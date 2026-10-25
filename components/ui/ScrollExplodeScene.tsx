@@ -7,7 +7,9 @@ import * as THREE from 'three';
 export interface ExplodeSamplePart {
   id: string;
   code: string;
+  folioRef: string;
   name: string;
+  latinNote: string;
   kind: 'printed' | 'purchased';
   dims: string;
   cost: string;
@@ -24,13 +26,15 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'sensor-cap',
     code: 'PRT-01',
+    folioRef: 'FIG. I · CORONA',
     name: 'Bayonet Top Cap & Sensor Collar',
+    latinNote: 'Operculum superius cum annulo clausurae',
     kind: 'printed',
     dims: '112 × 112 × 18 mm',
     cost: '$0.62 PETG',
-    material: 'Translucent Emerald PETG',
-    color: '#00f5a0',
-    emissive: '#006844',
+    material: 'Translucent Verdigris PETG',
+    color: '#2dd4bf',
+    emissive: '#115e59',
     basePos: [0, 0.85, 0],
     explodeVec: [0, 1.55, 0],
     geometry: 'cylinder',
@@ -39,13 +43,15 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'o-ring',
     code: 'BOM-01',
+    folioRef: 'FIG. II · ANNULUS',
     name: 'Nitrile 105mm Sealing O-Ring Gasket',
+    latinNote: 'Vinculum elasticum contra fluxum aquae',
     kind: 'purchased',
     dims: '105 × 105 × 3.5 mm',
     cost: '$1.40 McMaster',
     material: 'Buna-N 70A Elastomer',
-    color: '#ff6b2b',
-    emissive: '#7c2d12',
+    color: '#d97706',
+    emissive: '#78350f',
     basePos: [0, 0.65, 0],
     explodeVec: [0, 0.92, 0.35],
     geometry: 'ring',
@@ -54,7 +60,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'reservoir-body',
     code: 'PRT-02',
+    folioRef: 'FIG. III · VAS AQUARIUM',
     name: '750mL Fluted Hydro-Reservoir Vessel',
+    latinNote: 'Vas cylindricum striatum ad aquam servandam',
     kind: 'printed',
     dims: '110 × 110 × 145 mm',
     cost: '$1.85 PETG',
@@ -69,13 +77,15 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'submersible-pump',
     code: 'BOM-02',
+    folioRef: 'FIG. IV · COCHLEA',
     name: '5V Low-Noise Brushless Impeller Pump',
+    latinNote: 'Machina hydraulica rotunda submersa',
     kind: 'purchased',
     dims: '38 × 28 × 32 mm',
     cost: '$5.90 Amazon',
-    material: 'ABS + Ceramic Shaft',
-    color: '#38bdf8',
-    emissive: '#0c4a6e',
+    material: 'Burnished Brass & ABS Core',
+    color: '#d4af37',
+    emissive: '#713f12',
     basePos: [0, -0.35, 0],
     explodeVec: [-1.25, -0.25, 0.65],
     geometry: 'box',
@@ -84,13 +94,15 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'capacitive-probe',
     code: 'BOM-03',
+    folioRef: 'FIG. V · SPECULUM TERRAE',
     name: 'Capacitive Soil Moisture Probe v2.0',
+    latinNote: 'Lamina sensoria humorem terrae mensurans',
     kind: 'purchased',
     dims: '98 × 23 × 4 mm',
     cost: '$3.80 DigiKey',
-    material: 'FR4 Matte Black PCB',
-    color: '#0ea5e9',
-    emissive: '#075985',
+    material: 'Gilded FR4 Sensor Blade',
+    color: '#e5c158',
+    emissive: '#854d0e',
     basePos: [0.55, -0.1, 0.4],
     explodeVec: [1.45, 0.35, 0.7],
     geometry: 'box',
@@ -99,11 +111,13 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'manifold-ring',
     code: 'PRT-03',
+    folioRef: 'FIG. VI · DISTRIBUTOR',
     name: '4-Port Anti-Siphon Drip Manifold',
+    latinNote: 'Canalis quadripartitus guttatim distribuens',
     kind: 'printed',
     dims: '84 × 84 × 24 mm',
     cost: '$0.48 PETG',
-    material: 'Matte Emerald PLA/PETG',
+    material: 'Matte Verdigris PLA/PETG',
     color: '#34d399',
     emissive: '#065f46',
     basePos: [0, -0.62, 0],
@@ -114,11 +128,13 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'electronics-dock',
     code: 'PRT-04',
+    folioRef: 'FIG. VII · BASIS',
     name: 'Weighted Twist-Lock Base Chassis + M3 Inserts',
+    latinNote: 'Fundamentum ponderosum cum cochleis aeneis',
     kind: 'printed',
     dims: '118 × 118 × 32 mm',
     cost: '$0.90 PETG',
-    material: 'Carbon-Filled PETG',
+    material: 'Bronze-Filled Carbon PETG',
     color: '#059669',
     emissive: '#022c22',
     basePos: [0, -0.92, 0],
@@ -128,20 +144,40 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   },
 ];
 
+const SKETCH_PARCHMENT_FILL = new THREE.Color('#e8d6b3');
+const SKETCH_SEPIA_INK = new THREE.Color('#3b2410');
+const SKETCH_SEPIA_EMISSIVE = new THREE.Color('#4a2f16');
+const GILDED_HIGHLIGHT = new THREE.Color('#f3d478');
+
 function ExplodingPartMesh({
   part,
   explodeFactor,
+  realityFactor,
   selectedId,
   onSelect,
 }: {
   part: ExplodeSamplePart;
   explodeFactor: number;
+  realityFactor: number;
   selectedId: string;
   onSelect: (id: string) => void;
 }) {
   const groupRef = useRef<THREE.Group>(null);
+  const solidMatRef = useRef<THREE.MeshStandardMaterial>(null);
+  const wireMatRef = useRef<THREE.MeshBasicMaterial>(null);
+  const inkOutlineMatRef = useRef<THREE.MeshBasicMaterial>(null);
+
   const [hovered, setHovered] = useState(false);
   const isSelected = selectedId === part.id;
+
+  const realColor = useMemo(() => new THREE.Color(part.color), [part.color]);
+  const realEmissive = useMemo(
+    () => new THREE.Color(part.emissive),
+    [part.emissive]
+  );
+  const tmpColor = useMemo(() => new THREE.Color(), []);
+  const tmpEmissive = useMemo(() => new THREE.Color(), []);
+  const tmpWireColor = useMemo(() => new THREE.Color(), []);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
@@ -164,6 +200,68 @@ function ExplodingPartMesh({
       tz,
       Math.min(1, delta * 9)
     );
+
+    // Interpolate Sketch (0) -> Reality (1)
+    if (solidMatRef.current) {
+      tmpColor.copy(SKETCH_PARCHMENT_FILL).lerp(realColor, realityFactor);
+      solidMatRef.current.color.copy(tmpColor);
+
+      if (isSelected || hovered) {
+        tmpEmissive.copy(GILDED_HIGHLIGHT).lerp(realColor, realityFactor * 0.6);
+        solidMatRef.current.emissive.copy(tmpEmissive);
+        solidMatRef.current.emissiveIntensity =
+          0.25 + realityFactor * 0.35;
+      } else {
+        tmpEmissive
+          .copy(SKETCH_SEPIA_EMISSIVE)
+          .lerp(realEmissive, realityFactor);
+        solidMatRef.current.emissive.copy(tmpEmissive);
+        solidMatRef.current.emissiveIntensity =
+          0.08 + realityFactor * 0.16;
+      }
+
+      const targetMetal = part.kind === 'purchased' ? 0.72 : 0.28;
+      const targetRough = part.kind === 'purchased' ? 0.22 : 0.42;
+      solidMatRef.current.metalness = THREE.MathUtils.lerp(
+        0.04,
+        targetMetal,
+        realityFactor
+      );
+      solidMatRef.current.roughness = THREE.MathUtils.lerp(
+        0.92,
+        targetRough,
+        realityFactor
+      );
+      solidMatRef.current.opacity = THREE.MathUtils.lerp(
+        0.86,
+        0.95,
+        realityFactor
+      );
+    }
+
+    if (wireMatRef.current) {
+      tmpWireColor
+        .copy(SKETCH_SEPIA_INK)
+        .lerp(isSelected || hovered ? GILDED_HIGHLIGHT : realColor, realityFactor);
+      wireMatRef.current.color.copy(tmpWireColor);
+      // In sketch mode (realityFactor=0), sepia ink hatching wireframe is strong (0.72);
+      // in reality mode (realityFactor=1), subtle CAD wireframe (0.2)
+      const baseWireOpacity = THREE.MathUtils.lerp(0.75, 0.2, realityFactor);
+      wireMatRef.current.opacity =
+        isSelected || hovered ? Math.max(0.7, baseWireOpacity) : baseWireOpacity;
+    }
+
+    if (inkOutlineMatRef.current) {
+      // Inverted-hull sepia ink contour strongest in Sketch Mode
+      inkOutlineMatRef.current.opacity = THREE.MathUtils.lerp(
+        0.85,
+        isSelected || hovered ? 0.45 : 0.08,
+        realityFactor
+      );
+      inkOutlineMatRef.current.color.copy(
+        isSelected || hovered ? GILDED_HIGHLIGHT : SKETCH_SEPIA_INK
+      );
+    }
   });
 
   const geomNode = useMemo(() => {
@@ -202,25 +300,38 @@ function ExplodingPartMesh({
       }}
       onPointerOut={() => setHovered(false)}
     >
+      {/* Solid / Parchment-to-Reality Mesh */}
       <mesh castShadow receiveShadow>
         {geomNode}
         <meshStandardMaterial
-          color={part.color}
-          emissive={isSelected || hovered ? part.color : part.emissive}
-          emissiveIntensity={isSelected ? 0.55 : hovered ? 0.4 : 0.18}
-          metalness={part.kind === 'purchased' ? 0.65 : 0.25}
-          roughness={part.kind === 'purchased' ? 0.25 : 0.45}
+          ref={solidMatRef}
+          color="#e8d6b3"
           transparent
-          opacity={0.92}
+          opacity={0.9}
         />
       </mesh>
-      <mesh scale={[1.015, 1.015, 1.015]}>
+
+      {/* Inverted-Hull Sepia Ink Silhouette Outline (Da Vinci Pen Contour) */}
+      <mesh scale={[1.035, 1.035, 1.035]}>
         {geomNode}
         <meshBasicMaterial
-          color={isSelected || hovered ? '#ffffff' : part.color}
+          ref={inkOutlineMatRef}
+          color="#3b2410"
+          side={THREE.BackSide}
+          transparent
+          opacity={0.8}
+        />
+      </mesh>
+
+      {/* Sepia Cross-Hatching / CAD Wireframe Overlay */}
+      <mesh scale={[1.012, 1.012, 1.012]}>
+        {geomNode}
+        <meshBasicMaterial
+          ref={wireMatRef}
+          color="#3b2410"
           wireframe
           transparent
-          opacity={isSelected || hovered ? 0.65 : 0.22}
+          opacity={0.72}
         />
       </mesh>
     </group>
@@ -229,10 +340,12 @@ function ExplodingPartMesh({
 
 function AssemblyRig({
   explodeFactor,
+  realityFactor,
   selectedId,
   onSelect,
 }: {
   explodeFactor: number;
+  realityFactor: number;
   selectedId: string;
   onSelect: (id: string) => void;
 }) {
@@ -241,20 +354,39 @@ function AssemblyRig({
   useFrame((state) => {
     if (!rigRef.current) return;
     rigRef.current.rotation.y =
-      state.clock.getElapsedTime() * 0.35 + explodeFactor * 1.1;
+      state.clock.getElapsedTime() * 0.32 + explodeFactor * 1.15;
   });
 
   return (
     <group ref={rigRef}>
-      {/* Central CAD Datum Axis */}
+      {/* Central Da Vinci Plumb Line / Datum Axis */}
       <mesh position={[0, 0, 0]}>
-        <cylinderGeometry args={[0.012, 0.012, 5.4, 8]} />
-        <meshBasicMaterial color="#00f5a0" transparent opacity={0.35} />
+        <cylinderGeometry args={[0.014, 0.014, 5.4, 8]} />
+        <meshBasicMaterial
+          color={realityFactor < 0.5 ? '#5c3a1d' : '#d4af37'}
+          transparent
+          opacity={0.55}
+        />
       </mesh>
 
-      {/* Bambu 256x256 Build Plate Reference Grid */}
+      {/* Vitruvian Ring & Build Plate Reference Grid */}
+      <mesh position={[0, -2.54, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[2.2, 2.26, 64]} />
+        <meshBasicMaterial
+          color={realityFactor < 0.5 ? '#5c3a1d' : '#d4af37'}
+          side={THREE.DoubleSide}
+          transparent
+          opacity={0.45}
+        />
+      </mesh>
+
       <gridHelper
-        args={[5.2, 16, '#00f5a0', '#1e293b']}
+        args={[
+          5.2,
+          16,
+          realityFactor < 0.5 ? '#6e4720' : '#d4af37',
+          realityFactor < 0.5 ? '#9c7a4c' : '#2b2116',
+        ]}
         position={[0, -2.55, 0]}
       />
 
@@ -263,6 +395,7 @@ function AssemblyRig({
           key={p.id}
           part={p}
           explodeFactor={explodeFactor}
+          realityFactor={realityFactor}
           selectedId={selectedId}
           onSelect={onSelect}
         />
@@ -276,72 +409,109 @@ export default function ScrollExplodeScene({
 }: {
   scrollFactor: number;
 }) {
-  const [manualOverride, setManualOverride] = useState<number | null>(null);
+  const [manualExplode, setManualExplode] = useState<number | null>(null);
+  const [manualReality, setManualReality] = useState<number | null>(null);
   const [selectedId, setSelectedId] = useState<string>(
     SAMPLE_EXPLODE_PARTS[0].id
   );
 
+  const clampedScroll = Math.max(0, Math.min(1, scrollFactor));
+
   const effectiveExplode =
-    manualOverride !== null
-      ? manualOverride
-      : Math.max(0, Math.min(1, scrollFactor));
+    manualExplode !== null ? manualExplode : clampedScroll;
+
+  // As the user scrolls through the section, the model transitions from
+  // 0.0 (Sepia Ink Codex Sketch on Vellum) -> 1.0 (Full-Color Reality)
+  const autoReality = Math.max(
+    0,
+    Math.min(1, (clampedScroll - 0.12) / 0.72)
+  );
+  const effectiveReality =
+    manualReality !== null ? manualReality : autoReality;
 
   const selectedPart =
     SAMPLE_EXPLODE_PARTS.find((p) => p.id === selectedId) ||
     SAMPLE_EXPLODE_PARTS[0];
 
+  const isSketchDominant = effectiveReality < 0.48;
+
   return (
-    <div className="grid gap-6 lg:grid-cols-12 items-stretch">
-      {/* 3D Interactive Viewport */}
-      <div className="relative lg:col-span-8 min-h-[420px] sm:min-h-[500px] rounded-2xl border border-white/[0.1] bg-[#070a0f] overflow-hidden shadow-glass">
-        {/* Corner CAD Registration Crosshairs */}
-        <div className="pointer-events-none absolute top-3 left-3 z-10 flex items-center gap-2 font-mono text-[11px] text-[#00f5a0]">
-          <span className="inline-block h-2 w-2 rounded-full bg-[#00f5a0] animate-pulse" />
-          <span>CAD_VIEWPORT // EXPLODE_VECTOR: {(effectiveExplode * 100).toFixed(0)}%</span>
-        </div>
-        <div className="pointer-events-none absolute top-3 right-3 z-10 rounded-md border border-white/10 bg-[#050608]/80 px-2.5 py-1 font-mono text-[10px] text-slate-300">
-          BED: 256×256×256mm (BAMBU A1)
+    <div className="space-y-4">
+      {/* Top Sketch-to-Reality Transmutation Bar */}
+      <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#d4af37]/30 bg-[#14100b]/90 px-4 py-3">
+        <div className="flex items-center gap-3">
+          <span className="font-codex text-xs font-bold uppercase tracking-widest text-[#f3d478]">
+            Transmutation Stage:
+          </span>
+          <span
+            className={`rounded-full px-3 py-0.5 font-mono text-xs font-bold transition-colors ${
+              effectiveReality < 0.35
+                ? 'bg-[#e6d3b3] text-[#2b1d0e]'
+                : effectiveReality < 0.75
+                ? 'bg-[#d4af37]/25 text-[#f3d478] border border-[#d4af37]/50'
+                : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
+            }`}
+          >
+            {effectiveReality < 0.35
+              ? 'I · Da Vinci Sepia Ink Sketch (Codex Vellum)'
+              : effectiveReality < 0.75
+              ? 'II · Alchemical CAD Transmutation (Sketch → Solid)'
+              : 'III · Fabricated Reality (PETG + Sourced Hardware)'}
+          </span>
         </div>
 
-        <Canvas
-          camera={{ position: [3.9, 2.3, 4.4], fov: 40 }}
-          gl={{ antialias: true, alpha: true }}
-        >
-          <ambientLight intensity={0.85} />
-          <directionalLight position={[6, 8, 5]} intensity={1.6} />
-          <pointLight position={[-5, -3, -4]} intensity={0.9} color="#38bdf8" />
-          <pointLight position={[0, 4, 2]} intensity={1.1} color="#00f5a0" />
-          <AssemblyRig
-            explodeFactor={effectiveExplode}
-            selectedId={selectedId}
-            onSelect={setSelectedId}
-          />
-        </Canvas>
-
-        {/* Bottom Interactive Explode Scrubbing Bar */}
-        <div className="absolute bottom-3 inset-x-3 z-10 flex flex-wrap items-center justify-between gap-3 rounded-xl border border-white/10 bg-[#050608]/85 backdrop-blur-md px-4 py-2.5">
-          <div className="flex items-center gap-3 flex-1 min-w-[200px]">
-            <span className="font-mono text-[11px] uppercase tracking-wider text-slate-400">
-              Explode Axis
-            </span>
-            <input
-              type="range"
-              aria-label="Explode 3D assembly slider"
-              min={0}
-              max={100}
-              value={Math.round(effectiveExplode * 100)}
-              onChange={(e) => setManualOverride(Number(e.target.value) / 100)}
-              className="h-1.5 flex-1 cursor-pointer appearance-none rounded-lg bg-slate-800 accent-[#00f5a0]"
-            />
-            <span className="font-mono text-xs font-bold text-[#00f5a0] tabular-nums w-10 text-right">
-              {Math.round(effectiveExplode * 100)}%
-            </span>
-          </div>
-          {manualOverride !== null && (
+        {/* Quick Mode Preset Buttons */}
+        <div className="flex flex-wrap items-center gap-1.5 font-mono text-[11px]">
+          <button
+            type="button"
+            onClick={() => {
+              setManualReality(0.05);
+              setManualExplode(0.25);
+            }}
+            className={`rounded-lg px-2.5 py-1 transition-all ${
+              effectiveReality < 0.3
+                ? 'bg-[#e6d3b3] text-[#2b1d0e] font-bold'
+                : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
+            }`}
+          >
+            I. Ink Sketch
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setManualReality(0.5);
+              setManualExplode(0.6);
+            }}
+            className={`rounded-lg px-2.5 py-1 transition-all ${
+              effectiveReality >= 0.3 && effectiveReality <= 0.7
+                ? 'bg-[#d4af37] text-[#140e07] font-bold'
+                : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
+            }`}
+          >
+            II. Half-Transmuted
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setManualReality(1);
+              setManualExplode(0.85);
+            }}
+            className={`rounded-lg px-2.5 py-1 transition-all ${
+              effectiveReality > 0.7
+                ? 'bg-emerald-400 text-[#0c0906] font-bold'
+                : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
+            }`}
+          >
+            III. Full Reality
+          </button>
+          {(manualReality !== null || manualExplode !== null) && (
             <button
               type="button"
-              onClick={() => setManualOverride(null)}
-              className="rounded-lg border border-white/10 bg-white/5 px-2.5 py-1 font-mono text-[10px] text-slate-300 hover:text-white"
+              onClick={() => {
+                setManualReality(null);
+                setManualExplode(null);
+              }}
+              className="rounded-lg border border-[#d4af37]/40 bg-[#d4af37]/10 px-2.5 py-1 text-[#f3d478] hover:bg-[#d4af37]/20"
             >
               Sync to Scroll
             </button>
@@ -349,88 +519,278 @@ export default function ScrollExplodeScene({
         </div>
       </div>
 
-      {/* Right Column: Live Part Telemetry & Clickable Component Stack */}
-      <div className="lg:col-span-4 flex flex-col justify-between rounded-2xl border border-white/[0.08] bg-[#0a0d12]/90 p-5 space-y-4">
-        <div className="space-y-3">
-          <div className="flex items-center justify-between border-b border-white/[0.07] pb-3">
-            <span className="font-mono text-[11px] uppercase tracking-widest text-slate-400">
-              SELECTED COMPONENT
+      <div className="grid gap-6 lg:grid-cols-12 items-stretch">
+        {/* 3D Interactive Codex-to-Reality Viewport */}
+        <div
+          className="relative lg:col-span-8 min-h-[440px] sm:min-h-[520px] rounded-2xl overflow-hidden gilded-frame transition-colors duration-500"
+          style={{
+            background: `linear-gradient(160deg,
+              rgb(${Math.round(234 - effectiveReality * 214)}, ${Math.round(
+              214 - effectiveReality * 198
+            )}, ${Math.round(176 - effectiveReality * 165)}) 0%,
+              rgb(${Math.round(212 - effectiveReality * 198)}, ${Math.round(
+              186 - effectiveReality * 174
+            )}, ${Math.round(140 - effectiveReality * 132)}) 100%)`,
+          }}
+        >
+          {/* Decorative Vitruvian Circle + Square Compass Overlay */}
+          <svg
+            aria-hidden="true"
+            viewBox="0 0 500 500"
+            className="pointer-events-none absolute inset-0 h-full w-full p-6 transition-opacity duration-500"
+            style={{ opacity: 0.38 - effectiveReality * 0.2 }}
+          >
+            <circle
+              cx="250"
+              cy="250"
+              r="210"
+              fill="none"
+              stroke={isSketchDominant ? '#4a2f16' : '#d4af37'}
+              strokeWidth="1.2"
+              strokeDasharray="6 4"
+            />
+            <circle
+              cx="250"
+              cy="250"
+              r="165"
+              fill="none"
+              stroke={isSketchDominant ? '#4a2f16' : '#d4af37'}
+              strokeWidth="0.75"
+            />
+            <rect
+              x="76"
+              y="76"
+              width="348"
+              height="348"
+              fill="none"
+              stroke={isSketchDominant ? '#4a2f16' : '#d4af37'}
+              strokeWidth="1"
+            />
+            <line
+              x1="250"
+              y1="20"
+              x2="250"
+              y2="480"
+              stroke={isSketchDominant ? '#4a2f16' : '#d4af37'}
+              strokeWidth="0.6"
+              strokeDasharray="3 5"
+            />
+            <line
+              x1="20"
+              y1="250"
+              x2="480"
+              y2="250"
+              stroke={isSketchDominant ? '#4a2f16' : '#d4af37'}
+              strokeWidth="0.6"
+              strokeDasharray="3 5"
+            />
+          </svg>
+
+          {/* Top-Left Codex Marginalia & Telemetry */}
+          <div
+            className={`pointer-events-none absolute top-3.5 left-4 z-10 space-y-0.5 font-mono text-[11px] transition-colors ${
+              isSketchDominant ? 'text-[#3b2410]' : 'text-[#f3d478]'
+            }`}
+          >
+            <div className="flex items-center gap-2 font-bold">
+              <span className="inline-block h-2 w-2 rounded-full bg-current animate-pulse" />
+              <span>
+                FOLIO III // REALITY: {Math.round(effectiveReality * 100)}% ·
+                EXPLODE: {Math.round(effectiveExplode * 100)}%
+              </span>
+            </div>
+            <div className="text-[10px] opacity-80">
+              <span className="mirror-script">
+                LEONARDO BOTTEGA · PROPORTIO DIVINA
+              </span>{' '}
+              — Hover any vessel part
+            </div>
+          </div>
+
+          {/* Top-Right Bed Target Stamp */}
+          <div
+            className={`pointer-events-none absolute top-3.5 right-4 z-10 rounded-lg border px-2.5 py-1 font-mono text-[10px] transition-colors ${
+              isSketchDominant
+                ? 'border-[#5c3a1d]/40 bg-[#f5ebd6]/80 text-[#2b1d0e]'
+                : 'border-[#d4af37]/35 bg-[#0c0906]/85 text-[#e6d3b3]'
+            }`}
+          >
+            PLATE: 256×256×256mm · BAMBU A1
+          </div>
+
+          {/* Hand-drawn Callout Leader Badge on Viewport */}
+          <div
+            className={`pointer-events-none hidden sm:flex absolute top-16 right-4 z-10 max-w-[215px] flex-col rounded-xl border p-2.5 font-mono text-[10px] transition-all ${
+              isSketchDominant
+                ? 'border-[#5c3a1d]/45 bg-[#f5ebd6]/90 text-[#2b1d0e]'
+                : 'border-[#d4af37]/30 bg-[#14100b]/90 text-[#f5ebd6]'
+            }`}
+          >
+            <span className="font-codex font-bold text-[11px] text-[#b45309] dark:text-[#f3d478]">
+              {selectedPart.folioRef}
             </span>
-            <span
-              className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
-                selectedPart.kind === 'printed'
-                  ? 'border border-[#00f5a0]/40 bg-[#00f5a0]/15 text-[#00f5a0]'
-                  : 'border border-sky-400/40 bg-sky-400/15 text-sky-300'
-              }`}
-            >
-              {selectedPart.kind === 'printed'
-                ? '3D Printed STL'
-                : 'Off-The-Shelf BOM'}
+            <span className="font-semibold truncate">{selectedPart.name}</span>
+            <span className="italic opacity-80 font-display text-xs">
+              “{selectedPart.latinNote}”
             </span>
           </div>
 
-          <div>
-            <div className="font-mono text-xs text-[#00f5a0]">
-              {selectedPart.code} · {selectedPart.material}
-            </div>
-            <h4 className="font-display text-lg font-bold text-white mt-0.5">
-              {selectedPart.name}
-            </h4>
-          </div>
+          <Canvas
+            camera={{ position: [3.9, 2.3, 4.4], fov: 40 }}
+            gl={{ antialias: true, alpha: true }}
+          >
+            <ambientLight intensity={0.95 - effectiveReality * 0.15} />
+            <directionalLight
+              position={[6, 8, 5]}
+              intensity={1.1 + effectiveReality * 0.7}
+              color="#fff4d6"
+            />
+            <pointLight
+              position={[-5, -3, -4]}
+              intensity={effectiveReality * 1.1}
+              color="#d4af37"
+            />
+            <pointLight
+              position={[0, 4, 2]}
+              intensity={effectiveReality * 1.2}
+              color="#2dd4bf"
+            />
+            <AssemblyRig
+              explodeFactor={effectiveExplode}
+              realityFactor={effectiveReality}
+              selectedId={selectedId}
+              onSelect={setSelectedId}
+            />
+          </Canvas>
 
-          <div className="grid grid-cols-2 gap-2.5 pt-1 font-mono text-xs">
-            <div className="rounded-xl border border-white/[0.06] bg-[#050608] p-2.5">
-              <div className="text-[10px] text-slate-500">DIMENSIONS</div>
-              <div className="text-slate-200 font-semibold mt-0.5 tabular-nums">
-                {selectedPart.dims}
-              </div>
+          {/* Bottom Dual Scrubbing Bar: Sketch->Reality + Explode Vector */}
+          <div className="absolute bottom-3 inset-x-3 z-10 grid gap-2.5 sm:grid-cols-2 rounded-xl border border-[#d4af37]/35 bg-[#0c0906]/90 backdrop-blur-md px-4 py-3 text-[#f5ebd6]">
+            {/* Slider 1: Sketch -> Reality */}
+            <div className="flex items-center gap-2.5">
+              <span className="font-codex text-[10px] uppercase tracking-wider text-[#f3d478] shrink-0">
+                Sketch → Reality
+              </span>
+              <input
+                type="range"
+                aria-label="Sketch to reality transmutation slider"
+                min={0}
+                max={100}
+                value={Math.round(effectiveReality * 100)}
+                onChange={(e) => setManualReality(Number(e.target.value) / 100)}
+                className="h-1.5 flex-1 cursor-pointer appearance-none rounded-lg bg-[#282016] accent-[#d4af37]"
+              />
+              <span className="font-mono text-xs font-bold text-[#f3d478] tabular-nums w-9 text-right">
+                {Math.round(effectiveReality * 100)}%
+              </span>
             </div>
-            <div className="rounded-xl border border-white/[0.06] bg-[#050608] p-2.5">
-              <div className="text-[10px] text-slate-500">UNIT COST</div>
-              <div className="text-[#00f5a0] font-bold mt-0.5 tabular-nums">
-                {selectedPart.cost}
-              </div>
+
+            {/* Slider 2: Explode Vector */}
+            <div className="flex items-center gap-2.5">
+              <span className="font-codex text-[10px] uppercase tracking-wider text-[#bda782] shrink-0">
+                Explode Axis
+              </span>
+              <input
+                type="range"
+                aria-label="Explode 3D assembly slider"
+                min={0}
+                max={100}
+                value={Math.round(effectiveExplode * 100)}
+                onChange={(e) => setManualExplode(Number(e.target.value) / 100)}
+                className="h-1.5 flex-1 cursor-pointer appearance-none rounded-lg bg-[#282016] accent-[#2dd4bf]"
+              />
+              <span className="font-mono text-xs font-bold text-emerald-300 tabular-nums w-9 text-right">
+                {Math.round(effectiveExplode * 100)}%
+              </span>
             </div>
           </div>
         </div>
 
-        {/* Interactive Part List */}
-        <div className="space-y-1.5 pt-2">
-          <div className="font-mono text-[10px] uppercase tracking-wider text-slate-500">
-            Click Any Part to Inspect ({SAMPLE_EXPLODE_PARTS.length} Sub-Assemblies)
+        {/* Right Column: Da Vinci Codex Anatomy & Component Ledger */}
+        <div className="lg:col-span-4 flex flex-col justify-between rounded-2xl codex-folio p-5 space-y-4">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between border-b border-[#d4af37]/20 pb-3">
+              <span className="font-codex text-[11px] uppercase tracking-widest text-[#d4af37]">
+                ANATOMIA MECHANICA
+              </span>
+              <span
+                className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
+                  selectedPart.kind === 'printed'
+                    ? 'border border-emerald-400/40 bg-emerald-500/15 text-emerald-300'
+                    : 'border border-[#d4af37]/45 bg-[#d4af37]/15 text-[#f3d478]'
+                }`}
+              >
+                {selectedPart.kind === 'printed'
+                  ? '3D Printed Vessel'
+                  : 'Merchant Guild BOM'}
+              </span>
+            </div>
+
+            <div>
+              <div className="font-mono text-xs text-[#f3d478]">
+                {selectedPart.folioRef} · {selectedPart.code}
+              </div>
+              <h4 className="font-display text-xl font-bold text-[#f5ebd6] mt-0.5">
+                {selectedPart.name}
+              </h4>
+              <p className="font-display italic text-sm text-[#bda782]">
+                “{selectedPart.latinNote}”
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 gap-2.5 pt-1 font-mono text-xs">
+              <div className="rounded-xl border border-[#d4af37]/20 bg-[#0c0906]/90 p-2.5">
+                <div className="text-[10px] text-[#bda782]">PROPORTIONS</div>
+                <div className="text-[#f5ebd6] font-semibold mt-0.5 tabular-nums">
+                  {selectedPart.dims}
+                </div>
+              </div>
+              <div className="rounded-xl border border-[#d4af37]/20 bg-[#0c0906]/90 p-2.5">
+                <div className="text-[10px] text-[#bda782]">FLORINS / COST</div>
+                <div className="text-[#f3d478] font-bold mt-0.5 tabular-nums">
+                  {selectedPart.cost}
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="space-y-1.5 max-h-[240px] overflow-y-auto pr-1">
-            {SAMPLE_EXPLODE_PARTS.map((item) => {
-              const active = item.id === selectedPart.id;
-              return (
-                <button
-                  key={item.id}
-                  type="button"
-                  onClick={() => setSelectedId(item.id)}
-                  className={`w-full flex items-center justify-between rounded-xl border px-3 py-2 text-left transition-all ${
-                    active
-                      ? 'border-[#00f5a0]/60 bg-[#00f5a0]/10 text-white'
-                      : 'border-white/[0.06] bg-[#050608]/60 text-slate-300 hover:border-white/20'
-                  }`}
-                >
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <span
-                      className="h-2.5 w-2.5 rounded-full shrink-0"
-                      style={{ backgroundColor: item.color }}
-                    />
-                    <span className="font-mono text-[11px] text-slate-400 shrink-0">
-                      {item.code}
+
+          {/* Interactive Part List */}
+          <div className="space-y-1.5 pt-2">
+            <div className="font-mono text-[10px] uppercase tracking-wider text-[#bda782]">
+              Inspect Codex Sub-Assemblies ({SAMPLE_EXPLODE_PARTS.length} Folios)
+            </div>
+            <div className="space-y-1.5 max-h-[240px] overflow-y-auto pr-1">
+              {SAMPLE_EXPLODE_PARTS.map((item) => {
+                const active = item.id === selectedPart.id;
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => setSelectedId(item.id)}
+                    className={`w-full flex items-center justify-between rounded-xl border px-3 py-2 text-left transition-all ${
+                      active
+                        ? 'border-[#d4af37]/70 bg-[#d4af37]/15 text-[#f5ebd6]'
+                        : 'border-[#d4af37]/15 bg-[#0c0906]/70 text-[#e6d3b3] hover:border-[#d4af37]/40'
+                    }`}
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0">
+                      <span
+                        className="h-2.5 w-2.5 rounded-full shrink-0"
+                        style={{ backgroundColor: item.color }}
+                      />
+                      <span className="font-mono text-[11px] text-[#bda782] shrink-0">
+                        {item.code}
+                      </span>
+                      <span className="text-xs font-medium truncate">
+                        {item.name}
+                      </span>
+                    </div>
+                    <span className="font-mono text-[11px] text-[#f3d478] shrink-0 ml-2 tabular-nums">
+                      {item.cost.split(' ')[0]}
                     </span>
-                    <span className="text-xs font-medium truncate">
-                      {item.name}
-                    </span>
-                  </div>
-                  <span className="font-mono text-[11px] text-[#00f5a0] shrink-0 ml-2 tabular-nums">
-                    {item.cost.split(' ')[0]}
-                  </span>
-                </button>
-              );
-            })}
+                  </button>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>

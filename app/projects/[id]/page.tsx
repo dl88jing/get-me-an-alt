@@ -303,54 +303,54 @@ export default function ProjectPage() {
 
   return (
     <div className="space-y-6 pb-16">
-      {/* Top Bar & Savings Summary (Frosted Obsidian Glass Chrome) */}
-      <div className="flex flex-col gap-4 rounded-2xl glass-panel p-5 sm:flex-row sm:items-center sm:justify-between">
+      {/* Top Bar & Savings Summary (Florentine Codex Chrome) */}
+      <div className="flex flex-col gap-4 rounded-2xl gilded-frame codex-folio p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-1 font-mono text-xs text-slate-400 hover:text-[#00f5a0] transition-colors"
+              className="inline-flex items-center gap-1 font-mono text-xs text-[#bda782] hover:text-[#f3d478] transition-colors"
             >
-              <ArrowLeft className="h-3.5 w-3.5" /> All Projects
+              <ArrowLeft className="h-3.5 w-3.5" /> Return to Bottega
             </Link>
-            <span className="text-slate-700">/</span>
-            <span className="rounded-md border border-white/10 bg-[#050608] px-2 py-0.5 font-mono text-[11px] text-slate-300">
+            <span className="text-[#5c4930]">/</span>
+            <span className="rounded-md border border-[#d4af37]/25 bg-[#0c0906] px-2 py-0.5 font-mono text-[11px] text-[#e6d3b3]">
               data/objects/{manifest.id}
             </span>
             {manifest.isSample && (
-              <span className="rounded-md border border-[#00f5a0]/30 bg-[#00f5a0]/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-[#00f5a0]">
-                Pre-Generated Sample
+              <span className="rounded-md border border-[#d4af37]/45 bg-[#d4af37]/15 px-2 py-0.5 font-codex text-[10px] font-bold uppercase tracking-wider text-[#f3d478]">
+                Illuminated Codex Sample
               </span>
             )}
           </div>
 
-          <h1 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
+          <h1 className="font-display text-3xl font-bold tracking-tight text-[#f5ebd6] sm:text-4xl">
             {manifest.title}
           </h1>
           {analysis?.tagline && (
-            <p className="text-xs sm:text-sm text-slate-300 max-w-3xl">
+            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-3xl font-sans">
               {analysis.tagline}
             </p>
           )}
         </div>
 
-        {/* Savings Pill */}
+        {/* Gilded Savings Seal */}
         {bom && (
-          <div className="flex items-center gap-4 rounded-2xl border border-[#00f5a0]/35 bg-[#00f5a0]/10 px-5 py-3 shadow-electric">
+          <div className="flex items-center gap-4 rounded-2xl border border-[#d4af37]/50 bg-gradient-to-r from-[#d4af37]/15 via-[#14100b] to-[#d4af37]/10 px-5 py-3 shadow-electric">
             <div>
-              <div className="font-mono text-[11px] uppercase tracking-wider text-[#00f5a0] font-semibold">
-                Total DIY Build vs. Retail
+              <div className="font-codex text-[10px] uppercase tracking-widest text-[#f3d478] font-bold">
+                Bottega DIY vs. Merchant Price
               </div>
               <div className="flex items-baseline gap-2 font-mono tabular-nums">
-                <span className="font-display text-2xl font-black text-white">
+                <span className="font-display text-2xl sm:text-3xl font-bold text-[#f5ebd6]">
                   ${bom.summary.totalDiyCost.toFixed(2)}
                 </span>
-                <span className="text-xs text-slate-400 line-through">
+                <span className="text-xs text-[#bda782] line-through">
                   ${bom.summary.originalRetailPrice.toFixed(2)}
                 </span>
               </div>
             </div>
-            <div className="rounded-xl bg-[#00f5a0] px-3 py-1.5 text-[#050608] font-mono font-black text-xs tabular-nums">
+            <div className="rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-3.5 py-1.5 text-[#140e07] font-codex font-bold text-xs tabular-nums">
               YOU SAVE ${bom.summary.totalSavings.toFixed(2)} (
               {bom.summary.savingsPercent}%)
             </div>
@@ -375,8 +375,8 @@ export default function ProjectPage() {
         onManifestUpdate={(updated) => setManifest(updated)}
       />
 
-      {/* Sticky Glass Navigation Tabs with Animated Active Underline */}
-      <div className="sticky top-[57px] z-40 -mx-1 rounded-2xl border border-white/[0.08] bg-[#050608]/85 backdrop-blur-xl px-3 py-2 shadow-glass">
+      {/* Sticky Codex Folio Navigation Tabs with Gilded Active Underline */}
+      <div className="sticky top-[57px] z-40 -mx-1 rounded-2xl border border-[#d4af37]/30 bg-[#0c0906]/90 backdrop-blur-xl px-3 py-2 shadow-glass">
         <div className="flex flex-wrap items-center gap-2">
           {TABS.map((t) => {
             const Icon = t.icon;
@@ -386,10 +386,10 @@ export default function ProjectPage() {
                 key={t.id}
                 type="button"
                 onClick={() => setActiveTab(t.id)}
-                className={`relative inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-display text-xs font-bold transition-all duration-200 ${
+                className={`relative inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-codex text-xs font-bold tracking-wide transition-all duration-200 ${
                   active
-                    ? 'bg-[#00f5a0]/15 text-[#00f5a0] border border-[#00f5a0]/40 shadow-[0_0_24px_-6px_rgba(0,245,160,0.35)]'
-                    : 'border border-transparent bg-white/[0.03] text-slate-300 hover:border-white/10 hover:text-white'
+                    ? 'bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 shadow-[0_0_24px_-6px_rgba(212,175,55,0.45)]'
+                    : 'border border-transparent bg-white/[0.03] text-[#e6d3b3] hover:border-[#d4af37]/25 hover:text-[#f5ebd6]'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -398,8 +398,8 @@ export default function ProjectPage() {
                   <span
                     className={`rounded-md px-1.5 py-0.5 text-[10px] font-mono tabular-nums ${
                       active
-                        ? 'bg-[#00f5a0] text-[#050608] font-bold'
-                        : 'bg-slate-800/90 text-slate-300'
+                        ? 'bg-[#d4af37] text-[#140e07] font-bold'
+                        : 'bg-[#1d1710] text-[#bda782]'
                     }`}
                   >
                     {t.badge}
@@ -407,7 +407,7 @@ export default function ProjectPage() {
                 )}
                 <span
                   aria-hidden="true"
-                  className={`pointer-events-none absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-gradient-to-r from-[#00f5a0] via-emerald-300 to-sky-400 transition-all duration-300 ${
+                  className={`pointer-events-none absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-emerald-400 transition-all duration-300 ${
                     active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
                   }`}
                 />
@@ -421,38 +421,38 @@ export default function ProjectPage() {
       {activeTab === 'overview' && analysis && (
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="rounded-md bg-emerald-500/10 px-2.5 py-1 text-xs font-semibold text-emerald-300 border border-emerald-500/30">
+            <div className="rounded-2xl codex-folio p-6 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="rounded-md bg-[#d4af37]/15 px-2.5 py-1 font-codex text-xs font-semibold text-[#f3d478] border border-[#d4af37]/35">
                   {analysis.category}
                 </span>
-                <span className="text-xs text-slate-400">
+                <span className="text-xs text-[#bda782] font-mono">
                   Difficulty:{' '}
-                  <strong className="text-white">{analysis.difficulty}</strong> ·
+                  <strong className="text-[#f5ebd6]">{analysis.difficulty}</strong> ·
                   Est. Print:{' '}
-                  <strong className="text-white">
+                  <strong className="text-[#f5ebd6]">
                     {analysis.estimatedPrintTimeHours}h
                   </strong>{' '}
                   · Assembly:{' '}
-                  <strong className="text-white">
+                  <strong className="text-[#f5ebd6]">
                     {analysis.estimatedAssemblyMinutes} min
                   </strong>
                 </span>
               </div>
 
-              <h3 className="text-lg font-bold text-white">
+              <h3 className="font-display text-2xl font-bold text-[#f5ebd6]">
                 Why the Commercial Version Costs $
-                {analysis.originalProduct.retailPrice} — and How We Beat It
+                {analysis.originalProduct.retailPrice} — and How Our Bottega Beats It
               </h3>
-              <p className="text-sm text-slate-300 leading-relaxed">
+              <p className="text-sm text-[#e6d3b3] leading-relaxed">
                 {analysis.description}
               </p>
 
-              <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 space-y-2">
-                <div className="text-xs font-bold uppercase tracking-wider text-sky-400">
+              <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/80 p-4 space-y-2">
+                <div className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                   Core Engineering Function
                 </div>
-                <p className="text-xs text-slate-300 leading-relaxed">
+                <p className="text-xs text-[#e6d3b3] leading-relaxed">
                   {analysis.functionSummary}
                 </p>
               </div>
@@ -460,12 +460,12 @@ export default function ProjectPage() {
 
             {/* Printed vs Bought Split */}
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-950/10 p-5 space-y-3">
-                <div className="flex items-center gap-2 text-sm font-bold text-emerald-300">
+              <div className="rounded-2xl border border-emerald-500/35 bg-emerald-950/15 p-5 space-y-3">
+                <div className="flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-emerald-300">
                   <Printer className="h-4 w-4" />
-                  3D-Printed Parts ({analysis.whatGetsPrinted.length})
+                  3D-Printed Vessels ({analysis.whatGetsPrinted.length})
                 </div>
-                <ul className="space-y-2 text-xs text-slate-300">
+                <ul className="space-y-2 text-xs text-[#e6d3b3]">
                   {analysis.whatGetsPrinted.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
                       <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
@@ -475,15 +475,15 @@ export default function ProjectPage() {
                 </ul>
               </div>
 
-              <div className="rounded-2xl border border-sky-500/30 bg-sky-950/10 p-5 space-y-3">
-                <div className="flex items-center gap-2 text-sm font-bold text-sky-300">
+              <div className="rounded-2xl border border-[#d4af37]/35 bg-[#d4af37]/[0.07] p-5 space-y-3">
+                <div className="flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                   <ShoppingCart className="h-4 w-4" />
-                  Off-The-Shelf Hardware ({analysis.whatGetsBought.length})
+                  Merchant Guild Hardware ({analysis.whatGetsBought.length})
                 </div>
-                <ul className="space-y-2 text-xs text-slate-300">
+                <ul className="space-y-2 text-xs text-[#e6d3b3]">
                   {analysis.whatGetsBought.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-sky-400 shrink-0" />
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#d4af37] shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -496,15 +496,15 @@ export default function ProjectPage() {
 
           {/* Right Column: Specs & Engineering Notes */}
           <div className="space-y-6">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">
-                Key Mechanisms
+            <div className="rounded-2xl codex-folio p-5 space-y-4">
+              <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                Key Mechanisms (De Mechanica)
               </h3>
-              <ul className="space-y-2.5 text-xs text-slate-300">
+              <ul className="space-y-2.5 text-xs text-[#e6d3b3]">
                 {analysis.keyMechanisms.map((m, i) => (
                   <li
                     key={i}
-                    className="rounded-xl border border-slate-800 bg-slate-950/60 p-3 leading-relaxed"
+                    className="rounded-xl border border-[#d4af37]/20 bg-[#0c0906]/75 p-3 leading-relaxed"
                   >
                     {m}
                   </li>
@@ -512,14 +512,14 @@ export default function ProjectPage() {
               </ul>
             </div>
 
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-3">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-300">
-                DFM & Slicer Notes
+            <div className="rounded-2xl codex-folio p-5 space-y-3">
+              <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                DFM &amp; Slicer Marginalia
               </h3>
-              <ul className="space-y-2 text-xs text-slate-400">
+              <ul className="space-y-2 text-xs text-[#e6d3b3]">
                 {analysis.engineeringNotes.map((n, i) => (
                   <li key={i} className="flex items-start gap-2">
-                    <ChevronRight className="h-4 w-4 text-emerald-400 shrink-0" />
+                    <ChevronRight className="h-4 w-4 text-[#d4af37] shrink-0" />
                     <span>{n}</span>
                   </li>
                 ))}

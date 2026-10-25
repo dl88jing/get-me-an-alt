@@ -10,11 +10,13 @@ import {
   ArrowUpRight,
   Box,
   CheckCircle2,
+  Compass,
   Cpu,
-  FileCode2,
+  Feather,
   Layers,
   Link2,
   Printer,
+  ScrollText,
   Search,
   ShieldCheck,
   ShoppingCart,
@@ -30,8 +32,8 @@ const ScrollExplodeScene = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="min-h-[460px] rounded-2xl border border-white/10 bg-[#070a0f] p-8 flex items-center justify-center font-mono text-xs text-slate-400 skeleton-shimmer">
-        INITIALIZING WEBGL CAD VIEWPORT // 256×256×256MM...
+      <div className="min-h-[460px] rounded-2xl border border-[#d4af37]/30 bg-[#14100b] p-8 flex items-center justify-center font-mono text-xs text-[#e6d3b3] skeleton-shimmer">
+        PREPARING LEONARDO CODEX VIEWPORT // 256×256×256MM...
       </div>
     ),
   }
@@ -57,57 +59,69 @@ const POPULAR_PRINTERS = [
 const PRESET_GADGETS = [
   {
     id: 'plant-auto-waterer',
+    folio: 'CODEX I',
     title: 'Smart Plant Auto-Waterer',
-    category: 'HOME AUTOMATION // FLUIDICS',
+    latinTitle: 'Machina Hydraulica Botanica',
+    category: 'HYDRAULICS // AUTOMATA',
     retail: '$149',
     diy: '$24.85',
     savings: 'Save $124',
     savingsPct: '83%',
-    partsSpec: '5 Printed STLs · 6 BOM Parts · 1 Plate',
-    desc: '750mL PETG reservoir + 5V brushless pump + capacitive probe + anti-siphon drip spikes',
-    prompt: 'Smart Autonomous Plant Watering Station with 750mL reservoir and soil sensor',
+    partsSpec: '7 Printed STLs · 4 BOM Parts · 1 Plate',
+    desc: '750mL fluted PETG vessel + 5V brushless impeller pump + capacitive probe + anti-siphon drip manifold.',
+    prompt:
+      'Smart Autonomous Plant Watering Station with 750mL reservoir and soil sensor',
     url: 'https://www.amazon.com/s?k=smart+automatic+plant+watering+system+reservoir',
     isInstantDemo: true,
   },
   {
     id: 'art-easel',
+    folio: 'CODEX II',
     title: 'Articulated Tabletop Studio Art Easel',
-    category: 'STUDIO HARDWARE // MECHANICS',
+    latinTitle: 'Pluteus Pictoris Articulatus',
+    category: 'BOTTEGA MECHANICS // STUDIO',
     retail: '$189',
     diy: '$27.40',
     savings: 'Save $161',
     savingsPct: '85%',
     partsSpec: '6 Printed STLs · 5 BOM Parts · 1 Plate',
-    desc: 'Ratcheting tilt mast + canvas clamp jaws + 2020 aluminum extrusion spine + M5 knobs',
-    prompt: 'Bespoke Articulated Tabletop Studio Painting Easel with adjustable tilt and canvas clamp',
+    desc: 'Ratcheting tilt mast + canvas clamp jaws + 2020 aluminum extrusion spine + knurled M5 brass knobs.',
+    prompt:
+      'Bespoke Articulated Tabletop Studio Painting Easel with adjustable tilt and canvas clamp',
     url: 'https://www.amazon.com/s?k=adjustable+tabletop+studio+art+easel',
     isInstantDemo: false,
   },
   {
     id: 'iphone-magnifier',
-    title: 'iPhone Macro Microscope & Slide Adapter',
+    folio: 'CODEX III',
+    title: 'iPhone Macro Microscope & Slide Stage',
+    latinTitle: 'Speculum Opticum Microscopium',
     category: 'OPTICS // PRECISION STAGE',
     retail: '$119',
     diy: '$16.20',
     savings: 'Save $102',
     savingsPct: '86%',
     partsSpec: '4 Printed STLs · 4 BOM Parts · 1 Plate',
-    desc: 'Precision XYZ focus sled + clip-on 100x glass doublet mount + 5V LED ring diffuser',
-    prompt: 'iPhone Smartphone Microscope Magnifier Adapter with LED illumination and focus stage',
+    desc: 'Precision XYZ focus sled + clip-on 100x glass doublet mount + 5V warm LED ring diffuser.',
+    prompt:
+      'iPhone Smartphone Microscope Magnifier Adapter with LED illumination and focus stage',
     url: 'https://www.amazon.com/s?k=smartphone+microscope+adapter+stage',
     isInstantDemo: false,
   },
   {
     id: 'liquid-handler',
-    title: 'Benchtop Lab Pipette Liquid Handler Stand',
-    category: 'LAB AUTOMATION // GANTRY',
+    folio: 'CODEX IV',
+    title: 'Benchtop Lab Pipette Liquid Automaton',
+    latinTitle: 'Automaton Alchymicum Mensurae',
+    category: 'ALCHEMICAL LAB // GANTRY',
     retail: '$590',
     diy: '$68.50',
     savings: 'Save $521',
     savingsPct: '88%',
     partsSpec: '8 Printed STLs · 9 BOM Parts · 2 Plates',
-    desc: '96-well plate indexer + linear rail carriage + compliant pipette plunger actuator',
-    prompt: 'Desktop 96-well plate liquid handling robot / multi-channel pipette workstation',
+    desc: '96-well plate indexer + linear rail carriage + compliant pipette plunger escapement.',
+    prompt:
+      'Desktop 96-well plate liquid handling robot / multi-channel pipette workstation',
     url: 'https://www.youtube.com/results?search_query=diy+liquid+handling+robot+3d+printed',
     isInstantDemo: false,
   },
@@ -116,66 +130,80 @@ const PRESET_GADGETS = [
 const AGENT_STAGES = [
   {
     step: '01',
+    roman: 'I',
     name: 'Analyst',
+    latinRole: 'Deconstructor Visus',
     artifact: 'analysis.json',
-    desc: 'Gemini 4 Argon multimodal deconstruction of URLs, videos & photos into dimensions and mechanisms.',
+    desc: 'Gemini 4 Argon multimodal study of URLs, videos & sketches into proportions, mechanisms, and retail markup.',
     icon: Cpu,
   },
   {
     step: '02',
+    roman: 'II',
     name: 'Researcher',
-    artifact: 'sources.json',
-    desc: 'Google Search grounding + video teardown frame extraction for schematics, Printables & open hardware.',
+    latinRole: 'Inquisitor Fontium',
+    artifact: 'sources.json + teardown.json',
+    desc: 'Google Search grounding + video teardown frame dissection for schematics, Printables & open codices.',
     icon: Search,
   },
   {
     step: '03',
+    roman: 'III',
     name: 'Designer',
+    latinRole: 'Architectus Parametricus',
     artifact: 'design.json',
-    desc: 'Splits printed vs. purchased parts, parametric CSG shapes, and 3D explode vectors.',
+    desc: 'Separates printed vessels from guild hardware, computing CSG proportions and 3D explosion vectors.',
     icon: Layers,
   },
   {
     step: '04',
+    roman: 'IV',
     name: 'Critic',
+    latinRole: 'Censor Proportionum',
     artifact: 'critique.json',
-    desc: 'DFM printability verification checking overhangs, wall thickness, tolerances & bed fit in a feedback loop.',
+    desc: 'DFM printability tribunal verifying overhangs <=45°, wall thickness, tolerances & bed fit in a revision loop.',
     icon: ShieldCheck,
   },
   {
     step: '05',
-    name: 'BOM Agent',
+    roman: 'V',
+    name: 'BOM & Price Hunter',
+    latinRole: 'Mercator Tabulae',
     artifact: 'bom.json',
-    desc: 'Retailer sourcing links (Amazon, Home Depot, Walmart, McMaster, AliExpress) + total savings.',
+    desc: 'Live grounded sourcing across Amazon, Home Depot, Walmart & McMaster-Carr to secure the lowest price.',
     icon: ShoppingCart,
   },
   {
     step: '06',
+    roman: 'VI',
     name: 'CAD & Packer',
+    latinRole: 'Faber Geometriae',
     artifact: 'plates.json + *.3mf',
-    desc: 'OpenSCAD-WASM parametric STL compilation + 2D bin-packing onto minimum plates for your printer.',
+    desc: 'OpenSCAD-WASM parametric STL compilation with 3x self-healing retry + 2D bin-packing onto fewest plates.',
     icon: Box,
   },
   {
     step: '07',
+    roman: 'VII',
     name: 'Instructions',
+    latinRole: 'Magister Ordinis',
     artifact: 'instructions.json',
-    desc: 'IKEA-style step-by-step animated assembly choreography with motion vectors & tool callouts.',
+    desc: 'IKEA-style step-by-step animated 3D assembly treatise with insertion vectors & tool callouts.',
     icon: Wrench,
   },
 ];
 
 const RETAILER_MARQUEE = [
   { name: 'AMAZON', tag: 'PRIME FASTENERS & PUMPS' },
-  { name: 'McMASTER-CARR', tag: 'PRECISION METRIC HARDWARE' },
+  { name: 'McMASTER-CARR', tag: 'PRECISION METRIC BRASS & STEEL' },
   { name: 'BAMBU LAB', tag: '256×256MM 3MF PLATES' },
   { name: 'HOME DEPOT', tag: 'EXTRUSIONS & TUBING' },
   { name: 'DIGIKEY', tag: 'SENSORS & CONTROLLERS' },
-  { name: 'PRINTABLES', tag: 'OPEN CAD PRIORS' },
+  { name: 'PRINTABLES', tag: 'OPEN CODEX PRIORS' },
   { name: 'ALIEXPRESS', tag: 'DIRECT MOTION PARTS' },
-  { name: 'WALMART', tag: 'LOCAL COMMODITY SUPPLY' },
+  { name: 'WALMART', tag: 'COMMODITY HARDWARE' },
   { name: 'PRUSA RESEARCH', tag: 'MK4S / CORE ONE PROFILES' },
-  { name: 'CRAFTCLOUD', tag: 'ON-DEMAND PRINT BUREAU' },
+  { name: 'CRAFTCLOUD', tag: 'ON-DEMAND PRINT GUILD' },
   { name: 'JLC3DP', tag: 'FACTORY SLA / MJF / FDM' },
   { name: 'VORON DESIGN', tag: '350MM GANTRY SUPPORT' },
 ];
@@ -198,8 +226,10 @@ export default function LandingPage() {
     new Set(['plant-auto-waterer'])
   );
 
-  // Scroll-driven explode progress
+  // Scroll-driven gear drawing & 3D explode progress
+  const studySectionRef = useRef<HTMLElement | null>(null);
   const explodeSectionRef = useRef<HTMLElement | null>(null);
+  const [gearScrollProgress, setGearScrollProgress] = useState(0.45);
   const [scrollExplodeFactor, setScrollExplodeFactor] = useState(0.35);
 
   // Savings count-up animation
@@ -208,7 +238,7 @@ export default function LandingPage() {
   const [diyCostCount, setDiyCostCount] = useState(24.85);
   const [dollarSavedCount, setDollarSavedCount] = useState(124);
 
-  // Cycle active agent node highlight on landing strip
+  // Cycle active agent scholar highlight on Folio II
   useEffect(() => {
     const timer = setInterval(() => {
       setActiveAgentPulse((prev) => (prev + 1) % AGENT_STAGES.length);
@@ -233,15 +263,23 @@ export default function LandingPage() {
       .catch(() => {});
   }, []);
 
-  // Scroll listener for 3D explode section
+  // Scroll listener for SVG stroke-dashoffset gear drawing & 3D sketch->reality explode section
   useEffect(() => {
     const handleScroll = () => {
-      if (!explodeSectionRef.current) return;
-      const rect = explodeSectionRef.current.getBoundingClientRect();
       const vh = window.innerHeight || 800;
-      const raw = (vh * 0.72 - rect.top) / (rect.height * 0.78);
-      const clamped = Math.max(0.08, Math.min(1, raw));
-      setScrollExplodeFactor(clamped);
+
+      if (studySectionRef.current) {
+        const sRect = studySectionRef.current.getBoundingClientRect();
+        const sRaw = (vh * 0.85 - sRect.top) / (sRect.height * 0.85);
+        setGearScrollProgress(Math.max(0.15, Math.min(1, sRaw)));
+      }
+
+      if (explodeSectionRef.current) {
+        const rect = explodeSectionRef.current.getBoundingClientRect();
+        const raw = (vh * 0.72 - rect.top) / (rect.height * 0.78);
+        const clamped = Math.max(0.08, Math.min(1, raw));
+        setScrollExplodeFactor(clamped);
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
@@ -336,7 +374,9 @@ export default function LandingPage() {
   const handleStartPipeline = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim() && !imageFile) {
-      setError('Paste a product link, video link, description, or upload an image first.');
+      setError(
+        'Inscribe a product link, video link, description, or upload a sketch/photo first.'
+      );
       return;
     }
 
@@ -407,16 +447,27 @@ export default function LandingPage() {
     e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
   };
 
+  const gearDashOffset = Math.round((1 - gearScrollProgress) * 420);
+
   return (
     <div className="space-y-16 sm:space-y-24 pb-20">
       {/* =====================================================================
-          ACT I — FULL-BLEED VIDEO HERO + GLASS COMMAND BAR
+          FOLIO I — THE VISION: DA VINCI'S WORKSHOP HERO & ORNATE GILDED FRAME
       ===================================================================== */}
       <section
         id="hero-command"
-        className="relative overflow-hidden rounded-[28px] border border-white/[0.12] bg-[#050608] p-6 sm:p-12 lg:p-16 shadow-glass"
+        className="relative overflow-hidden rounded-[28px] gilded-frame bg-[#0e0a07] p-6 sm:p-10 lg:p-14"
       >
-        {/* Atmospheric Hardware Video Background */}
+        {/* Background Layer 1: Generated Florentine Vellum & Chiaroscuro Workshop Painting */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
+          style={{
+            backgroundImage: "url('/media/renaissance/parchment-codex-bg.webp')",
+          }}
+        />
+
+        {/* Background Layer 2: Graded Sepia Hardware Video Ambient Underlay */}
         <video
           autoPlay
           muted
@@ -424,56 +475,135 @@ export default function LandingPage() {
           playsInline
           preload="metadata"
           poster="/media/hero-poster.jpg"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-35"
+          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25 sepia-video-grade"
         >
           <source src="/media/hero.mp4" type="video/mp4" />
         </video>
 
-        {/* Multi-Stop Obsidian Vignette & Radial Glow */}
+        {/* Multi-Stop Caravaggio Chiaroscuro Vignette & Candlelight Glow */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#050608]/55 via-[#050608]/80 to-[#050608]"
+          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0c0906]/60 via-[#0c0906]/82 to-[#0c0906]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(0,245,160,0.16),transparent_60%)]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 film-grain opacity-80"
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_15%,rgba(212,175,55,0.22),transparent_62%)]"
         />
 
-        {/* Corner CAD Registration Telemetry */}
-        <div className="pointer-events-none hidden sm:flex items-center justify-between font-mono text-[11px] text-slate-400/90 mb-6 relative z-10">
-          <span className="inline-flex items-center gap-2">
-            <span className="h-2 w-2 rounded-full bg-[#00f5a0] animate-pulse" />
-            SYS_TELEMETRY // GEMINI_4_ARGON_SWARM [ONLINE]
+        {/* Vitruvian Circle + Square Compass Geometry Background SVG */}
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 800 800"
+          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[760px] w-[760px] opacity-[0.14]"
+        >
+          <circle
+            cx="400"
+            cy="400"
+            r="350"
+            fill="none"
+            stroke="#d4af37"
+            strokeWidth="1.2"
+            strokeDasharray="8 6"
+          />
+          <circle
+            cx="400"
+            cy="400"
+            r="280"
+            fill="none"
+            stroke="#e6d3b3"
+            strokeWidth="0.8"
+          />
+          <rect
+            x="120"
+            y="120"
+            width="560"
+            height="560"
+            fill="none"
+            stroke="#d4af37"
+            strokeWidth="1"
+          />
+          <line
+            x1="400"
+            y1="20"
+            x2="400"
+            y2="780"
+            stroke="#d4af37"
+            strokeWidth="0.6"
+            strokeDasharray="4 6"
+          />
+          <line
+            x1="20"
+            y1="400"
+            x2="780"
+            y2="400"
+            stroke="#d4af37"
+            strokeWidth="0.6"
+            strokeDasharray="4 6"
+          />
+        </svg>
+
+        {/* Top Codex Marginalia & Mirror-Script Bar */}
+        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-b border-[#d4af37]/25 pb-4 mb-8 font-mono text-[11px] text-[#bda782]">
+          <span className="inline-flex items-center gap-2 text-[#f3d478]">
+            <Compass className="h-3.5 w-3.5 text-[#d4af37] animate-spin-slow" />
+            <span className="font-codex tracking-widest">
+              FOLIO I · DE VISIONE MECHANICA
+            </span>
           </span>
-          <span>BED_TARGET: 256×256×256MM · TOLERANCE: ±0.15MM</span>
+
+          <span
+            className="group inline-flex items-center gap-2 rounded-full border border-[#d4af37]/25 bg-[#14100b]/80 px-3 py-0.5 text-[10px] text-[#e6d3b3]"
+            title="Hover to decipher Leonardo's mirror-script annotation"
+          >
+            <Feather className="h-3 w-3 text-[#d4af37]" />
+            <span className="mirror-script font-mono tracking-wider">
+              LA NATURA È PIENA DI INFINITE RAGIONI · CODEX ARGON
+            </span>
+            <span className="text-[#d4af37]/75 hidden sm:inline">
+              (hover mirror script)
+            </span>
+          </span>
+
+          <span className="hidden md:inline text-[#e6d3b3]">
+            BED PROPORTION: 256×256×256MM · TOLERANCE ±0.15MM
+          </span>
         </div>
 
+        {/* Central Codex Vision Copy + Command Bar */}
         <div className="relative z-10 mx-auto max-w-4xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#00f5a0]/35 bg-[#00f5a0]/10 px-4 py-1.5 font-mono text-xs font-medium text-[#00f5a0] shadow-[0_0_24px_-4px_rgba(0,245,160,0.35)]">
-            <Sparkles className="h-3.5 w-3.5 text-[#00f5a0]" />
-            Powered by Managed Gemini 4 Argon Agents (Antigravity CLI + Grounded REST)
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/45 bg-[#d4af37]/12 px-4 py-1.5 font-mono text-xs font-medium text-[#f3d478] shadow-[0_0_28px_-4px_rgba(212,175,55,0.4)]">
+            <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
+            <span>
+              The RenAIssance Edition · Managed Gemini 4 Argon Scholars
+            </span>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.04em] text-white leading-[0.96]">
-            Don&apos;t buy it.{' '}
-            <span className="bg-gradient-to-r from-[#00f5a0] via-emerald-300 to-sky-400 bg-clip-text text-transparent">
-              Get an alt.
+          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.02em] text-[#f5ebd6] leading-[0.98]">
+            Every invention begins as a sketch.{' '}
+            <span className="block mt-1 italic font-normal bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#e6c365] bg-clip-text text-transparent">
+              Be the Da Vinci of everything you can&apos;t afford.
             </span>
           </h1>
 
-          <p className="text-sm sm:text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
-            Paste any pricey gadget link, YouTube video, or photo. Our autonomous hardware swarm reverse-engineers it into{' '}
-            <strong className="text-white">plate-packed 3D-printable STLs &amp; 3MFs</strong>, a{' '}
-            <strong className="text-white">sourced retail BOM</strong>,{' '}
-            <strong className="text-white">IKEA-style animated 3D instructions</strong>, and an{' '}
-            <strong className="text-white">interactive exploded view</strong>.
+          <p className="text-sm sm:text-lg text-[#e6d3b3] max-w-2xl mx-auto leading-relaxed font-sans">
+            Paste any pricey commercial gadget link, YouTube video, or upload a
+            sketch/photo. Seven autonomous Gemini 4 Argon agents dissect its
+            anatomy into{' '}
+            <strong className="text-[#f5ebd6] font-semibold">
+              plate-packed 3D-printable STLs &amp; 3MFs
+            </strong>
+            , a{' '}
+            <strong className="text-[#f5ebd6] font-semibold">
+              grounded merchant BOM
+            </strong>
+            , and{' '}
+            <strong className="text-[#f5ebd6] font-semibold">
+              animated codex assembly instructions
+            </strong>
+            .
           </p>
 
-          {/* Glassy Command Bar Input (Paste Link or Drag-and-Drop Image) */}
+          {/* Prominent Codex Command Bar (Paste Link / Upload Photo / Video) */}
           <form
             onSubmit={handleStartPipeline}
             onDragOver={(e) => {
@@ -483,30 +613,30 @@ export default function LandingPage() {
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             className={`mt-8 space-y-4 rounded-2xl p-4 sm:p-5 text-left transition-all glass-command-bar ${
-              isDragging ? 'ring-2 ring-[#00f5a0] border-[#00f5a0]' : ''
+              isDragging ? 'ring-2 ring-[#f3d478] border-[#f3d478]' : ''
             }`}
           >
             <div className="flex flex-col gap-3 sm:flex-row">
               <div className="relative flex-1">
-                <Link2 className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[#00f5a0]" />
+                <Link2 className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[#d4af37]" />
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Paste product link (Amazon, Kickstarter, YouTube) or describe a gadget (e.g., 'Articulated studio art easel')..."
-                  className="w-full rounded-xl border border-white/15 bg-[#050608]/90 pl-12 pr-4 py-3.5 text-sm text-white placeholder-slate-400 focus:border-[#00f5a0] focus:outline-none focus:ring-2 focus:ring-[#00f5a0]/25"
+                  className="w-full rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 pl-12 pr-4 py-3.5 text-sm text-[#f5ebd6] placeholder-[#bda782]/75 focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#00f5a0] via-emerald-400 to-sky-400 px-7 py-3.5 font-display text-sm font-bold text-[#050608] shadow-electric hover:brightness-110 disabled:opacity-50 transition-all shrink-0"
+                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-7 py-3.5 font-codex text-xs sm:text-sm font-bold tracking-wider uppercase text-[#140e07] shadow-electric hover:brightness-110 disabled:opacity-50 transition-all shrink-0"
               >
                 {submitting ? (
                   <>
-                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#050608] border-t-transparent" />
-                    Spawning Agents...
+                    <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#140e07] border-t-transparent" />
+                    Summoning Scholars...
                   </>
                 ) : (
                   <>
@@ -517,7 +647,7 @@ export default function LandingPage() {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/10 text-xs text-slate-300">
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-[#d4af37]/20 text-xs text-[#e6d3b3]">
               {/* Drag-drop or click image upload */}
               <div className="flex flex-wrap items-center gap-3">
                 <label
@@ -529,16 +659,16 @@ export default function LandingPage() {
                   onDrop={handlePhotoDrop}
                   className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 font-mono text-xs font-medium transition-colors ${
                     isDraggingPhoto
-                      ? 'border-[#00f5a0] bg-[#00f5a0]/20 text-emerald-200'
-                      : 'border-white/15 bg-white/[0.04] text-slate-200 hover:border-[#00f5a0]/60 hover:text-[#00f5a0]'
+                      ? 'border-[#f3d478] bg-[#d4af37]/25 text-[#f3d478]'
+                      : 'border-[#d4af37]/30 bg-[#d4af37]/[0.08] text-[#f5ebd6] hover:border-[#f3d478] hover:text-[#f3d478]'
                   }`}
                 >
-                  <Upload className="h-3.5 w-3.5 text-[#00f5a0]" />
+                  <Upload className="h-3.5 w-3.5 text-[#f3d478]" />
                   {isDraggingPhoto
-                    ? 'Drop photo to upload'
+                    ? 'Drop sketch/photo to upload'
                     : imageFile
-                      ? `Photo: ${imageFile.name}`
-                      : 'Upload or drop a gadget photo'}
+                      ? `Sketch/Photo: ${imageFile.name}`
+                      : 'Upload or Drop Sketch / Photo'}
                   <input
                     type="file"
                     accept="image/*"
@@ -552,24 +682,25 @@ export default function LandingPage() {
                     onClick={() => setImageFile(null)}
                     className="font-mono text-xs text-rose-400 hover:underline"
                   >
-                    Remove photo
+                    Remove image
                   </button>
                 )}
-                <span className="hidden md:inline font-mono text-[11px] text-slate-400">
-                  Accepts URLs, YouTube teardowns, or JPEG/PNG/WebP
+                <span className="hidden md:inline font-mono text-[11px] text-[#bda782]">
+                  Accepts Amazon/Kickstarter URLs, YouTube teardowns, or
+                  JPEG/PNG/WebP
                 </span>
               </div>
 
               {/* Target Printer Selector */}
               <div className="flex items-center gap-2">
-                <Printer className="h-3.5 w-3.5 text-sky-400" />
-                <span className="font-mono text-[11px] text-slate-400">
-                  Target Printer:
+                <Printer className="h-3.5 w-3.5 text-[#f3d478]" />
+                <span className="font-mono text-[11px] text-[#bda782]">
+                  Target Forge:
                 </span>
                 <select
                   value={printerId}
                   onChange={(e) => setPrinterId(e.target.value)}
-                  className="rounded-lg border border-white/15 bg-[#050608] px-2.5 py-1.5 font-mono text-xs text-slate-100 focus:border-[#00f5a0] focus:outline-none"
+                  className="rounded-lg border border-[#d4af37]/30 bg-[#0c0906] px-2.5 py-1.5 font-mono text-xs text-[#f5ebd6] focus:border-[#f3d478] focus:outline-none"
                 >
                   {POPULAR_PRINTERS.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -588,27 +719,139 @@ export default function LandingPage() {
           </form>
 
           {/* Instant Demo CTA */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <Link
               href="/projects/plant-auto-waterer"
-              className="inline-flex items-center gap-2 rounded-xl border border-[#00f5a0]/50 bg-[#00f5a0]/15 px-5 py-2.5 text-xs font-semibold text-[#00f5a0] hover:bg-[#00f5a0]/25 transition-all shadow-[0_0_30px_-8px_rgba(0,245,160,0.4)]"
+              className="inline-flex items-center gap-2.5 rounded-xl border border-[#d4af37]/55 bg-[#d4af37]/15 px-5 py-2.5 text-xs font-semibold text-[#f3d478] hover:bg-[#d4af37]/25 transition-all shadow-[0_0_30px_-8px_rgba(212,175,55,0.45)]"
             >
-              <Zap className="h-4 w-4 text-[#00f5a0]" />
-              Instant Demo Mode: Smart Plant Auto-Waterer ($149 Commercial → $24.85 DIY)
+              <Zap className="h-4 w-4 text-[#f3d478]" />
+              <span>
+                Inspect Illuminated Folio I: Smart Plant Auto-Waterer ($149
+                Retail → $24.85 DIY · Save 83%)
+              </span>
             </Link>
+          </div>
+        </div>
+
+        {/* Ornate Gilded Museum Gallery Diptych: Graded Hero Video + Renaissance Oil Painting */}
+        <div className="relative z-10 mt-10 grid gap-6 lg:grid-cols-12 items-stretch">
+          {/* Left Frame: Graded Sepia/Chiaroscuro Hardware Video in Ornate Gilded Frame */}
+          <div className="lg:col-span-7 relative overflow-hidden rounded-2xl gilded-frame bg-[#0c0906] min-h-[260px] sm:min-h-[320px] flex flex-col justify-between p-5">
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              poster="/media/hero-poster.jpg"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-80 sepia-video-grade"
+            >
+              <source src="/media/hero.mp4" type="video/mp4" />
+            </video>
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906] via-[#0c0906]/25 to-[#0c0906]/65"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 film-grain opacity-80"
+            />
+
+            {/* Hand-Drawn Ink Callout Leader Overlay */}
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 600 300"
+              className="pointer-events-none absolute inset-0 h-full w-full"
+            >
+              <path
+                d="M 110 85 Q 190 55 265 110"
+                fill="none"
+                stroke="#f3d478"
+                strokeWidth="1.3"
+                strokeDasharray="4 3"
+              />
+              <circle cx="265" cy="110" r="4" fill="#f3d478" />
+              <path
+                d="M 465 215 Q 395 180 340 155"
+                fill="none"
+                stroke="#f3d478"
+                strokeWidth="1.3"
+                strokeDasharray="4 3"
+              />
+              <circle cx="340" cy="155" r="4" fill="#f3d478" />
+            </svg>
+
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="rounded-md border border-[#d4af37]/50 bg-[#0c0906]/85 px-2.5 py-1 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
+                GALLERIA I · AUTOMATA FABRICATION
+              </span>
+              <span className="font-mono text-[10px] text-[#e6d3b3] bg-[#0c0906]/75 px-2.5 py-1 rounded border border-[#d4af37]/25">
+                FIG. 01 // SEPIA CHIAROSCURO GRADE
+              </span>
+            </div>
+
+            <div className="relative z-10 space-y-1 max-w-lg">
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[#f3d478]">
+                PLATE-PACKED OPENSCAD GEOMETRY
+              </div>
+              <h3 className="font-display italic text-xl sm:text-2xl font-bold text-[#f5ebd6]">
+                “Where the master’s compass meets the autonomous 3D forge.”
+              </h3>
+              <p className="text-xs text-[#e6d3b3]">
+                Hover the frame to lift the sepia patina and reveal full-color
+                laser toolpath telemetry.
+              </p>
+            </div>
+          </div>
+
+          {/* Right Frame: Generated Da Vinci Workshop Oil Painting + Parchment Callout */}
+          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl gilded-frame bg-[#14100b] min-h-[260px] sm:min-h-[320px] flex flex-col justify-between p-5">
+            <img
+              src="/media/renaissance/davinci-workshop-hero.webp"
+              alt="Da Vinci candlelit Florentine workshop with codex gear sketches and 3D-printed botanical waterer"
+              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-85 transition-transform duration-700 hover:scale-105"
+            />
+            <div
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906] via-[#0c0906]/30 to-transparent"
+            />
+
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="rounded-md border border-[#d4af37]/50 bg-[#0c0906]/85 px-2.5 py-1 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
+                BOTTEGA DI FIRENZE · MMXXVI
+              </span>
+              <span className="rounded-full bg-[#c84b31]/90 px-2.5 py-0.5 font-codex text-[10px] font-bold text-[#f5ebd6] shadow">
+                83% SAVED
+              </span>
+            </div>
+
+            <div className="relative z-10 rounded-xl parchment-sheet p-3.5 space-y-1">
+              <div className="flex items-center justify-between font-mono text-[10px] font-bold text-[#5c3a1d]">
+                <span>CODEX ATLANTICUS · FOLIO 114R</span>
+                <span className="mirror-script">LEONARDO</span>
+              </div>
+              <p className="font-display italic text-sm font-semibold text-[#2b1d0e] leading-snug">
+                “First study the science, then follow the practice born of that
+                science.”
+              </p>
+              <div className="font-mono text-[10px] text-[#5c3a1d]">
+                7 Printed PETG Vessels ($4.25) + 4 Guild Components ($20.60) ={' '}
+                <strong>$24.85 Total</strong>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* =====================================================================
-          RETAILER & FABRICATION ECOSYSTEM MARQUEE
+          MERCHANT GUILD & FABRICATION ECOSYSTEM MARQUEE
       ===================================================================== */}
       <section
         aria-label="Supported Retailers and Printers"
-        className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-[#0a0d12]/80 py-3.5"
+        className="relative overflow-hidden rounded-2xl border border-[#d4af37]/25 bg-[#14100b]/90 py-3.5"
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#050608] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#050608] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0c0906] to-transparent" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#0c0906] to-transparent" />
 
         <div className="flex w-max animate-marquee items-center gap-8 px-4">
           {[...RETAILER_MARQUEE, ...RETAILER_MARQUEE].map((item, idx) => (
@@ -616,11 +859,11 @@ export default function LandingPage() {
               key={`${item.name}-${idx}`}
               className="flex items-center gap-3 font-mono text-xs whitespace-nowrap"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#00f5a0]" />
-              <span className="font-bold tracking-wider text-white">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
+              <span className="font-codex font-bold tracking-wider text-[#f5ebd6]">
                 {item.name}
               </span>
-              <span className="rounded border border-white/10 bg-white/[0.03] px-2 py-0.5 text-[10px] text-slate-400">
+              <span className="rounded border border-[#d4af37]/25 bg-[#d4af37]/[0.06] px-2 py-0.5 text-[10px] text-[#bda782]">
                 {item.tag}
               </span>
             </div>
@@ -629,34 +872,119 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          ACT II — ANIMATED MANAGED AGENT NODE STRIP
+          FOLIO II — THE STUDY: 7 MANAGED GEMINI 4 ARGON AGENTS & SCROLL GEARS
       ===================================================================== */}
       <section
-        id="pipeline-story"
-        className="rounded-3xl border border-white/[0.09] bg-[#0a0d12]/85 p-6 sm:p-8 space-y-6 shadow-glass"
+        id="folio-study"
+        ref={studySectionRef}
+        className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
       >
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4 border-b border-white/[0.07] pb-5">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#00f5a0]">
-              <FileCode2 className="h-4 w-4" />
-              01 // AUTONOMOUS MULTI-AGENT HARDWARE PIPELINE
+        {/* Anchor alias for existing #pipeline-story links */}
+        <div id="pipeline-story" className="-mt-4" />
+
+        <div className="grid gap-6 lg:grid-cols-12 items-center border-b border-[#d4af37]/20 pb-6">
+          <div className="lg:col-span-8 space-y-2">
+            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
+              <ScrollText className="h-4 w-4" />
+              FOLIO II · THE STUDY (DE SEPTEM ARTIFICIBUS)
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-white">
-              7 Managed Gemini 4 Argon Agents. Zero Manual CAD.
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6]">
+              Seven Managed Gemini 4 Argon Scholars.{' '}
+              <span className="italic font-normal text-[#f3d478]">
+                Zero Manual Drafting.
+              </span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-2xl">
-              Every stage runs an isolated Gemini 4 Argon agent that writes structured artifacts into{' '}
-              <code className="font-mono text-[#00f5a0]">
+            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl leading-relaxed">
+              Each stage invokes an autonomous Gemini 4 Argon scholar via the
+              Antigravity CLI or grounded REST API, inscribing structured codex
+              artifacts into{' '}
+              <code className="font-mono text-[#f3d478]">
                 data/objects/&lt;slug&gt;-&lt;id&gt;/
               </code>{' '}
-              and streams live thoughts, tokens, and STL geometry over Server-Sent Events.
+              while streaming thoughts, tokens, and self-healing OpenSCAD meshes.
             </p>
           </div>
 
-          <span className="inline-flex items-center gap-2 rounded-xl border border-white/10 bg-[#050608] px-3.5 py-2 font-mono text-[11px] text-slate-300 self-start lg:self-auto">
-            <span className="h-2 w-2 rounded-full bg-[#00f5a0] animate-ping" />
-            agy -p &quot;...&quot; --model gemini-4-argon --output-format json
-          </span>
+          {/* Scroll-Driven SVG Stroke-Dashoffset Gear & Compass Sketch */}
+          <div className="lg:col-span-4 flex items-center justify-between gap-4 rounded-2xl border border-[#d4af37]/30 bg-[#0c0906]/85 p-4">
+            <div className="space-y-1">
+              <div className="font-codex text-[10px] uppercase tracking-widest text-[#f3d478]">
+                FIG. II · ROTA DENTATA
+              </div>
+              <p className="font-display italic text-sm text-[#e6d3b3]">
+                Scroll-drawn ink escapement ({Math.round(gearScrollProgress * 100)}
+                % inscribed)
+              </p>
+              <div className="font-mono text-[10px] text-[#bda782]">
+                agy -p &quot;...&quot; --model gemini-4-argon
+              </div>
+            </div>
+
+            <svg
+              viewBox="0 0 120 120"
+              className="h-20 w-20 shrink-0 text-[#d4af37]"
+              aria-label="Da Vinci ink gear sketch animated on scroll"
+            >
+              <g
+                style={{
+                  transform: `rotate(${gearScrollProgress * 140}deg)`,
+                  transformOrigin: '60px 60px',
+                  transition: 'transform 120ms linear',
+                }}
+              >
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="34"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeDasharray="420"
+                  strokeDashoffset={gearDashOffset}
+                />
+                <circle
+                  cx="60"
+                  cy="60"
+                  r="18"
+                  fill="none"
+                  stroke="#e6d3b3"
+                  strokeWidth="1.4"
+                  strokeDasharray="220"
+                  strokeDashoffset={Math.round(gearDashOffset * 0.5)}
+                />
+                {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(
+                  (deg) => (
+                    <line
+                      key={deg}
+                      x1="60"
+                      y1="16"
+                      x2="60"
+                      y2="26"
+                      stroke="currentColor"
+                      strokeWidth="2.4"
+                      transform={`rotate(${deg} 60 60)`}
+                    />
+                  )
+                )}
+                <line
+                  x1="26"
+                  y1="60"
+                  x2="94"
+                  y2="60"
+                  stroke="#e6d3b3"
+                  strokeWidth="1"
+                />
+                <line
+                  x1="60"
+                  y1="26"
+                  x2="60"
+                  y2="94"
+                  stroke="#e6d3b3"
+                  strokeWidth="1"
+                />
+              </g>
+            </svg>
+          </div>
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-7">
@@ -670,34 +998,41 @@ export default function LandingPage() {
                 onMouseMove={handleCardSpotlight}
                 className={`spotlight-card relative flex flex-col justify-between rounded-2xl border p-4 transition-all duration-300 ${
                   isPulsing
-                    ? 'border-[#00f5a0]/70 bg-[#00f5a0]/[0.08] shadow-[0_0_32px_-8px_rgba(0,245,160,0.35)] -translate-y-0.5'
-                    : 'border-white/[0.08] bg-[#050608]/80 hover:border-white/20'
+                    ? 'border-[#f3d478]/80 bg-[#d4af37]/[0.12] shadow-[0_0_32px_-8px_rgba(212,175,55,0.4)] -translate-y-0.5'
+                    : 'border-[#d4af37]/20 bg-[#0c0906]/85 hover:border-[#d4af37]/45'
                 }`}
               >
-                <div className="space-y-2.5">
+                <div className="space-y-2">
                   <div className="flex items-center justify-between">
-                    <span className="font-mono text-[11px] font-bold text-[#00f5a0]">
-                      STAGE {stage.step}
+                    <span className="font-codex text-[11px] font-bold text-[#f3d478]">
+                      FOLIO II.{stage.roman}
                     </span>
                     <Icon
                       className={`h-4 w-4 transition-colors ${
-                        isPulsing ? 'text-[#00f5a0]' : 'text-slate-400'
+                        isPulsing ? 'text-[#f3d478]' : 'text-[#bda782]'
                       }`}
                     />
                   </div>
-                  <div className="font-display text-sm font-bold text-white">
-                    {stage.name}
+                  <div>
+                    <div className="font-display text-base font-bold text-[#f5ebd6]">
+                      {stage.name}
+                    </div>
+                    <div className="font-display italic text-xs text-[#d4af37]">
+                      {stage.latinRole}
+                    </div>
                   </div>
-                  <p className="text-[11px] text-slate-400 leading-relaxed">
+                  <p className="text-[11px] text-[#e6d3b3]/90 leading-relaxed">
                     {stage.desc}
                   </p>
                 </div>
 
-                <div className="mt-4 pt-2.5 border-t border-white/[0.06] flex items-center justify-between font-mono text-[10px]">
-                  <span className="text-slate-400 truncate">{stage.artifact}</span>
+                <div className="mt-4 pt-2.5 border-t border-[#d4af37]/15 flex items-center justify-between font-mono text-[10px]">
+                  <span className="text-[#bda782] truncate">
+                    {stage.artifact}
+                  </span>
                   <CheckCircle2
                     className={`h-3.5 w-3.5 shrink-0 ${
-                      isPulsing ? 'text-[#00f5a0]' : 'text-slate-600'
+                      isPulsing ? 'text-[#f3d478]' : 'text-[#5c4930]'
                     }`}
                   />
                 </div>
@@ -708,35 +1043,195 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          ACT III — SCROLL-DRIVEN 3D EXPLODED ASSEMBLY STORY
+          FOLIO III — THE BILL OF MATERIALS (IL LIBRO DEI CONTI) & OIL PAINTING
       ===================================================================== */}
       <section
-        id="exploded-story"
-        ref={explodeSectionRef}
-        className="rounded-3xl border border-white/[0.09] bg-gradient-to-b from-[#0a0d12] to-[#050608] p-6 sm:p-8 space-y-6 shadow-glass"
+        id="folio-bom"
+        ref={savingsSectionRef}
+        className="rounded-3xl codex-folio p-6 sm:p-10"
       >
+        <div id="savings-story" className="-mt-4" />
+        <div className="grid gap-8 lg:grid-cols-12 items-center">
+          {/* Left Column: Narrative + Generated Sketch-to-Machine Oil Painting */}
+          <div className="lg:col-span-5 space-y-5">
+            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
+              <TrendingDown className="h-4 w-4" />
+              FOLIO III · THE BILL OF MATERIALS (IL LIBRO DEI CONTI)
+            </div>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6] leading-tight">
+              Break the Merchant Monopoly.{' '}
+              <span className="italic font-normal text-[#f3d478]">
+                Keep 83% of the Florins.
+              </span>
+            </h2>
+            <p className="text-xs sm:text-sm text-[#e6d3b3] leading-relaxed">
+              Bespoke consumer hardware is 80% injection-molded plastic housing
+              around $20 of standard pumps, sensors, and metric fasteners. Our
+              BOM &amp; Price Hunter agents ground live prices across Amazon,
+              McMaster-Carr, Home Depot, and Walmart while your printer forges
+              the vessel overnight.
+            </p>
+
+            {/* Framed Renaissance Painting: Master Inventor Transmuting Sketch to Machine */}
+            <div className="relative overflow-hidden rounded-2xl gilded-frame bg-[#0c0906] p-3">
+              <div className="grid sm:grid-cols-12 gap-3 items-center">
+                <img
+                  src="/media/renaissance/sketch-to-machine.webp"
+                  alt="Renaissance master inventor holding brass dividers over a vellum scroll as a 3D machine materializes"
+                  className="sm:col-span-5 h-36 w-full rounded-xl object-cover border border-[#d4af37]/30"
+                />
+                <div className="sm:col-span-7 space-y-1.5 px-1">
+                  <div className="font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
+                    TABULA ARBITRAGII · VERIFIED LEDGER
+                  </div>
+                  <p className="font-display italic text-base text-[#f5ebd6] leading-snug">
+                    “Why pay a prince’s ransom for molded resin when the codex
+                    grants you the geometry?”
+                  </p>
+                  <Link
+                    href="/projects/plant-auto-waterer"
+                    className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#f3d478] hover:underline pt-1"
+                  >
+                    Inspect Full BOM &amp; Sourced Links{' '}
+                    <ArrowUpRight className="h-3.5 w-3.5" />
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Right Column: Monumental Gilded Ledger Numerals */}
+          <div className="lg:col-span-7 grid gap-4 sm:grid-cols-3">
+            <div className="rounded-2xl border border-[#d4af37]/55 bg-gradient-to-br from-[#d4af37]/20 via-[#d4af37]/[0.08] to-transparent p-5 space-y-2">
+              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
+                PATRON SAVINGS
+              </div>
+              <div className="font-display text-5xl sm:text-6xl font-bold text-[#f3d478] tabular-nums tracking-tight">
+                {savingsCount}%
+              </div>
+              <p className="font-mono text-xs text-[#e6d3b3]">
+                Save ${dollarSavedCount} on the flagship Plant Auto-Waterer
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
+              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#bda782]">
+                BOTTEGA DIY TOTAL
+              </div>
+              <div className="font-display text-4xl sm:text-5xl font-bold text-[#f5ebd6] tabular-nums tracking-tight">
+                ${diyCostCount.toFixed(2)}
+              </div>
+              <p className="font-mono text-xs text-[#bda782]">
+                vs.{' '}
+                <span className="line-through text-[#c84b31]">$149.00</span>{' '}
+                merchant retail
+              </p>
+            </div>
+
+            <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
+              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-emerald-300">
+                SINGLE-PLATE FORGE
+              </div>
+              <div className="font-display text-4xl sm:text-5xl font-bold text-emerald-300 tabular-nums tracking-tight">
+                1 Plate
+              </div>
+              <p className="font-mono text-xs text-[#bda782]">
+                185g PETG · $4.25 filament + $20.60 hardware
+              </p>
+            </div>
+
+            {/* Parchment Ledger Breakdown Bar */}
+            <div className="sm:col-span-3 rounded-2xl parchment-sheet p-5 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
+                <span className="font-codex font-bold text-[#2b1d0e]">
+                  FOLIO III LEDGER // SMART PLANT AUTO-WATERER
+                </span>
+                <span className="rounded-full bg-[#c84b31] px-3 py-0.5 font-codex text-[11px] font-bold text-[#f5ebd6]">
+                  SIGILLUM · YOU KEEP $124.15 (83.3%)
+                </span>
+              </div>
+              <div className="h-3.5 w-full rounded-full bg-[#2b1d0e]/20 overflow-hidden flex border border-[#5c3a1d]/40">
+                <div
+                  style={{ width: '4%' }}
+                  className="bg-emerald-700 h-full"
+                  title="3D Filament ($4.25)"
+                />
+                <div
+                  style={{ width: '13%' }}
+                  className="bg-[#b45309] h-full"
+                  title="Off-The-Shelf BOM ($20.60)"
+                />
+                <div
+                  style={{ width: '83%' }}
+                  className="bg-[#c84b31]/35 h-full"
+                  title="Brand Markup Saved ($124.15)"
+                />
+              </div>
+              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-[#3b2410]">
+                <span className="inline-flex items-center gap-1.5 font-semibold">
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-700" />
+                  $4.25 Printed PETG (3%)
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-semibold">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#b45309]" />
+                  $20.60 Guild Hardware (14%)
+                </span>
+                <span className="inline-flex items-center gap-1.5 font-semibold">
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#c84b31]" />
+                  $124.15 Merchant Markup Eliminated (83%)
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =====================================================================
+          FOLIO IV — THE MACHINE: SKETCH -> REALITY 3D EXPLODED VIEW
+      ===================================================================== */}
+      <section
+        id="folio-machine"
+        ref={explodeSectionRef}
+        className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
+      >
+        <div id="exploded-story" className="-mt-4" />
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#00f5a0]">
+            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
               <Layers className="h-4 w-4" />
-              02 // SCROLL-CHOREOGRAPHED HARDWARE DECONSTRUCTION
+              FOLIO IV · THE MACHINE (DE TRANSMUTATIONE SKETCH AD REM)
             </div>
-            <h2 className="font-display text-2xl sm:text-4xl font-bold tracking-tight text-white">
-              Watch Custom Printed STLs Separate From Off-The-Shelf Hardware.
+            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6]">
+              From Sepia Quill on Parchment{' '}
+              <span className="italic font-normal text-[#f3d478]">
+                to Living 3D-Printed Reality.
+              </span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400 max-w-2xl">
-              Scroll to scrub the 3D explosion vector or drag the axis slider below. Click any sub-assembly to inspect its filament weight, tolerances, and retail BOM source.
+            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl leading-relaxed">
+              As you scroll through Folio IV, watch the vessel transmute from a{' '}
+              <strong className="text-[#f5ebd6]">
+                Da Vinci pen-and-ink codex drawing on vellum
+              </strong>{' '}
+              into{' '}
+              <strong className="text-[#f5ebd6]">
+                watertight emerald PETG and burnished brass hardware
+              </strong>
+              —exploding along its `[x, y, z]` datum axis.
             </p>
           </div>
 
-          <div className="flex items-center gap-3 font-mono text-xs">
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#00f5a0]/30 bg-[#00f5a0]/10 px-3 py-1.5 text-[#00f5a0]">
-              <span className="h-2 w-2 rounded-full bg-[#00f5a0]" />
-              Printed PETG/PLA
+          <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/40 bg-[#e6d3b3]/15 px-3 py-1.5 text-[#f3d478]">
+              <span className="h-2 w-2 rounded-full bg-[#e6d3b3]" />
+              Sepia Codex Sketch
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-sky-400/30 bg-sky-400/10 px-3 py-1.5 text-sky-300">
-              <span className="h-2 w-2 rounded-full bg-sky-400" />
-              Purchased BOM
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-400/35 bg-emerald-400/10 px-3 py-1.5 text-emerald-300">
+              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+              Printed PETG Vessel
+            </span>
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/35 bg-[#d4af37]/10 px-3 py-1.5 text-[#f3d478]">
+              <span className="h-2 w-2 rounded-full bg-[#d4af37]" />
+              Purchased Guild BOM
             </span>
           </div>
         </div>
@@ -745,133 +1240,25 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          ACT IV — MONUMENTAL SAVINGS COUNTER & ECONOMICS BREAKDOWN
+          FOLIO V — THE ASSEMBLY & MASTERWORKS CODEX GALLERY
       ===================================================================== */}
-      <section
-        id="savings-story"
-        ref={savingsSectionRef}
-        className="rounded-3xl border border-white/[0.09] bg-[#0a0d12]/90 p-6 sm:p-10 shadow-glass"
-      >
-        <div className="grid gap-8 lg:grid-cols-12 items-center">
-          <div className="lg:col-span-5 space-y-4">
-            <div className="inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-widest text-[#00f5a0]">
-              <TrendingDown className="h-4 w-4" />
-              03 // HARDWARE MARKUP ARBITRAGE
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white leading-tight">
-              Stop Paying 6× For Injection-Molded Plastic.
-            </h2>
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed">
-              Most bespoke consumer hardware is 80% structural plastic housing around $18 of standard pumps, sensors, and metric fasteners. Our BOM + Price Hunter agents source the exact industrial components while your 3D printer fabricates the chassis overnight.
-            </p>
-
-            <div className="pt-2 flex flex-wrap items-center gap-3">
-              <Link
-                href="/projects/plant-auto-waterer"
-                className="inline-flex items-center gap-2 rounded-xl bg-[#00f5a0] px-5 py-2.5 font-display text-xs font-bold text-[#050608] hover:brightness-110 transition-all"
-              >
-                Inspect Full BOM &amp; STLs <ArrowUpRight className="h-4 w-4" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="lg:col-span-7 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl border border-[#00f5a0]/40 bg-[#00f5a0]/[0.07] p-5 space-y-2">
-              <div className="font-mono text-[11px] uppercase tracking-wider text-[#00f5a0]">
-                AVG COST REDUCTION
-              </div>
-              <div className="font-display text-5xl sm:text-6xl font-bold text-[#00f5a0] tabular-nums tracking-tight">
-                {savingsCount}%
-              </div>
-              <p className="font-mono text-xs text-slate-300">
-                Save ${dollarSavedCount} on the flagship Plant Auto-Waterer
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-[#050608] p-5 space-y-2">
-              <div className="font-mono text-[11px] uppercase tracking-wider text-slate-400">
-                TOTAL DIY ALT BUILD
-              </div>
-              <div className="font-display text-4xl sm:text-5xl font-bold text-white tabular-nums tracking-tight">
-                ${diyCostCount.toFixed(2)}
-              </div>
-              <p className="font-mono text-xs text-slate-400">
-                vs. <span className="line-through text-rose-400">$149.00</span> commercial MSRP
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-white/10 bg-[#050608] p-5 space-y-2">
-              <div className="font-mono text-[11px] uppercase tracking-wider text-sky-400">
-                SINGLE-PLATE PACKING
-              </div>
-              <div className="font-display text-4xl sm:text-5xl font-bold text-sky-400 tabular-nums tracking-tight">
-                1 Plate
-              </div>
-              <p className="font-mono text-xs text-slate-400">
-                185g PETG · $4.25 filament + $20.60 hardware
-              </p>
-            </div>
-
-            {/* Visual Cost Comparison Bar */}
-            <div className="sm:col-span-3 rounded-2xl border border-white/[0.08] bg-[#050608] p-4 space-y-3">
-              <div className="flex items-center justify-between font-mono text-xs">
-                <span className="text-slate-400">
-                  COST BREAKDOWN // SMART PLANT AUTO-WATERER
-                </span>
-                <span className="text-[#00f5a0] font-bold">
-                  YOU KEEP $124.15 (83.3%)
-                </span>
-              </div>
-              <div className="h-3 w-full rounded-full bg-slate-900 overflow-hidden flex">
-                <div
-                  style={{ width: '4%' }}
-                  className="bg-[#00f5a0] h-full"
-                  title="3D Filament ($4.25)"
-                />
-                <div
-                  style={{ width: '13%' }}
-                  className="bg-sky-400 h-full"
-                  title="Off-The-Shelf BOM ($20.60)"
-                />
-                <div
-                  style={{ width: '83%' }}
-                  className="bg-rose-500/25 h-full"
-                  title="Brand Markup Saved ($124.15)"
-                />
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-slate-400">
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-[#00f5a0]" />
-                  $4.25 Printed Filament (3%)
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-sky-400" />
-                  $20.60 Sourced Hardware (14%)
-                </span>
-                <span className="inline-flex items-center gap-1.5">
-                  <span className="h-2 w-2 rounded-full bg-rose-400/60" />
-                  $124.15 Retail Markup Eliminated (83%)
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          ACT V — SHOWCASE GALLERY (PRE-BUILT DEMO + FEATURED RUNS)
-      ===================================================================== */}
-      <section id="showcase-gallery" className="space-y-5">
+      <section id="folio-assembly" className="space-y-6">
+        <div id="showcase-gallery" className="-mt-4" />
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-          <div className="space-y-1">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-[#00f5a0]">
-              04 // SHOWCASE HARDWARE GALLERY
+          <div className="space-y-1.5">
+            <div className="font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
+              FOLIO V · THE ASSEMBLY &amp; MASTERWORKS GALLERY
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
-              Try a Featured Gadget Reverse-Engineering Run
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
+              Commission a Masterwork from the{' '}
+              <span className="italic font-normal text-[#f3d478]">
+                Codex Atlanticus
+              </span>
             </h2>
-            <p className="text-xs sm:text-sm text-slate-400">
-              Click any build card to inspect the pre-generated sample or launch a live Gemini 4 Argon reverse-engineering run.
+            <p className="text-xs sm:text-sm text-[#e6d3b3]">
+              Select any commission below to inspect the illuminated engineering
+              codex, 3MF build plates, and IKEA-style animated assembly
+              choreography.
             </p>
           </div>
         </div>
@@ -886,47 +1273,53 @@ export default function LandingPage() {
                 type="button"
                 onClick={() => launchPreset(item)}
                 onMouseMove={handleCardSpotlight}
-                className="spotlight-card group flex flex-col justify-between rounded-2xl border border-white/[0.09] bg-[#0a0d12]/85 p-5 text-left hover:border-[#00f5a0]/60 hover:-translate-y-1 transition-all duration-300 shadow-glass"
+                className="spotlight-card group flex flex-col justify-between rounded-2xl codex-folio p-5 text-left hover:border-[#f3d478]/70 hover:-translate-y-1 transition-all duration-300"
               >
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="rounded-md bg-[#00f5a0]/15 px-2.5 py-0.5 font-mono text-[11px] font-bold text-[#00f5a0] border border-[#00f5a0]/30">
-                      {item.savings} ({item.savingsPct})
+                    <span className="rounded-md bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[10px] font-bold text-[#f3d478] border border-[#d4af37]/40">
+                      {item.folio} · {item.savings} ({item.savingsPct})
                     </span>
                     {isReadySample && (
-                      <span className="rounded-md bg-sky-500/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-sky-300 border border-sky-500/30">
-                        Instant Demo
+                      <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-300 border border-emerald-500/30">
+                        Illuminated Demo
                       </span>
                     )}
                   </div>
 
-                  <div className="font-mono text-[10px] tracking-wider text-slate-500">
+                  <div className="font-mono text-[10px] tracking-wider text-[#bda782]">
                     {item.category}
                   </div>
 
-                  <h3 className="font-display text-base font-bold text-white group-hover:text-[#00f5a0] transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-slate-400 leading-relaxed">
+                  <div>
+                    <h3 className="font-display text-xl font-bold text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors">
+                      {item.title}
+                    </h3>
+                    <div className="font-display italic text-xs text-[#d4af37]">
+                      “{item.latinTitle}”
+                    </div>
+                  </div>
+
+                  <p className="text-xs text-[#e6d3b3]/90 leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
 
-                <div className="mt-5 space-y-3 border-t border-white/[0.07] pt-3">
-                  <div className="font-mono text-[10px] text-slate-400">
+                <div className="mt-5 space-y-3 border-t border-[#d4af37]/20 pt-3">
+                  <div className="font-mono text-[10px] text-[#bda782]">
                     {item.partsSpec}
                   </div>
                   <div className="flex items-center justify-between text-xs">
                     <div className="font-mono tabular-nums">
-                      <span className="text-slate-500 line-through mr-1.5">
+                      <span className="text-[#bda782] line-through mr-1.5">
                         {item.retail}
                       </span>
-                      <span className="font-bold text-[#00f5a0]">
+                      <span className="font-bold text-[#f3d478]">
                         {item.diy} DIY
                       </span>
                     </div>
-                    <span className="inline-flex items-center gap-1 font-display font-semibold text-slate-200 group-hover:text-[#00f5a0]">
-                      Open <ArrowRight className="h-3.5 w-3.5" />
+                    <span className="inline-flex items-center gap-1 font-codex text-[11px] font-bold text-[#f5ebd6] group-hover:text-[#f3d478]">
+                      Open Folio <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
                 </div>
@@ -940,34 +1333,36 @@ export default function LandingPage() {
       <ShowcaseBuild />
 
       {/* =====================================================================
-          ACT VI — FOOTER CTA
+          CODEX COLOPHON / FOOTER CTA
       ===================================================================== */}
-      <footer className="relative overflow-hidden rounded-3xl border border-[#00f5a0]/30 bg-gradient-to-r from-[#0a0d12] via-[#071512] to-[#0a0d12] p-8 sm:p-10 shadow-glass">
+      <footer className="relative overflow-hidden rounded-3xl gilded-frame bg-gradient-to-r from-[#14100b] via-[#1f170e] to-[#14100b] p-8 sm:p-10">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
-            <div className="font-mono text-[11px] uppercase tracking-widest text-[#00f5a0]">
-              READY TO FABRICATE // GEMINI 4 ARGON
+            <div className="font-codex text-xs font-bold uppercase tracking-[0.2em] text-[#f3d478]">
+              COLOPHON // BOTTEGA DI GEMINI IV ARGON
             </div>
-            <h2 className="font-display text-2xl sm:text-3xl font-bold text-white">
-              Got an overpriced gadget in your cart right now?
+            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
+              Ready to turn your next sketch into a real machine?
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300">
-              Paste the URL above or explore our complete Smart Plant Auto-Waterer engineering package with OpenSCAD STLs, Bambu 3MF plates, and IKEA-style 3D assembly instructions.
+            <p className="text-xs sm:text-sm text-[#e6d3b3]">
+              Inscribe any product link above or enter our flagship Smart Plant
+              Auto-Waterer codex with self-healing OpenSCAD STLs, Bambu 3MF
+              plates, and animated 3D assembly instructions.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-3">
             <a
               href="#hero-command"
-              className="inline-flex items-center gap-2 rounded-xl border border-white/15 bg-white/[0.06] px-5 py-3 font-display text-xs font-bold text-white hover:border-[#00f5a0] transition-colors"
+              className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/40 bg-[#d4af37]/10 px-5 py-3 font-codex text-xs font-bold text-[#f5ebd6] hover:border-[#f3d478] transition-colors"
             >
-              Paste a Product Link
+              Inscribe a Product Link
             </a>
             <Link
               href="/projects/plant-auto-waterer"
-              className="inline-flex items-center gap-2 rounded-xl bg-[#00f5a0] px-6 py-3 font-display text-xs font-bold text-[#050608] shadow-electric hover:brightness-110 transition-all"
+              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-6 py-3 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
             >
-              Open Instant Demo Project <ArrowRight className="h-4 w-4" />
+              Open Illuminated Demo Project <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

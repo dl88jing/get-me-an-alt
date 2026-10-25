@@ -1265,27 +1265,27 @@ export function MissionControl({
   return (
     <section
       aria-label="Mission Control — Gemini 4 Argon Managed Agent Pipeline"
-      className="glass-panel bg-grid-pattern relative overflow-hidden rounded-2xl border border-slate-800/90 p-4 sm:p-6 space-y-5"
+      className="codex-folio bg-grid-pattern relative overflow-hidden rounded-2xl border border-[#d4af37]/30 p-4 sm:p-6 space-y-5"
     >
-      {/* Ambient Radial Highlights */}
+      {/* Ambient Candlelit & Verdigris Radial Highlights */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/3 h-56 w-96 rounded-full bg-emerald-500/10 blur-3xl"
+        className="pointer-events-none absolute -top-24 left-1/3 h-56 w-96 rounded-full bg-[#d4af37]/12 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 right-1/4 h-56 w-96 rounded-full bg-sky-500/10 blur-3xl"
+        className="pointer-events-none absolute -bottom-24 right-1/4 h-56 w-96 rounded-full bg-emerald-500/10 blur-3xl"
       />
 
       {/* Top Header & Replay Controls */}
-      <div className="relative flex flex-col gap-3 border-b border-slate-800/80 pb-4 lg:flex-row lg:items-center lg:justify-between">
+      <div className="relative flex flex-col gap-3 border-b border-[#d4af37]/20 pb-4 lg:flex-row lg:items-center lg:justify-between">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-2.5 py-0.5 text-[11px] font-bold uppercase tracking-wider text-emerald-300">
-              <Activity className="h-3.5 w-3.5 text-emerald-400" />
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/50 bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
+              <Activity className="h-3.5 w-3.5 text-[#f3d478]" />
               Mission Control · Managed Agents
             </span>
-            <h2 className="text-sm sm:text-base font-extrabold tracking-tight text-white">
+            <h2 className="font-display text-base sm:text-xl font-bold tracking-tight text-[#f5ebd6]">
               Gemini 4 Argon 9-Agent Pipeline — “{manifest.title}”
             </h2>
             {(activeLoopPulse || loopCompleted) && (
