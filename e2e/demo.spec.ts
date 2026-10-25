@@ -35,16 +35,22 @@ async function saveStepScreenshot(page: Page, name: string): Promise<void> {
   }
 }
 
+let testStartMs = Date.now();
+function elapsedSec(): string {
+  return ((Date.now() - testStartMs) / 1000).toFixed(1);
+}
+
 async function safeStep(
   label: string,
   fn: () => Promise<void>
 ): Promise<void> {
   try {
-    console.log(`[demo.spec] ==> ${label}`);
+    console.log(`[demo.spec +${elapsedSec()}s] ==> START ${label}`);
     await fn();
+    console.log(`[demo.spec +${elapsedSec()}s] <== DONE  ${label}`);
   } catch (err) {
     console.warn(
-      `[demo.spec] Skipping non-critical step "${label}":`,
+      `[demo.spec +${elapsedSec()}s] !!! SKIP "${label}":`,
       err instanceof Error ? err.message : err
     );
   }
@@ -65,6 +71,7 @@ test.describe('Get Me An Alt — Full Story Screen Recording Walkthrough', () =>
   test('walks landing -> demo project -> agent timeline -> 6 tabs with deliberate pacing', async ({
     page,
   }) => {
+    testStartMs = Date.now();
     fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
 
     // =========================================================================

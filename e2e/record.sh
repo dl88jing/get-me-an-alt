@@ -52,12 +52,29 @@ cp -f "$WEBM_FILE" "$OUT_WEBM"
 cp -f "$WEBM_FILE" "$OUT_ASSETS_WEBM"
 echo "    Saved WebM recordings to $OUT_WEBM and $OUT_ASSETS_WEBM"
 
-echo "==> [3/3] Converting recording to $OUT_MP4 via ffmpeg ..."
+echo "==> [3/3] Converting recording to $OUT_MP4 via ffmpeg (segmented setpts alignment) ..."
+# Speed up initial loading/navigation stretches and align each tab section to its narration window:
+# - Seg A1 (0.0s..8.0s -> 6.0s): Landing Hero & Paste Product Link (setpts=0.75)
+# - Seg A2 (8.0s..10.8s -> 1.0s): Fast-forward page load to Demo Project (setpts=0.36)
+# - Seg A3 (10.8s..31.5s -> 21.0s): Mission Control 6-stage timeline, Overview, Sources (setpts=1.01)
+# - Seg B  (31.5s..38.8s -> 24.0s): BOM & Retailer Links tab (setpts=3.28)
+# - Seg C  (38.8s..49.0s -> 27.0s): Print Files, Plate Packer & On-Demand Print Quote (setpts=2.65)
+# - Seg D  (49.0s..73.7s -> 24.0s): Instructions Step Player & Exploded View Assembly Graph (setpts=0.97)
 ffmpeg -y -v error \
   -i "$WEBM_FILE" \
-  -vf "setpts=1.45*PTS,scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=#090d16,fps=30" \
+  -filter_complex "\
+[0:v]scale=1920:1080,split=6[v1][v2][v3][v4][v5][v6];\
+[v1]trim=0:8.0,setpts=0.75*(PTS-STARTPTS)[a1];\
+[v2]trim=8.0:10.8,setpts=0.36*(PTS-STARTPTS)[a2];\
+[v3]trim=10.8:31.5,setpts=1.01*(PTS-STARTPTS)[a3];\
+[v4]trim=31.5:38.8,setpts=3.28*(PTS-STARTPTS)[b];\
+[v5]trim=38.8:49.0,setpts=2.65*(PTS-STARTPTS)[c];\
+[v6]trim=49.0:73.7,setpts=0.97*(PTS-STARTPTS)[d];\
+[a1][a2][a3][b][c][d]concat=n=6:v=1:a=0,crop=1242:1080:339:0,fps=30[outv]" \
+  -map "[outv]" \
   -an \
   -c:v libx264 \
+  -g 30 -keyint_min 30 \
   -pix_fmt yuv420p \
   -preset veryfast \
   -crf 22 \
