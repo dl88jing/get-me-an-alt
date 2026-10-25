@@ -3,28 +3,161 @@
 @tailwind utilities;
 
 :root {
-  --background: #07090e;
-  --foreground: #f1f5f9;
+  --background: #050608;
+  --surface-1: #0a0d12;
+  --surface-2: #10151e;
+  --surface-3: #161d2a;
+  --foreground: #f4f7fb;
+  --foreground-muted: #94a3b8;
+  --accent-electric: #00f5a0;
+  --accent-electric-glow: rgba(0, 245, 160, 0.28);
+  --accent-cyan: #38bdf8;
+  --accent-signal: #ff6b2b;
+  --border-hairline: rgba(255, 255, 255, 0.08);
+  --border-specular: rgba(255, 255, 255, 0.16);
+  --glass-bg: rgba(10, 13, 18, 0.74);
+  --radius-sm: 0.5rem;
+  --radius-md: 0.875rem;
+  --radius-lg: 1.25rem;
+  --radius-xl: 1.75rem;
+  --shadow-glass: 0 24px 64px -16px rgba(0, 0, 0, 0.78),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+  --shadow-electric: 0 0 40px -8px rgba(0, 245, 160, 0.38);
+  --cursor-x: 50vw;
+  --cursor-y: 30vh;
+}
+
+html {
+  background-color: var(--background);
+  color-scheme: dark;
+  scroll-behavior: smooth;
 }
 
 body {
   color: var(--foreground);
-  background: var(--background);
-  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, sans-serif;
+  background-color: var(--background);
+  font-family: var(--font-sans), Inter, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
   min-height: 100vh;
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
 }
 
+/* Precision engineering blueprint grid with radial vignette */
 .bg-grid-pattern {
-  background-size: 32px 32px;
+  background-size: 36px 36px;
   background-image: linear-gradient(
       to right,
-      rgba(148, 163, 184, 0.05) 1px,
+      rgba(255, 255, 255, 0.035) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      rgba(148, 163, 184, 0.05) 1px,
+      rgba(255, 255, 255, 0.035) 1px,
       transparent 1px
     );
+}
+
+/* Tactile SVG Film Grain Overlay */
+.film-grain {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+}
+
+/* Global Ambient Cursor Spotlight */
+.cursor-ambient-glow {
+  background: radial-gradient(
+    650px circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
+    rgba(0, 245, 160, 0.055),
+    rgba(56, 189, 248, 0.025) 35%,
+    transparent 70%
+  );
+}
+
+/* Frosted Obsidian Glass Surfaces */
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid var(--border-hairline);
+  box-shadow: var(--shadow-glass);
+}
+
+.glass-command-bar {
+  background: rgba(8, 11, 16, 0.82);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 28px 80px -16px rgba(0, 0, 0, 0.88),
+    0 0 48px -12px rgba(0, 245, 160, 0.18),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.16);
+}
+
+/* Card-level interactive cursor spotlight */
+.spotlight-card {
+  position: relative;
+  overflow: hidden;
+}
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    420px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
+    rgba(0, 245, 160, 0.11),
+    transparent 65%
+  );
+  opacity: 0;
+  transition: opacity 250ms ease;
+}
+.spotlight-card:hover::before {
+  opacity: 1;
+}
+
+/* Tabular numerals for counters, prices, and dimensions */
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Skeleton Shimmer Loader */
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(16, 21, 30, 0.8) 0%,
+    rgba(30, 41, 59, 0.55) 50%,
+    rgba(16, 21, 30, 0.8) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite linear;
+}
+
+/* Custom sleek scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #050608;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
+
+/* Respect prefers-reduced-motion across all animations & smooth scroll */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
