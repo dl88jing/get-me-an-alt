@@ -32,6 +32,7 @@ import {
   ProjectManifest,
   SsePipelineEvent,
 } from '@/lib/types';
+import CritiquePanel from './CritiquePanel';
 
 type TabId =
   | 'overview'
@@ -251,7 +252,8 @@ export default function ProjectPage() {
     );
   }
 
-  const { analysis, sources, design, bom, plates, instructions } = manifest;
+  const { analysis, sources, design, critique, bom, plates, instructions } =
+    manifest;
   const activeStage =
     manifest.stages.find((s) => s.id === selectedStageId) ||
     manifest.stages[0];
@@ -389,8 +391,8 @@ export default function ProjectPage() {
           </span>
         </div>
 
-        {/* 6 Agent Stage Pills */}
-        <div className="grid gap-2.5 sm:grid-cols-3 lg:grid-cols-6">
+        {/* 7 Agent Stage Pills */}
+        <div className="grid gap-2.5 sm:grid-cols-3 lg:grid-cols-7">
           {manifest.stages.map((stage, idx) => {
             const isSelected = stage.id === activeStage?.id;
             return (
@@ -605,6 +607,8 @@ export default function ProjectPage() {
                 </ul>
               </div>
             </div>
+
+            {critique && <CritiquePanel critique={critique} />}
           </div>
 
           {/* Right Column: Specs & Engineering Notes */}
@@ -791,6 +795,7 @@ export default function ProjectPage() {
       {/* TAB 4: PRINT FILES */}
       {activeTab === 'print' && plates && (
         <div className="space-y-6">
+          {critique && <CritiquePanel critique={critique} />}
           {PeerPrintComp ? (
             <PeerPrintComp
               plates={plates}

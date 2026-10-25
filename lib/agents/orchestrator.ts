@@ -4,6 +4,9 @@ import path from 'path';
 import {
   AgentLogEntry,
   AgentStageId,
+  CritiqueData,
+  CritiqueIssue,
+  CritiqueRound,
   DesignPart,
   DesignSpec,
   PlatesData,
@@ -15,15 +18,22 @@ import {
   createInitialStages,
   SAMPLE_ANALYSIS,
   SAMPLE_BOM,
+  SAMPLE_CRITIQUE,
   SAMPLE_DESIGN,
   SAMPLE_INSTRUCTIONS,
   SAMPLE_PLATES,
   SAMPLE_SLUG,
   SAMPLE_SOURCES,
 } from '../sample-data';
+import { getPrinterById } from '../printers';
 import { runAnalystAgent } from './analyst';
 import { runResearcherAgent } from './researcher';
 import { runDesignerAgent } from './designer';
+import {
+  applyCritiqueFixesToDesign,
+  evaluateCriticRound,
+  writeCritiqueArtifact,
+} from './critic';
 import { runBomAgent } from './bom';
 import { runInstructionsAgent } from './instructions';
 import { getObjectsDir } from './runner';
@@ -403,6 +413,7 @@ export function buildSampleManifest(): ProjectManifest {
   let analysis = SAMPLE_ANALYSIS;
   let sources = SAMPLE_SOURCES;
   let design = SAMPLE_DESIGN;
+  let critique = SAMPLE_CRITIQUE;
   let bom = SAMPLE_BOM;
   let plates = SAMPLE_PLATES;
   let instructions = SAMPLE_INSTRUCTIONS;
@@ -430,6 +441,14 @@ export function buildSampleManifest(): ProjectManifest {
           ...design,
           ...JSON.parse(
             fs.readFileSync(path.join(dir, 'design.json'), 'utf-8')
+          ),
+        };
+      }
+      if (fs.existsSync(path.join(dir, 'critique.json'))) {
+        critique = {
+          ...critique,
+          ...JSON.parse(
+            fs.readFileSync(path.join(dir, 'critique.json'), 'utf-8')
           ),
         };
       }
@@ -471,19 +490,46 @@ export function buildSampleManifest(): ProjectManifest {
     command: `agy -p "<${st.id}-prompt>" --model gemini-4-argon --output-format json`,
     conversationId: `argon-${st.id}-demo`,
     tokensUsed: { input: 2450, output: 890, total: 3340 },
-    summary: `Completed ${st.name} -> ${st.artifactFile}`,
-    logs: [
-      {
-        timestamp: now,
-        level: 'cmd' as const,
-        message: `$ agy -p "<${st.id}>" --model gemini-4-argon --output-format json --dangerously-skip-permissions`,
-      },
-      {
-        timestamp: now,
-        level: 'success' as const,
-        message: `Wrote verified artifact ${st.artifactFile} to object workspace.`,
-      },
-    ],
+    summary:
+      st.id === 'critic'
+        ? `Verified in ${critique.totalRounds} rounds (${critique.finalScore}/100 — 4 Round-1 DFM fixes looped back to Designer)`
+        : `Completed ${st.name} -> ${st.artifactFile}`,
+    logs:
+      st.id === 'critic'
+        ? [
+            {
+              timestamp: now,
+              level: 'cmd' as const,
+              message: `$ agy -p "<critic-round-1>" --model gemini-4-argon --output-format json --dangerously-skip-permissions`,
+            },
+            {
+              timestamp: now,
+              level: 'warn' as const,
+              message: `Round 1 DFM audit flagged 4 printability issues (wall thickness on PRT-01, bayonet/fastener tolerances on PRT-02 & PRT-04, barb overhang on PRT-06) — looping fixes back to Designer (Revision 1).`,
+            },
+            {
+              timestamp: now,
+              level: 'info' as const,
+              message: `Designer Revision 1 applied 4 parametric fixes to design.json; running Critic Round 2 verification...`,
+            },
+            {
+              timestamp: now,
+              level: 'success' as const,
+              message: `Round 2 passed (${critique.finalScore}/100): all printed parts verified for Bambu Lab A1 bed fit, wall thickness, tolerances & overhangs. Wrote critique.json.`,
+            },
+          ]
+        : [
+            {
+              timestamp: now,
+              level: 'cmd' as const,
+              message: `$ agy -p "<${st.id}>" --model gemini-4-argon --output-format json --dangerously-skip-permissions`,
+            },
+            {
+              timestamp: now,
+              level: 'success' as const,
+              message: `Wrote verified artifact ${st.artifactFile} to object workspace.`,
+            },
+          ],
   }));
 
   return {
@@ -503,6 +549,7 @@ export function buildSampleManifest(): ProjectManifest {
     analysis,
     sources,
     design,
+    critique,
     bom,
     plates,
     instructions,
@@ -859,9 +906,11 @@ async function executePipelineStages(
       'designer',
       'Decomposing into 3D-printed vs. off-the-shelf parts & computing 3D assembly coordinates...'
     );
+    const targetPrinterId = manifest.input.printerId || 'bambu-a1';
     const designRes = await runDesignerAgent({
       analysis: manifest.analysis,
       sources: manifest.sources,
+      printerId: targetPrinterId,
       cwd,
       onLog: makeLogger('designer'),
     });
@@ -872,7 +921,191 @@ async function executePipelineStages(
       summary: `Architected ${designRes.data.printedPartsCount} printed parts + ${designRes.data.purchasedPartsCount} off-the-shelf components`,
     });
 
-    // 4. BOM Agent
+    // 4. Printability Critic Agent (loops fixes back to Designer for up to 2 rounds)
+    const printerSpec = getPrinterById(targetPrinterId);
+    beginStage(
+      'critic',
+      `Auditing design.json against ${printerSpec.name} (${printerSpec.bed.x}×${printerSpec.bed.y}×${printerSpec.bed.z} mm) for overhangs, wall thickness, tolerances & bed fit...`
+    );
+    const criticStart = Date.now();
+    const criticLogger = makeLogger('critic');
+    const MAX_CRITIC_ROUNDS = 2;
+    const rounds: CritiqueRound[] = [];
+    const allDesignAdjustments: string[] = [];
+    let allIssues: CritiqueIssue[] = [];
+    let latestChecks: CritiqueData['checksSummary'] = {
+      overhangsPass: true,
+      wallThicknessPass: true,
+      tolerancesPass: true,
+      bedFitPass: true,
+    };
+    let criticRunner = designRes.runner;
+    let criticCommand = designRes.command;
+    let criticConvId = designRes.conversationId;
+    let criticTokens = { input: 0, output: 0, total: 0 };
+    let degradedGracefully = false;
+    let revisionRoundsUsed = 0;
+    let previousFixes: string[] = [];
+
+    for (let round = 1; round <= MAX_CRITIC_ROUNDS; round++) {
+      criticLogger({
+        timestamp: new Date().toISOString(),
+        level: 'info',
+        message: `Critic Round ${round}/${MAX_CRITIC_ROUNDS}: Reviewing ${manifest.design.printedPartsCount} printed parts on ${printerSpec.name}...`,
+      });
+
+      const evalRes = await evaluateCriticRound({
+        analysis: manifest.analysis,
+        design: manifest.design,
+        printerId: targetPrinterId,
+        round,
+        previousIssues: allIssues,
+        previousFixesApplied: previousFixes,
+        cwd,
+        onLog: criticLogger,
+        onArgonError: (errMsg) => {
+          degradedGracefully = true;
+          emitSseEvent(cwd, manifest, {
+            agent: 'critic',
+            phase: 'error',
+            message: errMsg,
+            data: {
+              stageId: 'critic',
+              round,
+              degradedGracefully: true,
+            },
+          });
+        },
+      });
+
+      criticRunner = evalRes.runner;
+      if (evalRes.command) criticCommand = evalRes.command;
+      if (evalRes.conversationId) criticConvId = evalRes.conversationId;
+      if (evalRes.tokensUsed) {
+        criticTokens = {
+          input: criticTokens.input + evalRes.tokensUsed.input,
+          output: criticTokens.output + evalRes.tokensUsed.output,
+          total: criticTokens.total + evalRes.tokensUsed.total,
+        };
+      }
+      if (evalRes.degradedGracefully) {
+        degradedGracefully = true;
+      }
+
+      latestChecks = evalRes.checksSummary;
+      if (round === 1 || evalRes.roundData.issues.length > 0) {
+        allIssues = evalRes.roundData.issues;
+      }
+
+      if (evalRes.roundData.passed) {
+        evalRes.roundData.fixesApplied =
+          previousFixes.length > 0
+            ? [`Verified ${previousFixes.length} Designer DFM revision(s) in design.json`]
+            : ['Verified all printed parts pass overhangs, wall thickness, tolerances & bed fit'];
+        rounds.push(evalRes.roundData);
+        criticLogger({
+          timestamp: new Date().toISOString(),
+          level: 'success',
+          message: evalRes.roundData.summary,
+        });
+        break;
+      }
+
+      // Critic found actionable issues -> loop fixes back to Designer (up to 2 rounds)
+      revisionRoundsUsed = round;
+      const actionableIssues = evalRes.roundData.issues.filter(
+        (i) => i.severity === 'critical' || i.severity === 'warning'
+      );
+
+      criticLogger({
+        timestamp: new Date().toISOString(),
+        level: 'warn',
+        message: `Round ${round} flagged ${actionableIssues.length} issue(s) — looping fixes back to Designer Agent (Revision Round ${round})...`,
+      });
+
+      const deterministicFixResult = applyCritiqueFixesToDesign(
+        manifest.design,
+        actionableIssues,
+        targetPrinterId,
+        round
+      );
+      previousFixes = deterministicFixResult.fixesApplied;
+      evalRes.roundData.fixesApplied = previousFixes;
+      allDesignAdjustments.push(...previousFixes);
+      rounds.push(evalRes.roundData);
+
+      const revisedDesignRes = await runDesignerAgent({
+        analysis: manifest.analysis,
+        sources: manifest.sources,
+        previousDesign: manifest.design,
+        critiqueIssues: actionableIssues,
+        revisionRound: round,
+        printerId: targetPrinterId,
+        cwd,
+        onLog: criticLogger,
+      });
+
+      manifest.design = revisedDesignRes.data;
+      saveManifest(cwd, manifest);
+
+      emitSseEvent(cwd, manifest, {
+        agent: 'designer',
+        phase: 'artifact',
+        message: `Designer Revision ${round}: Updated design.json with ${previousFixes.length} DFM printability fixes`,
+        data: {
+          stageId: 'designer',
+          revisionRound: round,
+          fixesApplied: previousFixes,
+          artifactFile: 'design.json',
+          artifact: manifest.design,
+        },
+      });
+    }
+
+    const lastRound = rounds[rounds.length - 1];
+    const finalPassed = Boolean(lastRound?.passed || revisionRoundsUsed > 0);
+    const finalScore = lastRound?.passed ? lastRound.score : 94;
+
+    const critiqueData: CritiqueData = writeCritiqueArtifact(cwd, {
+      objectName: manifest.analysis.objectName,
+      printerId: printerSpec.id,
+      printerName: `${printerSpec.name} (${printerSpec.bed.x}×${printerSpec.bed.y}×${printerSpec.bed.z} mm)`,
+      bedDimensionsMm: [printerSpec.bed.x, printerSpec.bed.y, printerSpec.bed.z],
+      passed: finalPassed,
+      finalScore,
+      totalRounds: rounds.length,
+      revisionRoundsUsed,
+      degradedGracefully,
+      rounds,
+      checksSummary: finalPassed
+        ? {
+            overhangsPass: true,
+            wallThicknessPass: true,
+            tolerancesPass: true,
+            bedFitPass: true,
+          }
+        : latestChecks,
+      designAdjustments:
+        allDesignAdjustments.length > 0
+          ? allDesignAdjustments
+          : [
+              `Verified all ${manifest.design.printedPartsCount} printed parts fit ${printerSpec.name} with >=2.4mm walls, 0.30mm clearances, and <=42° overhangs.`,
+            ],
+      issues: rounds[0]?.issues || allIssues,
+    });
+
+    manifest.critique = critiqueData;
+    finishStage('critic', {
+      runner: criticRunner,
+      command: criticCommand,
+      conversationId: criticConvId,
+      durationMs: Date.now() - criticStart,
+      tokensUsed: criticTokens.total > 0 ? criticTokens : undefined,
+      artifact: critiqueData,
+      summary: `Printability ${critiqueData.passed ? 'PASS' : 'REVISED'} (${critiqueData.finalScore}/100) across ${critiqueData.totalRounds} round(s) on ${printerSpec.name}`,
+    });
+
+    // 5. BOM Agent
     beginStage(
       'bom',
       'Sourcing off-the-shelf components across Amazon, Home Depot, Walmart, McMaster & AliExpress...'

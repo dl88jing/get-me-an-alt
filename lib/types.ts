@@ -265,11 +265,20 @@ export interface InstructionsData {
 }
 
 export interface CritiqueIssue {
+  part: string;
   partId: string;
   partName: string;
-  category: 'overhang' | 'wall_thickness' | 'tolerance' | 'bed_fit' | 'orientation';
-  severity: 'pass' | 'warning' | 'critical';
+  category:
+    | 'overhang'
+    | 'wall_thickness'
+    | 'tolerance'
+    | 'bed_fit'
+    | 'orientation'
+    | 'fastener';
+  severity: 'pass' | 'info' | 'warning' | 'critical';
+  problem: string;
   finding: string;
+  fix: string;
   fixApplied: string;
   parameterAdjusted?: string;
 }
@@ -280,15 +289,21 @@ export interface CritiqueRound {
   score: number;
   summary: string;
   issues: CritiqueIssue[];
+  fixesApplied?: string[];
+  runner?: RunnerMode;
+  durationMs?: number;
 }
 
 export interface CritiqueData {
   objectName: string;
   printerId: string;
+  printerName?: string;
   bedDimensionsMm: [number, number, number];
   passed: boolean;
   finalScore: number;
   totalRounds: number;
+  revisionRoundsUsed?: number;
+  degradedGracefully?: boolean;
   rounds: CritiqueRound[];
   checksSummary: {
     overhangsPass: boolean;
@@ -297,6 +312,7 @@ export interface CritiqueData {
     bedFitPass: boolean;
   };
   designAdjustments: string[];
+  issues: CritiqueIssue[];
 }
 
 export interface ProjectManifest {

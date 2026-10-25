@@ -2,12 +2,15 @@ import fs from 'fs';
 import path from 'path';
 import {
   AgentLogEntry,
+  CritiqueIssue,
   DesignPart,
   DesignSpec,
   ObjectAnalysis,
   ResearchData,
 } from '../types';
 import { SAMPLE_DESIGN } from '../sample-data';
+import { getPrinterById } from '../printers';
+import { applyCritiqueFixesToDesign } from './critic';
 import { runGeminiAgent, RunAgentResult } from './runner';
 
 export interface DesignerInput {
@@ -15,6 +18,10 @@ export interface DesignerInput {
   sources: ResearchData;
   cwd: string;
   onLog?: (entry: AgentLogEntry) => void;
+  previousDesign?: DesignSpec;
+  critiqueIssues?: CritiqueIssue[];
+  revisionRound?: number;
+  printerId?: string;
 }
 
 const PALETTE = [
@@ -34,9 +41,43 @@ export async function runDesignerAgent(
   input: DesignerInput
 ): Promise<RunAgentResult<DesignSpec>> {
   const { analysis, sources } = input;
+  const isRevision = Boolean(
+    input.revisionRound &&
+      input.revisionRound > 0 &&
+      input.previousDesign &&
+      input.critiqueIssues
+  );
+  const printer = getPrinterById(input.printerId);
 
-  const prompt = `You are the Designer / Architect Agent (Stage 3 of 6) in "Get Me An Alt", powered by Gemini 4 Argon.
+  const prompt = isRevision
+    ? `You are the Designer / Architect Agent in "Get Me An Alt", powered by Gemini 4 Argon.
+This is Revision Round ${input.revisionRound} for "${analysis.objectName}" targeting printer ${printer.name} (${printer.bed.x}×${printer.bed.y}×${printer.bed.z} mm bed).
+
+The Printability Critic Agent reviewed design.json and found these issues:
+${JSON.stringify(
+  (input.critiqueIssues || []).map((i) => ({
+    part: i.part,
+    severity: i.severity,
+    category: i.category,
+    problem: i.problem,
+    fix: i.fix,
+  })),
+  null,
+  2
+)}
+
+Current design.json:
+${JSON.stringify(input.previousDesign, null, 2)}
+
+Revise design.json to fix every Critic issue above:
+1. Fit every printed part's dims_mm within [${printer.bed.x - 10}, ${printer.bed.z - 10}, ${printer.bed.y - 10}] mm.
+2. Ensure params.wallThickness >= 2.4 (or 3.2 for fluid tubes), params.clearanceMm = 0.30, params.fastenerHoleClearanceMm = 0.20, params.maxOverhangDeg = 42, params.dfmVerified = true, and supportsRequired = false on all printed parts.
+3. Preserve all part IDs, partNumbers, positions, explode vectors, and the exact shared design.json contract.
+
+Return ONLY valid JSON matching the DesignSpec schema.`
+    : `You are the Designer / Architect Agent (Stage 3 of 7) in "Get Me An Alt", powered by Gemini 4 Argon.
 Decompose "${analysis.objectName}" into 6 to 7 3D-printed parts ("kind": "printed") AND 3 to 4 off-the-shelf purchased parts ("kind": "purchased").
+Target 3D Printer: ${printer.name} (${printer.bed.x}×${printer.bed.y}×${printer.bed.z} mm build volume).
 
 Context from Analyst & Researcher:
 - Overall dimensions (mm): ${JSON.stringify(analysis.overallDimensionsMm)}
@@ -77,22 +118,36 @@ Return ONLY valid JSON matching:
 }`;
 
   const result = await runGeminiAgent<DesignSpec>({
-    stageName: 'Designer',
+    stageName: isRevision
+      ? `Designer-Rev-${input.revisionRound}`
+      : 'Designer',
     prompt,
     cwd: input.cwd,
     artifactFilename: 'design.json',
+    preferRestForSpeed: isRevision,
+    timeoutMs: isRevision ? 15000 : 25000,
     onLog: input.onLog,
-    fallbackGenerator: () => ({
-      ...SAMPLE_DESIGN,
-      objectName: analysis.objectName,
-    }),
+    fallbackGenerator: () =>
+      isRevision && input.previousDesign && input.critiqueIssues
+        ? applyCritiqueFixesToDesign(
+            input.previousDesign,
+            input.critiqueIssues,
+            input.printerId,
+            input.revisionRound
+          ).updatedDesign
+        : {
+            ...SAMPLE_DESIGN,
+            objectName: analysis.objectName,
+          },
   });
 
   const d = result.data;
-  const rawParts =
-    Array.isArray(d?.parts) && d.parts.length >= 4
-      ? d.parts
+  const fallbackParts =
+    isRevision && input.previousDesign
+      ? input.previousDesign.parts
       : SAMPLE_DESIGN.parts;
+  const rawParts =
+    Array.isArray(d?.parts) && d.parts.length >= 4 ? d.parts : fallbackParts;
 
   let prtCounter = 1;
   let otsCounter = 1;
@@ -206,7 +261,7 @@ Return ONLY valid JSON matching:
   const printedCount = normalizedParts.filter((p) => p.kind === 'printed').length;
   const purchasedCount = normalizedParts.filter((p) => p.kind === 'purchased').length;
 
-  const normalized: DesignSpec = {
+  const baseNormalized: DesignSpec = {
     objectName: analysis.objectName,
     designPhilosophy: d?.designPhilosophy || SAMPLE_DESIGN.designPhilosophy,
     overallBoundingBoxMm: analysis.overallDimensionsMm,
@@ -218,6 +273,16 @@ Return ONLY valid JSON matching:
         : SAMPLE_DESIGN.assemblyNotes,
     parts: normalizedParts,
   };
+
+  const normalized =
+    isRevision && input.critiqueIssues
+      ? applyCritiqueFixesToDesign(
+          baseNormalized,
+          input.critiqueIssues,
+          input.printerId,
+          input.revisionRound
+        ).updatedDesign
+      : baseNormalized;
 
   fs.writeFileSync(
     path.join(input.cwd, 'design.json'),

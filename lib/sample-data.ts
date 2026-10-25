@@ -1,6 +1,7 @@
 import {
   AgentStageState,
   BomData,
+  CritiqueData,
   DesignSpec,
   InstructionsData,
   ObjectAnalysis,
@@ -953,6 +954,224 @@ export const SAMPLE_INSTRUCTIONS: InstructionsData = {
   ],
 };
 
+export const SAMPLE_CRITIQUE: CritiqueData = {
+  objectName: 'HydroPulse Smart Plant Auto-Waterer',
+  printerId: 'bambu-a1',
+  printerName: 'Bambu Lab A1 (256×256×256 mm)',
+  bedDimensionsMm: [256, 256, 256],
+  passed: true,
+  finalScore: 98,
+  totalRounds: 2,
+  revisionRoundsUsed: 1,
+  checksSummary: {
+    overhangsPass: true,
+    wallThicknessPass: true,
+    tolerancesPass: true,
+    bedFitPass: true,
+  },
+  designAdjustments: [
+    'Round 1 -> Designer Revision 1: Increased PRT-01 reservoir radial wall thickness from 1.2mm to 3.5mm (4 PETG perimeters) and floor thickness to 4.0mm for hydrostatic watertightness.',
+    'Round 1 -> Designer Revision 1: Added 0.30mm radial clearance and 45° lead-in chamfer on PRT-02 twist-lock bayonet collar.',
+    'Round 1 -> Designer Revision 1: Calibrated PRT-04 M2.5 standoff pilot bores to 2.15mm ID for direct self-tapping thread engagement.',
+    'Round 1 -> Designer Revision 1: Added 45° teardrop underside relief on PRT-06 horizontal 6mm hose barbs so all 7 printed parts print 100% support-free.',
+  ],
+  rounds: [
+    {
+      round: 1,
+      passed: false,
+      score: 74,
+      summary:
+        'Round 1 DFM audit flagged 4 printability issues (1 critical watertight wall thickness deficit on PRT-01, 2 fastener/bayonet fit tolerance risks on PRT-02 & PRT-04, and 1 unsupported 90° barb overhang on PRT-06). Looping fixes back to Designer.',
+      fixesApplied: [
+        'PRT-01 (reservoir-tank): innerRadius adjusted 53.8mm -> 51.5mm (wallThickness = 3.5mm, floorThickness = 4.0mm)',
+        'PRT-02 (reservoir-lid): bayonetClearanceMm set to 0.30mm with 45° entry chamfer',
+        'PRT-04 (controller-enclosure): M2.5 screw boss pilot bore set to 2.15mm ID (5.0mm OD)',
+        'PRT-06 (drip-manifold): added 45° teardrop underside profile on 6mm barbed outlets (supportsRequired = false)',
+      ],
+      issues: [
+        {
+          part: 'PRT-01 · 750mL Watertight Reservoir Tank',
+          partId: 'reservoir-tank',
+          partName: '750mL Watertight Reservoir Tank',
+          category: 'wall_thickness',
+          severity: 'critical',
+          problem:
+            'Initial 1.2mm cylinder wall (3 perimeters) risks micro-porosity weeping under 95mm hydrostatic water head.',
+          finding:
+            'Initial 1.2mm cylinder wall (3 perimeters) risks micro-porosity weeping under 95mm hydrostatic water head.',
+          fix: 'Increase radial wall thickness to 3.5mm (outerRadius 55mm, innerRadius 51.5mm) and floor thickness to 4.0mm.',
+          fixApplied:
+            'Increased radial wall thickness to 3.5mm and base floor to 4.0mm with 2.5mm internal chine fillet.',
+          parameterAdjusted: 'params.innerRadius = 51.5, params.floorThickness = 4.0',
+        },
+        {
+          part: 'PRT-02 · Twist-Lock Reservoir Funnel Lid',
+          partId: 'reservoir-lid',
+          partName: 'Twist-Lock Reservoir Funnel Lid',
+          category: 'tolerance',
+          severity: 'warning',
+          problem:
+            'Nominal 0.05mm radial gap on twist-lock bayonet tabs will bind due to FDM seam bulge and thermal shrinkage.',
+          finding:
+            'Nominal 0.05mm radial gap on twist-lock bayonet tabs will bind due to FDM seam bulge and thermal shrinkage.',
+          fix: 'Widen radial bayonet clearance to 0.30mm and add 1.0mm × 45° lead-in chamfer.',
+          fixApplied:
+            'Applied 0.30mm radial clearance and 45° self-centering lead-in chamfer on bayonet locking lugs.',
+          parameterAdjusted: 'params.clearanceMm = 0.30',
+        },
+        {
+          part: 'PRT-04 · ESP32 Controller & MOSFET Housing',
+          partId: 'controller-enclosure',
+          partName: 'ESP32 Controller & MOSFET Housing',
+          category: 'tolerance',
+          severity: 'warning',
+          problem:
+            'M2.5 PCB mounting standoffs modeled with 2.50mm thru-holes provide zero thread bite for M2.5×6mm machine screws.',
+          finding:
+            'M2.5 PCB mounting standoffs modeled with 2.50mm thru-holes provide zero thread bite for M2.5×6mm machine screws.',
+          fix: 'Set standoff pilot hole diameter to 2.15mm ID with 5.0mm boss OD and 0.25mm lid snap-fit lip clearance.',
+          fixApplied:
+            'Updated M2.5 standoff bores to 2.15mm self-tapping ID and set PRT-05 bezel snap clearance to 0.25mm.',
+          parameterAdjusted: 'params.fastenerBoreMm = 2.15, params.lidClearanceMm = 0.25',
+        },
+        {
+          part: 'PRT-06 · Anti-Siphon Dual Barbed Drip Manifold',
+          partId: 'drip-manifold',
+          partName: 'Anti-Siphon Dual Barbed Drip Manifold',
+          category: 'overhang',
+          severity: 'warning',
+          problem:
+            'Horizontal 6mm barbed hose outlets have a 90° bottom step overhang that would sag without internal supports.',
+          finding:
+            'Horizontal 6mm barbed hose outlets have a 90° bottom step overhang that would sag without internal supports.',
+          fix: 'Add 45° teardrop underside ramp to external barb rings and orient manifold flat on base.',
+          fixApplied:
+            'Converted barb undercuts to 42° self-supporting ramps; internal bore uses teardrop crown.',
+          parameterAdjusted: 'params.maxOverhangDeg = 42, supportsRequired = false',
+        },
+      ],
+    },
+    {
+      round: 2,
+      passed: true,
+      score: 98,
+      summary:
+        'Round 2 verification passed (98/100): All 7 printed parts fit comfortably within the Bambu Lab A1 256×256×256 mm build volume, meet >=2.0mm structural / 3.5mm watertight wall thickness, include 0.25–0.30mm mating & M2.5 fastener clearances, and print with zero support material (max overhang 42°).',
+      fixesApplied: [
+        'Verified all Round 1 DFM fixes in revised design.json; approved for BOM & STL plate packing.',
+      ],
+      issues: [
+        {
+          part: 'PRT-01 · 750mL Watertight Reservoir Tank',
+          partId: 'reservoir-tank',
+          partName: '750mL Watertight Reservoir Tank',
+          category: 'wall_thickness',
+          severity: 'pass',
+          problem: 'Verified 3.5mm PETG wall & 4.0mm floor meet watertight pressure vessel spec.',
+          finding: 'Verified 3.5mm PETG wall & 4.0mm floor meet watertight pressure vessel spec.',
+          fix: 'No further change needed (110×95×110 mm fits 256×256×256 mm bed).',
+          fixApplied: 'Verified 3.5mm wall thickness & 4.0mm floor.',
+        },
+        {
+          part: 'PRT-02 · Twist-Lock Reservoir Funnel Lid',
+          partId: 'reservoir-lid',
+          partName: 'Twist-Lock Reservoir Funnel Lid',
+          category: 'tolerance',
+          severity: 'pass',
+          problem: 'Verified 0.30mm radial bayonet clearance and 45° chamfer.',
+          finding: 'Verified 0.30mm radial bayonet clearance and 45° chamfer.',
+          fix: 'No further change needed (118×18×118 mm fits 256×256×256 mm bed).',
+          fixApplied: 'Verified 0.30mm radial clearance.',
+        },
+        {
+          part: 'PRT-04 · ESP32 Controller & MOSFET Housing',
+          partId: 'controller-enclosure',
+          partName: 'ESP32 Controller & MOSFET Housing',
+          category: 'tolerance',
+          severity: 'pass',
+          problem: 'Verified 2.0mm enclosure walls, 2.15mm M2.5 self-tapping bosses, and 0.25mm lid fit.',
+          finding: 'Verified 2.0mm enclosure walls, 2.15mm M2.5 self-tapping bosses, and 0.25mm lid fit.',
+          fix: 'No further change needed (68×28×54 mm fits 256×256×256 mm bed).',
+          fixApplied: 'Verified 2.15mm M2.5 standoff bores.',
+        },
+        {
+          part: 'PRT-06 · Anti-Siphon Dual Barbed Drip Manifold',
+          partId: 'drip-manifold',
+          partName: 'Anti-Siphon Dual Barbed Drip Manifold',
+          category: 'overhang',
+          severity: 'pass',
+          problem: 'Verified 42° support-free barb ramps and +0.3mm interference fit for 6mm ID silicone tubing.',
+          finding: 'Verified 42° support-free barb ramps and +0.3mm interference fit for 6mm ID silicone tubing.',
+          fix: 'No further change needed (52×26×36 mm fits 256×256×256 mm bed).',
+          fixApplied: 'Verified 42° support-free barb overhangs.',
+        },
+      ],
+    },
+  ],
+  issues: [
+    {
+      part: 'PRT-01 · 750mL Watertight Reservoir Tank',
+      partId: 'reservoir-tank',
+      partName: '750mL Watertight Reservoir Tank',
+      category: 'wall_thickness',
+      severity: 'critical',
+      problem:
+        'Initial 1.2mm cylinder wall (3 perimeters) risks micro-porosity weeping under 95mm hydrostatic water head.',
+      finding:
+        'Initial 1.2mm cylinder wall (3 perimeters) risks micro-porosity weeping under 95mm hydrostatic water head.',
+      fix: 'Increased radial wall thickness to 3.5mm (outerRadius 55mm, innerRadius 51.5mm) and floor thickness to 4.0mm.',
+      fixApplied:
+        'Increased radial wall thickness to 3.5mm and base floor to 4.0mm with 2.5mm internal chine fillet.',
+      parameterAdjusted: 'params.innerRadius = 51.5, params.floorThickness = 4.0',
+    },
+    {
+      part: 'PRT-02 · Twist-Lock Reservoir Funnel Lid',
+      partId: 'reservoir-lid',
+      partName: 'Twist-Lock Reservoir Funnel Lid',
+      category: 'tolerance',
+      severity: 'warning',
+      problem:
+        'Nominal 0.05mm radial gap on twist-lock bayonet tabs will bind due to FDM seam bulge and thermal shrinkage.',
+      finding:
+        'Nominal 0.05mm radial gap on twist-lock bayonet tabs will bind due to FDM seam bulge and thermal shrinkage.',
+      fix: 'Widened radial bayonet clearance to 0.30mm and added 1.0mm × 45° lead-in chamfer.',
+      fixApplied:
+        'Applied 0.30mm radial clearance and 45° self-centering lead-in chamfer on bayonet locking lugs.',
+      parameterAdjusted: 'params.clearanceMm = 0.30',
+    },
+    {
+      part: 'PRT-04 · ESP32 Controller & MOSFET Housing',
+      partId: 'controller-enclosure',
+      partName: 'ESP32 Controller & MOSFET Housing',
+      category: 'tolerance',
+      severity: 'warning',
+      problem:
+        'M2.5 PCB mounting standoffs modeled with 2.50mm thru-holes provide zero thread bite for M2.5×6mm machine screws.',
+      finding:
+        'M2.5 PCB mounting standoffs modeled with 2.50mm thru-holes provide zero thread bite for M2.5×6mm machine screws.',
+      fix: 'Set standoff pilot hole diameter to 2.15mm ID with 5.0mm boss OD and 0.25mm lid snap-fit lip clearance.',
+      fixApplied:
+        'Updated M2.5 standoff bores to 2.15mm self-tapping ID and set PRT-05 bezel snap clearance to 0.25mm.',
+      parameterAdjusted: 'params.fastenerBoreMm = 2.15, params.lidClearanceMm = 0.25',
+    },
+    {
+      part: 'PRT-06 · Anti-Siphon Dual Barbed Drip Manifold',
+      partId: 'drip-manifold',
+      partName: 'Anti-Siphon Dual Barbed Drip Manifold',
+      category: 'overhang',
+      severity: 'warning',
+      problem:
+        'Horizontal 6mm barbed hose outlets have a 90° bottom step overhang that would sag without internal supports.',
+      finding:
+        'Horizontal 6mm barbed hose outlets have a 90° bottom step overhang that would sag without internal supports.',
+      fix: 'Converted barb undercuts to 42° self-supporting ramps; internal bore uses teardrop crown.',
+      fixApplied:
+        'Converted barb undercuts to 42° self-supporting ramps; internal bore uses teardrop crown.',
+      parameterAdjusted: 'params.maxOverhangDeg = 42, supportsRequired = false',
+    },
+  ],
+};
+
 export function createInitialStages(): AgentStageState[] {
   const model = process.env.GEMINI_MODEL || 'gemini-4-argon';
   return [
@@ -987,6 +1206,17 @@ export function createInitialStages(): AgentStageState[] {
       status: 'pending',
       model,
       artifactFile: 'design.json',
+      logs: [],
+    },
+    {
+      id: 'critic',
+      name: 'Printability Critic Agent',
+      role: 'DFM, Overhang, Wall Thickness, Tolerance & Bed-Fit Verifier',
+      description:
+        'Audits design.json against the selected printer bed and loops printability fixes back to the Designer.',
+      status: 'pending',
+      model,
+      artifactFile: 'critique.json',
       logs: [],
     },
     {
