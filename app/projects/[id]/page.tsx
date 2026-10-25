@@ -33,7 +33,7 @@ import {
   SsePipelineEvent,
 } from '@/lib/types';
 import CritiquePanel from './CritiquePanel';
-import MissionControl from '@/components/mission/MissionControl';
+import MissionControl from '@/components/ui/MissionControl';
 
 type TabId =
   | 'overview'
@@ -210,17 +210,6 @@ export default function ProjectPage() {
   const PeerExplodedComp = useMemo(
     () =>
       resolveOptionalPeerComponent(['three/Exploded', 'three/Viewer']),
-    []
-  );
-  const PeerMissionControlComp = useMemo(
-    () =>
-      resolveOptionalPeerComponent([
-        'mission/MissionControl',
-        'mission/index',
-        'ui/MissionControl',
-        'ui/AgentGraph',
-        'ui/AgentTimeline',
-      ]),
     []
   );
 
