@@ -5,9 +5,17 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 cd "$SCRIPT_DIR"
 
+if [[ -f "$SCRIPT_DIR/../e2e/setup-browser.sh" ]]; then
+  # shellcheck source=/dev/null
+  source "$SCRIPT_DIR/../e2e/setup-browser.sh"
+fi
+
 # Auto-detect headless Chromium on Linux ARM64 if HYPERFRAMES_BROWSER_PATH is not set
 if [[ -z "${HYPERFRAMES_BROWSER_PATH:-}" ]]; then
   for candidate in \
+    "${PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH:-}" \
+    "/workspace/work/ms-playwright/chromium-1248/chrome-linux-arm64/chrome" \
+    "/workspace/work/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux-arm64/chrome-headless-shell" \
     "/home/sandbox/.cache/ms-playwright/chromium-1248/chrome-linux-arm64/chrome" \
     "/home/sandbox/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux-arm64/chrome-headless-shell" \
     "$(command -v chromium-browser 2>/dev/null || true)" \

@@ -5,8 +5,9 @@ E2E_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(cd "$E2E_DIR/.." && pwd)"
 cd "$ROOT_DIR"
 
-export BASE_URL="${BASE_URL:-http://localhost:3000}"
+export BASE_URL="${BASE_URL:-https://get-me-an-alt.vercel.app}"
 export NODE_PATH="${ROOT_DIR}/node_modules:${ROOT_DIR}/video/node_modules:${NODE_PATH:-}"
+unset HTTP_PROXY HTTPS_PROXY http_proxy https_proxy || true
 
 # Ensure headless Chromium + shared libraries are installed & persisted in /workspace/work
 # shellcheck source=/dev/null
@@ -25,6 +26,8 @@ done
 
 RESULTS_DIR="$E2E_DIR/test-results"
 SCREENSHOTS_DIR="$E2E_DIR/screenshots"
+OUT_WEBM="$ROOT_DIR/video/recording.webm"
+OUT_ASSETS_WEBM="$ROOT_DIR/video/assets/recording.webm"
 OUT_MP4="$ROOT_DIR/video/assets/recording.mp4"
 
 rm -rf "$RESULTS_DIR"
@@ -45,6 +48,9 @@ if [[ -z "$WEBM_FILE" || ! -f "$WEBM_FILE" ]]; then
   exit 1
 fi
 echo "    Found recording: $WEBM_FILE"
+cp -f "$WEBM_FILE" "$OUT_WEBM"
+cp -f "$WEBM_FILE" "$OUT_ASSETS_WEBM"
+echo "    Saved WebM recordings to $OUT_WEBM and $OUT_ASSETS_WEBM"
 
 echo "==> [3/3] Converting recording to $OUT_MP4 via ffmpeg ..."
 ffmpeg -y -v error \

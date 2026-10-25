@@ -2,7 +2,7 @@ import { defineConfig, devices } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const BASE_URL = process.env.BASE_URL || 'http://localhost:3000';
+const BASE_URL = process.env.BASE_URL || 'https://get-me-an-alt.vercel.app';
 
 function detectChromiumExecutable(): string | undefined {
   if (process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH) {
@@ -58,9 +58,14 @@ export default defineConfig({
       ...(executablePath ? { executablePath } : {}),
       env: {
         ...process.env,
+        HTTP_PROXY: '',
+        HTTPS_PROXY: '',
+        http_proxy: '',
+        https_proxy: '',
         ...(ldLibraryPath ? { LD_LIBRARY_PATH: ldLibraryPath } : {}),
       },
       args: [
+        '--no-proxy-server',
         '--use-gl=angle',
         '--use-angle=swiftshader',
         '--enable-webgl',

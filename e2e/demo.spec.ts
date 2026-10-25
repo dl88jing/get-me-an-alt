@@ -2,7 +2,7 @@ import { test, expect, Page } from '@playwright/test';
 import * as fs from 'fs';
 import * as path from 'path';
 
-const BASE_URL = (process.env.BASE_URL || 'http://localhost:3000').replace(
+const BASE_URL = (process.env.BASE_URL || 'https://get-me-an-alt.vercel.app').replace(
   /\/+$/,
   ''
 );
