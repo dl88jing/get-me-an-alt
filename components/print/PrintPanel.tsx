@@ -875,6 +875,7 @@ export function PrintPanel({
                 plates={threePlatePreviewData}
                 design={design}
                 initialPlateIndex={safePlateIdx}
+                initialViewMode="3d"
               />
             </div>
           ) : (

@@ -17,6 +17,7 @@ export interface PlatePreviewProps {
   design?: AnyDesignInput;
   projectId?: string;
   initialPlateIndex?: number;
+  initialViewMode?: "2d" | "3d";
   className?: string;
 }
 
@@ -53,6 +54,7 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
   plates,
   design,
   initialPlateIndex = 0,
+  initialViewMode = "2d",
   className = "",
 }) => {
   const adaptedPlates = useMemo(() => adaptPlates(plates), [plates]);
@@ -67,7 +69,7 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
   );
   const [hoveredItemIdx, setHoveredItemIdx] = useState<number | null>(null);
   const [selectedItemIdx, setSelectedItemIdx] = useState<number | null>(0);
-  const [viewMode, setViewMode] = useState<"2d" | "3d">("2d");
+  const [viewMode, setViewMode] = useState<"2d" | "3d">(initialViewMode);
 
   const bedX = adaptedPlates.printer?.bed?.x || 256;
   const bedY = adaptedPlates.printer?.bed?.y || 256;

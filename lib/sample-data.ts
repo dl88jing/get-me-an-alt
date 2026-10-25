@@ -7,6 +7,7 @@ import {
   ObjectAnalysis,
   PlatesData,
   ResearchData,
+  TeardownData,
 } from './types';
 
 export const SAMPLE_SLUG = 'plant-auto-waterer';
@@ -152,6 +153,33 @@ export const SAMPLE_SOURCES: ResearchData = {
         'Seal sensor PCB edges with clear silicone conformal coating before soil insertion.',
       ],
       relevanceScore: 0.89,
+    },
+    {
+      id: 'src-6',
+      title: 'iFixit & Hardware Teardown: Disassembling Commercial Smart Drip Irrigation Units',
+      url: 'https://www.ifixit.com/Search?query=smart+plant+watering+pump+teardown',
+      domain: 'ifixit.com',
+      type: 'teardown',
+      summary:
+        'Internal teardown analysis of commercial $149 smart watering hubs showing ultrasonic-welded ABS shells, 5V centrifugal pumps, and O-ring bayonet collars.',
+      keyTakeaways: [
+        'Commercial units fail primarily at glued hose barbs; printable 1-piece PETG barbed manifolds eliminate glue joints.',
+        'Replace proprietary clip-on lids with a 3-lug twist-lock bayonet collar (0.30mm clearance) for tool-free service.',
+      ],
+      relevanceScore: 0.93,
+    },
+    {
+      id: 'src-7',
+      title: 'Datasheet & Application Note (PDF): Capacitive Soil Moisture Sensor v1.2 + ESP32 ADC Calibration',
+      url: 'https://www.google.com/search?q=capacitive+soil+moisture+sensor+v1.2+datasheet+filetype:pdf',
+      domain: 'dfrobot.com',
+      type: 'article',
+      summary:
+        'Reference PDF datasheet covering TLC555 capacitive oscillator frequency response, 3.3V regulator dropout, and ADC calibration curve.',
+      keyTakeaways: [
+        'Verify onboard LDO is the 3.3V TL750L05/XC6206 variant so analog output stays within ESP32-C3 0–2.8V ADC range.',
+      ],
+      relevanceScore: 0.87,
     },
   ],
   technicalInsights: [
@@ -1168,6 +1196,214 @@ export const SAMPLE_CRITIQUE: CritiqueData = {
       fixApplied:
         'Converted barb undercuts to 42° self-supporting ramps; internal bore uses teardrop crown.',
       parameterAdjusted: 'params.maxOverhangDeg = 42, supportsRequired = false',
+    },
+  ],
+};
+
+function makeBlueprintFrameSvg(
+  timeLabel: string,
+  title: string,
+  callouts: string[],
+  accent = '#00f5a0'
+): string {
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
+    <defs>
+      <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+        <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#1e293b" stroke-width="1"/>
+      </pattern>
+    </defs>
+    <rect width="640" height="360" fill="#070b12"/>
+    <rect width="640" height="360" fill="url(#grid)"/>
+    <rect x="18" y="18" width="604" height="324" rx="14" fill="none" stroke="${accent}" stroke-opacity="0.35" stroke-width="1.5"/>
+    <circle cx="210" cy="185" r="78" fill="#0f172a" stroke="${accent}" stroke-width="2"/>
+    <circle cx="210" cy="185" r="52" fill="none" stroke="#38bdf8" stroke-dasharray="6 4" stroke-width="1.5"/>
+    <rect x="175" y="155" width="70" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
+    <line x1="245" y1="170" x2="335" y2="128" stroke="${accent}" stroke-width="2"/>
+    <circle cx="245" cy="170" r="4" fill="${accent}"/>
+    <line x1="245" y1="200" x2="335" y2="215" stroke="#38bdf8" stroke-width="2"/>
+    <circle cx="245" cy="200" r="4" fill="#38bdf8"/>
+    <text x="36" y="52" fill="${accent}" font-family="monospace" font-size="13" font-weight="bold">GEMINI 4 ARGON // VIDEO TEARDOWN FRAME @ ${timeLabel}</text>
+    <text x="36" y="78" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold">${title}</text>
+    <rect x="335" y="102" width="265" height="72" rx="8" fill="#0f172a" stroke="${accent}" stroke-opacity="0.6" stroke-width="1.2"/>
+    <text x="348" y="126" fill="${accent}" font-family="monospace" font-size="11" font-weight="bold">CALLOUT 01</text>
+    <text x="348" y="148" fill="#e2e8f0" font-family="monospace" font-size="12">${callouts[0] || ''}</text>
+    <rect x="335" y="190" width="265" height="72" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.2"/>
+    <text x="348" y="214" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold">CALLOUT 02</text>
+    <text x="348" y="236" fill="#e2e8f0" font-family="monospace" font-size="12">${callouts[1] || ''}</text>
+    <text x="36" y="324" fill="#94a3b8" font-family="monospace" font-size="11">FILE_DATA TELEMETRY · REAL-TIME PART &amp; FASTENER EXTRACTION</text>
+  </svg>`;
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+}
+
+export const SAMPLE_TEARDOWN: TeardownData = {
+  videos: [
+    {
+      url: 'https://www.youtube.com/results?search_query=smart+plant+watering+system+teardown+diy',
+      title: 'Teardown: Inside a $149 Smart Autonomous Plant Watering Station',
+    },
+    {
+      url: 'https://www.youtube.com/results?search_query=esp32+capacitive+soil+moisture+pump+build',
+      title: 'DIY ESP32-C3 Capacitive Irrigation & Anti-Siphon Manifold Build',
+    },
+  ],
+  note: 'Analyzed 4 key disassembly timestamps via Gemini 4 Argon multimodal video inspection.',
+  generatedAt: '2026-10-25T19:45:00.000Z',
+  frames: [
+    {
+      video: 'https://www.youtube.com/results?search_query=smart+plant+watering+system+teardown+diy',
+      t: 24,
+      image: makeBlueprintFrameSvg(
+        '0:24 (t=24s)',
+        'Reservoir Vessel & Submersible Pump Isolation Cradle',
+        ['PRT-01: 750mL PETG Tank (110x95mm)', 'OTS-01: 5V Brushless Pump ($4.80)'],
+        '#00f5a0'
+      ),
+      description:
+        'Lower housing separated to expose the 750mL cylindrical water reservoir, bottom acoustic isolation cradle, and 5V brushless centrifugal micro-pump.',
+      captureMode: 'argon-thumbnail-fallback',
+      parts: [
+        {
+          name: '750mL Watertight Reservoir Tank',
+          function: 'Stores 750mL of irrigation water with 3.5mm watertight PETG perimeter walls and top bayonet locking ring.',
+          material: 'PETG (4 perimeters, 0.20mm layer)',
+          dims_mm: [110, 95, 110],
+          fasteners: '3-lug twist-lock bayonet collar (0.30mm radial clearance)',
+          buyOrPrint: 'print',
+          offTheShelfQuery: 'PETG 1.75mm filament watertight reservoir',
+          confidence: 0.97,
+          partId: 'reservoir-tank',
+          bomRef: 'bom-filament-petg',
+        },
+        {
+          name: '5V Brushless Submersible Micro-Pump',
+          function: 'Delivers 120 L/h water flow from reservoir floor through vertical 6mm outlet barb.',
+          material: 'ABS impeller housing + epoxy-potted brushless stator',
+          dims_mm: [38, 34, 32],
+          fasteners: 'Snap-fits into PRT-03 compliant isolation cradle + 6mm silicone barb',
+          buyOrPrint: 'buy',
+          offTheShelfQuery: '5V mini submersible brushless water pump 120L/h',
+          confidence: 0.96,
+          partId: 'pump-5v',
+          bomRef: 'bom-pump-5v',
+        },
+      ],
+    },
+    {
+      video: 'https://www.youtube.com/results?search_query=smart+plant+watering+system+teardown+diy',
+      t: 68,
+      image: makeBlueprintFrameSvg(
+        '1:08 (t=68s)',
+        'Bayonet Funnel Lid & Anti-Siphon Barbed Y-Manifold',
+        ['PRT-02: Twist-Lock Funnel Lid', 'PRT-06: Anti-Siphon Dual Manifold'],
+        '#38bdf8'
+      ),
+      description:
+        'Top deck removal revealing the twist-lock refill funnel lid, silicone riser grommet, and rim-mounted dual barbed Y-manifold seated above the high-water line.',
+      captureMode: 'argon-thumbnail-fallback',
+      parts: [
+        {
+          name: 'Twist-Lock Reservoir Funnel Lid',
+          function: 'Seals reservoir top while providing a recessed refill funnel and controller mounting rails.',
+          material: 'PLA+ / PETG (25% gyroid infill)',
+          dims_mm: [118, 18, 118],
+          fasteners: 'Bayonet twist-lock tabs + 8mm silicone pass-through grommet',
+          buyOrPrint: 'print',
+          offTheShelfQuery: 'PLA+ 1.75mm filament',
+          confidence: 0.95,
+          partId: 'reservoir-lid',
+          bomRef: 'bom-filament-petg',
+        },
+        {
+          name: 'Anti-Siphon Dual Barbed Drip Manifold',
+          function: 'Splits pump output to 2 pots at Z=98mm above waterline to break gravity siphons.',
+          material: 'PETG (42° support-free teardrop barbs)',
+          dims_mm: [52, 26, 36],
+          fasteners: 'Rim snap-clip + 3x 6.3mm barbed hose outlets',
+          buyOrPrint: 'print',
+          offTheShelfQuery: '6mm barbed Y splitter irrigation fitting',
+          confidence: 0.94,
+          partId: 'drip-manifold',
+          bomRef: 'bom-filament-petg',
+        },
+      ],
+    },
+    {
+      video: 'https://www.youtube.com/results?search_query=esp32+capacitive+soil+moisture+pump+build',
+      t: 118,
+      image: makeBlueprintFrameSvg(
+        '1:58 (t=118s)',
+        'ESP32-C3 + MOSFET Controller PCB & Enclosure Bosses',
+        ['PRT-04: Controller Housing (M2.5)', 'OTS-03: XIAO ESP32-C3 + MOSFET'],
+        '#a855f7'
+      ),
+      description:
+        'Close-up of the top electronics enclosure showing 4 self-tapping 2.15mm M2.5 standoffs, Seeed XIAO ESP32-C3 MCU, and low-side MOSFET pump switch.',
+      captureMode: 'argon-thumbnail-fallback',
+      parts: [
+        {
+          name: 'ESP32 Controller & MOSFET Housing',
+          function: 'Protects microcontroller and MOSFET driver above the lid splash zone.',
+          material: 'PLA+ (2.0mm walls, 2.15mm M2.5 pilot bores)',
+          dims_mm: [68, 28, 54],
+          fasteners: '4x M2.5x6mm stainless socket head cap screws + 0.25mm snap bezel',
+          buyOrPrint: 'print',
+          offTheShelfQuery: 'M2.5x6mm stainless socket head cap screws',
+          confidence: 0.95,
+          partId: 'controller-enclosure',
+          bomRef: 'bom-fasteners-kit',
+        },
+        {
+          name: 'Seeed XIAO ESP32-C3 & MOSFET Driver',
+          function: 'Reads capacitive moisture analog voltage and pulses 5V pump via PWM MOSFET switch.',
+          material: 'FR4 PCB + USB-C connector',
+          dims_mm: [54, 14, 38],
+          fasteners: '4x M2.5 mounting holes + 2-pin screw terminal',
+          buyOrPrint: 'buy',
+          offTheShelfQuery: 'Seeed Studio XIAO ESP32C3 MOSFET switch module',
+          confidence: 0.96,
+          partId: 'mcu-board',
+          bomRef: 'bom-esp32-mosfet',
+        },
+      ],
+    },
+    {
+      video: 'https://www.youtube.com/results?search_query=esp32+capacitive+soil+moisture+pump+build',
+      t: 164,
+      image: makeBlueprintFrameSvg(
+        '2:44 (t=164s)',
+        'Capacitive Moisture Probe & Labyrinth Drip Emitter Spikes',
+        ['OTS-02: Capacitive Probe v1.2', 'PRT-07: Root-Zone Emitter Spike x2'],
+        '#f59e0b'
+      ),
+      description:
+        'Root-zone delivery assembly pairing two 3D-printed conical labyrinth emitter spikes with a corrosion-free capacitive soil moisture sensor probe.',
+      captureMode: 'argon-thumbnail-fallback',
+      parts: [
+        {
+          name: 'Root-Zone Labyrinth Drip Emitter Spike (×2)',
+          function: 'Guides water directly to plant roots with cross-ribbed conical shaft and top 6mm barb.',
+          material: 'PETG (30% infill, zero supports)',
+          dims_mm: [30, 96, 30],
+          fasteners: '6mm barbed top inlet for 6mm ID silicone tubing',
+          buyOrPrint: 'print',
+          offTheShelfQuery: 'drip irrigation emitter stakes 1/4 inch barb',
+          confidence: 0.93,
+          partId: 'emitter-spike',
+          bomRef: 'bom-filament-petg',
+        },
+        {
+          name: 'Capacitive Soil Moisture Sensor Probe v1.2',
+          function: 'Measures soil dielectric permittivity (1.2V wet to 2.8V dry) without exposed metal electrodes.',
+          material: 'Conformal-coated FR4 PCB + JST-PH 3-pin lead',
+          dims_mm: [22, 98, 5],
+          fasteners: 'JST-PH 2.0mm 3-pin cable to controller ADC input',
+          buyOrPrint: 'buy',
+          offTheShelfQuery: 'capacitive soil moisture sensor v1.2 corrosion resistant',
+          confidence: 0.98,
+          partId: 'soil-sensor',
+          bomRef: 'bom-soil-sensor',
+        },
+      ],
     },
   ],
 };

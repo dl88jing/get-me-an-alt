@@ -61,56 +61,120 @@ export function BomSummary({ bom }: { bom: BomData }) {
   );
 }
 
-export function BomItemCard({ item, currency = 'USD' }: { item: BomItem; currency?: string }) {
+export function BomItemCard({
+  item,
+  currency = 'USD',
+  onSelectPartId,
+}: {
+  item: BomItem;
+  currency?: string;
+  onSelectPartId?: (partId: string) => void;
+}) {
   return (
-    <article className="card card-hover animate-slide-in p-4">
-      <div className="flex items-start justify-between gap-3">
-        <div className="min-w-0">
-          <p className="text-xs font-medium text-[#8b98a9]">
-            {item.partNumber} · {item.category}
-          </p>
-          <h3 className="mt-0.5 truncate font-medium">{item.name}</h3>
-          <p className="mt-1 text-sm leading-relaxed text-[#8b98a9]">
-            {item.specification}
+    <article
+      id={`bom-item-${item.id}`}
+      className="card card-hover animate-slide-in p-4 flex flex-col justify-between"
+    >
+      <div>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-xs font-medium text-[#8b98a9] font-mono">
+              {item.partNumber} · {item.category}
+            </p>
+            <h3 className="mt-0.5 truncate font-medium text-white">{item.name}</h3>
+            <p className="mt-1 text-sm leading-relaxed text-[#8b98a9]">
+              {item.specification}
+            </p>
+          </div>
+          <p className="shrink-0 text-right">
+            <span className="block font-semibold text-white">
+              {formatMoney(item.totalPrice, currency)}
+            </span>
+            <span className="text-xs text-[#8b98a9]">
+              {item.qty} × {formatMoney(item.unitPrice, currency)} / {item.unit}
+            </span>
           </p>
         </div>
-        <p className="shrink-0 text-right">
-          <span className="block font-semibold">{formatMoney(item.totalPrice, currency)}</span>
-          <span className="text-xs text-[#8b98a9]">
-            {item.qty} × {formatMoney(item.unitPrice, currency)} / {item.unit}
-          </span>
-        </p>
+        {item.notes ? <p className="mt-2 text-sm text-[#8b98a9]">{item.notes}</p> : null}
       </div>
-      {item.notes ? <p className="mt-2 text-sm text-[#8b98a9]">{item.notes}</p> : null}
-      <div className="mt-3 flex flex-wrap items-center gap-2">
-        <RetailerBadge retailer={item.primaryRetailer} />
-        <a
-          href={item.primaryUrl}
-          target="_blank"
-          rel="noreferrer"
-          className="text-sm font-medium text-[#3fb950] hover:underline"
-        >
-          Buy at {item.primaryRetailer} →
-        </a>
-        {item.retailerLinks
-          .filter((l) => l.retailer !== item.primaryRetailer)
-          .map((l) => (
-            <a
-              key={l.retailer}
-              href={l.url}
-              target="_blank"
-              rel="noreferrer"
-              className="text-sm text-[#8b98a9] hover:text-[#e6edf3] hover:underline"
-            >
-              {l.retailer} ({formatMoney(l.estPrice, currency)})
-            </a>
-          ))}
+      <div>
+        <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-[#232c38] pt-3">
+          <RetailerBadge retailer={item.primaryRetailer} />
+          <a
+            href={item.primaryUrl}
+            target="_blank"
+            rel="noreferrer"
+            className="text-sm font-medium text-[#3fb950] hover:underline"
+          >
+            Buy at {item.primaryRetailer} ({formatMoney(item.totalPrice, currency)}) →
+          </a>
+          {item.retailerLinks
+            .filter((l) => l.retailer !== item.primaryRetailer)
+            .map((l) => (
+              <a
+                key={l.retailer}
+                href={l.url}
+                target="_blank"
+                rel="noreferrer"
+                className="text-sm text-[#8b98a9] hover:text-[#e6edf3] hover:underline"
+              >
+                {l.retailer} ({formatMoney(l.estPrice, currency)})
+              </a>
+            ))}
+        </div>
+        {item.linkedPartIds.length > 0 ? (
+          <div className="mt-2 flex flex-wrap items-center gap-1.5 text-xs text-[#8b98a9]">
+            <span>Linked 3D parts:</span>
+            {item.linkedPartIds.map((pid) =>
+              onSelectPartId ? (
+                <button
+                  key={pid}
+                  type="button"
+                  onClick={() => onSelectPartId(pid)}
+                  className="rounded border border-emerald-500/30 bg-emerald-500/10 px-1.5 py-0.5 font-mono text-[11px] text-emerald-300 hover:bg-emerald-500/20"
+                >
+                  {pid}
+                </button>
+              ) : (
+                <span
+                  key={pid}
+                  className="rounded bg-[#232c38] px-1.5 py-0.5 font-mono text-[11px] text-[#e6edf3]"
+                >
+                  {pid}
+                </span>
+              )
+            )}
+          </div>
+        ) : null}
       </div>
-      {item.linkedPartIds.length > 0 ? (
-        <p className="mt-2 text-xs text-[#8b98a9]">
-          Printed parts: {item.linkedPartIds.join(', ')}
-        </p>
-      ) : null}
     </article>
   );
 }
+
+export function BomTab({
+  bom,
+  onSelectPartId,
+}: {
+  bom: BomData;
+  analysis?: unknown;
+  design?: unknown;
+  onSelectPartId?: (partId: string) => void;
+}) {
+  return (
+    <div className="space-y-6" data-testid="bom-tab">
+      <BomSummary bom={bom} />
+      <div className="grid gap-4 md:grid-cols-2">
+        {bom.items.map((item) => (
+          <BomItemCard
+            key={item.id}
+            item={item}
+            currency={bom.currency}
+            onSelectPartId={onSelectPartId}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+export default BomTab;

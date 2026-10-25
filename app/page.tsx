@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { ShowcaseBuild } from '../components/ui/ShowcaseBuild';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -276,7 +277,9 @@ export default function LandingPage() {
     return () => obs.disconnect();
   }, []);
 
-  const readImageFile = (file: File) => {
+  const handleImageFile = (file: File | undefined | null) => {
+    if (!file) return;
+    setError(null);
     const reader = new FileReader();
     reader.onload = () => {
       const dataUrl = String(reader.result || '');
@@ -294,17 +297,34 @@ export default function LandingPage() {
   };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    readImageFile(file);
+    handleImageFile(e.target.files?.[0]);
+  };
+
+  const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
+
+  const handlePhotoDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDraggingPhoto(false);
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      handleImageFile(file);
+    } else if (file) {
+      setError('Please drop an image file (PNG, JPG, WebP, etc.).');
+    }
   };
 
   const handleDrop = (e: React.DragEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsDragging(false);
+    setIsDraggingPhoto(false);
     const file = e.dataTransfer.files?.[0];
     if (file && file.type.startsWith('image/')) {
-      readImageFile(file);
+      handleImageFile(file);
+      return;
+    } else if (file) {
+      setError('Please drop an image file (PNG, JPG, WebP, etc.).');
       return;
     }
     const droppedText = e.dataTransfer.getData('text/plain');
@@ -500,11 +520,25 @@ export default function LandingPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-white/10 text-xs text-slate-300">
               {/* Drag-drop or click image upload */}
               <div className="flex flex-wrap items-center gap-3">
-                <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-xs font-medium text-slate-200 hover:border-[#00f5a0]/60 hover:text-[#00f5a0] transition-colors">
+                <label
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingPhoto(true);
+                  }}
+                  onDragLeave={() => setIsDraggingPhoto(false)}
+                  onDrop={handlePhotoDrop}
+                  className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 font-mono text-xs font-medium transition-colors ${
+                    isDraggingPhoto
+                      ? 'border-[#00f5a0] bg-[#00f5a0]/20 text-emerald-200'
+                      : 'border-white/15 bg-white/[0.04] text-slate-200 hover:border-[#00f5a0]/60 hover:text-[#00f5a0]'
+                  }`}
+                >
                   <Upload className="h-3.5 w-3.5 text-[#00f5a0]" />
-                  {imageFile
-                    ? `Photo: ${imageFile.name}`
-                    : 'Upload or Drop Gadget Photo'}
+                  {isDraggingPhoto
+                    ? 'Drop photo to upload'
+                    : imageFile
+                      ? `Photo: ${imageFile.name}`
+                      : 'Upload or drop a gadget photo'}
                   <input
                     type="file"
                     accept="image/*"
@@ -901,6 +935,9 @@ export default function LandingPage() {
           })}
         </div>
       </section>
+
+      {/* Showcase: finished build */}
+      <ShowcaseBuild />
 
       {/* =====================================================================
           ACT VI — FOOTER CTA
