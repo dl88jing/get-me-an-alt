@@ -35,6 +35,7 @@ import {
   writeCritiqueArtifact,
 } from './critic';
 import { runBomAgent } from './bom';
+import { runCadAgent } from './cad';
 import { runInstructionsAgent } from './instructions';
 import { getObjectsDir } from './runner';
 
@@ -1123,29 +1124,79 @@ async function executePipelineStages(
       summary: `Compiled ${bomRes.data.items.length} BOM line items — Total $${bomRes.data.summary.totalDiyCost.toFixed(2)} (You save $${bomRes.data.summary.totalSavings.toFixed(2)})`,
     });
 
-    // 5. CAD & Plate Packer Stage
+    // 6. CAD & Plate Packer Stage
     beginStage(
       'cad',
-      'Generating parametric STL meshes in parts/*.stl and packing onto minimum build plates...'
+      'Synthesizing parametric OpenSCAD modules, compiling STLs via openscad-wasm & packing onto minimum build plates...'
     );
     const cadStart = Date.now();
-    const platesData = buildBaselinePlatesAndStls(
-      manifest.design,
-      cwd,
-      manifest.input.printerId || 'bambu-a1'
-    );
-    manifest.plates = platesData;
-    makeLogger('cad')({
-      timestamp: new Date().toISOString(),
-      level: 'success',
-      message: `Generated ${platesData.parts.length} STL files in parts/*.stl and packed onto ${platesData.totalPlates} plate(s) (${platesData.totalWeightGrams}g total).`,
-    });
-    finishStage('cad', {
-      runner: designRes.runner,
-      durationMs: Date.now() - cadStart + 220,
-      artifact: platesData,
-      summary: `Exported ${platesData.parts.length} STL parts packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
-    });
+    const cadLogger = makeLogger('cad');
+    try {
+      const cadRes = await runCadAgent({
+        design: manifest.design,
+        analysis: manifest.analysis,
+        cwd,
+        objectId: manifest.id,
+        printerId: targetPrinterId,
+        maxRetries: 3,
+        preferRestForSpeed: Boolean(process.env.VERCEL),
+        manifest,
+        onLog: (entry) => {
+          const st = getStage('cad');
+          st.logs.push(entry);
+          saveManifest(cwd, manifest);
+        },
+        onEvent: (ev) => {
+          emitSseEvent(cwd, manifest, {
+            agent: ev.agent || 'cad',
+            phase: ev.phase,
+            message: ev.message,
+            data:
+              ev.data && typeof ev.data === 'object'
+                ? (ev.data as Record<string, unknown>)
+                : undefined,
+            ts: ev.ts,
+          });
+        },
+      });
+      const { bundle: _bundle, ...platesArtifact } = cadRes.data;
+      const platesData = platesArtifact as unknown as PlatesData;
+      manifest.plates = platesData;
+      finishStage('cad', {
+        runner: cadRes.runner,
+        command: cadRes.command,
+        conversationId: cadRes.conversationId,
+        durationMs: cadRes.durationMs || Date.now() - cadStart,
+        tokensUsed: cadRes.tokensUsed,
+        artifact: platesData,
+        summary: `Compiled ${platesData.parts.length} OpenSCAD/STL parts & packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
+      });
+    } catch (cadErr) {
+      const warnMsg =
+        cadErr instanceof Error ? cadErr.message : String(cadErr);
+      cadLogger({
+        timestamp: new Date().toISOString(),
+        level: 'warn',
+        message: `CAD Agent OpenSCAD compiler fallback triggered (${warnMsg}) — using baseline parametric STL & plate packer.`,
+      });
+      const platesData = buildBaselinePlatesAndStls(
+        manifest.design,
+        cwd,
+        targetPrinterId
+      );
+      manifest.plates = platesData;
+      cadLogger({
+        timestamp: new Date().toISOString(),
+        level: 'success',
+        message: `Generated ${platesData.parts.length} STL files in parts/*.stl and packed onto ${platesData.totalPlates} plate(s) (${platesData.totalWeightGrams}g total).`,
+      });
+      finishStage('cad', {
+        runner: designRes.runner,
+        durationMs: Date.now() - cadStart + 220,
+        artifact: platesData,
+        summary: `Exported ${platesData.parts.length} STL parts packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
+      });
+    }
 
     // 6. Instructions Agent
     beginStage(
