@@ -7,6 +7,7 @@ import { AgentLogEntry, RunnerMode } from '../types';
 export interface RunAgentOptions<T> {
   stageName: string;
   prompt: string;
+  retryPrompt?: string;
   cwd: string;
   artifactFilename?: string;
   inlineImage?: {
@@ -16,8 +17,46 @@ export interface RunAgentOptions<T> {
   useGoogleSearchGrounding?: boolean;
   preferRestForSpeed?: boolean;
   timeoutMs?: number;
+  pipelineStartMs?: number;
+  pipelineBudgetMs?: number;
   onLog?: (entry: AgentLogEntry) => void;
   fallbackGenerator: () => T;
+}
+
+export const GLOBAL_PIPELINE_BUDGET_MS = 240_000;
+
+const pipelineStartByCwd = new Map<string, number>();
+
+export function registerPipelineStart(cwd: string, startMs = Date.now()): void {
+  if (cwd) {
+    pipelineStartByCwd.set(cwd, startMs);
+  }
+}
+
+export function getRemainingPipelineBudgetMs(
+  cwd?: string,
+  budgetMs = GLOBAL_PIPELINE_BUDGET_MS,
+  explicitStartMs?: number
+): number {
+  const startMs = explicitStartMs ?? (cwd ? pipelineStartByCwd.get(cwd) : undefined);
+  if (!startMs) return budgetMs;
+  return Math.max(0, budgetMs - (Date.now() - startMs));
+}
+
+function buildCompactRetryPrompt(prompt: string): string {
+  const trimmed = prompt.trim();
+  if (trimmed.length <= 1600) {
+    return `${trimmed}\n\nBe concise (1 short sentence per text field). Return ONLY valid JSON.`;
+  }
+  const head = trimmed.slice(0, 750);
+  const schemaIdx = Math.max(
+    trimmed.lastIndexOf('Return ONLY'),
+    trimmed.lastIndexOf('Analyze this product and return'),
+    trimmed.lastIndexOf('Respond with ONLY')
+  );
+  const tail =
+    schemaIdx !== -1 ? trimmed.slice(schemaIdx) : trimmed.slice(-1100);
+  return `${head}\n\n${tail}\n\nIMPORTANT: Keep all string descriptions brief (under 15 words each) and return ONLY raw valid JSON.`;
 }
 
 export interface RunAgentResult<T> {
@@ -292,14 +331,20 @@ async function runWithGeminiRest<T>(
   options: RunAgentOptions<T>,
   apiKey: string,
   model: string,
-  emitLog: (level: AgentLogEntry['level'], message: string) => void
+  emitLog: (level: AgentLogEntry['level'], message: string) => void,
+  isRetry = false
 ): Promise<RunAgentResult<T> | null> {
   const startTime = Date.now();
   const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`;
 
+  const useSearchTool = Boolean(options.useGoogleSearchGrounding && !isRetry);
+  const promptText = isRetry
+    ? options.retryPrompt || buildCompactRetryPrompt(options.prompt)
+    : options.prompt;
+
   emitLog(
     'cmd',
-    `POST ${endpoint} ${options.useGoogleSearchGrounding ? '[tools: google_search]' : '[responseMimeType: application/json]'}${options.inlineImage ? ' [+inlineData image]' : ''}`
+    `POST ${endpoint} ${useSearchTool ? '[tools: google_search]' : '[responseMimeType: application/json]'}${options.inlineImage ? ' [+inlineData image]' : ''}${isRetry ? ' [retry: compact+LOW]' : ''}`
   );
 
   const parts: Array<Record<string, unknown>> = [];
@@ -312,12 +357,9 @@ async function runWithGeminiRest<T>(
     });
   }
   parts.push({
-    text: `${options.prompt}\n\nRespond with ONLY valid JSON matching the schema.`,
+    text: `${promptText}\n\nRespond with ONLY valid JSON matching the schema.`,
   });
 
-  const useSearchTool = Boolean(
-    options.useGoogleSearchGrounding && !process.env.VERCEL
-  );
   const body: Record<string, unknown> = {
     contents: [{ role: 'user', parts }],
     generationConfig: {
@@ -333,16 +375,18 @@ async function runWithGeminiRest<T>(
 
   try {
     const controller = new AbortController();
-    const defaultTimeout = process.env.VERCEL
-      ? options.stageName === 'Analyst'
-        ? 14500
-        : 7500
-      : 45000;
-    const effectiveTimeoutMs = options.timeoutMs
-      ? process.env.VERCEL
-        ? Math.min(options.timeoutMs, defaultTimeout)
-        : options.timeoutMs
-      : defaultTimeout;
+    const requestedTimeoutMs = useSearchTool
+      ? Math.min(options.timeoutMs || 25000, 25000)
+      : isRetry
+      ? Math.min(options.timeoutMs || 25000, 30000)
+      : Math.min(options.timeoutMs || 30000, 40000);
+    const remainingBudgetMs = getRemainingPipelineBudgetMs(
+      options.cwd,
+      options.pipelineBudgetMs || GLOBAL_PIPELINE_BUDGET_MS,
+      options.pipelineStartMs
+    );
+    const budgetCapMs = Math.max(5000, remainingBudgetMs - 4000);
+    const effectiveTimeoutMs = Math.min(requestedTimeoutMs, budgetCapMs);
     const timer = setTimeout(() => controller.abort(), effectiveTimeoutMs);
 
     const res = await fetch(endpoint, {
@@ -483,7 +527,8 @@ export async function runGeminiAgent<T>(
       options,
       apiKey,
       model,
-      emitLog
+      emitLog,
+      false
     );
     if (restResult) {
       if (options.artifactFilename) {
@@ -493,6 +538,34 @@ export async function runGeminiAgent<T>(
         );
       }
       return restResult;
+    }
+
+    const remainingMs = getRemainingPipelineBudgetMs(
+      options.cwd,
+      options.pipelineBudgetMs || GLOBAL_PIPELINE_BUDGET_MS,
+      options.pipelineStartMs
+    );
+    if (remainingMs > 6000) {
+      emitLog(
+        'info',
+        `Retrying ${options.stageName} once with shorter prompt and thinkingLevel LOW...`
+      );
+      const retryResult = await runWithGeminiRest(
+        options,
+        apiKey,
+        model,
+        emitLog,
+        true
+      );
+      if (retryResult) {
+        if (options.artifactFilename) {
+          fs.writeFileSync(
+            path.join(options.cwd, options.artifactFilename),
+            JSON.stringify(retryResult.data, null, 2)
+          );
+        }
+        return retryResult;
+      }
     }
   } else {
     emitLog(

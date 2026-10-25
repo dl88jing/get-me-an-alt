@@ -519,16 +519,41 @@ Return ONLY a valid JSON object matching this exact schema:
 }
 Include at least 7 diverse sources covering kinds: "video", "schematic", "pdf", "open-design", "teardown", "instructions", "product" (and types: "printable", "github", "video", "schematic", "teardown", "article").`;
 
+  const isSampleWaterer =
+    /\b(plant|waterer|auto-waterer|blumat|sustee|hydropulse|terracotta)\b/i.test(
+      `${analysis.objectName} ${analysis.slug}`
+    );
+
+  const genericQuerySummary = `Researched open-source 3D printable mechanisms, teardowns, schematics, and off-the-shelf hardware standards for ${analysis.objectName}.`;
+  const genericSearchQueries = [
+    `${analysis.objectName} 3D print model printables`,
+    `${analysis.objectName} teardown internal mechanism`,
+    `${analysis.objectName} DIY replacement bracket CAD`,
+    `${analysis.objectName} dimensions specification`,
+  ];
+  const genericTechnicalInsights = [
+    `Replace proprietary molded housings on ${analysis.objectName} with 4-perimeter PETG printed brackets and M3 brass heat-set inserts.`,
+    `Use standard N52 neodymium magnets and EPDM rubber pads for high-retention clamping and vibration isolation.`,
+    `Maintain 0.30mm radial clearance on sliding and articulated joints for smooth tool-free adjustment.`,
+  ];
+  const genericRefDimensions: Record<string, string> = {
+    'Overall Envelope': `${analysis.overallDimensionsMm.join(' × ')} mm`,
+    'Primary Fastener Standard': 'M3 × 12mm Socket Head Cap Screws',
+    'Minimum Wall Thickness': '2.4 mm (6 perimeters at 0.4mm nozzle)',
+  };
+
+  const retryPrompt = `Provide open-source 3D printing & teardown research for "${analysis.objectName}" (${analysis.category}). Use honest search URLs (printables.com/search, youtube.com/results, github.com/search, ifixit.com/Search). Return ONLY valid JSON with keys: querySummary, groundingUsed (false), searchQueries (4 strings), sources (7 items with id, title, url, domain, type, kind, summary, keyTakeaways, relevanceScore), technicalInsights (3 strings), referenceDimensions (object).`;
+
   const result = await runGeminiAgent<ResearchData>({
     stageName: 'Researcher',
     prompt,
+    retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'sources.json',
     useGoogleSearchGrounding: true,
+    timeoutMs: 25000,
     onLog: input.onLog,
     fallbackGenerator: () => {
-      const isSampleWaterer =
-        analysis.slug.includes('water') || analysis.slug.includes('plant');
       const baseSources: EnrichedResearchSource[] = isSampleWaterer
         ? SAMPLE_SOURCES.sources.map((s) => ({
             ...s,
@@ -538,12 +563,20 @@ Include at least 7 diverse sources covering kinds: "video", "schematic", "pdf", 
         : [];
       const merged = curateResearchSources(baseSources, honestFallbacks, 16);
       return {
-        ...SAMPLE_SOURCES,
         querySummary: isSampleWaterer
           ? SAMPLE_SOURCES.querySummary
-          : `Researched open-source 3D printable mechanisms, teardowns, schematics, and off-the-shelf hardware standards for ${analysis.objectName}.`,
+          : genericQuerySummary,
         groundingUsed: false,
+        searchQueries: isSampleWaterer
+          ? SAMPLE_SOURCES.searchQueries
+          : genericSearchQueries,
         sources: merged,
+        technicalInsights: isSampleWaterer
+          ? SAMPLE_SOURCES.technicalInsights
+          : genericTechnicalInsights,
+        referenceDimensions: isSampleWaterer
+          ? SAMPLE_SOURCES.referenceDimensions
+          : genericRefDimensions,
       };
     },
   });
@@ -651,21 +684,29 @@ Include at least 7 diverse sources covering kinds: "video", "schematic", "pdf", 
   );
 
   const normalized: ResearchData = {
-    querySummary: d?.querySummary || SAMPLE_SOURCES.querySummary,
+    querySummary:
+      d?.querySummary ||
+      (isSampleWaterer ? SAMPLE_SOURCES.querySummary : genericQuerySummary),
     groundingUsed: liveGroundingOccurred,
     searchQueries:
       Array.isArray(d?.searchQueries) && d.searchQueries.length > 0
         ? d.searchQueries
-        : SAMPLE_SOURCES.searchQueries,
+        : isSampleWaterer
+        ? SAMPLE_SOURCES.searchQueries
+        : genericSearchQueries,
     sources: curatedSources,
     technicalInsights:
       Array.isArray(d?.technicalInsights) && d.technicalInsights.length > 0
         ? d.technicalInsights
-        : SAMPLE_SOURCES.technicalInsights,
+        : isSampleWaterer
+        ? SAMPLE_SOURCES.technicalInsights
+        : genericTechnicalInsights,
     referenceDimensions:
       d?.referenceDimensions && Object.keys(d.referenceDimensions).length > 0
         ? d.referenceDimensions
-        : SAMPLE_SOURCES.referenceDimensions,
+        : isSampleWaterer
+        ? SAMPLE_SOURCES.referenceDimensions
+        : genericRefDimensions,
   };
 
   if (input.cwd) {

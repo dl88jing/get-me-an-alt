@@ -117,15 +117,136 @@ Return ONLY valid JSON matching:
   "parts": [ ... ]
 }`;
 
+  const isPlantWaterer =
+    /\b(plant|waterer|auto-waterer|blumat|sustee|hydropulse|terracotta)\b/i.test(
+      `${analysis.objectName} ${analysis.slug}`
+    );
+
+  const cleanLabel = (s: string, fallback: string) =>
+    s.replace(/^(PRT|OTS)-\d+\s*[:·-]?\s*/i, '').trim() || fallback;
+
+  const defaultPrintedLabels =
+    Array.isArray(analysis.whatGetsPrinted) && analysis.whatGetsPrinted.length > 0
+      ? analysis.whatGetsPrinted
+      : [
+          `PRT-01 ${analysis.objectName} Primary Base Chassis`,
+          `PRT-02 ${analysis.objectName} Articulated Mounting Bracket`,
+          `PRT-03 ${analysis.objectName} Tension Clamp Jaw`,
+          `PRT-04 ${analysis.objectName} Retention Cradle & Faceplate`,
+          `PRT-05 ${analysis.objectName} Locking Collar & Thumbwheel`,
+          `PRT-06 ${analysis.objectName} Protective Back Cover`,
+        ];
+
+  const defaultBoughtLabels =
+    Array.isArray(analysis.whatGetsBought) && analysis.whatGetsBought.length > 0
+      ? analysis.whatGetsBought
+      : [
+          'OTS-01 M3×12mm Stainless Socket Head Cap Screws & Brass Heat-Set Inserts',
+          'OTS-02 N52 Neodymium Disc Magnets (10×3mm, 12-Pack)',
+          'OTS-03 High-Friction 2mm EPDM Rubber Grip Pads',
+          'OTS-04 Stainless Steel Compression Spring & Detent Pin Set',
+        ];
+
+  const fallbackParts: DesignPart[] =
+    isRevision && input.previousDesign
+      ? input.previousDesign.parts
+      : isPlantWaterer
+      ? SAMPLE_DESIGN.parts
+      : [
+          ...defaultPrintedLabels.slice(0, 6).map((label, i) => ({
+            id: `prt-part-${i + 1}`,
+            partNumber: `PRT-0${i + 1}`,
+            name: cleanLabel(label, `Printed Part ${i + 1}`),
+            kind: 'printed' as const,
+            dims_mm: [
+              Math.max(40, 110 - i * 10),
+              Math.max(20, 45 - i * 4),
+              Math.max(40, 95 - i * 8),
+            ] as [number, number, number],
+            shape: (
+              ['enclosure', 'bracket', 'cylinder', 'box', 'tube', 'cone'] as const
+            )[i % 6],
+            params: {
+              wallThickness: 2.4,
+              clearanceMm: 0.3,
+              maxOverhangDeg: 42,
+              dfmVerified: true,
+            },
+            position: [0, 18 + i * 22, 0] as [number, number, number],
+            rotation: [0, 0, 0] as [number, number, number],
+            explode: [
+              Math.round(Math.cos(i) * 65),
+              (i - 2) * 30,
+              Math.round(Math.sin(i) * 65),
+            ] as [number, number, number],
+            color: PALETTE[i % PALETTE.length],
+            material: 'PETG / PLA+',
+            quantity: 1,
+            description: `3D-printed structural component for ${analysis.objectName}.`,
+            roleInAssembly: cleanLabel(label, `Printed Part ${i + 1}`),
+          })),
+          ...defaultBoughtLabels.slice(0, 4).map((label, i) => ({
+            id: `ots-part-${i + 1}`,
+            partNumber: `OTS-0${i + 1}`,
+            name: cleanLabel(label, `Hardware Module ${i + 1}`),
+            kind: 'purchased' as const,
+            dims_mm: [45, 25, 45] as [number, number, number],
+            shape: 'box' as const,
+            params: { width: 45, height: 25, depth: 45 },
+            position: [
+              20 * (i % 2 ? 1 : -1),
+              30 + i * 20,
+              0,
+            ] as [number, number, number],
+            rotation: [0, 0, 0] as [number, number, number],
+            explode: [i % 2 ? 80 : -80, 25 + i * 15, 40] as [
+              number,
+              number,
+              number,
+            ],
+            color: '#64748b',
+            bomRef: `bom-${i + 1}`,
+            material: 'Off-the-Shelf Hardware',
+            quantity: 1,
+            description: `Off-the-shelf component for ${analysis.objectName}.`,
+            roleInAssembly: cleanLabel(label, `Hardware Module ${i + 1}`),
+          })),
+        ];
+
+  const genericPhilosophy = isPlantWaterer
+    ? SAMPLE_DESIGN.designPhilosophy
+    : `Modular 3D-printed structural architecture for ${analysis.objectName} combining support-free PETG parts with standard metric off-the-shelf hardware.`;
+  const genericAssemblyNotes = isPlantWaterer
+    ? SAMPLE_DESIGN.assemblyNotes
+    : [
+        `Print all structural parts for ${analysis.objectName} in PETG or PLA+ at 0.20mm layer height with 4 perimeters (2.4mm walls) and 25% gyroid infill.`,
+        'Install M3 brass heat-set inserts into mounting bosses before bolting structural brackets together.',
+        'Apply non-slip EPDM rubber pads and verify smooth clamp/hinge motion before final torque.',
+      ];
+
+  const fallbackDesign: DesignSpec = {
+    objectName: analysis.objectName,
+    designPhilosophy: genericPhilosophy,
+    overallBoundingBoxMm: analysis.overallDimensionsMm || [145, 120, 110],
+    printedPartsCount: fallbackParts.filter((p) => p.kind === 'printed').length,
+    purchasedPartsCount: fallbackParts.filter((p) => p.kind === 'purchased')
+      .length,
+    assemblyNotes: genericAssemblyNotes,
+    parts: fallbackParts,
+  };
+
+  const retryPrompt = `Decompose "${analysis.objectName}" into 5 3D-printed parts ("kind":"printed", PRT-01..PRT-05) and 3 off-the-shelf parts ("kind":"purchased", OTS-01..OTS-03) for printer ${printer.name}. Planned printed: ${JSON.stringify(defaultPrintedLabels.slice(0, 5))}. Planned purchased: ${JSON.stringify(defaultBoughtLabels.slice(0, 3))}. Return ONLY valid JSON with keys: objectName, designPhilosophy, overallBoundingBoxMm, printedPartsCount, purchasedPartsCount, assemblyNotes (3 strings), parts (each with id, partNumber, name, kind, dims_mm:[w,h,d], shape, params, position:[x,y,z], rotation:[0,0,0], explode:[ex,ey,ez], color, material, quantity:1, description, roleInAssembly).`;
+
   const result = await runGeminiAgent<DesignSpec>({
     stageName: isRevision
       ? `Designer-Rev-${input.revisionRound}`
       : 'Designer',
     prompt,
+    retryPrompt: isRevision ? undefined : retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'design.json',
-    preferRestForSpeed: isRevision,
-    timeoutMs: isRevision ? 15000 : 25000,
+    preferRestForSpeed: true,
+    timeoutMs: isRevision ? 20000 : 30000,
     onLog: input.onLog,
     fallbackGenerator: () =>
       isRevision && input.previousDesign && input.critiqueIssues
@@ -135,57 +256,10 @@ Return ONLY valid JSON matching:
             input.printerId,
             input.revisionRound
           ).updatedDesign
-        : {
-            ...SAMPLE_DESIGN,
-            objectName: analysis.objectName,
-          },
+        : fallbackDesign,
   });
 
   const d = result.data;
-  const cleanLabel = (s: string, fallback: string) =>
-    s.replace(/^(PRT|OTS)-\d+\s*[:·-]?\s*/i, '').trim() || fallback;
-  const fallbackParts: DesignPart[] =
-    isRevision && input.previousDesign
-      ? input.previousDesign.parts
-      : analysis.slug.includes('water') || analysis.slug.includes('plant')
-      ? SAMPLE_DESIGN.parts
-      : [
-          ...(analysis.whatGetsPrinted || []).slice(0, 6).map((label, i) => ({
-            id: `prt-part-${i + 1}`,
-            partNumber: `PRT-0${i + 1}`,
-            name: cleanLabel(label, `Printed Part ${i + 1}`),
-            kind: 'printed' as const,
-            dims_mm: [Math.max(40, 110 - i * 10), Math.max(20, 45 - i * 4), Math.max(40, 95 - i * 8)] as [number, number, number],
-            shape: (['enclosure', 'bracket', 'cylinder', 'box', 'tube', 'cone'] as const)[i % 6],
-            params: { wallThickness: 2.4, clearanceMm: 0.3, maxOverhangDeg: 42, dfmVerified: true },
-            position: [0, 18 + i * 22, 0] as [number, number, number],
-            rotation: [0, 0, 0] as [number, number, number],
-            explode: [Math.round(Math.cos(i) * 65), (i - 2) * 30, Math.round(Math.sin(i) * 65)] as [number, number, number],
-            color: PALETTE[i % PALETTE.length],
-            material: 'PETG / PLA+',
-            quantity: 1,
-            description: `3D-printed structural component for ${analysis.objectName}.`,
-            roleInAssembly: cleanLabel(label, `Printed Part ${i + 1}`),
-          })),
-          ...(analysis.whatGetsBought || []).slice(0, 4).map((label, i) => ({
-            id: `ots-part-${i + 1}`,
-            partNumber: `OTS-0${i + 1}`,
-            name: cleanLabel(label, `Hardware Module ${i + 1}`),
-            kind: 'purchased' as const,
-            dims_mm: [45, 25, 45] as [number, number, number],
-            shape: 'box' as const,
-            params: { width: 45, height: 25, depth: 45 },
-            position: [20 * (i % 2 ? 1 : -1), 30 + i * 20, 0] as [number, number, number],
-            rotation: [0, 0, 0] as [number, number, number],
-            explode: [i % 2 ? 80 : -80, 25 + i * 15, 40] as [number, number, number],
-            color: '#64748b',
-            bomRef: `bom-${i + 1}`,
-            material: 'Off-the-Shelf Hardware',
-            quantity: 1,
-            description: `Off-the-shelf component for ${analysis.objectName}.`,
-            roleInAssembly: cleanLabel(label, `Hardware Module ${i + 1}`),
-          })),
-        ];
   const rawParts =
     Array.isArray(d?.parts) && d.parts.length >= 4 ? d.parts : fallbackParts;
 
@@ -303,14 +377,14 @@ Return ONLY valid JSON matching:
 
   const baseNormalized: DesignSpec = {
     objectName: analysis.objectName,
-    designPhilosophy: d?.designPhilosophy || SAMPLE_DESIGN.designPhilosophy,
+    designPhilosophy: d?.designPhilosophy || genericPhilosophy,
     overallBoundingBoxMm: analysis.overallDimensionsMm,
     printedPartsCount: printedCount,
     purchasedPartsCount: purchasedCount,
     assemblyNotes:
       Array.isArray(d?.assemblyNotes) && d.assemblyNotes.length > 0
         ? d.assemblyNotes
-        : SAMPLE_DESIGN.assemblyNotes,
+        : genericAssemblyNotes,
     parts: normalizedParts,
   };
 

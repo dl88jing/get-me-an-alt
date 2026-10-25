@@ -279,31 +279,25 @@ Return ONLY valid JSON matching this schema:
   ]
 }`;
 
+  const retryPrompt = `Compare prices across Amazon, Walmart, Home Depot, and McMaster-Carr for "${objectName}" BOM items: ${JSON.stringify(bom.items.map((i) => ({ id: i.id, partNumber: i.partNumber, name: i.name, currentTotalPrice: i.totalPrice })))}. Return ONLY valid JSON with key "lines" (array of {id, partNumber, name, quotes:[{retailer, url, price, inStock:true}], cheapestRetailer, cheapestPrice, cheapestUrl}).`;
+
   let agentResult: RunAgentResult<ArgonPriceHunterResponse>;
   try {
-    agentResult = process.env.VERCEL
-      ? {
-          data: {
-            lines: bom.items.map((item) => buildFallbackQuotesForItem(item)),
-          },
-          runner: 'gemini-rest',
-          model: process.env.GEMINI_MODEL || 'gemini-4-argon',
-          durationMs: 320,
-        }
-      : await runGeminiAgent<ArgonPriceHunterResponse>({
-          stageName: 'PriceHunter',
-          prompt,
-          cwd,
-          useGoogleSearchGrounding: true,
-          preferRestForSpeed: false,
-          timeoutMs: 30000,
-          onLog: (entry) => {
-            input.onLog?.(entry);
-          },
-          fallbackGenerator: () => ({
-            lines: bom.items.map((item) => buildFallbackQuotesForItem(item)),
-          }),
-        });
+    agentResult = await runGeminiAgent<ArgonPriceHunterResponse>({
+      stageName: 'PriceHunter',
+      prompt,
+      retryPrompt,
+      cwd,
+      useGoogleSearchGrounding: true,
+      preferRestForSpeed: false,
+      timeoutMs: 25000,
+      onLog: (entry) => {
+        input.onLog?.(entry);
+      },
+      fallbackGenerator: () => ({
+        lines: bom.items.map((item) => buildFallbackQuotesForItem(item)),
+      }),
+    });
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : String(err);
     emitEvent('error', `Price Hunter grounding warning: ${errMsg}`, {
@@ -459,7 +453,7 @@ Return ONLY valid JSON matching this schema:
   const originalRetailPrice =
     Number(analysis?.originalProduct?.retailPrice) ||
     bom.summary.originalRetailPrice ||
-    149.0;
+    89.0;
   const totalSavings = Math.max(
     0,
     round2(originalRetailPrice - totalDiyCost)

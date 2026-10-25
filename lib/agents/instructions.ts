@@ -63,16 +63,62 @@ Follow the exact shared contract in COORDINATION.md for instructions.json:
 }
 Include 5 to 7 logical assembly steps covering all parts in design.json.`;
 
+  const isPlantWaterer =
+    /\b(plant|waterer|auto-waterer|blumat|sustee|hydropulse|terracotta)\b/i.test(
+      `${analysis.objectName} ${analysis.slug}`
+    );
+
+  const fallbackSteps: InstructionStep[] = isPlantWaterer
+    ? SAMPLE_INSTRUCTIONS.steps
+    : design.parts.slice(0, 7).map((part, idx) => ({
+        n: idx + 1,
+        title: `Install ${part.name}`,
+        partIds: [part.id],
+        tools:
+          part.kind === 'purchased'
+            ? ['2.5mm Hex Key']
+            : ['Hand Fit (Tool-Free)'],
+        note: `Align ${part.name} (${part.partNumber}) with the mating registration features on ${analysis.objectName} and secure into position.`,
+        motion: [
+          {
+            partId: part.id,
+            from: [
+              part.position[0] + part.explode[0],
+              part.position[1] + Math.max(60, part.explode[1]),
+              part.position[2] + part.explode[2],
+            ],
+            to: part.position,
+          },
+        ],
+      }));
+
+  const genericSafetyNotes = isPlantWaterer
+    ? SAMPLE_INSTRUCTIONS.safetyNotes
+    : [
+        'Dry-fit all 3D-printed mating interfaces before installing fasteners to verify smooth clearance.',
+        'Do not over-torque M3 screws in PETG/PLA+ bosses; tighten until snug against the mating shoulder.',
+      ];
+
+  const fallbackInstructions: InstructionsData = {
+    objectName: analysis.objectName,
+    estimatedTotalMinutes: analysis.estimatedAssemblyMinutes || 20,
+    difficulty: analysis.difficulty || 'Beginner',
+    safetyNotes: genericSafetyNotes,
+    steps: fallbackSteps,
+  };
+
+  const retryPrompt = `Create 5 to 6 IKEA-style 3D assembly steps for "${analysis.objectName}" using these exact part IDs: ${JSON.stringify(design.parts.map((p) => ({ id: p.id, name: p.name, position: p.position })))}. Return ONLY valid JSON with keys: objectName, estimatedTotalMinutes, difficulty, safetyNotes (2 strings), steps (each with n, title, partIds, tools, note, motion:[{partId, from:[x,y,z], to:[x,y,z]}]).`;
+
   const result = await runGeminiAgent<InstructionsData>({
     stageName: 'Instructions',
     prompt,
+    retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'instructions.json',
+    preferRestForSpeed: true,
+    timeoutMs: 30000,
     onLog: input.onLog,
-    fallbackGenerator: () => ({
-      ...SAMPLE_INSTRUCTIONS,
-      objectName: analysis.objectName,
-    }),
+    fallbackGenerator: () => fallbackInstructions,
   });
 
   const d = result.data;
@@ -145,30 +191,8 @@ Include 5 to 7 logical assembly steps covering all parts in design.json.`;
         motion,
       };
     });
-  } else if (
-    analysis.slug.includes('water') ||
-    analysis.slug.includes('plant')
-  ) {
-    normalizedSteps = SAMPLE_INSTRUCTIONS.steps;
   } else {
-    normalizedSteps = design.parts.slice(0, 7).map((part, idx) => ({
-      n: idx + 1,
-      title: `Install ${part.name}`,
-      partIds: [part.id],
-      tools: part.kind === 'purchased' ? ['2.5mm Hex Key'] : ['Hand Fit (Tool-Free)'],
-      note: `Align ${part.name} (${part.partNumber}) with the mating registration features and secure into position.`,
-      motion: [
-        {
-          partId: part.id,
-          from: [
-            part.position[0] + part.explode[0],
-            part.position[1] + Math.max(60, part.explode[1]),
-            part.position[2] + part.explode[2],
-          ],
-          to: part.position,
-        },
-      ],
-    }));
+    normalizedSteps = fallbackSteps;
   }
 
   const normalized: InstructionsData = {
@@ -179,7 +203,7 @@ Include 5 to 7 logical assembly steps covering all parts in design.json.`;
     safetyNotes:
       Array.isArray(d?.safetyNotes) && d.safetyNotes.length > 0
         ? d.safetyNotes
-        : SAMPLE_INSTRUCTIONS.safetyNotes,
+        : genericSafetyNotes,
     steps: normalizedSteps,
   };
 

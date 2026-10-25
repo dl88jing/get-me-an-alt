@@ -28,7 +28,7 @@ import {
 } from '../sample-data';
 import { getPrinterById } from '../printers';
 import { generateCadBundle } from '../cad';
-import { runAnalystAgent } from './analyst';
+import { parseUrlProductInfo, runAnalystAgent } from './analyst';
 import { runResearcherAgent } from './researcher';
 import { runTeardownAgent } from './teardown';
 import { runDesignerAgent } from './designer';
@@ -41,7 +41,7 @@ import { runBomAgent } from './bom';
 import { runPriceHunterAgent } from './price-hunter';
 import { runCadAgent } from './cad';
 import { runInstructionsAgent } from './instructions';
-import { getObjectsDir } from './runner';
+import { getObjectsDir, registerPipelineStart } from './runner';
 
 const globalForOrchestrator = globalThis as unknown as {
   __altEmitter?: EventEmitter;
@@ -936,15 +936,7 @@ export function startProjectPipeline(
     return buildSampleManifest(matchedPresetSlug);
   }
 
-  const urlSlug = options.url
-    ? options.url
-        .replace(/^https?:\/\/(www\.|store\.|us\.)?/i, '')
-        .replace(/\?.*$/, '')
-        .replace(/\.(html?|php|aspx?)$/i, '')
-        .split(/[\/._-]+/)
-        .filter((w) => w && w.length > 1 && !/^(com|org|net|io|co|en|us|products?|collections?|shop|item|dp)$/i.test(w))
-        .join(' ')
-    : '';
+  const urlSlug = options.url ? parseUrlProductInfo(options.url).title : '';
   const rawName =
     options.prompt?.trim() ||
     urlSlug ||
@@ -967,7 +959,11 @@ export function startProjectPipeline(
   const manifest: ProjectManifest = {
     id: folderName,
     slug: baseSlug,
-    title: options.prompt?.trim() || options.url?.trim() || 'Analyzing Gadget...',
+    title:
+      options.prompt?.trim() ||
+      urlSlug ||
+      options.url?.trim() ||
+      'Analyzing Gadget...',
     createdAt: now,
     updatedAt: now,
     status: 'running',
@@ -1161,6 +1157,9 @@ async function executePipelineStages(
   };
 
   try {
+    registerPipelineStart(cwd, Date.now());
+    const targetPrinterId = manifest.input.printerId || 'bambu-a1';
+
     // 1. Analyst Agent
     beginStage(
       'analyst',
@@ -1182,36 +1181,11 @@ async function executePipelineStages(
       summary: `Identified "${analystRes.data.objectName}" ($${analystRes.data.originalProduct.retailPrice} retail -> ~$${analystRes.data.targetDiyCost} DIY)`,
     });
 
-    // Pre-start Designer in parallel with Researcher on Vercel so total runtime stays <45s
-    const targetPrinterId = manifest.input.printerId || 'bambu-a1';
-    const earlyDesignPromise = process.env.VERCEL
-      ? runDesignerAgent({
-          analysis: manifest.analysis,
-          sources: SAMPLE_SOURCES,
-          printerId: targetPrinterId,
-          cwd,
-          onLog: makeLogger('designer'),
-        })
-      : null;
-
-    // 2. Researcher Agent
+    // 2. Researcher Agent + 2b. Video Teardown Agent (run in parallel)
     beginStage(
       'researcher',
       'Searching web & open-source CAD repositories (Printables, GitHub, YouTube teardowns)...'
     );
-    const researchRes = await runResearcherAgent({
-      analysis: manifest.analysis,
-      cwd,
-      onLog: makeLogger('researcher'),
-    });
-    manifest.sources = researchRes.data;
-    finishStage('researcher', {
-      ...researchRes,
-      artifact: researchRes.data,
-      summary: `Grounded ${researchRes.data.sources.length} reference schematics, teardowns & open-source models`,
-    });
-
-    // 2b. Video Teardown Agent
     emitSseEvent(cwd, manifest, {
       agent: 'teardown',
       phase: 'start',
@@ -1219,82 +1193,80 @@ async function executePipelineStages(
         'Extracting timestamped video teardown frames & internal part callouts...',
       data: { stageId: 'teardown', artifactFile: 'teardown.json' },
     });
-    try {
-      const teardownRes = await runTeardownAgent({
-        analysis: manifest.analysis,
-        sources: manifest.sources,
-        cwd,
-        onLog: (entry) => {
-          emitSseEvent(cwd, manifest, {
-            agent: 'teardown',
-            phase: 'thought',
-            message: entry.message,
-            data: { stageId: 'teardown', level: entry.level },
-            ts: entry.timestamp,
-          });
+
+    const researchPromise = runResearcherAgent({
+      analysis: manifest.analysis,
+      cwd,
+      onLog: makeLogger('researcher'),
+    }).then((researchRes) => {
+      manifest.sources = researchRes.data;
+      finishStage('researcher', {
+        ...researchRes,
+        artifact: researchRes.data,
+        summary: `Grounded ${researchRes.data.sources.length} reference schematics, teardowns & open-source models`,
+      });
+      return researchRes;
+    });
+
+    const teardownPromise = (async () => {
+      try {
+        const teardownRes = await runTeardownAgent({
+          analysis: manifest.analysis,
+          sources: manifest.sources,
+          cwd,
+          onLog: (entry) => {
+            emitSseEvent(cwd, manifest, {
+              agent: 'teardown',
+              phase: 'thought',
+              message: entry.message,
+              data: { stageId: 'teardown', level: entry.level },
+              ts: entry.timestamp,
+            });
+          },
+        });
+        manifest.teardown = teardownRes.data;
+        saveManifest(cwd, manifest);
+      } catch {
+        // non-fatal teardown fallback
+      }
+      emitSseEvent(cwd, manifest, {
+        agent: 'teardown',
+        phase: 'artifact',
+        message: 'Wrote teardown.json & frames/*.jpg',
+        data: {
+          stageId: 'teardown',
+          artifactFile: 'teardown.json',
+          artifact: manifest.teardown,
         },
       });
-      manifest.teardown = teardownRes.data;
-      saveManifest(cwd, manifest);
-    } catch {
-      // non-fatal teardown fallback
-    }
-    emitSseEvent(cwd, manifest, {
-      agent: 'teardown',
-      phase: 'artifact',
-      message: 'Wrote teardown.json & frames/*.jpg',
-      data: {
-        stageId: 'teardown',
-        artifactFile: 'teardown.json',
-        artifact: manifest.teardown,
-      },
-    });
-    emitSseEvent(cwd, manifest, {
-      agent: 'teardown',
-      phase: 'done',
-      message: 'Mapped video teardown frames to BOM & parametric design parts',
-      data: { stageId: 'teardown', durationMs: 2400 },
-    });
+      emitSseEvent(cwd, manifest, {
+        agent: 'teardown',
+        phase: 'done',
+        message: 'Mapped video teardown frames to BOM & parametric design parts',
+        data: { stageId: 'teardown', durationMs: 2400 },
+      });
+    })();
+
+    await Promise.all([researchPromise, teardownPromise]);
 
     // 3. Designer Agent
     beginStage(
       'designer',
       'Decomposing into 3D-printed vs. off-the-shelf parts & computing 3D assembly coordinates...'
     );
-    const designRes =
-      (await earlyDesignPromise) ||
-      (await runDesignerAgent({
-        analysis: manifest.analysis,
-        sources: manifest.sources,
-        printerId: targetPrinterId,
-        cwd,
-        onLog: makeLogger('designer'),
-      }));
+    const designRes = await runDesignerAgent({
+      analysis: manifest.analysis,
+      sources: manifest.sources!,
+      printerId: targetPrinterId,
+      cwd,
+      onLog: makeLogger('designer'),
+    });
     manifest.design = designRes.data;
     finishStage('designer', {
       ...designRes,
       artifact: designRes.data,
       summary: `Architected ${designRes.data.printedPartsCount} printed parts + ${designRes.data.purchasedPartsCount} off-the-shelf components`,
     });
-
-    // Pre-start BOM & Instructions in parallel while Critic & CAD run
-    const earlyBomPromise = process.env.VERCEL
-      ? runBomAgent({
-          analysis: manifest.analysis,
-          design: manifest.design,
-          cwd,
-          onLog: makeLogger('bom'),
-        })
-      : null;
-    const earlyInstructionsPromise = process.env.VERCEL
-      ? runInstructionsAgent({
-          analysis: manifest.analysis,
-          design: manifest.design,
-          bom: SAMPLE_BOM,
-          cwd,
-          onLog: makeLogger('instructions'),
-        })
-      : null;
 
     // 4. Printability Critic Agent (loops fixes back to Designer for up to 2 rounds)
     const printerSpec = getPrinterById(targetPrinterId);
@@ -1413,7 +1385,7 @@ async function executePipelineStages(
         ? { data: deterministicFixResult.updatedDesign }
         : await runDesignerAgent({
             analysis: manifest.analysis,
-            sources: manifest.sources,
+            sources: manifest.sources!,
             previousDesign: manifest.design,
             critiqueIssues: actionableIssues,
             revisionRound: round,
@@ -1487,14 +1459,12 @@ async function executePipelineStages(
       'bom',
       'Sourcing off-the-shelf components across Amazon, Home Depot, Walmart, McMaster & AliExpress...'
     );
-    const bomRes =
-      (await earlyBomPromise) ||
-      (await runBomAgent({
-        analysis: manifest.analysis,
-        design: manifest.design,
-        cwd,
-        onLog: makeLogger('bom'),
-      }));
+    const bomRes = await runBomAgent({
+      analysis: manifest.analysis,
+      design: manifest.design,
+      cwd,
+      onLog: makeLogger('bom'),
+    });
     manifest.bom = bomRes.data;
     finishStage('bom', {
       ...bomRes,
@@ -1502,123 +1472,130 @@ async function executePipelineStages(
       summary: `Compiled ${bomRes.data.items.length} BOM line items — Total $${bomRes.data.summary.totalDiyCost.toFixed(2)} (You save $${bomRes.data.summary.totalSavings.toFixed(2)})`,
     });
 
-    // 5b. Price Hunter Agent (Google Search grounding across Amazon, Walmart, Home Depot & McMaster-Carr)
-    const priceHunterRes = await runPriceHunterAgent({
-      bom: manifest.bom,
-      analysis: manifest.analysis,
-      cwd,
-      onLog: (entry) => {
-        const st = getStage('bom');
-        st.logs.push(entry);
-        saveManifest(cwd, manifest);
-      },
-      onEvent: (ev) => {
-        emitSseEvent(cwd, manifest, {
-          agent: 'price-hunter',
-          phase: ev.phase,
-          message: ev.message,
-          data:
-            ev.data && typeof ev.data === 'object'
-              ? (ev.data as Record<string, unknown>)
-              : undefined,
-          ts: ev.ts,
+    // 5b. Price Hunter Agent + 6. CAD & Plate Packer Stage (run in parallel)
+    const priceHunterTask = (async () => {
+      try {
+        const priceHunterRes = await runPriceHunterAgent({
+          bom: manifest.bom!,
+          analysis: manifest.analysis,
+          cwd,
+          onLog: (entry) => {
+            const st = getStage('bom');
+            st.logs.push(entry);
+            saveManifest(cwd, manifest);
+          },
+          onEvent: (ev) => {
+            emitSseEvent(cwd, manifest, {
+              agent: 'price-hunter',
+              phase: ev.phase,
+              message: ev.message,
+              data:
+                ev.data && typeof ev.data === 'object'
+                  ? (ev.data as Record<string, unknown>)
+                  : undefined,
+              ts: ev.ts,
+            });
+          },
         });
-      },
-    });
-    manifest.bom = priceHunterRes.data;
-    saveManifest(cwd, manifest);
+        manifest.bom = priceHunterRes.data;
+        saveManifest(cwd, manifest);
+      } catch {
+        // keep bomRes.data
+      }
+    })();
 
-    // 6. CAD & Plate Packer Stage (orchestrator -> lib/agents/cad.ts -> lib/cad)
-    beginStage(
-      'cad',
-      'Synthesizing parametric OpenSCAD modules, compiling STLs via openscad-wasm & packing onto minimum build plates...'
-    );
-    const cadStart = Date.now();
-    const cadLogger = makeLogger('cad');
-    try {
-      const cadRes = await runCadAgent({
-        design: manifest.design,
-        analysis: manifest.analysis,
-        cwd,
-        objectId: manifest.id,
-        printerId: targetPrinterId,
-        maxRetries: 3,
-        preferRestForSpeed: Boolean(process.env.VERCEL),
-        onLog: (entry) => {
-          const st = getStage('cad');
-          st.logs.push(entry);
-          saveManifest(cwd, manifest);
-        },
-        onEvent: (ev) => {
-          if (ev.phase === 'start' || ev.phase === 'done') {
-            return;
-          }
-          emitSseEvent(cwd, manifest, {
-            agent: ev.agent || 'cad',
-            phase: ev.phase,
-            message: ev.message,
-            data:
-              ev.data && typeof ev.data === 'object'
-                ? (ev.data as Record<string, unknown>)
-                : undefined,
-            ts: ev.ts,
-          });
-        },
-      });
-      const { bundle: _bundle, ...platesArtifact } = cadRes.data;
-      const platesData = platesArtifact as unknown as PlatesData;
-      manifest.plates = platesData;
-      finishStage('cad', {
-        runner: cadRes.runner,
-        command: cadRes.command,
-        conversationId: cadRes.conversationId,
-        durationMs: cadRes.durationMs || Date.now() - cadStart,
-        tokensUsed: cadRes.tokensUsed,
-        artifact: platesData,
-        summary: `Compiled ${platesData.parts.length} OpenSCAD/STL parts & packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
-      });
-    } catch (cadErr) {
-      const warnMsg =
-        cadErr instanceof Error ? cadErr.message : String(cadErr);
-      cadLogger({
-        timestamp: new Date().toISOString(),
-        level: 'warn',
-        message: `CAD Agent OpenSCAD compiler fallback triggered (${warnMsg}) — using lib/cad generateCadBundle STL & 3MF plate packer.`,
-      });
-      const platesData = buildBaselinePlatesAndStls(
-        manifest.design,
-        cwd,
-        targetPrinterId,
-        manifest.id
+    const cadTask = (async () => {
+      beginStage(
+        'cad',
+        'Synthesizing parametric OpenSCAD modules, compiling STLs via openscad-wasm & packing onto minimum build plates...'
       );
-      manifest.plates = platesData;
-      cadLogger({
-        timestamp: new Date().toISOString(),
-        level: 'success',
-        message: `Generated ${platesData.parts.length} STL files in parts/*.stl and packed onto ${platesData.totalPlates} plate(s) (${platesData.totalWeightGrams}g total).`,
-      });
-      finishStage('cad', {
-        runner: designRes.runner,
-        durationMs: Date.now() - cadStart + 220,
-        artifact: platesData,
-        summary: `Exported ${platesData.parts.length} STL parts packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
-      });
-    }
+      const cadStart = Date.now();
+      const cadLogger = makeLogger('cad');
+      try {
+        const cadRes = await runCadAgent({
+          design: manifest.design,
+          analysis: manifest.analysis,
+          cwd,
+          objectId: manifest.id,
+          printerId: targetPrinterId,
+          maxRetries: 3,
+          preferRestForSpeed: Boolean(process.env.VERCEL),
+          onLog: (entry) => {
+            const st = getStage('cad');
+            st.logs.push(entry);
+            saveManifest(cwd, manifest);
+          },
+          onEvent: (ev) => {
+            if (ev.phase === 'start' || ev.phase === 'done') {
+              return;
+            }
+            emitSseEvent(cwd, manifest, {
+              agent: ev.agent || 'cad',
+              phase: ev.phase,
+              message: ev.message,
+              data:
+                ev.data && typeof ev.data === 'object'
+                  ? (ev.data as Record<string, unknown>)
+                  : undefined,
+              ts: ev.ts,
+            });
+          },
+        });
+        const { bundle: _bundle, ...platesArtifact } = cadRes.data;
+        const platesData = platesArtifact as unknown as PlatesData;
+        manifest.plates = platesData;
+        finishStage('cad', {
+          runner: cadRes.runner,
+          command: cadRes.command,
+          conversationId: cadRes.conversationId,
+          durationMs: cadRes.durationMs || Date.now() - cadStart,
+          tokensUsed: cadRes.tokensUsed,
+          artifact: platesData,
+          summary: `Compiled ${platesData.parts.length} OpenSCAD/STL parts & packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
+        });
+      } catch (cadErr) {
+        const warnMsg =
+          cadErr instanceof Error ? cadErr.message : String(cadErr);
+        cadLogger({
+          timestamp: new Date().toISOString(),
+          level: 'warn',
+          message: `CAD Agent OpenSCAD compiler fallback triggered (${warnMsg}) — using lib/cad generateCadBundle STL & 3MF plate packer.`,
+        });
+        const platesData = buildBaselinePlatesAndStls(
+          manifest.design!,
+          cwd,
+          targetPrinterId,
+          manifest.id
+        );
+        manifest.plates = platesData;
+        cadLogger({
+          timestamp: new Date().toISOString(),
+          level: 'success',
+          message: `Generated ${platesData.parts.length} STL files in parts/*.stl and packed onto ${platesData.totalPlates} plate(s) (${platesData.totalWeightGrams}g total).`,
+        });
+        finishStage('cad', {
+          runner: designRes.runner,
+          durationMs: Date.now() - cadStart + 220,
+          artifact: platesData,
+          summary: `Exported ${platesData.parts.length} STL parts packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
+        });
+      }
+    })();
 
-    // 6. Instructions Agent
+    await Promise.all([priceHunterTask, cadTask]);
+
+    // 7. Instructions Agent
     beginStage(
       'instructions',
       'Choreographing IKEA-style step-by-step animated 3D assembly instructions...'
     );
-    const instructionsRes =
-      (await earlyInstructionsPromise) ||
-      (await runInstructionsAgent({
-        analysis: manifest.analysis,
-        design: manifest.design,
-        bom: manifest.bom,
-        cwd,
-        onLog: makeLogger('instructions'),
-      }));
+    const instructionsRes = await runInstructionsAgent({
+      analysis: manifest.analysis,
+      design: manifest.design,
+      bom: manifest.bom,
+      cwd,
+      onLog: makeLogger('instructions'),
+    });
     manifest.instructions = instructionsRes.data;
     finishStage('instructions', {
       ...instructionsRes,
