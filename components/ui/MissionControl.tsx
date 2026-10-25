@@ -410,7 +410,7 @@ function normalizeAgentId(
   ) {
     return 'price-hunter';
   }
-  if (clean === 'cad' || clean === 'packer') return 'cad';
+  if (clean === 'cad' || clean === 'packer' || clean === 'print') return 'cad';
   if (clean === 'instructions' || clean === 'ikea') return 'instructions';
   return null;
 }
@@ -746,6 +746,7 @@ export function MissionControl({
   const replayDeckRef = useRef<SsePipelineEvent[]>([]);
   const replayCursorRef = useRef<number>(0);
   const hasAutoReplayedRef = useRef<boolean>(false);
+  const processedPropEventsRef = useRef<number>(0);
 
   const applyEventToState = useCallback((ev: SsePipelineEvent) => {
     setEventLog((prev) => [...prev.slice(-90), ev]);
@@ -933,7 +934,13 @@ export function MissionControl({
       !hasAutoReplayedRef.current
     ) {
       hasAutoReplayedRef.current = true;
+      processedPropEventsRef.current = mergedPropEvents.length;
       startReplayFromDeck(mergedPropEvents);
+      return;
+    }
+
+    if (isAlreadyCompleted && hasAutoReplayedRef.current) {
+      return;
     }
 
     try {
@@ -1025,6 +1032,75 @@ export function MissionControl({
     applyEventToState,
     startReplayFromDeck,
   ]);
+
+  // Process newly streamed events from prop updates (e.g. Ask Argon to Modify selective runs)
+  useEffect(() => {
+    if (!hasAutoReplayedRef.current) {
+      const hasModifyEvent = mergedPropEvents.some(
+        (e) => Boolean((e.data as Record<string, unknown> | undefined)?.isModify)
+      );
+      if (!hasModifyEvent) return;
+      hasAutoReplayedRef.current = true;
+    }
+
+    if (mergedPropEvents.length <= processedPropEventsRef.current) {
+      processedPropEventsRef.current = mergedPropEvents.length;
+      return;
+    }
+
+    const newEvents = mergedPropEvents.slice(processedPropEventsRef.current);
+    processedPropEventsRef.current = mergedPropEvents.length;
+
+    for (const ev of newEvents) {
+      const data = (ev.data || {}) as Record<string, unknown>;
+
+      if (ev.agent === 'orchestrator' && ev.phase === 'start' && data.isModify) {
+        setIsReplaying(false);
+        setIsPaused(false);
+        setActiveLoopPulse(false);
+        setNodeMap(createCompletedNodeMap(manifest));
+      }
+
+      if (
+        ev.agent === 'orchestrator' &&
+        ev.phase === 'thought' &&
+        Array.isArray(data.affectedAgents)
+      ) {
+        const affected = (data.affectedAgents as string[])
+          .map((a) => normalizeAgentId(a))
+          .filter((a): a is MissionNodeId => Boolean(a && a !== 'orchestrator'));
+        if (affected.length > 0) {
+          setIsReplaying(false);
+          setIsPaused(false);
+          setNodeMap((prev) => {
+            const next = { ...prev };
+            for (const nodeId of affected) {
+              if (next[nodeId]) {
+                next[nodeId] = {
+                  ...next[nodeId],
+                  status: 'pending',
+                  elapsedMs: 0,
+                  latestThought: `Queued by Argon Modify Router for "${data.prompt || 'change request'}"...`,
+                };
+              }
+            }
+            return next;
+          });
+          setSelectedNodeId(affected[0]);
+        }
+      }
+
+      applyEventToState(ev);
+      const norm = normalizeAgentId(ev.agent);
+      if (
+        norm &&
+        norm !== 'orchestrator' &&
+        (ev.phase === 'start' || ev.phase === 'thought')
+      ) {
+        setSelectedNodeId(norm);
+      }
+    }
+  }, [mergedPropEvents, applyEventToState, manifest]);
 
   // Step through replay deck on an interval
   useEffect(() => {

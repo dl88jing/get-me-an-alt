@@ -34,6 +34,7 @@ import {
 } from '@/lib/types';
 import CritiquePanel from './CritiquePanel';
 import MissionControl from '@/components/ui/MissionControl';
+import ModifyChat from '@/components/ui/ModifyChat';
 
 type TabId =
   | 'overview'
@@ -356,6 +357,14 @@ export default function ProjectPage() {
         stages={manifest.stages}
         events={streamEvents}
         onSelectStage={(id) => setSelectedStageId(id)}
+      />
+
+      {/* Ask Argon to Modify — Selective Agent Re-Orchestration Chat */}
+      <ModifyChat
+        projectId={manifest.id}
+        manifest={manifest}
+        onEvent={(ev) => setStreamEvents((prev) => [...prev.slice(-150), ev])}
+        onManifestUpdate={(updated) => setManifest(updated)}
       />
 
       {/* Sticky Glass Navigation Tabs with Animated Active Underline */}
