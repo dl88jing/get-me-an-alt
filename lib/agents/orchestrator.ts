@@ -26,6 +26,7 @@ import {
   SAMPLE_SOURCES,
 } from '../sample-data';
 import { getPrinterById } from '../printers';
+import { generateCadBundle } from '../cad';
 import { runAnalystAgent } from './analyst';
 import { runResearcherAgent } from './researcher';
 import { runDesignerAgent } from './designer';
@@ -35,6 +36,7 @@ import {
   writeCritiqueArtifact,
 } from './critic';
 import { runBomAgent } from './bom';
+import { runPriceHunterAgent } from './price-hunter';
 import { runCadAgent } from './cad';
 import { runInstructionsAgent } from './instructions';
 import { getObjectsDir } from './runner';
@@ -109,10 +111,32 @@ function generateMinimalAsciiStl(part: DesignPart): string {
 function buildBaselinePlatesAndStls(
   design: DesignSpec,
   cwd: string,
-  printerId = 'bambu-a1'
+  printerId = 'bambu-a1',
+  objectId?: string
 ): PlatesData {
   const partsDir = path.join(cwd, 'parts');
   fs.mkdirSync(partsDir, { recursive: true });
+
+  try {
+    const bundle = generateCadBundle(design, { printerId, objectId });
+    for (const art of bundle.stlArtifacts) {
+      fs.writeFileSync(path.join(cwd, art.stlFile), art.bytes);
+    }
+    for (const plate3mf of bundle.plate3mfArtifacts) {
+      fs.writeFileSync(path.join(cwd, plate3mf.relativePath), plate3mf.bytes);
+    }
+    fs.writeFileSync(
+      path.join(cwd, bundle.multiPlate3mfArtifact.relativePath),
+      bundle.multiPlate3mfArtifact.bytes
+    );
+    fs.writeFileSync(
+      path.join(cwd, 'plates.json'),
+      JSON.stringify(bundle.platesJson, null, 2)
+    );
+    return bundle.platesJson as unknown as PlatesData;
+  } catch {
+    // Fallback to minimal ASCII STL + shelf packer if lib/cad throws
+  }
 
   const printedParts = design.parts.filter((p) => p.kind === 'printed');
   const bedW = 256;
@@ -1306,34 +1330,33 @@ async function executePipelineStages(
       summary: `Compiled ${bomRes.data.items.length} BOM line items — Total $${bomRes.data.summary.totalDiyCost.toFixed(2)} (You save $${bomRes.data.summary.totalSavings.toFixed(2)})`,
     });
 
-    // 5b. Price Hunter Agent SSE telemetry
-    emitSseEvent(cwd, manifest, {
-      agent: 'price-hunter',
-      phase: 'start',
-      message:
-        'Comparing live retailer pricing across Amazon, Home Depot, Walmart & McMaster-Carr...',
-      data: { stageId: 'price-hunter', artifactFile: 'bom.json' },
+    // 5b. Price Hunter Agent (Google Search grounding across Amazon, Walmart, Home Depot & McMaster-Carr)
+    const priceHunterRes = await runPriceHunterAgent({
+      bom: manifest.bom,
+      analysis: manifest.analysis,
+      cwd,
+      onLog: (entry) => {
+        const st = getStage('bom');
+        st.logs.push(entry);
+        saveManifest(cwd, manifest);
+      },
+      onEvent: (ev) => {
+        emitSseEvent(cwd, manifest, {
+          agent: 'price-hunter',
+          phase: ev.phase,
+          message: ev.message,
+          data:
+            ev.data && typeof ev.data === 'object'
+              ? (ev.data as Record<string, unknown>)
+              : undefined,
+          ts: ev.ts,
+        });
+      },
     });
-    emitSseEvent(cwd, manifest, {
-      agent: 'price-hunter',
-      phase: 'thought',
-      message: `Grounded lowest unit prices across retailers — verified ${bomRes.data.summary.savingsPercent}% savings ($${bomRes.data.summary.totalSavings.toFixed(2)} saved vs. retail).`,
-      data: { stageId: 'price-hunter' },
-    });
-    emitSseEvent(cwd, manifest, {
-      agent: 'price-hunter',
-      phase: 'artifact',
-      message: 'Wrote verified retailer links & savings into bom.json',
-      data: { stageId: 'price-hunter', artifactFile: 'bom.json (priced)' },
-    });
-    emitSseEvent(cwd, manifest, {
-      agent: 'price-hunter',
-      phase: 'done',
-      message: `Verified multi-retailer links — You save $${bomRes.data.summary.totalSavings.toFixed(2)} (${bomRes.data.summary.savingsPercent}%)`,
-      data: { stageId: 'price-hunter', durationMs: 2100 },
-    });
+    manifest.bom = priceHunterRes.data;
+    saveManifest(cwd, manifest);
 
-    // 6. CAD & Plate Packer Stage
+    // 6. CAD & Plate Packer Stage (orchestrator -> lib/agents/cad.ts -> lib/cad)
     beginStage(
       'cad',
       'Synthesizing parametric OpenSCAD modules, compiling STLs via openscad-wasm & packing onto minimum build plates...'
@@ -1349,13 +1372,15 @@ async function executePipelineStages(
         printerId: targetPrinterId,
         maxRetries: 3,
         preferRestForSpeed: Boolean(process.env.VERCEL),
-        manifest,
         onLog: (entry) => {
           const st = getStage('cad');
           st.logs.push(entry);
           saveManifest(cwd, manifest);
         },
         onEvent: (ev) => {
+          if (ev.phase === 'start' || ev.phase === 'done') {
+            return;
+          }
           emitSseEvent(cwd, manifest, {
             agent: ev.agent || 'cad',
             phase: ev.phase,
@@ -1386,12 +1411,13 @@ async function executePipelineStages(
       cadLogger({
         timestamp: new Date().toISOString(),
         level: 'warn',
-        message: `CAD Agent OpenSCAD compiler fallback triggered (${warnMsg}) — using baseline parametric STL & plate packer.`,
+        message: `CAD Agent OpenSCAD compiler fallback triggered (${warnMsg}) — using lib/cad generateCadBundle STL & 3MF plate packer.`,
       });
       const platesData = buildBaselinePlatesAndStls(
         manifest.design,
         cwd,
-        targetPrinterId
+        targetPrinterId,
+        manifest.id
       );
       manifest.plates = platesData;
       cadLogger({

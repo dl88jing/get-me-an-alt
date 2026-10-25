@@ -417,9 +417,16 @@ export function inferSourceKind(
     return 'pdf';
   }
 
+  if (item.type === 'teardown') {
+    return 'teardown';
+  }
+
+  if (item.type === 'schematic') {
+    return 'schematic';
+  }
+
   if (
     lowerUrl.includes('ifixit.com') ||
-    item.type === 'teardown' ||
     lowerTitle.includes('teardown') ||
     lowerTitle.includes('disassembly')
   ) {
@@ -490,10 +497,6 @@ export function inferSourceKind(
     lowerSummary.includes('step-by-step')
   ) {
     return 'instructions';
-  }
-
-  if (item.type === 'schematic') {
-    return 'schematic';
   }
 
   return 'instructions';

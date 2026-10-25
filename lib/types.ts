@@ -149,6 +149,15 @@ export interface RetailerLink {
   url: string;
   estPrice: number;
   inStock?: boolean;
+  isCheapest?: boolean;
+  sourceUrl?: string;
+  sourceTitle?: string;
+}
+
+export interface BomSourceLink {
+  title: string;
+  url: string;
+  retailer?: string;
 }
 
 export interface BomItem {
@@ -172,6 +181,7 @@ export interface BomItem {
   retailerLinks: RetailerLink[];
   linkedPartIds: string[];
   notes: string;
+  sourceLinks?: BomSourceLink[];
 }
 
 export interface BomData {
@@ -184,6 +194,13 @@ export interface BomData {
     originalRetailPrice: number;
     totalSavings: number;
     savingsPercent: number;
+  };
+  priceHunter?: {
+    groundingUsed: boolean;
+    retailersCompared: string[];
+    cheapestPicksCount: number;
+    sourceLinks: BomSourceLink[];
+    updatedAt: string;
   };
 }
 
@@ -315,6 +332,43 @@ export interface CritiqueData {
   issues: CritiqueIssue[];
 }
 
+export interface TeardownVideo {
+  url: string;
+  title: string;
+  videoId?: string;
+  thumbnailUrl?: string;
+}
+
+export interface TeardownPart {
+  name: string;
+  function: string;
+  material: string;
+  dims_mm: [number, number, number];
+  fasteners: string;
+  buyOrPrint: 'buy' | 'print';
+  offTheShelfQuery: string;
+  confidence: number;
+  partId?: string;
+  bomRef?: string;
+}
+
+export interface TeardownFrame {
+  video: string;
+  t: number;
+  image: string;
+  parts: TeardownPart[];
+  description?: string;
+  thumbnailUrl?: string;
+  captureMode?: 'yt-dlp-ffmpeg' | 'argon-thumbnail-fallback';
+}
+
+export interface TeardownData {
+  videos: TeardownVideo[];
+  frames: TeardownFrame[];
+  note?: string;
+  generatedAt?: string;
+}
+
 export interface ProjectManifest {
   id: string;
   slug: string;
@@ -333,6 +387,7 @@ export interface ProjectManifest {
   stages: AgentStageState[];
   analysis?: ObjectAnalysis;
   sources?: ResearchData;
+  teardown?: TeardownData;
   design?: DesignSpec;
   critique?: CritiqueData;
   bom?: BomData;
