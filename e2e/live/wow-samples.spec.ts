@@ -76,7 +76,9 @@ test.describe('Three New Showcase Instant Demos (Wow Samples)', () => {
     expect(res?.status()).toBe(200);
 
     const gallery = page.locator('#folio-assembly');
-    await gallery.scrollIntoViewIfNeeded();
+    await page.evaluate(() => {
+      document.getElementById('folio-assembly')?.scrollIntoView({ behavior: 'instant' });
+    });
     await page.waitForTimeout(500);
 
     for (const item of WOW_SLUGS) {
