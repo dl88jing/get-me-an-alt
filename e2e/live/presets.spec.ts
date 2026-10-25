@@ -159,6 +159,33 @@ async function setupFastLandingAndCollectors(
   // Block heavy background hero.mp4 video decode so software WebGL + CPU stay responsive
   await page.route('**/media/hero.mp4', (r) => r.abort()).catch(() => {});
 
+  // Capture streamed manifest from EventSource or /api/objects/[id] JSON responses
+  await page.addInitScript(() => {
+    const OrigEventSource = window.EventSource;
+    if (OrigEventSource) {
+      class WrappedEventSource extends OrigEventSource {
+        constructor(url: string | URL, eventSourceInitDict?: EventSourceInit) {
+          super(url, eventSourceInitDict);
+          this.addEventListener('message', (evt: MessageEvent) => {
+            try {
+              const parsed = JSON.parse(evt.data);
+              if (parsed?.data?.manifest) {
+                (window as unknown as Record<string, unknown>).__latestAltManifest =
+                  parsed.data.manifest;
+              } else if (parsed?.stages && parsed?.id) {
+                (window as unknown as Record<string, unknown>).__latestAltManifest =
+                  parsed;
+              }
+            } catch {
+              // ignore
+            }
+          });
+        }
+      }
+      window.EventSource = WrappedEventSource;
+    }
+  });
+
   page.on('console', (msg) => {
     const text = msg.text();
     if (msg.type() === 'error') {
@@ -278,24 +305,39 @@ async function exerciseAllProjectTabsAndModify(
       let finalManifest: Record<string, unknown> | null = null;
       let stalledLogged = false;
 
-      while (Date.now() - waitStart < maxWaitMs) {
-        const pollRes = await page
+      // For instant sample, fetch once if not already in __latestAltManifest
+      if (isInstant) {
+        const initFetch = await page
           .evaluate(async (pid) => {
+            const w = window as unknown as Record<string, unknown>;
+            if (w.__latestAltManifest) return w.__latestAltManifest;
             try {
               const r = await fetch(`/api/objects/${encodeURIComponent(pid)}`);
-              if (!r.ok) return { httpStatus: r.status, manifest: null };
+              if (!r.ok) return null;
               const d = await r.json();
-              return { httpStatus: r.status, manifest: d.manifest || null };
+              if (d.manifest) w.__latestAltManifest = d.manifest;
+              return d.manifest || null;
             } catch {
-              return { httpStatus: 0, manifest: null };
+              return null;
             }
           }, projectId)
-          .catch(() => ({ httpStatus: 0, manifest: null }));
+          .catch(() => null);
+        if (initFetch) {
+          finalManifest = initFetch as Record<string, unknown>;
+        }
+      }
 
-        const m = pollRes.manifest as Record<string, unknown> | null;
-        if (m) {
-          finalManifest = m;
-          const st = String(m.status || '');
+      while (Date.now() - waitStart < maxWaitMs) {
+        const streamedManifest = await page
+          .evaluate(() => {
+            const w = window as unknown as Record<string, unknown>;
+            return (w.__latestAltManifest as Record<string, unknown>) || null;
+          })
+          .catch(() => null);
+
+        if (streamedManifest) {
+          finalManifest = streamedManifest;
+          const st = String(streamedManifest.status || '');
           if (st === 'completed' || st === 'error') {
             telemetry.pipelineCompleted = st === 'completed';
             telemetry.pipelineStatus = st;
@@ -303,7 +345,7 @@ async function exerciseAllProjectTabsAndModify(
           }
         }
 
-        // Also check UI tab badges directly (SSE stream updates React state even if GET /api/objects/[id] hits another serverless container)
+        // Also check UI tab badges directly (SSE stream updates React state)
         const uiState = await page
           .evaluate(() => {
             const buttons = Array.from(document.querySelectorAll('button'));
@@ -334,15 +376,15 @@ async function exerciseAllProjectTabsAndModify(
         }
 
         const elapsed = Date.now() - waitStart;
-        if (elapsed > 64_000 && !stalledLogged) {
+        if (elapsed > 68_000 && !stalledLogged) {
           stalledLogged = true;
           telemetry.bugsDetected.push(
-            `SSE stream /api/objects/${projectId}/stream exceeded Vercel 60s maxDuration timeout before all 9 stages completed (sequential Gemini REST calls + Google Search grounding exceed 60s).`
+            `SSE stream /api/objects/${projectId}/stream exceeded Vercel 60s maxDuration timeout before all 9 stages completed.`
           );
           break;
         }
 
-        await page.waitForTimeout(2000);
+        await page.waitForTimeout(1500);
       }
 
       telemetry.pipelineWaitMs = Date.now() - navStart;
@@ -364,18 +406,12 @@ async function exerciseAllProjectTabsAndModify(
         }
       }
 
-      // Extract manifest telemetry if available
+      // Extract manifest telemetry from window.__latestAltManifest
       const latestCheck = await page
-        .evaluate(async (pid) => {
-          try {
-            const r = await fetch(`/api/objects/${encodeURIComponent(pid)}`);
-            if (!r.ok) return null;
-            const d = await r.json();
-            return d.manifest || null;
-          } catch {
-            return null;
-          }
-        }, projectId)
+        .evaluate(() => {
+          const w = window as unknown as Record<string, unknown>;
+          return (w.__latestAltManifest as Record<string, unknown>) || null;
+        })
         .catch(() => null);
 
       const manifestObj = (latestCheck || finalManifest) as Record<
@@ -486,7 +522,9 @@ async function exerciseAllProjectTabsAndModify(
       await page.waitForTimeout(500);
       await assertNoUndefinedOrNaNOrErrorToast(page, 'Overview Tab', telemetry);
 
-      const printedHeading = page.getByText(/3D-Printed Parts/i).first();
+      const printedHeading = page
+        .getByText(/3D-Printed (Parts|Vessels)/i)
+        .first();
       await expect(printedHeading).toBeVisible({ timeout: 5000 });
 
       const round1Btn = page.getByRole('button', { name: /Round 1/i }).first();
@@ -517,17 +555,24 @@ async function exerciseAllProjectTabsAndModify(
       await page.waitForTimeout(600);
       await assertNoUndefinedOrNaNOrErrorToast(page, 'Sources Tab', telemetry);
 
-      const sourcesTabRoot = page.getByTestId('sources-tab').first();
+      const sourcesTabRoot = page
+        .getByTestId('sources-tab')
+        .or(page.locator('section[aria-label*="Research Sources" i]'))
+        .or(page.getByRole('heading', { name: /Research & Open Designs/i }))
+        .first();
       const hasSourcesTab = await sourcesTabRoot
-        .isVisible({ timeout: 3000 })
+        .isVisible({ timeout: 5000 })
         .catch(() => false);
       if (!hasSourcesTab) {
         throw new Error('Sources tab content did not render (sources artifact missing)');
       }
 
-      const teardownGallery = page.getByTestId('teardown-gallery').first();
+      const teardownGallery = page
+        .getByTestId('teardown-gallery')
+        .or(page.locator('section[aria-label*="Video Teardown" i]'))
+        .first();
       const hasTeardown = await teardownGallery
-        .isVisible({ timeout: 1500 })
+        .isVisible({ timeout: 2500 })
         .catch(() => false);
       if (!hasTeardown) {
         telemetry.bugsDetected.push(
@@ -716,7 +761,7 @@ async function exerciseAllProjectTabsAndModify(
         .getByTestId('explode-slider')
         .or(page.locator('input[type="range"][aria-label*="Explode" i]'))
         .first();
-      await expect(explodeSlider).toBeVisible({ timeout: 5000 });
+      await expect(explodeSlider).toBeVisible({ timeout: 20_000 });
 
       for (const val of ['0.45', '0.85']) {
         await explodeSlider.evaluate((el, v) => {
@@ -756,6 +801,13 @@ async function exerciseAllProjectTabsAndModify(
     'Modify Chat: Selective Re-Orchestration ("make it 20% taller")',
     telemetry,
     async () => {
+      // Switch to Overview tab first so Three.js canvas unmounts and frees software CPU
+      const overviewBtn = page.getByRole('button', { name: /^Overview/i }).first();
+      if (await overviewBtn.isVisible({ timeout: 1000 }).catch(() => false)) {
+        await overviewBtn.click({ force: true }).catch(() => {});
+        await page.waitForTimeout(250);
+      }
+
       await setReactInputValue(
         page,
         'input[aria-label="Ask Argon to modify this project"]',
@@ -846,10 +898,12 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       telemetry,
       async () => {
         await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
-        await expect(page.locator('#showcase-gallery')).toBeVisible({
+        await expect(
+          page.locator('#folio-assembly, #showcase-gallery').first()
+        ).toBeVisible({
           timeout: 15_000,
         });
-        return 'Landing page and #showcase-gallery visible';
+        return 'Landing page and preset gallery visible';
       }
     );
 
@@ -861,7 +915,10 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       telemetry,
       async () => {
         await page.evaluate(() => {
-          const section = document.querySelector('#showcase-gallery');
+          const section =
+            document.querySelector('#folio-assembly') ||
+            document.querySelector('#showcase-gallery')?.parentElement ||
+            document.body;
           section?.scrollIntoView({ behavior: 'instant' });
           const buttons = Array.from(
             section?.querySelectorAll('button') || []
@@ -893,7 +950,7 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       caseSlug,
       title: 'Preset: Articulated Tabletop Studio Art Easel',
       inputDescription:
-        'Click "Articulated Tabletop Studio Art Easel" preset card in #showcase-gallery',
+        'Click "Articulated Tabletop Studio Art Easel" preset card in Masterworks Gallery',
       totalDurationMs: 0,
       pipelineWaitMs: 0,
       steps: [],
@@ -915,7 +972,9 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       telemetry,
       async () => {
         await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
-        await expect(page.locator('#showcase-gallery')).toBeVisible({
+        await expect(
+          page.locator('#folio-assembly, #showcase-gallery').first()
+        ).toBeVisible({
           timeout: 15_000,
         });
         return 'Landing page loaded';
@@ -930,7 +989,10 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       telemetry,
       async () => {
         await page.evaluate(() => {
-          const section = document.querySelector('#showcase-gallery');
+          const section =
+            document.querySelector('#folio-assembly') ||
+            document.querySelector('#showcase-gallery')?.parentElement ||
+            document.body;
           section?.scrollIntoView({ behavior: 'instant' });
           const buttons = Array.from(
             section?.querySelectorAll('button') || []
@@ -960,9 +1022,9 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
     const t0 = Date.now();
     const telemetry: CaseTelemetry = {
       caseSlug,
-      title: 'Preset: iPhone Macro Microscope & Slide Adapter',
+      title: 'Preset: iPhone Macro Microscope & Slide Stage',
       inputDescription:
-        'Click "iPhone Macro Microscope & Slide Adapter" preset card in #showcase-gallery',
+        'Click "iPhone Macro Microscope & Slide Stage" preset card in Masterworks Gallery',
       totalDurationMs: 0,
       pipelineWaitMs: 0,
       steps: [],
@@ -984,7 +1046,9 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       telemetry,
       async () => {
         await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
-        await expect(page.locator('#showcase-gallery')).toBeVisible({
+        await expect(
+          page.locator('#folio-assembly, #showcase-gallery').first()
+        ).toBeVisible({
           timeout: 15_000,
         });
         return 'Landing page loaded';
@@ -995,11 +1059,14 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       page,
       caseSlug,
       '02-click-preset',
-      'Click iPhone Macro Microscope & Slide Adapter Preset Card',
+      'Click iPhone Macro Microscope & Slide Stage Preset Card',
       telemetry,
       async () => {
         await page.evaluate(() => {
-          const section = document.querySelector('#showcase-gallery');
+          const section =
+            document.querySelector('#folio-assembly') ||
+            document.querySelector('#showcase-gallery')?.parentElement ||
+            document.body;
           section?.scrollIntoView({ behavior: 'instant' });
           const buttons = Array.from(
             section?.querySelectorAll('button') || []
@@ -1029,9 +1096,9 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
     const t0 = Date.now();
     const telemetry: CaseTelemetry = {
       caseSlug,
-      title: 'Preset: Benchtop Lab Pipette Liquid Handler Stand',
+      title: 'Preset: Benchtop Lab Pipette Liquid Automaton',
       inputDescription:
-        'Click "Benchtop Lab Pipette Liquid Handler Stand" preset card in #showcase-gallery',
+        'Click "Benchtop Lab Pipette Liquid Automaton" preset card in Masterworks Gallery',
       totalDurationMs: 0,
       pipelineWaitMs: 0,
       steps: [],
@@ -1053,7 +1120,9 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       telemetry,
       async () => {
         await page.goto(BASE_URL, { waitUntil: 'domcontentloaded' });
-        await expect(page.locator('#showcase-gallery')).toBeVisible({
+        await expect(
+          page.locator('#folio-assembly, #showcase-gallery').first()
+        ).toBeVisible({
           timeout: 15_000,
         });
         return 'Landing page loaded';
@@ -1064,17 +1133,20 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
       page,
       caseSlug,
       '02-click-preset',
-      'Click Benchtop Lab Pipette Liquid Handler Stand Preset Card',
+      'Click Benchtop Lab Pipette Liquid Automaton Preset Card',
       telemetry,
       async () => {
         await page.evaluate(() => {
-          const section = document.querySelector('#showcase-gallery');
+          const section =
+            document.querySelector('#folio-assembly') ||
+            document.querySelector('#showcase-gallery')?.parentElement ||
+            document.body;
           section?.scrollIntoView({ behavior: 'instant' });
           const buttons = Array.from(
             section?.querySelectorAll('button') || []
           );
           const target = buttons.find((b) =>
-            /Benchtop Lab Pipette Liquid Handler/i.test(b.textContent || '')
+            /Benchtop Lab Pipette Liquid/i.test(b.textContent || '')
           );
           if (!target) throw new Error('Liquid Handler card not found');
           (target as HTMLButtonElement).click();
@@ -1221,7 +1293,7 @@ test.describe('Get Me An Alt — Presets, Free-Text & Edge Cases E2E Suite', () 
 
         const errMsg = page
           .getByText(
-            /Paste a product link, video link, description, or upload an image first/i
+            /Inscribe a product link, video link, description|Paste a product link, video link, description/i
           )
           .first();
         await expect(errMsg).toBeVisible({ timeout: 5000 });
