@@ -1,0 +1,103 @@
+{
+  "videos": [
+    {
+      "url": "https://www.youtube.com/results?search_query=dyson+purifier+cool+teardown+disassembly",
+      "title": "Teardown: Inside a $549 Bladeless HEPA Air Multiplier Tower"
+    }
+  ],
+  "note": "Dissected 3 aerodynamic & filtration stages via Gemini 4 Argon video teardown analysis.",
+  "generatedAt": "2026-10-25T22:45:00.000Z",
+  "frames": [
+    {
+      "video": "https://www.youtube.com/results?search_query=dyson+purifier+cool+teardown+disassembly",
+      "t": 44,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2300f5a0%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%200%3A44%20(t%3D44s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3E360%C2%B0%20HEPA%20H13%20Cartridge%20%26amp%3B%20Twist-Lock%20Compression%20Seal%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-02%2F03%3A%20Intake%20Shell%20%26amp%3B%20Retainer%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-02%3A%20HEPA%20H13%20Cylinder%20(%2414.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Lower filtration bay open to reveal the cylindrical True HEPA H13 + activated carbon filter seated between EPDM foam compression gaskets.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "360° Perforated HEPA Intake Lower Shell",
+          "function": "Draws room air radially across the full 360° surface area of the HEPA cylinder.",
+          "material": "PETG (3 perimeters, 30% infill)",
+          "dims_mm": [
+            164,
+            164,
+            125
+          ],
+          "fasteners": "3-lug bayonet twist-lock ring to PRT-01 base",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament white",
+          "confidence": 0.97,
+          "partId": "hepa-intake-shell",
+          "bomRef": "bom-filament-fan"
+        },
+        {
+          "name": "Cylindrical True HEPA H13 + Activated Carbon Filter",
+          "function": "Captures 99.97% of 0.3um particulates and VOC odors.",
+          "material": "Pleated borosilicate glass microfiber + carbon",
+          "dims_mm": [
+            152,
+            152,
+            115
+          ],
+          "fasteners": "Compressed axially by PRT-03 retainer ring",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "cylindrical HEPA H13 replacement filter 150mm",
+          "confidence": 0.98,
+          "partId": "hepa-h13-cylinder",
+          "bomRef": "bom-hepa-filter"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=dyson+purifier+cool+teardown+disassembly",
+      "t": 128,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%202%3A08%20(t%3D128s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3E24V%20High-Static%20Centrifugal%20Blower%20%26amp%3B%20Acoustic%20Diffuser%20Cone%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-04%2F05%3A%20Impeller%20Volute%20%26amp%3B%20Diffuser%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-01%3A%2024V%2012032%20Blower%20(%2413.50)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Mid-tower pressure engine showing the 120×32mm 24V brushless centrifugal blower isolated inside the printed volute and feeding the swirl-recovery diffuser cone.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+          "function": "Converts blower dynamic swirl into uniform static pressure entering the airfoil loop.",
+          "material": "PLA+ (25% gyroid infill)",
+          "dims_mm": [
+            146,
+            146,
+            52
+          ],
+          "fasteners": "4× M3×12mm bolts into M3 brass heat-set inserts",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PLA+ 1.75mm filament",
+          "confidence": 0.96,
+          "partId": "diffuser-stator-cone",
+          "bomRef": "bom-filament-fan"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=dyson+purifier+cool+teardown+disassembly",
+      "t": 215,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23a855f7%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%203%3A35%20(t%3D215s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3ESplit%20Coanda%20Airfoil%20Loop%20%26amp%3B%201.5mm%20Annular%20Jet%20Nozzle%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-07%2F08%3A%20Coanda%20Airfoil%20Lower%2FUpper%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3E1.5mm%20Jet%20Slot%20-%26gt%3B%2015x%20Entrainment%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Cross-section of the hollow airfoil loop showing the internal pressurized plenum, 1.5mm annular exit slit, and 16° Coanda entrainment ramp.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Coanda Airfoil Loop (Lower & Upper Split Halves)",
+          "function": "Accelerates pressurized air through a 1.5mm annular nozzle over a 16° Coanda ramp.",
+          "material": "Matte PLA+ (0.16mm layer height, 3 perimeters)",
+          "dims_mm": [
+            210,
+            78,
+            115
+          ],
+          "fasteners": "Tongue-and-groove flange + 4× concealed M3 screws",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "Matte PLA+ filament",
+          "confidence": 0.97,
+          "partId": "coanda-airfoil-upper",
+          "bomRef": "bom-filament-fan"
+        }
+      ]
+    }
+  ]
+}

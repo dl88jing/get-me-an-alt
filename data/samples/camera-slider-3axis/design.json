@@ -1,0 +1,812 @@
+{
+  "objectName": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "designPhilosophy": "Dual-2020 V-Slot linear rail base with 4-wheel eccentric-preloaded carriage, 6808 bearing 3:1 pan turntable, and cantilever Arca-Swiss tilt gimbal in CAD Z-up coordinates.",
+  "overallBoundingBoxMm": [
+    250,
+    190,
+    225
+  ],
+  "printedPartsCount": 9,
+  "purchasedPartsCount": 8,
+  "assemblyNotes": [
+    "All 9 printed part types (12 printed items including 4 fold-out outrigger legs) pack onto 2 Bambu Lab A1 plates with zero slicer supports.",
+    "Rotate the two 6mm eccentric spacers on PRT-04 until the 4 Delrin V-wheels roll with zero rocking play on the 2020 rails.",
+    "Set TMC2209 UART current to 650mA RMS for Slide/Pan and 500mA RMS for Tilt to keep motor temperatures cool during 4-hour time-lapses."
+  ],
+  "parts": [
+    {
+      "id": "extrusion-2020-1m",
+      "partNumber": "OTS-01",
+      "name": "Dual 2020 V-Slot Black Anodized Aluminum Rails (1000mm Span)",
+      "kind": "purchased",
+      "dims_mm": [
+        240,
+        60,
+        20
+      ],
+      "shape": "box",
+      "params": {
+        "width": 240,
+        "depth": 60,
+        "height": 20
+      },
+      "position": [
+        0,
+        0,
+        24
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -55
+      ],
+      "color": "#334155",
+      "bomRef": "bom-2020-extrusion",
+      "material": "6063-T5 Black Anodized Aluminum (Purchased)",
+      "quantity": 2,
+      "description": "Pair of rigid 20×20mm V-slot linear rails spaced 60mm center-to-center forming the linear dolly track.",
+      "roleInAssembly": "Primary linear guideway supporting carriage and end blocks.",
+      "step": 1,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "motor-end-block",
+      "partNumber": "PRT-01",
+      "name": "Left 2020 Rail Drive Block & NEMA17 Stepper Mount",
+      "kind": "printed",
+      "dims_mm": [
+        96,
+        78,
+        58
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "enclosure",
+        "width": 96,
+        "depth": 78,
+        "height": 58,
+        "wallThickness": 4,
+        "floorThickness": 4.5,
+        "cornerRadius": 8,
+        "dfmVerified": true
+      },
+      "position": [
+        -112,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -185,
+        0,
+        -20
+      ],
+      "color": "#0ea5e9",
+      "bomRef": "bom-filament-slider",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Left structural rail bridge clamping both 2020 extrusions and housing the Axis-1 linear slide NEMA17 stepper.",
+      "roleInAssembly": "Anchors left rail end and drives the GT2 timing belt.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 2
+    },
+    {
+      "id": "idler-end-block",
+      "partNumber": "PRT-02",
+      "name": "Right 2020 Rail Idler Block with M5 Belt Tensioner",
+      "kind": "printed",
+      "dims_mm": [
+        88,
+        78,
+        54
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "enclosure",
+        "width": 88,
+        "depth": 78,
+        "height": 54,
+        "wallThickness": 4,
+        "floorThickness": 4.5,
+        "cornerRadius": 8,
+        "dfmVerified": true
+      },
+      "position": [
+        112,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        185,
+        0,
+        -20
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-filament-slider",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Right structural rail bridge with sliding M5 screw tensioner clevis for the GT2 return idler pulley.",
+      "roleInAssembly": "Anchors right rail end and tensions the linear GT2 timing belt.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 3
+    },
+    {
+      "id": "outTrigger-leg",
+      "partNumber": "PRT-03",
+      "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+      "kind": "printed",
+      "dims_mm": [
+        115,
+        36,
+        24
+      ],
+      "shape": "bracketL",
+      "params": {
+        "legA": 115,
+        "legB": 36,
+        "width": 24,
+        "thickness": 5,
+        "filletRadius": 5,
+        "wallThickness": 3.6,
+        "dfmVerified": true
+      },
+      "position": [
+        -112,
+        58,
+        8
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -195,
+        110,
+        -75
+      ],
+      "color": "#f59e0b",
+      "bomRef": "bom-filament-slider",
+      "material": "PETG",
+      "quantity": 4,
+      "description": "Pivoting outrigger feet with M5 leveling thumbscrew bores for uneven rocks, tables, or tripod spans.",
+      "roleInAssembly": "Stabilizes the slider track against tipping during telephoto tilts.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 4
+    },
+    {
+      "id": "gt2-belt-pulleys",
+      "partNumber": "OTS-04",
+      "name": "3m GT2-6mm Fiberglass Timing Belt + 20T Pulleys & Idlers",
+      "kind": "purchased",
+      "dims_mm": [
+        24,
+        24,
+        16
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 12,
+        "height": 16,
+        "segments": 32
+      },
+      "position": [
+        95,
+        0,
+        42
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        160,
+        -55,
+        25
+      ],
+      "color": "#eab308",
+      "bomRef": "bom-gt2-kit",
+      "material": "CNC Aluminum Pulleys & Fiberglass Neoprene Belt (Purchased)",
+      "quantity": 1,
+      "description": "Zero-stretch 2mm-pitch GT2 belt (6mm wide) paired with 3× 20T 5mm-bore drive pulleys and 2× bearings idlers.",
+      "roleInAssembly": "Transmits backlash-free linear and rotary motion across all 3 axes.",
+      "step": 5,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "vslot-wheels-bearings",
+      "partNumber": "OTS-05",
+      "name": "4× Delrin POM V-Slot Wheels + Eccentric Nuts + 6808 Bearing",
+      "kind": "purchased",
+      "dims_mm": [
+        52,
+        52,
+        11
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 26,
+        "innerRadius": 19,
+        "height": 11
+      },
+      "position": [
+        0,
+        0,
+        40
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -75,
+        15
+      ],
+      "color": "#94a3b8",
+      "bomRef": "bom-wheels-bearings",
+      "material": "Delrin POM & 52100 Chrome Steel (Purchased)",
+      "quantity": 1,
+      "description": "4× precision 24mm Delrin V-wheels with 625RS bearings, 2× 6mm eccentric nuts, and 1× 6808-2RS slew bearing.",
+      "roleInAssembly": "Provides silent rolling carriage guidance and pan turntable support.",
+      "step": 6,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "gantry-carriage-plate",
+      "partNumber": "PRT-04",
+      "name": "4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores",
+      "kind": "printed",
+      "dims_mm": [
+        124,
+        108,
+        14
+      ],
+      "shape": "plate_with_holes",
+      "params": {
+        "width": 124,
+        "depth": 108,
+        "thickness": 14,
+        "cornerRadius": 12,
+        "wallThickness": 3.6,
+        "holes": [
+          {
+            "x": -42,
+            "y": -38,
+            "radius": 2.6
+          },
+          {
+            "x": 42,
+            "y": -38,
+            "radius": 2.6
+          },
+          {
+            "x": -42,
+            "y": 38,
+            "radius": 3.6
+          },
+          {
+            "x": 42,
+            "y": 38,
+            "radius": 3.6
+          }
+        ],
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        48
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        40
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-slider",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Rigid 14mm thick moving carriage deck with integrated GT2 belt pinch teeth and 4-wheel V-slot axle bosses.",
+      "roleInAssembly": "Travels linearly along the 2020 rails carrying the pan/tilt head.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 7
+    },
+    {
+      "id": "pan-turntable-housing",
+      "partNumber": "PRT-05",
+      "name": "Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat",
+      "kind": "printed",
+      "dims_mm": [
+        102,
+        102,
+        46
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 51,
+        "innerRadius": 38,
+        "height": 46,
+        "flangeRadius": 51,
+        "flangeHeight": 5,
+        "wallThickness": 3.5,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        62
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        95
+      ],
+      "color": "#14b8a6",
+      "bomRef": "bom-filament-slider",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Cylindrical Axis-2 base housing the pan NEMA17 motor, 6808-2RS bearing race, and 3:1 reduction pinion.",
+      "roleInAssembly": "Supports and drives 360° continuous horizontal camera panning.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 8
+    },
+    {
+      "id": "pan-ring-gear",
+      "partNumber": "PRT-06",
+      "name": "60-Tooth GT2 Pan Reduction Ring Gear (3:1 Ratio)",
+      "kind": "printed",
+      "dims_mm": [
+        92,
+        92,
+        16
+      ],
+      "shape": "gear_simple",
+      "params": {
+        "teeth": 24,
+        "module": 3.5,
+        "boreRadius": 20,
+        "thickness": 16,
+        "wallThickness": 3.2,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        108
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        150
+      ],
+      "color": "#38bdf8",
+      "bomRef": "bom-filament-slider",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Precision 60T reduction gear platform coupling the 6808 bearing inner race to the Axis-3 tilt yoke.",
+      "roleInAssembly": "Multiplies pan torque 3× and rotates the upper tilt gimbal.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 9
+    },
+    {
+      "id": "nema17-stepper",
+      "partNumber": "OTS-02",
+      "name": "NEMA17 Bipolar Stepper Motors ×3 (Slide, Pan & Tilt)",
+      "kind": "purchased",
+      "dims_mm": [
+        42,
+        42,
+        38
+      ],
+      "shape": "box",
+      "params": {
+        "width": 42,
+        "depth": 42,
+        "height": 38
+      },
+      "position": [
+        -48,
+        0,
+        82
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -125,
+        0,
+        125
+      ],
+      "color": "#1e293b",
+      "bomRef": "bom-nema17-steppers",
+      "material": "Bipolar 1.8° Stepper Motor (Purchased)",
+      "quantity": 3,
+      "description": "3× high-torque 1.8° NEMA17 stepper motors (42×42×38mm, 0.42 N·m) driving linear slide, 360° pan, and tilt axes.",
+      "roleInAssembly": "Provides precision microstepped actuation for all 3 motion axes.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "tilt-u-yoke",
+      "partNumber": "PRT-07",
+      "name": "Axis-3 Cantilever Tilt Gimbal U-Yoke Arm",
+      "kind": "printed",
+      "dims_mm": [
+        108,
+        74,
+        88
+      ],
+      "shape": "bracketL",
+      "params": {
+        "legA": 108,
+        "legB": 88,
+        "width": 74,
+        "thickness": 6,
+        "filletRadius": 6,
+        "wallThickness": 4,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        124
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        205
+      ],
+      "color": "#a855f7",
+      "bomRef": "bom-filament-slider",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Reinforced gimbal yoke carrying the Axis-3 tilt NEMA17 motor and opposing trunnion bearing.",
+      "roleInAssembly": "Supports the camera tilt platform above the pan ring gear.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "camera-arca-cradle",
+      "partNumber": "PRT-08",
+      "name": "Arca-Swiss Quick-Release Camera Tilt Cradle",
+      "kind": "printed",
+      "dims_mm": [
+        78,
+        64,
+        24
+      ],
+      "shape": "plate_with_holes",
+      "params": {
+        "width": 78,
+        "depth": 64,
+        "thickness": 24,
+        "cornerRadius": 8,
+        "wallThickness": 3.5,
+        "holes": [
+          {
+            "x": 0,
+            "y": 0,
+            "radius": 3.5
+          },
+          {
+            "x": -22,
+            "y": 0,
+            "radius": 2.5
+          },
+          {
+            "x": 22,
+            "y": 0,
+            "radius": 2.5
+          }
+        ],
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        184
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        265
+      ],
+      "color": "#ec4899",
+      "bomRef": "bom-filament-slider",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Pivoting tilt stage with integrated 3:1 belt pulley hub and center 1/4\"-20 bore for the Arca-Swiss clamp.",
+      "roleInAssembly": "Tilts the camera ±90° around its optical center of gravity.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "ball-head-mount",
+      "partNumber": "OTS-08",
+      "name": "Aluminum Arca-Swiss Quick-Release Clamp & Bubble Level",
+      "kind": "purchased",
+      "dims_mm": [
+        50,
+        38,
+        10
+      ],
+      "shape": "box",
+      "params": {
+        "width": 50,
+        "depth": 38,
+        "height": 10
+      },
+      "position": [
+        0,
+        0,
+        208
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        320
+      ],
+      "color": "#f43f5e",
+      "bomRef": "bom-arca-clamp",
+      "material": "CNC Anodized Aluminum (Purchased)",
+      "quantity": 1,
+      "description": "50mm CNC aluminum Arca-Swiss dovetail jaw clamp with captive 1/4\"-20 camera plate and spirit level.",
+      "roleInAssembly": "Locks mirrorless/cinema camera body onto the tilt cradle.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "controller-side-case",
+      "partNumber": "PRT-09",
+      "name": "Snap-Fit TMC2209 + ESP32 Motion Controller Side Case",
+      "kind": "printed",
+      "dims_mm": [
+        92,
+        62,
+        34
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "enclosure",
+        "width": 92,
+        "depth": 62,
+        "height": 34,
+        "wallThickness": 2.8,
+        "floorThickness": 3,
+        "cornerRadius": 6,
+        "dfmVerified": true
+      },
+      "position": [
+        -112,
+        -62,
+        36
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -175,
+        -110,
+        45
+      ],
+      "color": "#f97316",
+      "bomRef": "bom-filament-slider",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Vented electronics enclosure that clips onto the left 2020 rail end block with OLED window and shutter jack port.",
+      "roleInAssembly": "Houses ESP32 controller, 3× TMC2209 drivers, and USB-C PD board.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "tmc2209-drivers",
+      "partNumber": "OTS-03",
+      "name": "BIGTREETECH TMC2209 SilentStepStick UART Drivers (×3)",
+      "kind": "purchased",
+      "dims_mm": [
+        48,
+        22,
+        12
+      ],
+      "shape": "box",
+      "params": {
+        "width": 48,
+        "depth": 22,
+        "height": 12
+      },
+      "position": [
+        -112,
+        -62,
+        48
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -195,
+        -135,
+        95
+      ],
+      "color": "#2563eb",
+      "bomRef": "bom-tmc2209",
+      "material": "FR4 PCB + Heatsinks (Purchased)",
+      "quantity": 3,
+      "description": "Ultra-silent 256-microstep StealthChop2 stepper drivers with UART current tuning and StallGuard.",
+      "roleInAssembly": "Drives all 3 NEMA17 motors silently with zero vibration.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "esp32-oled-controller",
+      "partNumber": "OTS-06",
+      "name": "ESP32 + 0.96\" OLED Keyframe Controller & 2.5mm Shutter Cable",
+      "kind": "purchased",
+      "dims_mm": [
+        56,
+        30,
+        12
+      ],
+      "shape": "box",
+      "params": {
+        "width": 56,
+        "depth": 30,
+        "height": 12
+      },
+      "position": [
+        -112,
+        -62,
+        62
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -195,
+        -135,
+        135
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-esp32-oled",
+      "material": "FR4 PCB + OLED Display (Purchased)",
+      "quantity": 1,
+      "description": "Wi-Fi/BLE motion controller with onboard 128×64 OLED screen and opto-isolated 2.5mm camera shutter release cable.",
+      "roleInAssembly": "Executes keyframe interpolation and shoot-move-shoot time-lapse triggers.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "pd-trigger-battery",
+      "partNumber": "OTS-07",
+      "name": "USB-C PD 12V/20V Trigger Board + M5 T-Nuts & Hardware Kit",
+      "kind": "purchased",
+      "dims_mm": [
+        44,
+        26,
+        12
+      ],
+      "shape": "box",
+      "params": {
+        "width": 44,
+        "depth": 26,
+        "height": 12
+      },
+      "position": [
+        112,
+        -55,
+        36
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        175,
+        -110,
+        45
+      ],
+      "color": "#64748b",
+      "bomRef": "bom-pd-hardware",
+      "material": "USB-C PD Decoy PCB & Stainless Fasteners (Purchased)",
+      "quantity": 1,
+      "description": "Negotiates 12V/15V 3A power from any USB-C PD power bank plus 20× M5 T-nuts, M5 bolts, and 1/4\"-20 camera screw.",
+      "roleInAssembly": "Powers the 3-axis rig in the field and fastens rail assemblies.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    }
+  ],
+  "summary": [
+    "All 9 printed part types (12 printed items including 4 fold-out outrigger legs) pack onto 2 Bambu Lab A1 plates with zero slicer supports.",
+    "Rotate the two 6mm eccentric spacers on PRT-04 until the 4 Delrin V-wheels roll with zero rocking play on the 2020 rails.",
+    "Set TMC2209 UART current to 650mA RMS for Slide/Pan and 500mA RMS for Tilt to keep motor temperatures cool during 4-hour time-lapses."
+  ]
+}

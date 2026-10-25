@@ -1,0 +1,86 @@
+{
+  "objectName": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "slug": "desktop-robot-arm",
+  "category": "Robotics & Mechatronics",
+  "tagline": "6-DOF desktop serial manipulator with 6808 slew-bearing turntable, MG996R/MG90S servo kinematics, PCA9685 16-ch PWM driver & parallel spur-gear gripper",
+  "description": "Commercial 6-axis desktop robot arms like the uFactory Lite 6 ($1,299), Elephant Robotics myCobot 280 ($599–$799), or Hiwonder JetMax ($699) charge a 10x markup for injection-molded shells and basic hobby servo kinematics. This DIY alternative combines 9 structural PETG/PLA+ printed links with $62.90 of off-the-shelf MG996R/MG90S metal-gear servos, a 6808 thin-section turntable bearing, PCA9685 I2C PWM driver, ESP32-S3, and 6V 10A PSU.",
+  "functionSummary": "Executes 6-DOF inverse kinematics (azimuth waist J1, dual-torqued shoulder pitch J2, cantilever elbow J3, inline forearm roll J4, wrist pitch clevis J5, and parallel spur-gear gripper J6) driven by an ESP32-S3 over I2C to a 12-bit PCA9685 PWM generator.",
+  "inputUrl": "https://www.amazon.com/s?k=6+axis+desktop+robot+arm+programmable+servo+kit",
+  "inputType": "url",
+  "originalProduct": {
+    "name": "Hiwonder / uFactory Desktop 6-Axis Programmable Robotic Arm",
+    "brand": "Hiwonder / uFactory / Elephant Robotics",
+    "retailPrice": 899,
+    "currency": "USD",
+    "url": "https://www.amazon.com/s?k=6+axis+desktop+robot+arm+programmable+servo+kit",
+    "whyExpensive": "Proprietary machined/molded link housings, closed controller firmware, and 800% educational robotics distributor markup over standard metal-gear servos and thin-section bearings.",
+    "retailPriceUsd": 899
+  },
+  "targetDiyCost": 74.5,
+  "estimatedSavings": 824.5,
+  "estimatedPrintTimeHours": 8.6,
+  "estimatedAssemblyMinutes": 65,
+  "difficulty": "Intermediate",
+  "overallDimensionsMm": [
+    240,
+    210,
+    410
+  ],
+  "keyMechanisms": [
+    "J1 azimuth waist turntable riding on a preloaded 6808-2RS thin-section ball bearing (40×52×7mm) for zero radial play",
+    "J2–J3 triangulated truss lower arm and cantilever elbow housing driven by high-torque 11 kg·cm MG996R metal-gear digital servos",
+    "J4–J5 inline hollow forearm roll tube and differential wrist pitch clevis minimizing distal inertia",
+    "J6 synchronous spur-gear parallel linkage gripper with compliant textured jaws driven by an MG90S micro metal-gear servo"
+  ],
+  "engineeringNotes": [
+    "Print PRT-01 (Base Pedestal), PRT-03 (Shoulder Yoke), and PRT-04 (Lower Arm Link) in PETG with 4 perimeter walls and 35% gyroid infill to resist bending moments.",
+    "All bearing seats include a +0.15mm press-fit radial allowance and 45° lead-in chamfer for 6808-2RS and 608ZZ bearings.",
+    "Packs across 2 build plates on a Bambu Lab A1 / P1S / X1C (256×256×256 mm) with zero support material."
+  ],
+  "materialsNeeded": [
+    "PETG Filament (~360g) for high-load base pedestal, turntable, shoulder yoke, lower arm truss & elbow housing",
+    "PLA+ Filament (~180g) for lightweight forearm roll barrel, wrist clevis, gripper frame & geared jaws",
+    "3× MG996R + 3× MG90S Metal-Gear Servos + 6808-2RS Bearing + PCA9685 PWM Driver + ESP32-S3 + 6V 10A PSU"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Weighted Base Pedestal with 6808 Bearing Seat (150×150×42mm)",
+    "PRT-02: J1 Azimuth Rotary Turntable & Ring Gear Deck (134×134×14mm)",
+    "PRT-03: J2 Dual-Servo Shoulder U-Yoke Bracket (94×68×76mm)",
+    "PRT-04: J2–J3 Triangulated Truss Lower Arm Link (52×44×145mm)",
+    "PRT-05: J3 Offset Elbow Cantilever Servo Housing (68×54×56mm)",
+    "PRT-06: J4 Hollow Wrist-Roll Forearm Barrel (48×48×120mm)",
+    "PRT-07: J5 Differential Wrist Pitch Clevis Gimbal (48×42×44mm)",
+    "PRT-08: J6 Spur-Gear Parallel Gripper Chassis (64×52×28mm)",
+    "PRT-09: Compliant Geared Parallel Gripper Jaws ×2 (32×32×14mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: High-Torque MG996R Metal-Gear Digital Servos ×3 (J1–J3)",
+    "OTS-02: Micro MG90S Metal-Gear Servos ×3 (J4–J6 Wrist & Gripper)",
+    "OTS-03: 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 608ZZ Bearings",
+    "OTS-04: PCA9685 16-Channel 12-Bit PWM Servo Driver Board (I2C)",
+    "OTS-05: ESP32-S3 Wi-Fi/BLE Inverse-Kinematics Controller Board",
+    "OTS-06: 6V 10A (60W) Regulated Switching DC Power Supply",
+    "OTS-07: 25T Aluminum Clamping Servo Horns & M3 Stainless Fastener Kit"
+  ],
+  "id": "desktop-robot-arm",
+  "name": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "title": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "summary": "Commercial 6-axis desktop robot arms like the uFactory Lite 6 ($1,299), Elephant Robotics myCobot 280 ($599–$799), or Hiwonder JetMax ($699) charge a 10x markup for injection-molded shells and basic hobby servo kinematics. This DIY alternative combines 9 structural PETG/PLA+ printed links with $62.90 of off-the-shelf MG996R/MG90S metal-gear servos, a 6808 thin-section turntable bearing, PCA9685 I2C PWM driver, ESP32-S3, and 6V 10A PSU.",
+  "function": "Executes 6-DOF inverse kinematics (azimuth waist J1, dual-torqued shoulder pitch J2, cantilever elbow J3, inline forearm roll J4, wrist pitch clevis J5, and parallel spur-gear gripper J6) driven by an ESP32-S3 over I2C to a 12-bit PCA9685 PWM generator.",
+  "originalPrice": 899,
+  "estimatedDiyCost": 74.5,
+  "savingsPercent": 91.7,
+  "estimatedBuildTimeMinutes": 65,
+  "estimatedFilamentGrams": 609.3,
+  "dimensionsMm": {
+    "width": 240,
+    "depth": 210,
+    "height": 410
+  },
+  "mechanisms": [
+    "J1 azimuth waist turntable riding on a preloaded 6808-2RS thin-section ball bearing (40×52×7mm) for zero radial play",
+    "J2–J3 triangulated truss lower arm and cantilever elbow housing driven by high-torque 11 kg·cm MG996R metal-gear digital servos",
+    "J4–J5 inline hollow forearm roll tube and differential wrist pitch clevis minimizing distal inertia",
+    "J6 synchronous spur-gear parallel linkage gripper with compliant textured jaws driven by an MG90S micro metal-gear servo"
+  ]
+}

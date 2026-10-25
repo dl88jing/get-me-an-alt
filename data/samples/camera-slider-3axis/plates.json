@@ -1,0 +1,1600 @@
+{
+  "objectId": "camera-slider-3axis",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPlates": 2,
+  "totalUniqueParts": 9,
+  "totalPrintedItems": 12,
+  "totalWeightGrams": 581.7,
+  "totalFilamentGrams": 581.7,
+  "totalFilamentMeters": 195.06,
+  "totalPrintTimeMinutes": 770,
+  "formattedTotalPrintTime": "12h 50m",
+  "multiPlate3mfFile": "parts/all-plates.3mf",
+  "multiPlate3mfBytes": 851245,
+  "printer": {
+    "id": "bambu-a1",
+    "name": "Bambu Lab A1",
+    "brand": "Bambu Lab",
+    "bed": {
+      "x": 256,
+      "y": 256,
+      "z": 256
+    },
+    "multiColor": true,
+    "speedClass": "high-speed"
+  },
+  "margin": 5,
+  "spacing": 5,
+  "heuristicUsed": "MaxRects-BLSF-BF (area-desc)",
+  "parts": [
+    {
+      "partId": "motor-end-block",
+      "name": "Left 2020 Rail Drive Block & NEMA17 Stepper Mount",
+      "shape": "custom_csg",
+      "stlFile": "parts/motor-end-block.stl",
+      "file": "parts/motor-end-block.stl",
+      "scadFile": "parts/motor-end-block.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 70284,
+      "dims_mm": [
+        96,
+        78,
+        58
+      ],
+      "dimensionsMm": [
+        96,
+        78,
+        58
+      ],
+      "weightGrams": 75.7,
+      "filamentGrams": 75.7,
+      "filamentMeters": 25.38,
+      "estimatedMinutes": 107,
+      "printTimeMinutes": 107,
+      "formattedTime": "1h 47m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1404,
+      "vertexCount": 700,
+      "edgeCount": 2106,
+      "volumeMm3": 102209.91,
+      "surfaceAreaMm2": 51203.98,
+      "isManifold": true
+    },
+    {
+      "partId": "idler-end-block",
+      "name": "Right 2020 Rail Idler Block with M5 Belt Tensioner",
+      "shape": "custom_csg",
+      "stlFile": "parts/idler-end-block.stl",
+      "file": "parts/idler-end-block.stl",
+      "scadFile": "parts/idler-end-block.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 72284,
+      "dims_mm": [
+        88,
+        78,
+        54
+      ],
+      "dimensionsMm": [
+        88,
+        78,
+        54
+      ],
+      "weightGrams": 67.5,
+      "filamentGrams": 67.5,
+      "filamentMeters": 22.63,
+      "estimatedMinutes": 96,
+      "printTimeMinutes": 96,
+      "formattedTime": "1h 36m",
+      "color": "#10b981",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1444,
+      "vertexCount": 720,
+      "edgeCount": 2166,
+      "volumeMm3": 91088.44,
+      "surfaceAreaMm2": 45726.6,
+      "isManifold": true
+    },
+    {
+      "partId": "outTrigger-leg",
+      "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+      "shape": "bracketL",
+      "stlFile": "parts/outTrigger-leg.stl",
+      "file": "parts/outTrigger-leg.stl",
+      "scadFile": "parts/outTrigger-leg.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        115,
+        36,
+        24
+      ],
+      "dimensionsMm": [
+        115,
+        36,
+        24
+      ],
+      "weightGrams": 50,
+      "filamentGrams": 50,
+      "filamentMeters": 16.8,
+      "estimatedMinutes": 92,
+      "printTimeMinutes": 92,
+      "formattedTime": "1h 32m",
+      "color": "#f59e0b",
+      "material": "PETG",
+      "quantity": 4,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 17893.93,
+      "surfaceAreaMm2": 9027.41,
+      "isManifold": true
+    },
+    {
+      "partId": "gantry-carriage-plate",
+      "name": "4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/gantry-carriage-plate.stl",
+      "file": "parts/gantry-carriage-plate.stl",
+      "scadFile": "parts/gantry-carriage-plate.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 88684,
+      "dims_mm": [
+        124,
+        108,
+        14
+      ],
+      "dimensionsMm": [
+        124,
+        108,
+        14
+      ],
+      "weightGrams": 107.6,
+      "filamentGrams": 107.6,
+      "filamentMeters": 36.07,
+      "estimatedMinutes": 134,
+      "printTimeMinutes": 134,
+      "formattedTime": "2h 14m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1772,
+      "vertexCount": 872,
+      "edgeCount": 2658,
+      "volumeMm3": 183278.12,
+      "surfaceAreaMm2": 34147.45,
+      "isManifold": true
+    },
+    {
+      "partId": "pan-turntable-housing",
+      "name": "Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat",
+      "shape": "tube",
+      "stlFile": "parts/pan-turntable-housing.stl",
+      "file": "parts/pan-turntable-housing.stl",
+      "scadFile": "parts/pan-turntable-housing.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        102,
+        102,
+        46
+      ],
+      "dimensionsMm": [
+        102,
+        102,
+        46
+      ],
+      "weightGrams": 87.5,
+      "filamentGrams": 87.5,
+      "filamentMeters": 29.34,
+      "estimatedMinutes": 118,
+      "printTimeMinutes": 118,
+      "formattedTime": "1h 58m",
+      "color": "#14b8a6",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 159012,
+      "surfaceAreaMm2": 34974.25,
+      "isManifold": true
+    },
+    {
+      "partId": "pan-ring-gear",
+      "name": "60-Tooth GT2 Pan Reduction Ring Gear (3:1 Ratio)",
+      "shape": "gear_simple",
+      "stlFile": "parts/pan-ring-gear.stl",
+      "file": "parts/pan-ring-gear.stl",
+      "scadFile": "parts/pan-ring-gear.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 33684,
+      "dims_mm": [
+        92,
+        92,
+        16
+      ],
+      "dimensionsMm": [
+        92,
+        92,
+        16
+      ],
+      "weightGrams": 38.7,
+      "filamentGrams": 38.7,
+      "filamentMeters": 12.98,
+      "estimatedMinutes": 53,
+      "printTimeMinutes": 53,
+      "formattedTime": "53m",
+      "color": "#38bdf8",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 672,
+      "vertexCount": 336,
+      "edgeCount": 1008,
+      "volumeMm3": 63765.46,
+      "surfaceAreaMm2": 20874.13,
+      "isManifold": true
+    },
+    {
+      "partId": "tilt-u-yoke",
+      "name": "Axis-3 Cantilever Tilt Gimbal U-Yoke Arm",
+      "shape": "bracketL",
+      "stlFile": "parts/tilt-u-yoke.stl",
+      "file": "parts/tilt-u-yoke.stl",
+      "scadFile": "parts/tilt-u-yoke.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        108,
+        74,
+        88
+      ],
+      "dimensionsMm": [
+        108,
+        74,
+        88
+      ],
+      "weightGrams": 63.1,
+      "filamentGrams": 63.1,
+      "filamentMeters": 21.16,
+      "estimatedMinutes": 99,
+      "printTimeMinutes": 99,
+      "formattedTime": "1h 39m",
+      "color": "#a855f7",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 93298.72,
+      "surfaceAreaMm2": 34474.54,
+      "isManifold": true
+    },
+    {
+      "partId": "camera-arca-cradle",
+      "name": "Arca-Swiss Quick-Release Camera Tilt Cradle",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/camera-arca-cradle.stl",
+      "file": "parts/camera-arca-cradle.stl",
+      "scadFile": "parts/camera-arca-cradle.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 78884,
+      "dims_mm": [
+        78,
+        64,
+        24
+      ],
+      "dimensionsMm": [
+        78,
+        64,
+        24
+      ],
+      "weightGrams": 59.9,
+      "filamentGrams": 59.9,
+      "filamentMeters": 20.08,
+      "estimatedMinutes": 79,
+      "printTimeMinutes": 79,
+      "formattedTime": "1h 19m",
+      "color": "#ec4899",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1576,
+      "vertexCount": 776,
+      "edgeCount": 2364,
+      "volumeMm3": 115481.16,
+      "surfaceAreaMm2": 18504.9,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-side-case",
+      "name": "Snap-Fit TMC2209 + ESP32 Motion Controller Side Case",
+      "shape": "custom_csg",
+      "stlFile": "parts/controller-side-case.stl",
+      "file": "parts/controller-side-case.stl",
+      "scadFile": "parts/controller-side-case.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 71484,
+      "dims_mm": [
+        92,
+        62,
+        34
+      ],
+      "dimensionsMm": [
+        92,
+        62,
+        34
+      ],
+      "weightGrams": 31.7,
+      "filamentGrams": 31.7,
+      "filamentMeters": 10.62,
+      "estimatedMinutes": 48,
+      "printTimeMinutes": 48,
+      "formattedTime": "48m",
+      "color": "#f97316",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1428,
+      "vertexCount": 712,
+      "edgeCount": 2142,
+      "volumeMm3": 42108.59,
+      "surfaceAreaMm2": 30510.48,
+      "isManifold": true
+    }
+  ],
+  "partFiles": [
+    {
+      "partId": "motor-end-block",
+      "name": "Left 2020 Rail Drive Block & NEMA17 Stepper Mount",
+      "shape": "custom_csg",
+      "stlFile": "parts/motor-end-block.stl",
+      "file": "parts/motor-end-block.stl",
+      "scadFile": "parts/motor-end-block.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 70284,
+      "dims_mm": [
+        96,
+        78,
+        58
+      ],
+      "dimensionsMm": [
+        96,
+        78,
+        58
+      ],
+      "weightGrams": 75.7,
+      "filamentGrams": 75.7,
+      "filamentMeters": 25.38,
+      "estimatedMinutes": 107,
+      "printTimeMinutes": 107,
+      "formattedTime": "1h 47m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1404,
+      "vertexCount": 700,
+      "edgeCount": 2106,
+      "volumeMm3": 102209.91,
+      "surfaceAreaMm2": 51203.98,
+      "isManifold": true
+    },
+    {
+      "partId": "idler-end-block",
+      "name": "Right 2020 Rail Idler Block with M5 Belt Tensioner",
+      "shape": "custom_csg",
+      "stlFile": "parts/idler-end-block.stl",
+      "file": "parts/idler-end-block.stl",
+      "scadFile": "parts/idler-end-block.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 72284,
+      "dims_mm": [
+        88,
+        78,
+        54
+      ],
+      "dimensionsMm": [
+        88,
+        78,
+        54
+      ],
+      "weightGrams": 67.5,
+      "filamentGrams": 67.5,
+      "filamentMeters": 22.63,
+      "estimatedMinutes": 96,
+      "printTimeMinutes": 96,
+      "formattedTime": "1h 36m",
+      "color": "#10b981",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1444,
+      "vertexCount": 720,
+      "edgeCount": 2166,
+      "volumeMm3": 91088.44,
+      "surfaceAreaMm2": 45726.6,
+      "isManifold": true
+    },
+    {
+      "partId": "outTrigger-leg",
+      "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+      "shape": "bracketL",
+      "stlFile": "parts/outTrigger-leg.stl",
+      "file": "parts/outTrigger-leg.stl",
+      "scadFile": "parts/outTrigger-leg.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        115,
+        36,
+        24
+      ],
+      "dimensionsMm": [
+        115,
+        36,
+        24
+      ],
+      "weightGrams": 50,
+      "filamentGrams": 50,
+      "filamentMeters": 16.8,
+      "estimatedMinutes": 92,
+      "printTimeMinutes": 92,
+      "formattedTime": "1h 32m",
+      "color": "#f59e0b",
+      "material": "PETG",
+      "quantity": 4,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 17893.93,
+      "surfaceAreaMm2": 9027.41,
+      "isManifold": true
+    },
+    {
+      "partId": "gantry-carriage-plate",
+      "name": "4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/gantry-carriage-plate.stl",
+      "file": "parts/gantry-carriage-plate.stl",
+      "scadFile": "parts/gantry-carriage-plate.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 88684,
+      "dims_mm": [
+        124,
+        108,
+        14
+      ],
+      "dimensionsMm": [
+        124,
+        108,
+        14
+      ],
+      "weightGrams": 107.6,
+      "filamentGrams": 107.6,
+      "filamentMeters": 36.07,
+      "estimatedMinutes": 134,
+      "printTimeMinutes": 134,
+      "formattedTime": "2h 14m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1772,
+      "vertexCount": 872,
+      "edgeCount": 2658,
+      "volumeMm3": 183278.12,
+      "surfaceAreaMm2": 34147.45,
+      "isManifold": true
+    },
+    {
+      "partId": "pan-turntable-housing",
+      "name": "Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat",
+      "shape": "tube",
+      "stlFile": "parts/pan-turntable-housing.stl",
+      "file": "parts/pan-turntable-housing.stl",
+      "scadFile": "parts/pan-turntable-housing.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        102,
+        102,
+        46
+      ],
+      "dimensionsMm": [
+        102,
+        102,
+        46
+      ],
+      "weightGrams": 87.5,
+      "filamentGrams": 87.5,
+      "filamentMeters": 29.34,
+      "estimatedMinutes": 118,
+      "printTimeMinutes": 118,
+      "formattedTime": "1h 58m",
+      "color": "#14b8a6",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 159012,
+      "surfaceAreaMm2": 34974.25,
+      "isManifold": true
+    },
+    {
+      "partId": "pan-ring-gear",
+      "name": "60-Tooth GT2 Pan Reduction Ring Gear (3:1 Ratio)",
+      "shape": "gear_simple",
+      "stlFile": "parts/pan-ring-gear.stl",
+      "file": "parts/pan-ring-gear.stl",
+      "scadFile": "parts/pan-ring-gear.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 33684,
+      "dims_mm": [
+        92,
+        92,
+        16
+      ],
+      "dimensionsMm": [
+        92,
+        92,
+        16
+      ],
+      "weightGrams": 38.7,
+      "filamentGrams": 38.7,
+      "filamentMeters": 12.98,
+      "estimatedMinutes": 53,
+      "printTimeMinutes": 53,
+      "formattedTime": "53m",
+      "color": "#38bdf8",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 672,
+      "vertexCount": 336,
+      "edgeCount": 1008,
+      "volumeMm3": 63765.46,
+      "surfaceAreaMm2": 20874.13,
+      "isManifold": true
+    },
+    {
+      "partId": "tilt-u-yoke",
+      "name": "Axis-3 Cantilever Tilt Gimbal U-Yoke Arm",
+      "shape": "bracketL",
+      "stlFile": "parts/tilt-u-yoke.stl",
+      "file": "parts/tilt-u-yoke.stl",
+      "scadFile": "parts/tilt-u-yoke.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        108,
+        74,
+        88
+      ],
+      "dimensionsMm": [
+        108,
+        74,
+        88
+      ],
+      "weightGrams": 63.1,
+      "filamentGrams": 63.1,
+      "filamentMeters": 21.16,
+      "estimatedMinutes": 99,
+      "printTimeMinutes": 99,
+      "formattedTime": "1h 39m",
+      "color": "#a855f7",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 93298.72,
+      "surfaceAreaMm2": 34474.54,
+      "isManifold": true
+    },
+    {
+      "partId": "camera-arca-cradle",
+      "name": "Arca-Swiss Quick-Release Camera Tilt Cradle",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/camera-arca-cradle.stl",
+      "file": "parts/camera-arca-cradle.stl",
+      "scadFile": "parts/camera-arca-cradle.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 78884,
+      "dims_mm": [
+        78,
+        64,
+        24
+      ],
+      "dimensionsMm": [
+        78,
+        64,
+        24
+      ],
+      "weightGrams": 59.9,
+      "filamentGrams": 59.9,
+      "filamentMeters": 20.08,
+      "estimatedMinutes": 79,
+      "printTimeMinutes": 79,
+      "formattedTime": "1h 19m",
+      "color": "#ec4899",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1576,
+      "vertexCount": 776,
+      "edgeCount": 2364,
+      "volumeMm3": 115481.16,
+      "surfaceAreaMm2": 18504.9,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-side-case",
+      "name": "Snap-Fit TMC2209 + ESP32 Motion Controller Side Case",
+      "shape": "custom_csg",
+      "stlFile": "parts/controller-side-case.stl",
+      "file": "parts/controller-side-case.stl",
+      "scadFile": "parts/controller-side-case.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 71484,
+      "dims_mm": [
+        92,
+        62,
+        34
+      ],
+      "dimensionsMm": [
+        92,
+        62,
+        34
+      ],
+      "weightGrams": 31.7,
+      "filamentGrams": 31.7,
+      "filamentMeters": 10.62,
+      "estimatedMinutes": 48,
+      "printTimeMinutes": 48,
+      "formattedTime": "48m",
+      "color": "#f97316",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1428,
+      "vertexCount": 712,
+      "edgeCount": 2142,
+      "volumeMm3": 42108.59,
+      "surfaceAreaMm2": 30510.48,
+      "isManifold": true
+    }
+  ],
+  "plates": [
+    {
+      "plateNumber": 1,
+      "index": 0,
+      "name": "Plate 1 — Bambu Lab A1 (6 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 80.2,
+      "utilization": 0.802,
+      "maxHeight": 88,
+      "estimatedMinutes": 429,
+      "printTimeMinutes": 429,
+      "formattedTime": "7h 9m",
+      "weightGrams": 321.9,
+      "filamentGrams": 321.9,
+      "filamentMeters": 107.95,
+      "layers": 440,
+      "stlFile": "parts/plate-1.3mf",
+      "file": "parts/plate-1.3mf",
+      "bytes": 407140,
+      "placements": [
+        {
+          "partId": "gantry-carriage-plate",
+          "name": "4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 67,
+          "centerY": 59,
+          "width": 124,
+          "depth": 108,
+          "height": 14,
+          "rotated": false,
+          "color": "#6366f1",
+          "stlFile": "parts/gantry-carriage-plate.stl",
+          "weightGrams": 107.6,
+          "estimatedMinutes": 134
+        },
+        {
+          "partId": "pan-turntable-housing",
+          "name": "Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 134,
+          "y": 5,
+          "centerX": 185,
+          "centerY": 56,
+          "width": 102,
+          "depth": 102,
+          "height": 46,
+          "rotated": false,
+          "color": "#14b8a6",
+          "stlFile": "parts/pan-turntable-housing.stl",
+          "weightGrams": 87.5,
+          "estimatedMinutes": 118
+        },
+        {
+          "partId": "pan-ring-gear",
+          "name": "60-Tooth GT2 Pan Reduction Ring Gear (3:1 Ratio)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 134,
+          "y": 112,
+          "centerX": 180,
+          "centerY": 158,
+          "width": 92,
+          "depth": 92,
+          "height": 16,
+          "rotated": false,
+          "color": "#38bdf8",
+          "stlFile": "parts/pan-ring-gear.stl",
+          "weightGrams": 38.7,
+          "estimatedMinutes": 53
+        },
+        {
+          "partId": "tilt-u-yoke",
+          "name": "Axis-3 Cantilever Tilt Gimbal U-Yoke Arm",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 118,
+          "centerX": 42,
+          "centerY": 172,
+          "width": 74,
+          "depth": 108,
+          "height": 88,
+          "rotated": true,
+          "color": "#a855f7",
+          "stlFile": "parts/tilt-u-yoke.stl",
+          "weightGrams": 63.1,
+          "estimatedMinutes": 99
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 84,
+          "y": 118,
+          "centerX": 102,
+          "centerY": 175.5,
+          "width": 36,
+          "depth": 115,
+          "height": 24,
+          "rotated": true,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 125,
+          "y": 209,
+          "centerX": 182.5,
+          "centerY": 227,
+          "width": 115,
+          "depth": 36,
+          "height": 24,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        }
+      ],
+      "items": [
+        {
+          "partId": "gantry-carriage-plate",
+          "name": "4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 67,
+          "centerY": 59,
+          "width": 124,
+          "depth": 108,
+          "height": 14,
+          "rotated": false,
+          "color": "#6366f1",
+          "stlFile": "parts/gantry-carriage-plate.stl",
+          "weightGrams": 107.6,
+          "estimatedMinutes": 134
+        },
+        {
+          "partId": "pan-turntable-housing",
+          "name": "Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 134,
+          "y": 5,
+          "centerX": 185,
+          "centerY": 56,
+          "width": 102,
+          "depth": 102,
+          "height": 46,
+          "rotated": false,
+          "color": "#14b8a6",
+          "stlFile": "parts/pan-turntable-housing.stl",
+          "weightGrams": 87.5,
+          "estimatedMinutes": 118
+        },
+        {
+          "partId": "pan-ring-gear",
+          "name": "60-Tooth GT2 Pan Reduction Ring Gear (3:1 Ratio)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 134,
+          "y": 112,
+          "centerX": 180,
+          "centerY": 158,
+          "width": 92,
+          "depth": 92,
+          "height": 16,
+          "rotated": false,
+          "color": "#38bdf8",
+          "stlFile": "parts/pan-ring-gear.stl",
+          "weightGrams": 38.7,
+          "estimatedMinutes": 53
+        },
+        {
+          "partId": "tilt-u-yoke",
+          "name": "Axis-3 Cantilever Tilt Gimbal U-Yoke Arm",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 118,
+          "centerX": 42,
+          "centerY": 172,
+          "width": 74,
+          "depth": 108,
+          "height": 88,
+          "rotated": true,
+          "color": "#a855f7",
+          "stlFile": "parts/tilt-u-yoke.stl",
+          "weightGrams": 63.1,
+          "estimatedMinutes": 99
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 84,
+          "y": 118,
+          "centerX": 102,
+          "centerY": 175.5,
+          "width": 36,
+          "depth": 115,
+          "height": 24,
+          "rotated": true,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 125,
+          "y": 209,
+          "centerX": 182.5,
+          "centerY": 227,
+          "width": 115,
+          "depth": 36,
+          "height": 24,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        }
+      ]
+    },
+    {
+      "plateNumber": 2,
+      "index": 1,
+      "name": "Plate 2 — Bambu Lab A1 (6 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 55.07,
+      "utilization": 0.5507,
+      "maxHeight": 58,
+      "estimatedMinutes": 341,
+      "printTimeMinutes": 341,
+      "formattedTime": "5h 41m",
+      "weightGrams": 259.8,
+      "filamentGrams": 259.8,
+      "filamentMeters": 87.11,
+      "layers": 290,
+      "stlFile": "parts/plate-2.3mf",
+      "file": "parts/plate-2.3mf",
+      "bytes": 506835,
+      "placements": [
+        {
+          "partId": "motor-end-block",
+          "name": "Left 2020 Rail Drive Block & NEMA17 Stepper Mount",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 53,
+          "centerY": 44,
+          "width": 96,
+          "depth": 78,
+          "height": 58,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/motor-end-block.stl",
+          "weightGrams": 75.7,
+          "estimatedMinutes": 107
+        },
+        {
+          "partId": "idler-end-block",
+          "name": "Right 2020 Rail Idler Block with M5 Belt Tensioner",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 106,
+          "y": 5,
+          "centerX": 145,
+          "centerY": 49,
+          "width": 78,
+          "depth": 88,
+          "height": 54,
+          "rotated": true,
+          "color": "#10b981",
+          "stlFile": "parts/idler-end-block.stl",
+          "weightGrams": 67.5,
+          "estimatedMinutes": 96
+        },
+        {
+          "partId": "controller-side-case",
+          "name": "Snap-Fit TMC2209 + ESP32 Motion Controller Side Case",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 88,
+          "centerX": 36,
+          "centerY": 134,
+          "width": 62,
+          "depth": 92,
+          "height": 34,
+          "rotated": true,
+          "color": "#f97316",
+          "stlFile": "parts/controller-side-case.stl",
+          "weightGrams": 31.7,
+          "estimatedMinutes": 48
+        },
+        {
+          "partId": "camera-arca-cradle",
+          "name": "Arca-Swiss Quick-Release Camera Tilt Cradle",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 72,
+          "y": 98,
+          "centerX": 111,
+          "centerY": 130,
+          "width": 78,
+          "depth": 64,
+          "height": 24,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/camera-arca-cradle.stl",
+          "weightGrams": 59.9,
+          "estimatedMinutes": 79
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 3,
+          "copy": 3,
+          "x": 155,
+          "y": 98,
+          "centerX": 173,
+          "centerY": 155.5,
+          "width": 36,
+          "depth": 115,
+          "height": 24,
+          "rotated": true,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 4,
+          "copy": 4,
+          "x": 5,
+          "y": 185,
+          "centerX": 62.5,
+          "centerY": 203,
+          "width": 115,
+          "depth": 36,
+          "height": 24,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        }
+      ],
+      "items": [
+        {
+          "partId": "motor-end-block",
+          "name": "Left 2020 Rail Drive Block & NEMA17 Stepper Mount",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 53,
+          "centerY": 44,
+          "width": 96,
+          "depth": 78,
+          "height": 58,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/motor-end-block.stl",
+          "weightGrams": 75.7,
+          "estimatedMinutes": 107
+        },
+        {
+          "partId": "idler-end-block",
+          "name": "Right 2020 Rail Idler Block with M5 Belt Tensioner",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 106,
+          "y": 5,
+          "centerX": 145,
+          "centerY": 49,
+          "width": 78,
+          "depth": 88,
+          "height": 54,
+          "rotated": true,
+          "color": "#10b981",
+          "stlFile": "parts/idler-end-block.stl",
+          "weightGrams": 67.5,
+          "estimatedMinutes": 96
+        },
+        {
+          "partId": "controller-side-case",
+          "name": "Snap-Fit TMC2209 + ESP32 Motion Controller Side Case",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 88,
+          "centerX": 36,
+          "centerY": 134,
+          "width": 62,
+          "depth": 92,
+          "height": 34,
+          "rotated": true,
+          "color": "#f97316",
+          "stlFile": "parts/controller-side-case.stl",
+          "weightGrams": 31.7,
+          "estimatedMinutes": 48
+        },
+        {
+          "partId": "camera-arca-cradle",
+          "name": "Arca-Swiss Quick-Release Camera Tilt Cradle",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 72,
+          "y": 98,
+          "centerX": 111,
+          "centerY": 130,
+          "width": 78,
+          "depth": 64,
+          "height": 24,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/camera-arca-cradle.stl",
+          "weightGrams": 59.9,
+          "estimatedMinutes": 79
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 3,
+          "copy": 3,
+          "x": 155,
+          "y": 98,
+          "centerX": 173,
+          "centerY": 155.5,
+          "width": 36,
+          "depth": 115,
+          "height": 24,
+          "rotated": true,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        },
+        {
+          "partId": "outTrigger-leg",
+          "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+          "copyIndex": 4,
+          "copy": 4,
+          "x": 5,
+          "y": 185,
+          "centerX": 62.5,
+          "centerY": 203,
+          "width": 115,
+          "depth": 36,
+          "height": 24,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/outTrigger-leg.stl",
+          "weightGrams": 12.5,
+          "estimatedMinutes": 23
+        }
+      ]
+    }
+  ],
+  "rejected": [],
+  "cadReport": {
+    "printerId": "bambu-a1",
+    "printerName": "Bambu Lab A1",
+    "bedDimensionsMm": [
+      256,
+      256,
+      256
+    ],
+    "totalPrintedParts": 9,
+    "argonOpenScadParts": 0,
+    "fallbackParts": 0,
+    "totalAttempts": 0,
+    "parts": [
+      {
+        "partId": "motor-end-block",
+        "name": "Left 2020 Rail Drive Block & NEMA17 Stepper Mount",
+        "targetDimsMm": [
+          96,
+          78,
+          58
+        ],
+        "actualDimsMm": [
+          96,
+          78,
+          58
+        ],
+        "scadFile": "parts/motor-end-block.scad",
+        "stlFile": "parts/motor-end-block.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1404,
+          "volumeMm3": 102209.91,
+          "actualDimsMm": [
+            96,
+            78,
+            58
+          ],
+          "targetDimsMm": [
+            96,
+            78,
+            58
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1404,
+        "volumeMm3": 102209.91,
+        "isManifold": true
+      },
+      {
+        "partId": "idler-end-block",
+        "name": "Right 2020 Rail Idler Block with M5 Belt Tensioner",
+        "targetDimsMm": [
+          88,
+          78,
+          54
+        ],
+        "actualDimsMm": [
+          88,
+          78,
+          54
+        ],
+        "scadFile": "parts/idler-end-block.scad",
+        "stlFile": "parts/idler-end-block.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1444,
+          "volumeMm3": 91088.44,
+          "actualDimsMm": [
+            88,
+            78,
+            54
+          ],
+          "targetDimsMm": [
+            88,
+            78,
+            54
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1444,
+        "volumeMm3": 91088.44,
+        "isManifold": true
+      },
+      {
+        "partId": "outTrigger-leg",
+        "name": "Fold-Out Articulated All-Terrain Outrigger Legs (×4)",
+        "targetDimsMm": [
+          115,
+          36,
+          24
+        ],
+        "actualDimsMm": [
+          115,
+          36,
+          24
+        ],
+        "scadFile": "parts/outTrigger-leg.scad",
+        "stlFile": "parts/outTrigger-leg.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 816,
+          "volumeMm3": 17893.93,
+          "actualDimsMm": [
+            115,
+            36,
+            24
+          ],
+          "targetDimsMm": [
+            115,
+            36,
+            24
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 816,
+        "volumeMm3": 17893.93,
+        "isManifold": true
+      },
+      {
+        "partId": "gantry-carriage-plate",
+        "name": "4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores",
+        "targetDimsMm": [
+          124,
+          108,
+          14
+        ],
+        "actualDimsMm": [
+          124,
+          108,
+          14
+        ],
+        "scadFile": "parts/gantry-carriage-plate.scad",
+        "stlFile": "parts/gantry-carriage-plate.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1772,
+          "volumeMm3": 183278.12,
+          "actualDimsMm": [
+            124,
+            108,
+            14
+          ],
+          "targetDimsMm": [
+            124,
+            108,
+            14
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1772,
+        "volumeMm3": 183278.12,
+        "isManifold": true
+      },
+      {
+        "partId": "pan-turntable-housing",
+        "name": "Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat",
+        "targetDimsMm": [
+          102,
+          102,
+          46
+        ],
+        "actualDimsMm": [
+          102,
+          102,
+          46
+        ],
+        "scadFile": "parts/pan-turntable-housing.scad",
+        "stlFile": "parts/pan-turntable-housing.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1264,
+          "volumeMm3": 159012,
+          "actualDimsMm": [
+            102,
+            102,
+            46
+          ],
+          "targetDimsMm": [
+            102,
+            102,
+            46
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1264,
+        "volumeMm3": 159012,
+        "isManifold": true
+      },
+      {
+        "partId": "pan-ring-gear",
+        "name": "60-Tooth GT2 Pan Reduction Ring Gear (3:1 Ratio)",
+        "targetDimsMm": [
+          92,
+          92,
+          16
+        ],
+        "actualDimsMm": [
+          92,
+          92,
+          16
+        ],
+        "scadFile": "parts/pan-ring-gear.scad",
+        "stlFile": "parts/pan-ring-gear.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 672,
+          "volumeMm3": 63765.46,
+          "actualDimsMm": [
+            92,
+            92,
+            16
+          ],
+          "targetDimsMm": [
+            92,
+            92,
+            16
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 672,
+        "volumeMm3": 63765.46,
+        "isManifold": true
+      },
+      {
+        "partId": "tilt-u-yoke",
+        "name": "Axis-3 Cantilever Tilt Gimbal U-Yoke Arm",
+        "targetDimsMm": [
+          108,
+          74,
+          88
+        ],
+        "actualDimsMm": [
+          108,
+          74,
+          88
+        ],
+        "scadFile": "parts/tilt-u-yoke.scad",
+        "stlFile": "parts/tilt-u-yoke.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 816,
+          "volumeMm3": 93298.72,
+          "actualDimsMm": [
+            108,
+            74,
+            88
+          ],
+          "targetDimsMm": [
+            108,
+            74,
+            88
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 816,
+        "volumeMm3": 93298.72,
+        "isManifold": true
+      },
+      {
+        "partId": "camera-arca-cradle",
+        "name": "Arca-Swiss Quick-Release Camera Tilt Cradle",
+        "targetDimsMm": [
+          78,
+          64,
+          24
+        ],
+        "actualDimsMm": [
+          78,
+          64,
+          24
+        ],
+        "scadFile": "parts/camera-arca-cradle.scad",
+        "stlFile": "parts/camera-arca-cradle.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1576,
+          "volumeMm3": 115481.16,
+          "actualDimsMm": [
+            78,
+            64,
+            24
+          ],
+          "targetDimsMm": [
+            78,
+            64,
+            24
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1576,
+        "volumeMm3": 115481.16,
+        "isManifold": true
+      },
+      {
+        "partId": "controller-side-case",
+        "name": "Snap-Fit TMC2209 + ESP32 Motion Controller Side Case",
+        "targetDimsMm": [
+          92,
+          62,
+          34
+        ],
+        "actualDimsMm": [
+          92,
+          62,
+          34
+        ],
+        "scadFile": "parts/controller-side-case.scad",
+        "stlFile": "parts/controller-side-case.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1428,
+          "volumeMm3": 42108.59,
+          "actualDimsMm": [
+            92,
+            62,
+            34
+          ],
+          "targetDimsMm": [
+            92,
+            62,
+            34
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1428,
+        "volumeMm3": 42108.59,
+        "isManifold": true
+      }
+    ]
+  }
+}

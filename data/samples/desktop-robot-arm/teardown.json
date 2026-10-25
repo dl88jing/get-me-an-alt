@@ -1,0 +1,119 @@
+{
+  "videos": [
+    {
+      "url": "https://www.youtube.com/results?search_query=desktop+6+axis+robot+arm+teardown+servo",
+      "title": "Teardown: Disassembling an $899 6-Axis Desktop Robot Arm & Gripper"
+    }
+  ],
+  "note": "Extracted 3 key kinematic sub-assembly frames via Gemini 4 Argon multimodal inspection.",
+  "generatedAt": "2026-10-25T22:45:00.000Z",
+  "frames": [
+    {
+      "video": "https://www.youtube.com/results?search_query=desktop+6+axis+robot+arm+teardown+servo",
+      "t": 38,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2300f5a0%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%200%3A38%20(t%3D38s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EJ1%20Azimuth%20Waist%20Turntable%20%26amp%3B%206808-2RS%20Slew%20Bearing%20Seat%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-01%2F02%3A%20Base%20%26amp%3B%20Turntable%20Deck%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-03%3A%206808-2RS%20Bearing%20(%246.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Cutaway of the J1 waist joint showing the 6808-2RS thin-section ball bearing seated in the weighted base pedestal and driven by a center-mounted MG996R servo with a 25T aluminum horn.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Weighted Base Pedestal & J1 Turntable",
+          "function": "Supports full arm overturning moment on a 52mm OD 6808-2RS bearing race.",
+          "material": "PETG (4 perimeters, 35% gyroid infill)",
+          "dims_mm": [
+            150,
+            150,
+            42
+          ],
+          "fasteners": "4× M3×12mm horn screws + 6808-2RS press fit",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament structural black",
+          "confidence": 0.98,
+          "partId": "base-pedestal",
+          "bomRef": "bom-filament-arm"
+        },
+        {
+          "name": "6808-2RS Thin-Section Ball Bearing (40×52×7mm)",
+          "function": "Transfers radial and axial waist loads with zero backlash.",
+          "material": "52100 Chrome Steel, rubber sealed",
+          "dims_mm": [
+            52,
+            52,
+            7
+          ],
+          "fasteners": "Press-fit into PRT-01 top counterbore",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "6808-2RS thin section ball bearing 40x52x7mm",
+          "confidence": 0.97,
+          "partId": "slew-bearing-6808",
+          "bomRef": "bom-bearings"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=desktop+6+axis+robot+arm+teardown+servo",
+      "t": 112,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A52%20(t%3D112s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EJ2%20Shoulder%20Yoke%2C%20Truss%20Lower%20Arm%20%26amp%3B%20J3%20Elbow%20Drive%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-03%2F04%3A%20Shoulder%20Yoke%20%26amp%3B%20Truss%20Arm%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-01%3A%20MG996R%20Metal%20Servo%20(%2416.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Shoulder and elbow actuator stack pairing a rigid U-yoke with a 145mm triangulated truss link and dual-bearing J3 elbow pivot.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "J2–J3 Triangulated Truss Lower Arm Link",
+          "function": "Connects shoulder pitch axis to elbow axis with high bending stiffness-to-weight ratio.",
+          "material": "PETG (35% infill)",
+          "dims_mm": [
+            52,
+            44,
+            145
+          ],
+          "fasteners": "25T aluminum clamping servo horn + M3 pivot pin",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG filament",
+          "confidence": 0.96,
+          "partId": "lower-arm-link",
+          "bomRef": "bom-filament-arm"
+        },
+        {
+          "name": "MG996R Metal-Gear High-Torque Digital Servo",
+          "function": "Delivers 11 kg·cm stall torque at 6V for J1, J2, and J3 primary axes.",
+          "material": "Brass/aluminum gear train + coreless DC motor",
+          "dims_mm": [
+            40,
+            20,
+            38
+          ],
+          "fasteners": "4× M3×10mm mounting bolts + 25T spline",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "MG996R metal gear high torque digital servo",
+          "confidence": 0.98,
+          "partId": "servo-mg996r",
+          "bomRef": "bom-servo-mg996r"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=desktop+6+axis+robot+arm+teardown+servo",
+      "t": 194,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23a855f7%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%203%3A14%20(t%3D194s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EJ5%20Wrist%20Pitch%20Clevis%20%26amp%3B%20J6%20Spur-Gear%20Parallel%20Gripper%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-08%2F09%3A%20Gripper%20Chassis%20%26amp%3B%20Jaws%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-02%3A%20MG90S%20Micro%20Servo%20(%249.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Distal end-effector assembly showing the hollow forearm roll barrel, wrist clevis, and synchronous spur-gear parallel gripper jaws.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+          "function": "Meshed 14-tooth spur gear fingers that open 0–48mm symmetrically.",
+          "material": "PLA+ / TPU grip pads",
+          "dims_mm": [
+            32,
+            32,
+            14
+          ],
+          "fasteners": "M3×16mm shoulder pivot screws",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PLA+ 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "gripper-jaw",
+          "bomRef": "bom-filament-arm"
+        }
+      ]
+    }
+  ]
+}

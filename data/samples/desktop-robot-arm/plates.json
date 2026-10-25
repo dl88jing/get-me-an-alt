@@ -1,0 +1,1528 @@
+{
+  "objectId": "desktop-robot-arm",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPlates": 2,
+  "totalUniqueParts": 9,
+  "totalPrintedItems": 10,
+  "totalWeightGrams": 609.3,
+  "totalFilamentGrams": 609.3,
+  "totalFilamentMeters": 204.24,
+  "totalPrintTimeMinutes": 823,
+  "formattedTotalPrintTime": "13h 43m",
+  "multiPlate3mfFile": "parts/all-plates.3mf",
+  "multiPlate3mfBytes": 672645,
+  "printer": {
+    "id": "bambu-a1",
+    "name": "Bambu Lab A1",
+    "brand": "Bambu Lab",
+    "bed": {
+      "x": 256,
+      "y": 256,
+      "z": 256
+    },
+    "multiColor": true,
+    "speedClass": "high-speed"
+  },
+  "margin": 5,
+  "spacing": 5,
+  "heuristicUsed": "MaxRects-BL-FF (max-side-desc)",
+  "parts": [
+    {
+      "partId": "base-pedestal",
+      "name": "Weighted Base Pedestal & 6808 Bearing Seat",
+      "shape": "custom_csg",
+      "stlFile": "parts/base-pedestal.stl",
+      "file": "parts/base-pedestal.stl",
+      "scadFile": "parts/base-pedestal.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 31084,
+      "dims_mm": [
+        150,
+        150,
+        42
+      ],
+      "dimensionsMm": [
+        150,
+        150,
+        42
+      ],
+      "weightGrams": 129.7,
+      "filamentGrams": 129.7,
+      "filamentMeters": 43.49,
+      "estimatedMinutes": 168,
+      "printTimeMinutes": 168,
+      "formattedTime": "2h 48m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 620,
+      "vertexCount": 312,
+      "edgeCount": 930,
+      "volumeMm3": 190555.78,
+      "surfaceAreaMm2": 88893.4,
+      "isManifold": true
+    },
+    {
+      "partId": "turntable-plate",
+      "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/turntable-plate.stl",
+      "file": "parts/turntable-plate.stl",
+      "scadFile": "parts/turntable-plate.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 70084,
+      "dims_mm": [
+        134,
+        134,
+        14
+      ],
+      "dimensionsMm": [
+        134,
+        134,
+        14
+      ],
+      "weightGrams": 126.8,
+      "filamentGrams": 126.8,
+      "filamentMeters": 42.51,
+      "estimatedMinutes": 157,
+      "printTimeMinutes": 157,
+      "formattedTime": "2h 37m",
+      "color": "#10b981",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1400,
+      "vertexCount": 696,
+      "edgeCount": 2100,
+      "volumeMm3": 239948.4,
+      "surfaceAreaMm2": 42865.41,
+      "isManifold": true
+    },
+    {
+      "partId": "shoulder-yoke",
+      "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+      "shape": "bracketL",
+      "stlFile": "parts/shoulder-yoke.stl",
+      "file": "parts/shoulder-yoke.stl",
+      "scadFile": "parts/shoulder-yoke.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        94,
+        68,
+        76
+      ],
+      "dimensionsMm": [
+        94,
+        68,
+        76
+      ],
+      "weightGrams": 48.6,
+      "filamentGrams": 48.6,
+      "filamentMeters": 16.28,
+      "estimatedMinutes": 79,
+      "printTimeMinutes": 79,
+      "formattedTime": "1h 19m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 71506.72,
+      "surfaceAreaMm2": 26826.54,
+      "isManifold": true
+    },
+    {
+      "partId": "lower-arm-link",
+      "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
+      "shape": "box",
+      "stlFile": "parts/lower-arm-link.stl",
+      "file": "parts/lower-arm-link.stl",
+      "scadFile": "parts/lower-arm-link.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 20084,
+      "dims_mm": [
+        52,
+        44,
+        145
+      ],
+      "dimensionsMm": [
+        52,
+        44,
+        145
+      ],
+      "weightGrams": 158.6,
+      "filamentGrams": 158.6,
+      "filamentMeters": 53.17,
+      "estimatedMinutes": 228,
+      "printTimeMinutes": 228,
+      "formattedTime": "3h 48m",
+      "color": "#f59e0b",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 400,
+      "vertexCount": 200,
+      "edgeCount": 600,
+      "volumeMm3": 325919.68,
+      "surfaceAreaMm2": 32385.64,
+      "isManifold": true
+    },
+    {
+      "partId": "elbow-housing",
+      "name": "J3 Offset Elbow Cantilever Servo Housing",
+      "shape": "custom_csg",
+      "stlFile": "parts/elbow-housing.stl",
+      "file": "parts/elbow-housing.stl",
+      "scadFile": "parts/elbow-housing.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 70684,
+      "dims_mm": [
+        68,
+        54,
+        56
+      ],
+      "dimensionsMm": [
+        68,
+        54,
+        56
+      ],
+      "weightGrams": 36.9,
+      "filamentGrams": 36.9,
+      "filamentMeters": 12.37,
+      "estimatedMinutes": 60,
+      "printTimeMinutes": 60,
+      "formattedTime": "1h",
+      "color": "#14b8a6",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1412,
+      "vertexCount": 704,
+      "edgeCount": 2118,
+      "volumeMm3": 50296.83,
+      "surfaceAreaMm2": 31959.67,
+      "isManifold": true
+    },
+    {
+      "partId": "forearm-tube",
+      "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
+      "shape": "tube",
+      "stlFile": "parts/forearm-tube.stl",
+      "file": "parts/forearm-tube.stl",
+      "scadFile": "parts/forearm-tube.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 74484,
+      "dims_mm": [
+        48,
+        48,
+        120
+      ],
+      "dimensionsMm": [
+        48,
+        48,
+        120
+      ],
+      "weightGrams": 43.6,
+      "filamentGrams": 43.6,
+      "filamentMeters": 14.61,
+      "estimatedMinutes": 84,
+      "printTimeMinutes": 84,
+      "formattedTime": "1h 24m",
+      "color": "#38bdf8",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1488,
+      "vertexCount": 736,
+      "edgeCount": 2232,
+      "volumeMm3": 78243.56,
+      "surfaceAreaMm2": 31657.47,
+      "isManifold": true
+    },
+    {
+      "partId": "wrist-pitch-clevis",
+      "name": "J5 Differential Wrist Pitch Clevis Gimbal",
+      "shape": "bracketL",
+      "stlFile": "parts/wrist-pitch-clevis.stl",
+      "file": "parts/wrist-pitch-clevis.stl",
+      "scadFile": "parts/wrist-pitch-clevis.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        48,
+        42,
+        44
+      ],
+      "dimensionsMm": [
+        48,
+        42,
+        44
+      ],
+      "weightGrams": 11.6,
+      "filamentGrams": 11.6,
+      "filamentMeters": 3.88,
+      "estimatedMinutes": 26,
+      "printTimeMinutes": 26,
+      "formattedTime": "26m",
+      "color": "#a855f7",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 17306.6,
+      "surfaceAreaMm2": 9008.59,
+      "isManifold": true
+    },
+    {
+      "partId": "gripper-body",
+      "name": "J6 Spur-Gear Parallel Gripper Chassis",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/gripper-body.stl",
+      "file": "parts/gripper-body.stl",
+      "scadFile": "parts/gripper-body.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 69084,
+      "dims_mm": [
+        64,
+        52,
+        28
+      ],
+      "dimensionsMm": [
+        64,
+        52,
+        28
+      ],
+      "weightGrams": 41.9,
+      "filamentGrams": 41.9,
+      "filamentMeters": 14.05,
+      "estimatedMinutes": 59,
+      "printTimeMinutes": 59,
+      "formattedTime": "59m",
+      "color": "#ec4899",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1380,
+      "vertexCount": 680,
+      "edgeCount": 2070,
+      "volumeMm3": 90016.85,
+      "surfaceAreaMm2": 14781.42,
+      "isManifold": true
+    },
+    {
+      "partId": "gripper-jaw",
+      "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+      "shape": "gear_simple",
+      "stlFile": "parts/gripper-jaw.stl",
+      "file": "parts/gripper-jaw.stl",
+      "scadFile": "parts/gripper-jaw.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 26084,
+      "dims_mm": [
+        32,
+        31.81,
+        14
+      ],
+      "dimensionsMm": [
+        32,
+        31.81,
+        14
+      ],
+      "weightGrams": 11.6,
+      "filamentGrams": 11.6,
+      "filamentMeters": 3.88,
+      "estimatedMinutes": 26,
+      "printTimeMinutes": 26,
+      "formattedTime": "26m",
+      "color": "#f97316",
+      "material": "PLA+",
+      "quantity": 2,
+      "triangleCount": 520,
+      "vertexCount": 260,
+      "edgeCount": 780,
+      "volumeMm3": 8604.43,
+      "surfaceAreaMm2": 3880.63,
+      "isManifold": true
+    }
+  ],
+  "partFiles": [
+    {
+      "partId": "base-pedestal",
+      "name": "Weighted Base Pedestal & 6808 Bearing Seat",
+      "shape": "custom_csg",
+      "stlFile": "parts/base-pedestal.stl",
+      "file": "parts/base-pedestal.stl",
+      "scadFile": "parts/base-pedestal.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 31084,
+      "dims_mm": [
+        150,
+        150,
+        42
+      ],
+      "dimensionsMm": [
+        150,
+        150,
+        42
+      ],
+      "weightGrams": 129.7,
+      "filamentGrams": 129.7,
+      "filamentMeters": 43.49,
+      "estimatedMinutes": 168,
+      "printTimeMinutes": 168,
+      "formattedTime": "2h 48m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 620,
+      "vertexCount": 312,
+      "edgeCount": 930,
+      "volumeMm3": 190555.78,
+      "surfaceAreaMm2": 88893.4,
+      "isManifold": true
+    },
+    {
+      "partId": "turntable-plate",
+      "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/turntable-plate.stl",
+      "file": "parts/turntable-plate.stl",
+      "scadFile": "parts/turntable-plate.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 70084,
+      "dims_mm": [
+        134,
+        134,
+        14
+      ],
+      "dimensionsMm": [
+        134,
+        134,
+        14
+      ],
+      "weightGrams": 126.8,
+      "filamentGrams": 126.8,
+      "filamentMeters": 42.51,
+      "estimatedMinutes": 157,
+      "printTimeMinutes": 157,
+      "formattedTime": "2h 37m",
+      "color": "#10b981",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1400,
+      "vertexCount": 696,
+      "edgeCount": 2100,
+      "volumeMm3": 239948.4,
+      "surfaceAreaMm2": 42865.41,
+      "isManifold": true
+    },
+    {
+      "partId": "shoulder-yoke",
+      "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+      "shape": "bracketL",
+      "stlFile": "parts/shoulder-yoke.stl",
+      "file": "parts/shoulder-yoke.stl",
+      "scadFile": "parts/shoulder-yoke.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        94,
+        68,
+        76
+      ],
+      "dimensionsMm": [
+        94,
+        68,
+        76
+      ],
+      "weightGrams": 48.6,
+      "filamentGrams": 48.6,
+      "filamentMeters": 16.28,
+      "estimatedMinutes": 79,
+      "printTimeMinutes": 79,
+      "formattedTime": "1h 19m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 71506.72,
+      "surfaceAreaMm2": 26826.54,
+      "isManifold": true
+    },
+    {
+      "partId": "lower-arm-link",
+      "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
+      "shape": "box",
+      "stlFile": "parts/lower-arm-link.stl",
+      "file": "parts/lower-arm-link.stl",
+      "scadFile": "parts/lower-arm-link.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 20084,
+      "dims_mm": [
+        52,
+        44,
+        145
+      ],
+      "dimensionsMm": [
+        52,
+        44,
+        145
+      ],
+      "weightGrams": 158.6,
+      "filamentGrams": 158.6,
+      "filamentMeters": 53.17,
+      "estimatedMinutes": 228,
+      "printTimeMinutes": 228,
+      "formattedTime": "3h 48m",
+      "color": "#f59e0b",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 400,
+      "vertexCount": 200,
+      "edgeCount": 600,
+      "volumeMm3": 325919.68,
+      "surfaceAreaMm2": 32385.64,
+      "isManifold": true
+    },
+    {
+      "partId": "elbow-housing",
+      "name": "J3 Offset Elbow Cantilever Servo Housing",
+      "shape": "custom_csg",
+      "stlFile": "parts/elbow-housing.stl",
+      "file": "parts/elbow-housing.stl",
+      "scadFile": "parts/elbow-housing.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 70684,
+      "dims_mm": [
+        68,
+        54,
+        56
+      ],
+      "dimensionsMm": [
+        68,
+        54,
+        56
+      ],
+      "weightGrams": 36.9,
+      "filamentGrams": 36.9,
+      "filamentMeters": 12.37,
+      "estimatedMinutes": 60,
+      "printTimeMinutes": 60,
+      "formattedTime": "1h",
+      "color": "#14b8a6",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1412,
+      "vertexCount": 704,
+      "edgeCount": 2118,
+      "volumeMm3": 50296.83,
+      "surfaceAreaMm2": 31959.67,
+      "isManifold": true
+    },
+    {
+      "partId": "forearm-tube",
+      "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
+      "shape": "tube",
+      "stlFile": "parts/forearm-tube.stl",
+      "file": "parts/forearm-tube.stl",
+      "scadFile": "parts/forearm-tube.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 74484,
+      "dims_mm": [
+        48,
+        48,
+        120
+      ],
+      "dimensionsMm": [
+        48,
+        48,
+        120
+      ],
+      "weightGrams": 43.6,
+      "filamentGrams": 43.6,
+      "filamentMeters": 14.61,
+      "estimatedMinutes": 84,
+      "printTimeMinutes": 84,
+      "formattedTime": "1h 24m",
+      "color": "#38bdf8",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1488,
+      "vertexCount": 736,
+      "edgeCount": 2232,
+      "volumeMm3": 78243.56,
+      "surfaceAreaMm2": 31657.47,
+      "isManifold": true
+    },
+    {
+      "partId": "wrist-pitch-clevis",
+      "name": "J5 Differential Wrist Pitch Clevis Gimbal",
+      "shape": "bracketL",
+      "stlFile": "parts/wrist-pitch-clevis.stl",
+      "file": "parts/wrist-pitch-clevis.stl",
+      "scadFile": "parts/wrist-pitch-clevis.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        48,
+        42,
+        44
+      ],
+      "dimensionsMm": [
+        48,
+        42,
+        44
+      ],
+      "weightGrams": 11.6,
+      "filamentGrams": 11.6,
+      "filamentMeters": 3.88,
+      "estimatedMinutes": 26,
+      "printTimeMinutes": 26,
+      "formattedTime": "26m",
+      "color": "#a855f7",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 17306.6,
+      "surfaceAreaMm2": 9008.59,
+      "isManifold": true
+    },
+    {
+      "partId": "gripper-body",
+      "name": "J6 Spur-Gear Parallel Gripper Chassis",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/gripper-body.stl",
+      "file": "parts/gripper-body.stl",
+      "scadFile": "parts/gripper-body.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 69084,
+      "dims_mm": [
+        64,
+        52,
+        28
+      ],
+      "dimensionsMm": [
+        64,
+        52,
+        28
+      ],
+      "weightGrams": 41.9,
+      "filamentGrams": 41.9,
+      "filamentMeters": 14.05,
+      "estimatedMinutes": 59,
+      "printTimeMinutes": 59,
+      "formattedTime": "59m",
+      "color": "#ec4899",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1380,
+      "vertexCount": 680,
+      "edgeCount": 2070,
+      "volumeMm3": 90016.85,
+      "surfaceAreaMm2": 14781.42,
+      "isManifold": true
+    },
+    {
+      "partId": "gripper-jaw",
+      "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+      "shape": "gear_simple",
+      "stlFile": "parts/gripper-jaw.stl",
+      "file": "parts/gripper-jaw.stl",
+      "scadFile": "parts/gripper-jaw.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 26084,
+      "dims_mm": [
+        32,
+        31.81,
+        14
+      ],
+      "dimensionsMm": [
+        32,
+        31.81,
+        14
+      ],
+      "weightGrams": 11.6,
+      "filamentGrams": 11.6,
+      "filamentMeters": 3.88,
+      "estimatedMinutes": 26,
+      "printTimeMinutes": 26,
+      "formattedTime": "26m",
+      "color": "#f97316",
+      "material": "PLA+",
+      "quantity": 2,
+      "triangleCount": 520,
+      "vertexCount": 260,
+      "edgeCount": 780,
+      "volumeMm3": 8604.43,
+      "surfaceAreaMm2": 3880.63,
+      "isManifold": true
+    }
+  ],
+  "plates": [
+    {
+      "plateNumber": 1,
+      "index": 0,
+      "name": "Plate 1 — Bambu Lab A1 (9 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 73.59,
+      "utilization": 0.7359,
+      "maxHeight": 145,
+      "estimatedMinutes": 663,
+      "printTimeMinutes": 663,
+      "formattedTime": "11h 3m",
+      "weightGrams": 482.5,
+      "filamentGrams": 482.5,
+      "filamentMeters": 161.73,
+      "layers": 725,
+      "stlFile": "parts/plate-1.3mf",
+      "file": "parts/plate-1.3mf",
+      "bytes": 566826,
+      "placements": [
+        {
+          "partId": "base-pedestal",
+          "name": "Weighted Base Pedestal & 6808 Bearing Seat",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 80,
+          "centerY": 80,
+          "width": 150,
+          "depth": 150,
+          "height": 42,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/base-pedestal.stl",
+          "weightGrams": 129.7,
+          "estimatedMinutes": 168
+        },
+        {
+          "partId": "shoulder-yoke",
+          "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 160,
+          "y": 5,
+          "centerX": 194,
+          "centerY": 52,
+          "width": 68,
+          "depth": 94,
+          "height": 76,
+          "rotated": true,
+          "color": "#6366f1",
+          "stlFile": "parts/shoulder-yoke.stl",
+          "weightGrams": 48.6,
+          "estimatedMinutes": 79
+        },
+        {
+          "partId": "elbow-housing",
+          "name": "J3 Offset Elbow Cantilever Servo Housing",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 160,
+          "y": 104,
+          "centerX": 194,
+          "centerY": 131,
+          "width": 68,
+          "depth": 54,
+          "height": 56,
+          "rotated": false,
+          "color": "#14b8a6",
+          "stlFile": "parts/elbow-housing.stl",
+          "weightGrams": 36.9,
+          "estimatedMinutes": 60
+        },
+        {
+          "partId": "gripper-body",
+          "name": "J6 Spur-Gear Parallel Gripper Chassis",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 160,
+          "centerX": 37,
+          "centerY": 186,
+          "width": 64,
+          "depth": 52,
+          "height": 28,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/gripper-body.stl",
+          "weightGrams": 41.9,
+          "estimatedMinutes": 59
+        },
+        {
+          "partId": "lower-arm-link",
+          "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 74,
+          "y": 160,
+          "centerX": 100,
+          "centerY": 182,
+          "width": 52,
+          "depth": 44,
+          "height": 145,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/lower-arm-link.stl",
+          "weightGrams": 158.6,
+          "estimatedMinutes": 228
+        },
+        {
+          "partId": "forearm-tube",
+          "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 131,
+          "y": 163,
+          "centerX": 155,
+          "centerY": 187,
+          "width": 48,
+          "depth": 48,
+          "height": 120,
+          "rotated": false,
+          "color": "#38bdf8",
+          "stlFile": "parts/forearm-tube.stl",
+          "weightGrams": 43.6,
+          "estimatedMinutes": 84
+        },
+        {
+          "partId": "wrist-pitch-clevis",
+          "name": "J5 Differential Wrist Pitch Clevis Gimbal",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 184,
+          "y": 163,
+          "centerX": 208,
+          "centerY": 184,
+          "width": 48,
+          "depth": 42,
+          "height": 44,
+          "rotated": false,
+          "color": "#a855f7",
+          "stlFile": "parts/wrist-pitch-clevis.stl",
+          "weightGrams": 11.6,
+          "estimatedMinutes": 26
+        },
+        {
+          "partId": "gripper-jaw",
+          "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 74,
+          "y": 209,
+          "centerX": 90,
+          "centerY": 224.9,
+          "width": 32,
+          "depth": 31.81,
+          "height": 14,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/gripper-jaw.stl",
+          "weightGrams": 5.8,
+          "estimatedMinutes": 13
+        },
+        {
+          "partId": "gripper-jaw",
+          "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 184,
+          "y": 210,
+          "centerX": 200,
+          "centerY": 225.9,
+          "width": 32,
+          "depth": 31.81,
+          "height": 14,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/gripper-jaw.stl",
+          "weightGrams": 5.8,
+          "estimatedMinutes": 13
+        }
+      ],
+      "items": [
+        {
+          "partId": "base-pedestal",
+          "name": "Weighted Base Pedestal & 6808 Bearing Seat",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 80,
+          "centerY": 80,
+          "width": 150,
+          "depth": 150,
+          "height": 42,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/base-pedestal.stl",
+          "weightGrams": 129.7,
+          "estimatedMinutes": 168
+        },
+        {
+          "partId": "shoulder-yoke",
+          "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 160,
+          "y": 5,
+          "centerX": 194,
+          "centerY": 52,
+          "width": 68,
+          "depth": 94,
+          "height": 76,
+          "rotated": true,
+          "color": "#6366f1",
+          "stlFile": "parts/shoulder-yoke.stl",
+          "weightGrams": 48.6,
+          "estimatedMinutes": 79
+        },
+        {
+          "partId": "elbow-housing",
+          "name": "J3 Offset Elbow Cantilever Servo Housing",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 160,
+          "y": 104,
+          "centerX": 194,
+          "centerY": 131,
+          "width": 68,
+          "depth": 54,
+          "height": 56,
+          "rotated": false,
+          "color": "#14b8a6",
+          "stlFile": "parts/elbow-housing.stl",
+          "weightGrams": 36.9,
+          "estimatedMinutes": 60
+        },
+        {
+          "partId": "gripper-body",
+          "name": "J6 Spur-Gear Parallel Gripper Chassis",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 160,
+          "centerX": 37,
+          "centerY": 186,
+          "width": 64,
+          "depth": 52,
+          "height": 28,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/gripper-body.stl",
+          "weightGrams": 41.9,
+          "estimatedMinutes": 59
+        },
+        {
+          "partId": "lower-arm-link",
+          "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 74,
+          "y": 160,
+          "centerX": 100,
+          "centerY": 182,
+          "width": 52,
+          "depth": 44,
+          "height": 145,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/lower-arm-link.stl",
+          "weightGrams": 158.6,
+          "estimatedMinutes": 228
+        },
+        {
+          "partId": "forearm-tube",
+          "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 131,
+          "y": 163,
+          "centerX": 155,
+          "centerY": 187,
+          "width": 48,
+          "depth": 48,
+          "height": 120,
+          "rotated": false,
+          "color": "#38bdf8",
+          "stlFile": "parts/forearm-tube.stl",
+          "weightGrams": 43.6,
+          "estimatedMinutes": 84
+        },
+        {
+          "partId": "wrist-pitch-clevis",
+          "name": "J5 Differential Wrist Pitch Clevis Gimbal",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 184,
+          "y": 163,
+          "centerX": 208,
+          "centerY": 184,
+          "width": 48,
+          "depth": 42,
+          "height": 44,
+          "rotated": false,
+          "color": "#a855f7",
+          "stlFile": "parts/wrist-pitch-clevis.stl",
+          "weightGrams": 11.6,
+          "estimatedMinutes": 26
+        },
+        {
+          "partId": "gripper-jaw",
+          "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 74,
+          "y": 209,
+          "centerX": 90,
+          "centerY": 224.9,
+          "width": 32,
+          "depth": 31.81,
+          "height": 14,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/gripper-jaw.stl",
+          "weightGrams": 5.8,
+          "estimatedMinutes": 13
+        },
+        {
+          "partId": "gripper-jaw",
+          "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 184,
+          "y": 210,
+          "centerX": 200,
+          "centerY": 225.9,
+          "width": 32,
+          "depth": 31.81,
+          "height": 14,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/gripper-jaw.stl",
+          "weightGrams": 5.8,
+          "estimatedMinutes": 13
+        }
+      ]
+    },
+    {
+      "plateNumber": 2,
+      "index": 1,
+      "name": "Plate 2 — Bambu Lab A1 (1 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 29.67,
+      "utilization": 0.2967,
+      "maxHeight": 14,
+      "estimatedMinutes": 160,
+      "printTimeMinutes": 160,
+      "formattedTime": "2h 40m",
+      "weightGrams": 126.8,
+      "filamentGrams": 126.8,
+      "filamentMeters": 42.51,
+      "layers": 70,
+      "stlFile": "parts/plate-2.3mf",
+      "file": "parts/plate-2.3mf",
+      "bytes": 107505,
+      "placements": [
+        {
+          "partId": "turntable-plate",
+          "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 72,
+          "centerY": 72,
+          "width": 134,
+          "depth": 134,
+          "height": 14,
+          "rotated": false,
+          "color": "#10b981",
+          "stlFile": "parts/turntable-plate.stl",
+          "weightGrams": 126.8,
+          "estimatedMinutes": 157
+        }
+      ],
+      "items": [
+        {
+          "partId": "turntable-plate",
+          "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 72,
+          "centerY": 72,
+          "width": 134,
+          "depth": 134,
+          "height": 14,
+          "rotated": false,
+          "color": "#10b981",
+          "stlFile": "parts/turntable-plate.stl",
+          "weightGrams": 126.8,
+          "estimatedMinutes": 157
+        }
+      ]
+    }
+  ],
+  "rejected": [],
+  "cadReport": {
+    "printerId": "bambu-a1",
+    "printerName": "Bambu Lab A1",
+    "bedDimensionsMm": [
+      256,
+      256,
+      256
+    ],
+    "totalPrintedParts": 9,
+    "argonOpenScadParts": 0,
+    "fallbackParts": 0,
+    "totalAttempts": 0,
+    "parts": [
+      {
+        "partId": "base-pedestal",
+        "name": "Weighted Base Pedestal & 6808 Bearing Seat",
+        "targetDimsMm": [
+          150,
+          150,
+          42
+        ],
+        "actualDimsMm": [
+          150,
+          150,
+          42
+        ],
+        "scadFile": "parts/base-pedestal.scad",
+        "stlFile": "parts/base-pedestal.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 620,
+          "volumeMm3": 190555.78,
+          "actualDimsMm": [
+            150,
+            150,
+            42
+          ],
+          "targetDimsMm": [
+            150,
+            150,
+            42
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 620,
+        "volumeMm3": 190555.78,
+        "isManifold": true
+      },
+      {
+        "partId": "turntable-plate",
+        "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
+        "targetDimsMm": [
+          134,
+          134,
+          14
+        ],
+        "actualDimsMm": [
+          134,
+          134,
+          14
+        ],
+        "scadFile": "parts/turntable-plate.scad",
+        "stlFile": "parts/turntable-plate.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1400,
+          "volumeMm3": 239948.4,
+          "actualDimsMm": [
+            134,
+            134,
+            14
+          ],
+          "targetDimsMm": [
+            134,
+            134,
+            14
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1400,
+        "volumeMm3": 239948.4,
+        "isManifold": true
+      },
+      {
+        "partId": "shoulder-yoke",
+        "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+        "targetDimsMm": [
+          94,
+          68,
+          76
+        ],
+        "actualDimsMm": [
+          94,
+          68,
+          76
+        ],
+        "scadFile": "parts/shoulder-yoke.scad",
+        "stlFile": "parts/shoulder-yoke.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 816,
+          "volumeMm3": 71506.72,
+          "actualDimsMm": [
+            94,
+            68,
+            76
+          ],
+          "targetDimsMm": [
+            94,
+            68,
+            76
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 816,
+        "volumeMm3": 71506.72,
+        "isManifold": true
+      },
+      {
+        "partId": "lower-arm-link",
+        "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
+        "targetDimsMm": [
+          52,
+          44,
+          145
+        ],
+        "actualDimsMm": [
+          52,
+          44,
+          145
+        ],
+        "scadFile": "parts/lower-arm-link.scad",
+        "stlFile": "parts/lower-arm-link.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 400,
+          "volumeMm3": 325919.68,
+          "actualDimsMm": [
+            52,
+            44,
+            145
+          ],
+          "targetDimsMm": [
+            52,
+            44,
+            145
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 400,
+        "volumeMm3": 325919.68,
+        "isManifold": true
+      },
+      {
+        "partId": "elbow-housing",
+        "name": "J3 Offset Elbow Cantilever Servo Housing",
+        "targetDimsMm": [
+          68,
+          54,
+          56
+        ],
+        "actualDimsMm": [
+          68,
+          54,
+          56
+        ],
+        "scadFile": "parts/elbow-housing.scad",
+        "stlFile": "parts/elbow-housing.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1412,
+          "volumeMm3": 50296.83,
+          "actualDimsMm": [
+            68,
+            54,
+            56
+          ],
+          "targetDimsMm": [
+            68,
+            54,
+            56
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1412,
+        "volumeMm3": 50296.83,
+        "isManifold": true
+      },
+      {
+        "partId": "forearm-tube",
+        "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
+        "targetDimsMm": [
+          48,
+          48,
+          120
+        ],
+        "actualDimsMm": [
+          48,
+          48,
+          120
+        ],
+        "scadFile": "parts/forearm-tube.scad",
+        "stlFile": "parts/forearm-tube.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1488,
+          "volumeMm3": 78243.56,
+          "actualDimsMm": [
+            48,
+            48,
+            120
+          ],
+          "targetDimsMm": [
+            48,
+            48,
+            120
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1488,
+        "volumeMm3": 78243.56,
+        "isManifold": true
+      },
+      {
+        "partId": "wrist-pitch-clevis",
+        "name": "J5 Differential Wrist Pitch Clevis Gimbal",
+        "targetDimsMm": [
+          48,
+          42,
+          44
+        ],
+        "actualDimsMm": [
+          48,
+          42,
+          44
+        ],
+        "scadFile": "parts/wrist-pitch-clevis.scad",
+        "stlFile": "parts/wrist-pitch-clevis.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 816,
+          "volumeMm3": 17306.6,
+          "actualDimsMm": [
+            48,
+            42,
+            44
+          ],
+          "targetDimsMm": [
+            48,
+            42,
+            44
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 816,
+        "volumeMm3": 17306.6,
+        "isManifold": true
+      },
+      {
+        "partId": "gripper-body",
+        "name": "J6 Spur-Gear Parallel Gripper Chassis",
+        "targetDimsMm": [
+          64,
+          52,
+          28
+        ],
+        "actualDimsMm": [
+          64,
+          52,
+          28
+        ],
+        "scadFile": "parts/gripper-body.scad",
+        "stlFile": "parts/gripper-body.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1380,
+          "volumeMm3": 90016.85,
+          "actualDimsMm": [
+            64,
+            52,
+            28
+          ],
+          "targetDimsMm": [
+            64,
+            52,
+            28
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1380,
+        "volumeMm3": 90016.85,
+        "isManifold": true
+      },
+      {
+        "partId": "gripper-jaw",
+        "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+        "targetDimsMm": [
+          32,
+          32,
+          14
+        ],
+        "actualDimsMm": [
+          32,
+          31.81,
+          14
+        ],
+        "scadFile": "parts/gripper-jaw.scad",
+        "stlFile": "parts/gripper-jaw.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 520,
+          "volumeMm3": 8604.43,
+          "actualDimsMm": [
+            32,
+            31.81,
+            14
+          ],
+          "targetDimsMm": [
+            32,
+            32,
+            14
+          ],
+          "axisErrorsRatio": [
+            0,
+            0.01,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 520,
+        "volumeMm3": 8604.43,
+        "isManifold": true
+      }
+    ]
+  }
+}

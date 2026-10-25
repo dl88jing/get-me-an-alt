@@ -1,0 +1,637 @@
+{
+  "objectId": "desktop-robot-arm",
+  "objectName": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "currency": "USD",
+  "originalPrice": 899,
+  "purchasedTotal": 65.1,
+  "filamentEstimateUsd": 9.4,
+  "totalEstimatedCost": 74.5,
+  "savingsUsd": 824.5,
+  "savingsPercent": 91.7,
+  "items": [
+    {
+      "id": "bom-servo-mg996r",
+      "partNumber": "OTS-01",
+      "name": "MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)",
+      "category": "electronics",
+      "specification": "4.8V–6.6V DC, 11 kg·cm stall torque, full metal brass/aluminum gears, 25T output spline (J1, J2, J3)",
+      "qty": 3,
+      "unit": "pcs",
+      "unitPrice": 5.65,
+      "totalPrice": 16.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=MG996R+metal+gear+high+torque+digital+servo+pack",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=MG996R+metal+gear+high+torque+digital+servo+pack",
+          "estPrice": 16.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=MG996R+metal+gear+high+torque+digital+servo+pack",
+          "sourceTitle": "Amazon — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=MG996R+metal+gear+servo",
+          "estPrice": 18.4,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=MG996R+metal+gear+servo",
+          "sourceTitle": "Walmart — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-mg996r-metal-gear-servo.html",
+          "estPrice": 9.6,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-mg996r-metal-gear-servo.html",
+          "sourceTitle": "AliExpress — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)"
+        }
+      ],
+      "linkedPartIds": [
+        "servo-mg996r"
+      ],
+      "notes": "Powers J1 waist, J2 shoulder, and J3 elbow joints.",
+      "partId": "servo-mg996r",
+      "specs": "4.8V–6.6V DC, 11 kg·cm stall torque, full metal brass/aluminum gears, 25T output spline (J1, J2, J3)",
+      "quantity": 3,
+      "sourceLinks": [
+        {
+          "title": "Amazon — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)",
+          "url": "https://www.amazon.com/s?k=MG996R+metal+gear+high+torque+digital+servo+pack",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)",
+          "url": "https://www.walmart.com/search?q=MG996R+metal+gear+servo",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "AliExpress — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)",
+          "url": "https://www.aliexpress.com/w/wholesale-mg996r-metal-gear-servo.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-servo-mg90s",
+      "partNumber": "OTS-02",
+      "name": "MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)",
+      "category": "electronics",
+      "specification": "13.4g micro servo, metal gear train, 4.8V–6.0V DC, 2.2 kg·cm torque (J4 Roll, J5 Wrist, J6 Gripper)",
+      "qty": 3,
+      "unit": "pcs",
+      "unitPrice": 3.3,
+      "totalPrice": 9.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=MG90S+micro+metal+gear+servo+pack",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=MG90S+micro+metal+gear+servo+pack",
+          "estPrice": 9.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=MG90S+micro+metal+gear+servo+pack",
+          "sourceTitle": "Amazon — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=MG90S+micro+metal+gear+servo",
+          "estPrice": 10.8,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=MG90S+micro+metal+gear+servo",
+          "sourceTitle": "Walmart — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-mg90s-metal-gear-servo.html",
+          "estPrice": 5.4,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-mg90s-metal-gear-servo.html",
+          "sourceTitle": "AliExpress — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)"
+        }
+      ],
+      "linkedPartIds": [
+        "servo-mg90s"
+      ],
+      "notes": "Lightweight distal actuators for forearm roll, wrist pitch, and parallel gripper.",
+      "partId": "servo-mg90s",
+      "specs": "13.4g micro servo, metal gear train, 4.8V–6.0V DC, 2.2 kg·cm torque (J4 Roll, J5 Wrist, J6 Gripper)",
+      "quantity": 3,
+      "sourceLinks": [
+        {
+          "title": "Amazon — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)",
+          "url": "https://www.amazon.com/s?k=MG90S+micro+metal+gear+servo+pack",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)",
+          "url": "https://www.walmart.com/search?q=MG90S+micro+metal+gear+servo",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "AliExpress — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)",
+          "url": "https://www.aliexpress.com/w/wholesale-mg90s-metal-gear-servo.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-bearings",
+      "partNumber": "OTS-03",
+      "name": "6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings",
+      "category": "hardware",
+      "specification": "ABEC-5 52100 chrome steel deep-groove bearings: 1× 6808-2RS waist turntable + 4× 608ZZ (8×22×7mm) trunnions",
+      "qty": 1,
+      "unit": "kit",
+      "unitPrice": 8.95,
+      "totalPrice": 8.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=6808-2RS+bearing+40x52x7mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=6808-2RS+bearing+40x52x7mm",
+          "estPrice": 8.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=6808-2RS+bearing+40x52x7mm",
+          "sourceTitle": "Amazon — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#thin-section-ball-bearings/",
+          "estPrice": 11.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#thin-section-ball-bearings/",
+          "sourceTitle": "McMaster-Carr — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-6808-2rs-bearing.html",
+          "estPrice": 4.8,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-6808-2rs-bearing.html",
+          "sourceTitle": "AliExpress — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings"
+        }
+      ],
+      "linkedPartIds": [
+        "slew-bearing-6808"
+      ],
+      "notes": "Isolates radial and overturning moments from servo output splines.",
+      "partId": "slew-bearing-6808",
+      "specs": "ABEC-5 52100 chrome steel deep-groove bearings: 1× 6808-2RS waist turntable + 4× 608ZZ (8×22×7mm) trunnions",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings",
+          "url": "https://www.amazon.com/s?k=6808-2RS+bearing+40x52x7mm",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings",
+          "url": "https://www.mcmaster.com/#thin-section-ball-bearings/",
+          "retailer": "McMaster-Carr"
+        },
+        {
+          "title": "AliExpress — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings",
+          "url": "https://www.aliexpress.com/w/wholesale-6808-2rs-bearing.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-pca9685",
+      "partNumber": "OTS-04",
+      "name": "PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)",
+      "category": "electronics",
+      "specification": "I2C 16-ch hardware PWM generator (40–1000Hz), 4096-step resolution, onboard bulk capacitor & screw terminal",
+      "qty": 1,
+      "unit": "pc",
+      "unitPrice": 5.95,
+      "totalPrice": 5.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PCA9685+16+channel+12-bit+PWM+servo+driver+I2C",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PCA9685+16+channel+12-bit+PWM+servo+driver+I2C",
+          "estPrice": 5.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=PCA9685+16+channel+12-bit+PWM+servo+driver+I2C",
+          "sourceTitle": "Amazon — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)"
+        },
+        {
+          "retailer": "Adafruit",
+          "url": "https://www.adafruit.com/search?q=PCA9685+16-channel+servo",
+          "estPrice": 14.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.adafruit.com/search?q=PCA9685+16-channel+servo",
+          "sourceTitle": "Adafruit — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html",
+          "estPrice": 2.3,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html",
+          "sourceTitle": "AliExpress — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)"
+        }
+      ],
+      "linkedPartIds": [
+        "pca9685-driver"
+      ],
+      "notes": "Drives all 6 servos synchronously over 2-wire I2C from the ESP32-S3.",
+      "partId": "pca9685-driver",
+      "specs": "I2C 16-ch hardware PWM generator (40–1000Hz), 4096-step resolution, onboard bulk capacitor & screw terminal",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)",
+          "url": "https://www.amazon.com/s?k=PCA9685+16+channel+12-bit+PWM+servo+driver+I2C",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Adafruit — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)",
+          "url": "https://www.adafruit.com/search?q=PCA9685+16-channel+servo",
+          "retailer": "Adafruit"
+        },
+        {
+          "title": "AliExpress — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)",
+          "url": "https://www.aliexpress.com/w/wholesale-pca9685-16-channel-servo-driver.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-esp32",
+      "partNumber": "OTS-05",
+      "name": "ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board",
+      "category": "electronics",
+      "specification": "240MHz Xtensa LX7 with FPU for 6-DOF inverse kinematics, WebSocket control UI & USB-C serial",
+      "qty": 1,
+      "unit": "pc",
+      "unitPrice": 6.9,
+      "totalPrice": 6.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=ESP32-S3+development+board+USB-C",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=ESP32-S3+development+board+USB-C",
+          "estPrice": 6.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=ESP32-S3+development+board+USB-C",
+          "sourceTitle": "Amazon — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=ESP32+S3+development+board",
+          "estPrice": 7.45,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=ESP32+S3+development+board",
+          "sourceTitle": "Walmart — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-s3-board.html",
+          "estPrice": 3.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-esp32-s3-board.html",
+          "sourceTitle": "AliExpress — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board"
+        }
+      ],
+      "linkedPartIds": [
+        "esp32-controller"
+      ],
+      "notes": "Hosts browser kinematics pendant and trajectory planner.",
+      "partId": "esp32-controller",
+      "specs": "240MHz Xtensa LX7 with FPU for 6-DOF inverse kinematics, WebSocket control UI & USB-C serial",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board",
+          "url": "https://www.amazon.com/s?k=ESP32-S3+development+board+USB-C",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board",
+          "url": "https://www.walmart.com/search?q=ESP32+S3+development+board",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "AliExpress — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-s3-board.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-psu-6v",
+      "partNumber": "OTS-06",
+      "name": "6V 10A (60W) Regulated DC Switching Power Supply",
+      "category": "power",
+      "specification": "110/220V AC input to 6.0V DC 10A regulated output with short-circuit & overload protection",
+      "qty": 1,
+      "unit": "pc",
+      "unitPrice": 10.95,
+      "totalPrice": 10.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=6V+10A+DC+regulated+switching+power+supply+servo",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=6V+10A+DC+regulated+switching+power+supply+servo",
+          "estPrice": 10.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=6V+10A+DC+regulated+switching+power+supply+servo",
+          "sourceTitle": "Amazon — 6V 10A (60W) Regulated DC Switching Power Supply"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=6V+10A+power+supply+servo",
+          "estPrice": 11.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=6V+10A+power+supply+servo",
+          "sourceTitle": "Walmart — 6V 10A (60W) Regulated DC Switching Power Supply"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-6v-10a-switching-power-supply.html",
+          "estPrice": 6.8,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-6v-10a-switching-power-supply.html",
+          "sourceTitle": "AliExpress — 6V 10A (60W) Regulated DC Switching Power Supply"
+        }
+      ],
+      "linkedPartIds": [
+        "psu-6v-10a"
+      ],
+      "notes": "Supplies clean 6V high-current bus for simultaneous 6-axis motion.",
+      "partId": "psu-6v-10a",
+      "specs": "110/220V AC input to 6.0V DC 10A regulated output with short-circuit & overload protection",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 6V 10A (60W) Regulated DC Switching Power Supply",
+          "url": "https://www.amazon.com/s?k=6V+10A+DC+regulated+switching+power+supply+servo",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — 6V 10A (60W) Regulated DC Switching Power Supply",
+          "url": "https://www.walmart.com/search?q=6V+10A+power+supply+servo",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "AliExpress — 6V 10A (60W) Regulated DC Switching Power Supply",
+          "url": "https://www.aliexpress.com/w/wholesale-6v-10a-switching-power-supply.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-fasteners-horns",
+      "partNumber": "OTS-07",
+      "name": "25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit",
+      "category": "hardware",
+      "specification": "4× 25T M3-tapped aluminum disc horns + M3×8/12/16/20mm stainless screws, locknuts & brass standoffs",
+      "qty": 1,
+      "unit": "kit",
+      "unitPrice": 5.5,
+      "totalPrice": 5.5,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=25T+aluminum+round+servo+horn+disc+M3",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=25T+aluminum+round+servo+horn+disc+M3",
+          "estPrice": 5.5,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=25T+aluminum+round+servo+horn+disc+M3",
+          "sourceTitle": "Amazon — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#socket-head-cap-screws/=m3",
+          "estPrice": 6.4,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#socket-head-cap-screws/=m3",
+          "sourceTitle": "McMaster-Carr — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/m3%20stainless%20socket%20cap%20screws",
+          "estPrice": 5.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.homedepot.com/s/m3%20stainless%20socket%20cap%20screws",
+          "sourceTitle": "Home Depot — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit"
+        }
+      ],
+      "linkedPartIds": [
+        "fastener-horn-kit"
+      ],
+      "notes": "Eliminates plastic spline slip on J1–J3 joints.",
+      "partId": "fastener-horn-kit",
+      "specs": "4× 25T M3-tapped aluminum disc horns + M3×8/12/16/20mm stainless screws, locknuts & brass standoffs",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit",
+          "url": "https://www.amazon.com/s?k=25T+aluminum+round+servo+horn+disc+M3",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit",
+          "url": "https://www.mcmaster.com/#socket-head-cap-screws/=m3",
+          "retailer": "McMaster-Carr"
+        },
+        {
+          "title": "Home Depot — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit",
+          "url": "https://www.homedepot.com/s/m3%20stainless%20socket%20cap%20screws",
+          "retailer": "Home Depot"
+        }
+      ]
+    },
+    {
+      "id": "bom-filament-arm",
+      "partNumber": "FIL-01",
+      "name": "3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm High-Toughness PETG (Base, Turntable, Yoke, Truss, Elbow) + PLA+ (Forearm, Clevis, Gripper)",
+      "qty": 490,
+      "unit": "g",
+      "unitPrice": 0.0192,
+      "totalPrice": 9.4,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+filament+1kg",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+filament+1kg",
+          "estPrice": 9.4,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+filament+1kg",
+          "sourceTitle": "Amazon — 3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=PETG+1.75mm+3d+printer+filament",
+          "estPrice": 9.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=PETG+1.75mm+3d+printer+filament",
+          "sourceTitle": "Walmart — 3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)"
+        }
+      ],
+      "linkedPartIds": [
+        "base-pedestal",
+        "turntable-plate",
+        "shoulder-yoke",
+        "lower-arm-link",
+        "elbow-housing",
+        "forearm-tube",
+        "wrist-pitch-clevis",
+        "gripper-body",
+        "gripper-jaw"
+      ],
+      "notes": "Calculated from compiled OpenSCAD STL mesh volume across 10 printed items.",
+      "partId": "base-pedestal",
+      "specs": "1.75mm High-Toughness PETG (Base, Turntable, Yoke, Truss, Elbow) + PLA+ (Forearm, Clevis, Gripper)",
+      "quantity": 490,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+filament+1kg",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — 3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)",
+          "url": "https://www.walmart.com/search?q=PETG+1.75mm+3d+printer+filament",
+          "retailer": "Walmart"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "purchasedPartsTotal": 65.1,
+    "filamentCostTotal": 9.4,
+    "totalDiyCost": 74.5,
+    "originalRetailPrice": 899,
+    "totalSavings": 824.5,
+    "savingsPercent": 91.7
+  },
+  "priceHunter": {
+    "groundingUsed": true,
+    "retailersCompared": [
+      "Amazon",
+      "McMaster-Carr",
+      "Home Depot",
+      "Walmart",
+      "AliExpress"
+    ],
+    "cheapestPicksCount": 8,
+    "sourceLinks": [
+      {
+        "title": "Amazon — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)",
+        "url": "https://www.amazon.com/s?k=MG996R+metal+gear+high+torque+digital+servo+pack",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — MG996R High-Torque Metal-Gear Digital Servo (11 kg·cm, 180°, Pack of 3)",
+        "url": "https://www.walmart.com/search?q=MG996R+metal+gear+servo",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)",
+        "url": "https://www.amazon.com/s?k=MG90S+micro+metal+gear+servo+pack",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — MG90S Micro Metal-Gear Digital Servo (2.2 kg·cm, 180°, Pack of 3)",
+        "url": "https://www.walmart.com/search?q=MG90S+micro+metal+gear+servo",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings",
+        "url": "https://www.amazon.com/s?k=6808-2RS+bearing+40x52x7mm",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr — 6808-2RS Thin-Section Slew Bearing (40×52×7mm) + 4× 608ZZ Joint Bearings",
+        "url": "https://www.mcmaster.com/#thin-section-ball-bearings/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)",
+        "url": "https://www.amazon.com/s?k=PCA9685+16+channel+12-bit+PWM+servo+driver+I2C",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Adafruit — PCA9685 16-Channel 12-Bit PWM Servo Driver Module (I2C Interface)",
+        "url": "https://www.adafruit.com/search?q=PCA9685+16-channel+servo",
+        "retailer": "Adafruit"
+      },
+      {
+        "title": "Amazon — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board",
+        "url": "https://www.amazon.com/s?k=ESP32-S3+development+board+USB-C",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — ESP32-S3 Dual-Core Wi-Fi/BLE USB-C Microcontroller Board",
+        "url": "https://www.walmart.com/search?q=ESP32+S3+development+board",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — 6V 10A (60W) Regulated DC Switching Power Supply",
+        "url": "https://www.amazon.com/s?k=6V+10A+DC+regulated+switching+power+supply+servo",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — 6V 10A (60W) Regulated DC Switching Power Supply",
+        "url": "https://www.walmart.com/search?q=6V+10A+power+supply+servo",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit",
+        "url": "https://www.amazon.com/s?k=25T+aluminum+round+servo+horn+disc+M3",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr — 25T CNC Aluminum Servo Disc Horns (×4) & M3 Stainless Socket Screw Kit",
+        "url": "https://www.mcmaster.com/#socket-head-cap-screws/=m3",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon — 3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)",
+        "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+filament+1kg",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — 3D Print Filament — PETG & PLA+ (~490g Total Printed Weight)",
+        "url": "https://www.walmart.com/search?q=PETG+1.75mm+3d+printer+filament",
+        "retailer": "Walmart"
+      }
+    ],
+    "updatedAt": "2026-10-25T23:00:00.000Z"
+  }
+}

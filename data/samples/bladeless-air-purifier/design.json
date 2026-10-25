@@ -1,0 +1,693 @@
+{
+  "objectName": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "designPhilosophy": "Vertical concentric pressure stack in CAD Z-up coordinates: 360° HEPA H13 intake base -> 24V high-static centrifugal blower volute -> acoustic diffuser cone -> split Coanda airfoil loop.",
+  "overallBoundingBoxMm": [
+    215,
+    175,
+    495
+  ],
+  "printedPartsCount": 9,
+  "purchasedPartsCount": 6,
+  "assemblyNotes": [
+    "All 9 printed parts fit on 2 Bambu Lab A1 build plates (256×256×256 mm) with zero support material.",
+    "Apply EPDM gasket strip (OTS-06) to the top and bottom seats of the HEPA H13 cylinder for an airtight pressure seal.",
+    "Join PRT-07 and PRT-08 along their precision tongue-and-groove mid-plane seam using 4× M3×10mm screws."
+  ],
+  "parts": [
+    {
+      "id": "weighted-base-pan",
+      "partNumber": "PRT-01",
+      "name": "Acoustic Weighted Base Pan & Vibration Ring",
+      "kind": "printed",
+      "dims_mm": [
+        168,
+        168,
+        32
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "reservoir",
+        "width": 168,
+        "depth": 168,
+        "height": 32,
+        "wallThickness": 3.6,
+        "floorThickness": 4.5,
+        "cornerRadius": 28,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -95
+      ],
+      "color": "#0ea5e9",
+      "bomRef": "bom-filament-fan",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Flanged bottom pedestal with DC barrel jack port and bayonet locking lugs for tool-free HEPA filter changes.",
+      "roleInAssembly": "Anchors the tower and seals the bottom of the HEPA cartridge.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 1
+    },
+    {
+      "id": "hepa-h13-cylinder",
+      "partNumber": "OTS-02",
+      "name": "Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge",
+      "kind": "purchased",
+      "dims_mm": [
+        152,
+        152,
+        115
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 76,
+        "innerRadius": 52,
+        "height": 115
+      },
+      "position": [
+        0,
+        0,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -110,
+        0,
+        -20
+      ],
+      "color": "#f8fafc",
+      "bomRef": "bom-hepa-filter",
+      "material": "Pleated H13 Microfiber & Carbon (Purchased)",
+      "quantity": 1,
+      "description": "360° cylindrical True HEPA H13 cartridge removing 99.97% of allergens, smoke, and fine dust.",
+      "roleInAssembly": "Primary 360-degree intake air filtration stage.",
+      "step": 2,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "hepa-intake-shell",
+      "partNumber": "PRT-02",
+      "name": "360° Perforated HEPA Intake Lower Shell",
+      "kind": "printed",
+      "dims_mm": [
+        164,
+        164,
+        125
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 82,
+        "innerRadius": 78,
+        "height": 125,
+        "flangeRadius": 82,
+        "flangeHeight": 6,
+        "wallThickness": 3.6,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        24
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -25
+      ],
+      "color": "#38bdf8",
+      "bomRef": "bom-filament-fan",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Structural cylindrical cage with voronoi/slotted air intake grille surrounding the HEPA filter.",
+      "roleInAssembly": "Protects HEPA cartridge and carries upper tower loads.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 3
+    },
+    {
+      "id": "hepa-filter-frame",
+      "partNumber": "PRT-03",
+      "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+      "kind": "printed",
+      "dims_mm": [
+        160,
+        160,
+        16
+      ],
+      "shape": "plate_with_holes",
+      "params": {
+        "width": 160,
+        "depth": 160,
+        "thickness": 16,
+        "cornerRadius": 24,
+        "wallThickness": 3.2,
+        "holes": [
+          {
+            "x": 0,
+            "y": 0,
+            "radius": 48
+          }
+        ],
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        148
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        45
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-filament-fan",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Annular compression ring with EPDM gasket groove that seals the top of the HEPA cartridge to the blower intake.",
+      "roleInAssembly": "Prevents unfiltered air bypass between intake shell and blower.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 4
+    },
+    {
+      "id": "epdm-gasket-fasteners",
+      "partNumber": "OTS-06",
+      "name": "EPDM Acoustic Foam Seal Strip & M3 Brass Insert Kit",
+      "kind": "purchased",
+      "dims_mm": [
+        40,
+        40,
+        10
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 20,
+        "height": 10,
+        "segments": 32
+      },
+      "position": [
+        65,
+        0,
+        156
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        135,
+        0,
+        55
+      ],
+      "color": "#fbbf24",
+      "bomRef": "bom-gasket-inserts",
+      "material": "EPDM Foam & Brass M3 Inserts (Purchased)",
+      "quantity": 1,
+      "description": "Closed-cell EPDM acoustic gasket tape (2m) plus 20× M3×5×4mm brass heat-set inserts and M3 screws.",
+      "roleInAssembly": "Seals plenum joints airtight and damps blower vibration.",
+      "step": 5,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "impeller-shroud",
+      "partNumber": "PRT-04",
+      "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+      "kind": "printed",
+      "dims_mm": [
+        142,
+        142,
+        74
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 71,
+        "innerRadius": 64,
+        "height": 74,
+        "flangeRadius": 71,
+        "flangeHeight": 5,
+        "wallThickness": 3.5,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        164
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        95
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-fan",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Double-walled acoustic motor housing with Helmholtz resonance cavities and vibration-isolated blower cradle.",
+      "roleInAssembly": "Houses the 24V centrifugal blower and suppresses motor noise.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 6
+    },
+    {
+      "id": "blower-120mm-24v",
+      "partNumber": "OTS-01",
+      "name": "120×32mm 24V Brushless High-Static Centrifugal Blower",
+      "kind": "purchased",
+      "dims_mm": [
+        120,
+        120,
+        32
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 60,
+        "height": 32,
+        "segments": 36
+      },
+      "position": [
+        0,
+        0,
+        182
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -125,
+        0,
+        115
+      ],
+      "color": "#334155",
+      "bomRef": "bom-blower-24v",
+      "material": "PBT Impeller / Dual Ball Bearing (Purchased)",
+      "quantity": 1,
+      "description": "High-static-pressure (280 Pa, 42 CFM) 24V DC brushless centrifugal blower with 4-wire PWM speed control.",
+      "roleInAssembly": "Pulls air through HEPA H13 filter and pressurizes Coanda loop.",
+      "step": 7,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "diffuser-stator-cone",
+      "partNumber": "PRT-05",
+      "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+      "kind": "printed",
+      "dims_mm": [
+        146,
+        146,
+        52
+      ],
+      "shape": "funnel",
+      "params": {
+        "topRadius": 52,
+        "spoutRadius": 34,
+        "coneHeight": 36,
+        "spoutHeight": 16,
+        "wallThickness": 3,
+        "flangeWidth": 5,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        238
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        155
+      ],
+      "color": "#14b8a6",
+      "bomRef": "bom-filament-fan",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Conical pressure diffuser that straightens swirling blower exhaust into laminar vertical flow.",
+      "roleInAssembly": "Transitions circular blower outlet into the oval airfoil neck.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 8
+    },
+    {
+      "id": "plenum-neck-collar",
+      "partNumber": "PRT-06",
+      "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+      "kind": "printed",
+      "dims_mm": [
+        108,
+        76,
+        46
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "enclosure",
+        "width": 108,
+        "depth": 76,
+        "height": 46,
+        "wallThickness": 3.4,
+        "floorThickness": 3.4,
+        "cornerRadius": 14,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        286
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        205
+      ],
+      "color": "#a855f7",
+      "bomRef": "bom-filament-fan",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Structural manifold collar that splits upward airflow symmetrically into the left and right Coanda loop branches.",
+      "roleInAssembly": "Supports the airfoil loop and bifurcates pressurized airflow.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 9
+    },
+    {
+      "id": "coanda-airfoil-lower",
+      "partNumber": "PRT-07",
+      "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+      "kind": "printed",
+      "dims_mm": [
+        190,
+        190,
+        115
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 95,
+        "innerRadius": 72,
+        "height": 115,
+        "wallThickness": 3,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        328
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -25,
+        265
+      ],
+      "color": "#f59e0b",
+      "bomRef": "bom-filament-fan",
+      "material": "Matte PLA+",
+      "quantity": 1,
+      "description": "Lower half of the bladeless Coanda airfoil loop featuring internal dual plenum channels and 1.5mm exit lip.",
+      "roleInAssembly": "Forms the lower 180° arc of the Coanda air-multiplier nozzle.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "coanda-airfoil-upper",
+      "partNumber": "PRT-08",
+      "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+      "kind": "printed",
+      "dims_mm": [
+        190,
+        190,
+        115
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 95,
+        "innerRadius": 72,
+        "height": 115,
+        "wallThickness": 3,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        412
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        25,
+        345
+      ],
+      "color": "#ec4899",
+      "bomRef": "bom-filament-fan",
+      "material": "Matte PLA+",
+      "quantity": 1,
+      "description": "Upper crown of the Coanda airfoil loop with tapered internal plenum and 16° inner entrainment surface.",
+      "roleInAssembly": "Completes the 360° Coanda jet loop and entrains 15x ambient air.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "control-bezel-pod",
+      "partNumber": "PRT-09",
+      "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+      "kind": "printed",
+      "dims_mm": [
+        68,
+        44,
+        24
+      ],
+      "shape": "bracketL",
+      "params": {
+        "legA": 68,
+        "legB": 44,
+        "width": 24,
+        "thickness": 3.5,
+        "filletRadius": 4,
+        "wallThickness": 3,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        -82,
+        265
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -145,
+        200
+      ],
+      "color": "#f97316",
+      "bomRef": "bom-filament-fan",
+      "material": "PLA+",
+      "quantity": 2,
+      "description": "Front-mounted control pod bezel housing the rotary PWM speed dial and laser PM2.5 status window.",
+      "roleInAssembly": "Mounts user speed knob and air-quality sensor on the front neck.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "pwm-speed-controller",
+      "partNumber": "OTS-03",
+      "name": "25kHz 4-Wire PWM Fan Speed Controller with Rotary Encoder",
+      "kind": "purchased",
+      "dims_mm": [
+        52,
+        36,
+        18
+      ],
+      "shape": "box",
+      "params": {
+        "width": 52,
+        "depth": 36,
+        "height": 18
+      },
+      "position": [
+        -28,
+        -76,
+        265
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -95,
+        -140,
+        195
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-pwm-controller",
+      "material": "FR4 PCB + Aluminum Knob (Purchased)",
+      "quantity": 1,
+      "description": "Ultrasonic 25kHz PWM controller with stepless rotary dial and digital RPM percentage display.",
+      "roleInAssembly": "Regulates blower speed smoothly from silent 15% sleep mode to 100% turbo.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "pm25-air-sensor",
+      "partNumber": "OTS-04",
+      "name": "Laser PM2.5 Air Quality Sensor + ESP32-C3 Auto-Mode Module",
+      "kind": "purchased",
+      "dims_mm": [
+        50,
+        38,
+        21
+      ],
+      "shape": "box",
+      "params": {
+        "width": 50,
+        "depth": 38,
+        "height": 21
+      },
+      "position": [
+        28,
+        -76,
+        265
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        95,
+        -140,
+        195
+      ],
+      "color": "#2563eb",
+      "bomRef": "bom-pm25-sensor",
+      "material": "Laser Scattering Sensor + MCU (Purchased)",
+      "quantity": 1,
+      "description": "Real-time laser particulate sensor that automatically ramps fan speed when PM2.5 exceeds 12 ug/m3.",
+      "roleInAssembly": "Monitors indoor air quality and drives automatic purification mode.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "psu-24v-3a",
+      "partNumber": "OTS-05",
+      "name": "24V 3A (72W) UL-Listed Low-Noise DC Power Supply Brick",
+      "kind": "purchased",
+      "dims_mm": [
+        95,
+        48,
+        30
+      ],
+      "shape": "box",
+      "params": {
+        "width": 95,
+        "depth": 48,
+        "height": 30
+      },
+      "position": [
+        125,
+        0,
+        15
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        185,
+        0,
+        -45
+      ],
+      "color": "#475569",
+      "bomRef": "bom-psu-24v",
+      "material": "UL-Listed Power Adapter (Purchased)",
+      "quantity": 1,
+      "description": "Silent fanless 24V 3A external power adapter with 5.5×2.1mm DC barrel plug.",
+      "roleInAssembly": "Supplies 24V DC power to the centrifugal blower and PWM controller.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    }
+  ],
+  "summary": [
+    "All 9 printed parts fit on 2 Bambu Lab A1 build plates (256×256×256 mm) with zero support material.",
+    "Apply EPDM gasket strip (OTS-06) to the top and bottom seats of the HEPA H13 cylinder for an airtight pressure seal.",
+    "Join PRT-07 and PRT-08 along their precision tongue-and-groove mid-plane seam using 4× M3×10mm screws."
+  ]
+}

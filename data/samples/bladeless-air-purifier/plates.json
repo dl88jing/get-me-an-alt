@@ -1,0 +1,1673 @@
+{
+  "objectId": "bladeless-air-purifier",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPlates": 7,
+  "totalUniqueParts": 9,
+  "totalPrintedItems": 10,
+  "totalWeightGrams": 1675.2,
+  "totalFilamentGrams": 1675.2,
+  "totalFilamentMeters": 561.62,
+  "totalPrintTimeMinutes": 2183,
+  "formattedTotalPrintTime": "36h 23m",
+  "multiPlate3mfFile": "parts/all-plates.3mf",
+  "multiPlate3mfBytes": 714694,
+  "printer": {
+    "id": "bambu-a1",
+    "name": "Bambu Lab A1",
+    "brand": "Bambu Lab",
+    "bed": {
+      "x": 256,
+      "y": 256,
+      "z": 256
+    },
+    "multiColor": true,
+    "speedClass": "high-speed"
+  },
+  "margin": 5,
+  "spacing": 5,
+  "heuristicUsed": "MaxRects-BSSF-FF (area-desc)",
+  "parts": [
+    {
+      "partId": "weighted-base-pan",
+      "name": "Acoustic Weighted Base Pan & Vibration Ring",
+      "shape": "custom_csg",
+      "stlFile": "parts/weighted-base-pan.stl",
+      "file": "parts/weighted-base-pan.stl",
+      "scadFile": "parts/weighted-base-pan.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 31084,
+      "dims_mm": [
+        168,
+        168,
+        32
+      ],
+      "dimensionsMm": [
+        168,
+        168,
+        32
+      ],
+      "weightGrams": 126.9,
+      "filamentGrams": 126.9,
+      "filamentMeters": 42.56,
+      "estimatedMinutes": 162,
+      "printTimeMinutes": 162,
+      "formattedTime": "2h 42m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 620,
+      "vertexCount": 312,
+      "edgeCount": 930,
+      "volumeMm3": 180880.42,
+      "surfaceAreaMm2": 91621.39,
+      "isManifold": true
+    },
+    {
+      "partId": "hepa-intake-shell",
+      "name": "360° Perforated HEPA Intake Lower Shell",
+      "shape": "tube",
+      "stlFile": "parts/hepa-intake-shell.stl",
+      "file": "parts/hepa-intake-shell.stl",
+      "scadFile": "parts/hepa-intake-shell.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 41684,
+      "dims_mm": [
+        164,
+        164,
+        125
+      ],
+      "dimensionsMm": [
+        164,
+        164,
+        125
+      ],
+      "weightGrams": 160.6,
+      "filamentGrams": 160.6,
+      "filamentMeters": 53.85,
+      "estimatedMinutes": 226,
+      "printTimeMinutes": 226,
+      "formattedTime": "3h 46m",
+      "color": "#38bdf8",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 832,
+      "vertexCount": 408,
+      "edgeCount": 1248,
+      "volumeMm3": 234036.53,
+      "surfaceAreaMm2": 129178.31,
+      "isManifold": true
+    },
+    {
+      "partId": "hepa-filter-frame",
+      "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/hepa-filter-frame.stl",
+      "file": "parts/hepa-filter-frame.stl",
+      "scadFile": "parts/hepa-filter-frame.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 50484,
+      "dims_mm": [
+        160,
+        160,
+        16
+      ],
+      "dimensionsMm": [
+        160,
+        160,
+        16
+      ],
+      "weightGrams": 134.6,
+      "filamentGrams": 134.6,
+      "filamentMeters": 45.12,
+      "estimatedMinutes": 167,
+      "printTimeMinutes": 167,
+      "formattedTime": "2h 47m",
+      "color": "#10b981",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1008,
+      "vertexCount": 504,
+      "edgeCount": 1512,
+      "volumeMm3": 284614.31,
+      "surfaceAreaMm2": 50389.83,
+      "isManifold": true
+    },
+    {
+      "partId": "impeller-shroud",
+      "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+      "shape": "tube",
+      "stlFile": "parts/impeller-shroud.stl",
+      "file": "parts/impeller-shroud.stl",
+      "scadFile": "parts/impeller-shroud.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        142,
+        142,
+        74
+      ],
+      "dimensionsMm": [
+        142,
+        142,
+        74
+      ],
+      "weightGrams": 117.1,
+      "filamentGrams": 117.1,
+      "filamentMeters": 39.27,
+      "estimatedMinutes": 161,
+      "printTimeMinutes": 161,
+      "formattedTime": "2h 41m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 208374.49,
+      "surfaceAreaMm2": 69581.99,
+      "isManifold": true
+    },
+    {
+      "partId": "diffuser-stator-cone",
+      "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+      "shape": "funnel",
+      "stlFile": "parts/diffuser-stator-cone.stl",
+      "file": "parts/diffuser-stator-cone.stl",
+      "scadFile": "parts/diffuser-stator-cone.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 38484,
+      "dims_mm": [
+        146,
+        146,
+        52
+      ],
+      "dimensionsMm": [
+        146,
+        146,
+        52
+      ],
+      "weightGrams": 41.4,
+      "filamentGrams": 41.4,
+      "filamentMeters": 13.87,
+      "estimatedMinutes": 64,
+      "printTimeMinutes": 64,
+      "formattedTime": "1h 4m",
+      "color": "#14b8a6",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 768,
+      "vertexCount": 384,
+      "edgeCount": 1152,
+      "volumeMm3": 48628.43,
+      "surfaceAreaMm2": 43120.28,
+      "isManifold": true
+    },
+    {
+      "partId": "plenum-neck-collar",
+      "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+      "shape": "custom_csg",
+      "stlFile": "parts/plenum-neck-collar.stl",
+      "file": "parts/plenum-neck-collar.stl",
+      "scadFile": "parts/plenum-neck-collar.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 79484,
+      "dims_mm": [
+        108,
+        76,
+        46
+      ],
+      "dimensionsMm": [
+        108,
+        76,
+        46
+      ],
+      "weightGrams": 57.2,
+      "filamentGrams": 57.2,
+      "filamentMeters": 19.17,
+      "estimatedMinutes": 82,
+      "printTimeMinutes": 82,
+      "formattedTime": "1h 22m",
+      "color": "#a855f7",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1588,
+      "vertexCount": 696,
+      "edgeCount": 2286,
+      "volumeMm3": 75558.28,
+      "surfaceAreaMm2": 46134.73,
+      "isManifold": false
+    },
+    {
+      "partId": "coanda-airfoil-lower",
+      "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+      "shape": "tube",
+      "stlFile": "parts/coanda-airfoil-lower.stl",
+      "file": "parts/coanda-airfoil-lower.stl",
+      "scadFile": "parts/coanda-airfoil-lower.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        190,
+        190,
+        115
+      ],
+      "dimensionsMm": [
+        190,
+        190,
+        115
+      ],
+      "weightGrams": 511.8,
+      "filamentGrams": 511.8,
+      "filamentMeters": 171.59,
+      "estimatedMinutes": 652,
+      "printTimeMinutes": 652,
+      "formattedTime": "10h 52m",
+      "color": "#f59e0b",
+      "material": "Matte PLA+",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 1349562.09,
+      "surfaceAreaMm2": 153101.27,
+      "isManifold": true
+    },
+    {
+      "partId": "coanda-airfoil-upper",
+      "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+      "shape": "tube",
+      "stlFile": "parts/coanda-airfoil-upper.stl",
+      "file": "parts/coanda-airfoil-upper.stl",
+      "scadFile": "parts/coanda-airfoil-upper.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        190,
+        190,
+        115
+      ],
+      "dimensionsMm": [
+        190,
+        190,
+        115
+      ],
+      "weightGrams": 511.8,
+      "filamentGrams": 511.8,
+      "filamentMeters": 171.59,
+      "estimatedMinutes": 652,
+      "printTimeMinutes": 652,
+      "formattedTime": "10h 52m",
+      "color": "#ec4899",
+      "material": "Matte PLA+",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 1349562.09,
+      "surfaceAreaMm2": 153101.27,
+      "isManifold": true
+    },
+    {
+      "partId": "control-bezel-pod",
+      "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+      "shape": "bracketL",
+      "stlFile": "parts/control-bezel-pod.stl",
+      "file": "parts/control-bezel-pod.stl",
+      "scadFile": "parts/control-bezel-pod.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        68,
+        44,
+        24
+      ],
+      "dimensionsMm": [
+        68,
+        44,
+        24
+      ],
+      "weightGrams": 13.8,
+      "filamentGrams": 13.8,
+      "filamentMeters": 4.6,
+      "estimatedMinutes": 32,
+      "printTimeMinutes": 32,
+      "formattedTime": "32m",
+      "color": "#f97316",
+      "material": "PLA+",
+      "quantity": 2,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 9463.69,
+      "surfaceAreaMm2": 6450.93,
+      "isManifold": true
+    }
+  ],
+  "partFiles": [
+    {
+      "partId": "weighted-base-pan",
+      "name": "Acoustic Weighted Base Pan & Vibration Ring",
+      "shape": "custom_csg",
+      "stlFile": "parts/weighted-base-pan.stl",
+      "file": "parts/weighted-base-pan.stl",
+      "scadFile": "parts/weighted-base-pan.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 31084,
+      "dims_mm": [
+        168,
+        168,
+        32
+      ],
+      "dimensionsMm": [
+        168,
+        168,
+        32
+      ],
+      "weightGrams": 126.9,
+      "filamentGrams": 126.9,
+      "filamentMeters": 42.56,
+      "estimatedMinutes": 162,
+      "printTimeMinutes": 162,
+      "formattedTime": "2h 42m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 620,
+      "vertexCount": 312,
+      "edgeCount": 930,
+      "volumeMm3": 180880.42,
+      "surfaceAreaMm2": 91621.39,
+      "isManifold": true
+    },
+    {
+      "partId": "hepa-intake-shell",
+      "name": "360° Perforated HEPA Intake Lower Shell",
+      "shape": "tube",
+      "stlFile": "parts/hepa-intake-shell.stl",
+      "file": "parts/hepa-intake-shell.stl",
+      "scadFile": "parts/hepa-intake-shell.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 41684,
+      "dims_mm": [
+        164,
+        164,
+        125
+      ],
+      "dimensionsMm": [
+        164,
+        164,
+        125
+      ],
+      "weightGrams": 160.6,
+      "filamentGrams": 160.6,
+      "filamentMeters": 53.85,
+      "estimatedMinutes": 226,
+      "printTimeMinutes": 226,
+      "formattedTime": "3h 46m",
+      "color": "#38bdf8",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 832,
+      "vertexCount": 408,
+      "edgeCount": 1248,
+      "volumeMm3": 234036.53,
+      "surfaceAreaMm2": 129178.31,
+      "isManifold": true
+    },
+    {
+      "partId": "hepa-filter-frame",
+      "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+      "shape": "plate_with_holes",
+      "stlFile": "parts/hepa-filter-frame.stl",
+      "file": "parts/hepa-filter-frame.stl",
+      "scadFile": "parts/hepa-filter-frame.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 50484,
+      "dims_mm": [
+        160,
+        160,
+        16
+      ],
+      "dimensionsMm": [
+        160,
+        160,
+        16
+      ],
+      "weightGrams": 134.6,
+      "filamentGrams": 134.6,
+      "filamentMeters": 45.12,
+      "estimatedMinutes": 167,
+      "printTimeMinutes": 167,
+      "formattedTime": "2h 47m",
+      "color": "#10b981",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1008,
+      "vertexCount": 504,
+      "edgeCount": 1512,
+      "volumeMm3": 284614.31,
+      "surfaceAreaMm2": 50389.83,
+      "isManifold": true
+    },
+    {
+      "partId": "impeller-shroud",
+      "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+      "shape": "tube",
+      "stlFile": "parts/impeller-shroud.stl",
+      "file": "parts/impeller-shroud.stl",
+      "scadFile": "parts/impeller-shroud.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        142,
+        142,
+        74
+      ],
+      "dimensionsMm": [
+        142,
+        142,
+        74
+      ],
+      "weightGrams": 117.1,
+      "filamentGrams": 117.1,
+      "filamentMeters": 39.27,
+      "estimatedMinutes": 161,
+      "printTimeMinutes": 161,
+      "formattedTime": "2h 41m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 208374.49,
+      "surfaceAreaMm2": 69581.99,
+      "isManifold": true
+    },
+    {
+      "partId": "diffuser-stator-cone",
+      "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+      "shape": "funnel",
+      "stlFile": "parts/diffuser-stator-cone.stl",
+      "file": "parts/diffuser-stator-cone.stl",
+      "scadFile": "parts/diffuser-stator-cone.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 38484,
+      "dims_mm": [
+        146,
+        146,
+        52
+      ],
+      "dimensionsMm": [
+        146,
+        146,
+        52
+      ],
+      "weightGrams": 41.4,
+      "filamentGrams": 41.4,
+      "filamentMeters": 13.87,
+      "estimatedMinutes": 64,
+      "printTimeMinutes": 64,
+      "formattedTime": "1h 4m",
+      "color": "#14b8a6",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 768,
+      "vertexCount": 384,
+      "edgeCount": 1152,
+      "volumeMm3": 48628.43,
+      "surfaceAreaMm2": 43120.28,
+      "isManifold": true
+    },
+    {
+      "partId": "plenum-neck-collar",
+      "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+      "shape": "custom_csg",
+      "stlFile": "parts/plenum-neck-collar.stl",
+      "file": "parts/plenum-neck-collar.stl",
+      "scadFile": "parts/plenum-neck-collar.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 79484,
+      "dims_mm": [
+        108,
+        76,
+        46
+      ],
+      "dimensionsMm": [
+        108,
+        76,
+        46
+      ],
+      "weightGrams": 57.2,
+      "filamentGrams": 57.2,
+      "filamentMeters": 19.17,
+      "estimatedMinutes": 82,
+      "printTimeMinutes": 82,
+      "formattedTime": "1h 22m",
+      "color": "#a855f7",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1588,
+      "vertexCount": 696,
+      "edgeCount": 2286,
+      "volumeMm3": 75558.28,
+      "surfaceAreaMm2": 46134.73,
+      "isManifold": false
+    },
+    {
+      "partId": "coanda-airfoil-lower",
+      "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+      "shape": "tube",
+      "stlFile": "parts/coanda-airfoil-lower.stl",
+      "file": "parts/coanda-airfoil-lower.stl",
+      "scadFile": "parts/coanda-airfoil-lower.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        190,
+        190,
+        115
+      ],
+      "dimensionsMm": [
+        190,
+        190,
+        115
+      ],
+      "weightGrams": 511.8,
+      "filamentGrams": 511.8,
+      "filamentMeters": 171.59,
+      "estimatedMinutes": 652,
+      "printTimeMinutes": 652,
+      "formattedTime": "10h 52m",
+      "color": "#f59e0b",
+      "material": "Matte PLA+",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 1349562.09,
+      "surfaceAreaMm2": 153101.27,
+      "isManifold": true
+    },
+    {
+      "partId": "coanda-airfoil-upper",
+      "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+      "shape": "tube",
+      "stlFile": "parts/coanda-airfoil-upper.stl",
+      "file": "parts/coanda-airfoil-upper.stl",
+      "scadFile": "parts/coanda-airfoil-upper.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 63284,
+      "dims_mm": [
+        190,
+        190,
+        115
+      ],
+      "dimensionsMm": [
+        190,
+        190,
+        115
+      ],
+      "weightGrams": 511.8,
+      "filamentGrams": 511.8,
+      "filamentMeters": 171.59,
+      "estimatedMinutes": 652,
+      "printTimeMinutes": 652,
+      "formattedTime": "10h 52m",
+      "color": "#ec4899",
+      "material": "Matte PLA+",
+      "quantity": 1,
+      "triangleCount": 1264,
+      "vertexCount": 624,
+      "edgeCount": 1896,
+      "volumeMm3": 1349562.09,
+      "surfaceAreaMm2": 153101.27,
+      "isManifold": true
+    },
+    {
+      "partId": "control-bezel-pod",
+      "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+      "shape": "bracketL",
+      "stlFile": "parts/control-bezel-pod.stl",
+      "file": "parts/control-bezel-pod.stl",
+      "scadFile": "parts/control-bezel-pod.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 40884,
+      "dims_mm": [
+        68,
+        44,
+        24
+      ],
+      "dimensionsMm": [
+        68,
+        44,
+        24
+      ],
+      "weightGrams": 13.8,
+      "filamentGrams": 13.8,
+      "filamentMeters": 4.6,
+      "estimatedMinutes": 32,
+      "printTimeMinutes": 32,
+      "formattedTime": "32m",
+      "color": "#f97316",
+      "material": "PLA+",
+      "quantity": 2,
+      "triangleCount": 816,
+      "vertexCount": 402,
+      "edgeCount": 1224,
+      "volumeMm3": 9463.69,
+      "surfaceAreaMm2": 6450.93,
+      "isManifold": true
+    }
+  ],
+  "plates": [
+    {
+      "plateNumber": 1,
+      "index": 0,
+      "name": "Plate 1 — Bambu Lab A1 (3 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 69.54,
+      "utilization": 0.6954,
+      "maxHeight": 115,
+      "estimatedMinutes": 672,
+      "printTimeMinutes": 672,
+      "formattedTime": "11h 12m",
+      "weightGrams": 525.6,
+      "filamentGrams": 525.6,
+      "filamentMeters": 176.19,
+      "layers": 575,
+      "stlFile": "parts/plate-1.3mf",
+      "file": "parts/plate-1.3mf",
+      "bytes": 160313,
+      "placements": [
+        {
+          "partId": "coanda-airfoil-lower",
+          "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 100,
+          "centerY": 100,
+          "width": 190,
+          "depth": 190,
+          "height": 115,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/coanda-airfoil-lower.stl",
+          "weightGrams": 511.8,
+          "estimatedMinutes": 652
+        },
+        {
+          "partId": "control-bezel-pod",
+          "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 200,
+          "centerX": 39,
+          "centerY": 222,
+          "width": 68,
+          "depth": 44,
+          "height": 24,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/control-bezel-pod.stl",
+          "weightGrams": 6.9,
+          "estimatedMinutes": 16
+        },
+        {
+          "partId": "control-bezel-pod",
+          "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 78,
+          "y": 200,
+          "centerX": 112,
+          "centerY": 222,
+          "width": 68,
+          "depth": 44,
+          "height": 24,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/control-bezel-pod.stl",
+          "weightGrams": 6.9,
+          "estimatedMinutes": 16
+        }
+      ],
+      "items": [
+        {
+          "partId": "coanda-airfoil-lower",
+          "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 100,
+          "centerY": 100,
+          "width": 190,
+          "depth": 190,
+          "height": 115,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/coanda-airfoil-lower.stl",
+          "weightGrams": 511.8,
+          "estimatedMinutes": 652
+        },
+        {
+          "partId": "control-bezel-pod",
+          "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 200,
+          "centerX": 39,
+          "centerY": 222,
+          "width": 68,
+          "depth": 44,
+          "height": 24,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/control-bezel-pod.stl",
+          "weightGrams": 6.9,
+          "estimatedMinutes": 16
+        },
+        {
+          "partId": "control-bezel-pod",
+          "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 78,
+          "y": 200,
+          "centerX": 112,
+          "centerY": 222,
+          "width": 68,
+          "depth": 44,
+          "height": 24,
+          "rotated": false,
+          "color": "#f97316",
+          "stlFile": "parts/control-bezel-pod.stl",
+          "weightGrams": 6.9,
+          "estimatedMinutes": 16
+        }
+      ]
+    },
+    {
+      "plateNumber": 2,
+      "index": 1,
+      "name": "Plate 2 — Bambu Lab A1 (1 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 59.65,
+      "utilization": 0.5965,
+      "maxHeight": 115,
+      "estimatedMinutes": 647,
+      "printTimeMinutes": 647,
+      "formattedTime": "10h 47m",
+      "weightGrams": 511.8,
+      "filamentGrams": 511.8,
+      "filamentMeters": 171.59,
+      "layers": 575,
+      "stlFile": "parts/plate-2.3mf",
+      "file": "parts/plate-2.3mf",
+      "bytes": 97799,
+      "placements": [
+        {
+          "partId": "coanda-airfoil-upper",
+          "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 100,
+          "centerY": 100,
+          "width": 190,
+          "depth": 190,
+          "height": 115,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/coanda-airfoil-upper.stl",
+          "weightGrams": 511.8,
+          "estimatedMinutes": 652
+        }
+      ],
+      "items": [
+        {
+          "partId": "coanda-airfoil-upper",
+          "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 100,
+          "centerY": 100,
+          "width": 190,
+          "depth": 190,
+          "height": 115,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/coanda-airfoil-upper.stl",
+          "weightGrams": 511.8,
+          "estimatedMinutes": 652
+        }
+      ]
+    },
+    {
+      "plateNumber": 3,
+      "index": 2,
+      "name": "Plate 3 — Bambu Lab A1 (1 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 46.64,
+      "utilization": 0.4664,
+      "maxHeight": 32,
+      "estimatedMinutes": 164,
+      "printTimeMinutes": 164,
+      "formattedTime": "2h 44m",
+      "weightGrams": 126.9,
+      "filamentGrams": 126.9,
+      "filamentMeters": 42.56,
+      "layers": 160,
+      "stlFile": "parts/plate-3.3mf",
+      "file": "parts/plate-3.3mf",
+      "bytes": 49456,
+      "placements": [
+        {
+          "partId": "weighted-base-pan",
+          "name": "Acoustic Weighted Base Pan & Vibration Ring",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 89,
+          "centerY": 89,
+          "width": 168,
+          "depth": 168,
+          "height": 32,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/weighted-base-pan.stl",
+          "weightGrams": 126.9,
+          "estimatedMinutes": 162
+        }
+      ],
+      "items": [
+        {
+          "partId": "weighted-base-pan",
+          "name": "Acoustic Weighted Base Pan & Vibration Ring",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 89,
+          "centerY": 89,
+          "width": 168,
+          "depth": 168,
+          "height": 32,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/weighted-base-pan.stl",
+          "weightGrams": 126.9,
+          "estimatedMinutes": 162
+        }
+      ]
+    },
+    {
+      "plateNumber": 4,
+      "index": 3,
+      "name": "Plate 4 — Bambu Lab A1 (2 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 58.01,
+      "utilization": 0.5801,
+      "maxHeight": 125,
+      "estimatedMinutes": 301,
+      "printTimeMinutes": 301,
+      "formattedTime": "5h 1m",
+      "weightGrams": 217.8,
+      "filamentGrams": 217.8,
+      "filamentMeters": 73.02,
+      "layers": 625,
+      "stlFile": "parts/plate-4.3mf",
+      "file": "parts/plate-4.3mf",
+      "bytes": 180570,
+      "placements": [
+        {
+          "partId": "hepa-intake-shell",
+          "name": "360° Perforated HEPA Intake Lower Shell",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 87,
+          "centerY": 87,
+          "width": 164,
+          "depth": 164,
+          "height": 125,
+          "rotated": false,
+          "color": "#38bdf8",
+          "stlFile": "parts/hepa-intake-shell.stl",
+          "weightGrams": 160.6,
+          "estimatedMinutes": 226
+        },
+        {
+          "partId": "plenum-neck-collar",
+          "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 174,
+          "centerX": 59,
+          "centerY": 212,
+          "width": 108,
+          "depth": 76,
+          "height": 46,
+          "rotated": false,
+          "color": "#a855f7",
+          "stlFile": "parts/plenum-neck-collar.stl",
+          "weightGrams": 57.2,
+          "estimatedMinutes": 82
+        }
+      ],
+      "items": [
+        {
+          "partId": "hepa-intake-shell",
+          "name": "360° Perforated HEPA Intake Lower Shell",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 87,
+          "centerY": 87,
+          "width": 164,
+          "depth": 164,
+          "height": 125,
+          "rotated": false,
+          "color": "#38bdf8",
+          "stlFile": "parts/hepa-intake-shell.stl",
+          "weightGrams": 160.6,
+          "estimatedMinutes": 226
+        },
+        {
+          "partId": "plenum-neck-collar",
+          "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 174,
+          "centerX": 59,
+          "centerY": 212,
+          "width": 108,
+          "depth": 76,
+          "height": 46,
+          "rotated": false,
+          "color": "#a855f7",
+          "stlFile": "parts/plenum-neck-collar.stl",
+          "weightGrams": 57.2,
+          "estimatedMinutes": 82
+        }
+      ]
+    },
+    {
+      "plateNumber": 5,
+      "index": 4,
+      "name": "Plate 5 — Bambu Lab A1 (1 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 42.3,
+      "utilization": 0.423,
+      "maxHeight": 16,
+      "estimatedMinutes": 169,
+      "printTimeMinutes": 169,
+      "formattedTime": "2h 49m",
+      "weightGrams": 134.6,
+      "filamentGrams": 134.6,
+      "filamentMeters": 45.12,
+      "layers": 80,
+      "stlFile": "parts/plate-5.3mf",
+      "file": "parts/plate-5.3mf",
+      "bytes": 78546,
+      "placements": [
+        {
+          "partId": "hepa-filter-frame",
+          "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 85,
+          "centerY": 85,
+          "width": 160,
+          "depth": 160,
+          "height": 16,
+          "rotated": false,
+          "color": "#10b981",
+          "stlFile": "parts/hepa-filter-frame.stl",
+          "weightGrams": 134.6,
+          "estimatedMinutes": 167
+        }
+      ],
+      "items": [
+        {
+          "partId": "hepa-filter-frame",
+          "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 85,
+          "centerY": 85,
+          "width": 160,
+          "depth": 160,
+          "height": 16,
+          "rotated": false,
+          "color": "#10b981",
+          "stlFile": "parts/hepa-filter-frame.stl",
+          "weightGrams": 134.6,
+          "estimatedMinutes": 167
+        }
+      ]
+    },
+    {
+      "plateNumber": 6,
+      "index": 5,
+      "name": "Plate 6 — Bambu Lab A1 (1 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 35.22,
+      "utilization": 0.3522,
+      "maxHeight": 52,
+      "estimatedMinutes": 67,
+      "printTimeMinutes": 67,
+      "formattedTime": "1h 7m",
+      "weightGrams": 41.4,
+      "filamentGrams": 41.4,
+      "filamentMeters": 13.87,
+      "layers": 260,
+      "stlFile": "parts/plate-6.3mf",
+      "file": "parts/plate-6.3mf",
+      "bytes": 60651,
+      "placements": [
+        {
+          "partId": "diffuser-stator-cone",
+          "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 78,
+          "centerY": 78,
+          "width": 146,
+          "depth": 146,
+          "height": 52,
+          "rotated": false,
+          "color": "#14b8a6",
+          "stlFile": "parts/diffuser-stator-cone.stl",
+          "weightGrams": 41.4,
+          "estimatedMinutes": 64
+        }
+      ],
+      "items": [
+        {
+          "partId": "diffuser-stator-cone",
+          "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 78,
+          "centerY": 78,
+          "width": 146,
+          "depth": 146,
+          "height": 52,
+          "rotated": false,
+          "color": "#14b8a6",
+          "stlFile": "parts/diffuser-stator-cone.stl",
+          "weightGrams": 41.4,
+          "estimatedMinutes": 64
+        }
+      ]
+    },
+    {
+      "plateNumber": 7,
+      "index": 6,
+      "name": "Plate 7 — Bambu Lab A1 (1 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 33.32,
+      "utilization": 0.3332,
+      "maxHeight": 74,
+      "estimatedMinutes": 163,
+      "printTimeMinutes": 163,
+      "formattedTime": "2h 43m",
+      "weightGrams": 117.1,
+      "filamentGrams": 117.1,
+      "filamentMeters": 39.27,
+      "layers": 370,
+      "stlFile": "parts/plate-7.3mf",
+      "file": "parts/plate-7.3mf",
+      "bytes": 97668,
+      "placements": [
+        {
+          "partId": "impeller-shroud",
+          "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 76,
+          "centerY": 76,
+          "width": 142,
+          "depth": 142,
+          "height": 74,
+          "rotated": false,
+          "color": "#6366f1",
+          "stlFile": "parts/impeller-shroud.stl",
+          "weightGrams": 117.1,
+          "estimatedMinutes": 161
+        }
+      ],
+      "items": [
+        {
+          "partId": "impeller-shroud",
+          "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "centerX": 76,
+          "centerY": 76,
+          "width": 142,
+          "depth": 142,
+          "height": 74,
+          "rotated": false,
+          "color": "#6366f1",
+          "stlFile": "parts/impeller-shroud.stl",
+          "weightGrams": 117.1,
+          "estimatedMinutes": 161
+        }
+      ]
+    }
+  ],
+  "rejected": [],
+  "cadReport": {
+    "printerId": "bambu-a1",
+    "printerName": "Bambu Lab A1",
+    "bedDimensionsMm": [
+      256,
+      256,
+      256
+    ],
+    "totalPrintedParts": 9,
+    "argonOpenScadParts": 0,
+    "fallbackParts": 0,
+    "totalAttempts": 0,
+    "parts": [
+      {
+        "partId": "weighted-base-pan",
+        "name": "Acoustic Weighted Base Pan & Vibration Ring",
+        "targetDimsMm": [
+          168,
+          168,
+          32
+        ],
+        "actualDimsMm": [
+          168,
+          168,
+          32
+        ],
+        "scadFile": "parts/weighted-base-pan.scad",
+        "stlFile": "parts/weighted-base-pan.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 620,
+          "volumeMm3": 180880.42,
+          "actualDimsMm": [
+            168,
+            168,
+            32
+          ],
+          "targetDimsMm": [
+            168,
+            168,
+            32
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 620,
+        "volumeMm3": 180880.42,
+        "isManifold": true
+      },
+      {
+        "partId": "hepa-intake-shell",
+        "name": "360° Perforated HEPA Intake Lower Shell",
+        "targetDimsMm": [
+          164,
+          164,
+          125
+        ],
+        "actualDimsMm": [
+          164,
+          164,
+          125
+        ],
+        "scadFile": "parts/hepa-intake-shell.scad",
+        "stlFile": "parts/hepa-intake-shell.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 832,
+          "volumeMm3": 234036.53,
+          "actualDimsMm": [
+            164,
+            164,
+            125
+          ],
+          "targetDimsMm": [
+            164,
+            164,
+            125
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 832,
+        "volumeMm3": 234036.53,
+        "isManifold": true
+      },
+      {
+        "partId": "hepa-filter-frame",
+        "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+        "targetDimsMm": [
+          160,
+          160,
+          16
+        ],
+        "actualDimsMm": [
+          160,
+          160,
+          16
+        ],
+        "scadFile": "parts/hepa-filter-frame.scad",
+        "stlFile": "parts/hepa-filter-frame.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1008,
+          "volumeMm3": 284614.31,
+          "actualDimsMm": [
+            160,
+            160,
+            16
+          ],
+          "targetDimsMm": [
+            160,
+            160,
+            16
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1008,
+        "volumeMm3": 284614.31,
+        "isManifold": true
+      },
+      {
+        "partId": "impeller-shroud",
+        "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+        "targetDimsMm": [
+          142,
+          142,
+          74
+        ],
+        "actualDimsMm": [
+          142,
+          142,
+          74
+        ],
+        "scadFile": "parts/impeller-shroud.scad",
+        "stlFile": "parts/impeller-shroud.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1264,
+          "volumeMm3": 208374.49,
+          "actualDimsMm": [
+            142,
+            142,
+            74
+          ],
+          "targetDimsMm": [
+            142,
+            142,
+            74
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1264,
+        "volumeMm3": 208374.49,
+        "isManifold": true
+      },
+      {
+        "partId": "diffuser-stator-cone",
+        "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+        "targetDimsMm": [
+          146,
+          146,
+          52
+        ],
+        "actualDimsMm": [
+          146,
+          146,
+          52
+        ],
+        "scadFile": "parts/diffuser-stator-cone.scad",
+        "stlFile": "parts/diffuser-stator-cone.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 768,
+          "volumeMm3": 48628.43,
+          "actualDimsMm": [
+            146,
+            146,
+            52
+          ],
+          "targetDimsMm": [
+            146,
+            146,
+            52
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 768,
+        "volumeMm3": 48628.43,
+        "isManifold": true
+      },
+      {
+        "partId": "plenum-neck-collar",
+        "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+        "targetDimsMm": [
+          108,
+          76,
+          46
+        ],
+        "actualDimsMm": [
+          108,
+          76,
+          46
+        ],
+        "scadFile": "parts/plenum-neck-collar.scad",
+        "stlFile": "parts/plenum-neck-collar.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": false,
+          "triangleCount": 1588,
+          "volumeMm3": 75558.28,
+          "actualDimsMm": [
+            108,
+            76,
+            46
+          ],
+          "targetDimsMm": [
+            108,
+            76,
+            46
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1588,
+        "volumeMm3": 75558.28,
+        "isManifold": false
+      },
+      {
+        "partId": "coanda-airfoil-lower",
+        "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+        "targetDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "actualDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "scadFile": "parts/coanda-airfoil-lower.scad",
+        "stlFile": "parts/coanda-airfoil-lower.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1264,
+          "volumeMm3": 1349562.09,
+          "actualDimsMm": [
+            190,
+            190,
+            115
+          ],
+          "targetDimsMm": [
+            190,
+            190,
+            115
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1264,
+        "volumeMm3": 1349562.09,
+        "isManifold": true
+      },
+      {
+        "partId": "coanda-airfoil-upper",
+        "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+        "targetDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "actualDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "scadFile": "parts/coanda-airfoil-upper.scad",
+        "stlFile": "parts/coanda-airfoil-upper.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1264,
+          "volumeMm3": 1349562.09,
+          "actualDimsMm": [
+            190,
+            190,
+            115
+          ],
+          "targetDimsMm": [
+            190,
+            190,
+            115
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1264,
+        "volumeMm3": 1349562.09,
+        "isManifold": true
+      },
+      {
+        "partId": "control-bezel-pod",
+        "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+        "targetDimsMm": [
+          68,
+          44,
+          24
+        ],
+        "actualDimsMm": [
+          68,
+          44,
+          24
+        ],
+        "scadFile": "parts/control-bezel-pod.scad",
+        "stlFile": "parts/control-bezel-pod.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 816,
+          "volumeMm3": 9463.69,
+          "actualDimsMm": [
+            68,
+            44,
+            24
+          ],
+          "targetDimsMm": [
+            68,
+            44,
+            24
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 816,
+        "volumeMm3": 9463.69,
+        "isManifold": true
+      }
+    ]
+  }
+}

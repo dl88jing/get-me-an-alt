@@ -1,0 +1,390 @@
+{
+  "objectName": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "estimatedTotalMinutes": 45,
+  "difficulty": "Intermediate",
+  "safetyNotes": [
+    "Verify the EPDM gasket rings on PRT-01 and PRT-03 are continuous with no gaps so 100% of intake air passes through the HEPA H13 filter media.",
+    "Route the 24V blower wires through the sealed cable channel in PRT-04 before tightening the diffuser cone."
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "title": "Prepare Weighted Base Pan & Lower EPDM Gasket",
+      "partIds": [
+        "weighted-base-pan",
+        "epdm-gasket-fasteners"
+      ],
+      "tools": [
+        "Soldering Iron (for M3 brass inserts)"
+      ],
+      "note": "Set PRT-01 (Weighted Base Pan) on the workbench, press M3 brass heat-set inserts into the perimeter bosses, and adhere a ring of EPDM foam tape (OTS-06) into the filter seat groove.",
+      "motion": [
+        {
+          "partId": "weighted-base-pan",
+          "from": [
+            0,
+            0,
+            -95
+          ],
+          "to": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "partId": "epdm-gasket-fasteners",
+          "from": [
+            135,
+            0,
+            120
+          ],
+          "to": [
+            65,
+            0,
+            156
+          ]
+        }
+      ],
+      "actionType": "place",
+      "step": 1,
+      "description": "Set PRT-01 (Weighted Base Pan) on the workbench, press M3 brass heat-set inserts into the perimeter bosses, and adhere a ring of EPDM foam tape (OTS-06) into the filter seat groove.",
+      "action": "place",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 2,
+      "title": "Seat Cylindrical True HEPA H13 Filter Cartridge",
+      "partIds": [
+        "hepa-h13-cylinder"
+      ],
+      "tools": [],
+      "note": "Lower OTS-02 (Cylindrical True HEPA H13 + Activated Carbon Filter) concentrically onto the EPDM foam seal ring inside PRT-01.",
+      "motion": [
+        {
+          "partId": "hepa-h13-cylinder",
+          "from": [
+            -110,
+            0,
+            140
+          ],
+          "to": [
+            0,
+            0,
+            28
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 2,
+      "description": "Lower OTS-02 (Cylindrical True HEPA H13 + Activated Carbon Filter) concentrically onto the EPDM foam seal ring inside PRT-01.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 3,
+      "title": "Lock 360° Perforated HEPA Intake Shell onto Base",
+      "partIds": [
+        "hepa-intake-shell"
+      ],
+      "tools": [],
+      "note": "Slide PRT-02 (360° Perforated Intake Shell) over the HEPA cartridge and twist 15° clockwise to engage the bayonet base lock.",
+      "motion": [
+        {
+          "partId": "hepa-intake-shell",
+          "from": [
+            0,
+            0,
+            170
+          ],
+          "to": [
+            0,
+            0,
+            24
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 3,
+      "description": "Slide PRT-02 (360° Perforated Intake Shell) over the HEPA cartridge and twist 15° clockwise to engage the bayonet base lock.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 4,
+      "title": "Bolt Twist-Lock HEPA Compression Retainer Ring",
+      "partIds": [
+        "hepa-filter-frame"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Place PRT-03 (HEPA Compression Retainer) with its underside EPDM seal onto the top rim of PRT-02 and tighten 4× M3×10mm screws to compress the filter seal.",
+      "motion": [
+        {
+          "partId": "hepa-filter-frame",
+          "from": [
+            0,
+            0,
+            230
+          ],
+          "to": [
+            0,
+            0,
+            148
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 4,
+      "description": "Place PRT-03 (HEPA Compression Retainer) with its underside EPDM seal onto the top rim of PRT-02 and tighten 4× M3×10mm screws to compress the filter seal.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 5,
+      "title": "Mount Acoustic Blower Volute & 24V Centrifugal Blower",
+      "partIds": [
+        "impeller-shroud",
+        "blower-120mm-24v"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Wrap the perimeter of OTS-01 (120×32mm 24V Centrifugal Blower) in EPDM damping tape, seat it inside PRT-04 (Acoustic Volute), and bolt PRT-04 to PRT-03.",
+      "motion": [
+        {
+          "partId": "impeller-shroud",
+          "from": [
+            0,
+            0,
+            260
+          ],
+          "to": [
+            0,
+            0,
+            164
+          ]
+        },
+        {
+          "partId": "blower-120mm-24v",
+          "from": [
+            -125,
+            0,
+            275
+          ],
+          "to": [
+            0,
+            0,
+            182
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 5,
+      "description": "Wrap the perimeter of OTS-01 (120×32mm 24V Centrifugal Blower) in EPDM damping tape, seat it inside PRT-04 (Acoustic Volute), and bolt PRT-04 to PRT-03.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 6,
+      "title": "Fasten Swirl-Recovery Acoustic Diffuser Cone",
+      "partIds": [
+        "diffuser-stator-cone"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Align PRT-05 (Acoustic Diffuser Transition Cone) over the blower exhaust port and secure with 4× M3×12mm socket head screws.",
+      "motion": [
+        {
+          "partId": "diffuser-stator-cone",
+          "from": [
+            0,
+            0,
+            325
+          ],
+          "to": [
+            0,
+            0,
+            238
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 6,
+      "description": "Align PRT-05 (Acoustic Diffuser Transition Cone) over the blower exhaust port and secure with 4× M3×12mm socket head screws.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 7,
+      "title": "Install Pressurized Plenum Neck Collar",
+      "partIds": [
+        "plenum-neck-collar"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Seat PRT-06 (Plenum Neck Collar) onto the top flange of the diffuser cone so the dual bifurcation ducts face left and right.",
+      "motion": [
+        {
+          "partId": "plenum-neck-collar",
+          "from": [
+            0,
+            0,
+            375
+          ],
+          "to": [
+            0,
+            0,
+            286
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 7,
+      "description": "Seat PRT-06 (Plenum Neck Collar) onto the top flange of the diffuser cone so the dual bifurcation ducts face left and right.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 8,
+      "title": "Mount Lower Coanda Airfoil Loop Split Ring",
+      "partIds": [
+        "coanda-airfoil-lower"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Press the inlet spigot of PRT-07 (Coanda Airfoil Lower Ring) into the PRT-06 neck collar and lock with 4× M3×10mm screws.",
+      "motion": [
+        {
+          "partId": "coanda-airfoil-lower",
+          "from": [
+            0,
+            -45,
+            425
+          ],
+          "to": [
+            0,
+            0,
+            328
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 8,
+      "description": "Press the inlet spigot of PRT-07 (Coanda Airfoil Lower Ring) into the PRT-06 neck collar and lock with 4× M3×10mm screws.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 9,
+      "title": "Join Upper Coanda Airfoil Crown & Verify 1.5mm Jet Slit",
+      "partIds": [
+        "coanda-airfoil-upper"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Mate the tongue-and-groove mid-plane flange of PRT-08 (Upper Coanda Crown) onto PRT-07 and fasten the 4 concealed M3 screws.",
+      "motion": [
+        {
+          "partId": "coanda-airfoil-upper",
+          "from": [
+            0,
+            45,
+            510
+          ],
+          "to": [
+            0,
+            0,
+            412
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 9,
+      "description": "Mate the tongue-and-groove mid-plane flange of PRT-08 (Upper Coanda Crown) onto PRT-07 and fasten the 4 concealed M3 screws.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 10,
+      "title": "Snap Front PWM Control Bezel, PM2.5 Sensor & 24V PSU",
+      "partIds": [
+        "control-bezel-pod",
+        "pwm-speed-controller",
+        "pm25-air-sensor",
+        "psu-24v-3a"
+      ],
+      "tools": [
+        "Small Phillips Driver"
+      ],
+      "note": "Mount the 25kHz PWM Controller (OTS-03) and PM2.5 Sensor (OTS-04) inside PRT-09 (Front Bezel Pod), clip onto the neck collar, and plug in the 24V 3A PSU (OTS-05).",
+      "motion": [
+        {
+          "partId": "control-bezel-pod",
+          "from": [
+            0,
+            -165,
+            290
+          ],
+          "to": [
+            0,
+            -82,
+            265
+          ]
+        },
+        {
+          "partId": "pwm-speed-controller",
+          "from": [
+            -95,
+            -165,
+            290
+          ],
+          "to": [
+            -28,
+            -76,
+            265
+          ]
+        },
+        {
+          "partId": "pm25-air-sensor",
+          "from": [
+            95,
+            -165,
+            290
+          ],
+          "to": [
+            28,
+            -76,
+            265
+          ]
+        },
+        {
+          "partId": "psu-24v-3a",
+          "from": [
+            195,
+            0,
+            60
+          ],
+          "to": [
+            125,
+            0,
+            15
+          ]
+        }
+      ],
+      "actionType": "connect",
+      "step": 10,
+      "description": "Mount the 25kHz PWM Controller (OTS-03) and PM2.5 Sensor (OTS-04) inside PRT-09 (Front Bezel Pod), clip onto the neck collar, and plug in the 24V 3A PSU (OTS-05).",
+      "action": "connect",
+      "cameraHint": "isometric-front"
+    }
+  ],
+  "objectId": "bladeless-air-purifier",
+  "totalSteps": 10,
+  "estimatedMinutes": 45
+}

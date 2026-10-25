@@ -1,0 +1,424 @@
+{
+  "objectName": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "estimatedTotalMinutes": 55,
+  "difficulty": "Intermediate",
+  "safetyNotes": [
+    "Never unplug a NEMA17 stepper motor while the TMC2209 drivers are energized with 12V/15V USB-C PD power.",
+    "Balance your camera lens fore/aft in the Arca-Swiss clamp before enabling the Axis-3 tilt motor."
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "title": "Slide Dual 2020 V-Slot Rails into Left Motor End Block",
+      "partIds": [
+        "extrusion-2020-1m",
+        "motor-end-block"
+      ],
+      "tools": [
+        "3.0mm Hex Driver"
+      ],
+      "note": "Insert the left ends of both 2020 V-Slot Aluminum Extrusions (OTS-01) into the 60mm-spaced sockets of PRT-01 (Left Drive Block) and lock with 4× M5×10mm screws and T-nuts.",
+      "motion": [
+        {
+          "partId": "extrusion-2020-1m",
+          "from": [
+            0,
+            0,
+            -55
+          ],
+          "to": [
+            0,
+            0,
+            24
+          ]
+        },
+        {
+          "partId": "motor-end-block",
+          "from": [
+            -185,
+            0,
+            28
+          ],
+          "to": [
+            -112,
+            0,
+            28
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 1,
+      "description": "Insert the left ends of both 2020 V-Slot Aluminum Extrusions (OTS-01) into the 60mm-spaced sockets of PRT-01 (Left Drive Block) and lock with 4× M5×10mm screws and T-nuts.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 2,
+      "title": "Attach Fold-Out All-Terrain Outrigger Legs (×4)",
+      "partIds": [
+        "outTrigger-leg"
+      ],
+      "tools": [
+        "3.0mm Hex Driver"
+      ],
+      "note": "Bolt the 4× PRT-03 Articulated Outrigger Legs to the corner bosses of PRT-01 and PRT-02 using M5×20mm pivot bolts and nyloc nuts.",
+      "motion": [
+        {
+          "partId": "outTrigger-leg",
+          "from": [
+            -195,
+            110,
+            -45
+          ],
+          "to": [
+            -112,
+            58,
+            8
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 2,
+      "description": "Bolt the 4× PRT-03 Articulated Outrigger Legs to the corner bosses of PRT-01 and PRT-02 using M5×20mm pivot bolts and nyloc nuts.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 3,
+      "title": "Assemble 4-Wheel Delrin V-Slot Gantry Carriage & Roll onto Rails",
+      "partIds": [
+        "gantry-carriage-plate",
+        "vslot-wheels-bearings"
+      ],
+      "tools": [
+        "3.0mm Hex Driver",
+        "10mm Eccentric Wrench"
+      ],
+      "note": "Mount the 4× Delrin POM V-Wheels (OTS-05) onto PRT-04 (Gantry Carriage Plate) with the two 6mm eccentric spacers on the rear row, slide onto the 2020 rails, and turn the eccentric nuts until play disappears.",
+      "motion": [
+        {
+          "partId": "vslot-wheels-bearings",
+          "from": [
+            0,
+            -75,
+            95
+          ],
+          "to": [
+            0,
+            0,
+            40
+          ]
+        },
+        {
+          "partId": "gantry-carriage-plate",
+          "from": [
+            0,
+            0,
+            120
+          ],
+          "to": [
+            0,
+            0,
+            48
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 3,
+      "description": "Mount the 4× Delrin POM V-Wheels (OTS-05) onto PRT-04 (Gantry Carriage Plate) with the two 6mm eccentric spacers on the rear row, slide onto the 2020 rails, and turn the eccentric nuts until play disappears.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 4,
+      "title": "Cap Right Rail End with Idler Block & Tension GT2 Belt",
+      "partIds": [
+        "idler-end-block",
+        "gt2-belt-pulleys"
+      ],
+      "tools": [
+        "3.0mm Hex Driver"
+      ],
+      "note": "Slide PRT-02 (Right Idler Block) onto the right ends of the 2020 rails, loop the GT2-6mm timing belt (OTS-04) around the 20T drive pulley and right idler, and tighten the M5 tensioner screw.",
+      "motion": [
+        {
+          "partId": "idler-end-block",
+          "from": [
+            185,
+            0,
+            28
+          ],
+          "to": [
+            112,
+            0,
+            28
+          ]
+        },
+        {
+          "partId": "gt2-belt-pulleys",
+          "from": [
+            160,
+            -55,
+            85
+          ],
+          "to": [
+            95,
+            0,
+            42
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 4,
+      "description": "Slide PRT-02 (Right Idler Block) onto the right ends of the 2020 rails, loop the GT2-6mm timing belt (OTS-04) around the 20T drive pulley and right idler, and tighten the M5 tensioner screw.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 5,
+      "title": "Bolt Axis-2 Pan Turntable Housing & Seat 6808 Bearing",
+      "partIds": [
+        "pan-turntable-housing"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Fasten PRT-05 (Pan Turntable Housing) to the center of the gantry carriage plate and press the 6808-2RS thin-section bearing flush into its upper race.",
+      "motion": [
+        {
+          "partId": "pan-turntable-housing",
+          "from": [
+            0,
+            0,
+            150
+          ],
+          "to": [
+            0,
+            0,
+            62
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 5,
+      "description": "Fasten PRT-05 (Pan Turntable Housing) to the center of the gantry carriage plate and press the 6808-2RS thin-section bearing flush into its upper race.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 6,
+      "title": "Install 3× NEMA17 Stepper Motors (Slide, Pan & Tilt)",
+      "partIds": [
+        "nema17-stepper"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Mount the three NEMA17 Bipolar Stepper Motors (OTS-02) into PRT-01 (Slide), PRT-05 (Pan), and PRT-07 (Tilt) using M3×8mm socket head screws and fit the 20T GT2 pinions.",
+      "motion": [
+        {
+          "partId": "nema17-stepper",
+          "from": [
+            -125,
+            0,
+            165
+          ],
+          "to": [
+            -48,
+            0,
+            82
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 6,
+      "description": "Mount the three NEMA17 Bipolar Stepper Motors (OTS-02) into PRT-01 (Slide), PRT-05 (Pan), and PRT-07 (Tilt) using M3×8mm socket head screws and fit the 20T GT2 pinions.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 7,
+      "title": "Engage 60-Tooth Pan Reduction Ring Gear (3:1)",
+      "partIds": [
+        "pan-ring-gear"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Seat PRT-06 (60T Pan Ring Gear) onto the 6808-2RS bearing hub and mesh its teeth with the 20T pan stepper pinion.",
+      "motion": [
+        {
+          "partId": "pan-ring-gear",
+          "from": [
+            0,
+            0,
+            200
+          ],
+          "to": [
+            0,
+            0,
+            108
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 7,
+      "description": "Seat PRT-06 (60T Pan Ring Gear) onto the 6808-2RS bearing hub and mesh its teeth with the 20T pan stepper pinion.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 8,
+      "title": "Mount Axis-3 Cantilever Tilt Gimbal U-Yoke",
+      "partIds": [
+        "tilt-u-yoke"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Bolt PRT-07 (Tilt Gimbal U-Yoke) onto the top face of the 60T pan ring gear with 4× M3×12mm screws.",
+      "motion": [
+        {
+          "partId": "tilt-u-yoke",
+          "from": [
+            0,
+            0,
+            240
+          ],
+          "to": [
+            0,
+            0,
+            124
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 8,
+      "description": "Bolt PRT-07 (Tilt Gimbal U-Yoke) onto the top face of the 60T pan ring gear with 4× M3×12mm screws.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 9,
+      "title": "Pivot Camera Tilt Cradle & Lock Arca-Swiss Quick-Release Clamp",
+      "partIds": [
+        "camera-arca-cradle",
+        "ball-head-mount"
+      ],
+      "tools": [
+        "2.5mm Hex Driver",
+        "4.0mm Hex Driver"
+      ],
+      "note": "Insert PRT-08 (Camera Tilt Cradle) into the U-yoke trunnion, loop the closed-loop 200mm GT2 belt over the tilt motor pulley, and bolt the Aluminum Arca-Swiss Clamp (OTS-08) on top.",
+      "motion": [
+        {
+          "partId": "camera-arca-cradle",
+          "from": [
+            0,
+            0,
+            280
+          ],
+          "to": [
+            0,
+            0,
+            184
+          ]
+        },
+        {
+          "partId": "ball-head-mount",
+          "from": [
+            0,
+            0,
+            330
+          ],
+          "to": [
+            0,
+            0,
+            208
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 9,
+      "description": "Insert PRT-08 (Camera Tilt Cradle) into the U-yoke trunnion, loop the closed-loop 200mm GT2 belt over the tilt motor pulley, and bolt the Aluminum Arca-Swiss Clamp (OTS-08) on top.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 10,
+      "title": "Clip Electronics Case & Seat 3× Silent TMC2209 Drivers + ESP32 OLED",
+      "partIds": [
+        "controller-side-case",
+        "tmc2209-drivers",
+        "esp32-oled-controller",
+        "pd-trigger-battery"
+      ],
+      "tools": [
+        "Small Phillips Driver"
+      ],
+      "note": "Snap PRT-09 (Controller Side Case) onto the left rail block, install the 3× TMC2209 drivers (OTS-03), ESP32 OLED board (OTS-06), and USB-C PD 12V/15V trigger board (OTS-07), and plug in the 3 stepper cables.",
+      "motion": [
+        {
+          "partId": "controller-side-case",
+          "from": [
+            -175,
+            -110,
+            95
+          ],
+          "to": [
+            -112,
+            -62,
+            36
+          ]
+        },
+        {
+          "partId": "tmc2209-drivers",
+          "from": [
+            -195,
+            -135,
+            130
+          ],
+          "to": [
+            -112,
+            -62,
+            48
+          ]
+        },
+        {
+          "partId": "esp32-oled-controller",
+          "from": [
+            -195,
+            -135,
+            165
+          ],
+          "to": [
+            -112,
+            -62,
+            62
+          ]
+        },
+        {
+          "partId": "pd-trigger-battery",
+          "from": [
+            175,
+            -110,
+            95
+          ],
+          "to": [
+            112,
+            -55,
+            36
+          ]
+        }
+      ],
+      "actionType": "connect",
+      "step": 10,
+      "description": "Snap PRT-09 (Controller Side Case) onto the left rail block, install the 3× TMC2209 drivers (OTS-03), ESP32 OLED board (OTS-06), and USB-C PD 12V/15V trigger board (OTS-07), and plug in the 3 stepper cables.",
+      "action": "connect",
+      "cameraHint": "isometric-front"
+    }
+  ],
+  "objectId": "camera-slider-3axis",
+  "totalSteps": 10,
+  "estimatedMinutes": 55
+}

@@ -1,0 +1,85 @@
+{
+  "objectName": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "slug": "bladeless-air-purifier",
+  "category": "Climate Control & Air Purification",
+  "tagline": "Aerodynamic Coanda air-multiplier loop with 360° True HEPA H13 filtration, mixed-flow centrifugal blower, acoustic Helmholtz diffuser & PWM speed telemetry",
+  "description": "Commercial bladeless purifying fans like the Dyson Purifier Cool TP07 ($549–$649) charge over $500 for an injection-molded ABS Coanda loop, a $14 brushless centrifugal blower, and a cylindrical HEPA cartridge. Our DIY version splits the aerodynamic Coanda airfoil loop and 360° intake base into 9 support-free PETG/PLA+ printed vessels paired with $49.20 of off-the-shelf blower, True HEPA H13 filter, PM2.5 sensor, and 24V PWM electronics.",
+  "functionSummary": "Draws dusty room air through a 360° perforated lower shroud and cylindrical True HEPA H13 + activated carbon cartridge using a high-static-pressure 24V centrifugal blower, straightens swirl through an acoustic stator diffuser cone, and ejects a high-velocity 1.5mm annular sheet across a 16° Coanda airfoil ramp to entrain 15x ambient airflow.",
+  "inputUrl": "https://www.amazon.com/s?k=dyson+purifier+cool+bladeless+tower+fan+hepa",
+  "inputType": "url",
+  "originalProduct": {
+    "name": "Dyson Purifier Cool TP07 Air Multiplier & HEPA H13 Tower",
+    "brand": "Dyson",
+    "retailPrice": 549,
+    "currency": "USD",
+    "url": "https://www.amazon.com/s?k=dyson+purifier+cool+bladeless+tower+fan+hepa",
+    "whyExpensive": "Patented brand premium, multi-cavity injection molding tooling, and proprietary RFID-chipped replacement filter lock-in.",
+    "retailPriceUsd": 549
+  },
+  "targetDiyCost": 58.4,
+  "estimatedSavings": 490.6,
+  "estimatedPrintTimeHours": 11.2,
+  "estimatedAssemblyMinutes": 45,
+  "difficulty": "Intermediate",
+  "overallDimensionsMm": [
+    215,
+    175,
+    495
+  ],
+  "keyMechanisms": [
+    "Annular 1.5mm Coanda jet slot + 16° NACA-inspired inner airfoil ramp multiplying primary blower mass flow by 12–15× via viscous shear entrainment",
+    "360° radial intake shroud with twist-lock compression seal around a standard off-the-shelf cylindrical True HEPA H13 + carbon filter",
+    "Swirl-recovery stator diffuser cone that converts tangential blower velocity into static plenum pressure while cutting blade-pass noise by 9 dB",
+    "Closed-loop 25kHz PWM blower control with laser PM2.5 particulate sensor and front rotary encoder bezel"
+  ],
+  "engineeringNotes": [
+    "Print PRT-07 and PRT-08 (Coanda Airfoil Lower & Upper Loop Halves) with 0.16mm layer height, 3 perimeters, and scarf seams for a smooth internal air plenum.",
+    "Seat an EPDM closed-cell foam gasket strip along the PRT-03 HEPA compression ring so zero unfiltered air bypasses the cartridge.",
+    "Fits across 2 build plates on a Bambu Lab A1 / P1S / X1C (256×256×256 mm)."
+  ],
+  "materialsNeeded": [
+    "PETG Filament (~310g) for base pan, HEPA intake shell, impeller volute & pressurized neck collar",
+    "Matte PLA+ Filament (~210g) for upper/lower Coanda airfoil loop halves, diffuser cone & control bezel",
+    "120×32mm 24V Centrifugal Blower + True HEPA H13 Cylinder Filter + 25kHz PWM Controller + PM2.5 Sensor + 24V 3A PSU"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Acoustic Weighted Base Pan & Vibration Ring (168×168×32mm)",
+    "PRT-02: 360° Perforated HEPA Intake Lower Shell (164×164×125mm)",
+    "PRT-03: Twist-Lock HEPA H13 Filter Compression Retainer (160×160×16mm)",
+    "PRT-04: Centrifugal Blower Acoustic Volute & Motor Mount (142×142×74mm)",
+    "PRT-05: Swirl-Recovery Acoustic Diffuser Transition Cone (146×146×52mm)",
+    "PRT-06: Airfoil Loop Pressurized Plenum Neck Collar (108×76×46mm)",
+    "PRT-07: Coanda Airfoil Loop — Lower Plenum Split Ring (210×78×115mm)",
+    "PRT-08: Coanda Airfoil Loop — Upper Jet-Slot Crown (210×78×115mm)",
+    "PRT-09: Front PWM Dial Bezel & Harness Retention Clips ×2 (68×44×24mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: 120×32mm 24V DC Brushless High-Static-Pressure Centrifugal Blower",
+    "OTS-02: Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge",
+    "OTS-03: 25kHz PWM DC Motor Speed Controller with Rotary Knob & Tach",
+    "OTS-04: Laser PM2.5 Air Quality Sensor + ESP32-C3 Auto-Mode Module",
+    "OTS-05: 24V 3A (72W) UL-Listed Low-Noise Switching Power Adapter",
+    "OTS-06: EPDM Acoustic Gasket Tape & M3 Brass Heat-Set Insert Kit"
+  ],
+  "id": "bladeless-air-purifier",
+  "name": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "title": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "summary": "Commercial bladeless purifying fans like the Dyson Purifier Cool TP07 ($549–$649) charge over $500 for an injection-molded ABS Coanda loop, a $14 brushless centrifugal blower, and a cylindrical HEPA cartridge. Our DIY version splits the aerodynamic Coanda airfoil loop and 360° intake base into 9 support-free PETG/PLA+ printed vessels paired with $49.20 of off-the-shelf blower, True HEPA H13 filter, PM2.5 sensor, and 24V PWM electronics.",
+  "function": "Draws dusty room air through a 360° perforated lower shroud and cylindrical True HEPA H13 + activated carbon cartridge using a high-static-pressure 24V centrifugal blower, straightens swirl through an acoustic stator diffuser cone, and ejects a high-velocity 1.5mm annular sheet across a 16° Coanda airfoil ramp to entrain 15x ambient airflow.",
+  "originalPrice": 549,
+  "estimatedDiyCost": 58.4,
+  "savingsPercent": 89.4,
+  "estimatedBuildTimeMinutes": 45,
+  "estimatedFilamentGrams": 1675.2,
+  "dimensionsMm": {
+    "width": 215,
+    "depth": 175,
+    "height": 495
+  },
+  "mechanisms": [
+    "Annular 1.5mm Coanda jet slot + 16° NACA-inspired inner airfoil ramp multiplying primary blower mass flow by 12–15× via viscous shear entrainment",
+    "360° radial intake shroud with twist-lock compression seal around a standard off-the-shelf cylindrical True HEPA H13 + carbon filter",
+    "Swirl-recovery stator diffuser cone that converts tangential blower velocity into static plenum pressure while cutting blade-pass noise by 9 dB",
+    "Closed-loop 25kHz PWM blower control with laser PM2.5 particulate sensor and front rotary encoder bezel"
+  ]
+}

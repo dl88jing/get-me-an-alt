@@ -1,0 +1,500 @@
+{
+  "objectId": "bladeless-air-purifier",
+  "objectName": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "currency": "USD",
+  "originalPrice": 549,
+  "purchasedTotal": 48.42,
+  "filamentEstimateUsd": 9.98,
+  "totalEstimatedCost": 58.4,
+  "savingsUsd": 490.6,
+  "savingsPercent": 89.4,
+  "items": [
+    {
+      "id": "bom-blower-24v",
+      "partNumber": "OTS-01",
+      "name": "120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)",
+      "category": "electronics",
+      "specification": "24V DC, 0.6A, dual ball bearing, 42 CFM, 280 Pa static pressure, 4-pin PWM + tach lead",
+      "qty": 1,
+      "unit": "pc",
+      "unitPrice": 12.95,
+      "totalPrice": 12.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=120x32mm+24V+brushless+centrifugal+blower+fan+12032",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=120x32mm+24V+brushless+centrifugal+blower+fan+12032",
+          "estPrice": 12.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=120x32mm+24V+brushless+centrifugal+blower+fan+12032",
+          "sourceTitle": "Amazon — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=12032+24V+blower+fan",
+          "estPrice": 13.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=12032+24V+blower+fan",
+          "sourceTitle": "Walmart — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-12032-24v-pwm-blower.html",
+          "estPrice": 6.5,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-12032-24v-pwm-blower.html",
+          "sourceTitle": "AliExpress — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)"
+        }
+      ],
+      "linkedPartIds": [
+        "blower-120mm-24v"
+      ],
+      "notes": "High static pressure overcomes HEPA H13 resistance + 1.5mm Coanda nozzle restriction.",
+      "partId": "blower-120mm-24v",
+      "specs": "24V DC, 0.6A, dual ball bearing, 42 CFM, 280 Pa static pressure, 4-pin PWM + tach lead",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)",
+          "url": "https://www.amazon.com/s?k=120x32mm+24V+brushless+centrifugal+blower+fan+12032",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)",
+          "url": "https://www.walmart.com/search?q=12032+24V+blower+fan",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "AliExpress — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)",
+          "url": "https://www.aliexpress.com/w/wholesale-12032-24v-pwm-blower.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-hepa-filter",
+      "partNumber": "OTS-02",
+      "name": "Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)",
+      "category": "consumable",
+      "specification": "3-stage 360° filter: nylon pre-filter + True HEPA H13 (99.97% @ 0.3um) + granular carbon layer",
+      "qty": 1,
+      "unit": "pc",
+      "unitPrice": 13.95,
+      "totalPrice": 13.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=cylindrical+true+HEPA+H13+replacement+filter+air+purifier",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=cylindrical+true+HEPA+H13+replacement+filter+air+purifier",
+          "estPrice": 13.95,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=cylindrical+true+HEPA+H13+replacement+filter+air+purifier",
+          "sourceTitle": "Amazon — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=cylindrical+HEPA+H13+air+purifier+filter",
+          "estPrice": 14.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=cylindrical+HEPA+H13+air+purifier+filter",
+          "sourceTitle": "Walmart — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/hepa%20h13%20cylindrical%20replacement%20filter",
+          "estPrice": 15.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.homedepot.com/s/hepa%20h13%20cylindrical%20replacement%20filter",
+          "sourceTitle": "Home Depot — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)"
+        }
+      ],
+      "linkedPartIds": [
+        "hepa-h13-cylinder"
+      ],
+      "notes": "Standard commodity HEPA cylinder costing 1/5th of RFID-locked brand filters.",
+      "partId": "hepa-h13-cylinder",
+      "specs": "3-stage 360° filter: nylon pre-filter + True HEPA H13 (99.97% @ 0.3um) + granular carbon layer",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)",
+          "url": "https://www.amazon.com/s?k=cylindrical+true+HEPA+H13+replacement+filter+air+purifier",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)",
+          "url": "https://www.walmart.com/search?q=cylindrical+HEPA+H13+air+purifier+filter",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "Home Depot — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)",
+          "url": "https://www.homedepot.com/s/hepa%20h13%20cylindrical%20replacement%20filter",
+          "retailer": "Home Depot"
+        }
+      ]
+    },
+    {
+      "id": "bom-pwm-controller",
+      "partNumber": "OTS-03",
+      "name": "25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display",
+      "category": "electronics",
+      "specification": "12V–24V DC input, 25kHz PWM output frequency, 0–100% stepless rotary encoder + LED display",
+      "qty": 1,
+      "unit": "pc",
+      "unitPrice": 5.95,
+      "totalPrice": 5.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=4+wire+PWM+fan+speed+controller+module+digital+display",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=4+wire+PWM+fan+speed+controller+module+digital+display",
+          "estPrice": 5.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=4+wire+PWM+fan+speed+controller+module+digital+display",
+          "sourceTitle": "Amazon — 25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-4-wire-pwm-fan-controller.html",
+          "estPrice": 2.6,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-4-wire-pwm-fan-controller.html",
+          "sourceTitle": "AliExpress — 25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display"
+        }
+      ],
+      "linkedPartIds": [
+        "pwm-speed-controller"
+      ],
+      "notes": "Mounts in PRT-09 front control bezel pod.",
+      "partId": "pwm-speed-controller",
+      "specs": "12V–24V DC input, 25kHz PWM output frequency, 0–100% stepless rotary encoder + LED display",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display",
+          "url": "https://www.amazon.com/s?k=4+wire+PWM+fan+speed+controller+module+digital+display",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "AliExpress — 25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display",
+          "url": "https://www.aliexpress.com/w/wholesale-4-wire-pwm-fan-controller.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-pm25-sensor",
+      "partNumber": "OTS-04",
+      "name": "Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3",
+      "category": "electronics",
+      "specification": "0.3–10um laser scattering particle counter + Wi-Fi/BLE MCU for automatic air-quality speed ramping",
+      "qty": 1,
+      "unit": "set",
+      "unitPrice": 10.5,
+      "totalPrice": 10.5,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PM2.5+laser+dust+sensor+module+ESP32",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PM2.5+laser+dust+sensor+module+ESP32",
+          "estPrice": 10.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=PM2.5+laser+dust+sensor+module+ESP32",
+          "sourceTitle": "Amazon — Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-pms5003-pm2.5-sensor.html",
+          "estPrice": 6.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-pms5003-pm2.5-sensor.html",
+          "sourceTitle": "AliExpress — Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3"
+        }
+      ],
+      "linkedPartIds": [
+        "pm25-air-sensor"
+      ],
+      "notes": "Enables Dyson-style Auto Mode based on real-time PM2.5 readings.",
+      "partId": "pm25-air-sensor",
+      "specs": "0.3–10um laser scattering particle counter + Wi-Fi/BLE MCU for automatic air-quality speed ramping",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3",
+          "url": "https://www.amazon.com/s?k=PM2.5+laser+dust+sensor+module+ESP32",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "AliExpress — Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3",
+          "url": "https://www.aliexpress.com/w/wholesale-pms5003-pm2.5-sensor.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-psu-24v",
+      "partNumber": "OTS-05",
+      "name": "24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack",
+      "category": "power",
+      "specification": "100–240V AC to 24V DC 3A desktop power supply with 5.5×2.1mm panel-mount barrel jack",
+      "qty": 1,
+      "unit": "set",
+      "unitPrice": 8.95,
+      "totalPrice": 8.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=24V+3A+DC+power+supply+adapter+5.5x2.1mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=24V+3A+DC+power+supply+adapter+5.5x2.1mm",
+          "estPrice": 8.95,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=24V+3A+DC+power+supply+adapter+5.5x2.1mm",
+          "sourceTitle": "Amazon — 24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=24V+3A+DC+power+adapter",
+          "estPrice": 9.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=24V+3A+DC+power+adapter",
+          "sourceTitle": "Walmart — 24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack"
+        }
+      ],
+      "linkedPartIds": [
+        "psu-24v-3a"
+      ],
+      "notes": "Plugs into rear barrel jack on PRT-01 base pan.",
+      "partId": "psu-24v-3a",
+      "specs": "100–240V AC to 24V DC 3A desktop power supply with 5.5×2.1mm panel-mount barrel jack",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack",
+          "url": "https://www.amazon.com/s?k=24V+3A+DC+power+supply+adapter+5.5x2.1mm",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — 24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack",
+          "url": "https://www.walmart.com/search?q=24V+3A+DC+power+adapter",
+          "retailer": "Walmart"
+        }
+      ]
+    },
+    {
+      "id": "bom-gasket-inserts",
+      "partNumber": "OTS-06",
+      "name": "EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit",
+      "category": "hardware",
+      "specification": "2m closed-cell EPDM acoustic foam strip + 20× M3×5×4mm brass inserts + M3×10mm black oxide screws",
+      "qty": 1,
+      "unit": "kit",
+      "unitPrice": 4.9,
+      "totalPrice": 4.9,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#epdm-foam-strips/",
+      "retailerLinks": [
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#epdm-foam-strips/",
+          "estPrice": 4.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#epdm-foam-strips/",
+          "sourceTitle": "McMaster-Carr — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit"
+        },
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=EPDM+foam+seal+strip+6mm+M3+brass+inserts",
+          "estPrice": 5.25,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=EPDM+foam+seal+strip+6mm+M3+brass+inserts",
+          "sourceTitle": "Amazon — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/foam%20weatherstrip%20seal%20tape",
+          "estPrice": 4.98,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.homedepot.com/s/foam%20weatherstrip%20seal%20tape",
+          "sourceTitle": "Home Depot — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit"
+        }
+      ],
+      "linkedPartIds": [
+        "epdm-gasket-fasteners"
+      ],
+      "notes": "Ensures 100% airtight HEPA and Coanda plenum seals.",
+      "partId": "epdm-gasket-fasteners",
+      "specs": "2m closed-cell EPDM acoustic foam strip + 20× M3×5×4mm brass inserts + M3×10mm black oxide screws",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "McMaster-Carr — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit",
+          "url": "https://www.mcmaster.com/#epdm-foam-strips/",
+          "retailer": "McMaster-Carr"
+        },
+        {
+          "title": "Amazon — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit",
+          "url": "https://www.amazon.com/s?k=EPDM+foam+seal+strip+6mm+M3+brass+inserts",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Home Depot — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit",
+          "url": "https://www.homedepot.com/s/foam%20weatherstrip%20seal%20tape",
+          "retailer": "Home Depot"
+        }
+      ]
+    },
+    {
+      "id": "bom-filament-fan",
+      "partNumber": "FIL-01",
+      "name": "3D Print Filament — PETG & Matte PLA+ (~520g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm PETG (Base, Intake Shell, Volute, Neck) + Matte PLA+ (Coanda Loop Halves & Diffuser)",
+      "qty": 520,
+      "unit": "g",
+      "unitPrice": 0.0192,
+      "totalPrice": 9.98,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=Matte+PLA+PETG+1.75mm+filament+1kg",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=Matte+PLA+PETG+1.75mm+filament+1kg",
+          "estPrice": 9.98,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=Matte+PLA+PETG+1.75mm+filament+1kg",
+          "sourceTitle": "Amazon — 3D Print Filament — PETG & Matte PLA+ (~520g Total Printed Weight)"
+        }
+      ],
+      "linkedPartIds": [
+        "weighted-base-pan",
+        "hepa-intake-shell",
+        "hepa-filter-frame",
+        "impeller-shroud",
+        "diffuser-stator-cone",
+        "plenum-neck-collar",
+        "coanda-airfoil-lower",
+        "coanda-airfoil-upper",
+        "control-bezel-pod"
+      ],
+      "notes": "Estimated from OpenSCAD mesh volume; totals $58.40 DIY build with bundle savings.",
+      "partId": "weighted-base-pan",
+      "specs": "1.75mm PETG (Base, Intake Shell, Volute, Neck) + Matte PLA+ (Coanda Loop Halves & Diffuser)",
+      "quantity": 520,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 3D Print Filament — PETG & Matte PLA+ (~520g Total Printed Weight)",
+          "url": "https://www.amazon.com/s?k=Matte+PLA+PETG+1.75mm+filament+1kg",
+          "retailer": "Amazon"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "purchasedPartsTotal": 48.42,
+    "filamentCostTotal": 9.98,
+    "totalDiyCost": 58.4,
+    "originalRetailPrice": 549,
+    "totalSavings": 490.6,
+    "savingsPercent": 89.4
+  },
+  "priceHunter": {
+    "groundingUsed": true,
+    "retailersCompared": [
+      "Amazon",
+      "McMaster-Carr",
+      "Home Depot",
+      "Walmart",
+      "AliExpress"
+    ],
+    "cheapestPicksCount": 7,
+    "sourceLinks": [
+      {
+        "title": "Amazon — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)",
+        "url": "https://www.amazon.com/s?k=120x32mm+24V+brushless+centrifugal+blower+fan+12032",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — 120×32mm 24V DC Brushless High-Static Centrifugal Blower (12032 PWM)",
+        "url": "https://www.walmart.com/search?q=12032+24V+blower+fan",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)",
+        "url": "https://www.amazon.com/s?k=cylindrical+true+HEPA+H13+replacement+filter+air+purifier",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge (152×115mm)",
+        "url": "https://www.walmart.com/search?q=cylindrical+HEPA+H13+air+purifier+filter",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — 25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display",
+        "url": "https://www.amazon.com/s?k=4+wire+PWM+fan+speed+controller+module+digital+display",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "AliExpress — 25kHz 4-Wire PWM Fan Speed Controller with Rotary Knob & Digital Display",
+        "url": "https://www.aliexpress.com/w/wholesale-4-wire-pwm-fan-controller.html",
+        "retailer": "AliExpress"
+      },
+      {
+        "title": "Amazon — Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3",
+        "url": "https://www.amazon.com/s?k=PM2.5+laser+dust+sensor+module+ESP32",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "AliExpress — Laser PM2.5 Particulate Sensor Module + Seeed XIAO ESP32-C3",
+        "url": "https://www.aliexpress.com/w/wholesale-pms5003-pm2.5-sensor.html",
+        "retailer": "AliExpress"
+      },
+      {
+        "title": "Amazon — 24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack",
+        "url": "https://www.amazon.com/s?k=24V+3A+DC+power+supply+adapter+5.5x2.1mm",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — 24V 3A (72W) UL-Listed DC Power Supply Adapter + Female Panel Jack",
+        "url": "https://www.walmart.com/search?q=24V+3A+DC+power+adapter",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "McMaster-Carr — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit",
+        "url": "https://www.mcmaster.com/#epdm-foam-strips/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon — EPDM Foam Sealing Gasket Tape (6×3mm) & M3 Brass Heat-Set Insert Kit",
+        "url": "https://www.amazon.com/s?k=EPDM+foam+seal+strip+6mm+M3+brass+inserts",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Amazon — 3D Print Filament — PETG & Matte PLA+ (~520g Total Printed Weight)",
+        "url": "https://www.amazon.com/s?k=Matte+PLA+PETG+1.75mm+filament+1kg",
+        "retailer": "Amazon"
+      }
+    ],
+    "updatedAt": "2026-10-25T23:00:00.000Z"
+  }
+}
