@@ -24,8 +24,10 @@ export function ShowcaseBuild() {
   return (
     <section className="space-y-4">
       <div>
-        <h2 className="text-lg font-bold text-white">Showcase: a finished build</h2>
-        <p className="text-xs text-slate-400">
+        <h2 className="font-display text-2xl font-bold text-[#f5ebd6]">
+          Showcase: a finished build
+        </h2>
+        <p className="text-xs text-[#bda782]">
           One complete reverse-engineering run, end to end — research, teardown, BOM, CAD, plates
           and assembly — ready to open, print and build.
         </p>
@@ -33,34 +35,36 @@ export function ShowcaseBuild() {
 
       <Link
         href="/projects/plant-auto-waterer"
-        className="group block rounded-2xl border border-emerald-500/30 bg-gradient-to-br from-emerald-500/10 via-slate-900/80 to-slate-900/60 p-5 transition-all hover:border-emerald-400/60 sm:p-6"
+        className="group block rounded-2xl border border-[#d4af37]/35 bg-gradient-to-br from-[#d4af37]/15 via-[#14100b] to-[#1d1710] p-5 transition-all hover:border-[#f3d478]/70 sm:p-6"
       >
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1.5">
-            <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-[11px] font-bold text-emerald-300 border border-emerald-500/30">
+            <span className="rounded-md bg-[#d4af37]/20 px-2.5 py-0.5 font-codex text-[11px] font-bold text-[#f3d478] border border-[#d4af37]/45">
               Save 83% · $124.15
             </span>
-            <h3 className="text-base font-bold text-white group-hover:text-emerald-300 transition-colors sm:text-lg">
+            <h3 className="font-display text-xl font-bold text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors sm:text-2xl">
               HydroPulse Smart Plant Auto-Waterer — alt to a $149 smart auto-waterer
             </h3>
-            <p className="max-w-2xl text-xs leading-relaxed text-slate-400">
+            <p className="max-w-2xl text-xs leading-relaxed text-[#e6d3b3]">
               Closed-loop capacitive soil-moisture irrigation with a 750mL reservoir,
               drip manifold &amp; root-zone emitter spikes — with exploded 3D view, print files and
               step-by-step assembly.
             </p>
           </div>
-          <span className="inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-slate-300 group-hover:text-emerald-300">
+          <span className="inline-flex shrink-0 items-center gap-1 font-codex text-xs font-bold text-[#e6d3b3] group-hover:text-[#f3d478]">
             Open build <ArrowRight className="h-3.5 w-3.5" />
           </span>
         </div>
 
-        <div className="mt-5 grid gap-3 border-t border-slate-800/80 pt-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-5 grid gap-3 border-t border-[#d4af37]/20 pt-4 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((s) => (
             <div key={s.label} className="flex items-start gap-2.5">
-              <s.icon className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+              <s.icon className="mt-0.5 h-4 w-4 shrink-0 text-[#f3d478]" />
               <div>
-                <div className="text-sm font-bold text-white">{s.value}</div>
-                <div className="text-[11px] text-slate-500">
+                <div className="font-display text-base font-bold text-[#f5ebd6]">
+                  {s.value}
+                </div>
+                <div className="text-[11px] text-[#bda782]">
                   {s.label} · {s.sub}
                 </div>
               </div>

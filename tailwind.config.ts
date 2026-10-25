@@ -43,6 +43,22 @@ const config: Config = {
         signal: {
           DEFAULT: "#c84b31",
           400: "#e06348",
+          950: "#2a0f0a",
+        },
+        bronze: {
+          DEFAULT: "#b89b4a",
+          300: "#d8c07a",
+          400: "#c5a958",
+          500: "#b89b4a",
+          700: "#6e5a26",
+          950: "#1c1609",
+        },
+        sepia: {
+          300: "#d4bc94",
+          400: "#bda782",
+          500: "#9c7a4c",
+          700: "#5c4930",
+          900: "#2b1d0e",
         },
       },
       fontFamily: {

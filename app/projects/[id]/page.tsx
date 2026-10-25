@@ -222,12 +222,12 @@ export default function ProjectPage() {
   if (loading && !manifest) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
-        <Loader2 className="h-8 w-8 animate-spin text-emerald-400" />
+        <Loader2 className="h-8 w-8 animate-spin text-[#f3d478]" />
         <div>
-          <h2 className="text-lg font-bold text-white">
+          <h2 className="font-display text-2xl font-bold text-[#f5ebd6]">
             Initializing Gemini 4 Argon Agent Workspace...
           </h2>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#bda782]">
             Streaming artifacts from data/objects/{projectId}
           </p>
         </div>
@@ -237,12 +237,12 @@ export default function ProjectPage() {
 
   if (!manifest) {
     return (
-      <div className="rounded-2xl border border-rose-500/30 bg-rose-950/20 p-8 text-center space-y-4">
-        <AlertCircle className="mx-auto h-8 w-8 text-rose-400" />
-        <h2 className="text-lg font-bold text-white">Project Not Found</h2>
+      <div className="rounded-2xl border border-[#c84b31]/45 bg-[#2a0f0a]/60 p-8 text-center space-y-4">
+        <AlertCircle className="mx-auto h-8 w-8 text-[#e06348]" />
+        <h2 className="font-display text-2xl font-bold text-[#f5ebd6]">Project Not Found</h2>
         <Link
           href="/"
-          className="inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-4 py-2 text-xs font-bold text-slate-950"
+          className="inline-flex items-center gap-2 rounded-lg bg-[#d4af37] px-4 py-2 font-codex text-xs font-bold text-[#140e07]"
         >
           <ArrowLeft className="h-4 w-4" /> Back to Home
         </Link>
@@ -412,7 +412,7 @@ export default function ProjectPage() {
                 )}
                 <span
                   aria-hidden="true"
-                  className={`pointer-events-none absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-emerald-400 transition-all duration-300 ${
+                  className={`pointer-events-none absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b89b4a] transition-all duration-300 ${
                     active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
                   }`}
                 />
@@ -429,12 +429,12 @@ export default function ProjectPage() {
         (activeTab === 'print' && !plates) ||
         (activeTab === 'instructions' && !instructions) ||
         (activeTab === 'exploded' && !design)) && (
-        <div className="rounded-2xl border border-emerald-500/30 bg-slate-900/70 p-8 text-center space-y-3">
-          <Loader2 className="mx-auto h-6 w-6 animate-spin text-[#00f5a0]" />
-          <div className="text-sm font-bold text-white">
+        <div className="rounded-2xl border border-[#d4af37]/35 bg-[#14100b]/90 p-8 text-center space-y-3">
+          <Loader2 className="mx-auto h-6 w-6 animate-spin text-[#f3d478]" />
+          <div className="font-display text-lg font-bold text-[#f5ebd6]">
             Gemini 4 Argon Swarm Synthesizing {activeTab.toUpperCase()} Artifact...
           </div>
-          <p className="text-xs text-slate-400">
+          <p className="text-xs text-[#bda782]">
             Watch live agent progress in Mission Control above — this tab populates automatically as soon as the stage completes.
           </p>
         </div>
@@ -483,15 +483,15 @@ export default function ProjectPage() {
 
             {/* Printed vs Bought Split */}
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-emerald-500/35 bg-emerald-950/15 p-5 space-y-3">
-                <div className="flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-emerald-300">
-                  <Printer className="h-4 w-4" />
+              <div className="rounded-2xl border border-[#b89b4a]/40 bg-[#1d1710]/85 p-5 space-y-3">
+                <div className="flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                  <Printer className="h-4 w-4 text-[#b89b4a]" />
                   3D-Printed Vessels ({analysis.whatGetsPrinted.length})
                 </div>
                 <ul className="space-y-2 text-xs text-[#e6d3b3]">
                   {analysis.whatGetsPrinted.map((item, i) => (
                     <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-400 shrink-0" />
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#b89b4a] shrink-0" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -571,16 +571,16 @@ export default function ProjectPage() {
             />
           ) : (
             <>
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-3">
+              <div className="rounded-2xl codex-folio p-5 space-y-3">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-base font-bold text-white">
+                  <h3 className="font-display text-lg font-bold text-[#f5ebd6]">
                     Gemini 4 Argon Grounded Web Research & Open-Source Priors
                   </h3>
-                  <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-0.5 text-xs text-sky-300">
+                  <span className="rounded-full border border-[#d4af37]/35 bg-[#d4af37]/15 px-3 py-0.5 font-codex text-xs text-[#f3d478]">
                     Google Search Grounding Active
                   </span>
                 </div>
-                <p className="text-xs text-slate-300">{sources.querySummary}</p>
+                <p className="text-xs text-[#e6d3b3]">{sources.querySummary}</p>
               </div>
 
               <div className="grid gap-4 md:grid-cols-2">
@@ -590,24 +590,24 @@ export default function ProjectPage() {
                     href={src.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-emerald-500/50 transition-all"
+                    className="group flex flex-col justify-between rounded-2xl codex-folio p-5 hover:border-[#f3d478]/60 transition-all"
                   >
                     <div className="space-y-2.5">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="rounded-md bg-slate-800 px-2 py-0.5 font-mono uppercase text-emerald-300">
+                        <span className="rounded-md bg-[#1d1710] border border-[#d4af37]/25 px-2 py-0.5 font-codex uppercase text-[#f3d478]">
                           {src.type} · {src.domain}
                         </span>
-                        <ExternalLink className="h-4 w-4 text-slate-400 group-hover:text-emerald-400" />
+                        <ExternalLink className="h-4 w-4 text-[#bda782] group-hover:text-[#f3d478]" />
                       </div>
-                      <h4 className="text-sm font-bold text-white group-hover:text-emerald-300">
+                      <h4 className="font-display text-base font-bold text-[#f5ebd6] group-hover:text-[#f3d478]">
                         {src.title}
                       </h4>
-                      <p className="text-xs text-slate-400 leading-relaxed">
+                      <p className="text-xs text-[#bda782] leading-relaxed">
                         {src.summary}
                       </p>
                     </div>
 
-                    <ul className="mt-4 space-y-1 border-t border-slate-800/80 pt-3 text-[11px] text-slate-300">
+                    <ul className="mt-4 space-y-1 border-t border-[#d4af37]/20 pt-3 text-[11px] text-[#e6d3b3]">
                       {src.keyTakeaways.map((tk, i) => (
                         <li key={i}>• {tk}</li>
                       ))}
@@ -637,35 +637,35 @@ export default function ProjectPage() {
             <>
               {/* Summary Cards */}
               <div className="grid gap-4 sm:grid-cols-4">
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                  <div className="text-xs text-slate-400">
+                <div className="rounded-2xl codex-folio p-4">
+                  <div className="text-xs text-[#bda782]">
                     Original Commercial Price
                   </div>
-                  <div className="mt-1 text-2xl font-bold text-slate-300 line-through">
+                  <div className="mt-1 font-display text-2xl font-bold text-[#bda782] line-through">
                     ${bom.summary.originalRetailPrice.toFixed(2)}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                  <div className="text-xs text-slate-400">
+                <div className="rounded-2xl codex-folio p-4">
+                  <div className="text-xs text-[#bda782]">
                     Off-The-Shelf Hardware
                   </div>
-                  <div className="mt-1 text-2xl font-bold text-white">
+                  <div className="mt-1 font-display text-2xl font-bold text-[#f5ebd6]">
                     ${bom.summary.purchasedPartsTotal.toFixed(2)}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                  <div className="text-xs text-slate-400">
+                <div className="rounded-2xl codex-folio p-4">
+                  <div className="text-xs text-[#bda782]">
                     3D Print Filament Est.
                   </div>
-                  <div className="mt-1 text-2xl font-bold text-sky-400">
+                  <div className="mt-1 font-display text-2xl font-bold text-[#f3d478]">
                     ${bom.summary.filamentCostTotal.toFixed(2)}
                   </div>
                 </div>
-                <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4">
-                  <div className="text-xs font-semibold text-emerald-300">
+                <div className="rounded-2xl border border-[#d4af37]/50 bg-[#d4af37]/15 p-4">
+                  <div className="text-xs font-semibold text-[#f3d478]">
                     Total DIY Cost (Save {bom.summary.savingsPercent}%)
                   </div>
-                  <div className="mt-1 text-2xl font-black text-emerald-400">
+                  <div className="mt-1 font-display text-2xl font-black text-[#f3d478]">
                     ${bom.summary.totalDiyCost.toFixed(2)}
                   </div>
                 </div>
@@ -676,46 +676,46 @@ export default function ProjectPage() {
                 {bom.items.map((item) => (
                   <div
                     key={item.id}
-                    className="flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/65 p-5 space-y-4"
+                    className="flex flex-col justify-between rounded-2xl codex-folio p-5 space-y-4"
                   >
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-xs font-bold text-emerald-300">
+                        <span className="rounded bg-[#1d1710] border border-[#d4af37]/25 px-2 py-0.5 font-codex text-xs font-bold text-[#f3d478]">
                           {item.partNumber} · {item.category}
                         </span>
-                        <span className="text-base font-extrabold text-white">
+                        <span className="font-display text-lg font-extrabold text-[#f5ebd6]">
                           ${item.totalPrice.toFixed(2)}{' '}
-                          <span className="text-xs font-normal text-slate-400">
+                          <span className="text-xs font-normal text-[#bda782]">
                             (Qty: {item.qty} {item.unit})
                           </span>
                         </span>
                       </div>
 
-                      <h4 className="text-sm font-bold text-white">
+                      <h4 className="font-display text-base font-bold text-[#f5ebd6]">
                         {item.name}
                       </h4>
-                      <p className="text-xs text-slate-400">
+                      <p className="text-xs text-[#e6d3b3]">
                         {item.specification}
                       </p>
                       {item.notes && (
-                        <p className="text-[11px] text-slate-500">
+                        <p className="text-[11px] text-[#bda782]">
                           {item.notes}
                         </p>
                       )}
                     </div>
 
                     {/* Retailer Links */}
-                    <div className="flex flex-wrap items-center gap-2 border-t border-slate-800/80 pt-3">
+                    <div className="flex flex-wrap items-center gap-2 border-t border-[#d4af37]/20 pt-3">
                       {item.retailerLinks.map((link, i) => (
                         <a
                           key={i}
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-emerald-400 hover:text-emerald-300 transition-colors"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs font-semibold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
                         >
                           <span>{link.retailer}</span>
-                          <span className="text-emerald-400">
+                          <span className="text-[#f3d478]">
                             ${link.estPrice.toFixed(2)}
                           </span>
                           <ExternalLink className="h-3 w-3" />
@@ -742,7 +742,7 @@ export default function ProjectPage() {
             />
           ) : (
             <>
-              <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200 flex items-center justify-between">
+              <div className="rounded-xl border border-[#d4af37]/35 bg-[#14100b] p-4 text-xs text-[#e6d3b3] flex items-center justify-between">
                 <span>
                   3D Plate Viewer slot ready — automatically mounts{' '}
                   <code>components/print/</code> when present. Below are the live generated plates & STL downloads from{' '}
@@ -751,7 +751,7 @@ export default function ProjectPage() {
                 <button
                   type="button"
                   onClick={() => setShowOrderModal(true)}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-400 px-3.5 py-2 text-xs font-bold text-slate-950"
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#d4af37] px-3.5 py-2 font-codex text-xs font-bold text-[#140e07]"
                 >
                   <Truck className="h-3.5 w-3.5" /> No Printer? Order Prints
                 </button>
@@ -762,21 +762,21 @@ export default function ProjectPage() {
                 {plates.plates.map((plate) => (
                   <div
                     key={plate.plateNumber}
-                    className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4"
+                    className="rounded-2xl codex-folio p-5 space-y-4"
                   >
                     <div className="flex items-center justify-between">
                       <div>
-                        <h4 className="text-base font-bold text-white">
+                        <h4 className="font-display text-lg font-bold text-[#f5ebd6]">
                           {plate.name}
                         </h4>
-                        <p className="text-xs text-slate-400">
+                        <p className="text-xs text-[#bda782]">
                           Printer: {plate.printerName} (
                           {plate.bedDimensionsMm.join('×')} mm) · Utilization:{' '}
                           {plate.utilizationPercent}%
                         </p>
                       </div>
-                      <div className="text-right text-xs text-slate-300">
-                        <div className="font-bold text-emerald-400">
+                      <div className="text-right text-xs text-[#e6d3b3]">
+                        <div className="font-bold text-[#f3d478]">
                           {plate.weightGrams}g filament
                         </div>
                         <div>~{plate.estimatedMinutes} min</div>
@@ -784,14 +784,14 @@ export default function ProjectPage() {
                     </div>
 
                     {/* 2D Bed Preview */}
-                    <div className="relative mx-auto aspect-square max-w-[260px] rounded-xl border border-slate-700 bg-slate-950 p-3 flex items-center justify-center overflow-hidden">
+                    <div className="relative mx-auto aspect-square max-w-[260px] rounded-xl border border-[#d4af37]/30 bg-[#0c0906] p-3 flex items-center justify-center overflow-hidden">
                       <div className="absolute inset-0 bg-grid-pattern opacity-40" />
                       <div className="relative z-10 text-center space-y-1">
-                        <Box className="mx-auto h-6 w-6 text-emerald-400" />
-                        <div className="text-xs font-bold text-white">
+                        <Box className="mx-auto h-6 w-6 text-[#f3d478]" />
+                        <div className="text-xs font-bold text-[#f5ebd6]">
                           {plate.placements.length} Packed Parts
                         </div>
-                        <div className="text-[10px] text-slate-400">
+                        <div className="text-[10px] text-[#bda782]">
                           {plate.bedDimensionsMm[0]} × {plate.bedDimensionsMm[1]} mm
                           Build Plate
                         </div>
@@ -802,15 +802,15 @@ export default function ProjectPage() {
               </div>
 
               {/* Individual STL Parts Table */}
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
+              <div className="rounded-2xl codex-folio p-5 space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
+                  <h3 className="font-codex text-sm font-bold uppercase tracking-wider text-[#f5ebd6]">
                     Individual Printable STL Files (parts/*.stl)
                   </h3>
                   <button
                     type="button"
                     onClick={() => setShowOrderModal(true)}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1.5 font-codex text-xs font-semibold text-[#f3d478] hover:bg-[#d4af37]/25"
                   >
                     <Truck className="h-3.5 w-3.5" /> Request Print Bureau Quote
                     (Craftcloud / JLC3DP / Xometry)
@@ -823,7 +823,7 @@ export default function ProjectPage() {
                     return (
                       <div
                         key={part.partId}
-                        className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/70 p-3.5"
+                        className="flex items-center justify-between rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5"
                       >
                         <div className="space-y-1">
                           <div className="flex items-center gap-2">
@@ -831,11 +831,11 @@ export default function ProjectPage() {
                               className="h-3 w-3 rounded-full"
                               style={{ backgroundColor: part.color }}
                             />
-                            <span className="text-xs font-bold text-white">
+                            <span className="font-display text-sm font-bold text-[#f5ebd6]">
                               {part.name}
                             </span>
                           </div>
-                          <div className="text-[11px] text-slate-400 font-mono">
+                          <div className="text-[11px] text-[#bda782] font-mono">
                             {part.dims_mm.join('×')}mm · {part.weightGrams}g ·{' '}
                             {part.material}
                           </div>
@@ -844,7 +844,7 @@ export default function ProjectPage() {
                         <a
                           href={`/api/objects/${manifest.id}/stl/${fileBase}`}
                           download={fileBase}
-                          className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-emerald-300 hover:border-emerald-400"
+                          className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-2.5 py-1.5 font-codex text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
                         >
                           <Download className="h-3.5 w-3.5" /> STL
                         </a>
@@ -869,7 +869,7 @@ export default function ProjectPage() {
             />
           ) : (
             <>
-              <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200">
+              <div className="rounded-xl border border-[#d4af37]/35 bg-[#14100b] p-4 text-xs text-[#e6d3b3]">
                 IKEA-Style Three.js Animated Player slot ready — dynamically imports{' '}
                 <code>components/three/</code> when present. Step through the{' '}
                 <code>instructions.json</code> motion choreography below:
@@ -877,7 +877,7 @@ export default function ProjectPage() {
 
               <div className="grid gap-6 lg:grid-cols-3">
                 {/* Step Player Card */}
-                <div className="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-5">
+                <div className="lg:col-span-2 rounded-2xl codex-folio p-6 space-y-5">
                   {(() => {
                     const step =
                       instructions.steps[activeStepIdx] || instructions.steps[0];
@@ -885,7 +885,7 @@ export default function ProjectPage() {
                     return (
                       <>
                         <div className="flex items-center justify-between">
-                          <span className="rounded-lg bg-emerald-400 px-3 py-1 text-xs font-black text-slate-950">
+                          <span className="rounded-lg bg-[#d4af37] px-3 py-1 font-codex text-xs font-bold text-[#140e07]">
                             STEP {step.n} OF {instructions.steps.length}
                           </span>
                           <div className="flex items-center gap-2">
@@ -895,7 +895,7 @@ export default function ProjectPage() {
                               onClick={() =>
                                 setActiveStepIdx((i) => Math.max(0, i - 1))
                               }
-                              className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 disabled:opacity-40"
+                              className="rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-3 py-1.5 font-codex text-xs font-semibold text-[#e6d3b3] disabled:opacity-40"
                             >
                               Prev
                             </button>
@@ -909,30 +909,30 @@ export default function ProjectPage() {
                                   Math.min(instructions.steps.length - 1, i + 1)
                                 )
                               }
-                              className="inline-flex items-center gap-1 rounded-lg bg-emerald-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 disabled:opacity-40"
+                              className="inline-flex items-center gap-1 rounded-lg bg-[#d4af37] px-3.5 py-1.5 font-codex text-xs font-bold text-[#140e07] disabled:opacity-40"
                             >
                               <Play className="h-3 w-3" /> Next Step
                             </button>
                           </div>
                         </div>
 
-                        <h3 className="text-xl font-bold text-white">
+                        <h3 className="font-display text-2xl font-bold text-[#f5ebd6]">
                           {step.title}
                         </h3>
-                        <p className="text-sm text-slate-300 leading-relaxed">
+                        <p className="text-sm text-[#e6d3b3] leading-relaxed">
                           {step.note}
                         </p>
 
                         <div className="grid gap-3 sm:grid-cols-2">
-                          <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-1.5">
-                            <div className="text-[11px] font-bold uppercase text-slate-400">
+                          <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5 space-y-1.5">
+                            <div className="font-codex text-[11px] font-bold uppercase text-[#bda782]">
                               Parts Involved
                             </div>
                             <div className="flex flex-wrap gap-1.5">
                               {step.partIds.map((pid) => (
                                 <span
                                   key={pid}
-                                  className="rounded bg-emerald-500/15 px-2 py-0.5 font-mono text-xs text-emerald-300"
+                                  className="rounded bg-[#d4af37]/15 border border-[#d4af37]/35 px-2 py-0.5 font-codex text-xs text-[#f3d478]"
                                 >
                                   {pid}
                                 </span>
@@ -940,11 +940,11 @@ export default function ProjectPage() {
                             </div>
                           </div>
 
-                          <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-1.5">
-                            <div className="text-[11px] font-bold uppercase text-slate-400">
+                          <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5 space-y-1.5">
+                            <div className="font-codex text-[11px] font-bold uppercase text-[#bda782]">
                               3D Motion Vectors (from → to mm)
                             </div>
-                            <div className="space-y-1 font-mono text-[11px] text-slate-300">
+                            <div className="space-y-1 font-mono text-[11px] text-[#e6d3b3]">
                               {step.motion.map((m, idx) => (
                                 <div key={idx}>
                                   {m.partId}: [{m.from.join(', ')}] → [
@@ -968,19 +968,19 @@ export default function ProjectPage() {
                       onClick={() => setActiveStepIdx(idx)}
                       className={`w-full rounded-xl border p-3.5 text-left transition-all ${
                         idx === activeStepIdx
-                          ? 'border-emerald-400 bg-emerald-500/10'
-                          : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
+                          ? 'border-[#f3d478] bg-[#d4af37]/15'
+                          : 'border-[#d4af37]/20 bg-[#14100b]/80 hover:border-[#d4af37]/45'
                       }`}
                     >
                       <div className="flex items-center justify-between text-xs">
-                        <span className="font-mono font-bold text-emerald-400">
+                        <span className="font-codex font-bold text-[#f3d478]">
                           STEP 0{s.n}
                         </span>
-                        <span className="text-[11px] text-slate-400">
+                        <span className="text-[11px] text-[#bda782]">
                           {s.partIds.length} part(s)
                         </span>
                       </div>
-                      <div className="mt-1 text-xs font-bold text-white">
+                      <div className="mt-1 font-display text-sm font-bold text-[#f5ebd6]">
                         {s.title}
                       </div>
                     </button>
@@ -1003,7 +1003,7 @@ export default function ProjectPage() {
             />
           ) : (
             <>
-              <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200">
+              <div className="rounded-xl border border-[#d4af37]/35 bg-[#14100b] p-4 text-xs text-[#e6d3b3]">
                 Interactive Three.js Exploded View slot ready — dynamically imports{' '}
                 <code>components/three/</code> when present. Inspect the parametric assembly graph (
                 <code>design.json</code>) below:
@@ -1020,12 +1020,12 @@ export default function ProjectPage() {
                         onClick={() => setSelectedPartId(part.id)}
                         className={`rounded-xl border p-4 text-left transition-all ${
                           isSelected
-                            ? 'border-emerald-400 bg-emerald-500/10'
-                            : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
+                            ? 'border-[#f3d478] bg-[#d4af37]/15'
+                            : 'border-[#d4af37]/20 bg-[#14100b]/80 hover:border-[#d4af37]/45'
                         }`}
                       >
                         <div className="flex items-center justify-between">
-                          <span className="flex items-center gap-2 text-xs font-mono font-bold text-slate-300">
+                          <span className="flex items-center gap-2 text-xs font-codex font-bold text-[#e6d3b3]">
                             <span
                               className="h-3 w-3 rounded-full"
                               style={{ backgroundColor: part.color }}
@@ -1033,19 +1033,19 @@ export default function ProjectPage() {
                             {part.partNumber || part.id}
                           </span>
                           <span
-                            className={`rounded px-2 py-0.5 text-[10px] font-bold uppercase ${
+                            className={`rounded px-2 py-0.5 font-codex text-[10px] font-bold uppercase ${
                               part.kind === 'printed'
-                                ? 'bg-emerald-500/15 text-emerald-300'
-                                : 'bg-sky-500/15 text-sky-300'
+                                ? 'bg-[#b89b4a]/20 text-[#f3d478] border border-[#b89b4a]/40'
+                                : 'bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40'
                             }`}
                           >
                             {part.kind}
                           </span>
                         </div>
-                        <div className="mt-2 text-sm font-bold text-white">
+                        <div className="mt-2 font-display text-base font-bold text-[#f5ebd6]">
                           {part.name}
                         </div>
-                        <div className="mt-1 font-mono text-[11px] text-slate-400">
+                        <div className="mt-1 font-mono text-[11px] text-[#bda782]">
                           dims: {part.dims_mm.join('×')}mm · shape: {part.shape}
                         </div>
                       </button>
@@ -1055,29 +1055,29 @@ export default function ProjectPage() {
 
                 {/* Part Inspector Panel */}
                 {selectedPart && (
-                  <div className="rounded-2xl border border-slate-800 bg-slate-900/75 p-5 space-y-4">
+                  <div className="rounded-2xl codex-folio p-5 space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="font-mono text-xs text-emerald-400">
+                      <span className="font-codex text-xs font-bold text-[#f3d478]">
                         {selectedPart.id}
                       </span>
-                      <span className="rounded bg-slate-800 px-2 py-0.5 text-xs text-slate-200">
+                      <span className="rounded bg-[#1d1710] border border-[#d4af37]/25 px-2 py-0.5 text-xs text-[#e6d3b3]">
                         {selectedPart.material}
                       </span>
                     </div>
-                    <h3 className="text-lg font-bold text-white">
+                    <h3 className="font-display text-xl font-bold text-[#f5ebd6]">
                       {selectedPart.name}
                     </h3>
-                    <p className="text-xs text-slate-300 leading-relaxed">
+                    <p className="text-xs text-[#e6d3b3] leading-relaxed">
                       {selectedPart.description}
                     </p>
 
-                    <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-950 p-3.5 font-mono text-xs text-slate-300">
+                    <div className="space-y-2 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-3.5 font-mono text-xs text-[#e6d3b3]">
                       <div>dims_mm: [{selectedPart.dims_mm.join(', ')}]</div>
                       <div>position: [{selectedPart.position.join(', ')}]</div>
                       <div>explode: [{selectedPart.explode.join(', ')}]</div>
                       <div>shape: {selectedPart.shape}</div>
                       {selectedPart.bomRef && (
-                        <div className="text-emerald-400">
+                        <div className="text-[#f3d478]">
                           bomRef: {selectedPart.bomRef}
                         </div>
                       )}
@@ -1093,21 +1093,21 @@ export default function ProjectPage() {
       {/* Print Service Quote Modal */}
       {showOrderModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4">
-          <div className="w-full max-w-lg rounded-2xl border border-slate-700 bg-slate-900 p-6 space-y-4">
+          <div className="w-full max-w-lg rounded-2xl codex-folio p-6 space-y-4">
             <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white">
+              <h3 className="font-display text-xl font-bold text-[#f5ebd6]">
                 No 3D Printer? Send STLs to an On-Demand Print Service
               </h3>
               <button
                 type="button"
                 onClick={() => setShowOrderModal(false)}
-                className="text-xs text-slate-400 hover:text-white"
+                className="text-xs text-[#bda782] hover:text-[#f5ebd6]"
               >
                 Close ✕
               </button>
             </div>
 
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-[#e6d3b3]">
               Bundle all {plates?.parts.length || 7} printed STL files (
               {plates?.totalWeightGrams || 185}g total) and hand off to a print bureau:
             </p>
@@ -1137,8 +1137,8 @@ export default function ProjectPage() {
                   key={srv.id}
                   className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 ${
                     selectedService === srv.id
-                      ? 'border-emerald-400 bg-emerald-500/10'
-                      : 'border-slate-800 bg-slate-950'
+                      ? 'border-[#f3d478] bg-[#d4af37]/15'
+                      : 'border-[#d4af37]/25 bg-[#0c0906]'
                   }`}
                 >
                   <div className="flex items-center gap-2">
@@ -1148,11 +1148,11 @@ export default function ProjectPage() {
                       checked={selectedService === srv.id}
                       onChange={() => setSelectedService(srv.id)}
                     />
-                    <span className="text-xs font-bold text-white">
+                    <span className="text-xs font-bold text-[#f5ebd6]">
                       {srv.name}
                     </span>
                   </div>
-                  <span className="text-xs font-bold text-emerald-400">
+                  <span className="text-xs font-bold text-[#f3d478]">
                     Est. {srv.est}
                   </span>
                 </label>
@@ -1165,7 +1165,7 @@ export default function ProjectPage() {
                 value={shippingZip}
                 onChange={(e) => setShippingZip(e.target.value)}
                 placeholder="Shipping ZIP / Postal Code"
-                className="flex-1 rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-xs text-white"
+                className="flex-1 rounded-lg border border-[#d4af37]/35 bg-[#0c0906] px-3 py-2 text-xs text-[#f5ebd6]"
               />
               <a
                 href={
@@ -1177,7 +1177,7 @@ export default function ProjectPage() {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-400 px-4 py-2 text-xs font-bold text-slate-950"
+                className="inline-flex items-center gap-1.5 rounded-lg bg-[#d4af37] px-4 py-2 font-codex text-xs font-bold text-[#140e07]"
               >
                 Continue to Service <ExternalLink className="h-3.5 w-3.5" />
               </a>

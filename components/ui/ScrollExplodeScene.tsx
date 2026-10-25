@@ -32,9 +32,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
     kind: 'printed',
     dims: '112 × 112 × 18 mm',
     cost: '$0.62 PETG',
-    material: 'Translucent Verdigris PETG',
-    color: '#2dd4bf',
-    emissive: '#115e59',
+    material: 'Burnished Olive-Bronze PETG',
+    color: '#c5a059',
+    emissive: '#5c4930',
     basePos: [0, 0.85, 0],
     explodeVec: [0, 1.55, 0],
     geometry: 'cylinder',
@@ -50,8 +50,8 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
     dims: '105 × 105 × 3.5 mm',
     cost: '$1.40 McMaster',
     material: 'Buna-N 70A Elastomer',
-    color: '#d97706',
-    emissive: '#78350f',
+    color: '#c84b31',
+    emissive: '#5c1f12',
     basePos: [0, 0.65, 0],
     explodeVec: [0, 0.92, 0.35],
     geometry: 'ring',
@@ -66,9 +66,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
     kind: 'printed',
     dims: '110 × 110 × 145 mm',
     cost: '$1.85 PETG',
-    material: '3-Perim Watertight PETG',
-    color: '#10b981',
-    emissive: '#064e3b',
+    material: '3-Perim Florentine Bronze PETG',
+    color: '#b89b4a',
+    emissive: '#4a3b18',
     basePos: [0, 0.05, 0],
     explodeVec: [0, 0.15, 0],
     geometry: 'cylinder',
@@ -101,7 +101,7 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
     dims: '98 × 23 × 4 mm',
     cost: '$3.80 DigiKey',
     material: 'Gilded FR4 Sensor Blade',
-    color: '#e5c158',
+    color: '#f3d478',
     emissive: '#854d0e',
     basePos: [0.55, -0.1, 0.4],
     explodeVec: [1.45, 0.35, 0.7],
@@ -117,9 +117,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
     kind: 'printed',
     dims: '84 × 84 × 24 mm',
     cost: '$0.48 PETG',
-    material: 'Matte Verdigris PLA/PETG',
-    color: '#34d399',
-    emissive: '#065f46',
+    material: 'Warm Terracotta PLA/PETG',
+    color: '#d4bc94',
+    emissive: '#5c4930',
     basePos: [0, -0.62, 0],
     explodeVec: [0, -0.82, -0.35],
     geometry: 'hex',
@@ -135,8 +135,8 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
     dims: '118 × 118 × 32 mm',
     cost: '$0.90 PETG',
     material: 'Bronze-Filled Carbon PETG',
-    color: '#059669',
-    emissive: '#022c22',
+    color: '#9c7a4c',
+    emissive: '#3b2410',
     basePos: [0, -0.92, 0],
     explodeVec: [0, -1.65, 0],
     geometry: 'cylinder',
@@ -449,7 +449,7 @@ export default function ScrollExplodeScene({
                 ? 'bg-[#e6d3b3] text-[#2b1d0e]'
                 : effectiveReality < 0.75
                 ? 'bg-[#d4af37]/25 text-[#f3d478] border border-[#d4af37]/50'
-                : 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/40'
+                : 'bg-[#b89b4a]/25 text-[#f3d478] border border-[#b89b4a]/50'
             }`}
           >
             {effectiveReality < 0.35
@@ -498,7 +498,7 @@ export default function ScrollExplodeScene({
             }}
             className={`rounded-lg px-2.5 py-1 transition-all ${
               effectiveReality > 0.7
-                ? 'bg-emerald-400 text-[#0c0906] font-bold'
+                ? 'bg-[#f3d478] text-[#140e07] font-bold'
                 : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
             }`}
           >
@@ -653,7 +653,7 @@ export default function ScrollExplodeScene({
             <pointLight
               position={[0, 4, 2]}
               intensity={effectiveReality * 1.2}
-              color="#2dd4bf"
+              color="#f3d478"
             />
             <AssemblyRig
               explodeFactor={effectiveExplode}
@@ -696,9 +696,9 @@ export default function ScrollExplodeScene({
                 max={100}
                 value={Math.round(effectiveExplode * 100)}
                 onChange={(e) => setManualExplode(Number(e.target.value) / 100)}
-                className="h-1.5 flex-1 cursor-pointer appearance-none rounded-lg bg-[#282016] accent-[#2dd4bf]"
+                className="h-1.5 flex-1 cursor-pointer appearance-none rounded-lg bg-[#282016] accent-[#f3d478]"
               />
-              <span className="font-mono text-xs font-bold text-emerald-300 tabular-nums w-9 text-right">
+              <span className="font-mono text-xs font-bold text-[#f3d478] tabular-nums w-9 text-right">
                 {Math.round(effectiveExplode * 100)}%
               </span>
             </div>
@@ -715,7 +715,7 @@ export default function ScrollExplodeScene({
               <span
                 className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
                   selectedPart.kind === 'printed'
-                    ? 'border border-emerald-400/40 bg-emerald-500/15 text-emerald-300'
+                    ? 'border border-[#b89b4a]/45 bg-[#b89b4a]/15 text-[#f3d478]'
                     : 'border border-[#d4af37]/45 bg-[#d4af37]/15 text-[#f3d478]'
                 }`}
               >

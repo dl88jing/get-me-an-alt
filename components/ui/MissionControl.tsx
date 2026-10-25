@@ -308,29 +308,29 @@ const THOUGHT_STYLE: Record<
   { dot: string; label: string; badge: string }
 > = {
   start: {
-    dot: 'bg-slate-400',
+    dot: 'bg-[#9c7a4c]',
     label: 'started',
-    badge: 'border-slate-700 bg-slate-900 text-slate-300',
+    badge: 'border-[#d4af37]/25 bg-[#1d1710] text-[#e6d3b3]',
   },
   thought: {
-    dot: 'bg-amber-400 animate-timeline-dot',
+    dot: 'bg-[#f3d478] animate-timeline-dot',
     label: 'thinking',
-    badge: 'border-amber-500/40 bg-amber-500/10 text-amber-300',
+    badge: 'border-[#d4af37]/45 bg-[#d4af37]/15 text-[#f3d478]',
   },
   artifact: {
-    dot: 'bg-sky-400',
+    dot: 'bg-[#d4af37]',
     label: 'artifact',
-    badge: 'border-sky-500/40 bg-sky-500/10 text-sky-300',
+    badge: 'border-[#d4af37]/40 bg-[#d4af37]/12 text-[#e6d3b3]',
   },
   done: {
-    dot: 'bg-emerald-400',
+    dot: 'bg-[#b89b4a]',
     label: 'done',
-    badge: 'border-emerald-500/40 bg-emerald-500/10 text-emerald-300',
+    badge: 'border-[#b89b4a]/45 bg-[#b89b4a]/15 text-[#f3d478]',
   },
   error: {
-    dot: 'bg-rose-400',
+    dot: 'bg-[#c84b31]',
     label: 'error',
-    badge: 'border-rose-500/40 bg-rose-500/10 text-rose-300',
+    badge: 'border-[#c84b31]/45 bg-[#c84b31]/15 text-[#e06348]',
   },
 };
 
@@ -1267,14 +1267,14 @@ export function MissionControl({
       aria-label="Mission Control — Gemini 4 Argon Managed Agent Pipeline"
       className="codex-folio bg-grid-pattern relative overflow-hidden rounded-2xl border border-[#d4af37]/30 p-4 sm:p-6 space-y-5"
     >
-      {/* Ambient Candlelit & Verdigris Radial Highlights */}
+      {/* Ambient Candlelit & Gilded Radial Highlights */}
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -top-24 left-1/3 h-56 w-96 rounded-full bg-[#d4af37]/12 blur-3xl"
       />
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 right-1/4 h-56 w-96 rounded-full bg-emerald-500/10 blur-3xl"
+        className="pointer-events-none absolute -bottom-24 right-1/4 h-56 w-96 rounded-full bg-[#b89b4a]/10 blur-3xl"
       />
 
       {/* Top Header & Replay Controls */}
@@ -1285,32 +1285,32 @@ export function MissionControl({
               <Activity className="h-3.5 w-3.5 text-[#f3d478]" />
               Mission Control · Managed Agents
             </span>
-            <h2 className="font-display text-base sm:text-xl font-bold tracking-tight text-[#f5ebd6]">
+            <h2 className="font-display text-lg sm:text-2xl font-bold tracking-tight text-[#f5ebd6]">
               Gemini 4 Argon 9-Agent Pipeline — “{manifest.title}”
             </h2>
             {(activeLoopPulse || loopCompleted) && (
               <span
-                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[11px] font-semibold ${
+                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 font-codex text-[10px] font-bold uppercase tracking-wider ${
                   activeLoopPulse
-                    ? 'border-amber-400/60 bg-amber-500/20 text-amber-200'
-                    : 'border-amber-500/35 bg-amber-500/10 text-amber-300'
+                    ? 'border-[#f3d478]/70 bg-[#d4af37]/25 text-[#f3d478]'
+                    : 'border-[#d4af37]/40 bg-[#d4af37]/12 text-[#e6d3b3]'
                 }`}
               >
-                <GitCompare className="h-3 w-3" />
+                <GitCompare className="h-3 w-3 text-[#f3d478]" />
                 Critic → Designer Loop:{' '}
                 {activeLoopPulse ? 'Revising design.json...' : '2-Round Verified'}
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-400">
-            Streaming live events{' '}
-            <code className="rounded bg-slate-900 px-1.5 py-0.5 font-mono text-[11px] text-sky-300">
+          <p className="font-display italic text-sm text-[#bda782]">
+            Streaming live codex telemetry{' '}
+            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-sans not-italic text-[11px] text-[#f3d478]">
               {'{agent, phase, message, data, ts}'}
-            </code>{' '}
+            </span>{' '}
             from{' '}
-            <code className="rounded bg-slate-900 px-1.5 py-0.5 font-mono text-[11px] text-emerald-300">
+            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-sans not-italic text-[11px] text-[#e6d3b3]">
               /api/objects/{projectId}/stream
-            </code>
+            </span>
           </p>
         </div>
 
@@ -1321,29 +1321,29 @@ export function MissionControl({
               <button
                 type="button"
                 onClick={() => setIsPaused((p) => !p)}
-                className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-slate-200 hover:border-emerald-400/50 hover:text-white"
+                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-2.5 py-1.5 font-codex text-xs font-semibold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6]"
               >
                 {isPaused ? (
                   <>
-                    <Play className="h-3.5 w-3.5 text-emerald-400" /> Resume
+                    <Play className="h-3.5 w-3.5 text-[#f3d478]" /> Resume
                   </>
                 ) : (
                   <>
-                    <Pause className="h-3.5 w-3.5 text-amber-400" /> Pause
+                    <Pause className="h-3.5 w-3.5 text-[#d4af37]" /> Pause
                   </>
                 )}
               </button>
               <button
                 type="button"
                 onClick={() => setSpeedMultiplier((s) => (s === 1 ? 2 : 1))}
-                className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-2 py-1.5 font-mono text-xs font-bold text-sky-300 hover:border-sky-400/50"
+                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-2 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
               >
                 {speedMultiplier}x
               </button>
               <button
                 type="button"
                 onClick={finishImmediately}
-                className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-slate-300 hover:border-slate-600 hover:text-white"
+                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-2.5 py-1.5 font-codex text-xs font-semibold text-[#bda782] hover:border-[#d4af37]/60 hover:text-[#f5ebd6]"
               >
                 <FastForward className="h-3.5 w-3.5" /> Skip
               </button>
@@ -1352,7 +1352,7 @@ export function MissionControl({
             <button
               type="button"
               onClick={handleReplayClick}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-3 py-1.5 text-xs font-bold text-emerald-300 hover:bg-emerald-500/25 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37]/25 transition-colors"
             >
               <RotateCcw className="h-3.5 w-3.5" />
               Replay Agent Graph
@@ -1362,15 +1362,15 @@ export function MissionControl({
       </div>
 
       {/* Overall Telemetry Bar (Consolidated from muse-dl88jing's MissionControl) */}
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-slate-800/90 bg-slate-950/90 px-4 py-3 text-xs tabular-nums">
-        <span className="flex items-center gap-2 font-semibold text-white">
+      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-[#d4af37]/25 bg-[#14100b]/95 px-4 py-3 text-xs tabular-nums">
+        <span className="flex items-center gap-2 font-codex font-semibold text-[#f5ebd6]">
           <span
             className={`inline-block h-2.5 w-2.5 rounded-full ${
               completedCount === MISSION_NODES.length && !isReplaying
-                ? 'bg-[#3fb950]'
+                ? 'bg-[#b89b4a]'
                 : failedCount > 0
-                ? 'bg-[#f85149]'
-                : 'bg-[#d29922] animate-timeline-dot'
+                ? 'bg-[#c84b31]'
+                : 'bg-[#f3d478] animate-timeline-dot'
             }`}
           />
           {completedCount === MISSION_NODES.length && !isReplaying
@@ -1382,40 +1382,40 @@ export function MissionControl({
             : 'Build in progress'}
         </span>
 
-        <span className="text-slate-400">
-          <strong className="text-emerald-400">
+        <span className="text-[#bda782]">
+          <strong className="font-codex text-[#f3d478]">
             {completedCount}/{MISSION_NODES.length}
           </strong>{' '}
           agents done
           {failedCount > 0 ? ` · ${failedCount} failed` : ''}
         </span>
 
-        <span className="inline-flex items-center gap-1 text-slate-400">
-          <Cpu className="h-3.5 w-3.5 text-sky-400" />
-          <strong className="text-sky-300">
+        <span className="inline-flex items-center gap-1 text-[#bda782]">
+          <Cpu className="h-3.5 w-3.5 text-[#d4af37]" />
+          <strong className="font-codex text-[#e6d3b3]">
             {formatTokens(totalTokensCount)}
           </strong>{' '}
           tokens
         </span>
 
-        <span className="inline-flex items-center gap-1 text-slate-400">
-          <Clock className="h-3.5 w-3.5 text-amber-400" />
-          <strong className="text-amber-300">
+        <span className="inline-flex items-center gap-1 text-[#bda782]">
+          <Clock className="h-3.5 w-3.5 text-[#f3d478]" />
+          <strong className="font-codex text-[#f3d478]">
             {formatMs(totalElapsedMs)}
           </strong>{' '}
           elapsed
         </span>
 
-        <span className="inline-flex items-center gap-1 text-slate-400">
-          <FileCode className="h-3.5 w-3.5 text-emerald-400" />
-          <strong className="text-emerald-300">{totalArtifactsCount}</strong>{' '}
+        <span className="inline-flex items-center gap-1 text-[#bda782]">
+          <FileCode className="h-3.5 w-3.5 text-[#b89b4a]" />
+          <strong className="font-codex text-[#e6d3b3]">{totalArtifactsCount}</strong>{' '}
           artifacts
         </span>
 
         <div className="min-w-[140px] flex-1">
-          <div className="h-2 overflow-hidden rounded-full bg-[#232c38]">
+          <div className="h-2 overflow-hidden rounded-full border border-[#d4af37]/25 bg-[#282016]">
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#00f5a0] to-sky-400 transition-all duration-300"
+              className="h-full rounded-full bg-gradient-to-r from-[#b89b4a] via-[#d4af37] to-[#f3d478] transition-all duration-300"
               style={{ width: `${progressPercent}%` }}
             />
           </div>
@@ -1423,7 +1423,7 @@ export function MissionControl({
       </div>
 
       {/* Directed Agent Graph Topology SVG (with Critic -> Designer Revision Loop) */}
-      <div className="relative overflow-x-auto rounded-xl border border-slate-800/90 bg-[#05070b]/95 p-3">
+      <div className="relative overflow-x-auto rounded-xl border border-[#d4af37]/25 bg-[#120d08]/95 p-3 shadow-inner">
         <svg
           viewBox="0 0 1120 228"
           className="h-[185px] min-w-[860px] w-full select-none"
@@ -1440,7 +1440,7 @@ export function MissionControl({
               markerHeight="5"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 10 5 L 0 9 z" fill="#334155" />
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#5c4930" />
             </marker>
             <marker
               id="mc-arrow-done"
@@ -1451,7 +1451,7 @@ export function MissionControl({
               markerHeight="5"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 10 5 L 0 9 z" fill="#00f5a0" />
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#d4af37" />
             </marker>
             <marker
               id="mc-arrow-loop"
@@ -1462,11 +1462,11 @@ export function MissionControl({
               markerHeight="6"
               orient="auto-start-reverse"
             >
-              <path d="M 0 1 L 10 5 L 0 9 z" fill="#ff6b2b" />
+              <path d="M 0 1 L 10 5 L 0 9 z" fill="#f3d478" />
             </marker>
           </defs>
 
-          {/* Directed Edges */}
+          {/* Directed Edges (Gold Ink Strokes with Animated Gold Pulse) */}
           {MISSION_EDGES.map((edge) => {
             const fromState = nodeMap[edge.from];
             const toState = nodeMap[edge.to];
@@ -1481,13 +1481,13 @@ export function MissionControl({
 
             const strokeColor = isLoop
               ? isEdgeActive || isEdgeDone
-                ? '#ff6b2b'
-                : '#475569'
+                ? '#f3d478'
+                : '#7a5c38'
               : isEdgeActive
-              ? '#38bdf8'
+              ? '#f3d478'
               : isEdgeDone
-              ? '#00f5a0'
-              : '#1e293b';
+              ? '#d4af37'
+              : '#5c4930';
 
             return (
               <g key={edge.id}>
@@ -1495,7 +1495,7 @@ export function MissionControl({
                   d={edge.path}
                   fill="none"
                   stroke={strokeColor}
-                  strokeWidth={isLoop ? 2.4 : isEdgeActive ? 2.5 : 1.8}
+                  strokeWidth={isLoop ? 2.2 : isEdgeActive ? 2.5 : 1.7}
                   strokeDasharray={isLoop ? '6 4' : undefined}
                   markerEnd={
                     isLoop
@@ -1508,18 +1508,18 @@ export function MissionControl({
                 />
 
                 {!prefersReducedMotion &&
-                  (isEdgeActive || (isLoop && activeLoopPulse)) && (
+                  (isEdgeActive || isEdgeDone || (isLoop && activeLoopPulse)) && (
                     <motion.path
                       d={edge.path}
                       fill="none"
-                      stroke={isLoop ? '#ff6b2b' : '#00f5a0'}
-                      strokeWidth={3.2}
-                      strokeDasharray="10 14"
+                      stroke="#f3d478"
+                      strokeWidth={isEdgeActive ? 3.2 : 2.2}
+                      strokeDasharray="8 16"
                       initial={{ strokeDashoffset: 48 }}
                       animate={{ strokeDashoffset: 0 }}
                       transition={{
                         repeat: Infinity,
-                        duration: 0.75,
+                        duration: isEdgeActive ? 0.75 : 1.8,
                         ease: 'linear',
                       }}
                     />
@@ -1528,14 +1528,14 @@ export function MissionControl({
                 {isLoop && (
                   <g transform="translate(570, 24)">
                     <rect
-                      x="-98"
+                      x="-104"
                       y="-11"
-                      width="196"
+                      width="208"
                       height="20"
                       rx="10"
-                      fill="#0f172a"
+                      fill="#14100b"
                       stroke={
-                        activeLoopPulse || loopCompleted ? '#ff6b2b' : '#334155'
+                        activeLoopPulse || loopCompleted ? '#d4af37' : '#5c4930'
                       }
                       strokeWidth="1.2"
                     />
@@ -1544,10 +1544,10 @@ export function MissionControl({
                       y="3"
                       textAnchor="middle"
                       fill={
-                        activeLoopPulse || loopCompleted ? '#fdba74' : '#94a3b8'
+                        activeLoopPulse || loopCompleted ? '#f3d478' : '#bda782'
                       }
                       fontSize="9.5"
-                      fontFamily="monospace"
+                      fontFamily="var(--font-codex), Georgia, serif"
                       fontWeight="700"
                     >
                       ↺ Critic → Designer Revision Loop
@@ -1568,14 +1568,14 @@ export function MissionControl({
 
             const borderStroke =
               st.status === 'revising'
-                ? '#ff6b2b'
+                ? '#f3d478'
                 : isRunning
-                ? '#38bdf8'
+                ? '#f3d478'
                 : isDone
-                ? '#00f5a0'
+                ? '#b89b4a'
                 : isSelected
-                ? '#94a3b8'
-                : '#1e293b';
+                ? '#d4af37'
+                : '#5c4930';
 
             return (
               <g
@@ -1592,7 +1592,7 @@ export function MissionControl({
                     height="68"
                     rx="12"
                     fill="none"
-                    stroke={st.status === 'revising' ? '#ff6b2b' : '#00f5a0'}
+                    stroke="#f3d478"
                     strokeWidth="2"
                     initial={{ opacity: 0.85, scale: 0.96 }}
                     animate={{ opacity: 0, scale: 1.15 }}
@@ -1606,7 +1606,7 @@ export function MissionControl({
                   width="88"
                   height="60"
                   rx="10"
-                  fill={isSelected ? '#111c2d' : '#0a0f18'}
+                  fill={isSelected ? '#282016' : '#14100b'}
                   stroke={borderStroke}
                   strokeWidth={isSelected || isRunning ? '2.2' : '1.4'}
                 />
@@ -1614,9 +1614,9 @@ export function MissionControl({
                 <text
                   x="-34"
                   y="-13"
-                  fill="#64748b"
+                  fill="#9c7a4c"
                   fontSize="8.5"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-codex), Georgia, serif"
                   fontWeight="700"
                 >
                   {node.order}
@@ -1628,14 +1628,14 @@ export function MissionControl({
                   r="4"
                   fill={
                     st.status === 'revising'
-                      ? '#ff6b2b'
+                      ? '#f3d478'
                       : isRunning
-                      ? '#38bdf8'
+                      ? '#f3d478'
                       : isDone
-                      ? '#00f5a0'
+                      ? '#b89b4a'
                       : st.status === 'error'
-                      ? '#f43f5e'
-                      : '#334155'
+                      ? '#c84b31'
+                      : '#5c4930'
                   }
                 />
 
@@ -1643,8 +1643,9 @@ export function MissionControl({
                   x="0"
                   y="4"
                   textAnchor="middle"
-                  fill="#f8fafc"
-                  fontSize="10.5"
+                  fill="#f5ebd6"
+                  fontSize="11.5"
+                  fontFamily="var(--font-display), Georgia, serif"
                   fontWeight="700"
                 >
                   {node.label}
@@ -1654,9 +1655,9 @@ export function MissionControl({
                   x="0"
                   y="20"
                   textAnchor="middle"
-                  fill={isDone ? '#34d399' : isRunning ? '#38bdf8' : '#64748b'}
+                  fill={isDone ? '#d4af37' : isRunning ? '#f3d478' : '#9c7a4c'}
                   fontSize="8.5"
-                  fontFamily="monospace"
+                  fontFamily="var(--font-codex), Georgia, serif"
                 >
                   {st.elapsedMs > 0
                     ? `${(st.elapsedMs / 1000).toFixed(1)}s`
@@ -1685,37 +1686,37 @@ export function MissionControl({
               onClick={() => handleSelectNode(node)}
               className={`group relative flex flex-col justify-between rounded-xl border p-3.5 text-left transition-all ${
                 isSelected
-                  ? 'border-emerald-400/80 bg-emerald-500/10 shadow-[0_0_28px_-8px_rgba(0,245,160,0.35)]'
+                  ? 'border-[#f3d478]/85 bg-[#282016]/90 shadow-[0_0_28px_-8px_rgba(212,175,55,0.45)]'
                   : st.status === 'revising'
-                  ? 'border-amber-500/60 bg-amber-500/10'
+                  ? 'border-[#f3d478]/65 bg-[#d4af37]/15'
                   : isRunning
-                  ? 'border-sky-400/70 bg-sky-500/10'
+                  ? 'border-[#f3d478]/75 bg-[#d4af37]/15 shadow-[0_0_24px_-8px_rgba(243,212,120,0.38)]'
                   : isDone
-                  ? 'border-slate-800 bg-slate-900/75 hover:border-emerald-500/40'
-                  : 'border-slate-800/80 bg-slate-950/60 hover:border-slate-700'
+                  ? 'border-[#d4af37]/25 bg-[#14100b]/90 hover:border-[#d4af37]/55'
+                  : 'border-[#d4af37]/15 bg-[#0c0906]/75 hover:border-[#d4af37]/35'
               }`}
             >
               <div className="space-y-2 w-full">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-slate-700/80 bg-slate-950 text-emerald-400">
+                    <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#1d1710] text-[#f3d478]">
                       <Icon className="h-3.5 w-3.5" />
                     </span>
                     <div className="truncate">
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[10px] text-slate-400">
+                        <span className="font-codex text-[10px] font-bold text-[#9c7a4c]">
                           {node.order}
                         </span>
-                        <span className="text-xs font-extrabold text-white">
+                        <span className="font-display text-base font-bold text-[#f5ebd6]">
                           {node.label}
                         </span>
                         {st.revisionCount > 0 && (
-                          <span className="rounded bg-amber-500/20 border border-amber-400/40 px-1.5 py-0.2 font-mono text-[9px] font-bold text-amber-300">
+                          <span className="rounded bg-[#d4af37]/20 border border-[#d4af37]/45 px-1.5 py-0.2 font-codex text-[9px] font-bold text-[#f3d478]">
                             ↺ Rev {st.revisionCount}
                           </span>
                         )}
                       </div>
-                      <div className="truncate text-[10px] text-slate-400">
+                      <div className="truncate font-display italic text-xs text-[#bda782]">
                         {node.role}
                       </div>
                     </div>
@@ -1724,38 +1725,38 @@ export function MissionControl({
                   {/* Token & Time Counters + Status Icon */}
                   <div className="flex items-center gap-1.5 shrink-0">
                     {st.tokensTotal > 0 && (
-                      <span className="rounded bg-slate-950/90 border border-slate-800 px-1.5 py-0.5 font-mono text-[10px] text-sky-300 tabular-nums">
+                      <span className="rounded bg-[#1d1710] border border-[#d4af37]/30 px-1.5 py-0.5 font-codex text-[10px] font-semibold text-[#e6d3b3] tabular-nums">
                         {formatTokens(st.tokensTotal)} tok
                       </span>
                     )}
-                    <span className="font-mono text-[11px] font-semibold text-slate-300 tabular-nums">
+                    <span className="font-codex text-[11px] font-semibold text-[#f3d478] tabular-nums">
                       {formatMs(st.elapsedMs)}
                     </span>
                     {st.status === 'done' ? (
-                      <CheckCircle2 className="h-4 w-4 text-emerald-400" />
+                      <CheckCircle2 className="h-4 w-4 text-[#b89b4a]" />
                     ) : st.status === 'revising' ? (
-                      <RefreshCw className="h-4 w-4 animate-spin text-amber-400" />
+                      <RefreshCw className="h-4 w-4 animate-spin text-[#f3d478]" />
                     ) : st.status === 'running' ? (
-                      <Loader2 className="h-4 w-4 animate-spin text-sky-400" />
+                      <Loader2 className="h-4 w-4 animate-spin text-[#f3d478]" />
                     ) : st.status === 'error' ? (
-                      <AlertCircle className="h-4 w-4 text-rose-400" />
+                      <AlertCircle className="h-4 w-4 text-[#c84b31]" />
                     ) : (
-                      <Clock className="h-3.5 w-3.5 text-slate-600" />
+                      <Clock className="h-3.5 w-3.5 text-[#5c4930]" />
                     )}
                   </div>
                 </div>
 
-                {/* Streaming Thought */}
+                {/* Streaming Thought (Sepia Ink on Dark Vellum) */}
                 <div
                   title={st.latestThought}
-                  className="rounded-lg border border-slate-800/90 bg-[#05070b] px-2.5 py-1.5 font-mono text-[11px] leading-snug text-slate-300 line-clamp-2 min-h-[2.5rem]"
+                  className="rounded-lg border border-[#d4af37]/20 bg-[#1a130c] px-2.5 py-1.5 font-mono text-[11px] leading-snug text-[#e6d3b3] line-clamp-2 min-h-[2.5rem]"
                 >
-                  <span className="text-emerald-400 mr-1">&gt;</span>
+                  <span className="text-[#d4af37] mr-1">&gt;</span>
                   {st.latestThought}
                 </div>
               </div>
 
-              {/* Pop-Out Artifact Chips */}
+              {/* Pop-Out Artifact Chips (Gilded Codex Seals) */}
               <div className="mt-2.5 flex flex-wrap items-center gap-1.5 min-h-[1.5rem]">
                 <AnimatePresence initial={false}>
                   {st.artifacts.map((chip) => (
@@ -1773,16 +1774,16 @@ export function MissionControl({
                         stiffness: 420,
                         damping: 22,
                       }}
-                      className="inline-flex items-center gap-1 rounded-md border border-emerald-500/35 bg-emerald-500/10 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-300"
+                      className="inline-flex items-center gap-1 rounded-md border border-[#d4af37]/40 bg-[#d4af37]/12 px-2 py-0.5 font-codex text-[10px] font-semibold tracking-wide text-[#f3d478]"
                     >
-                      <FileCode className="h-2.5 w-2.5 text-emerald-400" />
+                      <FileCode className="h-2.5 w-2.5 text-[#d4af37]" />
                       {chip}
                     </motion.span>
                   ))}
                 </AnimatePresence>
                 {st.artifacts.length === 0 && (
-                  <span className="font-mono text-[10px] text-slate-600">
-                    awaiting artifact...
+                  <span className="font-display italic text-xs text-[#9c7a4c]">
+                    awaiting codex folio...
                   </span>
                 )}
               </div>
@@ -1793,59 +1794,59 @@ export function MissionControl({
 
       {/* Bottom Split: Selected Agent Inspector + Global Live Thought Feed */}
       <div className="grid gap-3 lg:grid-cols-2">
-        {/* Selected Node CLI & Thought Telemetry Inspector */}
-        <div className="rounded-xl border border-slate-800/90 bg-[#05070b] p-3.5 font-mono text-xs space-y-2.5">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2 text-[11px] text-slate-400">
+        {/* Selected Node CLI & Thought Telemetry Inspector (Sepia Ink on Dark Vellum) */}
+        <div className="rounded-xl border border-[#d4af37]/25 bg-[#1a130c] p-3.5 text-xs space-y-2.5 shadow-inner">
+          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#d4af37]/20 pb-2 text-[11px] text-[#bda782]">
             <div className="flex items-center gap-2">
-              <Terminal className="h-3.5 w-3.5 text-emerald-400" />
-              <span className="font-bold text-white">
+              <Terminal className="h-3.5 w-3.5 text-[#d4af37]" />
+              <span className="font-display text-sm font-bold text-[#f5ebd6]">
                 {selectedSpec.order} · {selectedSpec.label}
               </span>
-              <span className="rounded bg-slate-900 border border-slate-800 px-1.5 py-0.5 text-[10px] text-sky-300">
+              <span className="rounded bg-[#14100b] border border-[#d4af37]/30 px-1.5 py-0.5 font-codex text-[10px] text-[#f3d478]">
                 gemini-4-argon ·{' '}
                 {selectedRuntime?.runner ||
                   selectedManifestStage?.runner ||
                   'agy-cli'}
               </span>
             </div>
-            <div className="flex flex-wrap items-center gap-2.5 tabular-nums">
-              <span className="text-slate-400">
+            <div className="flex flex-wrap items-center gap-2.5 font-codex tabular-nums">
+              <span className="text-[#bda782]">
                 tokens:{' '}
-                <strong className="text-sky-300">
+                <strong className="text-[#e6d3b3]">
                   {formatTokens(
                     selectedRuntime?.tokensTotal ||
                       selectedManifestStage?.tokensUsed?.total
                   )}
                 </strong>
               </span>
-              <span className="text-slate-400">
+              <span className="text-[#bda782]">
                 time:{' '}
-                <strong className="text-emerald-300">
+                <strong className="text-[#f3d478]">
                   {formatMs(selectedRuntime?.elapsedMs)}
                 </strong>
               </span>
             </div>
           </div>
 
-          <div className="max-h-28 overflow-y-auto space-y-1 text-[11px] text-slate-300">
+          <div className="max-h-28 overflow-y-auto space-y-1 font-mono text-[11px] text-[#e6d3b3]">
             {selectedRuntime && selectedRuntime.thoughts.length > 0 ? (
               selectedRuntime.thoughts.map((t, idx) => (
                 <div key={idx} className="leading-relaxed">
-                  <span className="text-slate-600 mr-2">
+                  <span className="text-[#9c7a4c] mr-2">
                     [{formatTs(t.ts) || '14:00:00'}]
                   </span>
-                  <span className="mr-1.5 uppercase text-[10px] text-sky-400">
+                  <span className="mr-1.5 uppercase text-[10px] text-[#d4af37]">
                     [{t.phase}]
                   </span>
                   <span
                     className={
                       t.phase === 'artifact'
-                        ? 'text-emerald-300'
+                        ? 'text-[#f3d478]'
                         : t.phase === 'error'
-                        ? 'text-rose-300'
+                        ? 'text-[#e06348]'
                         : /Revision|Round 1/i.test(t.message)
-                        ? 'text-amber-300'
-                        : 'text-slate-200'
+                        ? 'text-[#f3d478]'
+                        : 'text-[#e6d3b3]'
                     }
                   >
                     {t.message}
@@ -1853,28 +1854,28 @@ export function MissionControl({
                 </div>
               ))
             ) : (
-              <div className="text-slate-500">
+              <div className="text-[#9c7a4c]">
                 Waiting for agent telemetry events...
               </div>
             )}
           </div>
         </div>
 
-        {/* Unified Live Thought Stream (from muse-dl88jing's MissionControl) */}
-        <div className="rounded-xl border border-slate-800/90 bg-[#05070b] p-3.5 font-mono text-xs space-y-2.5">
-          <div className="flex items-center justify-between gap-2 border-b border-slate-800/80 pb-2 text-[11px] text-slate-400">
+        {/* Unified Live Thought Stream (Sepia Ink on Dark Vellum) */}
+        <div className="rounded-xl border border-[#d4af37]/25 bg-[#1a130c] p-3.5 text-xs space-y-2.5 shadow-inner">
+          <div className="flex items-center justify-between gap-2 border-b border-[#d4af37]/20 pb-2 text-[11px] text-[#bda782]">
             <div className="flex items-center gap-2">
-              <Sparkles className="h-3.5 w-3.5 text-sky-400" />
-              <span className="font-bold text-white">
+              <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
+              <span className="font-display text-sm font-bold text-[#f5ebd6]">
                 Live Thought Stream (All Agents)
               </span>
             </div>
-            <span className="text-emerald-400 tabular-nums">
+            <span className="font-codex text-[#f3d478] tabular-nums">
               {streamConnected ? '● SSE LIVE' : `${liveThoughtsFeed.length} events`}
             </span>
           </div>
 
-          <ul className="max-h-28 overflow-y-auto space-y-1.5 text-[11px]">
+          <ul className="max-h-28 overflow-y-auto space-y-1.5 font-mono text-[11px]">
             {liveThoughtsFeed.length > 0 ? (
               liveThoughtsFeed.slice(-12).map((thought, i) => {
                 const style =
@@ -1883,30 +1884,30 @@ export function MissionControl({
                 return (
                   <li
                     key={`${thought.agent}-${thought.phase}-${i}`}
-                    className="flex flex-wrap items-baseline gap-x-2 text-slate-400"
+                    className="flex flex-wrap items-baseline gap-x-2 text-[#bda782]"
                   >
                     <span
                       className={`inline-block h-2 w-2 shrink-0 rounded-full ${style.dot}`}
                     />
-                    <span className="font-sans font-bold text-white">
+                    <span className="font-display text-xs font-bold text-[#f5ebd6]">
                       {thought.agent}
                     </span>
                     <span
-                      className={`rounded border px-1 py-0.2 text-[9px] uppercase ${style.badge}`}
+                      className={`rounded border px-1 py-0.2 font-codex text-[9px] uppercase ${style.badge}`}
                     >
                       {style.label}
                     </span>
                     {ts ? (
-                      <span className="text-[10px] text-slate-500">{ts}</span>
+                      <span className="text-[10px] text-[#9c7a4c]">{ts}</span>
                     ) : null}
-                    <span className="font-sans text-xs text-slate-200">
+                    <span className="font-mono text-[11px] text-[#e6d3b3]">
                       {thought.message}
                     </span>
                   </li>
                 );
               })
             ) : (
-              <li className="text-slate-500">
+              <li className="text-[#9c7a4c]">
                 Streaming events appear here as each Gemini 4 Argon agent executes.
               </li>
             )}

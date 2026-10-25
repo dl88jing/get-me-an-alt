@@ -95,32 +95,32 @@ const AGENT_META: Record<
   designer: {
     label: 'Designer',
     icon: Box,
-    color: 'border-sky-500/40 bg-sky-500/15 text-sky-300',
+    color: 'border-[#d4af37]/40 bg-[#d4af37]/15 text-[#f3d478]',
   },
   critic: {
     label: 'Critic',
     icon: ShieldCheck,
-    color: 'border-amber-500/40 bg-amber-500/15 text-amber-300',
+    color: 'border-[#f3d478]/45 bg-[#d4af37]/20 text-[#f3d478]',
   },
   bom: {
     label: 'BOM',
     icon: ShoppingCart,
-    color: 'border-emerald-500/40 bg-emerald-500/15 text-emerald-300',
+    color: 'border-[#b89b4a]/45 bg-[#b89b4a]/15 text-[#e6d3b3]',
   },
   'price-hunter': {
     label: 'Price Hunter',
     icon: Tag,
-    color: 'border-teal-500/40 bg-teal-500/15 text-teal-300',
+    color: 'border-[#d4af37]/45 bg-[#d4af37]/15 text-[#f3d478]',
   },
   cad: {
     label: 'CAD & Plates',
     icon: Printer,
-    color: 'border-indigo-500/40 bg-indigo-500/15 text-indigo-300',
+    color: 'border-[#9c7a4c]/50 bg-[#282016] text-[#f5ebd6]',
   },
   instructions: {
     label: 'Instructions',
     icon: Wrench,
-    color: 'border-purple-500/40 bg-purple-500/15 text-purple-300',
+    color: 'border-[#d4af37]/40 bg-[#1d1710] text-[#e6d3b3]',
   },
 };
 
@@ -494,36 +494,36 @@ export function ModifyChat({
   return (
     <section
       aria-label="Ask Argon to Modify — Selective Agent Re-Orchestration"
-      className="glass-panel bg-grid-pattern relative overflow-hidden rounded-2xl border border-emerald-500/30 p-4 sm:p-6 space-y-4 shadow-electric"
+      className="codex-folio bg-grid-pattern relative overflow-hidden rounded-2xl border border-[#d4af37]/30 p-4 sm:p-6 space-y-4 shadow-electric"
     >
       {/* Ambient Glow */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-20 -top-20 h-48 w-72 rounded-full bg-[#00f5a0]/10 blur-3xl"
+        className="pointer-events-none absolute -right-20 -top-20 h-48 w-72 rounded-full bg-[#d4af37]/12 blur-3xl"
       />
 
       {/* Top Header Bar */}
       <div className="relative flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#00f5a0]/40 bg-[#00f5a0]/15 px-2.5 py-0.5 font-mono text-[11px] font-bold uppercase tracking-wider text-[#00f5a0]">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/50 bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
               <Sparkles className="h-3.5 w-3.5" />
               Ask Argon to Modify
             </span>
-            <span className="rounded-md border border-slate-700/80 bg-slate-900/90 px-2 py-0.5 font-mono text-[11px] text-sky-300">
+            <span className="rounded-md border border-[#d4af37]/30 bg-[#14100b] px-2 py-0.5 font-codex text-[11px] text-[#e6d3b3]">
               Selective DAG Router · gemini-4-argon
             </span>
             {history.length > 0 && (
-              <span className="rounded-md border border-emerald-500/35 bg-emerald-500/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-300">
+              <span className="rounded-md border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-2 py-0.5 font-codex text-[11px] font-semibold text-[#f3d478]">
                 {history.length} modification{history.length === 1 ? '' : 's'}{' '}
                 applied
               </span>
             )}
           </div>
-          <p className="text-xs text-slate-300">
+          <p className="text-xs text-[#e6d3b3]">
             Request any dimensional, hardware, cost, or printer-bed change —
             Gemini 4 Argon classifies which downstream agents are affected and
-            re-runs <strong className="text-white">only those stages</strong>{' '}
+            re-runs <strong className="text-[#f5ebd6]">only those stages</strong>{' '}
             live in Mission Control above.
           </p>
         </div>
@@ -533,9 +533,9 @@ export function ModifyChat({
             type="button"
             disabled={isRunning}
             onClick={handleResetBaseline}
-            className="inline-flex items-center gap-1.5 self-start rounded-xl border border-slate-700 bg-slate-900/90 px-3 py-1.5 text-xs font-semibold text-slate-300 hover:border-emerald-400/50 hover:text-white disabled:opacity-40"
+            className="inline-flex items-center gap-1.5 self-start rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3 py-1.5 font-codex text-xs font-semibold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6] disabled:opacity-40"
           >
-            <RotateCcw className="h-3.5 w-3.5 text-emerald-400" />
+            <RotateCcw className="h-3.5 w-3.5 text-[#f3d478]" />
             Reset to Baseline
           </button>
         )}
@@ -543,7 +543,7 @@ export function ModifyChat({
 
       {/* Quick Suggestion Pills */}
       <div className="flex flex-wrap items-center gap-2">
-        <span className="font-mono text-[11px] uppercase tracking-wider text-slate-400">
+        <span className="font-codex text-[11px] uppercase tracking-wider text-[#bda782]">
           Try:
         </span>
         {PRESET_SUGGESTIONS.map((preset) => (
@@ -552,10 +552,10 @@ export function ModifyChat({
             type="button"
             disabled={isRunning}
             onClick={() => handleRunModify(preset.prompt)}
-            className="group inline-flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-950/85 px-3 py-1.5 text-xs text-slate-200 transition-all hover:border-[#00f5a0]/50 hover:bg-[#00f5a0]/10 hover:text-white disabled:opacity-40"
+            className="group inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/25 bg-[#14100b]/90 px-3 py-1.5 text-xs text-[#e6d3b3] transition-all hover:border-[#f3d478]/60 hover:bg-[#d4af37]/15 hover:text-[#f5ebd6] disabled:opacity-40"
           >
             <span className="font-semibold">{preset.label}</span>
-            <span className="rounded bg-slate-900 px-1.5 py-0.5 font-mono text-[10px] text-emerald-400 group-hover:bg-[#00f5a0]/20">
+            <span className="rounded bg-[#1d1710] border border-[#d4af37]/25 px-1.5 py-0.5 font-codex text-[10px] text-[#f3d478] group-hover:bg-[#d4af37]/25">
               {preset.badge}
             </span>
           </button>
@@ -571,7 +571,7 @@ export function ModifyChat({
         className="glass-command-bar relative flex flex-col gap-2.5 rounded-2xl p-2.5 sm:flex-row sm:items-center"
       >
         <div className="flex flex-1 items-center gap-2.5 px-2">
-          <Zap className="h-4 w-4 shrink-0 text-[#00f5a0]" />
+          <Zap className="h-4 w-4 shrink-0 text-[#f3d478]" />
           <input
             type="text"
             value={promptText}
@@ -579,18 +579,18 @@ export function ModifyChat({
             onChange={(e) => setPromptText(e.target.value)}
             placeholder='Ask Argon to modify (e.g., "make the reservoir 2x bigger", "use cheaper parts", "fit a Bambu A1 mini bed")...'
             aria-label="Ask Argon to modify this project"
-            className="w-full bg-transparent text-xs sm:text-sm text-white placeholder-slate-400 focus:outline-none disabled:opacity-60"
+            className="w-full bg-transparent text-xs sm:text-sm text-[#f5ebd6] placeholder-[#bda782]/75 focus:outline-none disabled:opacity-60"
           />
         </div>
 
         {/* Live Predicted Agent Routing Pill while typing */}
         {promptText.trim().length > 2 && !isRunning && (
-          <div className="hidden xl:flex items-center gap-1.5 rounded-xl border border-slate-800 bg-slate-950/90 px-2.5 py-1 font-mono text-[10px] text-slate-300">
-            <span className="text-slate-400">Will re-run:</span>
+          <div className="hidden xl:flex items-center gap-1.5 rounded-xl border border-[#d4af37]/25 bg-[#14100b] px-2.5 py-1 font-codex text-[10px] text-[#e6d3b3]">
+            <span className="text-[#bda782]">Will re-run:</span>
             {predictedAgents.map((ag) => (
               <span
                 key={ag}
-                className="rounded bg-emerald-500/15 px-1.5 py-0.5 font-bold text-emerald-300"
+                className="rounded bg-[#d4af37]/15 border border-[#d4af37]/35 px-1.5 py-0.5 font-bold text-[#f3d478]"
               >
                 {AGENT_META[ag]?.label || ag}
               </span>
@@ -601,7 +601,7 @@ export function ModifyChat({
         <button
           type="submit"
           disabled={isRunning || !promptText.trim()}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-[#00f5a0] px-4 py-2.5 font-display text-xs font-black text-[#050608] transition-all hover:brightness-110 disabled:opacity-40 shrink-0"
+          className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold uppercase tracking-wider text-[#140e07] transition-all hover:brightness-110 disabled:opacity-40 shrink-0"
         >
           {isRunning ? (
             <>
@@ -619,17 +619,17 @@ export function ModifyChat({
 
       {/* Live Execution Progress Strip */}
       {isRunning && (
-        <div className="rounded-xl border border-sky-500/40 bg-slate-950/90 p-3.5 space-y-2.5 animate-slide-in">
+        <div className="rounded-xl border border-[#f3d478]/45 bg-[#14100b]/95 p-3.5 space-y-2.5 animate-slide-in">
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div className="flex items-center gap-2 font-mono text-sky-300">
-              <Loader2 className="h-3.5 w-3.5 animate-spin text-[#00f5a0]" />
-              <span className="font-bold text-white">
+            <div className="flex items-center gap-2 font-codex text-[#f3d478]">
+              <Loader2 className="h-3.5 w-3.5 animate-spin text-[#f3d478]" />
+              <span className="font-bold text-[#f5ebd6]">
                 Selective Re-Run Active
               </span>
-              <span className="text-slate-400">·</span>
-              <span>{liveStatusMessage}</span>
+              <span className="text-[#9c7a4c]">·</span>
+              <span className="font-sans text-[#e6d3b3]">{liveStatusMessage}</span>
             </div>
-            <span className="font-mono text-[11px] text-emerald-400 tabular-nums">
+            <span className="font-codex text-[11px] text-[#f3d478] tabular-nums">
               {completedAffectedAgents.length}/{activeAffectedAgents.length}{' '}
               affected stages done
             </span>
@@ -645,21 +645,21 @@ export function ModifyChat({
               return (
                 <React.Fragment key={ag}>
                   {idx > 0 && (
-                    <ArrowRight className="h-3 w-3 text-slate-600 shrink-0" />
+                    <ArrowRight className="h-3 w-3 text-[#9c7a4c] shrink-0" />
                   )}
                   <span
-                    className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 font-mono text-[11px] font-semibold transition-all ${
+                    className={`inline-flex items-center gap-1.5 rounded-lg border px-2.5 py-1 font-codex text-[11px] font-semibold transition-all ${
                       isDone
-                        ? 'border-emerald-500/50 bg-emerald-500/15 text-emerald-300'
+                        ? 'border-[#b89b4a]/55 bg-[#b89b4a]/15 text-[#f3d478]'
                         : isCurrent
-                        ? 'border-sky-400 bg-sky-500/20 text-white shadow-[0_0_16px_-4px_rgba(56,189,248,0.5)]'
-                        : 'border-slate-800 bg-slate-900 text-slate-400'
+                        ? 'border-[#f3d478] bg-[#d4af37]/25 text-[#f5ebd6] shadow-[0_0_16px_-4px_rgba(243,212,120,0.5)]'
+                        : 'border-[#d4af37]/20 bg-[#1d1710] text-[#bda782]'
                     }`}
                   >
                     {isDone ? (
-                      <CheckCircle2 className="h-3 w-3 text-emerald-400" />
+                      <CheckCircle2 className="h-3 w-3 text-[#b89b4a]" />
                     ) : isCurrent ? (
-                      <Loader2 className="h-3 w-3 animate-spin text-sky-300" />
+                      <Loader2 className="h-3 w-3 animate-spin text-[#f3d478]" />
                     ) : (
                       <Icon className="h-3 w-3" />
                     )}
@@ -674,45 +674,45 @@ export function ModifyChat({
 
       {/* Error Banner */}
       {errorMessage && (
-        <div className="rounded-xl border border-rose-500/40 bg-rose-950/30 px-4 py-2.5 text-xs text-rose-200">
+        <div className="rounded-xl border border-[#c84b31]/50 bg-[#2a0f0a]/80 px-4 py-2.5 text-xs text-[#f5ebd6]">
           {errorMessage}
         </div>
       )}
 
       {/* Diff Summary Card After Modification Run */}
       {latestDiff && !isRunning && (
-        <div className="rounded-2xl border border-emerald-500/35 bg-[#05070b]/95 p-4 sm:p-5 space-y-4 animate-slide-in">
+        <div className="rounded-2xl border border-[#d4af37]/40 bg-[#14100b]/95 p-4 sm:p-5 space-y-4 animate-slide-in">
           {/* Diff Header & Selective Agent Routing Telemetry */}
-          <div className="flex flex-col gap-3 border-b border-slate-800/90 pb-3.5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="flex flex-col gap-3 border-b border-[#d4af37]/20 pb-3.5 lg:flex-row lg:items-center lg:justify-between">
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="inline-flex items-center gap-1 rounded-md bg-[#00f5a0] px-2 py-0.5 font-mono text-[10px] font-black uppercase text-[#050608]">
+                <span className="inline-flex items-center gap-1 rounded-md bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-2 py-0.5 font-codex text-[10px] font-bold uppercase text-[#140e07]">
                   <GitCompare className="h-3 w-3" />
                   Modification Diff Summary
                 </span>
-                <span className="font-display text-sm font-bold text-white">
+                <span className="font-display text-base font-bold text-[#f5ebd6]">
                   “{latestDiff.prompt}”
                 </span>
-                <span className="rounded border border-slate-800 bg-slate-900 px-2 py-0.5 font-mono text-[10px] text-slate-300 tabular-nums">
+                <span className="rounded border border-[#d4af37]/25 bg-[#1d1710] px-2 py-0.5 font-codex text-[10px] text-[#e6d3b3] tabular-nums">
                   {(latestDiff.totalDurationMs / 1000).toFixed(1)}s ·{' '}
                   {(latestDiff.totalTokensUsed / 1000).toFixed(1)}k tok ·{' '}
                   {latestDiff.runner}
                 </span>
               </div>
-              <p className="text-xs text-slate-300">
+              <p className="text-xs text-[#e6d3b3]">
                 {latestDiff.classificationReasoning}
               </p>
             </div>
 
             {/* Re-ran vs Skipped Stage Pills */}
             <div className="flex flex-wrap items-center gap-1.5 shrink-0">
-              <span className="rounded-lg border border-emerald-500/40 bg-emerald-500/15 px-2.5 py-1 font-mono text-[11px] font-bold text-emerald-300">
+              <span className="rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-2.5 py-1 font-codex text-[11px] font-bold text-[#f3d478]">
                 Re-ran {latestDiff.affectedAgents.length}/9:{' '}
                 {latestDiff.affectedAgents
                   .map((a) => AGENT_META[a]?.label || a)
                   .join(' → ')}
               </span>
-              <span className="rounded-lg border border-slate-800 bg-slate-900/90 px-2.5 py-1 font-mono text-[11px] text-slate-400">
+              <span className="rounded-lg border border-[#d4af37]/20 bg-[#1d1710] px-2.5 py-1 font-codex text-[11px] text-[#bda782]">
                 Skipped {latestDiff.skippedAgents.length} unchanged
               </span>
             </div>
@@ -721,19 +721,19 @@ export function ModifyChat({
           {/* 3-Column Diff Breakdown: Price · Parts · Print Time & Plates */}
           <div className="grid gap-3.5 md:grid-cols-3">
             {/* 1. Price & BOM Diff */}
-            <div className="rounded-xl border border-slate-800/90 bg-slate-900/55 p-3.5 space-y-2.5">
+            <div className="rounded-xl border border-[#d4af37]/25 bg-[#1d1710]/85 p-3.5 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-emerald-300">
+                <span className="inline-flex items-center gap-1.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
                   <DollarSign className="h-3.5 w-3.5" />
                   DIY Price & BOM Diff
                 </span>
                 <span
-                  className={`rounded-md px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums ${
+                  className={`rounded-md px-2 py-0.5 font-codex text-[11px] font-bold tabular-nums ${
                     latestDiff.price.deltaCost < 0
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                      ? 'bg-[#b89b4a]/20 text-[#f3d478] border border-[#b89b4a]/45'
                       : latestDiff.price.deltaCost > 0
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                      : 'bg-slate-800 text-slate-300'
+                      ? 'bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40'
+                      : 'bg-[#282016] text-[#e6d3b3]'
                   }`}
                 >
                   {latestDiff.price.deltaCost === 0
@@ -745,44 +745,44 @@ export function ModifyChat({
               </div>
 
               <div className="flex items-baseline gap-2 font-mono tabular-nums">
-                <span className="text-xs text-slate-400 line-through">
+                <span className="text-xs text-[#bda782] line-through">
                   ${latestDiff.price.beforeDiyCost.toFixed(2)}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 text-slate-500" />
-                <span className="font-display text-xl font-black text-white">
+                <ArrowRight className="h-3.5 w-3.5 text-[#9c7a4c]" />
+                <span className="font-display text-xl font-black text-[#f5ebd6]">
                   ${latestDiff.price.afterDiyCost.toFixed(2)}
                 </span>
-                <span className="text-[11px] text-emerald-400 font-semibold">
+                <span className="text-[11px] text-[#f3d478] font-semibold">
                   ({latestDiff.price.afterSavingsPercent}% saved vs $
                   {latestDiff.price.retailPrice.toFixed(0)})
                 </span>
               </div>
 
               {latestDiff.price.changedItems.length > 0 ? (
-                <ul className="space-y-1 border-t border-slate-800/80 pt-2 font-mono text-[11px] text-slate-300">
+                <ul className="space-y-1 border-t border-[#d4af37]/20 pt-2 font-mono text-[11px] text-[#e6d3b3]">
                   {latestDiff.price.changedItems.slice(0, 3).map((item) => (
                     <li
                       key={item.id}
                       className="flex items-center justify-between gap-2 truncate"
                     >
-                      <span className="truncate text-slate-300">
+                      <span className="truncate text-[#e6d3b3]">
                         {item.partNumber} {item.name}
                       </span>
-                      <span className="shrink-0 text-emerald-300 tabular-nums">
+                      <span className="shrink-0 text-[#f3d478] tabular-nums">
                         ${item.beforePrice.toFixed(2)} → $
                         {item.afterPrice.toFixed(2)}
                       </span>
                     </li>
                   ))}
                   {latestDiff.price.changedItems.length > 3 && (
-                    <li className="text-[10px] text-slate-400">
+                    <li className="text-[10px] text-[#bda782]">
                       +{latestDiff.price.changedItems.length - 3} more BOM line
                       item(s) updated
                     </li>
                   )}
                 </ul>
               ) : (
-                <p className="border-t border-slate-800/80 pt-2 text-[11px] text-slate-400">
+                <p className="border-t border-[#d4af37]/20 pt-2 text-[11px] text-[#bda782]">
                   Off-the-shelf hardware pricing preserved — no BOM changes
                   needed.
                 </p>
@@ -790,79 +790,79 @@ export function ModifyChat({
             </div>
 
             {/* 2. Parts & Geometry Diff */}
-            <div className="rounded-xl border border-slate-800/90 bg-slate-900/55 p-3.5 space-y-2.5">
+            <div className="rounded-xl border border-[#d4af37]/25 bg-[#1d1710]/85 p-3.5 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-sky-300">
+                <span className="inline-flex items-center gap-1.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
                   <Layers className="h-3.5 w-3.5" />
                   Parametric Parts Diff
                 </span>
-                <span className="rounded-md border border-sky-500/35 bg-sky-500/15 px-2 py-0.5 font-mono text-[11px] font-bold text-sky-300 tabular-nums">
+                <span className="rounded-md border border-[#d4af37]/35 bg-[#d4af37]/15 px-2 py-0.5 font-codex text-[11px] font-bold text-[#f3d478] tabular-nums">
                   {latestDiff.parts.modifiedParts.length > 0
                     ? `${latestDiff.parts.modifiedParts.length} part(s) modified`
                     : `${latestDiff.parts.afterTotalCount} parts preserved`}
                 </span>
               </div>
 
-              <div className="flex items-baseline gap-2 font-mono text-xs text-slate-300 tabular-nums">
+              <div className="flex items-baseline gap-2 font-mono text-xs text-[#e6d3b3] tabular-nums">
                 <span>
-                  <strong className="text-white">
+                  <strong className="text-[#f5ebd6]">
                     {latestDiff.parts.afterPrintedCount}
                   </strong>{' '}
                   printed
                 </span>
                 <span>·</span>
                 <span>
-                  <strong className="text-white">
+                  <strong className="text-[#f5ebd6]">
                     {latestDiff.parts.afterPurchasedCount}
                   </strong>{' '}
                   off-the-shelf
                 </span>
                 <span>·</span>
-                <span className="text-emerald-400">
+                <span className="text-[#f3d478]">
                   DFM {latestDiff.dfm.score}/100
                 </span>
               </div>
 
               {latestDiff.parts.modifiedParts.length > 0 ? (
-                <ul className="space-y-1.5 border-t border-slate-800/80 pt-2 font-mono text-[11px]">
+                <ul className="space-y-1.5 border-t border-[#d4af37]/20 pt-2 font-mono text-[11px]">
                   {latestDiff.parts.modifiedParts.slice(0, 3).map((mp) => (
                     <li key={mp.id} className="space-y-0.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="font-bold text-white truncate">
+                        <span className="font-bold text-[#f5ebd6] truncate">
                           {mp.partNumber} · {mp.name}
                         </span>
-                        <span className="shrink-0 text-sky-300 tabular-nums">
+                        <span className="shrink-0 text-[#f3d478] tabular-nums">
                           {mp.beforeDimsMm.join('×')} →{' '}
                           {mp.afterDimsMm.join('×')}mm
                         </span>
                       </div>
-                      <div className="truncate text-[10px] text-slate-400 font-sans">
+                      <div className="truncate text-[10px] text-[#bda782] font-sans">
                         {mp.changeSummary}
                       </div>
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="border-t border-slate-800/80 pt-2 text-[11px] text-slate-400">
+                <p className="border-t border-[#d4af37]/20 pt-2 text-[11px] text-[#bda782]">
                   3D CAD part geometry & STLs untouched by this modification.
                 </p>
               )}
             </div>
 
             {/* 3. Print Time, Filament & Plates Diff */}
-            <div className="rounded-xl border border-slate-800/90 bg-slate-900/55 p-3.5 space-y-2.5">
+            <div className="rounded-xl border border-[#d4af37]/25 bg-[#1d1710]/85 p-3.5 space-y-2.5">
               <div className="flex items-center justify-between">
-                <span className="inline-flex items-center gap-1.5 font-mono text-[11px] font-bold uppercase tracking-wider text-indigo-300">
+                <span className="inline-flex items-center gap-1.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
                   <Clock className="h-3.5 w-3.5" />
                   Print Time & Plates Diff
                 </span>
                 <span
-                  className={`rounded-md px-2 py-0.5 font-mono text-[11px] font-bold tabular-nums ${
+                  className={`rounded-md px-2 py-0.5 font-codex text-[11px] font-bold tabular-nums ${
                     latestDiff.print.deltaPrintTimeMinutes < 0
-                      ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/40'
+                      ? 'bg-[#b89b4a]/20 text-[#f3d478] border border-[#b89b4a]/45'
                       : latestDiff.print.deltaPrintTimeMinutes > 0
-                      ? 'bg-amber-500/20 text-amber-300 border border-amber-500/40'
-                      : 'bg-slate-800 text-slate-300'
+                      ? 'bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40'
+                      : 'bg-[#282016] text-[#e6d3b3]'
                   }`}
                 >
                   {formatSignedDeltaMinutes(
@@ -872,34 +872,34 @@ export function ModifyChat({
               </div>
 
               <div className="flex items-baseline gap-2 font-mono tabular-nums">
-                <span className="text-xs text-slate-400 line-through">
+                <span className="text-xs text-[#bda782] line-through">
                   {formatDurationMinutes(
                     latestDiff.print.beforePrintTimeMinutes
                   )}
                 </span>
-                <ArrowRight className="h-3.5 w-3.5 text-slate-500" />
-                <span className="font-display text-xl font-black text-white">
+                <ArrowRight className="h-3.5 w-3.5 text-[#9c7a4c]" />
+                <span className="font-display text-xl font-black text-[#f5ebd6]">
                   {formatDurationMinutes(
                     latestDiff.print.afterPrintTimeMinutes
                   )}
                 </span>
-                <span className="text-[11px] text-sky-300">
+                <span className="text-[11px] text-[#e6d3b3]">
                   ({latestDiff.print.beforeWeightGrams}g →{' '}
                   {latestDiff.print.afterWeightGrams}g)
                 </span>
               </div>
 
-              <div className="space-y-1 border-t border-slate-800/80 pt-2 font-mono text-[11px] text-slate-300">
+              <div className="space-y-1 border-t border-[#d4af37]/20 pt-2 font-mono text-[11px] text-[#e6d3b3]">
                 <div className="flex items-center justify-between">
-                  <span className="text-slate-400">Build Plates:</span>
-                  <span className="text-white font-semibold tabular-nums">
+                  <span className="text-[#bda782]">Build Plates:</span>
+                  <span className="text-[#f5ebd6] font-semibold tabular-nums">
                     {latestDiff.print.beforePlatesCount} plate(s) →{' '}
                     {latestDiff.print.afterPlatesCount} plate(s)
                   </span>
                 </div>
                 <div className="flex items-center justify-between gap-2">
-                  <span className="text-slate-400 shrink-0">Target Bed:</span>
-                  <span className="truncate text-emerald-300 font-semibold">
+                  <span className="text-[#bda782] shrink-0">Target Bed:</span>
+                  <span className="truncate text-[#f3d478] font-semibold">
                     {latestDiff.print.afterPrinterName}
                   </span>
                 </div>

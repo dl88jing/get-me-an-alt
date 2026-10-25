@@ -680,7 +680,7 @@ export default function LandingPage() {
                   <button
                     type="button"
                     onClick={() => setImageFile(null)}
-                    className="font-mono text-xs text-rose-400 hover:underline"
+                    className="font-mono text-xs text-[#e06348] hover:underline"
                   >
                     Remove image
                   </button>
@@ -712,7 +712,7 @@ export default function LandingPage() {
             </div>
 
             {error && (
-              <p className="font-mono text-xs font-medium text-rose-400">
+              <p className="font-mono text-xs font-medium text-[#e06348]">
                 {error}
               </p>
             )}
@@ -1129,10 +1129,10 @@ export default function LandingPage() {
             </div>
 
             <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
-              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-emerald-300">
+              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
                 SINGLE-PLATE FORGE
               </div>
-              <div className="font-display text-4xl sm:text-5xl font-bold text-emerald-300 tabular-nums tracking-tight">
+              <div className="font-display text-4xl sm:text-5xl font-bold text-[#f3d478] tabular-nums tracking-tight">
                 1 Plate
               </div>
               <p className="font-mono text-xs text-[#bda782]">
@@ -1153,7 +1153,7 @@ export default function LandingPage() {
               <div className="h-3.5 w-full rounded-full bg-[#2b1d0e]/20 overflow-hidden flex border border-[#5c3a1d]/40">
                 <div
                   style={{ width: '4%' }}
-                  className="bg-emerald-700 h-full"
+                  className="bg-[#6e5a26] h-full"
                   title="3D Filament ($4.25)"
                 />
                 <div
@@ -1169,7 +1169,7 @@ export default function LandingPage() {
               </div>
               <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-[#3b2410]">
                 <span className="inline-flex items-center gap-1.5 font-semibold">
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-700" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-[#6e5a26]" />
                   $4.25 Printed PETG (3%)
                 </span>
                 <span className="inline-flex items-center gap-1.5 font-semibold">
@@ -1214,7 +1214,7 @@ export default function LandingPage() {
               </strong>{' '}
               into{' '}
               <strong className="text-[#f5ebd6]">
-                watertight emerald PETG and burnished brass hardware
+                watertight bronze-gilded PETG and burnished brass hardware
               </strong>
               —exploding along its `[x, y, z]` datum axis.
             </p>
@@ -1225,8 +1225,8 @@ export default function LandingPage() {
               <span className="h-2 w-2 rounded-full bg-[#e6d3b3]" />
               Sepia Codex Sketch
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-400/35 bg-emerald-400/10 px-3 py-1.5 text-emerald-300">
-              <span className="h-2 w-2 rounded-full bg-emerald-400" />
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-3 py-1.5 text-[#f3d478]">
+              <span className="h-2 w-2 rounded-full bg-[#b89b4a]" />
               Printed PETG Vessel
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/35 bg-[#d4af37]/10 px-3 py-1.5 text-[#f3d478]">
@@ -1281,7 +1281,7 @@ export default function LandingPage() {
                       {item.folio} · {item.savings} ({item.savingsPct})
                     </span>
                     {isReadySample && (
-                      <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] font-semibold text-emerald-300 border border-emerald-500/30">
+                      <span className="rounded-md bg-[#b89b4a]/20 px-2 py-0.5 font-codex text-[10px] font-semibold text-[#f3d478] border border-[#b89b4a]/40">
                         Illuminated Demo
                       </span>
                     )}

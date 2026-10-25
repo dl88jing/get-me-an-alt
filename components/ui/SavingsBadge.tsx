@@ -14,7 +14,7 @@ export function SavingsBadge({
   }).format(savings);
   return (
     <span
-      className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-sm font-semibold text-[#3fb950]"
+      className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/45 px-3 py-1 font-codex text-xs font-bold text-[#f3d478]"
       style={{ background: 'var(--accent-soft)' }}
       title={`You save ${formatted} (${savingsPercent.toFixed(1)}%) vs. the original`}
     >

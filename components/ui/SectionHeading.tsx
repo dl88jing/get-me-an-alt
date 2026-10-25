@@ -12,11 +12,11 @@ export function SectionHeading({
   return (
     <div className="animate-slide-in">
       {eyebrow ? <p className="eyebrow">{eyebrow}</p> : null}
-      <h2 className="mt-1 text-xl font-semibold tracking-tight text-[#e6edf3]">
+      <h2 className="mt-1 font-display text-2xl font-bold tracking-tight text-[#f5ebd6]">
         {title}
       </h2>
       {description ? (
-        <p className="mt-1 text-sm leading-relaxed text-[#8b98a9]">{description}</p>
+        <p className="mt-1 text-sm leading-relaxed text-[#bda782]">{description}</p>
       ) : null}
     </div>
   );
@@ -33,8 +33,8 @@ export function EmptyState({
 }) {
   return (
     <div className="card flex flex-col items-center px-6 py-10 text-center">
-      <p className="font-medium text-[#e6edf3]">{title}</p>
-      {body ? <p className="mt-1 max-w-md text-sm text-[#8b98a9]">{body}</p> : null}
+      <p className="font-display text-lg font-bold text-[#f5ebd6]">{title}</p>
+      {body ? <p className="mt-1 max-w-md text-sm text-[#bda782]">{body}</p> : null}
       {children ? <div className="mt-4">{children}</div> : null}
     </div>
   );
@@ -46,7 +46,7 @@ export function LoadingState({ label = 'Agents are working…' }: { label?: stri
       <div className="skeleton h-4 w-1/3" />
       <div className="skeleton h-4 w-2/3" />
       <div className="skeleton h-4 w-1/2" />
-      <p className="pt-1 text-sm text-[#8b98a9]">{label}</p>
+      <p className="pt-1 text-sm text-[#bda782]">{label}</p>
     </div>
   );
 }
