@@ -1,21 +1,19 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DEFAULT_PRINTER_ID, getPrinterById } from "../lib/printers";
+import { DEFAULT_PRINTER_ID } from "../lib/printers";
 import {
-  DesignSpec,
+  DesignPartShape,
+  generateCadBundle,
   generatePartMesh,
-  meshToBinaryStl,
-  packPrintedParts,
-  Plate3mfItem,
+  normalizeDesignSpec,
+  normalizeInstructions,
   PRINTED_PART_SHAPES,
-  TriangleMesh,
   validateManifold,
-  writePlate3mf,
 } from "../lib/cad";
 
 function verifyAllParametricShapes(): void {
-  console.log("=== Verifying all 10 parametric shape generators (2-manifold check) ===");
+  console.log("=== Verifying parametric shape generators & aliases (2-manifold check) ===");
   const sampleParams: Record<string, Record<string, any>> = {
     box: { width: 40, depth: 30, height: 20 },
     cylinder: { radius: 15, height: 30, segments: 36 },
@@ -57,9 +55,21 @@ function verifyAllParametricShapes(): void {
         { x: 20, y: 0, radius: 2 },
       ],
     },
+    cone: { radiusBottom: 15, radiusTop: 3, height: 40 },
+    sphere: { radius: 16 },
+    bracket: { legA: 40, legB: 35, width: 20, thickness: 4 },
+    enclosure: { width: 68, depth: 54, height: 28, wallThickness: 2.5 },
   };
 
-  for (const shape of PRINTED_PART_SHAPES) {
+  const allShapes: DesignPartShape[] = [
+    ...PRINTED_PART_SHAPES,
+    "cone",
+    "sphere",
+    "bracket",
+    "enclosure",
+  ];
+
+  for (const shape of allShapes) {
     const mesh = generatePartMesh({ shape, params: sampleParams[shape] ?? {} });
     const report = validateManifold(mesh);
     if (!report.isManifold) {
@@ -77,196 +87,154 @@ function verifyAllParametricShapes(): void {
   }
 }
 
+function verifyLegacyAdapterCompatibility(): void {
+  console.log("\n=== Verifying dual-schema adapter compatibility ===");
+  const legacyDesign = {
+    objectName: "Legacy Schema Test",
+    printedParts: [
+      {
+        id: "base-box",
+        name: "Base Box",
+        shape: "box",
+        params: { width: 50, depth: 40, height: 20 },
+        color: "#0ea5e9",
+        quantity: 1,
+      },
+    ],
+    purchasedParts: [
+      {
+        id: "motor-1",
+        name: "5V Motor",
+        bomLine: "bom-motor-1",
+        proxyShape: { shape: "cylinder", params: { radius: 10, height: 25 } },
+      },
+    ],
+    assembly: [
+      { partId: "base-box", position: [0, 0, 0], rotation: [0, 0, 0], explode: [0, 0, -30], step: 1 },
+      { partId: "motor-1", position: [0, 0, 20], rotation: [0, 0, 0], explode: [0, 0, 40], step: 2 },
+    ],
+  };
+
+  const normalized = normalizeDesignSpec(legacyDesign);
+  if (normalized.parts.length !== 2 || normalized.parts[0].kind !== "printed" || normalized.parts[1].kind !== "purchased") {
+    throw new Error("Legacy design adapter failed to produce flat parts[] array.");
+  }
+
+  const legacyInstructions = {
+    steps: [
+      { step: 1, title: "Place Base", description: "Put base on table", partIds: ["base-box"], tools: [] },
+      { step: 2, title: "Insert Motor", description: "Drop motor in", partIds: ["motor-1", "base-box"], tools: ["M3 Hex"] },
+    ],
+  };
+  const normInst = normalizeInstructions(legacyInstructions, normalized);
+  if (
+    normInst.steps.length !== 2 ||
+    normInst.steps[1].motion.length !== 1 ||
+    normInst.steps[1].motion[0].partId !== "motor-1"
+  ) {
+    throw new Error("Legacy instructions adapter failed to synthesize motion[].");
+  }
+  console.log("  [OK] Adapters accept both shared-contract and legacy schemas.");
+}
+
+function generateArtifactsForFolder(targetDir: string, objectId: string, printerId = DEFAULT_PRINTER_ID): void {
+  const partsDir = path.join(targetDir, "parts");
+  fs.mkdirSync(partsDir, { recursive: true });
+
+  // Remove stale legacy `prints/` directory if present
+  const legacyPrintsDir = path.join(targetDir, "prints");
+  if (fs.existsSync(legacyPrintsDir)) {
+    fs.rmSync(legacyPrintsDir, { recursive: true, force: true });
+  }
+
+  const designPath = path.join(targetDir, "design.json");
+  const rawDesign = JSON.parse(fs.readFileSync(designPath, "utf-8"));
+  const bundle = generateCadBundle(rawDesign, { printerId, objectId });
+
+  console.log(`\n=== Generating STLs & Plates for '${bundle.design.objectName}' in ${targetDir} ===`);
+  console.log(
+    `Target Printer: ${bundle.printer.name} (${bundle.printer.bed.x}x${bundle.printer.bed.y}x${bundle.printer.bed.z} mm)`
+  );
+
+  for (const art of bundle.stlArtifacts) {
+    if (!art.manifold.isManifold) {
+      throw new Error(
+        `Part '${art.partId}' (${art.shape}) failed manifold validation: ${JSON.stringify(art.manifold)}`
+      );
+    }
+
+    const view = new DataView(art.bytes.buffer, art.bytes.byteOffset, art.bytes.byteLength);
+    const headerTriCount = view.getUint32(80, true);
+    const expectedByteLen = 84 + headerTriCount * 50;
+    if (headerTriCount !== art.manifold.triangleCount || art.byteLength !== expectedByteLen) {
+      throw new Error(
+        `Invalid STL binary structure for ${art.partId}: tris=${headerTriCount}, bytes=${art.byteLength}`
+      );
+    }
+
+    const stlAbsPath = path.join(targetDir, art.stlFile);
+    fs.writeFileSync(stlAbsPath, art.bytes);
+    console.log(
+      `  [STL] ${art.stlFile.padEnd(28)} | qty=${art.quantity} | dims=${art.dims_mm
+        .map((d) => d.toFixed(1))
+        .join("x")} mm | tris=${art.manifold.triangleCount} | manifold=true`
+    );
+  }
+
+  if (bundle.packResult.rejected.length > 0) {
+    throw new Error(
+      `Unexpected rejected parts on printer bed: ${JSON.stringify(bundle.packResult.rejected)}`
+    );
+  }
+
+  for (const plate3mf of bundle.plate3mfArtifacts) {
+    if (
+      plate3mf.byteLength < 22 ||
+      plate3mf.bytes[0] !== 0x50 ||
+      plate3mf.bytes[1] !== 0x4b ||
+      plate3mf.bytes[2] !== 0x03 ||
+      plate3mf.bytes[3] !== 0x04
+    ) {
+      throw new Error(`Generated 3MF ${plate3mf.fileName} is not a valid ZIP archive.`);
+    }
+    const outPath = path.join(targetDir, plate3mf.relativePath);
+    fs.writeFileSync(outPath, plate3mf.bytes);
+    console.log(
+      `  [3MF] ${plate3mf.relativePath.padEnd(28)} | size=${plate3mf.byteLength} B (${bundle.packResult.heuristicUsed})`
+    );
+  }
+
+  const platesJsonPath = path.join(targetDir, "plates.json");
+  fs.writeFileSync(platesJsonPath, JSON.stringify(bundle.platesJson, null, 2) + "\n", "utf-8");
+
+  // Validate instructions.json motion vectors against design.json
+  const instructionsPath = path.join(targetDir, "instructions.json");
+  if (fs.existsSync(instructionsPath)) {
+    const rawInstructions = JSON.parse(fs.readFileSync(instructionsPath, "utf-8"));
+    const normInstructions = normalizeInstructions(rawInstructions, bundle.design);
+    fs.writeFileSync(instructionsPath, JSON.stringify(normInstructions, null, 2) + "\n", "utf-8");
+    console.log(`  [OK] Verified instructions.json (${normInstructions.steps.length} steps with motion:{partId,from,to}[]).`);
+  }
+
+  console.log(
+    `\nWrote ${platesJsonPath} (${bundle.platesJson.totalPlates} plate(s), ${bundle.platesJson.totalPrintedItems} total printed items, ${bundle.platesJson.totalWeightGrams}g total).`
+  );
+}
+
 function main(): void {
   verifyAllParametricShapes();
+  verifyLegacyAdapterCompatibility();
 
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const rootDir = path.resolve(scriptDir, "..");
-  const demoDir = path.join(rootDir, "data", "demo", "plant-waterer");
-  const printsDir = path.join(demoDir, "prints");
-  fs.mkdirSync(printsDir, { recursive: true });
+  const nodeProcess = (globalThis as { process?: { argv?: string[]; cwd?: () => string } }).process;
+  const cliTarget = nodeProcess?.argv?.[2];
+  const targetDir = cliTarget
+    ? path.resolve(nodeProcess?.cwd ? nodeProcess.cwd() : rootDir, cliTarget)
+    : path.join(rootDir, "data", "demo", "plant-waterer");
+  const objectId = path.basename(targetDir);
 
-  const designPath = path.join(demoDir, "design.json");
-  const design: DesignSpec = JSON.parse(fs.readFileSync(designPath, "utf-8"));
-  const printer = getPrinterById(DEFAULT_PRINTER_ID);
-
-  console.log(`\n=== Generating Demo STLs for '${design.objectName}' ===`);
-  console.log(
-    `Target Printer: ${printer.name} (${printer.bed.x}x${printer.bed.y}x${printer.bed.z} mm)`
-  );
-
-  const meshesById = new Map<string, TriangleMesh>();
-  const partFilesMeta: Array<{
-    partId: string;
-    name: string;
-    shape: string;
-    material: string;
-    color: string;
-    quantity: number;
-    file: string;
-    bytes: number;
-    dimensionsMm: [number, number, number];
-    triangleCount: number;
-    vertexCount: number;
-    edgeCount: number;
-    volumeMm3: number;
-    isManifold: boolean;
-  }> = [];
-
-  for (const part of design.printedParts) {
-    const mesh = generatePartMesh(part);
-    const report = validateManifold(mesh);
-
-    if (!report.isManifold) {
-      throw new Error(
-        `Demo part '${part.id}' (${part.shape}) failed manifold validation: ${JSON.stringify(
-          report
-        )}`
-      );
-    }
-
-    const stlBytes = meshToBinaryStl(mesh, `GetMeAnAlt ${part.id} (${part.shape})`);
-    const view = new DataView(stlBytes.buffer, stlBytes.byteOffset, stlBytes.byteLength);
-    const headerTriCount = view.getUint32(80, true);
-    const expectedByteLen = 84 + headerTriCount * 50;
-
-    if (headerTriCount !== mesh.triangleCount || stlBytes.byteLength !== expectedByteLen) {
-      throw new Error(
-        `Invalid STL binary structure for ${part.id}: tris=${headerTriCount}, bytes=${stlBytes.byteLength}`
-      );
-    }
-
-    const fileName = `part-${part.id}.stl`;
-    const filePath = path.join(printsDir, fileName);
-    fs.writeFileSync(filePath, stlBytes);
-
-    meshesById.set(part.id, mesh);
-    const dims: [number, number, number] = [
-      Math.round(mesh.bbox.size[0] * 100) / 100,
-      Math.round(mesh.bbox.size[1] * 100) / 100,
-      Math.round(mesh.bbox.size[2] * 100) / 100,
-    ];
-
-    partFilesMeta.push({
-      partId: part.id,
-      name: part.name,
-      shape: part.shape,
-      material: part.material ?? "PLA",
-      color: part.color,
-      quantity: part.quantity,
-      file: fileName,
-      bytes: stlBytes.byteLength,
-      dimensionsMm: dims,
-      triangleCount: report.triangleCount,
-      vertexCount: report.vertexCount,
-      edgeCount: report.edgeCount,
-      volumeMm3: Math.round(report.volumeMm3 * 100) / 100,
-      isManifold: report.isManifold,
-    });
-
-    console.log(
-      `  [STL] ${fileName.padEnd(28)} | qty=${part.quantity} | size=${dims
-        .map((d) => d.toFixed(1))
-        .join("x")} mm | tris=${report.triangleCount} | manifold=true`
-    );
-  }
-
-  console.log(`\n=== Packing Parts onto ${printer.name} Plates ===`);
-  const packResult = packPrintedParts(
-    design.printedParts,
-    printer.bed,
-    { margin: 5, spacing: 5, allowRotation: true },
-    meshesById
-  );
-
-  if (packResult.rejected.length > 0) {
-    throw new Error(
-      `Unexpected rejected parts on default printer bed: ${JSON.stringify(
-        packResult.rejected
-      )}`
-    );
-  }
-
-  const partsById = new Map(design.printedParts.map((p) => [p.id, p]));
-  const platesMeta = packResult.plates.map((plate) => {
-    const plateItems3mf: Plate3mfItem[] = plate.items.map((item) => {
-      const partDef = partsById.get(item.partId)!;
-      const mesh = meshesById.get(item.partId)!;
-      return {
-        partId: item.partId,
-        name: partDef.name,
-        copy: item.copy,
-        mesh,
-        x: item.x,
-        y: item.y,
-        centerX: item.centerX,
-        centerY: item.centerY,
-        rotated: item.rotated,
-        color: partDef.color,
-      };
-    });
-
-    const plateFileName = `plate-${plate.index + 1}.3mf`;
-    const plateFilePath = path.join(printsDir, plateFileName);
-    const zipBytes = writePlate3mf(plateItems3mf, {
-      title: `${design.objectName} - Plate ${plate.index + 1}`,
-      printerName: printer.name,
-      plateIndex: plate.index,
-    });
-
-    // Verify PKZIP magic bytes
-    if (
-      zipBytes.length < 22 ||
-      zipBytes[0] !== 0x50 ||
-      zipBytes[1] !== 0x4b ||
-      zipBytes[2] !== 0x03 ||
-      zipBytes[3] !== 0x04
-    ) {
-      throw new Error(`Generated 3MF ${plateFileName} is not a valid ZIP archive.`);
-    }
-
-    fs.writeFileSync(plateFilePath, zipBytes);
-    console.log(
-      `  [3MF] ${plateFileName} | items=${plate.items.length} | utilization=${(
-        plate.utilization * 100
-      ).toFixed(1)}% | maxHeight=${plate.maxHeight} mm | size=${zipBytes.byteLength} B (${
-        packResult.heuristicUsed
-      })`
-    );
-
-    return {
-      index: plate.index,
-      file: plateFileName,
-      bytes: zipBytes.byteLength,
-      utilization: plate.utilization,
-      maxHeight: plate.maxHeight,
-      items: plate.items,
-    };
-  });
-
-  const totalItems = design.printedParts.reduce((sum, p) => sum + p.quantity, 0);
-  const platesJson = {
-    objectId: "plant-waterer",
-    printer: {
-      id: printer.id,
-      name: printer.name,
-      brand: printer.brand,
-      bed: printer.bed,
-      multiColor: printer.multiColor,
-    },
-    margin: packResult.margin,
-    spacing: packResult.spacing,
-    heuristicUsed: packResult.heuristicUsed,
-    totalUniqueParts: design.printedParts.length,
-    totalPrintedItems: totalItems,
-    partFiles: partFilesMeta,
-    plates: platesMeta,
-    rejected: packResult.rejected,
-  };
-
-  const platesJsonPath = path.join(printsDir, "plates.json");
-  fs.writeFileSync(platesJsonPath, JSON.stringify(platesJson, null, 2) + "\n", "utf-8");
-  console.log(`\nWrote ${platesJsonPath} (${platesMeta.length} plate(s), ${totalItems} total printed items).`);
+  generateArtifactsForFolder(targetDir, objectId, DEFAULT_PRINTER_ID);
 }
 
 main();

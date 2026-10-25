@@ -5,22 +5,38 @@ Zero-dependency TypeScript CAD engine for generating watertight 3D-printable mes
 ## Module Overview
 
 - `lib/printers.ts` — `PRINTERS`, `DEFAULT_PRINTER_ID` (`"bambu-a1"`), `DEFAULT_PRINTER`, `getPrinterById(id)`.
-- `lib/cad/parts.ts` — `PrintedPart`, `PurchasedPart`, `AssemblyNode`, `DesignSpec`, `PrintedPartShape`.
+- `lib/cad/parts.ts` — `DesignPart` (shared contract), `DesignSpec`, `PrintedPart`, `PurchasedPart`, `AssemblyNode`, `InstructionStepSpec`, `InstructionsSpec`.
 - `lib/cad/geometry.ts` — `generatePartMesh(part)`, `validateManifold(mesh)`, `transformMesh(mesh, opts)`, `TriangleMesh`.
 - `lib/cad/stl.ts` — `meshToBinaryStl(mesh, label)`, `writePlate3mf(items, opts)`, `createStoreZip(entries)`.
-- `lib/cad/packer.ts` — `packParts(parts, bed, opts)`, `packPrintedParts(printedParts, bed, opts)`.
+- `lib/cad/packer.ts` — `packParts(parts, bed, opts)`, `packPrintedParts(parts, bed, opts)`.
+- `lib/cad/adapters.ts` — `normalizeDesignSpec(raw)`, `normalizeDesignPart(raw)`, `normalizeInstructions(raw, design)`, `generateCadBundle(design, opts)`.
 
 ## Usage in API Routes & UI Components
 
-### 1. Select Printer & Generate Meshes
+### 1. Generate Full CAD Bundle (`parts/*.stl`, `parts/plate-*.3mf`, `plates.json`)
+
+```ts
+import { generateCadBundle, normalizeInstructions } from "@/lib/cad";
+
+const bundle = generateCadBundle(rawDesignJson, {
+  printerId: "bambu-a1",
+  objectId: "plant-waterer",
+});
+// bundle.stlArtifacts => [{ partId, stlFile: "parts/<id>.stl", bytes: Uint8Array, dims_mm, manifold }]
+// bundle.plate3mfArtifacts => [{ plateNumber, relativePath: "parts/plate-1.3mf", bytes: Uint8Array }]
+// bundle.platesJson => unified plates.json payload
+```
+
+### 2. Select Printer & Generate Meshes
 
 ```ts
 import { getPrinterById, DEFAULT_PRINTER_ID } from "@/lib/printers";
-import { generatePartMesh, validateManifold } from "@/lib/cad/geometry";
-import type { DesignSpec } from "@/lib/cad/parts";
+import { generatePartMesh, validateManifold, normalizeDesignSpec } from "@/lib/cad";
 
+const design = normalizeDesignSpec(rawDesignJson); // accepts flat parts[] or legacy printedParts/purchasedParts
 const printer = getPrinterById(printerId ?? DEFAULT_PRINTER_ID);
-const mesh = generatePartMesh(design.printedParts[0]); // { positions, indices, normals, bbox }
+const printedParts = design.parts.filter((p) => p.kind === "printed");
+const mesh = generatePartMesh(printedParts[0]); // { positions, indices, normals, bbox }
 const check = validateManifold(mesh); // { isManifold: true, triangleCount, volumeMm3, ... }
 ```
 

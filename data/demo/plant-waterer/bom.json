@@ -11,178 +11,319 @@
   "items": [
     {
       "id": "bom-pump-5v",
+      "partNumber": "OTS-01",
       "partId": "pump-5v",
       "name": "5V Mini Submersible Micro Water Pump (3V-5V DC, 120 L/h)",
-      "category": "Fluidics & Actuation",
+      "category": "plumbing",
+      "specification": "DC 3-5V, 0.2A, 120 L/h flow rate, 1.1m max head, 7mm OD outlet nozzle, 1m waterproof lead",
+      "specs": "DC 3-5V, 0.2A, 120 L/h flow rate, 1.1m max head, 7mm OD outlet nozzle, 1m waterproof lead",
       "qty": 1,
       "quantity": 1,
+      "unit": "pc",
       "unitPrice": 4.5,
       "totalPrice": 4.5,
-      "specs": "DC 3-5V, 0.2A, 120 L/h flow rate, 1.1m max head, 7mm OD outlet nozzle, 1m waterproof lead",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=5V+mini+submersible+water+pump+USB",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=5V+mini+submersible+water+pump+USB"
+          "url": "https://www.amazon.com/s?k=5V+mini+submersible+water+pump+USB",
+          "estPrice": 4.5,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=5v+mini+submersible+water+pump"
+          "url": "https://www.walmart.com/search?q=5v+mini+submersible+water+pump",
+          "estPrice": 4.95,
+          "inStock": true
         },
         {
           "retailer": "AliExpress",
-          "url": "https://www.aliexpress.com/w/wholesale-5v-mini-submersible-water-pump.html"
+          "url": "https://www.aliexpress.com/w/wholesale-5v-mini-submersible-water-pump.html",
+          "estPrice": 2.1,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["pump-5v"],
+      "notes": "Seats into printed PRT-03 isolation cradle on the reservoir floor."
     },
     {
       "id": "bom-silicone-tubing",
+      "partNumber": "OTS-02",
       "partId": "silicone-tubing",
       "name": "Food-Grade Flexible Silicone Tubing 4mm ID x 6mm OD (2 Meters)",
-      "category": "Fluidics & Actuation",
+      "category": "plumbing",
+      "specification": "4mm inner diameter, 6mm outer diameter, 1mm wall, soft flexible silicone rubber",
+      "specs": "4mm inner diameter, 6mm outer diameter, 1mm wall, soft flexible silicone rubber",
       "qty": 1,
       "quantity": 1,
+      "unit": "roll (2m)",
       "unitPrice": 3.99,
       "totalPrice": 3.99,
-      "specs": "4mm inner diameter, 6mm outer diameter, 1mm wall, soft flexible silicone rubber",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=4mm+ID+6mm+OD+silicone+tubing",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=4mm+ID+6mm+OD+silicone+tubing"
+          "url": "https://www.amazon.com/s?k=4mm+ID+6mm+OD+silicone+tubing",
+          "estPrice": 3.99,
+          "inStock": true
         },
         {
           "retailer": "Home Depot",
-          "url": "https://www.homedepot.com/s/1%2F4%20inch%20vinyl%20tubing%20irrigation"
+          "url": "https://www.homedepot.com/s/1%2F4%20inch%20vinyl%20tubing%20irrigation",
+          "estPrice": 4.25,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=4mm+6mm+silicone+tubing"
+          "url": "https://www.walmart.com/search?q=4mm+6mm+silicone+tubing",
+          "estPrice": 4.1,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["silicone-tubing"],
+      "notes": "Routes through PRT-02 lid grommet, PRT-07 rim clips, and PRT-08 soil stakes."
     },
     {
       "id": "bom-moisture-sensor",
+      "partNumber": "OTS-03",
       "partId": "moisture-sensor",
       "name": "Capacitive Soil Moisture Sensor Module v1.2 (Corrosion Resistant)",
-      "category": "Sensors",
+      "category": "electronics",
+      "specification": "3.3V-5.5V operating voltage, 0-3.0V analog output, PH2.54-3P connector, coated PCB blade",
+      "specs": "3.3V-5.5V operating voltage, 0-3.0V analog output, PH2.54-3P connector, coated PCB blade",
       "qty": 1,
       "quantity": 1,
+      "unit": "pc",
       "unitPrice": 3.25,
       "totalPrice": 3.25,
-      "specs": "3.3V-5.5V operating voltage, 0-3.0V analog output, PH2.54-3P connector, coated PCB blade",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=capacitive+soil+moisture+sensor+v1.2",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=capacitive+soil+moisture+sensor+v1.2"
+          "url": "https://www.amazon.com/s?k=capacitive+soil+moisture+sensor+v1.2",
+          "estPrice": 3.25,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=capacitive+soil+moisture+sensor"
+          "url": "https://www.walmart.com/search?q=capacitive+soil+moisture+sensor",
+          "estPrice": 3.75,
+          "inStock": true
         },
         {
           "retailer": "AliExpress",
-          "url": "https://www.aliexpress.com/w/wholesale-capacitive-soil-moisture-sensor-v1.2.html"
+          "url": "https://www.aliexpress.com/w/wholesale-capacitive-soil-moisture-sensor-v1.2.html",
+          "estPrice": 1.35,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["moisture-sensor"],
+      "notes": "Corrosion-free capacitive sensing in root zone."
     },
     {
       "id": "bom-esp32-mcu",
+      "partNumber": "OTS-04",
       "partId": "esp32-mcu",
       "name": "ESP32-WROOM-32 Type-C Development Board (or Arduino Nano)",
-      "category": "Electronics & Control",
+      "category": "electronics",
+      "specification": "Dual-core 240MHz Wi-Fi/BLE MCU, 12-bit ADC, USB-C programming & 5V VIN pass-through",
+      "specs": "Dual-core 240MHz Wi-Fi/BLE MCU, 12-bit ADC, USB-C programming & 5V VIN pass-through",
       "qty": 1,
       "quantity": 1,
+      "unit": "pc",
       "unitPrice": 5.99,
       "totalPrice": 5.99,
-      "specs": "Dual-core 240MHz Wi-Fi/BLE MCU, 12-bit ADC, USB-C programming & 5V VIN pass-through",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=ESP32+USB-C+development+board",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=ESP32+USB-C+development+board"
+          "url": "https://www.amazon.com/s?k=ESP32+USB-C+development+board",
+          "estPrice": 5.99,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=ESP32+development+board+USB+C"
+          "url": "https://www.walmart.com/search?q=ESP32+development+board+USB+C",
+          "estPrice": 6.49,
+          "inStock": true
         },
         {
           "retailer": "AliExpress",
-          "url": "https://www.aliexpress.com/w/wholesale-esp32-usb-c-board.html"
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-usb-c-board.html",
+          "estPrice": 3.4,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["esp32-mcu"],
+      "notes": "Mounts inside PRT-05 controller box."
     },
     {
       "id": "bom-mosfet-module",
+      "partNumber": "OTS-05",
       "partId": "mosfet-module",
       "name": "5V Logic-Level MOSFET Switch / Single-Channel Relay Module",
-      "category": "Electronics & Control",
+      "category": "electronics",
+      "specification": "3.3V/5V logic trigger, up to 5A DC load switching with status LED and screw terminals",
+      "specs": "3.3V/5V logic trigger, up to 5A DC load switching with status LED and screw terminals",
       "qty": 1,
       "quantity": 1,
+      "unit": "pc",
       "unitPrice": 2.49,
       "totalPrice": 2.49,
-      "specs": "3.3V/5V logic trigger, up to 5A DC load switching with status LED and screw terminals",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=5V+MOSFET+switch+driver+module+arduino",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=5V+MOSFET+switch+driver+module+arduino"
+          "url": "https://www.amazon.com/s?k=5V+MOSFET+switch+driver+module+arduino",
+          "estPrice": 2.49,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=5V+single+channel+relay+module+arduino"
+          "url": "https://www.walmart.com/search?q=5V+single+channel+relay+module+arduino",
+          "estPrice": 2.95,
+          "inStock": true
         },
         {
           "retailer": "AliExpress",
-          "url": "https://www.aliexpress.com/w/wholesale-mosfet-switch-module-arduino.html"
+          "url": "https://www.aliexpress.com/w/wholesale-mosfet-switch-module-arduino.html",
+          "estPrice": 1.1,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["mosfet-module"],
+      "notes": "Switches 5V power to the submersible pump from 3.3V ESP32 GPIO."
     },
     {
       "id": "bom-usbc-power",
+      "partNumber": "OTS-06",
       "partId": "usbc-power",
       "name": "5V 2A USB-C Wall Power Adapter + 1.5m USB-C Cable",
-      "category": "Power",
+      "category": "power",
+      "specification": "100-240V AC input, 5V DC 2.0A output, UL listed wall plug with 1.5m USB-C cord",
+      "specs": "100-240V AC input, 5V DC 2.0A output, UL listed wall plug with 1.5m USB-C cord",
       "qty": 1,
       "quantity": 1,
+      "unit": "set",
       "unitPrice": 5.99,
       "totalPrice": 5.99,
-      "specs": "100-240V AC input, 5V DC 2.0A output, UL listed wall plug with 1.5m USB-C cord",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=5V+2A+USB-C+power+adapter+with+cable",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=5V+2A+USB-C+power+adapter+with+cable"
+          "url": "https://www.amazon.com/s?k=5V+2A+USB-C+power+adapter+with+cable",
+          "estPrice": 5.99,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=5V+2A+USB+C+wall+charger+cable"
+          "url": "https://www.walmart.com/search?q=5V+2A+USB+C+wall+charger+cable",
+          "estPrice": 6.29,
+          "inStock": true
         },
         {
           "retailer": "Home Depot",
-          "url": "https://www.homedepot.com/s/USB-C%20wall%20charger%20adapter"
+          "url": "https://www.homedepot.com/s/USB-C%20wall%20charger%20adapter",
+          "estPrice": 6.99,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["usbc-power"],
+      "notes": "Powers both the ESP32 controller and the 5V submersible pump."
     },
     {
       "id": "bom-wiring-hardware",
+      "partNumber": "OTS-07",
       "partId": "wiring-hardware",
       "name": "Dupont Jumper Wires (20cm F-F) & M3x10mm Stainless Screws",
-      "category": "Fasteners & Wiring",
+      "category": "hardware",
+      "specification": "10-pin 20cm female-to-female jumper strip + 4x M3x10mm socket head screws & nuts",
+      "specs": "10-pin 20cm female-to-female jumper strip + 4x M3x10mm socket head screws & nuts",
       "qty": 1,
       "quantity": 1,
+      "unit": "pack",
       "unitPrice": 2.79,
       "totalPrice": 2.79,
-      "specs": "10-pin 20cm female-to-female jumper strip + 4x M3x10mm socket head screws & nuts",
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=dupont+jumper+wires+female+to+female+M3+screws",
       "retailerLinks": [
         {
           "retailer": "Amazon",
-          "url": "https://www.amazon.com/s?k=dupont+jumper+wires+female+to+female+M3+screws"
+          "url": "https://www.amazon.com/s?k=dupont+jumper+wires+female+to+female+M3+screws",
+          "estPrice": 2.79,
+          "inStock": true
         },
         {
           "retailer": "Home Depot",
-          "url": "https://www.homedepot.com/s/M3%20x%2010mm%20stainless%20machine%20screws"
+          "url": "https://www.homedepot.com/s/M3%20x%2010mm%20stainless%20machine%20screws",
+          "estPrice": 2.98,
+          "inStock": true
         },
         {
           "retailer": "Walmart",
-          "url": "https://www.walmart.com/search?q=dupont+jumper+wires+female"
+          "url": "https://www.walmart.com/search?q=dupont+jumper+wires+female",
+          "estPrice": 2.89,
+          "inStock": true
         }
-      ]
+      ],
+      "linkedPartIds": ["wiring-hardware", "controller-bracket", "controller-box"],
+      "notes": "Fastens controller box to L-bracket and wires sensor + MOSFET."
+    },
+    {
+      "id": "bom-filament-petg",
+      "partNumber": "FIL-01",
+      "partId": "reservoir-tank",
+      "name": "3D Print Filament — PETG & PLA (~245g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm PETG (Reservoir, Cradle, Clips) + PLA (Lid, Funnel, Enclosure, Bracket, Stakes, Wheel)",
+      "specs": "1.75mm PETG + PLA filament (~245g from $18/kg spool)",
+      "qty": 245,
+      "quantity": 245,
+      "unit": "g",
+      "unitPrice": 0.018,
+      "totalPrice": 4.4,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PETG+1.75mm+filament+1kg+spool",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PETG+1.75mm+filament+1kg+spool",
+          "estPrice": 4.4,
+          "inStock": true
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=PETG+3D+printer+filament+1.75mm",
+          "estPrice": 4.65,
+          "inStock": true
+        }
+      ],
+      "linkedPartIds": [
+        "reservoir-tank",
+        "reservoir-lid",
+        "pump-mount",
+        "refill-funnel",
+        "controller-box",
+        "controller-bracket",
+        "tube-clip",
+        "drip-stake",
+        "flow-wheel"
+      ],
+      "notes": "Estimated from mesh volume across all 13 printed items."
     }
-  ]
+  ],
+  "summary": {
+    "purchasedPartsTotal": 29.0,
+    "filamentCostTotal": 4.4,
+    "totalDiyCost": 33.4,
+    "originalRetailPrice": 129.0,
+    "totalSavings": 95.6,
+    "savingsPercent": 74.1
+  }
 }

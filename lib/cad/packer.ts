@@ -1,6 +1,6 @@
 import { PrinterBed } from "../printers";
 import { generatePartMesh, TriangleMesh } from "./geometry";
-import { PrintedPart } from "./parts";
+import { DesignPart, PrintedPart } from "./parts";
 
 export interface PackInputPart {
   partId: string;
@@ -783,16 +783,20 @@ export function packParts(
 }
 
 /**
- * Convenience helper: generates meshes (or uses precomputed meshes) for `PrintedPart[]`,
- * extracts their Z-up bounding boxes, and packs them onto the minimum number of plates.
+ * Convenience helper: generates meshes (or uses precomputed meshes) for `PrintedPart[]` or `DesignPart[]`,
+ * filters to printed parts (`kind !== "purchased"`), extracts their Z-up bounding boxes, and packs them
+ * onto the minimum number of plates.
  */
 export function packPrintedParts(
-  parts: PrintedPart[],
+  parts: Array<PrintedPart | DesignPart>,
   bed: PrinterBed,
   options: PackOptions = {},
   precomputedMeshes?: Map<string, TriangleMesh>
 ): PackResult {
-  const inputParts: PackInputPart[] = parts.map((part) => {
+  const printedOnly = parts.filter(
+    (p) => !("kind" in p) || p.kind === undefined || p.kind === "printed"
+  );
+  const inputParts: PackInputPart[] = printedOnly.map((part) => {
     const mesh = precomputedMeshes?.get(part.id) ?? generatePartMesh(part);
     const [width, depth, height] = mesh.bbox.size;
     return {
@@ -801,7 +805,7 @@ export function packPrintedParts(
       width,
       depth,
       height,
-      quantity: part.quantity,
+      quantity: Math.max(1, Math.floor(part.quantity ?? 1)),
     };
   });
 

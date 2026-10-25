@@ -1,4 +1,6 @@
 declare module "node:fs" {
+  export function existsSync(path: string): boolean;
+  export function rmSync(path: string, options?: { recursive?: boolean; force?: boolean }): void;
   export function mkdirSync(path: string, options?: { recursive?: boolean }): string | undefined;
   export function readFileSync(path: string, encoding: BufferEncoding): string;
   export function writeFileSync(
@@ -12,6 +14,7 @@ declare module "node:path" {
   export function resolve(...paths: string[]): string;
   export function join(...paths: string[]): string;
   export function dirname(p: string): string;
+  export function basename(p: string): string;
 }
 
 declare module "node:url" {

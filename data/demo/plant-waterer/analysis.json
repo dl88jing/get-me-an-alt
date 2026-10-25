@@ -1,34 +1,82 @@
 {
   "id": "plant-waterer",
   "slug": "plant-waterer",
+  "objectName": "Self-watering plant system (alt to a $129 smart auto-waterer)",
   "name": "Self-Watering Smart Plant System",
   "title": "Self-watering plant system (alt to a $129 smart auto-waterer)",
   "category": "Home & Garden Automation",
+  "tagline": "Closed-loop capacitive soil moisture irrigation system with 1.4L modular PETG reservoir, flow wheel & root-zone emitter stakes",
+  "description": "A closed-loop automatic plant irrigation system combining a 3D-printed 1.4L modular reservoir, snap-fit port lid, submersible pump isolation cradle, ESP32 controller enclosure, silicone tubing clips, and soil drip emitter stakes with $29 of off-the-shelf electronics.",
+  "summary": "A closed-loop automatic plant irrigation system combining a 3D-printed 1.4L modular reservoir, snap-fit port lid, submersible pump isolation cradle, ESP32 controller enclosure, silicone tubing clips, and soil drip emitter stakes with $29 of off-the-shelf electronics.",
+  "functionSummary": "Monitors root-zone soil moisture continuously using a corrosion-resistant capacitive probe and triggers a quiet 5V submersible micro-pump through food-grade 4/6mm silicone tubing to deliver precise water doses directly to plant stakes.",
+  "function": "Monitors root-zone soil moisture continuously using a corrosion-resistant capacitive probe and triggers a quiet 5V submersible micro-pump through food-grade 4/6mm silicone tubing to deliver precise water doses directly to plant stakes.",
+  "inputUrl": "https://www.amazon.com/s?k=smart+wifi+automatic+plant+watering+system+reservoir",
+  "inputType": "url",
   "originalProduct": {
     "name": "Smart Wi-Fi Automatic Drip Irrigation & Reservoir System",
     "brand": "Bespoke Botanics",
+    "retailPrice": 129.0,
     "retailPriceUsd": 129.0,
-    "url": "https://www.amazon.com/s?k=smart+wifi+automatic+plant+watering+system+reservoir"
+    "currency": "USD",
+    "url": "https://www.amazon.com/s?k=smart+wifi+automatic+plant+watering+system+reservoir",
+    "whyExpensive": "Proprietary injection-molded reservoir tank, cloud app subscription markup, and bundled wall power adapter over ~$29 of standard ESP32 + 5V pump hardware."
   },
   "originalPrice": 129.0,
+  "targetDiyCost": 33.4,
   "estimatedDiyCost": 33.4,
   "estimatedSavings": 95.6,
   "savingsPercent": 74.1,
-  "summary": "A closed-loop automatic plant irrigation system combining a 3D-printed 1.4L modular reservoir, snap-fit port lid, submersible pump isolation cradle, ESP32 controller enclosure, silicone tubing clips, and soil drip emitter stakes with $29 of off-the-shelf electronics.",
-  "function": "Monitors root-zone soil moisture continuously using a corrosion-resistant capacitive probe and triggers a quiet 5V submersible micro-pump through food-grade 4/6mm silicone tubing to deliver precise water doses directly to plant stakes.",
+  "estimatedPrintTimeHours": 4.2,
+  "estimatedAssemblyMinutes": 25,
+  "estimatedBuildTimeMinutes": 25,
+  "estimatedFilamentGrams": 245,
+  "difficulty": "Beginner",
+  "overallDimensionsMm": [185, 140, 165],
   "dimensionsMm": {
     "width": 185,
     "depth": 140,
     "height": 165
   },
+  "keyMechanisms": [
+    "Capacitive dielectric soil moisture sensing (3.3V analog feedback)",
+    "5V PWM/MOSFET switched centrifugal submersible micro-pump (120 L/h)",
+    "Gravity-isolated top-refill funnel and anti-siphon tubing guide clips",
+    "Root-zone targeted stake drippers with manual rotary flow restrictor wheel"
+  ],
   "mechanisms": [
     "Capacitive dielectric soil moisture sensing (3.3V analog feedback)",
     "5V PWM/MOSFET switched centrifugal submersible micro-pump (120 L/h)",
     "Gravity-isolated top-refill funnel and anti-siphon tubing guide clips",
     "Root-zone targeted stake drippers with manual rotary flow restrictor wheel"
   ],
-  "difficulty": "Beginner",
-  "estimatedBuildTimeMinutes": 45,
-  "estimatedPrintTimeHours": 4.2,
-  "estimatedFilamentGrams": 245
+  "engineeringNotes": [
+    "Print reservoir-tank and pump-mount in PETG with 4 perimeter walls and 0.20mm layer height for 100% watertightness.",
+    "All 9 unique printed parts (13 total items) orient flat on the print bed and require zero slicer support material.",
+    "Packs onto 1 single 256×256mm build plate on Bambu Lab A1 / P1S / X1C."
+  ],
+  "materialsNeeded": [
+    "PETG Filament (~160g) for watertight reservoir base, pump mount & snap clips",
+    "PLA Filament (~85g) for lid, refill funnel, controller enclosure, L-bracket, stakes & flow wheel",
+    "5V Submersible Pump + 4/6mm Silicone Tubing + Capacitive Soil Sensor + ESP32 + MOSFET Module"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Water Reservoir Base 1.4L (115×115×100mm)",
+    "PRT-02: Snap-Fit Reservoir Lid with Port Grommets (120×120×7mm)",
+    "PRT-03: Submersible Pump Isolation Cradle (56×56×32mm)",
+    "PRT-04: Wide-Mouth Top Refill Funnel (54×54×38mm)",
+    "PRT-05: ESP32 & MOSFET Controller Enclosure (78×54×28mm)",
+    "PRT-06: Reservoir Side-Mount L-Bracket (42×38×30mm)",
+    "PRT-07: Rim-Snap 6mm Silicone Tube Clips ×4 (12×11×12mm)",
+    "PRT-08: Root-Zone Soil Emitter Stakes ×2 (27×109×8mm)",
+    "PRT-09: Rotary Drip Flow Restrictor Wheel (29×29×7mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: 5V Mini Submersible Water Pump (120 L/h)",
+    "OTS-02: Food-Grade 4mm ID / 6mm OD Silicone Tubing (2m)",
+    "OTS-03: Capacitive Soil Moisture Sensor v1.2",
+    "OTS-04: ESP32-WROOM-32 USB-C Development Board",
+    "OTS-05: 5V Logic-Level MOSFET Switch / Relay Module",
+    "OTS-06: 5V 2A USB-C Power Supply + 1.5m Braided Cable",
+    "OTS-07: Dupont Jumper Wires & M3x10mm Stainless Screws"
+  ]
 }

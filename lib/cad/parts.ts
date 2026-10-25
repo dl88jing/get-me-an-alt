@@ -10,6 +10,13 @@ export type PrintedPartShape =
   | "gear_simple"
   | "custom_csg";
 
+export type DesignPartShape =
+  | PrintedPartShape
+  | "cone"
+  | "sphere"
+  | "bracket"
+  | "enclosure";
+
 export const PRINTED_PART_SHAPES: readonly PrintedPartShape[] = [
   "box",
   "cylinder",
@@ -194,21 +201,23 @@ export type PartParams =
 export interface PrintedPart {
   id: string;
   name: string;
-  shape: PrintedPartShape;
+  shape: DesignPartShape;
   /** Shape dimensions in millimeters */
   params: Record<string, any>;
+  /** Bounding box dimensions [x, y, z] in mm (shared contract) */
+  dims_mm?: [number, number, number];
   /** Filament material recommendation (e.g. "PLA", "PETG", "TPU", "ABS") */
   material?: string;
   /** Hex color string for 3D viewer and plate preview (e.g. "#10b981") */
   color: string;
   /** Number of copies needed for the full assembly */
-  quantity: number;
+  quantity?: number;
   /** Optional functional description */
   description?: string;
 }
 
 export interface ProxyShapeSpec {
-  shape: PrintedPartShape;
+  shape: DesignPartShape;
   params: Record<string, any>;
   color?: string;
 }
@@ -242,10 +251,86 @@ export interface AssemblyNode {
   step: number;
 }
 
+/**
+ * Shared contract in COORDINATION.md for design.json parts:
+ * `{ id, name, kind: "printed"|"purchased", dims_mm:[x,y,z], shape, params, position:[x,y,z], rotation:[x,y,z], explode:[x,y,z], color, bomRef? }`
+ */
+export interface DesignPart {
+  id: string;
+  partNumber?: string;
+  name: string;
+  kind: "printed" | "purchased";
+  dims_mm: [number, number, number];
+  shape: DesignPartShape;
+  params: Record<string, any>;
+  position: [number, number, number];
+  rotation: [number, number, number];
+  explode: [number, number, number];
+  color: string;
+  bomRef?: string;
+  material?: string;
+  quantity?: number;
+  description?: string;
+  roleInAssembly?: string;
+  infillPercent?: number;
+  layerHeightMm?: number;
+  supportsRequired?: boolean;
+  step?: number;
+}
+
 export interface DesignSpec {
   objectName?: string;
+  designPhilosophy?: string;
   summary?: string;
-  printedParts: PrintedPart[];
-  purchasedParts: PurchasedPart[];
-  assembly: AssemblyNode[];
+  overallBoundingBoxMm?: [number, number, number];
+  printedPartsCount?: number;
+  purchasedPartsCount?: number;
+  assemblyNotes?: string[];
+  /** Shared contract: flat parts array of printed + purchased parts */
+  parts: DesignPart[];
+  /** Optional legacy arrays supported via adapters */
+  printedParts?: PrintedPart[];
+  purchasedParts?: PurchasedPart[];
+  assembly?: AssemblyNode[];
+}
+
+/**
+ * Shared contract in COORDINATION.md for instructions.json:
+ * `{ steps: [{ n, title, partIds:[], tools:[], note, motion:{ partId, from:[x,y,z], to:[x,y,z] }[] }] }`
+ */
+export interface InstructionMotion {
+  partId: string;
+  from: [number, number, number];
+  to: [number, number, number];
+}
+
+export interface InstructionStepSpec {
+  n: number;
+  title: string;
+  partIds: string[];
+  tools: string[];
+  note: string;
+  motion: InstructionMotion[];
+  /** Optional legacy/extended fields */
+  step?: number;
+  description?: string;
+  action?: string;
+  actionType?: string;
+  cameraHint?: {
+    position: [number, number, number];
+    target: [number, number, number];
+    zoom?: number;
+    angle?: string;
+  };
+}
+
+export interface InstructionsSpec {
+  objectId?: string;
+  objectName?: string;
+  totalSteps?: number;
+  estimatedMinutes?: number;
+  estimatedTotalMinutes?: number;
+  difficulty?: string;
+  safetyNotes?: string[];
+  steps: InstructionStepSpec[];
 }

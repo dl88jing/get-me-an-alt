@@ -3,6 +3,8 @@ import {
   ClipParams,
   CustomCsgParams,
   CylinderParams,
+  DesignPart,
+  DesignPartShape,
   FunnelParams,
   GearSimpleParams,
   HoleSpec,
@@ -1405,23 +1407,52 @@ export function generateCustomCsgMesh(
 }
 
 /**
- * Generates an indexed triangle mesh for any PrintedPart or PurchasedPartProxy.
+ * Generates an indexed triangle mesh for any DesignPart, PrintedPart, or ProxyShapeSpec.
  * Output is in millimeters, Z-up, centered in X/Y with its flattest base resting at z = 0.
  */
 export function generatePartMesh(
-  part: Pick<PrintedPart, "shape" | "params"> | ProxyShapeSpec
+  part:
+    | Pick<PrintedPart, "shape" | "params" | "dims_mm">
+    | Pick<DesignPart, "shape" | "params" | "dims_mm">
+    | ProxyShapeSpec
 ): TriangleMesh {
-  const shape: PrintedPartShape = part.shape;
-  const params = part.params ?? {};
+  const shape: DesignPartShape = part.shape;
+  const rawParams = part.params ?? {};
+  const dims = "dims_mm" in part && Array.isArray(part.dims_mm) ? part.dims_mm : undefined;
+  const params: Record<string, any> = dims
+    ? {
+        width: rawParams.width ?? dims[0],
+        depth: rawParams.depth ?? dims[1],
+        height: rawParams.height ?? dims[2],
+        ...rawParams,
+      }
+    : rawParams;
 
   switch (shape) {
     case "box":
       return generateBoxMesh(params);
     case "cylinder":
       return generateCylinderMesh(params);
+    case "cone":
+      return generateCylinderMesh({
+        radius: params.radiusBottom ?? params.radius ?? (dims ? dims[0] * 0.5 : 15),
+        topRadius: params.radiusTop ?? params.topRadius ?? 2,
+        height: params.height ?? (dims ? dims[2] : 30),
+        ...params,
+      });
+    case "sphere": {
+      const r = num(params.radius, dims ? Math.min(dims[0], dims[1], dims[2]) * 0.5 : 15);
+      return generateCylinderMesh({
+        radius: r,
+        topRadius: r * 0.75,
+        height: r * 2,
+        segments: 36,
+      });
+    }
     case "tube":
       return generateTubeMesh(params);
     case "bracketL":
+    case "bracket":
       return generateBracketLMesh(params);
     case "plate_with_holes":
       return generatePlateWithHolesMesh(params);
@@ -1435,6 +1466,8 @@ export function generatePartMesh(
       return generateGearSimpleMesh(params);
     case "custom_csg":
       return generateCustomCsgMesh(params);
+    case "enclosure":
+      return generateCustomCsgMesh({ preset: "enclosure", ...params });
     default:
       return generateBoxMesh(params);
   }

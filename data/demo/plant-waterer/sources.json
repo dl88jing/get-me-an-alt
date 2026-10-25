@@ -1,51 +1,100 @@
 {
   "objectId": "plant-waterer",
   "query": "DIY 3D printed ESP32 automatic plant watering system capacitive moisture sensor",
+  "querySummary": "Analyzed open-source Printables/Thingiverse plant irrigation STLs, ESP32 capacitive moisture sensor schematics, and watertight PETG reservoir design rules.",
+  "groundingUsed": true,
+  "searchQueries": [
+    "DIY 3D printed ESP32 automatic plant watering system capacitive moisture sensor",
+    "printables 3d printed plant waterer pump mount drip stake hose clip",
+    "esp32 capacitive soil moisture sensor v1.2 5v mosfet submersible pump wiring",
+    "watertight petg reservoir 3d print wall thickness perimeters"
+  ],
   "sources": [
     {
       "id": "src-printables-waterer",
       "title": "Printables — 3D Printable Plant Watering Spikes, Stakes & Pump Mounts",
-      "type": "3d-repository",
+      "type": "printable",
       "provider": "Printables",
+      "domain": "printables.com",
       "url": "https://www.printables.com/search/models?q=plant+waterer+pump",
       "summary": "Open-source community STLs for snap-on hose clips, soil irrigation stakes, and submersible mini-pump cradles.",
-      "relevance": "Reference geometry for 4/6mm silicone tubing snap clips and tapered soil drip stakes."
+      "relevance": "Reference geometry for 4/6mm silicone tubing snap clips and tapered soil drip stakes.",
+      "keyTakeaways": [
+        "C-clip inner radius of 3.2mm with 76° jaw opening grips 6mm OD silicone tubing without kinking.",
+        "Flanged pump cradle keeps intake screen 4mm off reservoir floor to prevent cavitation."
+      ],
+      "relevanceScore": 0.98
     },
     {
       "id": "src-thingiverse-irrigation",
       "title": "Thingiverse — Automatic Plant Irrigation & ESP32 Enclosure Designs",
-      "type": "3d-repository",
+      "type": "printable",
       "provider": "Thingiverse",
+      "domain": "thingiverse.com",
       "url": "https://www.thingiverse.com/search?q=automatic+plant+watering+system&type=things",
       "summary": "Parametric electronics enclosures for ESP32 / Arduino Nano and reservoir lid cable grommets.",
-      "relevance": "Informs wall thickness (3mm), snap-fit lid tolerances, and ventilation slot layout."
+      "relevance": "Informs wall thickness (3mm), snap-fit lid tolerances, and ventilation slot layout.",
+      "keyTakeaways": [
+        "3.5mm reservoir walls and 4mm floor thickness ensure watertight PETG prints without epoxy sealing.",
+        "Side-mounted L-bracket isolates ESP32 electronics from reservoir condensation."
+      ],
+      "relevanceScore": 0.95
     },
     {
       "id": "src-youtube-esp32-waterer",
       "title": "YouTube — Build a Smart Auto Plant Waterer with ESP32 & Capacitive Sensor",
       "type": "video",
       "provider": "YouTube",
+      "domain": "youtube.com",
       "url": "https://www.youtube.com/results?search_query=esp32+automatic+plant+watering+system+capacitive+sensor",
       "summary": "Step-by-step wiring and calibration guides for v1.2 capacitive soil moisture sensors, 5V MOSFET switching modules, and mini submersible pumps.",
-      "relevance": "Confirms single-supply 5V USB-C power routing and flyback protection for the 5V water pump."
+      "relevance": "Confirms single-supply 5V USB-C power routing and flyback protection for the 5V water pump.",
+      "keyTakeaways": [
+        "Capacitive v1.2 probe operates at 3.3V analog output and avoids galvanic trace corrosion.",
+        "5V logic-level MOSFET module switches the 200mA submersible pump directly from a 3.3V ESP32 GPIO."
+      ],
+      "relevanceScore": 0.94
     },
     {
       "id": "src-github-esphome-irrigation",
       "title": "GitHub — Open-Source ESP32 / ESPHome Plant Irrigation Firmware",
-      "type": "code",
+      "type": "github",
       "provider": "GitHub",
+      "domain": "github.com",
       "url": "https://github.com/search?q=esp32+plant+watering+capacitive+sensor&type=repositories",
       "summary": "Ready-to-flash Arduino and ESPHome firmware with moisture threshold hysteresis, pump run-time safety cutoffs, and Wi-Fi telemetry.",
-      "relevance": "Provides drop-in firmware for the ESP32-WROOM-32 controller board."
+      "relevance": "Provides drop-in firmware for the ESP32-WROOM-32 controller board.",
+      "keyTakeaways": [
+        "Pulse pump in 5-second bursts followed by a 60-second soil absorption delay.",
+        "Dry-run cutoff stops pump automatically if reservoir water level drops below intake."
+      ],
+      "relevanceScore": 0.92
     },
     {
       "id": "src-instructables-watering",
       "title": "Instructables — DIY Automated Desktop Plant Watering Guides",
-      "type": "guide",
+      "type": "schematic",
       "provider": "Instructables",
+      "domain": "instructables.com",
       "url": "https://www.instructables.com/search/?q=automatic+plant+watering+arduino+pump",
       "summary": "Mechanical assembly teardowns, tubing routing anti-siphon tips, and waterproofing best practices for capacitive probes.",
-      "relevance": "Validates reservoir lid port placement above waterline to prevent back-siphoning."
+      "relevance": "Validates reservoir lid port placement above waterline to prevent back-siphoning.",
+      "keyTakeaways": [
+        "Routing the silicone hose over the top reservoir rim at Z=104mm prevents passive siphon drainage.",
+        "Rotary thumb-wheel pinch restrictor equalizes flow between multiple drip stakes."
+      ],
+      "relevanceScore": 0.9
     }
-  ]
+  ],
+  "technicalInsights": [
+    "Watertight PETG Reservoir: 3.5mm walls + 4mm floor + 12mm internal corner fillets eliminate perimeter pinhole leaks.",
+    "Support-Free Print Orientation: All 9 unique printed parts (13 total items) print flat on z=0 with zero support material.",
+    "Single-Plate Packing: All 13 printed items pack onto 1 single 256×256mm Bambu Lab A1 build plate."
+  ],
+  "referenceDimensions": {
+    "Reservoir Tank": "115 × 115 × 100 mm (1.4L capacity, 3.5mm wall)",
+    "Submersible Pump Cradle": "44 mm OD × 32 mm ID × 32 mm H (56mm base flange)",
+    "Silicone Tubing": "4 mm ID × 6 mm OD food-grade silicone",
+    "Controller Enclosure": "78 × 54 × 28 mm with M3 mounting holes"
+  }
 }

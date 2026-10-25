@@ -3,146 +3,546 @@
   "objectName": "Self-watering plant system (alt to a $129 smart auto-waterer)",
   "totalSteps": 10,
   "estimatedMinutes": 25,
+  "estimatedTotalMinutes": 25,
+  "difficulty": "Beginner",
+  "safetyNotes": [
+    "Fill PRT-01 (Water Reservoir Base) with water on a sink counter for 10 minutes first to verify a watertight perimeter seal.",
+    "Mount PRT-05 (Controller Enclosure) on the exterior side L-bracket; only the IP68 submersible pump and silicone tubing go inside the reservoir."
+  ],
   "steps": [
     {
+      "n": 1,
       "step": 1,
       "title": "Place the 1.4L Water Reservoir Base",
+      "partIds": [
+        "reservoir-tank"
+      ],
+      "tools": [
+        "Flat workbench"
+      ],
+      "note": "Set the 3D-printed PETG water reservoir tank on a flat surface near your potted plant.",
       "description": "Set the 3D-printed PETG water reservoir tank on a flat surface near your potted plant.",
-      "partIds": ["reservoir-tank"],
+      "motion": [
+        {
+          "partId": "reservoir-tank",
+          "from": [
+            0,
+            0,
+            -45
+          ],
+          "to": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
       "action": "place",
+      "actionType": "place",
       "cameraHint": {
-        "position": [180, -180, 140],
-        "target": [0, 0, 50],
+        "position": [
+          180,
+          -180,
+          140
+        ],
+        "target": [
+          0,
+          0,
+          50
+        ],
         "zoom": 1.1,
         "angle": "isometric-front"
-      },
-      "tools": ["Flat workbench"]
+      }
     },
     {
+      "n": 2,
       "step": 2,
       "title": "Insert the Submersible Pump Isolation Cradle",
+      "partIds": [
+        "pump-mount",
+        "reservoir-tank"
+      ],
+      "tools": [
+        "Hands only"
+      ],
+      "note": "Lower the flanged tubular pump cradle onto the center floor of the reservoir tank with its wide flange facing down.",
       "description": "Lower the flanged tubular pump cradle onto the center floor of the reservoir tank with its wide flange facing down.",
-      "partIds": ["pump-mount", "reservoir-tank"],
+      "motion": [
+        {
+          "partId": "pump-mount",
+          "from": [
+            0,
+            0,
+            39
+          ],
+          "to": [
+            0,
+            0,
+            4
+          ]
+        }
+      ],
       "action": "insert",
+      "actionType": "insert",
       "cameraHint": {
-        "position": [90, -110, 190],
-        "target": [0, 0, 25],
+        "position": [
+          90,
+          -110,
+          190
+        ],
+        "target": [
+          0,
+          0,
+          25
+        ],
         "zoom": 1.35,
         "angle": "top-angled"
-      },
-      "tools": ["Hands only"]
+      }
     },
     {
+      "n": 3,
       "step": 3,
       "title": "Seat the 5V Submersible Water Pump",
+      "partIds": [
+        "pump-5v",
+        "pump-mount"
+      ],
+      "tools": [
+        "Hands only"
+      ],
+      "note": "Press the 5V mini submersible pump vertically into the isolation cradle so the intake screen sits 4mm above the floor.",
       "description": "Press the 5V mini submersible pump vertically into the isolation cradle so the intake screen sits 4mm above the floor.",
-      "partIds": ["pump-5v", "pump-mount"],
+      "motion": [
+        {
+          "partId": "pump-5v",
+          "from": [
+            0,
+            0,
+            83
+          ],
+          "to": [
+            0,
+            0,
+            8
+          ]
+        }
+      ],
       "action": "insert",
+      "actionType": "insert",
       "cameraHint": {
-        "position": [100, -100, 180],
-        "target": [0, 0, 35],
+        "position": [
+          100,
+          -100,
+          180
+        ],
+        "target": [
+          0,
+          0,
+          35
+        ],
         "zoom": 1.4,
         "angle": "top-cutaway"
-      },
-      "tools": ["Hands only"]
+      }
     },
     {
+      "n": 4,
       "step": 4,
       "title": "Connect the 4/6mm Silicone Delivery Tubing",
+      "partIds": [
+        "silicone-tubing",
+        "pump-5v"
+      ],
+      "tools": [
+        "Scissors or tube cutter"
+      ],
+      "note": "Push one end of the 4mm ID silicone tubing firmly onto the pump's top outlet barb.",
       "description": "Push one end of the 4mm ID silicone tubing firmly onto the pump's top outlet barb.",
-      "partIds": ["silicone-tubing", "pump-5v"],
+      "motion": [
+        {
+          "partId": "silicone-tubing",
+          "from": [
+            0,
+            0,
+            173
+          ],
+          "to": [
+            0,
+            0,
+            48
+          ]
+        }
+      ],
       "action": "connect",
+      "actionType": "connect",
       "cameraHint": {
-        "position": [130, -120, 150],
-        "target": [0, 0, 65],
+        "position": [
+          130,
+          -120,
+          150
+        ],
+        "target": [
+          0,
+          0,
+          65
+        ],
         "zoom": 1.3,
         "angle": "side-closeup"
-      },
-      "tools": ["Scissors or tube cutter"]
+      }
     },
     {
+      "n": 5,
       "step": 5,
       "title": "Snap on the Reservoir Grommet Lid",
+      "partIds": [
+        "reservoir-lid",
+        "reservoir-tank",
+        "silicone-tubing"
+      ],
+      "tools": [
+        "Hands only"
+      ],
+      "note": "Thread the silicone tube through the center 10mm hole and the pump power lead through the side 8mm grommet, then snap the lid onto the reservoir rim.",
       "description": "Thread the silicone tube through the center 10mm hole and the pump power lead through the side 8mm grommet, then snap the lid onto the reservoir rim.",
-      "partIds": ["reservoir-lid", "reservoir-tank", "silicone-tubing"],
+      "motion": [
+        {
+          "partId": "reservoir-lid",
+          "from": [
+            0,
+            0,
+            265
+          ],
+          "to": [
+            0,
+            0,
+            100
+          ]
+        }
+      ],
       "action": "snap",
+      "actionType": "fasten",
       "cameraHint": {
-        "position": [160, -160, 175],
-        "target": [0, 0, 100],
+        "position": [
+          160,
+          -160,
+          175
+        ],
+        "target": [
+          0,
+          0,
+          100
+        ],
         "zoom": 1.15,
         "angle": "isometric-top"
-      },
-      "tools": ["Hands only"]
+      }
     },
     {
+      "n": 6,
       "step": 6,
       "title": "Insert the Top Refill Funnel",
+      "partIds": [
+        "refill-funnel",
+        "reservoir-lid"
+      ],
+      "tools": [
+        "Hands only"
+      ],
+      "note": "Drop the conical refill funnel into the 22mm corner port on the reservoir lid for easy top-up watering.",
       "description": "Drop the conical refill funnel into the 22mm corner port on the reservoir lid for easy top-up watering.",
-      "partIds": ["refill-funnel", "reservoir-lid"],
+      "motion": [
+        {
+          "partId": "refill-funnel",
+          "from": [
+            -77,
+            -77,
+            317
+          ],
+          "to": [
+            -32,
+            -32,
+            107
+          ]
+        }
+      ],
       "action": "insert",
+      "actionType": "insert",
       "cameraHint": {
-        "position": [-140, -140, 185],
-        "target": [-32, -32, 110],
+        "position": [
+          -140,
+          -140,
+          185
+        ],
+        "target": [
+          -32,
+          -32,
+          110
+        ],
         "zoom": 1.4,
         "angle": "corner-detail"
-      },
-      "tools": ["Hands only"]
+      }
     },
     {
+      "n": 7,
       "step": 7,
       "title": "Screw the Side-Mount L-Bracket to the Controller Box",
+      "partIds": [
+        "controller-bracket",
+        "wiring-hardware",
+        "controller-box"
+      ],
+      "tools": [
+        "2.5mm Hex Key / Phillips Screwdriver"
+      ],
+      "note": "Fasten the 3D-printed L-bracket to the rear mounting holes of the controller enclosure using two M3x10mm stainless screws.",
       "description": "Fasten the 3D-printed L-bracket to the rear mounting holes of the controller enclosure using two M3x10mm stainless screws.",
-      "partIds": ["controller-bracket", "controller-box", "wiring-hardware"],
+      "motion": [
+        {
+          "partId": "controller-bracket",
+          "from": [
+            127,
+            0,
+            83
+          ],
+          "to": [
+            62,
+            0,
+            68
+          ]
+        },
+        {
+          "partId": "wiring-hardware",
+          "from": [
+            167,
+            0,
+            98
+          ],
+          "to": [
+            72,
+            0,
+            78
+          ]
+        }
+      ],
       "action": "screw",
+      "actionType": "fasten",
       "cameraHint": {
-        "position": [210, -90, 120],
-        "target": [75, 0, 65],
+        "position": [
+          210,
+          -90,
+          120
+        ],
+        "target": [
+          75,
+          0,
+          65
+        ],
         "zoom": 1.45,
         "angle": "right-side"
-      },
-      "tools": ["2.5mm Hex Key / Phillips Screwdriver"]
+      }
     },
     {
+      "n": 8,
       "step": 8,
       "title": "Mount ESP32 & MOSFET Module Inside the Enclosure",
+      "partIds": [
+        "controller-box",
+        "esp32-mcu",
+        "mosfet-module",
+        "wiring-hardware"
+      ],
+      "tools": [
+        "Needle-nose pliers (optional)"
+      ],
+      "note": "Snap the ESP32-WROOM-32 board and 5V MOSFET driver module into the controller box bays and connect the 3-wire jumper harness.",
       "description": "Snap the ESP32-WROOM-32 board and 5V MOSFET driver module into the controller box bays and connect the 3-wire jumper harness.",
-      "partIds": ["esp32-mcu", "mosfet-module", "controller-box", "wiring-hardware"],
+      "motion": [
+        {
+          "partId": "controller-box",
+          "from": [
+            216,
+            0,
+            52
+          ],
+          "to": [
+            86,
+            0,
+            52
+          ]
+        },
+        {
+          "partId": "esp32-mcu",
+          "from": [
+            267,
+            -35,
+            83
+          ],
+          "to": [
+            92,
+            -10,
+            58
+          ]
+        },
+        {
+          "partId": "mosfet-module",
+          "from": [
+            267,
+            41,
+            83
+          ],
+          "to": [
+            92,
+            16,
+            58
+          ]
+        }
+      ],
       "action": "place",
+      "actionType": "place",
       "cameraHint": {
-        "position": [220, -60, 140],
-        "target": [90, 0, 60],
+        "position": [
+          220,
+          -60,
+          140
+        ],
+        "target": [
+          90,
+          0,
+          60
+        ],
         "zoom": 1.5,
         "angle": "enclosure-closeup"
-      },
-      "tools": ["Needle-nose pliers (optional)"]
+      }
     },
     {
+      "n": 9,
       "step": 9,
       "title": "Snap Tube Guide Clips & Flow Restrictor Wheel onto Rim",
+      "partIds": [
+        "tube-clip",
+        "flow-wheel",
+        "silicone-tubing"
+      ],
+      "tools": [
+        "Hands only"
+      ],
+      "note": "Thread the silicone tubing through the rotary flow restrictor gear wheel and click the 4 C-clips along the reservoir rim and plant pot edge.",
       "description": "Thread the silicone tubing through the rotary flow restrictor gear wheel and click the 4 C-clips along the reservoir rim and plant pot edge.",
-      "partIds": ["tube-clip", "flow-wheel", "silicone-tubing"],
+      "motion": [
+        {
+          "partId": "tube-clip",
+          "from": [
+            0,
+            143,
+            279
+          ],
+          "to": [
+            0,
+            58,
+            104
+          ]
+        },
+        {
+          "partId": "flow-wheel",
+          "from": [
+            40,
+            107,
+            303
+          ],
+          "to": [
+            15,
+            42,
+            108
+          ]
+        }
+      ],
       "action": "snap",
+      "actionType": "route",
       "cameraHint": {
-        "position": [110, 170, 165],
-        "target": [15, 50, 105],
+        "position": [
+          110,
+          170,
+          165
+        ],
+        "target": [
+          15,
+          50,
+          105
+        ],
         "zoom": 1.35,
         "angle": "back-rim"
-      },
-      "tools": ["Hands only"]
+      }
     },
     {
+      "n": 10,
       "step": 10,
       "title": "Insert Soil Emitter Stakes, Moisture Probe & Connect USB-C Power",
+      "partIds": [
+        "drip-stake",
+        "moisture-sensor",
+        "usbc-power",
+        "silicone-tubing"
+      ],
+      "tools": [
+        "Hands only"
+      ],
+      "note": "Push the 2 drip emitter stakes and the capacitive soil moisture sensor into the plant pot soil, route the tube ends into the stake hooks, and plug in the 5V USB-C power adapter.",
       "description": "Push the 2 drip emitter stakes and the capacitive soil moisture sensor into the plant pot soil, route the tube ends into the stake hooks, and plug in the 5V USB-C power adapter.",
-      "partIds": ["drip-stake", "moisture-sensor", "usbc-power", "silicone-tubing"],
+      "motion": [
+        {
+          "partId": "drip-stake",
+          "from": [
+            -205,
+            90,
+            105
+          ],
+          "to": [
+            -85,
+            35,
+            45
+          ]
+        },
+        {
+          "partId": "moisture-sensor",
+          "from": [
+            -245,
+            0,
+            128
+          ],
+          "to": [
+            -95,
+            0,
+            48
+          ]
+        },
+        {
+          "partId": "usbc-power",
+          "from": [
+            295,
+            0,
+            -17
+          ],
+          "to": [
+            110,
+            0,
+            18
+          ]
+        }
+      ],
       "action": "connect",
+      "actionType": "connect",
       "cameraHint": {
-        "position": [-210, -170, 155],
-        "target": [-35, 0, 55],
-        "zoom": 1.0,
+        "position": [
+          -210,
+          -170,
+          155
+        ],
+        "target": [
+          -35,
+          0,
+          55
+        ],
+        "zoom": 1,
         "angle": "full-assembly"
-      },
-      "tools": ["Hands only"]
+      }
     }
   ]
 }
