@@ -177,7 +177,9 @@ function generateArtifactsForFolder(targetDir: string, objectId: string, printer
     console.log(
       `  [STL] ${art.stlFile.padEnd(28)} | qty=${art.quantity} | dims=${art.dims_mm
         .map((d) => d.toFixed(1))
-        .join("x")} mm | tris=${art.manifold.triangleCount} | manifold=true`
+        .join("x")} mm | ${art.filamentGrams}g | ~${art.formattedTime} | area=${(
+        art.surfaceAreaMm2 / 100
+      ).toFixed(1)} cm^2 | manifold=true`
     );
   }
 
@@ -199,10 +201,26 @@ function generateArtifactsForFolder(targetDir: string, objectId: string, printer
     }
     const outPath = path.join(targetDir, plate3mf.relativePath);
     fs.writeFileSync(outPath, plate3mf.bytes);
+    const plateInfo = bundle.platesJson.plates[plate3mf.index];
     console.log(
-      `  [3MF] ${plate3mf.relativePath.padEnd(28)} | size=${plate3mf.byteLength} B (${bundle.packResult.heuristicUsed})`
+      `  [3MF] ${plate3mf.relativePath.padEnd(28)} | size=${plate3mf.byteLength} B | ${plateInfo?.weightGrams ?? 0}g | ~${plateInfo?.formattedTime ?? ""} (${bundle.packResult.heuristicUsed})`
     );
   }
+
+  // Write multi-plate Bambu-friendly 3MF (one plate per packed bed in a single 3MF)
+  const multi3mf = bundle.multiPlate3mfArtifact;
+  if (
+    multi3mf.byteLength < 22 ||
+    multi3mf.bytes[0] !== 0x50 ||
+    multi3mf.bytes[1] !== 0x4b
+  ) {
+    throw new Error(`Generated multi-plate 3MF ${multi3mf.fileName} is not a valid ZIP archive.`);
+  }
+  const multiOutPath = path.join(targetDir, multi3mf.relativePath);
+  fs.writeFileSync(multiOutPath, multi3mf.bytes);
+  console.log(
+    `  [3MF] ${multi3mf.relativePath.padEnd(28)} | size=${multi3mf.byteLength} B | ${multi3mf.plateCount} packed plate(s) in 1 Bambu 3MF`
+  );
 
   const platesJsonPath = path.join(targetDir, "plates.json");
   fs.writeFileSync(platesJsonPath, JSON.stringify(bundle.platesJson, null, 2) + "\n", "utf-8");

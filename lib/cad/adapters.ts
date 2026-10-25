@@ -17,7 +17,19 @@ import {
   PrintedPart,
   PurchasedPart,
 } from "./parts";
-import { meshToBinaryStl, Plate3mfItem, writePlate3mf } from "./stl";
+import {
+  estimatePartPrint,
+  estimatePlatePrint,
+  formatPrintDuration,
+  PartPrintEstimate,
+} from "./estimate";
+import {
+  meshToBinaryStl,
+  MultiPlate3mfSpec,
+  Plate3mfItem,
+  writeMultiPlate3mf,
+  writePlate3mf,
+} from "./stl";
 
 const DEFAULT_PART_COLORS = [
   "#0ea5e9",
@@ -541,7 +553,13 @@ export interface GeneratedStlArtifact {
   byteLength: number;
   dims_mm: [number, number, number];
   weightGrams: number;
+  filamentGrams: number;
+  filamentMeters: number;
   estimatedMinutes: number;
+  printTimeMinutes: number;
+  formattedTime: string;
+  surfaceAreaMm2: number;
+  estimate: PartPrintEstimate;
   mesh: TriangleMesh;
   manifold: ManifoldReport;
 }
@@ -555,6 +573,14 @@ export interface GeneratedPlate3mfArtifact {
   byteLength: number;
 }
 
+export interface GeneratedMultiPlate3mfArtifact {
+  fileName: string;
+  relativePath: string;
+  plateCount: number;
+  bytes: Uint8Array;
+  byteLength: number;
+}
+
 export interface UnifiedPlatesArtifact {
   objectId?: string;
   printerId: string;
@@ -564,7 +590,12 @@ export interface UnifiedPlatesArtifact {
   totalUniqueParts: number;
   totalPrintedItems: number;
   totalWeightGrams: number;
+  totalFilamentGrams: number;
+  totalFilamentMeters: number;
   totalPrintTimeMinutes: number;
+  formattedTotalPrintTime: string;
+  multiPlate3mfFile: string;
+  multiPlate3mfBytes: number;
   printer: Printer;
   margin: number;
   spacing: number;
@@ -579,7 +610,11 @@ export interface UnifiedPlatesArtifact {
     dims_mm: [number, number, number];
     dimensionsMm: [number, number, number];
     weightGrams: number;
+    filamentGrams: number;
+    filamentMeters: number;
     estimatedMinutes: number;
+    printTimeMinutes: number;
+    formattedTime: string;
     color: string;
     material: string;
     quantity: number;
@@ -587,6 +622,7 @@ export interface UnifiedPlatesArtifact {
     vertexCount: number;
     edgeCount: number;
     volumeMm3: number;
+    surfaceAreaMm2: number;
     isManifold: boolean;
   }>;
   partFiles: Array<{
@@ -601,10 +637,17 @@ export interface UnifiedPlatesArtifact {
     bytes: number;
     dimensionsMm: [number, number, number];
     dims_mm: [number, number, number];
+    weightGrams: number;
+    filamentGrams: number;
+    filamentMeters: number;
+    estimatedMinutes: number;
+    printTimeMinutes: number;
+    formattedTime: string;
     triangleCount: number;
     vertexCount: number;
     edgeCount: number;
     volumeMm3: number;
+    surfaceAreaMm2: number;
     isManifold: boolean;
   }>;
   plates: Array<{
@@ -618,7 +661,12 @@ export interface UnifiedPlatesArtifact {
     utilization: number;
     maxHeight: number;
     estimatedMinutes: number;
+    printTimeMinutes: number;
+    formattedTime: string;
     weightGrams: number;
+    filamentGrams: number;
+    filamentMeters: number;
+    layers: number;
     stlFile?: string;
     file: string;
     bytes: number;
@@ -637,6 +685,8 @@ export interface UnifiedPlatesArtifact {
       rotated: boolean;
       color: string;
       stlFile: string;
+      weightGrams: number;
+      estimatedMinutes: number;
     }>;
     items: Array<{
       partId: string;
@@ -653,6 +703,8 @@ export interface UnifiedPlatesArtifact {
       rotated: boolean;
       color: string;
       stlFile: string;
+      weightGrams: number;
+      estimatedMinutes: number;
     }>;
   }>;
   rejected: RejectedPart[];
@@ -664,14 +716,16 @@ export interface CadGenerationBundle {
   packResult: PackResult;
   stlArtifacts: GeneratedStlArtifact[];
   plate3mfArtifacts: GeneratedPlate3mfArtifact[];
+  multiPlate3mfArtifact: GeneratedMultiPlate3mfArtifact;
   platesJson: UnifiedPlatesArtifact;
 }
 
 /**
  * Generates binary STL meshes for all printed parts in a `design.json` (accepting either
  * the flat `parts[]` shared contract or legacy `printedParts[]`), packs them onto the
- * minimum number of plates for the target printer, builds `.3mf` plate files, and
- * returns the unified `plates.json` artifact + binary buffers.
+ * minimum number of plates for the target printer, builds per-plate `.3mf` files AND a
+ * single Bambu-friendly multi-plate `.3mf` file, and returns the unified `plates.json`
+ * artifact + binary buffers.
  */
 export function generateCadBundle(
   designInput: unknown,
@@ -700,13 +754,14 @@ export function generateCadBundle(
     ];
     part.dims_mm = dims_mm;
 
-    // Estimate filament weight from true mesh volume (1.25 g/cm^3 * ~0.48 effective shell+infill factor)
-    const volumeCm3 = manifold.volumeMm3 / 1000;
-    const unitWeightGrams = Math.max(
-      2,
-      Math.round(volumeCm3 * 1.24 * 0.45 * 10) / 10
-    );
-    const unitMinutes = Math.max(5, Math.round(unitWeightGrams * 1.15));
+    const estimate = estimatePartPrint(mesh, {
+      printer,
+      infillRatio:
+        typeof part.infillPercent === "number"
+          ? Math.max(0.05, Math.min(1, part.infillPercent / 100))
+          : 0.15,
+      layerHeightMm: part.layerHeightMm ?? 0.2,
+    });
 
     const fileName = `${part.id}.stl`;
     const stlFile = `parts/${fileName}`;
@@ -716,7 +771,7 @@ export function generateCadBundle(
       partId: part.id,
       name: part.name,
       shape: part.shape,
-      material: part.material ?? "PETG",
+      material: part.material ?? "PLA",
       color: part.color,
       quantity: part.quantity ?? 1,
       fileName,
@@ -724,8 +779,14 @@ export function generateCadBundle(
       bytes: stlBytes,
       byteLength: stlBytes.byteLength,
       dims_mm,
-      weightGrams: unitWeightGrams,
-      estimatedMinutes: unitMinutes,
+      weightGrams: estimate.filamentGrams,
+      filamentGrams: estimate.filamentGrams,
+      filamentMeters: estimate.filamentMeters,
+      estimatedMinutes: estimate.printTimeMinutes,
+      printTimeMinutes: estimate.printTimeMinutes,
+      formattedTime: estimate.formattedTime,
+      surfaceAreaMm2: estimate.surfaceAreaMm2,
+      estimate,
       mesh,
       manifold,
     });
@@ -740,9 +801,11 @@ export function generateCadBundle(
 
   const stlById = new Map(stlArtifacts.map((a) => [a.partId, a]));
   const plate3mfArtifacts: GeneratedPlate3mfArtifact[] = [];
+  const multiPlateSpecs: MultiPlate3mfSpec[] = [];
 
   const plates = packResult.plates.map((plate) => {
     const plateNumber = plate.index + 1;
+    const plateTitle = `${design.objectName ?? "Object"} - Plate ${plateNumber}`;
     const plateItems3mf: Plate3mfItem[] = plate.items.map((item) => {
       const art = stlById.get(item.partId)!;
       return {
@@ -759,12 +822,20 @@ export function generateCadBundle(
       };
     });
 
+    multiPlateSpecs.push({
+      plateIndex: plate.index,
+      plateNumber,
+      name: plateTitle,
+      items: plateItems3mf,
+    });
+
     const fileName = `plate-${plateNumber}.3mf`;
     const relativePath = `parts/${fileName}`;
     const zipBytes = writePlate3mf(plateItems3mf, {
-      title: `${design.objectName ?? "Object"} - Plate ${plateNumber}`,
+      title: plateTitle,
       printerName: printer.name,
       plateIndex: plate.index,
+      bedDimensionsMm: [printer.bed.x, printer.bed.y, printer.bed.z],
     });
 
     plate3mfArtifacts.push({
@@ -776,13 +847,20 @@ export function generateCadBundle(
       byteLength: zipBytes.byteLength,
     });
 
-    let plateWeight = 0;
-    let plateMinutes = 0;
+    const plateEstimate = estimatePlatePrint(
+      plate.items.map((item) => {
+        const art = stlById.get(item.partId)!;
+        return {
+          estimate: art.estimate,
+          heightMm: item.height,
+          count: 1,
+        };
+      }),
+      { printer }
+    );
 
     const placements = plate.items.map((item) => {
       const art = stlById.get(item.partId)!;
-      plateWeight += art.weightGrams;
-      plateMinutes += art.estimatedMinutes;
       return {
         partId: item.partId,
         name: art.name,
@@ -798,6 +876,8 @@ export function generateCadBundle(
         rotated: item.rotated,
         color: art.color,
         stlFile: art.stlFile,
+        weightGrams: art.filamentGrams,
+        estimatedMinutes: art.printTimeMinutes,
       };
     });
 
@@ -815,8 +895,13 @@ export function generateCadBundle(
       utilizationPercent: round2(plate.utilization * 100),
       utilization: plate.utilization,
       maxHeight: plate.maxHeight,
-      estimatedMinutes: Math.round(plateMinutes),
-      weightGrams: round2(plateWeight),
+      estimatedMinutes: plateEstimate.printTimeMinutes,
+      printTimeMinutes: plateEstimate.printTimeMinutes,
+      formattedTime: plateEstimate.formattedTime,
+      weightGrams: plateEstimate.filamentGrams,
+      filamentGrams: plateEstimate.filamentGrams,
+      filamentMeters: plateEstimate.filamentMeters,
+      layers: plateEstimate.layers,
       stlFile: relativePath,
       file: relativePath,
       bytes: zipBytes.byteLength,
@@ -825,29 +910,57 @@ export function generateCadBundle(
     };
   });
 
-  const partsSummary = stlArtifacts.map((art) => ({
-    partId: art.partId,
-    name: art.name,
-    shape: art.shape,
-    stlFile: art.stlFile,
-    file: art.stlFile,
-    bytes: art.byteLength,
-    dims_mm: art.dims_mm,
-    dimensionsMm: art.dims_mm,
-    weightGrams: round2(art.weightGrams * art.quantity),
-    estimatedMinutes: Math.round(art.estimatedMinutes * art.quantity),
-    color: art.color,
-    material: art.material,
-    quantity: art.quantity,
-    triangleCount: art.manifold.triangleCount,
-    vertexCount: art.manifold.vertexCount,
-    edgeCount: art.manifold.edgeCount,
-    volumeMm3: round2(art.manifold.volumeMm3),
-    isManifold: art.manifold.isManifold,
-  }));
+  const multiPlateFileName = "all-plates.3mf";
+  const multiPlateRelPath = `parts/${multiPlateFileName}`;
+  const multiPlateBytes = writeMultiPlate3mf(multiPlateSpecs, {
+    title: `${design.objectName ?? "Object"} — All Plates (${printer.name})`,
+    printerName: printer.name,
+    bedDimensionsMm: [printer.bed.x, printer.bed.y, printer.bed.z],
+  });
+  const multiPlate3mfArtifact: GeneratedMultiPlate3mfArtifact = {
+    fileName: multiPlateFileName,
+    relativePath: multiPlateRelPath,
+    plateCount: plates.length,
+    bytes: multiPlateBytes,
+    byteLength: multiPlateBytes.byteLength,
+  };
+
+  const partsSummary = stlArtifacts.map((art) => {
+    const totalPartGrams = round2(art.filamentGrams * art.quantity);
+    const totalPartMeters = round2(art.filamentMeters * art.quantity);
+    const totalPartMinutes = Math.round(art.printTimeMinutes * art.quantity);
+    return {
+      partId: art.partId,
+      name: art.name,
+      shape: art.shape,
+      stlFile: art.stlFile,
+      file: art.stlFile,
+      bytes: art.byteLength,
+      dims_mm: art.dims_mm,
+      dimensionsMm: art.dims_mm,
+      weightGrams: totalPartGrams,
+      filamentGrams: totalPartGrams,
+      filamentMeters: totalPartMeters,
+      estimatedMinutes: totalPartMinutes,
+      printTimeMinutes: totalPartMinutes,
+      formattedTime: formatPrintDuration(totalPartMinutes),
+      color: art.color,
+      material: art.material,
+      quantity: art.quantity,
+      triangleCount: art.manifold.triangleCount,
+      vertexCount: art.manifold.vertexCount,
+      edgeCount: art.manifold.edgeCount,
+      volumeMm3: round2(art.manifold.volumeMm3),
+      surfaceAreaMm2: round2(art.surfaceAreaMm2),
+      isManifold: art.manifold.isManifold,
+    };
+  });
 
   const totalWeightGrams = round2(
     plates.reduce((sum, p) => sum + p.weightGrams, 0)
+  );
+  const totalFilamentMeters = round2(
+    plates.reduce((sum, p) => sum + p.filamentMeters, 0)
   );
   const totalPrintTimeMinutes = Math.round(
     plates.reduce((sum, p) => sum + p.estimatedMinutes, 0)
@@ -866,7 +979,12 @@ export function generateCadBundle(
     totalUniqueParts: printedParts.length,
     totalPrintedItems,
     totalWeightGrams,
+    totalFilamentGrams: totalWeightGrams,
+    totalFilamentMeters,
     totalPrintTimeMinutes,
+    formattedTotalPrintTime: formatPrintDuration(totalPrintTimeMinutes),
+    multiPlate3mfFile: multiPlateRelPath,
+    multiPlate3mfBytes: multiPlateBytes.byteLength,
     printer,
     margin: packResult.margin,
     spacing: packResult.spacing,
@@ -883,6 +1001,7 @@ export function generateCadBundle(
     packResult,
     stlArtifacts,
     plate3mfArtifacts,
+    multiPlate3mfArtifact,
     platesJson,
   };
 }

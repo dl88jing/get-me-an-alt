@@ -10,8 +10,13 @@
   "totalPlates": 1,
   "totalUniqueParts": 9,
   "totalPrintedItems": 13,
-  "totalWeightGrams": 219.1,
-  "totalPrintTimeMinutes": 271,
+  "totalWeightGrams": 248.9,
+  "totalFilamentGrams": 248.9,
+  "totalFilamentMeters": 83.4,
+  "totalPrintTimeMinutes": 370,
+  "formattedTotalPrintTime": "6h 10m",
+  "multiPlate3mfFile": "parts/all-plates.3mf",
+  "multiPlate3mfBytes": 245885,
   "printer": {
     "id": "bambu-a1",
     "name": "Bambu Lab A1",
@@ -21,7 +26,8 @@
       "y": 256,
       "z": 256
     },
-    "multiColor": true
+    "multiColor": true,
+    "speedClass": "high-speed"
   },
   "margin": 5,
   "spacing": 5,
@@ -44,8 +50,12 @@
         115,
         100
       ],
-      "weightGrams": 109.4,
-      "estimatedMinutes": 126,
+      "weightGrams": 135.7,
+      "filamentGrams": 135.7,
+      "filamentMeters": 45.49,
+      "estimatedMinutes": 189,
+      "printTimeMinutes": 189,
+      "formattedTime": "3h 9m",
       "color": "#0ea5e9",
       "material": "PETG",
       "quantity": 1,
@@ -53,6 +63,7 @@
       "vertexCount": 112,
       "edgeCount": 330,
       "volumeMm3": 196081.9,
+      "surfaceAreaMm2": 110167.24,
       "isManifold": true
     },
     {
@@ -72,8 +83,12 @@
         120,
         7
       ],
-      "weightGrams": 53.8,
+      "weightGrams": 49.2,
+      "filamentGrams": 49.2,
+      "filamentMeters": 16.49,
       "estimatedMinutes": 62,
+      "printTimeMinutes": 62,
+      "formattedTime": "1h 2m",
       "color": "#10b981",
       "material": "PLA",
       "quantity": 1,
@@ -81,6 +96,7 @@
       "vertexCount": 176,
       "edgeCount": 540,
       "volumeMm3": 96394.42,
+      "surfaceAreaMm2": 31631.58,
       "isManifold": true
     },
     {
@@ -100,8 +116,12 @@
         56,
         32
       ],
-      "weightGrams": 14.9,
-      "estimatedMinutes": 17,
+      "weightGrams": 15,
+      "filamentGrams": 15,
+      "filamentMeters": 5.04,
+      "estimatedMinutes": 28,
+      "printTimeMinutes": 28,
+      "formattedTime": "28m",
       "color": "#334155",
       "material": "PETG",
       "quantity": 1,
@@ -109,6 +129,7 @@
       "vertexCount": 288,
       "edgeCount": 864,
       "volumeMm3": 26614.81,
+      "surfaceAreaMm2": 11093.64,
       "isManifold": true
     },
     {
@@ -128,8 +149,12 @@
         54,
         38
       ],
-      "weightGrams": 5.4,
-      "estimatedMinutes": 6,
+      "weightGrams": 7.9,
+      "filamentGrams": 7.9,
+      "filamentMeters": 2.64,
+      "estimatedMinutes": 20,
+      "printTimeMinutes": 20,
+      "formattedTime": "20m",
       "color": "#84cc16",
       "material": "PLA",
       "quantity": 1,
@@ -137,6 +162,7 @@
       "vertexCount": 384,
       "edgeCount": 1152,
       "volumeMm3": 9637.47,
+      "surfaceAreaMm2": 8424.04,
       "isManifold": true
     },
     {
@@ -156,8 +182,12 @@
         54,
         28
       ],
-      "weightGrams": 16.5,
-      "estimatedMinutes": 19,
+      "weightGrams": 21.3,
+      "filamentGrams": 21.3,
+      "filamentMeters": 7.13,
+      "estimatedMinutes": 34,
+      "printTimeMinutes": 34,
+      "formattedTime": "34m",
       "color": "#1e293b",
       "material": "PLA",
       "quantity": 1,
@@ -165,6 +195,7 @@
       "vertexCount": 176,
       "edgeCount": 534,
       "volumeMm3": 29586.1,
+      "surfaceAreaMm2": 21387.33,
       "isManifold": true
     },
     {
@@ -184,8 +215,12 @@
         38,
         30
       ],
-      "weightGrams": 5.1,
-      "estimatedMinutes": 6,
+      "weightGrams": 6.8,
+      "filamentGrams": 6.8,
+      "filamentMeters": 2.29,
+      "estimatedMinutes": 17,
+      "printTimeMinutes": 17,
+      "formattedTime": "17m",
       "color": "#059669",
       "material": "PLA",
       "quantity": 1,
@@ -193,6 +228,7 @@
       "vertexCount": 24,
       "edgeCount": 66,
       "volumeMm3": 9227.3,
+      "surfaceAreaMm2": 5363.11,
       "isManifold": true
     },
     {
@@ -212,8 +248,12 @@
         11.2,
         12
       ],
-      "weightGrams": 8,
+      "weightGrams": 4.8,
+      "filamentGrams": 4.8,
+      "filamentMeters": 1.6,
       "estimatedMinutes": 20,
+      "printTimeMinutes": 20,
+      "formattedTime": "20m",
       "color": "#14b8a6",
       "material": "PETG",
       "quantity": 4,
@@ -221,6 +261,7 @@
       "vertexCount": 116,
       "edgeCount": 342,
       "volumeMm3": 631.94,
+      "surfaceAreaMm2": 705.16,
       "isManifold": true
     },
     {
@@ -240,8 +281,12 @@
         106.6,
         8
       ],
-      "weightGrams": 4,
-      "estimatedMinutes": 10,
+      "weightGrams": 5.8,
+      "filamentGrams": 5.8,
+      "filamentMeters": 1.92,
+      "estimatedMinutes": 14,
+      "printTimeMinutes": 14,
+      "formattedTime": "14m",
       "color": "#f59e0b",
       "material": "PLA",
       "quantity": 2,
@@ -249,6 +294,7 @@
       "vertexCount": 76,
       "edgeCount": 222,
       "volumeMm3": 3015.82,
+      "surfaceAreaMm2": 2964.76,
       "isManifold": true
     },
     {
@@ -268,8 +314,12 @@
         28.8,
         7
       ],
-      "weightGrams": 2,
-      "estimatedMinutes": 5,
+      "weightGrams": 2.4,
+      "filamentGrams": 2.4,
+      "filamentMeters": 0.8,
+      "estimatedMinutes": 6,
+      "printTimeMinutes": 6,
+      "formattedTime": "6m",
       "color": "#f97316",
       "material": "PLA",
       "quantity": 1,
@@ -277,6 +327,7 @@
       "vertexCount": 224,
       "edgeCount": 672,
       "volumeMm3": 3137.27,
+      "surfaceAreaMm2": 2123.28,
       "isManifold": true
     }
   ],
@@ -298,8 +349,12 @@
         115,
         100
       ],
-      "weightGrams": 109.4,
-      "estimatedMinutes": 126,
+      "weightGrams": 135.7,
+      "filamentGrams": 135.7,
+      "filamentMeters": 45.49,
+      "estimatedMinutes": 189,
+      "printTimeMinutes": 189,
+      "formattedTime": "3h 9m",
       "color": "#0ea5e9",
       "material": "PETG",
       "quantity": 1,
@@ -307,6 +362,7 @@
       "vertexCount": 112,
       "edgeCount": 330,
       "volumeMm3": 196081.9,
+      "surfaceAreaMm2": 110167.24,
       "isManifold": true
     },
     {
@@ -326,8 +382,12 @@
         120,
         7
       ],
-      "weightGrams": 53.8,
+      "weightGrams": 49.2,
+      "filamentGrams": 49.2,
+      "filamentMeters": 16.49,
       "estimatedMinutes": 62,
+      "printTimeMinutes": 62,
+      "formattedTime": "1h 2m",
       "color": "#10b981",
       "material": "PLA",
       "quantity": 1,
@@ -335,6 +395,7 @@
       "vertexCount": 176,
       "edgeCount": 540,
       "volumeMm3": 96394.42,
+      "surfaceAreaMm2": 31631.58,
       "isManifold": true
     },
     {
@@ -354,8 +415,12 @@
         56,
         32
       ],
-      "weightGrams": 14.9,
-      "estimatedMinutes": 17,
+      "weightGrams": 15,
+      "filamentGrams": 15,
+      "filamentMeters": 5.04,
+      "estimatedMinutes": 28,
+      "printTimeMinutes": 28,
+      "formattedTime": "28m",
       "color": "#334155",
       "material": "PETG",
       "quantity": 1,
@@ -363,6 +428,7 @@
       "vertexCount": 288,
       "edgeCount": 864,
       "volumeMm3": 26614.81,
+      "surfaceAreaMm2": 11093.64,
       "isManifold": true
     },
     {
@@ -382,8 +448,12 @@
         54,
         38
       ],
-      "weightGrams": 5.4,
-      "estimatedMinutes": 6,
+      "weightGrams": 7.9,
+      "filamentGrams": 7.9,
+      "filamentMeters": 2.64,
+      "estimatedMinutes": 20,
+      "printTimeMinutes": 20,
+      "formattedTime": "20m",
       "color": "#84cc16",
       "material": "PLA",
       "quantity": 1,
@@ -391,6 +461,7 @@
       "vertexCount": 384,
       "edgeCount": 1152,
       "volumeMm3": 9637.47,
+      "surfaceAreaMm2": 8424.04,
       "isManifold": true
     },
     {
@@ -410,8 +481,12 @@
         54,
         28
       ],
-      "weightGrams": 16.5,
-      "estimatedMinutes": 19,
+      "weightGrams": 21.3,
+      "filamentGrams": 21.3,
+      "filamentMeters": 7.13,
+      "estimatedMinutes": 34,
+      "printTimeMinutes": 34,
+      "formattedTime": "34m",
       "color": "#1e293b",
       "material": "PLA",
       "quantity": 1,
@@ -419,6 +494,7 @@
       "vertexCount": 176,
       "edgeCount": 534,
       "volumeMm3": 29586.1,
+      "surfaceAreaMm2": 21387.33,
       "isManifold": true
     },
     {
@@ -438,8 +514,12 @@
         38,
         30
       ],
-      "weightGrams": 5.1,
-      "estimatedMinutes": 6,
+      "weightGrams": 6.8,
+      "filamentGrams": 6.8,
+      "filamentMeters": 2.29,
+      "estimatedMinutes": 17,
+      "printTimeMinutes": 17,
+      "formattedTime": "17m",
       "color": "#059669",
       "material": "PLA",
       "quantity": 1,
@@ -447,6 +527,7 @@
       "vertexCount": 24,
       "edgeCount": 66,
       "volumeMm3": 9227.3,
+      "surfaceAreaMm2": 5363.11,
       "isManifold": true
     },
     {
@@ -466,8 +547,12 @@
         11.2,
         12
       ],
-      "weightGrams": 8,
+      "weightGrams": 4.8,
+      "filamentGrams": 4.8,
+      "filamentMeters": 1.6,
       "estimatedMinutes": 20,
+      "printTimeMinutes": 20,
+      "formattedTime": "20m",
       "color": "#14b8a6",
       "material": "PETG",
       "quantity": 4,
@@ -475,6 +560,7 @@
       "vertexCount": 116,
       "edgeCount": 342,
       "volumeMm3": 631.94,
+      "surfaceAreaMm2": 705.16,
       "isManifold": true
     },
     {
@@ -494,8 +580,12 @@
         106.6,
         8
       ],
-      "weightGrams": 4,
-      "estimatedMinutes": 10,
+      "weightGrams": 5.8,
+      "filamentGrams": 5.8,
+      "filamentMeters": 1.92,
+      "estimatedMinutes": 14,
+      "printTimeMinutes": 14,
+      "formattedTime": "14m",
       "color": "#f59e0b",
       "material": "PLA",
       "quantity": 2,
@@ -503,6 +593,7 @@
       "vertexCount": 76,
       "edgeCount": 222,
       "volumeMm3": 3015.82,
+      "surfaceAreaMm2": 2964.76,
       "isManifold": true
     },
     {
@@ -522,8 +613,12 @@
         28.8,
         7
       ],
-      "weightGrams": 2,
-      "estimatedMinutes": 5,
+      "weightGrams": 2.4,
+      "filamentGrams": 2.4,
+      "filamentMeters": 0.8,
+      "estimatedMinutes": 6,
+      "printTimeMinutes": 6,
+      "formattedTime": "6m",
       "color": "#f97316",
       "material": "PLA",
       "quantity": 1,
@@ -531,6 +626,7 @@
       "vertexCount": 224,
       "edgeCount": 672,
       "volumeMm3": 3137.27,
+      "surfaceAreaMm2": 2123.28,
       "isManifold": true
     }
   ],
@@ -549,11 +645,16 @@
       "utilizationPercent": 75.56,
       "utilization": 0.7556,
       "maxHeight": 100,
-      "estimatedMinutes": 271,
-      "weightGrams": 219.1,
+      "estimatedMinutes": 370,
+      "printTimeMinutes": 370,
+      "formattedTime": "6h 10m",
+      "weightGrams": 248.9,
+      "filamentGrams": 248.9,
+      "filamentMeters": 83.4,
+      "layers": 500,
       "stlFile": "parts/plate-1.3mf",
       "file": "parts/plate-1.3mf",
-      "bytes": 234285,
+      "bytes": 245865,
       "placements": [
         {
           "partId": "reservoir-lid",
@@ -569,7 +670,9 @@
           "height": 7,
           "rotated": false,
           "color": "#10b981",
-          "stlFile": "parts/reservoir-lid.stl"
+          "stlFile": "parts/reservoir-lid.stl",
+          "weightGrams": 49.2,
+          "estimatedMinutes": 62
         },
         {
           "partId": "reservoir-tank",
@@ -585,7 +688,9 @@
           "height": 100,
           "rotated": false,
           "color": "#0ea5e9",
-          "stlFile": "parts/reservoir-tank.stl"
+          "stlFile": "parts/reservoir-tank.stl",
+          "weightGrams": 135.7,
+          "estimatedMinutes": 189
         },
         {
           "partId": "controller-box",
@@ -601,7 +706,9 @@
           "height": 28,
           "rotated": false,
           "color": "#1e293b",
-          "stlFile": "parts/controller-box.stl"
+          "stlFile": "parts/controller-box.stl",
+          "weightGrams": 21.3,
+          "estimatedMinutes": 34
         },
         {
           "partId": "pump-mount",
@@ -617,7 +724,9 @@
           "height": 32,
           "rotated": false,
           "color": "#334155",
-          "stlFile": "parts/pump-mount.stl"
+          "stlFile": "parts/pump-mount.stl",
+          "weightGrams": 15,
+          "estimatedMinutes": 28
         },
         {
           "partId": "refill-funnel",
@@ -633,7 +742,9 @@
           "height": 38,
           "rotated": false,
           "color": "#84cc16",
-          "stlFile": "parts/refill-funnel.stl"
+          "stlFile": "parts/refill-funnel.stl",
+          "weightGrams": 7.9,
+          "estimatedMinutes": 20
         },
         {
           "partId": "drip-stake",
@@ -649,7 +760,9 @@
           "height": 8,
           "rotated": false,
           "color": "#f59e0b",
-          "stlFile": "parts/drip-stake.stl"
+          "stlFile": "parts/drip-stake.stl",
+          "weightGrams": 2.9,
+          "estimatedMinutes": 7
         },
         {
           "partId": "drip-stake",
@@ -665,7 +778,9 @@
           "height": 8,
           "rotated": true,
           "color": "#f59e0b",
-          "stlFile": "parts/drip-stake.stl"
+          "stlFile": "parts/drip-stake.stl",
+          "weightGrams": 2.9,
+          "estimatedMinutes": 7
         },
         {
           "partId": "controller-bracket",
@@ -681,7 +796,9 @@
           "height": 30,
           "rotated": false,
           "color": "#059669",
-          "stlFile": "parts/controller-bracket.stl"
+          "stlFile": "parts/controller-bracket.stl",
+          "weightGrams": 6.8,
+          "estimatedMinutes": 17
         },
         {
           "partId": "flow-wheel",
@@ -697,7 +814,9 @@
           "height": 7,
           "rotated": true,
           "color": "#f97316",
-          "stlFile": "parts/flow-wheel.stl"
+          "stlFile": "parts/flow-wheel.stl",
+          "weightGrams": 2.4,
+          "estimatedMinutes": 6
         },
         {
           "partId": "tube-clip",
@@ -713,7 +832,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         },
         {
           "partId": "tube-clip",
@@ -729,7 +850,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         },
         {
           "partId": "tube-clip",
@@ -745,7 +868,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         },
         {
           "partId": "tube-clip",
@@ -761,7 +886,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         }
       ],
       "items": [
@@ -779,7 +906,9 @@
           "height": 7,
           "rotated": false,
           "color": "#10b981",
-          "stlFile": "parts/reservoir-lid.stl"
+          "stlFile": "parts/reservoir-lid.stl",
+          "weightGrams": 49.2,
+          "estimatedMinutes": 62
         },
         {
           "partId": "reservoir-tank",
@@ -795,7 +924,9 @@
           "height": 100,
           "rotated": false,
           "color": "#0ea5e9",
-          "stlFile": "parts/reservoir-tank.stl"
+          "stlFile": "parts/reservoir-tank.stl",
+          "weightGrams": 135.7,
+          "estimatedMinutes": 189
         },
         {
           "partId": "controller-box",
@@ -811,7 +942,9 @@
           "height": 28,
           "rotated": false,
           "color": "#1e293b",
-          "stlFile": "parts/controller-box.stl"
+          "stlFile": "parts/controller-box.stl",
+          "weightGrams": 21.3,
+          "estimatedMinutes": 34
         },
         {
           "partId": "pump-mount",
@@ -827,7 +960,9 @@
           "height": 32,
           "rotated": false,
           "color": "#334155",
-          "stlFile": "parts/pump-mount.stl"
+          "stlFile": "parts/pump-mount.stl",
+          "weightGrams": 15,
+          "estimatedMinutes": 28
         },
         {
           "partId": "refill-funnel",
@@ -843,7 +978,9 @@
           "height": 38,
           "rotated": false,
           "color": "#84cc16",
-          "stlFile": "parts/refill-funnel.stl"
+          "stlFile": "parts/refill-funnel.stl",
+          "weightGrams": 7.9,
+          "estimatedMinutes": 20
         },
         {
           "partId": "drip-stake",
@@ -859,7 +996,9 @@
           "height": 8,
           "rotated": false,
           "color": "#f59e0b",
-          "stlFile": "parts/drip-stake.stl"
+          "stlFile": "parts/drip-stake.stl",
+          "weightGrams": 2.9,
+          "estimatedMinutes": 7
         },
         {
           "partId": "drip-stake",
@@ -875,7 +1014,9 @@
           "height": 8,
           "rotated": true,
           "color": "#f59e0b",
-          "stlFile": "parts/drip-stake.stl"
+          "stlFile": "parts/drip-stake.stl",
+          "weightGrams": 2.9,
+          "estimatedMinutes": 7
         },
         {
           "partId": "controller-bracket",
@@ -891,7 +1032,9 @@
           "height": 30,
           "rotated": false,
           "color": "#059669",
-          "stlFile": "parts/controller-bracket.stl"
+          "stlFile": "parts/controller-bracket.stl",
+          "weightGrams": 6.8,
+          "estimatedMinutes": 17
         },
         {
           "partId": "flow-wheel",
@@ -907,7 +1050,9 @@
           "height": 7,
           "rotated": true,
           "color": "#f97316",
-          "stlFile": "parts/flow-wheel.stl"
+          "stlFile": "parts/flow-wheel.stl",
+          "weightGrams": 2.4,
+          "estimatedMinutes": 6
         },
         {
           "partId": "tube-clip",
@@ -923,7 +1068,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         },
         {
           "partId": "tube-clip",
@@ -939,7 +1086,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         },
         {
           "partId": "tube-clip",
@@ -955,7 +1104,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         },
         {
           "partId": "tube-clip",
@@ -971,7 +1122,9 @@
           "height": 12,
           "rotated": true,
           "color": "#14b8a6",
-          "stlFile": "parts/tube-clip.stl"
+          "stlFile": "parts/tube-clip.stl",
+          "weightGrams": 1.2,
+          "estimatedMinutes": 5
         }
       ]
     }

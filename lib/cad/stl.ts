@@ -32,7 +32,23 @@ export interface Plate3mfOptions {
   title?: string;
   printerName?: string;
   plateIndex?: number;
+  bedDimensionsMm?: [number, number, number];
   /** If true, item.x and item.y are already center coordinates rather than min-corner coordinates */
+  isCenteredOffset?: boolean;
+}
+
+export interface MultiPlate3mfSpec {
+  plateIndex: number;
+  plateNumber?: number;
+  name?: string;
+  items: Plate3mfItem[];
+}
+
+export interface MultiPlate3mfOptions {
+  title?: string;
+  printerName?: string;
+  bedDimensionsMm?: [number, number, number];
+  plateGapMm?: number;
   isCenteredOffset?: boolean;
 }
 
@@ -327,6 +343,8 @@ export function createPlate3mfModelXml(
 
   lines.push(`  </resources>`, `  <build>`);
 
+  const plateNum = (options.plateIndex ?? 0) + 1;
+
   for (const item of items) {
     const obj = uniqueObjects.get(item.partId)!;
     const rotated = Boolean(item.rotated);
@@ -355,17 +373,234 @@ export function createPlate3mfModelXml(
       ? `0 1 0 -1 0 0 0 0 1 ${fmt(tx)} ${fmt(ty)} ${fmt(tz)}`
       : `1 0 0 0 1 0 0 0 1 ${fmt(tx)} ${fmt(ty)} ${fmt(tz)}`;
 
-    lines.push(`    <item objectid="${obj.objectId}" transform="${matrix}" />`);
+    lines.push(
+      `    <item objectid="${obj.objectId}" transform="${matrix}" printable="1">`,
+      `      <metadataGroup>`,
+      `        <metadata name="plate_id">${plateNum}</metadata>`,
+      `        <metadata name="plater_id">${plateNum}</metadata>`,
+      `        <metadata name="plater_name">${escapeXml(title)}</metadata>`,
+      `        <metadata name="part_id">${escapeXml(item.partId)}</metadata>`,
+      `        <metadata name="copy">${item.copy ?? 1}</metadata>`,
+      `      </metadataGroup>`,
+      `    </item>`
+    );
   }
 
   lines.push(`  </build>`, `</model>`, ``);
   return lines.join("\n");
 }
 
+/**
+ * Generates a single Bambu-friendly `3D/3dmodel.model` XML document containing
+ * ALL packed plates in one 3MF file (multiple build items with plate metadata and
+ * non-overlapping plate offsets), plus returns object/instance mapping for
+ * `Metadata/model_settings.config`.
+ */
+export function createMultiPlate3mfModelXml(
+  plates: MultiPlate3mfSpec[],
+  options: MultiPlate3mfOptions = {}
+): {
+  modelXml: string;
+  modelSettingsXml: string;
+} {
+  const title = options.title ?? "GetMeAnAlt Multi-Plate Build";
+  const bedX = options.bedDimensionsMm?.[0] ?? 256;
+  const plateGap = options.plateGapMm ?? 30;
+  const plateStrideX = bedX + plateGap;
+
+  const uniqueObjects = new Map<
+    string,
+    { objectId: number; name: string; mesh: TriangleMesh; instanceCount: number }
+  >();
+  let nextObjId = 1;
+
+  for (const plate of plates) {
+    for (const item of plate.items) {
+      if (!uniqueObjects.has(item.partId)) {
+        uniqueObjects.set(item.partId, {
+          objectId: nextObjId++,
+          name: item.name ?? item.partId,
+          mesh: item.mesh,
+          instanceCount: 0,
+        });
+      }
+    }
+  }
+
+  const lines: string[] = [
+    `<?xml version="1.0" encoding="UTF-8"?>`,
+    `<model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02" xmlns:BambuStudio="http://schemas.bambulab.com/package/2021">`,
+    `  <metadata name="Title">${escapeXml(title)}</metadata>`,
+    `  <metadata name="Application">BambuStudio-GetMeAnAlt-CAD</metadata>`,
+    `  <metadata name="PlateCount">${plates.length}</metadata>`,
+  ];
+
+  if (options.printerName) {
+    lines.push(
+      `  <metadata name="Printer">${escapeXml(options.printerName)}</metadata>`
+    );
+  }
+
+  lines.push(`  <resources>`);
+
+  for (const [partId, obj] of uniqueObjects.entries()) {
+    const { positions, indices } = obj.mesh;
+    lines.push(
+      `    <object id="${obj.objectId}" name="${escapeXml(obj.name)} (${escapeXml(partId)})" type="model">`,
+      `      <mesh>`,
+      `        <vertices>`
+    );
+
+    for (let i = 0; i < positions.length; i += 3) {
+      lines.push(
+        `          <vertex x="${fmt(positions[i])}" y="${fmt(positions[i + 1])}" z="${fmt(positions[i + 2])}" />`
+      );
+    }
+
+    lines.push(`        </vertices>`, `        <triangles>`);
+
+    for (let i = 0; i < indices.length; i += 3) {
+      lines.push(
+        `          <triangle v1="${indices[i]}" v2="${indices[i + 1]}" v3="${indices[i + 2]}" />`
+      );
+    }
+
+    lines.push(`        </triangles>`, `      </mesh>`, `    </object>`);
+  }
+
+  lines.push(`  </resources>`, `  <build>`);
+
+  const plateInstanceMap = new Map<
+    number,
+    Array<{ objectId: number; instanceId: number; partId: string; name: string }>
+  >();
+
+  for (let pIdx = 0; pIdx < plates.length; pIdx++) {
+    const plate = plates[pIdx];
+    const plateNum = plate.plateNumber ?? plate.plateIndex + 1;
+    const plateName = plate.name ?? `Plate ${plateNum}`;
+    const plateOffsetX = pIdx * plateStrideX;
+    const instancesForPlate: Array<{
+      objectId: number;
+      instanceId: number;
+      partId: string;
+      name: string;
+    }> = [];
+
+    for (const item of plate.items) {
+      const obj = uniqueObjects.get(item.partId)!;
+      obj.instanceCount += 1;
+      const instanceId = obj.instanceCount;
+
+      const rotated = Boolean(item.rotated);
+      const rawW = obj.mesh.bbox.size[0];
+      const rawD = obj.mesh.bbox.size[1];
+      const placedW = rotated ? rawD : rawW;
+      const placedD = rotated ? rawW : rawD;
+
+      const localX =
+        item.centerX !== undefined
+          ? item.centerX
+          : options.isCenteredOffset
+            ? item.x
+            : item.x + placedW * 0.5;
+      const localY =
+        item.centerY !== undefined
+          ? item.centerY
+          : options.isCenteredOffset
+            ? item.y
+            : item.y + placedD * 0.5;
+      const tx = plateOffsetX + localX;
+      const ty = localY;
+      const tz = item.z ?? 0;
+
+      const matrix = rotated
+        ? `0 1 0 -1 0 0 0 0 1 ${fmt(tx)} ${fmt(ty)} ${fmt(tz)}`
+        : `1 0 0 0 1 0 0 0 1 ${fmt(tx)} ${fmt(ty)} ${fmt(tz)}`;
+
+      lines.push(
+        `    <item objectid="${obj.objectId}" transform="${matrix}" printable="1">`,
+        `      <metadataGroup>`,
+        `        <metadata name="plate_id">${plateNum}</metadata>`,
+        `        <metadata name="plater_id">${plateNum}</metadata>`,
+        `        <metadata name="plater_name">${escapeXml(plateName)}</metadata>`,
+        `        <metadata name="instance_id">${instanceId}</metadata>`,
+        `        <metadata name="part_id">${escapeXml(item.partId)}</metadata>`,
+        `        <metadata name="copy">${item.copy ?? 1}</metadata>`,
+        `        <metadata name="bed_x">${fmt(localX)}</metadata>`,
+        `        <metadata name="bed_y">${fmt(localY)}</metadata>`,
+        `      </metadataGroup>`,
+        `    </item>`
+      );
+
+      instancesForPlate.push({
+        objectId: obj.objectId,
+        instanceId,
+        partId: item.partId,
+        name: obj.name,
+      });
+    }
+
+    plateInstanceMap.set(plateNum, instancesForPlate);
+  }
+
+  lines.push(`  </build>`, `</model>`, ``);
+
+  // Build Bambu Studio / OrcaSlicer `Metadata/model_settings.config` XML
+  const configLines: string[] = [
+    `<?xml version="1.0" encoding="UTF-8"?>`,
+    `<config>`,
+  ];
+
+  for (const [partId, obj] of uniqueObjects.entries()) {
+    configLines.push(
+      `  <object id="${obj.objectId}">`,
+      `    <metadata key="name" value="${escapeXml(obj.name)}" />`,
+      `    <metadata key="part_id" value="${escapeXml(partId)}" />`,
+      `    <metadata key="extruder" value="1" />`,
+      `  </object>`
+    );
+  }
+
+  for (let pIdx = 0; pIdx < plates.length; pIdx++) {
+    const plate = plates[pIdx];
+    const plateNum = plate.plateNumber ?? plate.plateIndex + 1;
+    const plateName = plate.name ?? `Plate ${plateNum}`;
+    const insts = plateInstanceMap.get(plateNum) ?? [];
+
+    configLines.push(
+      `  <plate>`,
+      `    <metadata key="plater_id" value="${plateNum}" />`,
+      `    <metadata key="plater_name" value="${escapeXml(plateName)}" />`,
+      `    <metadata key="locked" value="false" />`
+    );
+
+    for (const inst of insts) {
+      configLines.push(
+        `    <model_instance>`,
+        `      <metadata key="object_id" value="${inst.objectId}" />`,
+        `      <metadata key="instance_id" value="${inst.instanceId}" />`,
+        `      <metadata key="identify_id" value="${inst.objectId * 100 + inst.instanceId}" />`,
+        `    </model_instance>`
+      );
+    }
+
+    configLines.push(`  </plate>`);
+  }
+
+  configLines.push(`</config>`, ``);
+
+  return {
+    modelXml: lines.join("\n"),
+    modelSettingsXml: configLines.join("\n"),
+  };
+}
+
 const CONTENT_TYPES_XML = `<?xml version="1.0" encoding="UTF-8"?>
 <Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
   <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml" />
   <Default Extension="model" ContentType="application/vnd.ms-package.3dmanufacturing-3dmodel+xml" />
+  <Default Extension="config" ContentType="text/xml" />
 </Types>
 `;
 
@@ -382,10 +617,49 @@ export function writePlate3mf(
   items: Plate3mfItem[],
   options: Plate3mfOptions = {}
 ): Uint8Array {
-  const modelXml = createPlate3mfModelXml(items, options);
+  const plateIndex = options.plateIndex ?? 0;
+  const plateNumber = plateIndex + 1;
+  const title = options.title ?? `Print Plate ${plateNumber}`;
+  const { modelXml, modelSettingsXml } = createMultiPlate3mfModelXml(
+    [
+      {
+        plateIndex,
+        plateNumber,
+        name: title,
+        items,
+      },
+    ],
+    {
+      title,
+      printerName: options.printerName,
+      bedDimensionsMm: options.bedDimensionsMm,
+      isCenteredOffset: options.isCenteredOffset,
+    }
+  );
   return createStoreZip([
     { path: "[Content_Types].xml", data: CONTENT_TYPES_XML },
     { path: "_rels/.rels", data: RELS_XML },
     { path: "3D/3dmodel.model", data: modelXml },
+    { path: "Metadata/model_settings.config", data: modelSettingsXml },
+  ]);
+}
+
+/**
+ * Writes a single Bambu-friendly multi-plate 3MF archive containing ONE plate per packed bed
+ * (multiple build items with plate metadata + `Metadata/model_settings.config` plate assignments).
+ */
+export function writeMultiPlate3mf(
+  plates: MultiPlate3mfSpec[],
+  options: MultiPlate3mfOptions = {}
+): Uint8Array {
+  const { modelXml, modelSettingsXml } = createMultiPlate3mfModelXml(
+    plates,
+    options
+  );
+  return createStoreZip([
+    { path: "[Content_Types].xml", data: CONTENT_TYPES_XML },
+    { path: "_rels/.rels", data: RELS_XML },
+    { path: "3D/3dmodel.model", data: modelXml },
+    { path: "Metadata/model_settings.config", data: modelSettingsXml },
   ]);
 }
