@@ -131,8 +131,7 @@ export default function LandingPage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+  const handleImageFile = (file: File | undefined | null) => {
     if (!file) return;
     const reader = new FileReader();
     reader.onload = () => {
@@ -148,6 +147,23 @@ export default function LandingPage() {
       });
     };
     reader.readAsDataURL(file);
+  };
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    handleImageFile(e.target.files?.[0]);
+  };
+
+  const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
+
+  const handlePhotoDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    setIsDraggingPhoto(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      handleImageFile(file);
+    } else if (file) {
+      setError('Please drop an image file (PNG, JPG, WebP, etc.).');
+    }
   };
 
   const handleStartPipeline = async (e: React.FormEvent) => {
@@ -282,9 +298,25 @@ export default function LandingPage() {
             <div className="flex flex-wrap items-center justify-between gap-3 pt-1 border-t border-slate-800/80 text-xs text-slate-300">
               {/* Image upload */}
               <div className="flex items-center gap-3">
-                <label className="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs font-medium text-slate-200 hover:border-emerald-500/50 hover:text-emerald-300 transition-colors">
+                <label
+                  onDragOver={(e) => {
+                    e.preventDefault();
+                    setIsDraggingPhoto(true);
+                  }}
+                  onDragLeave={() => setIsDraggingPhoto(false)}
+                  onDrop={handlePhotoDrop}
+                  className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors ${
+                    isDraggingPhoto
+                      ? 'border-emerald-400 bg-emerald-500/20 text-emerald-200'
+                      : 'border-slate-700 bg-slate-900 text-slate-200 hover:border-emerald-500/50 hover:text-emerald-300'
+                  }`}
+                >
                   <Upload className="h-3.5 w-3.5 text-emerald-400" />
-                  {imageFile ? `Photo: ${imageFile.name}` : 'Upload Gadget Photo'}
+                  {isDraggingPhoto
+                    ? 'Drop photo to upload'
+                    : imageFile
+                      ? `Photo: ${imageFile.name}`
+                      : 'Upload or drop a gadget photo'}
                   <input
                     type="file"
                     accept="image/*"
