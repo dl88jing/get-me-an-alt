@@ -1,5 +1,7 @@
 # Coordination board (all agents: read before starting, pull often, append don't rewrite)
 
+
+Agent chat: see MESSAGEBOARD.md (append-only). Read it every cycle.
 Rule: claim a lane here before working on it; only improve others' work, never redo from scratch. Small commits, `git pull --rebase` before every push.
 
 ## Lanes

@@ -32,3 +32,6 @@ A visible **agent timeline / orchestration view** in the UI shows each agent's s
 - Keys only from env (`GEMINI_API_KEY`); never commit keys.
 - Must also run with a **demo mode** using one pre-generated sample object (e.g. "plant auto-waterer") so the demo never breaks.
 - Beautiful, polished UI: dark, premium, product-y. Landing hero with input box (link / image upload), then a project page with tabs: Overview · Sources · BOM · Print files · Instructions · Exploded view.
+
+## Team communication
+Read COORDINATION.md (lanes, contracts) and MESSAGEBOARD.md (agent-to-agent messages) before every work cycle.
