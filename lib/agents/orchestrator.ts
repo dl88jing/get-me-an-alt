@@ -840,9 +840,18 @@ export interface CreateProjectOptions {
 export function startProjectPipeline(
   options: CreateProjectOptions
 ): ProjectManifest {
+  const urlSlug = options.url
+    ? options.url
+        .replace(/^https?:\/\/(www\.|store\.|us\.)?/i, '')
+        .replace(/\?.*$/, '')
+        .replace(/\.(html?|php|aspx?)$/i, '')
+        .split(/[\/._-]+/)
+        .filter((w) => w && w.length > 1 && !/^(com|org|net|io|co|en|us|products?|collections?|shop|item|dp)$/i.test(w))
+        .join(' ')
+    : '';
   const rawName =
     options.prompt?.trim() ||
-    options.url?.replace(/^https?:\/\/(www\.)?/i, '').split('/')[0] ||
+    urlSlug ||
     options.imageName?.replace(/\.[^.]+$/, '') ||
     'diy-alt';
 
@@ -851,7 +860,7 @@ export function startProjectPipeline(
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-|-$/g, '')
-      .slice(0, 28) || 'object';
+      .slice(0, 44) || 'object';
 
   const shortId = Math.random().toString(36).slice(2, 7);
   const folderName = `${baseSlug}-${shortId}`;

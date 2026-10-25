@@ -214,6 +214,11 @@ export default function ProjectPage() {
     []
   );
 
+  if (typeof window !== 'undefined' && manifest) {
+    (window as unknown as { __ALT_MANIFEST__?: ProjectManifest }).__ALT_MANIFEST__ =
+      manifest;
+  }
+
   if (loading && !manifest) {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">

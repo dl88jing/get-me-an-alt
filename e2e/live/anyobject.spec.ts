@@ -296,40 +296,49 @@ test.describe('Get Me An Alt — Live Prod Any-Object E2E Suite', () => {
 
             let midShotTaken = false;
             while (Date.now() - pollStart < maxWaitMs) {
-              const res = await page.request
-                .get(`${BASE_URL}/api/objects/${encodeURIComponent(projectId)}`, {
-                  timeout: 10_000,
-                })
+              const pageManifest = await page
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                .evaluate(() => (window as any).__ALT_MANIFEST__ || null)
                 .catch(() => null);
 
-              if (res && res.ok()) {
-                const data = await res.json().catch(() => null);
-                if (data?.manifest) {
-                  finalManifest = data.manifest;
-                  const completedStages = (finalManifest.stages || []).filter(
-                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-                    (s: any) => s.status === 'completed'
-                  ).length;
-
-                  if (!midShotTaken && completedStages >= 2) {
-                    midShotTaken = true;
-                    await captureShot(
-                      page,
-                      shotDir,
-                      '02a-mission-control-streaming',
-                      screenshots
-                    );
-                  }
-
-                  if (
-                    finalManifest.status === 'completed' ||
-                    finalManifest.status === 'error'
-                  ) {
-                    break;
-                  }
+              if (pageManifest) {
+                finalManifest = pageManifest;
+              } else {
+                const res = await page.request
+                  .get(`${BASE_URL}/api/objects/${encodeURIComponent(projectId)}`, {
+                    timeout: 10_000,
+                  })
+                  .catch(() => null);
+                if (res && res.ok()) {
+                  const data = await res.json().catch(() => null);
+                  if (data?.manifest) finalManifest = data.manifest;
                 }
               }
-              await page.waitForTimeout(1500);
+
+              if (finalManifest) {
+                const completedStages = (finalManifest.stages || []).filter(
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  (s: any) => s.status === 'completed'
+                ).length;
+
+                if (!midShotTaken && completedStages >= 2) {
+                  midShotTaken = true;
+                  await captureShot(
+                    page,
+                    shotDir,
+                    '02a-mission-control-streaming',
+                    screenshots
+                  );
+                }
+
+                if (
+                  finalManifest.status === 'completed' ||
+                  finalManifest.status === 'error'
+                ) {
+                  break;
+                }
+              }
+              await page.waitForTimeout(1200);
             }
 
             pipelineDurationSec = Number(
