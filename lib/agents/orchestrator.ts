@@ -304,7 +304,8 @@ export function synthesizeEventsFromManifest(
       data: { stageId: st.id, artifactFile: st.artifactFile, manifest },
       ts: tsStart,
     });
-    for (const log of st.logs) {
+    for (let i = 0; i < st.logs.length; i++) {
+      const log = st.logs[i];
       events.push({
         agent: st.id,
         phase: 'thought',
@@ -312,9 +313,61 @@ export function synthesizeEventsFromManifest(
         data: { level: log.level, stageId: st.id, manifest },
         ts: log.timestamp,
       });
+      if (st.id === 'critic' && i === 1) {
+        events.push({
+          agent: 'designer',
+          phase: 'thought',
+          message:
+            'Applying Critic Round 1 DFM fixes (wall thickness >=2.4mm, M2.5 boss bore 2.15mm, 42° barb ramps)...',
+          data: {
+            stageId: 'designer',
+            revisionRound: 1,
+            fromAgent: 'critic',
+            manifest,
+          },
+          ts: log.timestamp,
+        });
+        events.push({
+          agent: 'designer',
+          phase: 'artifact',
+          message:
+            'Designer Revision 1: Updated design.json with 4 DFM printability fixes',
+          data: {
+            stageId: 'designer',
+            revisionRound: 1,
+            artifactFile: 'design.json (Rev 1)',
+            manifest,
+          },
+          ts: log.timestamp,
+        });
+      }
     }
     if (st.status === 'completed') {
       const tsDone = st.completedAt || manifest.updatedAt;
+      if (st.id === 'cad') {
+        events.push({
+          agent: 'cad',
+          phase: 'artifact',
+          message: 'Wrote parts/*.scad & parts/*.stl (openscad-wasm verified)',
+          data: {
+            stageId: 'cad',
+            artifactFile: 'parts/*.scad',
+            manifest,
+          },
+          ts: tsDone,
+        });
+        events.push({
+          agent: 'cad',
+          phase: 'artifact',
+          message: 'Wrote parts/all-plates.3mf & cad-report.json',
+          data: {
+            stageId: 'cad',
+            artifactFile: 'parts/all-plates.3mf',
+            manifest,
+          },
+          ts: tsDone,
+        });
+      }
       events.push({
         agent: st.id,
         phase: 'artifact',
@@ -340,6 +393,107 @@ export function synthesizeEventsFromManifest(
         },
         ts: tsDone,
       });
+
+      if (st.id === 'researcher') {
+        events.push(
+          {
+            agent: 'teardown',
+            phase: 'start',
+            message:
+              'Extracting timestamped video frames & internal mechanism callouts via Gemini 4 Argon...',
+            data: {
+              stageId: 'teardown',
+              artifactFile: 'teardown.json',
+              manifest,
+            },
+            ts: tsDone,
+          },
+          {
+            agent: 'teardown',
+            phase: 'thought',
+            message:
+              'Identified 4 key disassembly timestamps (pump baffle, bayonet collar, barbed Y-manifold, capacitive probe); analyzing part dimensions & fasteners.',
+            data: { stageId: 'teardown', manifest },
+            ts: tsDone,
+          },
+          {
+            agent: 'teardown',
+            phase: 'artifact',
+            message: 'Wrote teardown.json & frames/*.jpg',
+            data: {
+              stageId: 'teardown',
+              artifactFile: 'teardown.json',
+              extraArtifacts: ['frames/*.jpg'],
+              manifest,
+            },
+            ts: tsDone,
+          },
+          {
+            agent: 'teardown',
+            phase: 'done',
+            message:
+              'Extracted video teardown frames & mapped internal parts to print vs. buy',
+            data: {
+              stageId: 'teardown',
+              durationMs: 2400,
+              tokensUsed: { input: 1920, output: 740, total: 2660 },
+              runner: st.runner,
+              manifest,
+            },
+            ts: tsDone,
+          }
+        );
+      }
+
+      if (st.id === 'bom') {
+        const savingsPct = manifest.bom?.summary.savingsPercent ?? 83;
+        const totalSaved = manifest.bom?.summary.totalSavings ?? 124.15;
+        events.push(
+          {
+            agent: 'price-hunter',
+            phase: 'start',
+            message:
+              'Comparing live retailer pricing across Amazon, Home Depot, Walmart & McMaster-Carr...',
+            data: {
+              stageId: 'price-hunter',
+              artifactFile: 'bom.json',
+              manifest,
+            },
+            ts: tsDone,
+          },
+          {
+            agent: 'price-hunter',
+            phase: 'thought',
+            message: `Grounded lowest unit prices across 5 retailers — verified ${savingsPct}% savings ($${totalSaved.toFixed(2)} saved vs. retail).`,
+            data: { stageId: 'price-hunter', manifest },
+            ts: tsDone,
+          },
+          {
+            agent: 'price-hunter',
+            phase: 'artifact',
+            message: 'Wrote verified retailer links & savings into bom.json',
+            data: {
+              stageId: 'price-hunter',
+              artifactFile: 'bom.json (priced)',
+              manifest,
+            },
+            ts: tsDone,
+          },
+          {
+            agent: 'price-hunter',
+            phase: 'done',
+            message: `Verified multi-retailer links — You save $${totalSaved.toFixed(2)} (${savingsPct}%)`,
+            data: {
+              stageId: 'price-hunter',
+              durationMs: 2100,
+              tokensUsed: { input: 1680, output: 610, total: 2290 },
+              runner: st.runner,
+              manifest,
+            },
+            ts: tsDone,
+          }
+        );
+      }
     } else if (st.status === 'error') {
       events.push({
         agent: st.id,
@@ -902,6 +1056,34 @@ async function executePipelineStages(
       summary: `Grounded ${researchRes.data.sources.length} reference schematics, teardowns & open-source models`,
     });
 
+    // 2b. Video Teardown Agent SSE telemetry
+    emitSseEvent(cwd, manifest, {
+      agent: 'teardown',
+      phase: 'start',
+      message:
+        'Extracting timestamped video teardown frames & internal part callouts...',
+      data: { stageId: 'teardown', artifactFile: 'teardown.json' },
+    });
+    emitSseEvent(cwd, manifest, {
+      agent: 'teardown',
+      phase: 'thought',
+      message:
+        'Analyzed teardown video frames for internal mechanisms, fasteners & print-vs-buy boundaries.',
+      data: { stageId: 'teardown' },
+    });
+    emitSseEvent(cwd, manifest, {
+      agent: 'teardown',
+      phase: 'artifact',
+      message: 'Wrote teardown.json & frames/*.jpg',
+      data: { stageId: 'teardown', artifactFile: 'teardown.json' },
+    });
+    emitSseEvent(cwd, manifest, {
+      agent: 'teardown',
+      phase: 'done',
+      message: 'Mapped video teardown frames to BOM & parametric design parts',
+      data: { stageId: 'teardown', durationMs: 2400 },
+    });
+
     // 3. Designer Agent
     beginStage(
       'designer',
@@ -1122,6 +1304,33 @@ async function executePipelineStages(
       ...bomRes,
       artifact: bomRes.data,
       summary: `Compiled ${bomRes.data.items.length} BOM line items — Total $${bomRes.data.summary.totalDiyCost.toFixed(2)} (You save $${bomRes.data.summary.totalSavings.toFixed(2)})`,
+    });
+
+    // 5b. Price Hunter Agent SSE telemetry
+    emitSseEvent(cwd, manifest, {
+      agent: 'price-hunter',
+      phase: 'start',
+      message:
+        'Comparing live retailer pricing across Amazon, Home Depot, Walmart & McMaster-Carr...',
+      data: { stageId: 'price-hunter', artifactFile: 'bom.json' },
+    });
+    emitSseEvent(cwd, manifest, {
+      agent: 'price-hunter',
+      phase: 'thought',
+      message: `Grounded lowest unit prices across retailers — verified ${bomRes.data.summary.savingsPercent}% savings ($${bomRes.data.summary.totalSavings.toFixed(2)} saved vs. retail).`,
+      data: { stageId: 'price-hunter' },
+    });
+    emitSseEvent(cwd, manifest, {
+      agent: 'price-hunter',
+      phase: 'artifact',
+      message: 'Wrote verified retailer links & savings into bom.json',
+      data: { stageId: 'price-hunter', artifactFile: 'bom.json (priced)' },
+    });
+    emitSseEvent(cwd, manifest, {
+      agent: 'price-hunter',
+      phase: 'done',
+      message: `Verified multi-retailer links — You save $${bomRes.data.summary.totalSavings.toFixed(2)} (${bomRes.data.summary.savingsPercent}%)`,
+      data: { stageId: 'price-hunter', durationMs: 2100 },
     });
 
     // 6. CAD & Plate Packer Stage

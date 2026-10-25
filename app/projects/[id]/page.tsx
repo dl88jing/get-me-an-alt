@@ -33,6 +33,7 @@ import {
   SsePipelineEvent,
 } from '@/lib/types';
 import CritiquePanel from './CritiquePanel';
+import MissionControl from '@/components/mission/MissionControl';
 
 type TabId =
   | 'overview'
@@ -359,148 +360,14 @@ export default function ProjectPage() {
         )}
       </div>
 
-      {/* Live Managed Agents Orchestration Timeline */}
-      {PeerMissionControlComp && (
-        <PeerMissionControlComp
-          manifest={manifest}
-          stages={manifest.stages}
-          events={streamEvents}
-          projectId={manifest.id}
-        />
-      )}
-
-      <section className="rounded-2xl border border-slate-800 bg-slate-950/90 p-4 sm:p-5 space-y-4">
-        <div className="flex flex-wrap items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <Cpu className="h-4 w-4 text-emerald-400" />
-            <h2 className="text-xs font-bold uppercase tracking-wider text-slate-200">
-              Gemini 4 Argon Managed Agent Pipeline (SSE Live Orchestration)
-            </h2>
-          </div>
-          <span className="text-[11px] font-mono text-slate-400">
-            SSE Events: <strong className="text-sky-400">{streamEvents.length}</strong> · Status:{' '}
-            <strong
-              className={
-                manifest.status === 'completed'
-                  ? 'text-emerald-400'
-                  : manifest.status === 'running'
-                  ? 'text-amber-400'
-                  : 'text-rose-400'
-              }
-            >
-              {manifest.status.toUpperCase()}
-            </strong>
-          </span>
-        </div>
-
-        {/* 7 Agent Stage Pills */}
-        <div className="grid gap-2.5 sm:grid-cols-3 lg:grid-cols-7">
-          {manifest.stages.map((stage, idx) => {
-            const isSelected = stage.id === activeStage?.id;
-            return (
-              <button
-                key={stage.id}
-                type="button"
-                onClick={() => setSelectedStageId(stage.id)}
-                className={`flex flex-col justify-between rounded-xl border p-3 text-left transition-all ${
-                  isSelected
-                    ? 'border-emerald-400 bg-emerald-500/10'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                }`}
-              >
-                <div className="flex items-center justify-between gap-1">
-                  <span className="font-mono text-[10px] text-slate-400">
-                    0{idx + 1} · {stage.artifactFile}
-                  </span>
-                  {stage.status === 'completed' ? (
-                    <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
-                  ) : stage.status === 'running' ? (
-                    <Loader2 className="h-4 w-4 animate-spin text-amber-400 shrink-0" />
-                  ) : stage.status === 'error' ? (
-                    <AlertCircle className="h-4 w-4 text-rose-400 shrink-0" />
-                  ) : (
-                    <Clock className="h-3.5 w-3.5 text-slate-600 shrink-0" />
-                  )}
-                </div>
-
-                <div className="mt-1.5 text-xs font-bold text-white">
-                  {stage.name}
-                </div>
-
-                <div className="mt-2 flex items-center justify-between text-[10px] text-slate-400">
-                  <span className="rounded bg-slate-800 px-1.5 py-0.5 font-mono text-slate-300">
-                    {stage.runner || 'queued'}
-                  </span>
-                  {stage.durationMs && (
-                    <span>{(stage.durationMs / 1000).toFixed(1)}s</span>
-                  )}
-                </div>
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Active Stage Inspector Log */}
-        {activeStage && (
-          <div className="rounded-xl border border-slate-800/90 bg-[#05070b] p-3.5 font-mono text-xs space-y-2">
-            <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800/80 pb-2 text-[11px] text-slate-400">
-              <div className="flex items-center gap-2">
-                <Terminal className="h-3.5 w-3.5 text-emerald-400" />
-                <span className="font-bold text-slate-200">
-                  {activeStage.name}
-                </span>
-                <span>— {activeStage.role}</span>
-              </div>
-              <div className="flex items-center gap-3">
-                {activeStage.conversationId && (
-                  <span>conv: {activeStage.conversationId}</span>
-                )}
-                {activeStage.tokensUsed && (
-                  <span>tokens: {activeStage.tokensUsed.total}</span>
-                )}
-                <span className="text-emerald-400">
-                  artifact: {activeStage.artifactFile}
-                </span>
-              </div>
-            </div>
-
-            {activeStage.summary && (
-              <div className="text-emerald-300 text-xs">
-                ✓ {activeStage.summary}
-              </div>
-            )}
-
-            <div className="max-h-28 overflow-y-auto space-y-1 text-[11px] text-slate-400">
-              {activeStage.logs.length === 0 ? (
-                <div className="text-slate-600">
-                  Waiting for previous stage to complete...
-                </div>
-              ) : (
-                activeStage.logs.map((log, i) => (
-                  <div key={i} className="leading-relaxed">
-                    <span className="text-slate-600 mr-2">
-                      [{log.timestamp.slice(11, 19)}]
-                    </span>
-                    <span
-                      className={
-                        log.level === 'cmd'
-                          ? 'text-sky-300'
-                          : log.level === 'success'
-                          ? 'text-emerald-300'
-                          : log.level === 'warn'
-                          ? 'text-amber-300'
-                          : 'text-slate-300'
-                      }
-                    >
-                      {log.message}
-                    </span>
-                  </div>
-                ))
-              )}
-            </div>
-          </div>
-        )}
-      </section>
+      {/* Live Managed Agents Orchestration Graph (Mission Control) */}
+      <MissionControl
+        projectId={manifest.id}
+        manifest={manifest}
+        stages={manifest.stages}
+        events={streamEvents}
+        onSelectStage={(id) => setSelectedStageId(id)}
+      />
 
       {/* Sticky Glass Navigation Tabs with Animated Active Underline */}
       <div className="sticky top-[57px] z-40 -mx-1 rounded-2xl border border-white/[0.08] bg-[#050608]/85 backdrop-blur-xl px-3 py-2 shadow-glass">
