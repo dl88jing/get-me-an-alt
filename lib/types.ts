@@ -2,9 +2,20 @@ export type AgentStageId =
   | 'analyst'
   | 'researcher'
   | 'designer'
+  | 'critic'
   | 'bom'
   | 'cad'
   | 'instructions';
+
+export type SsePhase = 'start' | 'thought' | 'artifact' | 'done' | 'error';
+
+export interface SsePipelineEvent {
+  agent: string;
+  phase: SsePhase;
+  message: string;
+  data?: unknown;
+  ts: string;
+}
 
 export type AgentStatus = 'pending' | 'running' | 'completed' | 'error';
 
@@ -253,6 +264,41 @@ export interface InstructionsData {
   steps: InstructionStep[];
 }
 
+export interface CritiqueIssue {
+  partId: string;
+  partName: string;
+  category: 'overhang' | 'wall_thickness' | 'tolerance' | 'bed_fit' | 'orientation';
+  severity: 'pass' | 'warning' | 'critical';
+  finding: string;
+  fixApplied: string;
+  parameterAdjusted?: string;
+}
+
+export interface CritiqueRound {
+  round: number;
+  passed: boolean;
+  score: number;
+  summary: string;
+  issues: CritiqueIssue[];
+}
+
+export interface CritiqueData {
+  objectName: string;
+  printerId: string;
+  bedDimensionsMm: [number, number, number];
+  passed: boolean;
+  finalScore: number;
+  totalRounds: number;
+  rounds: CritiqueRound[];
+  checksSummary: {
+    overhangsPass: boolean;
+    wallThicknessPass: boolean;
+    tolerancesPass: boolean;
+    bedFitPass: boolean;
+  };
+  designAdjustments: string[];
+}
+
 export interface ProjectManifest {
   id: string;
   slug: string;
@@ -272,6 +318,7 @@ export interface ProjectManifest {
   analysis?: ObjectAnalysis;
   sources?: ResearchData;
   design?: DesignSpec;
+  critique?: CritiqueData;
   bom?: BomData;
   plates?: PlatesData;
   instructions?: InstructionsData;

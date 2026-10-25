@@ -147,7 +147,7 @@ async function runWithAgyCli<T>(
   emitLog: (level: AgentLogEntry['level'], message: string) => void
 ): Promise<RunAgentResult<T> | null> {
   const startTime = Date.now();
-  const timeoutSec = Math.max(20, Math.round((options.timeoutMs || 45000) / 1000));
+  const timeoutSec = Math.max(15, Math.round((options.timeoutMs || 25000) / 1000));
   const fullPrompt = `${options.prompt}\n\nIMPORTANT: Do NOT invoke any tools, shell commands, or file reads. Respond immediately with ONLY raw valid JSON matching the requested schema (no markdown fences).`;
 
   const displayCmd = `agy -p "<${options.stageName.toLowerCase()}-prompt>" --model ${model} --output-format json --dangerously-skip-permissions`;
@@ -173,7 +173,7 @@ async function runWithAgyCli<T>(
     ];
 
     const child = spawn(agyBin, args, {
-      cwd: options.cwd,
+      cwd: os.tmpdir(),
       env: {
         ...process.env,
         GEMINI_API_KEY: apiKey,
@@ -319,6 +319,7 @@ async function runWithGeminiRest<T>(
     contents: [{ role: 'user', parts }],
     generationConfig: {
       temperature: 0.25,
+      thinkingConfig: { thinkingLevel: 'LOW' },
       ...(options.useGoogleSearchGrounding
         ? {}
         : { responseMimeType: 'application/json' }),
@@ -446,7 +447,12 @@ export async function runGeminiAgent<T>(
   fs.mkdirSync(options.cwd, { recursive: true });
 
   if (apiKey) {
-    if (agyBin && !options.inlineImage && !options.preferRestForSpeed) {
+    if (
+      agyBin &&
+      !options.inlineImage &&
+      !options.useGoogleSearchGrounding &&
+      !options.preferRestForSpeed
+    ) {
       const agyResult = await runWithAgyCli(
         options,
         agyBin,

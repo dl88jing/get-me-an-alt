@@ -30,6 +30,7 @@ import {
   AgentStageId,
   DesignPart,
   ProjectManifest,
+  SsePipelineEvent,
 } from '@/lib/types';
 
 type TabId =
@@ -81,6 +82,7 @@ export default function ProjectPage() {
   const projectId = params?.id || 'plant-auto-waterer';
 
   const [manifest, setManifest] = useState<ProjectManifest | null>(null);
+  const [streamEvents, setStreamEvents] = useState<SsePipelineEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<TabId>('overview');
   const [selectedStageId, setSelectedStageId] =
@@ -102,6 +104,9 @@ export default function ProjectPage() {
           const data = await res.json();
           if (!cancelled && data.manifest) {
             setManifest(data.manifest);
+            if (Array.isArray(data.events)) {
+              setStreamEvents(data.events);
+            }
             setLoading(false);
           }
         }
@@ -113,16 +118,48 @@ export default function ProjectPage() {
       es.onmessage = (evt) => {
         if (cancelled) return;
         try {
-          const updated = JSON.parse(evt.data) as ProjectManifest;
-          setManifest(updated);
-          setLoading(false);
-
-          const running = updated.stages.find((s) => s.status === 'running');
-          if (running) {
-            setSelectedStageId(running.id);
-          }
-          if (updated.status === 'completed' || updated.status === 'error') {
-            es?.close();
+          const parsed = JSON.parse(evt.data);
+          if (
+            parsed &&
+            typeof parsed.agent === 'string' &&
+            typeof parsed.phase === 'string'
+          ) {
+            const sseEvt = parsed as SsePipelineEvent;
+            setStreamEvents((prev) => [...prev.slice(-120), sseEvt]);
+            const evtData = (sseEvt.data || {}) as Record<string, unknown>;
+            const updated = evtData.manifest as ProjectManifest | undefined;
+            if (updated && Array.isArray(updated.stages)) {
+              setManifest(updated);
+              setLoading(false);
+              const running = updated.stages.find(
+                (s) => s.status === 'running'
+              );
+              if (running) {
+                setSelectedStageId(running.id);
+              }
+              if (
+                updated.status === 'completed' ||
+                updated.status === 'error'
+              ) {
+                es?.close();
+              }
+            } else if (
+              sseEvt.agent === 'orchestrator' &&
+              (sseEvt.phase === 'done' || sseEvt.phase === 'error')
+            ) {
+              es?.close();
+            }
+          } else if (parsed && Array.isArray(parsed.stages)) {
+            const updated = parsed as ProjectManifest;
+            setManifest(updated);
+            setLoading(false);
+            const running = updated.stages.find((s) => s.status === 'running');
+            if (running) {
+              setSelectedStageId(running.id);
+            }
+            if (updated.status === 'completed' || updated.status === 'error') {
+              es?.close();
+            }
           }
         } catch {
           // ignore malformed chunk
@@ -171,6 +208,15 @@ export default function ProjectPage() {
   const PeerExplodedComp = useMemo(
     () =>
       resolveOptionalPeerComponent(['three/Exploded', 'three/Viewer']),
+    []
+  );
+  const PeerMissionControlComp = useMemo(
+    () =>
+      resolveOptionalPeerComponent([
+        'ui/MissionControl',
+        'ui/AgentGraph',
+        'ui/AgentTimeline',
+      ]),
     []
   );
 
@@ -310,6 +356,15 @@ export default function ProjectPage() {
       </div>
 
       {/* Live Managed Agents Orchestration Timeline */}
+      {PeerMissionControlComp && (
+        <PeerMissionControlComp
+          manifest={manifest}
+          stages={manifest.stages}
+          events={streamEvents}
+          projectId={manifest.id}
+        />
+      )}
+
       <section className="rounded-2xl border border-slate-800 bg-slate-950/90 p-4 sm:p-5 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
@@ -319,7 +374,7 @@ export default function ProjectPage() {
             </h2>
           </div>
           <span className="text-[11px] font-mono text-slate-400">
-            Status:{' '}
+            SSE Events: <strong className="text-sky-400">{streamEvents.length}</strong> · Status:{' '}
             <strong
               className={
                 manifest.status === 'completed'

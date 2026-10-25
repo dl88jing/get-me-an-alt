@@ -8,6 +8,8 @@ import {
   DesignSpec,
   PlatesData,
   ProjectManifest,
+  SsePhase,
+  SsePipelineEvent,
 } from '../types';
 import {
   createInitialStages,
@@ -29,6 +31,8 @@ import { getObjectsDir } from './runner';
 const globalForOrchestrator = globalThis as unknown as {
   __altEmitter?: EventEmitter;
   __altManifests?: Map<string, ProjectManifest>;
+  __altEvents?: Map<string, SsePipelineEvent[]>;
+  __altActivePipelines?: Set<string>;
 };
 
 export const pipelineEmitter =
@@ -39,6 +43,14 @@ pipelineEmitter.setMaxListeners(100);
 const memoryManifests =
   globalForOrchestrator.__altManifests ||
   (globalForOrchestrator.__altManifests = new Map<string, ProjectManifest>());
+
+const memoryEvents =
+  globalForOrchestrator.__altEvents ||
+  (globalForOrchestrator.__altEvents = new Map<string, SsePipelineEvent[]>());
+
+const activePipelines =
+  globalForOrchestrator.__altActivePipelines ||
+  (globalForOrchestrator.__altActivePipelines = new Set<string>());
 
 function generateMinimalAsciiStl(part: DesignPart): string {
   const [w, h, d] = part.dims_mm || [40, 30, 40];
@@ -218,6 +230,167 @@ function saveManifest(cwd: string, manifest: ProjectManifest) {
     // ignore fs errors on read-only paths
   }
   pipelineEmitter.emit(`update:${manifest.id}`, manifest);
+}
+
+export function emitSseEvent(
+  cwd: string,
+  manifest: ProjectManifest,
+  params: {
+    agent: string;
+    phase: SsePhase;
+    message: string;
+    data?: Record<string, unknown>;
+    ts?: string;
+  }
+): SsePipelineEvent {
+  const event: SsePipelineEvent = {
+    agent: params.agent,
+    phase: params.phase,
+    message: params.message,
+    data: {
+      ...(params.data || {}),
+      manifest,
+    },
+    ts: params.ts || new Date().toISOString(),
+  };
+
+  const list = memoryEvents.get(manifest.id) || [];
+  list.push(event);
+  memoryEvents.set(manifest.id, list);
+
+  try {
+    fs.mkdirSync(cwd, { recursive: true });
+    const diskEvents = list.map((ev) => ({
+      ...ev,
+      data:
+        ev.data && typeof ev.data === 'object'
+          ? { ...(ev.data as Record<string, unknown>), manifest: undefined }
+          : ev.data,
+    }));
+    fs.writeFileSync(
+      path.join(cwd, 'events.json'),
+      JSON.stringify(diskEvents, null, 2)
+    );
+  } catch {
+    // ignore fs errors
+  }
+
+  pipelineEmitter.emit(`event:${manifest.id}`, event);
+  return event;
+}
+
+export function synthesizeEventsFromManifest(
+  manifest: ProjectManifest
+): SsePipelineEvent[] {
+  const events: SsePipelineEvent[] = [];
+  for (const st of manifest.stages) {
+    if (st.status === 'pending') continue;
+    const tsStart = st.startedAt || manifest.createdAt;
+    events.push({
+      agent: st.id,
+      phase: 'start',
+      message: `Starting ${st.name} (${st.role})`,
+      data: { stageId: st.id, artifactFile: st.artifactFile, manifest },
+      ts: tsStart,
+    });
+    for (const log of st.logs) {
+      events.push({
+        agent: st.id,
+        phase: 'thought',
+        message: log.message,
+        data: { level: log.level, stageId: st.id, manifest },
+        ts: log.timestamp,
+      });
+    }
+    if (st.status === 'completed') {
+      const tsDone = st.completedAt || manifest.updatedAt;
+      events.push({
+        agent: st.id,
+        phase: 'artifact',
+        message: `Wrote ${st.artifactFile}`,
+        data: {
+          stageId: st.id,
+          artifactFile: st.artifactFile,
+          manifest,
+        },
+        ts: tsDone,
+      });
+      events.push({
+        agent: st.id,
+        phase: 'done',
+        message: st.summary || `Completed ${st.name}`,
+        data: {
+          stageId: st.id,
+          summary: st.summary,
+          durationMs: st.durationMs,
+          tokensUsed: st.tokensUsed,
+          runner: st.runner,
+          manifest,
+        },
+        ts: tsDone,
+      });
+    } else if (st.status === 'error') {
+      events.push({
+        agent: st.id,
+        phase: 'error',
+        message: st.error || `${st.name} encountered an error`,
+        data: { stageId: st.id, error: st.error, manifest },
+        ts: manifest.updatedAt,
+      });
+    }
+  }
+  if (manifest.status === 'completed') {
+    events.push({
+      agent: 'orchestrator',
+      phase: 'done',
+      message: `Completed all managed agent stages for ${manifest.title}`,
+      data: { status: 'completed', manifest },
+      ts: manifest.updatedAt,
+    });
+  }
+  return events;
+}
+
+export function getProjectEvents(id: string): SsePipelineEvent[] {
+  if (id === SAMPLE_SLUG || id === 'demo' || id === 'sample') {
+    return synthesizeEventsFromManifest(buildSampleManifest());
+  }
+
+  const mem = memoryEvents.get(id);
+  if (mem && mem.length > 0) {
+    return mem;
+  }
+
+  const manifest = getProjectManifest(id);
+  const folder = getProjectFolder(id);
+  if (folder) {
+    const eventsPath = path.join(folder, 'events.json');
+    if (fs.existsSync(eventsPath)) {
+      try {
+        const disk = JSON.parse(
+          fs.readFileSync(eventsPath, 'utf-8')
+        ) as SsePipelineEvent[];
+        if (Array.isArray(disk) && disk.length > 0) {
+          const hydrated = disk.map((ev) => ({
+            ...ev,
+            data:
+              ev.data && typeof ev.data === 'object'
+                ? { ...(ev.data as Record<string, unknown>), manifest }
+                : { manifest },
+          }));
+          memoryEvents.set(id, hydrated);
+          return hydrated;
+        }
+      } catch {
+        // fallback to synthesis
+      }
+    }
+  }
+
+  if (manifest) {
+    return synthesizeEventsFromManifest(manifest);
+  }
+  return [];
 }
 
 export function buildSampleManifest(): ProjectManifest {
@@ -464,10 +637,81 @@ export function startProjectPipeline(
     stages: createInitialStages(),
   };
 
+  try {
+    fs.writeFileSync(
+      path.join(cwd, 'options.json'),
+      JSON.stringify(options, null, 2)
+    );
+  } catch {
+    // ignore
+  }
+
   saveManifest(cwd, manifest);
 
-  // Kick off async 6-stage pipeline
-  void executePipelineStages(manifest, cwd, options);
+  // On Vercel serverless, defer execution to /api/objects/[id]/stream so the POST
+  // container returns immediately and handles the follow-up stream request.
+  if (!process.env.VERCEL) {
+    ensurePipelineRunning(manifest.id);
+  }
+
+  return manifest;
+}
+
+export function ensurePipelineRunning(id: string): ProjectManifest | null {
+  if (id === SAMPLE_SLUG || id === 'demo' || id === 'sample') {
+    return buildSampleManifest();
+  }
+
+  let manifest = getProjectManifest(id);
+
+  // Reconstruct manifest on cold serverless instance if needed
+  if (!manifest) {
+    const cleanSlug = id.replace(/-[a-z0-9]{4,6}$/i, '') || id;
+    const readablePrompt = cleanSlug.replace(/-/g, ' ');
+    const cwd = path.join(getObjectsDir(), id);
+    fs.mkdirSync(cwd, { recursive: true });
+    const now = new Date().toISOString();
+    manifest = {
+      id,
+      slug: cleanSlug,
+      title: readablePrompt,
+      createdAt: now,
+      updatedAt: now,
+      status: 'running',
+      input: {
+        prompt: readablePrompt,
+        printerId: 'bambu-a1',
+      },
+      stages: createInitialStages(),
+    };
+    saveManifest(cwd, manifest);
+  }
+
+  if (
+    manifest.status === 'running' &&
+    !activePipelines.has(manifest.id)
+  ) {
+    activePipelines.add(manifest.id);
+    const cwd = getProjectFolder(manifest.id) || path.join(getObjectsDir(), manifest.id);
+    let options: CreateProjectOptions = {
+      prompt: manifest.input.prompt || manifest.title,
+      url: manifest.input.url,
+      imageName: manifest.input.imageName,
+      printerId: manifest.input.printerId || 'bambu-a1',
+    };
+    try {
+      const optPath = path.join(cwd, 'options.json');
+      if (fs.existsSync(optPath)) {
+        options = JSON.parse(fs.readFileSync(optPath, 'utf-8'));
+      }
+    } catch {
+      // use manifest.input
+    }
+
+    void executePipelineStages(manifest, cwd, options).finally(() => {
+      activePipelines.delete(manifest!.id);
+    });
+  }
 
   return manifest;
 }
@@ -484,6 +728,16 @@ async function executePipelineStages(
     const st = getStage(id);
     st.logs.push(entry);
     saveManifest(cwd, manifest);
+    emitSseEvent(cwd, manifest, {
+      agent: id,
+      phase: 'thought',
+      message: entry.message,
+      data: {
+        level: entry.level,
+        stageId: id,
+      },
+      ts: entry.timestamp,
+    });
   };
 
   const beginStage = (id: AgentStageId, initialMsg: string) => {
@@ -496,6 +750,18 @@ async function executePipelineStages(
       message: initialMsg,
     });
     saveManifest(cwd, manifest);
+    emitSseEvent(cwd, manifest, {
+      agent: id,
+      phase: 'start',
+      message: initialMsg,
+      data: {
+        stageId: id,
+        stageName: st.name,
+        role: st.role,
+        artifactFile: st.artifactFile,
+      },
+      ts: st.startedAt,
+    });
   };
 
   const finishStage = (
@@ -507,6 +773,7 @@ async function executePipelineStages(
       durationMs?: number;
       tokensUsed?: { input: number; output: number; total: number };
       summary: string;
+      artifact?: unknown;
     }
   ) => {
     const st = getStage(id);
@@ -519,6 +786,33 @@ async function executePipelineStages(
     st.tokensUsed = meta.tokensUsed;
     st.summary = meta.summary;
     saveManifest(cwd, manifest);
+
+    emitSseEvent(cwd, manifest, {
+      agent: id,
+      phase: 'artifact',
+      message: `Wrote ${st.artifactFile}`,
+      data: {
+        stageId: id,
+        artifactFile: st.artifactFile,
+        artifact: meta.artifact,
+      },
+      ts: st.completedAt,
+    });
+
+    emitSseEvent(cwd, manifest, {
+      agent: id,
+      phase: 'done',
+      message: meta.summary,
+      data: {
+        stageId: id,
+        summary: meta.summary,
+        durationMs: meta.durationMs,
+        tokensUsed: meta.tokensUsed,
+        runner: meta.runner,
+        conversationId: meta.conversationId,
+      },
+      ts: st.completedAt,
+    });
   };
 
   try {
@@ -539,6 +833,7 @@ async function executePipelineStages(
     manifest.title = analystRes.data.objectName;
     finishStage('analyst', {
       ...analystRes,
+      artifact: analystRes.data,
       summary: `Identified "${analystRes.data.objectName}" ($${analystRes.data.originalProduct.retailPrice} retail -> ~$${analystRes.data.targetDiyCost} DIY)`,
     });
 
@@ -555,6 +850,7 @@ async function executePipelineStages(
     manifest.sources = researchRes.data;
     finishStage('researcher', {
       ...researchRes,
+      artifact: researchRes.data,
       summary: `Grounded ${researchRes.data.sources.length} reference schematics, teardowns & open-source models`,
     });
 
@@ -572,6 +868,7 @@ async function executePipelineStages(
     manifest.design = designRes.data;
     finishStage('designer', {
       ...designRes,
+      artifact: designRes.data,
       summary: `Architected ${designRes.data.printedPartsCount} printed parts + ${designRes.data.purchasedPartsCount} off-the-shelf components`,
     });
 
@@ -589,6 +886,7 @@ async function executePipelineStages(
     manifest.bom = bomRes.data;
     finishStage('bom', {
       ...bomRes,
+      artifact: bomRes.data,
       summary: `Compiled ${bomRes.data.items.length} BOM line items — Total $${bomRes.data.summary.totalDiyCost.toFixed(2)} (You save $${bomRes.data.summary.totalSavings.toFixed(2)})`,
     });
 
@@ -612,6 +910,7 @@ async function executePipelineStages(
     finishStage('cad', {
       runner: designRes.runner,
       durationMs: Date.now() - cadStart + 220,
+      artifact: platesData,
       summary: `Exported ${platesData.parts.length} STL parts packed onto ${platesData.totalPlates} plate(s) (${platesData.printerName})`,
     });
 
@@ -630,18 +929,32 @@ async function executePipelineStages(
     manifest.instructions = instructionsRes.data;
     finishStage('instructions', {
       ...instructionsRes,
+      artifact: instructionsRes.data,
       summary: `Created ${instructionsRes.data.steps.length} animated IKEA-style assembly steps`,
     });
 
     manifest.status = 'completed';
     saveManifest(cwd, manifest);
+    emitSseEvent(cwd, manifest, {
+      agent: 'orchestrator',
+      phase: 'done',
+      message: `Completed all managed agent stages for ${manifest.title}`,
+      data: { status: 'completed' },
+    });
   } catch (err) {
     manifest.status = 'error';
+    const errMsg = err instanceof Error ? err.message : String(err);
     const runningStage = manifest.stages.find((s) => s.status === 'running');
     if (runningStage) {
       runningStage.status = 'error';
-      runningStage.error = err instanceof Error ? err.message : String(err);
+      runningStage.error = errMsg;
     }
     saveManifest(cwd, manifest);
+    emitSseEvent(cwd, manifest, {
+      agent: runningStage?.id || 'orchestrator',
+      phase: 'error',
+      message: errMsg,
+      data: { error: errMsg },
+    });
   }
 }

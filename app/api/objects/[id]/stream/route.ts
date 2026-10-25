@@ -1,12 +1,15 @@
 import { NextRequest } from 'next/server';
 import {
+  ensurePipelineRunning,
+  getProjectEvents,
   getProjectManifest,
   pipelineEmitter,
 } from '@/lib/agents/orchestrator';
-import { ProjectManifest } from '@/lib/types';
+import { SsePipelineEvent } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
 export const runtime = 'nodejs';
+export const maxDuration = 60;
 
 export async function GET(
   req: NextRequest,
@@ -18,54 +21,93 @@ export async function GET(
   const stream = new ReadableStream({
     start(controller) {
       let closed = false;
+      let sentCount = 0;
 
-      const sendEvent = (manifest: ProjectManifest) => {
+      const sendSseEvent = (ev: SsePipelineEvent) => {
         if (closed) return;
         try {
+          const payload: SsePipelineEvent = {
+            agent: ev.agent,
+            phase: ev.phase,
+            message: ev.message,
+            data: ev.data,
+            ts: ev.ts || new Date().toISOString(),
+          };
           controller.enqueue(
-            encoder.encode(`data: ${JSON.stringify(manifest)}\n\n`)
+            encoder.encode(`data: ${JSON.stringify(payload)}\n\n`)
           );
         } catch {
           closed = true;
         }
       };
 
-      const initial = getProjectManifest(projectId);
-      if (initial) {
-        sendEvent(initial);
-        if (initial.status === 'completed' || initial.status === 'error') {
-          closed = true;
-          controller.close();
-          return;
+      const initialManifest = ensurePipelineRunning(projectId);
+      const initialEvents = getProjectEvents(projectId);
+
+      if (initialEvents.length > 0) {
+        for (const ev of initialEvents) {
+          sendSseEvent(ev);
+          sentCount++;
         }
+      } else if (initialManifest) {
+        sendSseEvent({
+          agent: 'orchestrator',
+          phase: 'start',
+          message: `Initialized pipeline workspace for ${initialManifest.title}`,
+          data: { manifest: initialManifest },
+          ts: initialManifest.createdAt,
+        });
       }
 
-      const onUpdate = (updated: ProjectManifest) => {
-        sendEvent(updated);
-        if (updated.status === 'completed' || updated.status === 'error') {
+      if (
+        initialManifest &&
+        (initialManifest.status === 'completed' ||
+          initialManifest.status === 'error')
+      ) {
+        closed = true;
+        try {
+          controller.close();
+        } catch {
+          // ignore
+        }
+        return;
+      }
+
+      const onEvent = (ev: SsePipelineEvent) => {
+        sendSseEvent(ev);
+        sentCount++;
+        if (
+          ev.agent === 'orchestrator' &&
+          (ev.phase === 'done' || ev.phase === 'error')
+        ) {
           cleanup();
         }
       };
 
-      pipelineEmitter.on(`update:${projectId}`, onUpdate);
+      pipelineEmitter.on(`event:${projectId}`, onEvent);
 
       // Periodic poll fallback for multi-worker environments
       const pollTimer = setInterval(() => {
         if (closed) return;
-        const latest = getProjectManifest(projectId);
-        if (latest) {
-          sendEvent(latest);
-          if (latest.status === 'completed' || latest.status === 'error') {
-            cleanup();
-          }
+        const allEvents = getProjectEvents(projectId);
+        while (sentCount < allEvents.length) {
+          sendSseEvent(allEvents[sentCount]);
+          sentCount++;
         }
-      }, 1500);
+        const latest = getProjectManifest(projectId);
+        if (
+          latest &&
+          (latest.status === 'completed' || latest.status === 'error')
+        ) {
+          cleanup();
+        }
+      }, 1000);
 
       function cleanup() {
         if (closed) return;
         closed = true;
         clearInterval(pollTimer);
-        pipelineEmitter.off(`update:${projectId}`, onUpdate);
+        pipelineEmitter.off(`event:${projectId}`, onEvent);
         try {
           controller.close();
         } catch {

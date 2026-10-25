@@ -6,5 +6,7 @@ data/objects/*
 !data/objects/.gitkeep
 *.log
 .DS_Store
+.vercel
+.vercel/
 
 next-env.d.ts

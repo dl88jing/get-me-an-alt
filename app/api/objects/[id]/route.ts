@@ -1,7 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getProjectManifest } from '@/lib/agents/orchestrator';
+import {
+  getProjectEvents,
+  getProjectManifest,
+} from '@/lib/agents/orchestrator';
 
 export const dynamic = 'force-dynamic';
+export const maxDuration = 60;
 
 export async function GET(
   _req: NextRequest,
@@ -11,5 +15,6 @@ export async function GET(
   if (!manifest) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
-  return NextResponse.json({ manifest });
+  const events = getProjectEvents(params.id);
+  return NextResponse.json({ manifest, events });
 }
