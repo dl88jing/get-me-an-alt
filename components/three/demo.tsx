@@ -1,12 +1,22 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
+  AnyDesignInput,
+  AnyInstructionsInput,
+  AnyBomInput,
+  AnyPlatesInput,
   DesignData,
   InstructionsData,
   BomData,
   PlatesData,
 } from "./types";
+import {
+  adaptBom,
+  adaptDesign,
+  adaptInstructions,
+  adaptPlates,
+} from "./adapters";
 import { ExplodedView } from "./ExplodedView";
 import { AssemblyPlayer } from "./AssemblyPlayer";
 import { PlatePreview } from "./PlatePreview";
@@ -427,10 +437,11 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
 export type DemoTabKey = "exploded" | "assembly" | "plates" | "all";
 
 export interface DemoViewerProps {
-  design?: DesignData;
-  instructions?: InstructionsData;
-  bom?: BomData;
-  plates?: PlatesData;
+  design?: AnyDesignInput;
+  instructions?: AnyInstructionsInput;
+  bom?: AnyBomInput;
+  plates?: AnyPlatesInput;
+  projectId?: string;
   initialTab?: DemoTabKey;
   externalStep?: number;
   onStepDone?: (stepNumber: number) => void;
@@ -449,32 +460,41 @@ export const DemoViewer: React.FC<DemoViewerProps> = ({
 }) => {
   const [activeTab, setActiveTab] = useState<DemoTabKey>(initialTab);
 
-  const safeDesign =
-    design &&
-    ((design.printed && design.printed.length > 0) ||
-      (design.assembly && design.assembly.length > 0))
-      ? design
+  const safeDesign = useMemo(() => {
+    const adapted = adaptDesign(design, instructions);
+    return adapted.printed.length > 0 || adapted.assembly.length > 0
+      ? adapted
       : FALLBACK_PLANT_WATERER_DESIGN;
+  }, [design, instructions]);
 
-  const safeInstructions =
-    instructions && instructions.steps && instructions.steps.length > 0
-      ? instructions
+  const safeInstructions = useMemo(() => {
+    const adapted = adaptInstructions(instructions, design);
+    return adapted.steps.length > 0
+      ? adapted
       : FALLBACK_PLANT_WATERER_INSTRUCTIONS;
+  }, [instructions, design]);
 
-  const safeBom =
-    bom && bom.items && bom.items.length > 0 ? bom : FALLBACK_PLANT_WATERER_BOM;
+  const safeBom = useMemo(() => {
+    const adapted = adaptBom(bom);
+    return adapted.items.length > 0 ? adapted : FALLBACK_PLANT_WATERER_BOM;
+  }, [bom]);
 
-  const safePlates =
-    plates && plates.plates && plates.plates.length > 0
-      ? plates
-      : FALLBACK_PLANT_WATERER_PLATES;
+  const safePlates = useMemo(() => {
+    const adapted = adaptPlates(plates);
+    return adapted.plates.length > 0 ? adapted : FALLBACK_PLANT_WATERER_PLATES;
+  }, [plates]);
 
-  const totalBomCost = safeBom.items.reduce(
-    (sum, item) => sum + item.priceUsd * (item.qty || 1),
-    0
-  );
-  const retailPrice = safeBom.originalPriceUsd || 89.0;
-  const savings = Math.max(0, retailPrice - (totalBomCost + 3.8));
+  const totalBomCost =
+    safeBom.summary?.totalDiyCost ??
+    safeBom.items.reduce(
+      (sum, item) => sum + item.priceUsd * (item.qty || 1),
+      0
+    );
+  const retailPrice =
+    safeBom.summary?.originalRetailPrice ?? safeBom.originalPriceUsd ?? 89.0;
+  const savings =
+    safeBom.summary?.totalSavings ??
+    Math.max(0, retailPrice - (totalBomCost + 3.8));
 
   return (
     <div

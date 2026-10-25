@@ -3,12 +3,19 @@
 import React, { useState, useMemo } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Html, ContactShadows } from "@react-three/drei";
-import { PlatesData, DesignData, PlateItemFootprint } from "./types";
+import {
+  AnyPlatesInput,
+  AnyDesignInput,
+  PlateItemFootprint,
+  PartParams,
+} from "./types";
+import { adaptDesign, adaptPlates } from "./adapters";
 import { buildPartGeometry, buildPartEdgesGeometry } from "./shapes";
 
 export interface PlatePreviewProps {
-  plates: PlatesData;
-  design?: DesignData;
+  plates: AnyPlatesInput;
+  design?: AnyDesignInput;
+  projectId?: string;
   initialPlateIndex?: number;
   className?: string;
 }
@@ -48,7 +55,13 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
   initialPlateIndex = 0,
   className = "",
 }) => {
-  const plateList = plates?.plates ?? [];
+  const adaptedPlates = useMemo(() => adaptPlates(plates), [plates]);
+  const adaptedDesign = useMemo(
+    () => (design ? adaptDesign(design) : undefined),
+    [design]
+  );
+
+  const plateList = adaptedPlates.plates ?? [];
   const [selectedPlateIdx, setSelectedPlateIdx] = useState<number>(
     Math.min(initialPlateIndex, Math.max(0, plateList.length - 1))
   );
@@ -56,9 +69,9 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
   const [selectedItemIdx, setSelectedItemIdx] = useState<number | null>(0);
   const [viewMode, setViewMode] = useState<"2d" | "3d">("2d");
 
-  const bedX = plates?.printer?.bed?.x || 256;
-  const bedY = plates?.printer?.bed?.y || 256;
-  const printerName = plates?.printer?.name || "Bambu Lab A1";
+  const bedX = adaptedPlates.printer?.bed?.x || 256;
+  const bedY = adaptedPlates.printer?.bed?.y || 256;
+  const printerName = adaptedPlates.printer?.name || "Bambu Lab A1";
 
   const activePlate = plateList[selectedPlateIdx] ?? {
     index: 1,
@@ -69,13 +82,13 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
   const printedLookup = useMemo(() => {
     const map = new Map<
       string,
-      { shape: string; params: Record<string, number>; color?: string }
+      { shape: string; params: PartParams; color?: string }
     >();
-    (design?.printed ?? []).forEach((p) => {
+    (adaptedDesign?.printed ?? []).forEach((p) => {
       map.set(p.id, { shape: p.shape, params: p.params, color: p.color });
     });
     return map;
-  }, [design]);
+  }, [adaptedDesign]);
 
   const enrichedItems = useMemo(() => {
     return (activePlate.items ?? []).map((item, idx) => {

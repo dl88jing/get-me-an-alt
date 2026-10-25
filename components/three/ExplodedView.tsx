@@ -4,11 +4,10 @@ import React, { useState, useMemo, useRef, useEffect } from "react";
 import { Canvas, useFrame, useThree, ThreeEvent } from "@react-three/fiber";
 import { OrbitControls, Html, ContactShadows, Line } from "@react-three/drei";
 import * as THREE from "three";
-import type { OrbitControls as OrbitControlsImpl } from "three-stdlib";
 import {
-  DesignData,
-  BomData,
-  InstructionsData,
+  AnyDesignInput,
+  AnyBomInput,
+  AnyInstructionsInput,
   PartFilterMode,
   ResolvedAssemblyPart,
   resolveAssemblyParts,
@@ -21,9 +20,10 @@ import {
 } from "./shapes";
 
 export interface ExplodedViewProps {
-  design: DesignData;
-  bom?: BomData;
-  instructions?: InstructionsData;
+  design: AnyDesignInput;
+  bom?: AnyBomInput;
+  instructions?: AnyInstructionsInput;
+  projectId?: string;
   initialExplode?: number;
   initialSelectedPartId?: string | null;
   className?: string;
@@ -236,7 +236,8 @@ const CameraRig: React.FC<CameraRigProps> = ({
   autoRotate,
   isUserInteracting,
 }) => {
-  const controlsRef = useRef<OrbitControlsImpl>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const controlsRef = useRef<any>(null);
   const { camera } = useThree();
   const desiredTarget = useRef(new THREE.Vector3(0, 15, 0));
   const desiredCamPos = useRef<THREE.Vector3 | null>(null);
@@ -702,7 +703,8 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                   <div className="text-xs font-mono font-semibold text-slate-100 mt-0.5">
                     {formatPartDimensions(
                       selectedPart.shape,
-                      selectedPart.params
+                      selectedPart.params,
+                      selectedPart.dims_mm
                     )}
                   </div>
                 </div>
@@ -733,15 +735,19 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                     ? `Step ${selectedPart.stepInfo.n}: ${selectedPart.stepInfo.title}`
                     : `Step ${selectedPart.step}: Install ${selectedPart.name}`}
                 </div>
-                {selectedPart.stepInfo?.note && (
+                {(selectedPart.stepInfo?.note ||
+                  selectedPart.roleInAssembly ||
+                  selectedPart.description) && (
                   <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
-                    {selectedPart.stepInfo.note}
+                    {selectedPart.stepInfo?.note ||
+                      selectedPart.roleInAssembly ||
+                      selectedPart.description}
                   </p>
                 )}
               </div>
 
               {/* BOM / Pricing Info */}
-              {selectedPart.category === "purchased" || selectedPart.bomItem ? (
+              {selectedPart.category === "purchased" ? (
                 <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/25">
                   <div className="flex items-center justify-between">
                     <span className="text-[10px] uppercase tracking-wider font-semibold text-amber-300">

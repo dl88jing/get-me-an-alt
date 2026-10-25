@@ -11,17 +11,20 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Line, Html, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import {
-  DesignData,
-  InstructionsData,
+  AnyDesignInput,
+  AnyInstructionsInput,
   InstructionStep,
   ResolvedAssemblyPart,
+  StepMotion,
   resolveAssemblyParts,
 } from "./types";
+import { adaptInstructions } from "./adapters";
 import { buildPartGeometry, buildPartEdgesGeometry } from "./shapes";
 
 export interface AssemblyPlayerProps {
-  design: DesignData;
-  instructions: InstructionsData;
+  design?: AnyDesignInput;
+  instructions: AnyInstructionsInput;
+  projectId?: string;
   /**
    * Optional deterministic step override (1-based step number, or fractional e.g. 2.75).
    * When provided, drives the player deterministically for video capture.
@@ -102,6 +105,7 @@ interface IkeaPartMeshProps {
   status: "assembled" | "active" | "future";
   stepProgress: number; // 0..1 within current step
   action?: string;
+  motionVector?: StepMotion;
   activeIndex?: number;
   activeCount?: number;
 }
@@ -111,6 +115,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
   status,
   stepProgress,
   action,
+  motionVector,
   activeIndex = 0,
   activeCount = 1,
 }) => {
@@ -126,13 +131,38 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
 
   const gradientMap = useMemo(() => getToonGradientTexture(), []);
 
+  const startPos: [number, number, number] = useMemo(
+    () =>
+      motionVector?.from
+        ? [motionVector.from[0], motionVector.from[1], motionVector.from[2]]
+        : [
+            part.position[0] + part.explode[0],
+            part.position[1] + part.explode[1],
+            part.position[2] + part.explode[2],
+          ],
+    [motionVector, part.position, part.explode]
+  );
+
+  const endPos: [number, number, number] = useMemo(
+    () =>
+      motionVector?.to
+        ? [motionVector.to[0], motionVector.to[1], motionVector.to[2]]
+        : [part.position[0], part.position[1], part.position[2]],
+    [motionVector, part.position]
+  );
+
+  const deltaVec: [number, number, number] = useMemo(
+    () => [
+      startPos[0] - endPos[0],
+      startPos[1] - endPos[1],
+      startPos[2] - endPos[2],
+    ],
+    [startPos, endPos]
+  );
+
   // Direction quaternion for 3D motion arrow head pointing from startPos -> endPos
   const arrowTransform = useMemo(() => {
-    const dir = new THREE.Vector3(
-      -part.explode[0],
-      -part.explode[1],
-      -part.explode[2]
-    );
+    const dir = new THREE.Vector3(-deltaVec[0], -deltaVec[1], -deltaVec[2]);
     const len = dir.length();
     if (len < 1) return null;
     dir.normalize();
@@ -140,14 +170,14 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
       new THREE.Vector3(0, 1, 0),
       dir
     );
-    // Position arrow head 35% of the way back from target so it's clearly visible
+    // Position arrow head 28% of the way back from target so it's clearly visible
     const arrowPos: [number, number, number] = [
-      part.position[0] + part.explode[0] * 0.28,
-      part.position[1] + part.explode[1] * 0.28,
-      part.position[2] + part.explode[2] * 0.28,
+      endPos[0] + deltaVec[0] * 0.28,
+      endPos[1] + deltaVec[1] * 0.28,
+      endPos[2] + deltaVec[2] * 0.28,
     ];
     return { quat, arrowPos };
-  }, [part.position, part.explode]);
+  }, [endPos, deltaVec]);
 
   if (status === "future") return null;
 
@@ -155,13 +185,15 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
   const inv = 1 - eased;
 
   const curPos: [number, number, number] = [
-    part.position[0] + part.explode[0] * inv,
-    part.position[1] + part.explode[1] * inv,
-    part.position[2] + part.explode[2] * inv,
+    endPos[0] + deltaVec[0] * inv,
+    endPos[1] + deltaVec[1] * inv,
+    endPos[2] + deltaVec[2] * inv,
   ];
 
   const spinOffsetDeg =
-    status === "active" && action === "screw" ? inv * 360 : 0;
+    status === "active" && (action === "screw" || action === "fasten")
+      ? inv * 360
+      : 0;
 
   const eulerRad = new THREE.Euler(
     THREE.MathUtils.degToRad(part.rotation[0] || 0),
@@ -169,23 +201,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
     THREE.MathUtils.degToRad(part.rotation[2] || 0)
   );
 
-  const startPos: [number, number, number] = [
-    part.position[0] + part.explode[0],
-    part.position[1] + part.explode[1],
-    part.position[2] + part.explode[2],
-  ];
-
-  const endPos: [number, number, number] = [
-    part.position[0],
-    part.position[1],
-    part.position[2],
-  ];
-
-  const explodeDist = Math.hypot(
-    part.explode[0],
-    part.explode[1],
-    part.explode[2]
-  );
+  const explodeDist = Math.hypot(deltaVec[0], deltaVec[1], deltaVec[2]);
 
   // Paper / IKEA cel-shaded color palette:
   // Assembled parts: warm technical off-white paper fill (#EAE6DC) with charcoal ink outlines
@@ -472,9 +488,14 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     [design, instructions]
   );
 
+  const adaptedInstructions = useMemo(
+    () => adaptInstructions(instructions, design),
+    [instructions, design]
+  );
+
   const steps = useMemo<InstructionStep[]>(() => {
-    if (instructions?.steps && instructions.steps.length > 0) {
-      return [...instructions.steps].sort((a, b) => a.n - b.n);
+    if (adaptedInstructions.steps && adaptedInstructions.steps.length > 0) {
+      return [...adaptedInstructions.steps].sort((a, b) => a.n - b.n);
     }
     // Synthesize steps from assembly step numbers if instructions.steps is empty
     const map = new Map<number, string[]>();
@@ -492,7 +513,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
         action: "place" as const,
         tools: ["hand"],
       }));
-  }, [instructions, allParts]);
+  }, [adaptedInstructions, allParts]);
 
   const totalSteps = Math.max(1, steps.length);
 
@@ -597,14 +618,28 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     return active;
   }, [currentStep]);
 
+  // Motion lookup for current step
+  const currentMotionByPartId = useMemo(() => {
+    const map = new Map<string, StepMotion>();
+    (currentStep.motion ?? []).forEach((m) => {
+      if (m.partId) map.set(m.partId, m);
+    });
+    return map;
+  }, [currentStep]);
+
   // Parts involved in the current step
   const currentStepParts = useMemo(() => {
-    return allParts.filter(
-      (p) =>
-        p.step === currentStep.n ||
-        (currentStep.partIds || []).includes(p.partId)
+    const active = allParts.filter((p) => {
+      if (currentMotionByPartId.has(p.partId)) return true;
+      if (p.step === currentStep.n) return true;
+      if (p.step < currentStep.n) return false;
+      return (currentStep.partIds || []).includes(p.partId);
+    });
+    if (active.length > 0) return active;
+    return allParts.filter((p) =>
+      (currentStep.partIds || []).includes(p.partId)
     );
-  }, [allParts, currentStep]);
+  }, [allParts, currentStep, currentMotionByPartId]);
 
   const overallProgress =
     ((currentStepIdx + stepProgress) / Math.max(1, totalSteps)) * 100;
@@ -715,9 +750,12 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             {(() => {
               let activeRunningIdx = 0;
               return allParts.map((part) => {
+                const motionVec = currentMotionByPartId.get(part.partId);
                 const inCurrentStep =
+                  Boolean(motionVec) ||
                   part.step === currentStep.n ||
-                  (currentStep.partIds || []).includes(part.partId);
+                  (part.step > currentStep.n &&
+                    (currentStep.partIds || []).includes(part.partId));
                 const status: "assembled" | "active" | "future" = inCurrentStep
                   ? "active"
                   : part.step < currentStep.n
@@ -732,6 +770,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                     status={status}
                     stepProgress={stepProgress}
                     action={currentStep.action}
+                    motionVector={motionVec}
                     activeIndex={myActiveIdx}
                     activeCount={currentStepParts.length}
                   />
