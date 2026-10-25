@@ -333,9 +333,16 @@ async function runWithGeminiRest<T>(
 
   try {
     const controller = new AbortController();
-    const effectiveTimeoutMs = process.env.VERCEL
-      ? Math.min(options.timeoutMs || 6500, 6500)
-      : options.timeoutMs || 45000;
+    const defaultTimeout = process.env.VERCEL
+      ? options.stageName === 'Analyst'
+        ? 14500
+        : 7500
+      : 45000;
+    const effectiveTimeoutMs = options.timeoutMs
+      ? process.env.VERCEL
+        ? Math.min(options.timeoutMs, defaultTimeout)
+        : options.timeoutMs
+      : defaultTimeout;
     const timer = setTimeout(() => controller.abort(), effectiveTimeoutMs);
 
     const res = await fetch(endpoint, {

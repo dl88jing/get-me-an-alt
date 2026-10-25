@@ -254,6 +254,8 @@ export async function runCadAgent(
   const argonFilterSet =
     Array.isArray(input.argonPartIds) && input.argonPartIds.length > 0
       ? new Set(input.argonPartIds)
+      : input.preferRestForSpeed
+      ? new Set<string>()
       : null;
 
   for (let idx = 0; idx < printedParts.length; idx++) {

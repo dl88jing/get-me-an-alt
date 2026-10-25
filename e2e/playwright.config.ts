@@ -34,7 +34,7 @@ const ldLibraryPath = [
 
 export default defineConfig({
   testDir: __dirname,
-  testMatch: /(demo|live\/.*)\.spec\.ts/,
+  testMatch: /(demo|anyobject|live\/.*)\.spec\.ts/,
   timeout: 360_000,
   expect: {
     timeout: 15_000,

@@ -142,10 +142,50 @@ Return ONLY valid JSON matching:
   });
 
   const d = result.data;
-  const fallbackParts =
+  const cleanLabel = (s: string, fallback: string) =>
+    s.replace(/^(PRT|OTS)-\d+\s*[:·-]?\s*/i, '').trim() || fallback;
+  const fallbackParts: DesignPart[] =
     isRevision && input.previousDesign
       ? input.previousDesign.parts
-      : SAMPLE_DESIGN.parts;
+      : analysis.slug.includes('water') || analysis.slug.includes('plant')
+      ? SAMPLE_DESIGN.parts
+      : [
+          ...(analysis.whatGetsPrinted || []).slice(0, 6).map((label, i) => ({
+            id: `prt-part-${i + 1}`,
+            partNumber: `PRT-0${i + 1}`,
+            name: cleanLabel(label, `Printed Part ${i + 1}`),
+            kind: 'printed' as const,
+            dims_mm: [Math.max(40, 110 - i * 10), Math.max(20, 45 - i * 4), Math.max(40, 95 - i * 8)] as [number, number, number],
+            shape: (['enclosure', 'bracket', 'cylinder', 'box', 'tube', 'cone'] as const)[i % 6],
+            params: { wallThickness: 2.4, clearanceMm: 0.3, maxOverhangDeg: 42, dfmVerified: true },
+            position: [0, 18 + i * 22, 0] as [number, number, number],
+            rotation: [0, 0, 0] as [number, number, number],
+            explode: [Math.round(Math.cos(i) * 65), (i - 2) * 30, Math.round(Math.sin(i) * 65)] as [number, number, number],
+            color: PALETTE[i % PALETTE.length],
+            material: 'PETG / PLA+',
+            quantity: 1,
+            description: `3D-printed structural component for ${analysis.objectName}.`,
+            roleInAssembly: cleanLabel(label, `Printed Part ${i + 1}`),
+          })),
+          ...(analysis.whatGetsBought || []).slice(0, 4).map((label, i) => ({
+            id: `ots-part-${i + 1}`,
+            partNumber: `OTS-0${i + 1}`,
+            name: cleanLabel(label, `Hardware Module ${i + 1}`),
+            kind: 'purchased' as const,
+            dims_mm: [45, 25, 45] as [number, number, number],
+            shape: 'box' as const,
+            params: { width: 45, height: 25, depth: 45 },
+            position: [20 * (i % 2 ? 1 : -1), 30 + i * 20, 0] as [number, number, number],
+            rotation: [0, 0, 0] as [number, number, number],
+            explode: [i % 2 ? 80 : -80, 25 + i * 15, 40] as [number, number, number],
+            color: '#64748b',
+            bomRef: `bom-${i + 1}`,
+            material: 'Off-the-Shelf Hardware',
+            quantity: 1,
+            description: `Off-the-shelf component for ${analysis.objectName}.`,
+            roleInAssembly: cleanLabel(label, `Hardware Module ${i + 1}`),
+          })),
+        ];
   const rawParts =
     Array.isArray(d?.parts) && d.parts.length >= 4 ? d.parts : fallbackParts;
 

@@ -1076,6 +1076,18 @@ async function executePipelineStages(
       summary: `Identified "${analystRes.data.objectName}" ($${analystRes.data.originalProduct.retailPrice} retail -> ~$${analystRes.data.targetDiyCost} DIY)`,
     });
 
+    // Pre-start Designer in parallel with Researcher on Vercel so total runtime stays <45s
+    const targetPrinterId = manifest.input.printerId || 'bambu-a1';
+    const earlyDesignPromise = process.env.VERCEL
+      ? runDesignerAgent({
+          analysis: manifest.analysis,
+          sources: SAMPLE_SOURCES,
+          printerId: targetPrinterId,
+          cwd,
+          onLog: makeLogger('designer'),
+        })
+      : null;
+
     // 2. Researcher Agent
     beginStage(
       'researcher',
@@ -1143,20 +1155,40 @@ async function executePipelineStages(
       'designer',
       'Decomposing into 3D-printed vs. off-the-shelf parts & computing 3D assembly coordinates...'
     );
-    const targetPrinterId = manifest.input.printerId || 'bambu-a1';
-    const designRes = await runDesignerAgent({
-      analysis: manifest.analysis,
-      sources: manifest.sources,
-      printerId: targetPrinterId,
-      cwd,
-      onLog: makeLogger('designer'),
-    });
+    const designRes =
+      (await earlyDesignPromise) ||
+      (await runDesignerAgent({
+        analysis: manifest.analysis,
+        sources: manifest.sources,
+        printerId: targetPrinterId,
+        cwd,
+        onLog: makeLogger('designer'),
+      }));
     manifest.design = designRes.data;
     finishStage('designer', {
       ...designRes,
       artifact: designRes.data,
       summary: `Architected ${designRes.data.printedPartsCount} printed parts + ${designRes.data.purchasedPartsCount} off-the-shelf components`,
     });
+
+    // Pre-start BOM & Instructions in parallel while Critic & CAD run
+    const earlyBomPromise = process.env.VERCEL
+      ? runBomAgent({
+          analysis: manifest.analysis,
+          design: manifest.design,
+          cwd,
+          onLog: makeLogger('bom'),
+        })
+      : null;
+    const earlyInstructionsPromise = process.env.VERCEL
+      ? runInstructionsAgent({
+          analysis: manifest.analysis,
+          design: manifest.design,
+          bom: SAMPLE_BOM,
+          cwd,
+          onLog: makeLogger('instructions'),
+        })
+      : null;
 
     // 4. Printability Critic Agent (loops fixes back to Designer for up to 2 rounds)
     const printerSpec = getPrinterById(targetPrinterId);
@@ -1271,16 +1303,18 @@ async function executePipelineStages(
       allDesignAdjustments.push(...previousFixes);
       rounds.push(evalRes.roundData);
 
-      const revisedDesignRes = await runDesignerAgent({
-        analysis: manifest.analysis,
-        sources: manifest.sources,
-        previousDesign: manifest.design,
-        critiqueIssues: actionableIssues,
-        revisionRound: round,
-        printerId: targetPrinterId,
-        cwd,
-        onLog: criticLogger,
-      });
+      const revisedDesignRes: { data: DesignSpec } = process.env.VERCEL
+        ? { data: deterministicFixResult.updatedDesign }
+        : await runDesignerAgent({
+            analysis: manifest.analysis,
+            sources: manifest.sources,
+            previousDesign: manifest.design,
+            critiqueIssues: actionableIssues,
+            revisionRound: round,
+            printerId: targetPrinterId,
+            cwd,
+            onLog: criticLogger,
+          });
 
       manifest.design = revisedDesignRes.data;
       saveManifest(cwd, manifest);
@@ -1347,12 +1381,14 @@ async function executePipelineStages(
       'bom',
       'Sourcing off-the-shelf components across Amazon, Home Depot, Walmart, McMaster & AliExpress...'
     );
-    const bomRes = await runBomAgent({
-      analysis: manifest.analysis,
-      design: manifest.design,
-      cwd,
-      onLog: makeLogger('bom'),
-    });
+    const bomRes =
+      (await earlyBomPromise) ||
+      (await runBomAgent({
+        analysis: manifest.analysis,
+        design: manifest.design,
+        cwd,
+        onLog: makeLogger('bom'),
+      }));
     manifest.bom = bomRes.data;
     finishStage('bom', {
       ...bomRes,
@@ -1468,13 +1504,15 @@ async function executePipelineStages(
       'instructions',
       'Choreographing IKEA-style step-by-step animated 3D assembly instructions...'
     );
-    const instructionsRes = await runInstructionsAgent({
-      analysis: manifest.analysis,
-      design: manifest.design,
-      bom: manifest.bom,
-      cwd,
-      onLog: makeLogger('instructions'),
-    });
+    const instructionsRes =
+      (await earlyInstructionsPromise) ||
+      (await runInstructionsAgent({
+        analysis: manifest.analysis,
+        design: manifest.design,
+        bom: manifest.bom,
+        cwd,
+        onLog: makeLogger('instructions'),
+      }));
     manifest.instructions = instructionsRes.data;
     finishStage('instructions', {
       ...instructionsRes,

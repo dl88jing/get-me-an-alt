@@ -417,6 +417,24 @@ export default function ProjectPage() {
         </div>
       </div>
 
+      {/* Graceful in-progress / partial state banner so no tab is ever blank */}
+      {((activeTab === 'overview' && !analysis) ||
+        (activeTab === 'sources' && !sources) ||
+        (activeTab === 'bom' && !bom) ||
+        (activeTab === 'print' && !plates) ||
+        (activeTab === 'instructions' && !instructions) ||
+        (activeTab === 'exploded' && !design)) && (
+        <div className="rounded-2xl border border-emerald-500/30 bg-slate-900/70 p-8 text-center space-y-3">
+          <Loader2 className="mx-auto h-6 w-6 animate-spin text-[#00f5a0]" />
+          <div className="text-sm font-bold text-white">
+            Gemini 4 Argon Swarm Synthesizing {activeTab.toUpperCase()} Artifact...
+          </div>
+          <p className="text-xs text-slate-400">
+            Watch live agent progress in Mission Control above — this tab populates automatically as soon as the stage completes.
+          </p>
+        </div>
+      )}
+
       {/* TAB 1: OVERVIEW */}
       {activeTab === 'overview' && analysis && (
         <div className="grid gap-6 lg:grid-cols-3">

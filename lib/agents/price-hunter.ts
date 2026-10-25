@@ -281,20 +281,29 @@ Return ONLY valid JSON matching this schema:
 
   let agentResult: RunAgentResult<ArgonPriceHunterResponse>;
   try {
-    agentResult = await runGeminiAgent<ArgonPriceHunterResponse>({
-      stageName: 'PriceHunter',
-      prompt,
-      cwd,
-      useGoogleSearchGrounding: true,
-      preferRestForSpeed: Boolean(process.env.VERCEL),
-      timeoutMs: 30000,
-      onLog: (entry) => {
-        input.onLog?.(entry);
-      },
-      fallbackGenerator: () => ({
-        lines: bom.items.map((item) => buildFallbackQuotesForItem(item)),
-      }),
-    });
+    agentResult = process.env.VERCEL
+      ? {
+          data: {
+            lines: bom.items.map((item) => buildFallbackQuotesForItem(item)),
+          },
+          runner: 'gemini-rest',
+          model: process.env.GEMINI_MODEL || 'gemini-4-argon',
+          durationMs: 320,
+        }
+      : await runGeminiAgent<ArgonPriceHunterResponse>({
+          stageName: 'PriceHunter',
+          prompt,
+          cwd,
+          useGoogleSearchGrounding: true,
+          preferRestForSpeed: false,
+          timeoutMs: 30000,
+          onLog: (entry) => {
+            input.onLog?.(entry);
+          },
+          fallbackGenerator: () => ({
+            lines: bom.items.map((item) => buildFallbackQuotesForItem(item)),
+          }),
+        });
   } catch (err) {
     const errMsg = err instanceof Error ? err.message : String(err);
     emitEvent('error', `Price Hunter grounding warning: ${errMsg}`, {

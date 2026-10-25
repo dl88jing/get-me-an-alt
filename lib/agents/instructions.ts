@@ -145,8 +145,30 @@ Include 5 to 7 logical assembly steps covering all parts in design.json.`;
         motion,
       };
     });
-  } else {
+  } else if (
+    analysis.slug.includes('water') ||
+    analysis.slug.includes('plant')
+  ) {
     normalizedSteps = SAMPLE_INSTRUCTIONS.steps;
+  } else {
+    normalizedSteps = design.parts.slice(0, 7).map((part, idx) => ({
+      n: idx + 1,
+      title: `Install ${part.name}`,
+      partIds: [part.id],
+      tools: part.kind === 'purchased' ? ['2.5mm Hex Key'] : ['Hand Fit (Tool-Free)'],
+      note: `Align ${part.name} (${part.partNumber}) with the mating registration features and secure into position.`,
+      motion: [
+        {
+          partId: part.id,
+          from: [
+            part.position[0] + part.explode[0],
+            part.position[1] + Math.max(60, part.explode[1]),
+            part.position[2] + part.explode[2],
+          ],
+          to: part.position,
+        },
+      ],
+    }));
   }
 
   const normalized: InstructionsData = {
