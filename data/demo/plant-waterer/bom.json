@@ -1,13 +1,13 @@
 {
   "objectId": "plant-waterer",
-  "objectName": "Self-watering plant system (alt to a $129 smart auto-waterer)",
+  "objectName": "Self-watering plant system (alt to a $149 smart auto-waterer)",
   "currency": "USD",
-  "originalPrice": 129.0,
-  "purchasedTotal": 29.0,
-  "filamentEstimateUsd": 4.4,
-  "totalEstimatedCost": 33.4,
-  "savingsUsd": 95.6,
-  "savingsPercent": 74.1,
+  "originalPrice": 149.0,
+  "purchasedTotal": 21.3,
+  "filamentEstimateUsd": 3.55,
+  "totalEstimatedCost": 24.85,
+  "savingsUsd": 124.15,
+  "savingsPercent": 83,
   "items": [
     {
       "id": "bom-pump-5v",
@@ -319,11 +319,11 @@
     }
   ],
   "summary": {
-    "purchasedPartsTotal": 29.0,
-    "filamentCostTotal": 4.4,
-    "totalDiyCost": 33.4,
-    "originalRetailPrice": 129.0,
-    "totalSavings": 95.6,
-    "savingsPercent": 74.1
+    "purchasedPartsTotal": 21.3,
+    "filamentCostTotal": 3.55,
+    "totalDiyCost": 24.85,
+    "originalRetailPrice": 149.0,
+    "totalSavings": 124.15,
+    "savingsPercent": 83
   }
 }

@@ -9,13 +9,13 @@
     #s2-stage {
       position: absolute;
       inset: 0;
-      padding: 112px 192px;
+      padding: 68px 72px;
       display: flex;
       justify-content: space-between;
-      gap: 48px;
+      gap: 40px;
     }
     #s2-left {
-      width: 660px;
+      width: 584px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -23,83 +23,83 @@
     .s2-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(16, 185, 129, 0.14);
-      border: 2px solid #10b981;
-      color: #10b981;
+      background: rgba(0, 245, 160, 0.14);
+      border: 2px solid #00f5a0;
+      color: #00f5a0;
       font-family: "JetBrains Mono", monospace;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      padding: 8px 18px;
+      padding: 8px 16px;
       border-radius: 999px;
       width: fit-content;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.05em;
     }
     .s2-title {
-      font-size: 54px;
+      font-size: 46px;
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: -0.03em;
       color: #f8fafc;
-      margin-top: 20px;
+      margin-top: 18px;
     }
     .s2-accent {
-      color: #10b981;
+      color: #00f5a0;
     }
     .s2-sub {
-      font-size: 24px;
-      line-height: 1.4;
+      font-size: 21px;
+      line-height: 1.38;
       color: #cbd5e1;
-      margin-top: 16px;
+      margin-top: 14px;
     }
     .s2-agents {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 14px;
+      gap: 12px;
     }
     .s2-agent {
       background: #111827;
       border: 2px solid #1e293b;
-      border-left: 5px solid #10b981;
+      border-left: 5px solid #00f5a0;
       border-radius: 12px;
-      padding: 14px 18px;
+      padding: 13px 16px;
     }
     .s2-agent-name {
       font-family: "JetBrains Mono", monospace;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
-      color: #10b981;
+      color: #00f5a0;
     }
     .s2-agent-role {
-      font-size: 18px;
+      font-size: 16px;
       color: #e2e8f0;
       margin-top: 4px;
     }
     #s2-right {
-      width: 828px;
+      width: 1152px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
     .s2-caption-bar {
       background: #111827;
-      border: 2px solid #10b981;
+      border: 2px solid #00f5a0;
       border-radius: 14px;
-      padding: 18px 24px;
+      padding: 16px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
     .s2-cap-title {
       font-family: "JetBrains Mono", monospace;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
       color: #f8fafc;
     }
     .s2-cap-pill {
       font-family: "JetBrains Mono", monospace;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
-      color: #10b981;
+      color: #00f5a0;
     }
   </style>
   <div id="root" data-composition-id="scene-2" data-width="1920" data-height="1080">
@@ -107,12 +107,12 @@
       <div id="s2-stage">
         <div id="s2-left">
           <div id="s2-head">
-            <div class="s2-badge">02 · ANTIGRAVITY CLI · RESEARCH + VIDEO TEARDOWN</div>
+            <div class="s2-badge">02 · MISSION CONTROL · 9-AGENT DAG + CRITIC</div>
             <h1 class="s2-title">
-              6 <span class="s2-accent">Gemini 4 Argon</span> Agents + Video Teardown.
+              <span class="s2-accent">Gemini 4 Argon</span> Swarm + DFM Critic Loop.
             </h1>
             <p class="s2-sub">
-              Run via <code style="color:#10b981;">agy --model gemini-4-argon</code>. Streams SSE to Mission Control, grounds web priors, and extracts frame-by-frame video teardowns.
+              Runs via <code style="color:#00f5a0;">agy --model gemini-4-argon</code>. Streams live SSE to Mission Control with 2-round Critic → Designer feedback.
             </p>
           </div>
           <div id="s2-grid" class="s2-agents">
@@ -122,30 +122,30 @@
             </div>
             <div class="s2-agent">
               <div class="s2-agent-name">2. RESEARCH + TEARDOWN</div>
-              <div class="s2-agent-role">Search grounding &amp; video frame callouts</div>
+              <div class="s2-agent-role">Search grounding &amp; video teardowns</div>
             </div>
             <div class="s2-agent">
-              <div class="s2-agent-name">3. DESIGNER</div>
-              <div class="s2-agent-role">7 printed vs. 6 purchased parts</div>
+              <div class="s2-agent-name">3. DESIGNER + CRITIC</div>
+              <div class="s2-agent-role">11 parts (7 printed, 4 bought) + DFM loop</div>
             </div>
             <div class="s2-agent">
-              <div class="s2-agent-name">4. BOM AGENT</div>
-              <div class="s2-agent-role">Retailer links &amp; 83% savings</div>
+              <div class="s2-agent-name">4. BOM + PRICE HUNTER</div>
+              <div class="s2-agent-role">$24.85 DIY · Save $124.15 (83%)</div>
             </div>
             <div class="s2-agent">
               <div class="s2-agent-name">5. CAD &amp; PACKER</div>
-              <div class="s2-agent-role">STL/3MF for 20+ printers</div>
+              <div class="s2-agent-role">OpenSCAD WASM → STL/3MF (1 plate)</div>
             </div>
             <div class="s2-agent">
               <div class="s2-agent-name">6. INSTRUCTIONS</div>
-              <div class="s2-agent-role">IKEA-style 3D step motion</div>
+              <div class="s2-agent-role">7-step IKEA 3D motion player</div>
             </div>
           </div>
         </div>
         <div id="s2-right">
           <div id="s2-bar" class="s2-caption-bar">
-            <span class="s2-cap-title">recording.mp4 · Live SSE Agent Timeline</span>
-            <span class="s2-cap-pill">● STREAMING 6/6 AGENTS</span>
+            <span class="s2-cap-title">LIVE PROD · Mission Control 9-Agent DAG &amp; Printability Critic</span>
+            <span class="s2-cap-pill">● 9/9 AGENTS + 2-ROUND DFM VERIFIED</span>
           </div>
         </div>
       </div>

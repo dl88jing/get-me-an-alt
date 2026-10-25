@@ -67,37 +67,52 @@ QUALITY="${QUALITY:-draft}"
 WORKERS="${WORKERS:-2}"
 OUT_DIR="$SCRIPT_DIR/out"
 OUT_MP4="$OUT_DIR/presentation.mp4"
+OUT_V2_MP4="$OUT_DIR/get-me-an-alt-v2.mp4"
+SHARED_V2_MP4="/workspace/work/out/get-me-an-alt-v2.mp4"
 FRAMES_DIR="$OUT_DIR/frames"
+SHARED_SHOTS_DIR="/workspace/work/shots"
 
-mkdir -p "$OUT_DIR" "$FRAMES_DIR"
+mkdir -p "$OUT_DIR" "$FRAMES_DIR" "/workspace/work/out" "$SHARED_SHOTS_DIR"
 
 echo "==> [1/4] Linting HyperFrames composition..."
 npx hyperframes lint .
 
 echo "==> [2/4] Rendering presentation video to $OUT_MP4 (fps=$FPS, quality=$QUALITY, workers=$WORKERS)..."
+TMP_RENDER_MP4="/tmp/gma-presentation-v2.mp4"
+rm -f "$TMP_RENDER_MP4"
 npx hyperframes render . \
   -f "$FPS" \
   -q "$QUALITY" \
   --no-low-memory-mode \
   -w "$WORKERS" \
-  -o "$OUT_MP4" < /dev/null
+  -o "$TMP_RENDER_MP4" < /dev/null
 
-echo "==> [3/4] Verifying duration <= 180s with ffprobe..."
+cp -f "$TMP_RENDER_MP4" "$OUT_MP4"
+cp -f "$TMP_RENDER_MP4" "$OUT_V2_MP4"
+cp -f "$TMP_RENDER_MP4" "$SHARED_V2_MP4"
+
+echo "==> [3/4] Verifying duration <= 170s with ffprobe..."
 DURATION="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$OUT_MP4")"
 echo "    Rendered duration: ${DURATION}s"
 
 awk -v d="$DURATION" 'BEGIN {
-  if (d <= 0 || d > 180.0) {
-    printf("ERROR: Video duration %.2fs exceeds 180s limit (or is invalid)!\n", d) > "/dev/stderr";
+  if (d <= 0 || d > 170.0) {
+    printf("ERROR: Video duration %.2fs exceeds 170s limit (or is invalid)!\n", d) > "/dev/stderr";
     exit 1;
   }
 }'
-echo "    PASS: ${DURATION}s <= 180s"
+echo "    PASS: ${DURATION}s <= 170s"
 
-echo "==> [4/4] Extracting 3 verification frames to $FRAMES_DIR/*.png..."
-ffmpeg -y -v error -ss 5   -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-1-hook.png"
-ffmpeg -y -v error -ss 30  -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-2-demo.png"
-ffmpeg -y -v error -ss 130 -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-3-close.png"
+echo "==> [4/4] Extracting 4 verification frames to $FRAMES_DIR/*.png and $SHARED_SHOTS_DIR/video-v2-*.png..."
+ffmpeg -y -v error -ss 26  -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-1-mission-control.png"
+ffmpeg -y -v error -ss 58  -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-2-bom-savings.png"
+ffmpeg -y -v error -ss 82  -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-3-print-panel.png"
+ffmpeg -y -v error -ss 112 -i "$OUT_MP4" -frames:v 1 "$FRAMES_DIR/frame-4-exploded-3d.png"
 
-ls -lh "$OUT_MP4" "$FRAMES_DIR"/*.png
-echo "==> Done! Presentation video ready at $OUT_MP4"
+cp -f "$FRAMES_DIR/frame-1-mission-control.png" "$SHARED_SHOTS_DIR/video-v2-1-mission-control.png"
+cp -f "$FRAMES_DIR/frame-2-bom-savings.png"     "$SHARED_SHOTS_DIR/video-v2-2-bom-savings.png"
+cp -f "$FRAMES_DIR/frame-3-print-panel.png"     "$SHARED_SHOTS_DIR/video-v2-3-print-panel.png"
+cp -f "$FRAMES_DIR/frame-4-exploded-3d.png"     "$SHARED_SHOTS_DIR/video-v2-4-exploded-3d.png"
+
+ls -lh "$OUT_MP4" "$SHARED_V2_MP4" "$SHARED_SHOTS_DIR"/video-v2-*.png
+echo "==> Done! Presentation video v2 ready at $SHARED_V2_MP4 and $OUT_V2_MP4"
