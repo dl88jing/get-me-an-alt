@@ -4,18 +4,18 @@
       position: absolute;
       inset: 0;
       font-family: "Inter", sans-serif;
-      color: #f8fafc;
+      color: #f5ebd6;
     }
     #s5-stage {
       position: absolute;
       inset: 0;
-      padding: 68px 72px;
+      padding: 52px 56px;
       display: flex;
       justify-content: space-between;
-      gap: 40px;
+      gap: 32px;
     }
     #s5-left {
-      width: 584px;
+      width: 472px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -23,23 +23,23 @@
     .s5-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(0, 245, 160, 0.14);
-      border: 2px solid #00f5a0;
-      color: #00f5a0;
+      background: rgba(212, 175, 55, 0.16);
+      border: 2px solid #d4af37;
+      color: #f3d478;
       font-family: "JetBrains Mono", monospace;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       padding: 8px 16px;
       border-radius: 999px;
       width: fit-content;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
     .s5-title {
-      font-size: 46px;
+      font-size: 44px;
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: -0.03em;
-      color: #f8fafc;
+      color: #f5ebd6;
       margin-top: 18px;
     }
     .s5-accent {
@@ -48,92 +48,95 @@
     .s5-sub {
       font-size: 21px;
       line-height: 1.38;
-      color: #cbd5e1;
+      color: #e6d3b3;
       margin-top: 14px;
     }
-    .s5-cards {
+    .s5-list {
       display: flex;
       flex-direction: column;
       gap: 13px;
     }
     .s5-card {
-      background: #111827;
-      border: 2px solid #1e293b;
-      border-left: 5px solid #00f5a0;
+      background: #14100b;
+      border: 2px solid rgba(212, 175, 55, 0.45);
+      border-left: 6px solid #d4af37;
       border-radius: 12px;
       padding: 15px 18px;
     }
-    .s5-card-head {
-      font-family: "JetBrains Mono", monospace;
-      font-size: 16px;
-      font-weight: 700;
-      color: #00f5a0;
+    .s5-card-alt {
+      border-color: #00f5a0;
+      border-left-color: #00f5a0;
+      background: #0d1f18;
     }
-    .s5-card-body {
-      font-size: 18px;
-      color: #f8fafc;
+    .s5-head-txt {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 15px;
+      font-weight: 800;
+      color: #f3d478;
+    }
+    .s5-body-txt {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
       margin-top: 4px;
     }
     #s5-right {
-      width: 1152px;
+      width: 1304px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
-    .s5-caption-bar {
-      background: #111827;
+    .s5-bar {
+      background: #14100b;
       border: 2px solid #00f5a0;
       border-radius: 14px;
-      padding: 16px 24px;
+      padding: 15px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .s5-cap-title {
+    .s5-bar-left {
       font-family: "JetBrains Mono", monospace;
       font-size: 19px;
-      font-weight: 700;
-      color: #f8fafc;
+      font-weight: 800;
+      color: #f5ebd6;
     }
-    .s5-cap-pill {
+    .s5-bar-right {
       font-family: "JetBrains Mono", monospace;
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       color: #00f5a0;
     }
   </style>
   <div id="root" data-composition-id="scene-5" data-width="1920" data-height="1080">
-    <div id="s5-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+    <div id="s5-clip" class="clip" data-start="0" data-duration="12" data-track-index="0">
       <div id="s5-stage">
         <div id="s5-left">
           <div id="s5-head">
-            <div class="s5-badge">05 · THREE.JS 3D VIEWS · 11 PARTS &amp; 7 STEPS</div>
+            <div class="s5-badge">05 · ASK ARGON TO MODIFY</div>
             <h1 class="s5-title">
-              Interactive <span class="s5-accent">Exploded View</span> &amp; IKEA 3D Player.
+              Modify by Chat:<br />
+              <span class="s5-accent">“Make It 20% Taller”</span>
             </h1>
             <p class="s5-sub">
-              Play step-by-step animated Three.js assembly instructions, then scrub the 3D explode slider across all 11 parts.
+              Argon classifies the change and selectively re-runs only affected agents.
             </p>
           </div>
-          <div id="s5-list" class="s5-cards">
-            <div class="s5-card">
-              <div class="s5-card-head">IKEA-STYLE THREE.JS ASSEMBLY PLAYER (7 STEPS)</div>
-              <div class="s5-card-body">Crisp toon/line-art shader · Parts fly along vectors · Play/Pause/Step</div>
+          <div id="s5-list" class="s5-list">
+            <div class="s5-card s5-card-alt">
+              <div class="s5-head-txt" style="color:#00f5a0;">SELECTIVE DAG RE-ORCHESTRATION</div>
+              <div class="s5-body-txt">Designer → Critic → CAD → BOM → Instructions</div>
             </div>
             <div class="s5-card">
-              <div class="s5-card-head">INTERACTIVE EXPLODED 3D VIEW (11 PARTS)</div>
-              <div class="s5-card-body">7 printed STLs + 4 purchased parts · Orbit, explode slider &amp; BOM callouts</div>
-            </div>
-            <div class="s5-card">
-              <div class="s5-card-head">GENERATED BY INSTRUCTIONS &amp; CAD AGENTS</div>
-              <div class="s5-card-body">Real OpenSCAD STL geometry, numbered badges &amp; tool callouts</div>
+              <div class="s5-head-txt">3-COLUMN LIVE DIFF SUMMARY</div>
+              <div class="s5-body-txt">Price Diff · +20% Z-Height CAD · Plate Time</div>
             </div>
           </div>
         </div>
         <div id="s5-right">
-          <div id="s5-bar" class="s5-caption-bar">
-            <span class="s5-cap-title">LIVE PROD · Three.js IKEA AssemblyPlayer &amp; ExplodedView</span>
-            <span class="s5-cap-pill">● 11 PARTS · 7 STEPS IN 3D</span>
+          <div id="s5-bar" class="s5-bar">
+            <span class="s5-bar-left">Ask Argon to Modify · “make it 20% taller” → Live Diff Summary</span>
+            <span class="s5-bar-right">● SELECTIVE AGENT ROUTING</span>
           </div>
         </div>
       </div>
@@ -142,9 +145,9 @@
   <script>
     window.__timelines = window.__timelines || {};
     const s5Tl = gsap.timeline({ paused: true });
-    s5Tl.fromTo("#s5-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
-    s5Tl.fromTo("#s5-list", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
-    s5Tl.fromTo("#s5-bar", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.45);
+    s5Tl.fromTo("#s5-head", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.05);
+    s5Tl.fromTo("#s5-list", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.2);
+    s5Tl.fromTo("#s5-bar", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.3);
     window.__timelines["scene-5"] = s5Tl;
   </script>
 </template>

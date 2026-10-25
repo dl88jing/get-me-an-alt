@@ -3,14 +3,19 @@
     #root {
       position: absolute;
       inset: 0;
-      background: #090d16;
       font-family: "Inter", sans-serif;
-      color: #f8fafc;
+      color: #f5ebd6;
     }
     #s1-stage {
       position: absolute;
       inset: 0;
-      padding: 112px 160px;
+      padding: 52px 56px;
+      display: flex;
+      justify-content: space-between;
+      gap: 32px;
+    }
+    #s1-left {
+      width: 472px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -18,105 +23,130 @@
     .s1-badge {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: rgba(0, 245, 160, 0.12);
-      border: 2px solid #00f5a0;
-      color: #00f5a0;
+      background: rgba(212, 175, 55, 0.16);
+      border: 2px solid #d4af37;
+      color: #f3d478;
       font-family: "JetBrains Mono", monospace;
-      font-size: 20px;
-      font-weight: 700;
-      padding: 10px 22px;
+      font-size: 16px;
+      font-weight: 800;
+      padding: 8px 16px;
       border-radius: 999px;
       width: fit-content;
       letter-spacing: 0.06em;
-      text-transform: uppercase;
     }
     .s1-title {
-      font-size: 76px;
+      font-size: 46px;
       font-weight: 900;
-      line-height: 1.06;
+      line-height: 1.08;
       letter-spacing: -0.03em;
-      color: #f8fafc;
-      max-width: 1520px;
+      color: #f5ebd6;
+      margin-top: 20px;
     }
-    .s1-accent {
+    .s1-gold {
+      color: #f3d478;
+    }
+    .s1-emerald {
       color: #00f5a0;
     }
     .s1-sub {
-      font-size: 31px;
-      font-weight: 400;
+      font-size: 22px;
       line-height: 1.4;
-      color: #cbd5e1;
-      max-width: 1460px;
+      color: #e6d3b3;
+      margin-top: 16px;
     }
-    .s1-compare {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
-      width: 100%;
-    }
-    .s1-card {
-      background: #111827;
-      border: 2px solid #1e293b;
-      border-radius: 20px;
-      padding: 32px 36px;
+    .s1-cards {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
+    }
+    .s1-card {
+      background: #14100b;
+      border: 2px solid rgba(212, 175, 55, 0.45);
+      border-left: 6px solid #d4af37;
+      border-radius: 14px;
+      padding: 18px 20px;
     }
     .s1-card-alt {
       border-color: #00f5a0;
-      background: #0d1f1a;
+      border-left-color: #00f5a0;
+      background: #0d1f18;
     }
     .s1-card-label {
       font-family: "JetBrains Mono", monospace;
-      font-size: 18px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: #94a3b8;
+      font-size: 15px;
+      font-weight: 800;
+      color: #f3d478;
+      letter-spacing: 0.06em;
     }
-    .s1-card-label-alt {
-      color: #00f5a0;
-    }
-    .s1-price {
-      font-size: 64px;
+    .s1-card-val {
+      font-size: 28px;
       font-weight: 900;
-      letter-spacing: -0.03em;
-      color: #f8fafc;
+      color: #ffffff;
+      margin-top: 6px;
     }
-    .s1-price-alt {
+    .s1-card-desc {
+      font-size: 17px;
+      color: #e6d3b3;
+      margin-top: 4px;
+    }
+    #s1-right {
+      width: 1304px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .s1-bar {
+      background: #14100b;
+      border: 2px solid #d4af37;
+      border-radius: 14px;
+      padding: 15px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .s1-bar-left {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 19px;
+      font-weight: 800;
+      color: #f5ebd6;
+    }
+    .s1-bar-right {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 800;
       color: #00f5a0;
-    }
-    .s1-desc {
-      font-size: 23px;
-      color: #cbd5e1;
-      line-height: 1.35;
     }
   </style>
   <div id="root" data-composition-id="scene-1" data-width="1920" data-height="1080">
-    <div id="s1-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+    <div id="s1-clip" class="clip" data-start="0" data-duration="12" data-track-index="0">
       <div id="s1-stage">
-        <div id="s1-top">
-          <div class="s1-badge">01 · THE PROBLEM · BESPOKE HARDWARE MARKUP</div>
-          <h1 class="s1-title" style="margin-top: 28px;">
-            Bespoke Gadgets Cost <span class="s1-accent">$149+</span>.<br />
-            Inside? It’s <span class="s1-accent">$21</span> of Standard Parts.
-          </h1>
-          <p class="s1-sub" style="margin-top: 22px;">
-            Turn any product link, YouTube video, or photo into a 3D-printable + off-the-shelf DIY build powered by Gemini 4 Argon Managed Agents via Antigravity CLI.
-          </p>
-        </div>
-        <div id="s1-cards" class="s1-compare">
-          <div class="s1-card">
-            <div class="s1-card-label">COMMERCIAL RETAIL GADGET</div>
-            <div class="s1-price">$149.00</div>
-            <div class="s1-desc">Smart Autonomous Plant Auto-Waterer · Proprietary molded enclosure</div>
+        <div id="s1-left">
+          <div id="s1-head">
+            <div class="s1-badge">01 · RENAISSANCE WORKSHOP</div>
+            <h1 class="s1-title">
+              Overpriced Gadgets → <span class="s1-emerald">Open DIY Builds</span>.
+            </h1>
+            <p class="s1-sub">
+              Paste any product link, photo, or video—or pick an instant Codex preset.
+            </p>
           </div>
-          <div class="s1-card s1-card-alt">
-            <div class="s1-card-label s1-card-label-alt">GET ME AN ALT · 11-PART OPEN-SOURCE DIY BUILD</div>
-            <div class="s1-price s1-price-alt">$24.85 · Save $124.15 (83%)</div>
-            <div class="s1-desc">11 Parts: 7 watertight 3D-printed STLs ($3.55 PETG/PLA) + 4 off-the-shelf hardware ($21.30)</div>
+          <div id="s1-cards" class="s1-cards">
+            <div class="s1-card">
+              <div class="s1-card-label">ANY INPUT OR CODEX PRESET</div>
+              <div class="s1-card-val">URL · Photo · Video</div>
+              <div class="s1-card-desc">Plant Waterer · Art Easel · Macro Stage · Pipette Robot</div>
+            </div>
+            <div class="s1-card s1-card-alt">
+              <div class="s1-card-label" style="color:#00f5a0;">FLAGSHIP SAVINGS</div>
+              <div class="s1-card-val" style="color:#00f5a0;">$149 → $24.85 (Save 83%)</div>
+              <div class="s1-card-desc">3D-printed STLs + off-the-shelf hardware</div>
+            </div>
+          </div>
+        </div>
+        <div id="s1-right">
+          <div id="s1-bar" class="s1-bar">
+            <span class="s1-bar-left">get-me-an-alt.vercel.app · The RenAIssance Edition</span>
+            <span class="s1-bar-right">● PASTE LINK / PHOTO / VIDEO</span>
           </div>
         </div>
       </div>
@@ -125,8 +155,9 @@
   <script>
     window.__timelines = window.__timelines || {};
     const s1Tl = gsap.timeline({ paused: true });
-    s1Tl.fromTo("#s1-top", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.05);
-    s1Tl.fromTo("#s1-cards", { opacity: 0, y: 32 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.35);
+    s1Tl.fromTo("#s1-head", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.05);
+    s1Tl.fromTo("#s1-cards", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.2);
+    s1Tl.fromTo("#s1-bar", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.3);
     window.__timelines["scene-1"] = s1Tl;
   </script>
 </template>

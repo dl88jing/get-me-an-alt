@@ -4,18 +4,18 @@
       position: absolute;
       inset: 0;
       font-family: "Inter", sans-serif;
-      color: #f8fafc;
+      color: #f5ebd6;
     }
     #s2-stage {
       position: absolute;
       inset: 0;
-      padding: 68px 72px;
+      padding: 52px 56px;
       display: flex;
       justify-content: space-between;
-      gap: 40px;
+      gap: 32px;
     }
     #s2-left {
-      width: 584px;
+      width: 472px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -23,23 +23,23 @@
     .s2-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(0, 245, 160, 0.14);
+      background: rgba(0, 245, 160, 0.15);
       border: 2px solid #00f5a0;
       color: #00f5a0;
       font-family: "JetBrains Mono", monospace;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       padding: 8px 16px;
       border-radius: 999px;
       width: fit-content;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
     .s2-title {
-      font-size: 46px;
+      font-size: 44px;
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: -0.03em;
-      color: #f8fafc;
+      color: #f5ebd6;
       margin-top: 18px;
     }
     .s2-accent {
@@ -48,104 +48,93 @@
     .s2-sub {
       font-size: 21px;
       line-height: 1.38;
-      color: #cbd5e1;
+      color: #e6d3b3;
       margin-top: 14px;
     }
-    .s2-agents {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .s2-list {
+      display: flex;
+      flex-direction: column;
       gap: 12px;
     }
-    .s2-agent {
-      background: #111827;
-      border: 2px solid #1e293b;
-      border-left: 5px solid #00f5a0;
+    .s2-pill {
+      background: #14100b;
+      border: 2px solid rgba(212, 175, 55, 0.4);
+      border-left: 6px solid #00f5a0;
       border-radius: 12px;
-      padding: 13px 16px;
+      padding: 14px 18px;
     }
-    .s2-agent-name {
+    .s2-pill-head {
       font-family: "JetBrains Mono", monospace;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       color: #00f5a0;
     }
-    .s2-agent-role {
-      font-size: 16px;
-      color: #e2e8f0;
+    .s2-pill-desc {
+      font-size: 18px;
+      font-weight: 600;
+      color: #f5ebd6;
       margin-top: 4px;
     }
     #s2-right {
-      width: 1152px;
+      width: 1304px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
-    .s2-caption-bar {
-      background: #111827;
+    .s2-bar {
+      background: #14100b;
       border: 2px solid #00f5a0;
       border-radius: 14px;
-      padding: 16px 24px;
+      padding: 15px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .s2-cap-title {
+    .s2-bar-left {
       font-family: "JetBrains Mono", monospace;
       font-size: 19px;
-      font-weight: 700;
-      color: #f8fafc;
+      font-weight: 800;
+      color: #f5ebd6;
     }
-    .s2-cap-pill {
+    .s2-bar-right {
       font-family: "JetBrains Mono", monospace;
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       color: #00f5a0;
     }
   </style>
   <div id="root" data-composition-id="scene-2" data-width="1920" data-height="1080">
-    <div id="s2-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+    <div id="s2-clip" class="clip" data-start="0" data-duration="15" data-track-index="0">
       <div id="s2-stage">
         <div id="s2-left">
           <div id="s2-head">
-            <div class="s2-badge">02 · MISSION CONTROL · 9-AGENT DAG + CRITIC</div>
+            <div class="s2-badge">02 · MISSION CONTROL (3.5× SPEED)</div>
             <h1 class="s2-title">
-              <span class="s2-accent">Gemini 4 Argon</span> Swarm + DFM Critic Loop.
+              9 <span class="s2-accent">Gemini 4 Argon</span> Managed Agents.
             </h1>
             <p class="s2-sub">
-              Runs via <code style="color:#00f5a0;">agy --model gemini-4-argon</code>. Streams live SSE to Mission Control with 2-round Critic → Designer feedback.
+              Orchestrated via Antigravity CLI with live SSE thoughts, tokens &amp; Critic loop.
             </p>
           </div>
-          <div id="s2-grid" class="s2-agents">
-            <div class="s2-agent">
-              <div class="s2-agent-name">1. ANALYST</div>
-              <div class="s2-agent-role">Multimodal dims &amp; $149 retail spec</div>
+          <div id="s2-list" class="s2-list">
+            <div class="s2-pill">
+              <div class="s2-pill-head">ANALYST · RESEARCHER · TEARDOWN</div>
+              <div class="s2-pill-desc">Search grounding &amp; video teardown frames</div>
             </div>
-            <div class="s2-agent">
-              <div class="s2-agent-name">2. RESEARCH + TEARDOWN</div>
-              <div class="s2-agent-role">Search grounding &amp; video teardowns</div>
+            <div class="s2-pill">
+              <div class="s2-pill-head">DESIGNER ⇄ DFM CRITIC LOOP</div>
+              <div class="s2-pill-desc">2-round overhang, wall &amp; bed-fit check</div>
             </div>
-            <div class="s2-agent">
-              <div class="s2-agent-name">3. DESIGNER + CRITIC</div>
-              <div class="s2-agent-role">11 parts (7 printed, 4 bought) + DFM loop</div>
-            </div>
-            <div class="s2-agent">
-              <div class="s2-agent-name">4. BOM + PRICE HUNTER</div>
-              <div class="s2-agent-role">$24.85 DIY · Save $124.15 (83%)</div>
-            </div>
-            <div class="s2-agent">
-              <div class="s2-agent-name">5. CAD &amp; PACKER</div>
-              <div class="s2-agent-role">OpenSCAD WASM → STL/3MF (1 plate)</div>
-            </div>
-            <div class="s2-agent">
-              <div class="s2-agent-name">6. INSTRUCTIONS</div>
-              <div class="s2-agent-role">7-step IKEA 3D motion player</div>
+            <div class="s2-pill">
+              <div class="s2-pill-head">BOM · PRICE HUNTER · OPENSCAD CAD</div>
+              <div class="s2-pill-desc">Retailer pricing + WASM STL compilation</div>
             </div>
           </div>
         </div>
         <div id="s2-right">
-          <div id="s2-bar" class="s2-caption-bar">
-            <span class="s2-cap-title">LIVE PROD · Mission Control 9-Agent DAG &amp; Printability Critic</span>
-            <span class="s2-cap-pill">● 9/9 AGENTS + 2-ROUND DFM VERIFIED</span>
+          <div id="s2-bar" class="s2-bar">
+            <span class="s2-bar-left">Mission Control · 9-Agent DAG, DFM Critic &amp; Video Teardown</span>
+            <span class="s2-bar-right">⚡ 3.5× PIPELINE REPLAY</span>
           </div>
         </div>
       </div>
@@ -154,9 +143,9 @@
   <script>
     window.__timelines = window.__timelines || {};
     const s2Tl = gsap.timeline({ paused: true });
-    s2Tl.fromTo("#s2-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
-    s2Tl.fromTo("#s2-grid", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
-    s2Tl.fromTo("#s2-bar", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.45);
+    s2Tl.fromTo("#s2-head", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.05);
+    s2Tl.fromTo("#s2-list", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.2);
+    s2Tl.fromTo("#s2-bar", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.3);
     window.__timelines["scene-2"] = s2Tl;
   </script>
 </template>

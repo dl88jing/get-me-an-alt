@@ -4,18 +4,18 @@
       position: absolute;
       inset: 0;
       font-family: "Inter", sans-serif;
-      color: #f8fafc;
+      color: #f5ebd6;
     }
     #s3-stage {
       position: absolute;
       inset: 0;
-      padding: 68px 72px;
+      padding: 52px 56px;
       display: flex;
       justify-content: space-between;
-      gap: 40px;
+      gap: 32px;
     }
     #s3-left {
-      width: 584px;
+      width: 472px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -23,23 +23,23 @@
     .s3-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(0, 245, 160, 0.14);
-      border: 2px solid #00f5a0;
-      color: #00f5a0;
+      background: rgba(212, 175, 55, 0.16);
+      border: 2px solid #d4af37;
+      color: #f3d478;
       font-family: "JetBrains Mono", monospace;
       font-size: 16px;
-      font-weight: 700;
+      font-weight: 800;
       padding: 8px 16px;
       border-radius: 999px;
       width: fit-content;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.06em;
     }
     .s3-title {
       font-size: 46px;
       font-weight: 900;
       line-height: 1.08;
       letter-spacing: -0.03em;
-      color: #f8fafc;
+      color: #f5ebd6;
       margin-top: 18px;
     }
     .s3-accent {
@@ -48,110 +48,99 @@
     .s3-sub {
       font-size: 21px;
       line-height: 1.38;
-      color: #cbd5e1;
+      color: #e6d3b3;
       margin-top: 14px;
     }
-    .s3-bom-list {
+    .s3-list {
       display: flex;
       flex-direction: column;
-      gap: 11px;
-    }
-    .s3-bom-row {
-      background: #111827;
-      border: 2px solid #1e293b;
-      border-radius: 12px;
-      padding: 13px 18px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       gap: 12px;
     }
-    .s3-bom-total {
+    .s3-card {
+      background: #14100b;
+      border: 2px solid rgba(212, 175, 55, 0.45);
+      border-left: 6px solid #d4af37;
+      border-radius: 12px;
+      padding: 15px 18px;
+    }
+    .s3-card-alt {
       border-color: #00f5a0;
-      background: #0d1f1a;
+      border-left-color: #00f5a0;
+      background: #0d1f18;
     }
-    .s3-part {
-      font-size: 17px;
-      font-weight: 700;
-      color: #f8fafc;
-      white-space: nowrap;
-    }
-    .s3-store {
+    .s3-head-txt {
       font-family: "JetBrains Mono", monospace;
-      font-size: 16px;
-      color: #00f5a0;
-      white-space: nowrap;
-      flex-shrink: 0;
+      font-size: 15px;
+      font-weight: 800;
+      color: #f3d478;
+    }
+    .s3-body-txt {
+      font-size: 20px;
+      font-weight: 800;
+      color: #ffffff;
+      margin-top: 4px;
     }
     #s3-right {
-      width: 1152px;
+      width: 1304px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
     }
-    .s3-caption-bar {
-      background: #111827;
-      border: 2px solid #00f5a0;
+    .s3-bar {
+      background: #14100b;
+      border: 2px solid #d4af37;
       border-radius: 14px;
-      padding: 16px 24px;
+      padding: 15px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
-    .s3-cap-title {
+    .s3-bar-left {
       font-family: "JetBrains Mono", monospace;
       font-size: 19px;
-      font-weight: 700;
-      color: #f8fafc;
+      font-weight: 800;
+      color: #f5ebd6;
     }
-    .s3-cap-pill {
+    .s3-bar-right {
       font-family: "JetBrains Mono", monospace;
-      font-size: 17px;
-      font-weight: 700;
+      font-size: 18px;
+      font-weight: 800;
       color: #00f5a0;
     }
   </style>
   <div id="root" data-composition-id="scene-3" data-width="1920" data-height="1080">
-    <div id="s3-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+    <div id="s3-clip" class="clip" data-start="0" data-duration="16" data-track-index="0">
       <div id="s3-stage">
         <div id="s3-left">
           <div id="s3-head">
-            <div class="s3-badge">03 · BILL OF MATERIALS &amp; RETAILER LINKS</div>
+            <div class="s3-badge">03 · BOM SAVINGS &amp; 3MF PLATES</div>
             <h1 class="s3-title">
               $149 → <span class="s3-accent">$24.85</span>.<br />
-              Save <span class="s3-accent">$124.15</span> (83%).
+              Save <span class="s3-accent">83%</span> ($124).
             </h1>
             <p class="s3-sub">
-              Live sourcing links across Amazon, Home Depot, Walmart, McMaster-Carr &amp; AliExpress for all 11 parts (7 printed + 4 purchased).
+              Grounded retailer links + 1-plate 3MF packing across 22 printers.
             </p>
           </div>
-          <div id="s3-bom" class="s3-bom-list">
-            <div class="s3-bom-row">
-              <span class="s3-part">5V Brushless Submersible Pump</span>
-              <span class="s3-store">Amazon / Walmart · $4.95</span>
+          <div id="s3-list" class="s3-list">
+            <div class="s3-card s3-card-alt">
+              <div class="s3-head-txt" style="color:#00f5a0;">GROUNDED RETAILER BOM</div>
+              <div class="s3-body-txt">Amazon · Home Depot · Walmart · McMaster</div>
             </div>
-            <div class="s3-bom-row">
-              <span class="s3-part">Capacitive Soil Probe v1.2</span>
-              <span class="s3-store">Amazon / AliExpress · $3.25</span>
+            <div class="s3-card">
+              <div class="s3-head-txt">MIN-PLATE 3MF PACKER (22 PRINTERS)</div>
+              <div class="s3-body-txt">Bambu Lab A1 (1 Plate · 185g · 3h 24m)</div>
             </div>
-            <div class="s3-bom-row">
-              <span class="s3-part">Silicone Tubing 6×8mm (2m)</span>
-              <span class="s3-store">Home Depot / Amazon · $3.80</span>
-            </div>
-            <div class="s3-bom-row">
-              <span class="s3-part">XIAO ESP32-C3 + MOSFET + Screws</span>
-              <span class="s3-store">McMaster / Amazon · $9.30</span>
-            </div>
-            <div class="s3-bom-row s3-bom-total">
-              <span class="s3-part">DIY Total (+$3.55 PETG/PLA) vs. $149</span>
-              <span class="s3-store">$24.85 · SAVE 83%</span>
+            <div class="s3-card">
+              <div class="s3-head-txt">NO PRINTER? ON-DEMAND DELIVERY</div>
+              <div class="s3-body-txt">Craftcloud · JLC3DP · Xometry Quotes</div>
             </div>
           </div>
         </div>
         <div id="s3-right">
-          <div id="s3-bar" class="s3-caption-bar">
-            <span class="s3-cap-title">LIVE PROD · BOM Tab &amp; Multi-Retailer Sourcing Links</span>
-            <span class="s3-cap-pill">● $24.85 DIY vs. $149.00 RETAIL (SAVE 83%)</span>
+          <div id="s3-bar" class="s3-bar">
+            <span class="s3-bar-left">BOM ($24.85 DIY) · PrintPanel 3MF Packer &amp; Print Service</span>
+            <span class="s3-bar-right">● YOU SAVE $124.15 (83%)</span>
           </div>
         </div>
       </div>
@@ -160,9 +149,9 @@
   <script>
     window.__timelines = window.__timelines || {};
     const s3Tl = gsap.timeline({ paused: true });
-    s3Tl.fromTo("#s3-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
-    s3Tl.fromTo("#s3-bom", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
-    s3Tl.fromTo("#s3-bar", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.45);
+    s3Tl.fromTo("#s3-head", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.05);
+    s3Tl.fromTo("#s3-list", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.4, ease: "power3.out" }, 0.2);
+    s3Tl.fromTo("#s3-bar", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.3);
     window.__timelines["scene-3"] = s3Tl;
   </script>
 </template>

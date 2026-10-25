@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=1920, height=1080" />
-    <title>Get Me An Alt — Narrated Presentation Video (v2)</title>
+    <title>Get Me An Alt — 60s Narrated Demo Video (v3)</title>
     <script src="assets/gsap.min.js"></script>
     <style>
       * {
@@ -17,7 +17,7 @@
         width: 1920px;
         height: 1080px;
         overflow: hidden;
-        background: #090d16;
+        background: #0c0906;
         font-family: "Inter", sans-serif;
       }
       #root {
@@ -32,19 +32,19 @@
         height: 1080px;
         z-index: 3;
       }
-      /* Larger, brighter inset (1152x846 vs 828x720 in v1 -> +64% area, bright gamma lift) */
+      /* Large, high-clarity 1304x876 viewport showing the live Renaissance production app */
       .rec-viewport {
         position: absolute;
-        left: 696px;
-        top: 68px;
-        width: 1152px;
-        height: 846px;
+        left: 560px;
+        top: 52px;
+        width: 1304px;
+        height: 876px;
         object-fit: cover;
         border-radius: 18px;
-        border: 3px solid #00f5a0;
-        box-shadow: 0 0 44px rgba(0, 245, 160, 0.28), 0 18px 42px rgba(0, 0, 0, 0.65);
-        filter: brightness(1.12) contrast(1.06) saturate(1.12);
-        background: #0d1f2d;
+        border: 3px solid #d4af37;
+        box-shadow: 0 0 42px rgba(212, 175, 55, 0.28), 0 18px 42px rgba(0, 0, 0, 0.72);
+        filter: brightness(1.10) contrast(1.05) saturate(1.08);
+        background: #14100b;
         z-index: 2;
       }
     </style>
@@ -54,40 +54,51 @@
       id="root"
       data-composition-id="main"
       data-start="0"
-      data-duration="147"
+      data-duration="58"
       data-width="1920"
       data-height="1080"
       data-fps="10"
     >
       <div
         id="bg-canvas"
-        style="position: absolute; inset: 0; background: #090d16; z-index: 0"
+        style="position: absolute; inset: 0; background: radial-gradient(circle at 20% 20%, #1c140d 0%, #0c0906 70%); z-index: 0"
       ></div>
 
-      <!-- Scene 1: Title Card & Problem Hook (0s - 18s) -->
+      <!-- Scene 1: Problem & Renaissance Landing + Preset Selection (0s - 8s) -->
+      <video
+        id="rec-scene-1"
+        class="clip rec-viewport"
+        src="assets/recording.mp4"
+        muted
+        playsinline
+        data-start="0"
+        data-duration="8"
+        data-media-start="0"
+        data-track-index="0"
+      ></video>
       <div
         id="scene-1"
         class="clip scene-host"
         data-composition-id="scene-1"
         data-composition-src="compositions/scene-1.html"
         data-start="0"
-        data-duration="18"
+        data-duration="8"
         data-track-index="1"
         data-track-kind="graphics"
         data-width="1920"
         data-height="1080"
       ></div>
 
-      <!-- Scene 2: Input & Live Gemini 4 Argon Agent Timeline (18s - 46s) -->
+      <!-- Scene 2: Mission Control 9-Agent DAG (3-4x Speed) + Critic & Teardown (8s - 19s) -->
       <video
         id="rec-scene-2"
         class="clip rec-viewport"
         src="assets/recording.mp4"
         muted
         playsinline
-        data-start="18"
-        data-duration="28"
-        data-media-start="0"
+        data-start="8"
+        data-duration="11"
+        data-media-start="8"
         data-track-index="0"
       ></video>
       <div
@@ -95,24 +106,24 @@
         class="clip scene-host"
         data-composition-id="scene-2"
         data-composition-src="compositions/scene-2.html"
-        data-start="18"
-        data-duration="28"
+        data-start="8"
+        data-duration="11"
         data-track-index="1"
         data-track-kind="graphics"
         data-width="1920"
         data-height="1080"
       ></div>
 
-      <!-- Scene 3: Bill of Materials & Instant Savings (46s - 70s) -->
+      <!-- Scene 3: BOM & 83% Savings + Multi-Printer 3MF Plates & Print Service (19s - 32s) -->
       <video
         id="rec-scene-3"
         class="clip rec-viewport"
         src="assets/recording.mp4"
         muted
         playsinline
-        data-start="46"
-        data-duration="24"
-        data-media-start="28"
+        data-start="19"
+        data-duration="13"
+        data-media-start="19"
         data-track-index="0"
       ></video>
       <div
@@ -120,24 +131,24 @@
         class="clip scene-host"
         data-composition-id="scene-3"
         data-composition-src="compositions/scene-3.html"
-        data-start="46"
-        data-duration="24"
+        data-start="19"
+        data-duration="13"
         data-track-index="1"
         data-track-kind="graphics"
         data-width="1920"
         data-height="1080"
       ></div>
 
-      <!-- Scene 4: Parametric CAD, Plate Packing & Print Service (70s - 97s) -->
+      <!-- Scene 4: Three.js IKEA Assembly Player & Interactive Exploded 3D View (32s - 41s) -->
       <video
         id="rec-scene-4"
         class="clip rec-viewport"
         src="assets/recording.mp4"
         muted
         playsinline
-        data-start="70"
-        data-duration="27"
-        data-media-start="52"
+        data-start="32"
+        data-duration="9"
+        data-media-start="32"
         data-track-index="0"
       ></video>
       <div
@@ -145,24 +156,24 @@
         class="clip scene-host"
         data-composition-id="scene-4"
         data-composition-src="compositions/scene-4.html"
-        data-start="70"
-        data-duration="27"
+        data-start="32"
+        data-duration="9"
         data-track-index="1"
         data-track-kind="graphics"
         data-width="1920"
         data-height="1080"
       ></div>
 
-      <!-- Scene 5: Interactive Exploded 3D View & IKEA Assembly (97s - 121s) -->
+      <!-- Scene 5: Ask Argon to Modify by Chat ("make it 20% taller") (41s - 50s) -->
       <video
         id="rec-scene-5"
         class="clip rec-viewport"
         src="assets/recording.mp4"
         muted
         playsinline
-        data-start="97"
-        data-duration="24"
-        data-media-start="79"
+        data-start="41"
+        data-duration="9"
+        data-media-start="41"
         data-track-index="0"
       ></video>
       <div
@@ -170,22 +181,22 @@
         class="clip scene-host"
         data-composition-id="scene-5"
         data-composition-src="compositions/scene-5.html"
-        data-start="97"
-        data-duration="24"
+        data-start="41"
+        data-duration="9"
         data-track-index="1"
         data-track-kind="graphics"
         data-width="1920"
         data-height="1080"
       ></div>
 
-      <!-- Scene 6: Managed Agents Architecture & Closing Title Card (121s - 147s) -->
+      <!-- Scene 6: Outro Card with App Name & Live URL (50s - 58s) -->
       <div
         id="scene-6"
         class="clip scene-host"
         data-composition-id="scene-6"
         data-composition-src="compositions/scene-6.html"
-        data-start="121"
-        data-duration="26"
+        data-start="50"
+        data-duration="8"
         data-track-index="1"
         data-track-kind="graphics"
         data-width="1920"
@@ -196,48 +207,48 @@
       <audio
         id="vo-scene-1"
         src="assets/audio/scene-1.wav"
-        data-start="0.3"
-        data-duration="17.365"
+        data-start="0.25"
+        data-duration="6.400"
         data-track-index="2"
         data-volume="1"
       ></audio>
       <audio
         id="vo-scene-2"
         src="assets/audio/scene-2.wav"
-        data-start="18.3"
-        data-duration="27.264"
+        data-start="8.25"
+        data-duration="9.323"
         data-track-index="2"
         data-volume="1"
       ></audio>
       <audio
         id="vo-scene-3"
         src="assets/audio/scene-3.wav"
-        data-start="46.2"
-        data-duration="23.509"
+        data-start="19.20"
+        data-duration="11.605"
         data-track-index="2"
         data-volume="1"
       ></audio>
       <audio
         id="vo-scene-4"
         src="assets/audio/scene-4.wav"
-        data-start="70.3"
-        data-duration="25.728"
+        data-start="32.25"
+        data-duration="7.552"
         data-track-index="2"
         data-volume="1"
       ></audio>
       <audio
         id="vo-scene-5"
         src="assets/audio/scene-5.wav"
-        data-start="97.3"
-        data-duration="22.528"
+        data-start="41.25"
+        data-duration="6.955"
         data-track-index="2"
         data-volume="1"
       ></audio>
       <audio
         id="vo-scene-6"
         src="assets/audio/scene-6.wav"
-        data-start="121.3"
-        data-duration="24.469"
+        data-start="50.25"
+        data-duration="6.272"
         data-track-index="2"
         data-volume="1"
       ></audio>

@@ -3,14 +3,14 @@
     #root {
       position: absolute;
       inset: 0;
-      background: #090d16;
+      background: radial-gradient(circle at 50% 20%, #24190e 0%, #0c0906 72%);
       font-family: "Inter", sans-serif;
-      color: #f8fafc;
+      color: #f5ebd6;
     }
     #s6-stage {
       position: absolute;
       inset: 0;
-      padding: 108px 160px;
+      padding: 88px 128px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -18,116 +18,137 @@
     .s6-badge {
       display: inline-flex;
       align-items: center;
-      background: rgba(0, 245, 160, 0.14);
-      border: 2px solid #00f5a0;
-      color: #00f5a0;
+      background: rgba(212, 175, 55, 0.16);
+      border: 2px solid #d4af37;
+      color: #f3d478;
       font-family: "JetBrains Mono", monospace;
       font-size: 20px;
-      font-weight: 700;
-      padding: 10px 22px;
+      font-weight: 800;
+      padding: 10px 24px;
       border-radius: 999px;
       width: fit-content;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.08em;
     }
     .s6-title {
-      font-size: 72px;
+      font-size: 84px;
       font-weight: 900;
-      line-height: 1.06;
+      line-height: 1.04;
       letter-spacing: -0.03em;
-      color: #f8fafc;
-      margin-top: 24px;
+      color: #f5ebd6;
+      margin-top: 22px;
     }
-    .s6-accent {
+    .s6-gold {
+      color: #f3d478;
+    }
+    .s6-emerald {
       color: #00f5a0;
     }
-    .s6-sub {
-      font-size: 29px;
-      line-height: 1.4;
-      color: #cbd5e1;
-      margin-top: 18px;
-      max-width: 1480px;
+    .s6-url-box {
+      margin-top: 26px;
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      background: #0d1f18;
+      border: 3px solid #00f5a0;
+      border-radius: 20px;
+      padding: 18px 34px;
+      box-shadow: 0 0 40px rgba(0, 245, 160, 0.25);
+    }
+    .s6-url {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 40px;
+      font-weight: 900;
+      color: #00f5a0;
+      letter-spacing: -0.01em;
     }
     .s6-grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 36px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
     }
-    .s6-box {
-      background: #111827;
-      border: 2px solid #00f5a0;
-      border-radius: 20px;
-      padding: 28px 34px;
+    .s6-card {
+      background: #14100b;
+      border: 2px solid rgba(212, 175, 55, 0.45);
+      border-top: 5px solid #d4af37;
+      border-radius: 16px;
+      padding: 22px 24px;
     }
-    .s6-box-tag {
+    .s6-card-tag {
       font-family: "JetBrains Mono", monospace;
-      font-size: 18px;
-      font-weight: 700;
-      color: #00f5a0;
-      letter-spacing: 0.06em;
-    }
-    .s6-box-title {
-      font-size: 34px;
+      font-size: 15px;
       font-weight: 800;
-      color: #f8fafc;
-      margin-top: 10px;
+      color: #00f5a0;
     }
-    .s6-box-desc {
-      font-size: 22px;
-      color: #cbd5e1;
-      line-height: 1.38;
-      margin-top: 10px;
+    .s6-card-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: #f5ebd6;
+      margin-top: 8px;
+    }
+    .s6-card-price {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #f3d478;
+      margin-top: 6px;
     }
     .s6-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-top: 2px solid #1e293b;
+      border-top: 2px solid rgba(212, 175, 55, 0.3);
       padding-top: 24px;
     }
-    .s6-cta {
-      font-size: 30px;
+    .s6-foot-left {
+      font-size: 28px;
       font-weight: 800;
-      color: #f8fafc;
+      color: #f5ebd6;
     }
-    .s6-hack {
+    .s6-foot-right {
       font-family: "JetBrains Mono", monospace;
       font-size: 20px;
-      font-weight: 700;
-      color: #00f5a0;
+      font-weight: 800;
+      color: #f3d478;
     }
   </style>
   <div id="root" data-composition-id="scene-6" data-width="1920" data-height="1080">
-    <div id="s6-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+    <div id="s6-clip" class="clip" data-start="0" data-duration="12" data-track-index="0">
       <div id="s6-stage">
         <div id="s6-top">
-          <div class="s6-badge">06 · BEST USE OF MANAGED AGENTS · GEMINI 4 ARGON</div>
+          <div class="s6-badge">GET ME AN ALT · GEMINI 4 ARGON MANAGED AGENTS</div>
           <h1 class="s6-title">
-            Built By <span class="s6-accent">Managed Agents</span>.<br />
-            Powered By <span class="s6-accent">Gemini 4 Argon</span>.
+            Print It. Assemble It.<br />
+            <span class="s6-gold">Modify It by Chat.</span>
           </h1>
-          <p class="s6-sub">
-            Antigravity CLI orchestrates both our 9-node runtime hardware swarm ($149 → $24.85, 83% saved, 11 parts) and our parallel multi-agent engineering workspace.
-          </p>
+          <div class="s6-url-box">
+            <span class="s6-url">https://get-me-an-alt.vercel.app</span>
+          </div>
         </div>
         <div id="s6-boxes" class="s6-grid">
-          <div class="s6-box">
-            <div class="s6-box-tag">RUNTIME PIPELINE · AGY CLI + SSE</div>
-            <div class="s6-box-title">Mission Control &amp; DFM Critic Loop</div>
-            <div class="s6-box-desc">
-              Analyst → Researcher/Teardown → Designer ⇄ Critic → BOM/Price Hunter → OpenSCAD CAD → Instructions.
-            </div>
+          <div class="s6-card">
+            <div class="s6-card-tag">SAVE 83% · 1 PLATE</div>
+            <div class="s6-card-name">Smart Plant Waterer</div>
+            <div class="s6-card-price">$149 → $24.85 DIY</div>
           </div>
-          <div class="s6-box">
-            <div class="s6-box-tag">BUILD-TIME ORCHESTRATION · PARALLEL LANES</div>
-            <div class="s6-box-title">Multi-Agent Software Engineering</div>
-            <div class="s6-box-desc">
-              Coordinated Antigravity agents built the Next.js shell, OpenSCAD-WASM packer, Three.js players &amp; video studio in parallel.
-            </div>
+          <div class="s6-card">
+            <div class="s6-card-tag">SAVE 85% · 1 PLATE</div>
+            <div class="s6-card-name">Studio Art Easel</div>
+            <div class="s6-card-price">$189 → $27.40 DIY</div>
+          </div>
+          <div class="s6-card">
+            <div class="s6-card-tag">SAVE 86% · 1 PLATE</div>
+            <div class="s6-card-name">iPhone Macro Stage</div>
+            <div class="s6-card-price">$119 → $16.20 DIY</div>
+          </div>
+          <div class="s6-card">
+            <div class="s6-card-tag">SAVE 88% · 2 PLATES</div>
+            <div class="s6-card-name">Lab Pipette Robot</div>
+            <div class="s6-card-price">$590 → $68.50 DIY</div>
           </div>
         </div>
         <div id="s6-foot" class="s6-footer">
-          <span class="s6-cta">Get Me An Alt — Paste a Link. Print the Parts. Build Your Alt.</span>
-          <span class="s6-hack">GEMINI 4 ARGON SF HACKATHON 2026</span>
+          <span class="s6-foot-left">9 Gemini 4 Argon Agents · OpenSCAD STLs &amp; 3MFs · Three.js 3D Players</span>
+          <span class="s6-foot-right">GEMINI 4 ARGON SF HACKATHON 2026</span>
         </div>
       </div>
     </div>
@@ -135,9 +156,9 @@
   <script>
     window.__timelines = window.__timelines || {};
     const s6Tl = gsap.timeline({ paused: true });
-    s6Tl.fromTo("#s6-top", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.05);
-    s6Tl.fromTo("#s6-boxes", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.35);
-    s6Tl.fromTo("#s6-foot", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.55);
+    s6Tl.fromTo("#s6-top", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.05);
+    s6Tl.fromTo("#s6-boxes", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.2);
+    s6Tl.fromTo("#s6-foot", { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, 0.35);
     window.__timelines["scene-6"] = s6Tl;
   </script>
 </template>

@@ -1,48 +1,48 @@
-# Get Me An Alt — Presentation Video Script (v2)
+# Get Me An Alt — Presentation Video Script (v3 · 60-Second Cut)
 
-- **Target Total Duration:** ~2:27 (147 seconds, strictly <= 170 seconds)
-- **Narration Word Count:** ~350 words
+- **Target Total Duration:** 58.0 seconds (strictly 55–60s, never over 60.0s)
+- **Narration Word Count:** 110 words (<= 140 words max)
 - **Voice:** Kokoro TTS (`af_heart` default voice via `npx hyperframes tts`)
 - **Hackathon:** Gemini 4 Argon SF Hackathon (Google DeepMind x Cerebral Valley)
 
 ---
 
-## Scene 1 — Hook: Bespoke Gadgets Are Pricey (0:00 – 0:18 | 18s)
-**Visual:** Title card transitions into side-by-side comparison of the commercial **$149.00** Smart Plant Auto-Waterer vs. the **$24.85** Get Me An Alt DIY build (**Save $124.15 / 83%**, **11 parts**: 7 watertight 3D-printed STLs + 4 off-the-shelf components).
-**Narration:**
-> Bespoke gadgets are absurdly overpriced. A commercial smart plant auto-waterer retails for a hundred and forty-nine dollars—yet inside, it is twenty-one dollars of standard pumps, sensors, and tubing wrapped in injection-molded plastic. What if any product link, video, or photo could become an open-source DIY build?
+## Scene 1 — Problem & Renaissance Workshop Landing (0:00 – 0:08 | 8.0s)
+**Visual:** Live screen recording (`assets/recording.mp4`, `0s–8s`) of **The RenAIssance Edition / Da Vinci's Workshop** landing page (`https://get-me-an-alt.vercel.app`): pasting a product link, selecting a target 3D printer, scrolling the Sketch-to-Reality 3D exploded view, and picking a showcase preset from the Codex gallery (`Articulated Studio Art Easel` `$189 → $27.40` / `Smart Plant Auto-Waterer` `$149 → $24.85`).
+**Narration (6.40s):**
+> Bespoke gadgets are wildly overpriced. Paste any link, photo, or video—or pick a showcase build.
 
 ---
 
-## Scene 2 — Multi-Agent Mission Control, Printability Critic & Video Teardown (0:18 – 0:46 | 28s)
-**Visual:** Large, bright screen recording (`assets/recording.mp4`, `0s–28s`) showing the new full-bleed landing page, 3D scroll-explode story, and the live **Mission Control** 9-agent DAG (`Analyst`, `Researcher`, `Teardown`, `Designer`, `Critic`, `BOM`, `Price Hunter`, `CAD`, `Instructions`) with the 2-round `Critic → Designer` DFM printability loop (`CritiquePanel`) and grounded `SourcesTab`.
-**Narration:**
-> Meet Get Me An Alt. Paste a product link, YouTube video, or gadget photo, and our six-stage Gemini 4 Argon agent pipeline runs through the Antigravity CLI, streaming live to Mission Control. First, the Analyst extracts dimensions and mechanisms. Next, the Researcher combines Google Search grounding with our Video Teardown Agent—inspecting disassembly frames to map every internal part, material, and fastener before the Designer splits printed geometry from purchased hardware.
+## Scene 2 — Mission Control: Gemini 4 Argon Managed Agents (0:08 – 0:19 | 11.0s)
+**Visual:** Live screen recording (`assets/recording.mp4`, `8s–19s`, 3–4× speed) of the **Mission Control** 9-agent DAG lighting up (`Analyst`, `Researcher`, `Teardown`, `Designer ⇄ Critic` 2-round DFM printability loop, `BOM`, `Price Hunter`, `CAD`, `Instructions`), plus the Printability Critic panel and Video Teardown frame callouts.
+**Narration (9.32s):**
+> In Mission Control, a team of Gemini 4 Argon managed agents researches, designs, critiques, prices, and generates printable CAD.
 
 ---
 
-## Scene 3 — Bill of Materials (BOM) with Real Retailer Links & 83% Savings (0:46 – 1:10 | 24s)
-**Visual:** Large, bright screen recording (`assets/recording.mp4`, `28s–52s`) on the BOM tab showing `$149.00` commercial price vs. `$24.85` DIY build (`You Save $124.15 / 83%`), 5V brushless submersible pump, capacitive soil probe, ESP32-C3 controller, silicone tubing, and M2.5/M3 fasteners with live retailer links across Amazon, Home Depot, Walmart, McMaster-Carr, and AliExpress.
-**Narration:**
-> Next, the BOM Agent builds a complete bill of materials for every off-the-shelf component—submersible pump, capacitive moisture probe, ESP32 controller, silicone tubing, and brass inserts—complete with real search links across Amazon, Home Depot, Walmart, McMaster-Carr, and AliExpress. Instead of paying a hundred and forty-nine dollars retail, your entire DIY build costs twenty-four eighty-five—saving a hundred and twenty-four dollars, or eighty-three percent.
+## Scene 3 — BOM Savings ($149 → $24.85 / 83%) & Multi-Printer 3MF Plates (0:19 – 0:32 | 13.0s)
+**Visual:** Live screen recording (`assets/recording.mp4`, `19s–32s`) showing the **BOM** tab (`$149.00` retail vs. `$24.85` DIY, **Save $124.15 / 83%**, live Amazon/Home Depot/Walmart/McMaster links) and **Print Files (`PrintPanel`)** (watertight OpenSCAD STLs packed onto 1 plate on Bambu Lab A1, switching printers across 22 models, `.3MF` export, and Craftcloud/JLC3DP print-service quote handoff).
+**Narration (11.61s):**
+> A hundred-and-forty-nine-dollar smart waterer costs just twenty-four eighty-five—saving eighty-three percent—with live retailer links, packed 3MF plates, or print-service delivery.
 
 ---
 
-## Scene 4 — OpenSCAD-WASM STL/3MF Packer for 22 Printers & Print-Service Delivery (1:10 – 1:37 | 27s)
-**Visual:** Large, bright screen recording (`assets/recording.mp4`, `52s–79s`) on the Print Files tab (`PrintPanel`) showing OpenSCAD-compiled watertight STL parts bin-packed onto 1 plate on a Bambu Lab A1 (256×256×256 mm), live re-packing across 22 popular printers (Bambu A1 mini, Prusa MK4S, Voron 2.4), multi-plate `.3MF` export, and the inline `"No printer? Get it printed"` quote handoff to Craftcloud, JLC3DP, and Xometry.
-**Narration:**
-> Meanwhile, the CAD Agent generates watertight parametric STL meshes and multi-plate 3MF bundles, bin-packing all seven printed parts onto the fewest possible build plates. It defaults to the Bambu Lab A1 and re-packs live across more than twenty popular printers from Bambu, Prusa, Creality, Elegoo, Anycubic, and Voron. No 3D printer? One click hands off your STL bundle for instant delivered quotes from Craftcloud, JLC3DP, or Xometry.
+## Scene 4 — Three.js IKEA Assembly Player & Exploded 3D View (0:32 – 0:41 | 9.0s)
+**Visual:** Live screen recording (`assets/recording.mp4`, `32s–41s`) of the **Three.js IKEA-style animated assembly player** (7 steps, toon/line-art shader, parts flying along insertion vectors) followed by the **Interactive Exploded 3D View** (dragging explode slider `0% → 100%`, orbiting the 3D assembly, and clicking part callouts).
+**Narration (7.55s):**
+> Step through the animated IKEA-style 3D assembly player, or orbit and scrub the interactive exploded 3D view.
 
 ---
 
-## Scene 5 — Three.js IKEA-Style Assembly Player & Interactive Exploded 3D View (1:37 – 2:01 | 24s)
-**Visual:** Large, bright screen recording (`assets/recording.mp4`, `79s–103s`) showing the Three.js IKEA-style animated 7-step assembly player (`AssemblyPlayer` with toon/line-art shader and motion vectors) followed by the interactive Three.js Exploded 3D View (`ExplodedView` with 11 parts, smooth explode slider, orbit camera, numbered callouts, and click-to-inspect BOM mapping).
-**Narration:**
-> Ready to assemble? Open the Three.js IKEA-style instructions player, where our Instructions Agent choreographs each step in crisp line-art as parts fly along motion vectors with tool callouts. Then switch to the interactive exploded 3D view—drag the explode slider from zero to a hundred percent, orbit the assembly, and click any part to inspect its dimensions and linked BOM item.
+## Scene 5 — Ask Argon to Modify by Chat ("make it 20% taller") (0:41 – 0:50 | 9.0s)
+**Visual:** Live screen recording (`assets/recording.mp4`, `41s–50s`) of the **Ask Argon to Modify** chat: submitting `"make it 20% taller"`, watching Gemini 4 Argon selectively re-run only the affected downstream agents in Mission Control, and displaying the 3-column **Modification Diff Summary** (Price, Parametric Parts `+20% taller`, Print Time & Plates).
+**Narration (6.95s):**
+> Need changes? Ask Argon to make it twenty percent taller, and it selectively re-runs only the affected agents.
 
 ---
 
-## Scene 6 — Why Managed Agents & Antigravity CLI Shine + Close (2:01 – 2:27 | 26s)
-**Visual:** Closing architecture card highlighting runtime Gemini 4 Argon agents via Antigravity CLI (`agy`) + SSE (including the Critic → Designer DFM loop and OpenSCAD-WASM retry loop) and parallel build-time multi-agent engineering lanes.
-**Narration:**
-> Get Me An Alt showcases Managed Agents at two levels: at runtime, six Gemini 4 Argon agents collaborate via the Antigravity CLI through typed JSON, teardown, and STL contracts; at build time, coordinated Antigravity agents engineered our CAD packer, Three.js players, teardown pipeline, and video studio in parallel. Stop overpaying for bespoke hardware—Get Me An Alt.
+## Scene 6 — Outro: Print It, Assemble It, Modify It by Chat (0:50 – 0:58 | 8.0s)
+**Visual:** Closing title card featuring **Get Me An Alt** (`https://get-me-an-alt.vercel.app`), the 9-agent Gemini 4 Argon architecture summary, and showcase builds (`Smart Plant Auto-Waterer` 83% saved, `Studio Art Easel` 85% saved, `iPhone Macro Stage` 86% saved, `Lab Pipette Robot` 88% saved).
+**Narration (6.27s):**
+> Print it, assemble it, modify it by chat. Get Me An Alt—live at get-me-an-alt dot vercel dot app.
