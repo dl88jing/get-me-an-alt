@@ -591,7 +591,7 @@ export const SAMPLE_BOM: BomData = {
       specification: '1.75mm PETG (Reservoir, Cradle, Manifold, Spikes) + PLA+ (Lid & Enclosure)',
       qty: 185,
       unit: 'g',
-      unitPrice: 0.019,
+      unitPrice: 0.0192, // 185g x $0.0192 = $3.552 -> $3.55 totalPrice
       totalPrice: 3.55,
       primaryRetailer: 'Amazon',
       primaryUrl: 'https://www.amazon.com/s?k=PETG+1.75mm+filament+1kg+spool+watertight',
