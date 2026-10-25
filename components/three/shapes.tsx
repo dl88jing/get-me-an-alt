@@ -51,8 +51,10 @@ function buildBoxGeometry(params: PartParams): THREE.BufferGeometry {
 
   const shape = createRoundedRectShape(w, d, radius);
 
-  // Optional hollow box if wall/wallThickness is specified
-  const wall = Number(params?.wall ?? params?.wallThickness ?? 0);
+  // Optional hollow box ONLY when explicitly marked hollow (never from DFM wallThickness alone)
+  const wall = params?.hollow
+    ? Number(params?.wall ?? params?.wallThickness ?? 0)
+    : 0;
   if (wall > 0 && wall < Math.min(w, d) * 0.4) {
     const innerW = w - wall * 2;
     const innerD = d - wall * 2;
@@ -506,10 +508,152 @@ function buildGearSimpleGeometry(params: PartParams): THREE.BufferGeometry {
   return geo;
 }
 
+function mergeBufferGeometries(
+  geometries: THREE.BufferGeometry[]
+): THREE.BufferGeometry {
+  const nonIndexed = geometries.map((g) =>
+    g.index ? g.toNonIndexed() : g.clone()
+  );
+  let totalVerts = 0;
+  for (const g of nonIndexed) {
+    const pos = g.getAttribute("position");
+    if (pos) totalVerts += pos.count;
+  }
+  const positions = new Float32Array(totalVerts * 3);
+  const normals = new Float32Array(totalVerts * 3);
+  let offset = 0;
+  for (const g of nonIndexed) {
+    g.computeVertexNormals();
+    const pos = g.getAttribute("position");
+    const norm = g.getAttribute("normal");
+    if (!pos) continue;
+    positions.set(pos.array as Float32Array, offset * 3);
+    if (norm) {
+      normals.set(norm.array as Float32Array, offset * 3);
+    }
+    offset += pos.count;
+  }
+  const merged = new THREE.BufferGeometry();
+  merged.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  merged.setAttribute("normal", new THREE.BufferAttribute(normals, 3));
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildHFrameGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(90, pickNum(params, ["w", "width"], 136));
+  const h = Math.max(150, pickNum(params, ["h", "height"], 204));
+  const d = Math.max(70, pickNum(params, ["d", "depth"], 96));
+  const barT = Math.max(12, Math.min(20, Math.round(w * 0.12)));
+  const halfSpanX = w / 2 - barT / 2;
+  const bottomY = -h / 2 + barT / 2;
+
+  const leftStile = new THREE.BoxGeometry(barT, h * 0.88, barT);
+  leftStile.translate(-halfSpanX, -h * 0.04, 0);
+
+  const rightStile = new THREE.BoxGeometry(barT, h * 0.88, barT);
+  rightStile.translate(halfSpanX, -h * 0.04, 0);
+
+  const leftFoot = new THREE.BoxGeometry(barT * 1.1, barT, d);
+  leftFoot.translate(-halfSpanX, bottomY, 0);
+
+  const rightFoot = new THREE.BoxGeometry(barT * 1.1, barT, d);
+  rightFoot.translate(halfSpanX, bottomY, 0);
+
+  const lowerCrossbar = new THREE.BoxGeometry(w - barT, barT, barT);
+  lowerCrossbar.translate(0, -h * 0.26, 0);
+
+  const upperCrossbar = new THREE.BoxGeometry(w - barT, barT, barT);
+  upperCrossbar.translate(0, h * 0.24, 0);
+
+  const centerMast = new THREE.BoxGeometry(barT * 0.95, h, barT * 0.95);
+  centerMast.translate(0, 0, barT * 0.35);
+
+  const rearStrut = new THREE.BoxGeometry(barT * 0.85, h * 0.72, barT * 0.85);
+  rearStrut.rotateX(THREE.MathUtils.degToRad(22));
+  rearStrut.translate(0, -h * 0.14, -d * 0.28);
+
+  return mergeBufferGeometries([
+    leftStile,
+    rightStile,
+    leftFoot,
+    rightFoot,
+    lowerCrossbar,
+    upperCrossbar,
+    centerMast,
+    rearStrut,
+  ]);
+}
+
+function buildCasterWheelGeometry(params: PartParams): THREE.BufferGeometry {
+  const wheelR = Math.max(12, Math.min(28, pickNum(params, ["radius", "r"], 18)));
+  const wheelW = Math.max(10, Math.min(20, pickNum(params, ["wheelWidth"], 12)));
+  const isQuadSet = Boolean(params?.isQuadSet);
+
+  const makeSingleCaster = (ox: number, oz: number): THREE.BufferGeometry[] => {
+    const wheel = new THREE.CylinderGeometry(wheelR, wheelR, wheelW, 24);
+    wheel.rotateZ(Math.PI / 2);
+    wheel.translate(ox, -wheelR * 0.3, oz);
+
+    const hub = new THREE.CylinderGeometry(wheelR * 0.38, wheelR * 0.38, wheelW + 3, 16);
+    hub.rotateZ(Math.PI / 2);
+    hub.translate(ox, -wheelR * 0.3, oz);
+
+    const yokePlate = new THREE.BoxGeometry(wheelW + 8, 5, wheelR * 1.35);
+    yokePlate.translate(ox, wheelR * 0.65, oz);
+
+    const stem = new THREE.CylinderGeometry(4.5, 4.5, 16, 16);
+    stem.translate(ox, wheelR * 0.65 + 9, oz);
+
+    return [wheel, hub, yokePlate, stem];
+  };
+
+  if (isQuadSet) {
+    const sx = pickNum(params, ["spanX"], 59);
+    const sz = pickNum(params, ["spanZ"], 38);
+    return mergeBufferGeometries([
+      ...makeSingleCaster(-sx, -sz),
+      ...makeSingleCaster(sx, -sz),
+      ...makeSingleCaster(-sx, sz),
+      ...makeSingleCaster(sx, sz),
+    ]);
+  }
+
+  const single = mergeBufferGeometries(makeSingleCaster(0, 0));
+  single.center();
+  single.computeBoundingBox();
+  single.computeBoundingSphere();
+  return single;
+}
+
+function buildShelfLedgeGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(85, pickNum(params, ["w", "width"], 158));
+  const d = Math.max(28, pickNum(params, ["d", "depth"], 42));
+  const h = Math.max(14, pickNum(params, ["h", "height"], 24));
+  const deckT = Math.max(6, Math.min(10, h * 0.38));
+
+  const deck = new THREE.BoxGeometry(w, deckT, d);
+  deck.translate(0, -h / 2 + deckT / 2, 0);
+
+  const frontLip = new THREE.BoxGeometry(w, h * 0.78, 6);
+  frontLip.translate(0, -h * 0.1, d / 2 - 3);
+
+  const rearSpineClamp = new THREE.BoxGeometry(Math.min(54, w * 0.38), h, 12);
+  rearSpineClamp.translate(0, 0, -d / 2 + 6);
+
+  const merged = mergeBufferGeometries([deck, frontLip, rearSpineClamp]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
 function buildCustomCsgGeometry(params: PartParams): THREE.BufferGeometry {
   if (params?.preset === "enclosure") {
     return buildBoxGeometry({
       ...params,
+      hollow: true,
       wall: params.wallThickness ?? params.wall ?? 2.8,
     });
   }
@@ -569,53 +713,65 @@ export function buildPartGeometry(
   if (cached) return cached;
 
   let geometry: THREE.BufferGeometry;
-  switch (shape) {
-    case "box":
-      geometry = buildBoxGeometry(params);
-      break;
-    case "cylinder":
-      geometry = buildCylinderGeometry(params);
-      break;
-    case "cone":
-      geometry = buildConeGeometry(params);
-      break;
-    case "sphere":
-      geometry = buildSphereGeometry(params);
-      break;
-    case "tube":
-      geometry = buildTubeGeometry(params);
-      break;
-    case "bracketL":
-    case "bracket":
-      geometry = buildBracketLGeometry(params);
-      break;
-    case "plate_with_holes":
-      geometry = buildPlateWithHolesGeometry(params);
-      break;
-    case "hook":
-      geometry = buildHookGeometry(params);
-      break;
-    case "clip":
-      geometry = buildClipGeometry(params);
-      break;
-    case "funnel":
-      geometry = buildFunnelGeometry(params);
-      break;
-    case "gear_simple":
-      geometry = buildGearSimpleGeometry(params);
-      break;
-    case "enclosure":
-      geometry = buildBoxGeometry({
-        ...params,
-        wall: params.wallThickness ?? params.wall ?? 2.5,
-      });
-      break;
-    case "custom_csg":
-      geometry = buildCustomCsgGeometry(params);
-      break;
-    default:
-      geometry = buildBoxGeometry(params);
-      break;
+  const rolePreset =
+    typeof params?.rolePreset === "string" ? params.rolePreset : "";
+
+  if (rolePreset === "h_frame") {
+    geometry = buildHFrameGeometry(params);
+  } else if (rolePreset === "caster_wheel") {
+    geometry = buildCasterWheelGeometry(params);
+  } else if (rolePreset === "shelf_ledge") {
+    geometry = buildShelfLedgeGeometry(params);
+  } else {
+    switch (shape) {
+      case "box":
+        geometry = buildBoxGeometry(params);
+        break;
+      case "cylinder":
+        geometry = buildCylinderGeometry(params);
+        break;
+      case "cone":
+        geometry = buildConeGeometry(params);
+        break;
+      case "sphere":
+        geometry = buildSphereGeometry(params);
+        break;
+      case "tube":
+        geometry = buildTubeGeometry(params);
+        break;
+      case "bracketL":
+      case "bracket":
+        geometry = buildBracketLGeometry(params);
+        break;
+      case "plate_with_holes":
+        geometry = buildPlateWithHolesGeometry(params);
+        break;
+      case "hook":
+        geometry = buildHookGeometry(params);
+        break;
+      case "clip":
+        geometry = buildClipGeometry(params);
+        break;
+      case "funnel":
+        geometry = buildFunnelGeometry(params);
+        break;
+      case "gear_simple":
+        geometry = buildGearSimpleGeometry(params);
+        break;
+      case "enclosure":
+        geometry = buildBoxGeometry({
+          ...params,
+          hollow: params.hollow ?? true,
+          wall: params.wallThickness ?? params.wall ?? 2.5,
+        });
+        break;
+      case "custom_csg":
+        geometry = buildCustomCsgGeometry(params);
+        break;
+      default:
+        geometry = buildBoxGeometry(params);
+        break;
+    }
   }
 
   geometry.computeBoundingBox();
@@ -748,10 +904,38 @@ function getStlLoader(): STLLoader {
   return sharedStlLoader;
 }
 
+export const PRESET_PROJECT_ID_SET = new Set<string>([
+  "plant-auto-waterer",
+  "plant-waterer",
+  "demo",
+  "sample",
+  "art-easel",
+  "tabletop-studio-art-easel",
+  "articulated-tabletop-studio-art-easel",
+  "iphone-magnifier",
+  "iphone-magnifier-adapter",
+  "liquid-handler",
+  "liquid-handling-robot",
+  "desktop-robot-arm",
+  "robot-arm",
+  "6-axis-robot-arm",
+  "bladeless-air-purifier",
+  "bladeless-fan",
+  "bladeless-tower-fan",
+  "camera-slider-3axis",
+  "camera-slider",
+  "motorized-camera-slider",
+]);
+
+export function isPresetProjectId(projectId?: string): boolean {
+  if (!projectId) return false;
+  return PRESET_PROJECT_ID_SET.has(projectId.trim().toLowerCase());
+}
+
 /**
  * Builds candidate STL fetch URLs for a printed part.
- * Uses `/api/objects/[id]/stl/[filename]` for live objects and `/api/objects/plant-waterer/stl/[filename]`
- * to load `data/demo/plant-waterer/parts/*.stl` for the demo plant-waterer project.
+ * Only loads pre-built STLs for known preset/demo projects and never reuses
+ * plant-waterer STLs for non-plant-waterer objects.
  */
 export function getCandidateStlUrls(
   partId: string,
@@ -768,37 +952,36 @@ export function getCandidateStlUrls(
     : `${baseId}.stl`;
   const mappedDemoFile = DEMO_PART_STL_MAP[baseId];
 
-  const isDemoProject =
-    !projectId ||
+  const isPlantWatererDemo =
+    (!projectId && Boolean(mappedDemoFile)) ||
     projectId === "plant-auto-waterer" ||
     projectId === "plant-waterer" ||
     projectId === "demo" ||
     projectId === "sample";
+
+  // Live (non-preset) projects build each part's mesh directly from its dimensions & role
+  if (!isPlantWatererDemo && !isPresetProjectId(projectId)) {
+    return [];
+  }
 
   const urls: string[] = [];
   const pushUnique = (u: string) => {
     if (!urls.includes(u)) urls.push(u);
   };
 
-  if (!isDemoProject && projectId) {
-    pushUnique(
-      `/api/objects/${encodeURIComponent(projectId)}/stl/${encodeURIComponent(
-        explicitBase
-      )}`
-    );
-  }
-
-  if (mappedDemoFile) {
-    pushUnique(
-      `/api/objects/plant-waterer/stl/${encodeURIComponent(mappedDemoFile)}`
-    );
-  } else if (isDemoProject) {
+  if (isPlantWatererDemo) {
+    if (mappedDemoFile) {
+      pushUnique(
+        `/api/objects/plant-waterer/stl/${encodeURIComponent(mappedDemoFile)}`
+      );
+    }
     pushUnique(
       `/api/objects/plant-waterer/stl/${encodeURIComponent(explicitBase)}`
     );
+    return urls;
   }
 
-  if (projectId && projectId !== "plant-waterer") {
+  if (projectId) {
     pushUnique(
       `/api/objects/${encodeURIComponent(projectId)}/stl/${encodeURIComponent(
         explicitBase

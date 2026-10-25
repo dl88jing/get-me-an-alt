@@ -43,6 +43,192 @@ const DEFAULT_PURCHASED_PALETTE = [
   "#475569", // Dark anodized
 ];
 
+const PRESET_KNOWN_PART_IDS = new Set<string>([
+  // plant-auto-waterer / plant-waterer
+  "reservoir-tank",
+  "reservoir-lid",
+  "pump-mount",
+  "refill-funnel",
+  "controller-box",
+  "controller-bracket",
+  "tube-clip",
+  "drip-stake",
+  "flow-wheel",
+  "pump-cradle",
+  "drip-manifold",
+  "controller-enclosure",
+  "enclosure-cover",
+  "emitter-spike",
+  "reservoir_base",
+  "pump_mount_plate",
+  "inner_planter_cup",
+  "float_guide_tube",
+  "refill_funnel",
+  "sensor_bracket",
+  "flow_dosing_gear",
+  "drip_rim_clip",
+  // art-easel preset
+  "easel-base-hub",
+  "ratchet-tilt-hinge",
+  "lower-canvas-tray",
+  "upper-canvas-clamp",
+  "rear-strut-collar",
+  "knurled-lock-knobs",
+  "extrusion-spine-2020",
+  // iphone-magnifier preset
+  "phone-clamp-chassis",
+  "doublet-lens-barrel",
+  "xyz-focus-sled",
+  // liquid-handler preset
+  "deck-base-96well",
+  "gantry-upright-left",
+  "gantry-upright-right",
+  "x-carriage-shuttle",
+  // desktop-robot-arm preset
+  "weighted-turntable-base",
+  "lower-arm-link",
+  "elbow-housing",
+  "forearm-tube",
+  // bladeless-air-purifier preset
+  "weighted-base-pan",
+  "hepa-h13-cylinder",
+  "hepa-intake-shell",
+  "coanda-airfoil-lower",
+  // camera-slider-3axis preset
+  "extrusion-2020-1m",
+  "motor-end-block",
+  "idler-end-block",
+  "pan-turntable-housing",
+]);
+
+export function isPresetDesignSpec(
+  parts: Array<{ id?: string }> | undefined
+): boolean {
+  if (!Array.isArray(parts) || parts.length === 0) return false;
+  return parts.some(
+    (p) => typeof p?.id === "string" && PRESET_KNOWN_PART_IDS.has(p.id.trim())
+  );
+}
+
+type LivePartRole =
+  | "h_frame"
+  | "long_bar"
+  | "caster"
+  | "gusset"
+  | "hinge"
+  | "shelf"
+  | "clamp"
+  | "knob"
+  | "pad"
+  | "fastener"
+  | "cover"
+  | "enclosure"
+  | "bracket";
+
+function classifyLivePartRole(
+  name: string,
+  roleInAssembly?: string,
+  description?: string,
+  isTallFrameObject = false
+): LivePartRole {
+  const nameLower = (name || "").toLowerCase();
+  const fullText = `${name || ""} ${roleInAssembly || ""} ${description || ""}`.toLowerCase();
+
+  if (/\b(caster|wheel|roller|pulley|tire)\b/.test(nameLower)) {
+    return "caster";
+  }
+  if (
+    /\b(gusset|corner\s+brace|corner\s+plate|corner\s+bracket|joiner|splice\s+plate|t-plate|l-plate)\b/.test(
+      nameLower
+    )
+  ) {
+    return "gusset";
+  }
+  if (
+    /\b(hinge|pivot|trunnion|clevis|knuckle|ratchet|quadrant|tilt|articulated\s+joint)\b/.test(
+      nameLower
+    )
+  ) {
+    return "hinge";
+  }
+  if (
+    /\b(shelf|ledge|tray|panel|canvas\s+rest|brush\s+rest|support\s+bar|platform|deck|stage|platen|holder\s+tray)\b/.test(
+      nameLower
+    )
+  ) {
+    return "shelf";
+  }
+  if (
+    /\b(knob|thumbwheel|thumb\s*screw|rosette|dial|handwheel|star\s+knob)\b/.test(
+      nameLower
+    )
+  ) {
+    return "knob";
+  }
+  if (
+    /\b(pad|foot|feet|bumper|gasket|cushion|epdm|rubber\s+pad|silicone\s+pad|isolation\s+pad|anti-slip)\b/.test(
+      nameLower
+    )
+  ) {
+    return "pad";
+  }
+  if (
+    /\b(lumber|pine|wood|2x4|1x2|1x3|dimensional|h-frame\s+base|frame\s+rail|wood\s+rail)\b/.test(
+      nameLower
+    )
+  ) {
+    return "h_frame";
+  }
+  if (
+    /\b(mast|spine|extrusion|2020|v-slot|t-slot|rail|leg|strut|stanchion|beam|bar|stile|upright|post|column)\b/.test(
+      nameLower
+    ) &&
+    !/\b(clamp|bracket|hinge|gusset|collar|cap|knob|holder|mount|adapter)\b/.test(
+      nameLower
+    )
+  ) {
+    return "long_bar";
+  }
+  if (
+    /\b(clamp|jaw|holder|cradle|retainer|carriage|slider|clip|collar|hook|latch|top\s+mount|upper\s+mount)\b/.test(
+      nameLower
+    )
+  ) {
+    return "clamp";
+  }
+  if (
+    /\b(screw|bolt|nut|insert|heat-set|t-nut|washer|spring|pin|dowel|rod|shaft|bearing|bushing|standoff|magnet|rivet|fastener|hardware\s+kit)\b/.test(
+      nameLower
+    )
+  ) {
+    return "fastener";
+  }
+  if (
+    /\b(cover|cap|lid|faceplate|bezel|shroud|guard|shell|backplate)\b/.test(
+      nameLower
+    )
+  ) {
+    return "cover";
+  }
+  if (
+    !isTallFrameObject &&
+    /\b(reservoir|tank|enclosure|housing|container|chamber|basin)\b/.test(
+      nameLower
+    )
+  ) {
+    return "enclosure";
+  }
+  if (/\b(caster|wheel|roller)\b/.test(fullText)) return "caster";
+  if (/\b(gusset|corner\s+brace)\b/.test(fullText)) return "gusset";
+  if (/\b(hinge|pivot|tilt)\b/.test(fullText)) return "hinge";
+  if (/\b(shelf|ledge|tray|panel)\b/.test(fullText)) return "shelf";
+  if (/\b(lumber|pine|wood)\b/.test(fullText)) return "h_frame";
+  if (/\b(mast|spine|extrusion|rail|leg|post|column)\b/.test(fullText)) {
+    return "long_bar";
+  }
+  return "bracket";
+}
+
 function toVec3(
   val: unknown,
   fallback: [number, number, number]
@@ -367,6 +553,7 @@ export function adaptDesign(
   // Shared-contract or hybrid input: normalize with lib/cad/adapters.ts
   const spec = normalizeDesignSpec(rawInput);
   const zUp = isCadZUpDesign(spec.parts);
+  const isPreset = isPresetDesignSpec(spec.parts);
 
   // Track raw explicit step per partId so we know whether `part.step` was explicitly provided
   const rawPartsArray = Array.isArray(raw.parts) ? raw.parts : [];
@@ -377,28 +564,292 @@ export function adaptDesign(
     }
   });
 
+  const objectContext = `${spec.objectName || ""} ${spec.designPhilosophy || ""} ${spec.summary || ""} ${spec.parts.map((p) => p.name).join(" ")}`.toLowerCase();
+  const isTallFrameObject =
+    !isPreset &&
+    /\b(easel|h-frame|a-frame|canvas|stand|tripod|mast|lumber|rack|gantry|column|tower)\b/.test(
+      objectContext
+    );
+
+  const liveRoles: LivePartRole[] = !isPreset
+    ? spec.parts.map((p) =>
+        classifyLivePartRole(
+          p.name,
+          p.roleInAssembly,
+          p.description,
+          isTallFrameObject
+        )
+      )
+    : [];
+
+  if (!isPreset && isTallFrameObject && !liveRoles.includes("h_frame")) {
+    const barIdx = liveRoles.indexOf("long_bar");
+    if (barIdx >= 0) {
+      liveRoles[barIdx] = "h_frame";
+    } else if (liveRoles.length > 0) {
+      liveRoles[0] = "h_frame";
+    }
+  }
+
+  const roleCounters: Record<string, number> = {};
+  const nextRoleIdx = (r: string) => {
+    const c = roleCounters[r] ?? 0;
+    roleCounters[r] = c + 1;
+    return c;
+  };
+
   const printed: PrintedPartSpec[] = [];
   const purchased: PurchasedPartSpec[] = [];
   const assembly: AssemblyNode[] = [];
   const adaptedParts: SharedDesignPart[] = [];
 
   spec.parts.forEach((p, idx) => {
-    const shape = normalizePartShape(p.shape) as PartShape;
-    const params = enrichPartParams(shape, p.params, p.dims_mm, zUp);
-    const position = toThreeVec3(p.position, zUp);
-    const explode = toThreeVec3(p.explode, zUp);
+    let shape = normalizePartShape(p.shape) as PartShape;
+    let dims_mm: [number, number, number] = [...p.dims_mm];
+    let params = enrichPartParams(shape, p.params, dims_mm, zUp);
+    let position = toThreeVec3(p.position, zUp);
+    let explode = toThreeVec3(p.explode, zUp);
 
     // Normalize rotation: if Z-up CAD coordinates had 90/180 X flips for Z-extruded shapes,
     // our Three.js geometry builders already orient heights along +Y.
-    const rotation: [number, number, number] = zUp
+    let rotation: [number, number, number] = zUp
       ? [0, p.rotation[2] || 0, 0]
       : [...p.rotation];
 
-    const step =
+    let step =
       explicitStepByPartId.get(p.id) ??
       firstStepByPartId.get(p.id) ??
       p.step ??
       idx + 1;
+
+    if (!isPreset) {
+      const role = liveRoles[idx] || "bracket";
+      const rIdx = nextRoleIdx(role);
+
+      switch (role) {
+        case "h_frame": {
+          shape = "box";
+          dims_mm = [136, 204, 96];
+          params = {
+            ...params,
+            rolePreset: "h_frame",
+            width: 136,
+            height: 204,
+            depth: 96,
+            hollow: false,
+          };
+          position = [0, 78, 0];
+          rotation = [0, 0, 0];
+          explode = [0, 35, -55];
+          step = 1;
+          break;
+        }
+        case "long_bar": {
+          const isHorizontal = /\b(crossbar|beam|horizontal|ledge|bottom\s+bar|top\s+bar)\b/i.test(
+            p.name
+          );
+          shape = "box";
+          dims_mm = isHorizontal ? [142, 22, 24] : [24, 196, 24];
+          params = {
+            ...params,
+            width: dims_mm[0],
+            height: dims_mm[1],
+            depth: dims_mm[2],
+            hollow: false,
+          };
+          position = isHorizontal
+            ? [0, 12 + rIdx * 65, 8]
+            : [rIdx === 0 ? 0 : (rIdx % 2 === 1 ? -58 : 58), 84, -14];
+          rotation = isHorizontal ? [0, 0, 0] : [rIdx === 0 ? -10 : 0, 0, 0];
+          explode = [
+            position[0] === 0 ? 0 : Math.sign(position[0]) * 75,
+            65,
+            -60,
+          ];
+          break;
+        }
+        case "caster": {
+          const isQuad =
+            /\b(set\s+of\s+4|4-pack|4x|wheels|casters)\b/i.test(p.name) ||
+            (p.quantity ?? 1) >= 4 ||
+            rIdx === 0;
+          shape = "cylinder";
+          dims_mm = isQuad ? [136, 42, 96] : [36, 42, 36];
+          params = {
+            ...params,
+            rolePreset: "caster_wheel",
+            radius: 18,
+            wheelWidth: 12,
+            isQuadSet: isQuad,
+            spanX: 59,
+            spanZ: 38,
+          };
+          position = isQuad
+            ? [0, -24, 0]
+            : [(rIdx % 2 === 0 ? 1 : -1) * 59, -24, rIdx < 2 ? 38 : -38];
+          rotation = [0, 0, 0];
+          explode = [0, -78, 25];
+          break;
+        }
+        case "gusset": {
+          shape = "plate_with_holes";
+          dims_mm = [48, 48, 8];
+          params = {
+            ...params,
+            width: 48,
+            depth: 48,
+            thickness: 8,
+            holes: 4,
+          };
+          const gx = rIdx % 2 === 0 ? -56 : 56;
+          const gy = rIdx < 2 ? 22 : 124;
+          position = [gx, gy, 12];
+          rotation = [90, 0, 0];
+          explode = [Math.sign(gx) * 80, 15, 60];
+          break;
+        }
+        case "hinge": {
+          shape = "bracketL";
+          dims_mm = [36, 46, 42];
+          params = {
+            ...params,
+            leg1: 46,
+            leg2: 42,
+            width: 36,
+            thickness: 6,
+          };
+          const hx = rIdx === 0 ? 0 : (rIdx % 2 === 1 ? -56 : 56);
+          position = [hx, 18 + rIdx * 16, 16];
+          rotation = [0, 0, 0];
+          explode = [hx === 0 ? 0 : Math.sign(hx) * 75, -25, 78];
+          break;
+        }
+        case "shelf": {
+          shape = "box";
+          dims_mm = [158, 24, 42];
+          params = {
+            ...params,
+            rolePreset: "shelf_ledge",
+            width: 158,
+            height: 24,
+            depth: 42,
+            hollow: false,
+          };
+          position = [0, 52 + rIdx * 42, 26];
+          rotation = [0, 0, 0];
+          explode = [0, 18, 96];
+          break;
+        }
+        case "clamp": {
+          shape = "bracketL";
+          dims_mm = [38, 50, 42];
+          params = {
+            ...params,
+            leg1: 50,
+            leg2: 42,
+            width: 38,
+            thickness: 6,
+          };
+          position = [
+            rIdx === 0 ? 0 : (rIdx % 2 === 1 ? -42 : 42),
+            154 - rIdx * 28,
+            20,
+          ];
+          rotation = [0, 0, 0];
+          explode = [
+            position[0] === 0 ? 0 : Math.sign(position[0]) * 70,
+            85,
+            78,
+          ];
+          break;
+        }
+        case "knob": {
+          shape = "gear_simple";
+          dims_mm = [34, 34, 14];
+          params = {
+            ...params,
+            outerRadius: 17,
+            thickness: 14,
+            teeth: 8,
+            boreRadius: 3,
+          };
+          const kx = rIdx % 2 === 0 ? 32 : -32;
+          position = [kx, 96 - rIdx * 26, 22];
+          rotation = [90, 0, 0];
+          explode = [Math.sign(kx) * 88, 25, 65];
+          break;
+        }
+        case "pad": {
+          shape = "box";
+          dims_mm = [32, 6, 32];
+          params = {
+            ...params,
+            width: 32,
+            height: 6,
+            depth: 32,
+            hollow: false,
+          };
+          const px = rIdx % 2 === 0 ? -56 : 56;
+          position = [px, -20, 34];
+          rotation = [0, 0, 0];
+          explode = [Math.sign(px) * 75, -58, 55];
+          break;
+        }
+        case "fastener": {
+          shape = "cylinder";
+          dims_mm = [14, 26, 14];
+          params = {
+            ...params,
+            radius: 7,
+            height: 26,
+          };
+          const fx = rIdx % 2 === 0 ? 38 : -38;
+          position = [fx, 44 + rIdx * 24, -14];
+          rotation = [90, 0, 0];
+          explode = [Math.sign(fx) * 82, 22, -68];
+          break;
+        }
+        case "cover": {
+          shape = "plate_with_holes";
+          dims_mm = [68, 48, 8];
+          params = {
+            ...params,
+            width: 68,
+            depth: 48,
+            thickness: 8,
+            holes: 4,
+          };
+          position = [0, 88 + rIdx * 24, -18];
+          rotation = [90, 0, 0];
+          explode = [0, 35, -88];
+          break;
+        }
+        case "enclosure": {
+          shape = "enclosure";
+          params = {
+            ...params,
+            hollow: true,
+          };
+          break;
+        }
+        default: {
+          shape = "bracketL";
+          dims_mm = [44, 42, 34];
+          params = {
+            ...params,
+            leg1: 42,
+            leg2: 34,
+            width: 32,
+            thickness: 5.5,
+          };
+          const bx = rIdx % 2 === 0 ? -48 : 48;
+          position = [bx, 64 + rIdx * 28, 16];
+          rotation = [0, 0, 0];
+          explode = [Math.sign(bx) * 78, 35, 65];
+          break;
+        }
+      }
+    }
 
     if (p.kind === "printed") {
       printed.push({
@@ -407,7 +858,7 @@ export function adaptDesign(
         name: p.name,
         shape,
         params,
-        dims_mm: p.dims_mm,
+        dims_mm,
         color: p.color,
         material: p.material,
         quantity: p.quantity ?? 1,
@@ -426,7 +877,7 @@ export function adaptDesign(
         color: p.color,
         material: p.material,
         quantity: p.quantity ?? 1,
-        dims_mm: p.dims_mm,
+        dims_mm,
         description: p.description,
         roleInAssembly: p.roleInAssembly,
         step,
@@ -447,6 +898,7 @@ export function adaptDesign(
 
     adaptedParts.push({
       ...p,
+      dims_mm,
       shape,
       params,
       position,
@@ -510,6 +962,19 @@ export function adaptInstructions(
     }
   }
 
+  const adaptedDesign = rawDesign ? adaptDesign(rawDesign, rawInput) : null;
+  const isPreset = adaptedDesign
+    ? isPresetDesignSpec(adaptedDesign.parts)
+    : false;
+  const adaptedNodeByPartId = new Map<string, AssemblyNode>();
+  if (adaptedDesign && !isPreset) {
+    for (const node of adaptedDesign.assembly) {
+      if (!adaptedNodeByPartId.has(node.partId)) {
+        adaptedNodeByPartId.set(node.partId, node);
+      }
+    }
+  }
+
   const steps: InstructionStep[] = normalized.steps.map((s) => {
     const action = normalizeAssemblyAction(
       s.action,
@@ -517,11 +982,25 @@ export function adaptInstructions(
       s.title,
       s.tools
     );
-    const motion: StepMotion[] = (s.motion ?? []).map((m) => ({
-      partId: m.partId,
-      from: toThreeVec3(m.from, zUp),
-      to: toThreeVec3(m.to, zUp),
-    }));
+    const motion: StepMotion[] = (s.motion ?? []).map((m) => {
+      const adaptedNode = adaptedNodeByPartId.get(m.partId);
+      if (adaptedNode) {
+        return {
+          partId: m.partId,
+          to: [...adaptedNode.position],
+          from: [
+            adaptedNode.position[0] + adaptedNode.explode[0],
+            adaptedNode.position[1] + adaptedNode.explode[1],
+            adaptedNode.position[2] + adaptedNode.explode[2],
+          ],
+        };
+      }
+      return {
+        partId: m.partId,
+        from: toThreeVec3(m.from, zUp),
+        to: toThreeVec3(m.to, zUp),
+      };
+    });
 
     return {
       n: s.n,
