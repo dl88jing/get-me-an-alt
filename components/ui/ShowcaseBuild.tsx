@@ -3,19 +3,22 @@ import { ArrowRight, Layers, Printer, ShoppingCart, Wrench } from 'lucide-react'
 
 /**
  * ShowcaseBuild — featured completed-build card for the landing page.
- * Numbers are the verified demo artifacts in data/demo/plant-waterer
- * (bom.json, design.json, plates.json, instructions.json), not marketing
- * copy: $129 retail -> $33.40 DIY (74% saved), 16 parts (9 printed +
- * 7 purchased), 10 assembly steps, 1 Bambu A1 plate, 6h 10m, 249g.
- * More showcase builds arrive with the data/samples lane; this card only
- * ever advertises builds that actually exist.
+ * Numbers match the project this card LINKS TO, /projects/plant-auto-waterer,
+ * i.e. the in-app sample data in lib/sample-data.ts (SAMPLE_DESIGN /
+ * SAMPLE_BOM / SAMPLE_PLATES / SAMPLE_INSTRUCTIONS), not marketing copy:
+ * $149 retail -> $24.85 DIY (save $124.15, 83%), 11 parts (7 printed types
+ * incl. the x2 emitter spike = 8 printed items, 4 purchased), 7 assembly
+ * steps, 1 Bambu A1 plate, 3h 24m, 185g.
+ * NOTE: data/demo/plant-waterer on disk is a DIFFERENT dataset ($129 ->
+ * $33.40, 74%, 16 parts) and is NOT what this link opens — do not mix the
+ * two sets of numbers on this card again.
  */
 export function ShowcaseBuild() {
   const stats = [
-    { icon: Layers, label: 'Parts', value: '16', sub: '9 printed · 7 purchased' },
-    { icon: Printer, label: 'Print', value: '1 plate · 6h 10m', sub: '249g · Bambu A1' },
-    { icon: Wrench, label: 'Assembly', value: '10 steps', sub: 'IKEA-style player' },
-    { icon: ShoppingCart, label: 'DIY cost', value: '$33.40', sub: 'vs $129 retail' },
+    { icon: Layers, label: 'Parts', value: '11', sub: '7 printed · 4 purchased' },
+    { icon: Printer, label: 'Print', value: '1 plate · 3h 24m', sub: '185g · Bambu A1' },
+    { icon: Wrench, label: 'Assembly', value: '7 steps', sub: 'IKEA-style player' },
+    { icon: ShoppingCart, label: 'DIY cost', value: '$24.85', sub: 'vs $149 retail' },
   ];
 
   return (
@@ -35,14 +38,14 @@ export function ShowcaseBuild() {
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div className="space-y-1.5">
             <span className="rounded-md bg-emerald-500/15 px-2 py-0.5 text-[11px] font-bold text-emerald-300 border border-emerald-500/30">
-              Save 74% · $95.60
+              Save 83% · $124.15
             </span>
             <h3 className="text-base font-bold text-white group-hover:text-emerald-300 transition-colors sm:text-lg">
-              Self-watering plant system — alt to a $129 smart auto-waterer
+              HydroPulse Smart Plant Auto-Waterer — alt to a $149 smart auto-waterer
             </h3>
             <p className="max-w-2xl text-xs leading-relaxed text-slate-400">
-              Closed-loop capacitive soil-moisture irrigation with a 1.4L modular PETG reservoir,
-              flow wheel &amp; root-zone emitter stakes — with exploded 3D view, print files and
+              Closed-loop capacitive soil-moisture irrigation with a 750mL reservoir,
+              drip manifold &amp; root-zone emitter spikes — with exploded 3D view, print files and
               step-by-step assembly.
             </p>
           </div>
