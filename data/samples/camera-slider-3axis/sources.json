@@ -1,0 +1,85 @@
+{
+  "querySummary": "Grounded open-source 3-axis motorized camera sliders (Printables/Thingiverse 2020 V-slot sliders, Isaacag / Dejan Nedelkovski DIY motorized pan/tilt heads), TMC2209 StealthChop UART tuning, and AccelStepper multi-axis interpolation.",
+  "groundingUsed": true,
+  "searchQueries": [
+    "printables motorized 3 axis camera slider pan tilt 2020 extrusion stl",
+    "edelkrone sliderone headplus teardown belt drive mechanism",
+    "esp32 tmc2209 multistepper 3 axis camera slider timelapse github",
+    "v-slot delrin wheel eccentric nut spacing 2020 extrusion"
+  ],
+  "sources": [
+    {
+      "id": "src-slider-1",
+      "title": "Printables: Motorized 3-Axis 2020 V-Slot Camera Slider with Pan & Tilt Gimbal",
+      "url": "https://www.printables.com/search/models?q=motorized+camera+slider+pan+tilt",
+      "domain": "printables.com",
+      "type": "printable",
+      "summary": "Complete 3D-printable carriage, belt tensioner end blocks, and geared pan/tilt head built on dual 2020 V-slot rails.",
+      "keyTakeaways": [
+        "Spacing two 2020 rails 60mm center-to-center creates a wide 80mm wheelbase that eliminates camera pitch nod with heavy telephoto lenses.",
+        "Use 7.2mm bores on one side of PRT-04 for 6mm eccentric spacers so Delrin V-wheels preload cleanly against the V-slot groove."
+      ],
+      "relevanceScore": 0.99,
+      "provider": "Printables",
+      "relevance": "Complete 3D-printable carriage, belt tensioner end blocks, and geared pan/tilt head built on dual 2020 V-slot rails."
+    },
+    {
+      "id": "src-slider-2",
+      "title": "GitHub: ESP32 + TMC2209 3-Axis Keyframe & Astro Time-Lapse Motion Controller",
+      "url": "https://github.com/topics/camera-slider",
+      "domain": "github.com",
+      "type": "github",
+      "summary": "Firmware for synchronized 3-axis Bresenham/S-curve stepper interpolation, shoot-move-shoot bulb triggering, and two-point parallax tracking.",
+      "keyTakeaways": [
+        "Configure TMC2209 in StealthChop2 mode (256 interpolated microsteps) so on-camera shotgun microphones pick up zero stepper hum.",
+        "Use an optocoupler on the 2.5mm TRS jack to trigger Sony/Canon/Nikon shutters during shoot-move-shoot intervals."
+      ],
+      "relevanceScore": 0.97,
+      "provider": "GitHub",
+      "relevance": "Firmware for synchronized 3-axis Bresenham/S-curve stepper interpolation, shoot-move-shoot bulb triggering, and two-point parallax tracking."
+    },
+    {
+      "id": "src-slider-3",
+      "title": "YouTube Teardown & Build: DIY 3-Axis Motorized Camera Slider vs $900 Edelkrone",
+      "url": "https://www.youtube.com/results?search_query=diy+3+axis+motorized+camera+slider+pan+tilt+3d+printed",
+      "domain": "youtube.com",
+      "type": "video",
+      "summary": "Detailed mechanical comparison showing how a 3:1 belt/gear reduction on the pan and tilt axes supports 3.5 kg mirrorless rigs.",
+      "keyTakeaways": [
+        "A 20T pinion driving a 60T printed ring gear multiplies NEMA17 holding torque 3× and gives 0.0018° per microstep pan resolution.",
+        "Powering the rig from any 45W+ USB-C PD power bank via a 12V PD trigger board eliminates heavy V-mount batteries."
+      ],
+      "relevanceScore": 0.95,
+      "provider": "YouTube",
+      "relevance": "Detailed mechanical comparison showing how a 3:1 belt/gear reduction on the pan and tilt axes supports 3.5 kg mirrorless rigs."
+    },
+    {
+      "id": "src-slider-4",
+      "title": "OpenBuilds V-Slot Linear Rail & Eccentric Wheel Preload Engineering Guide",
+      "url": "https://www.thingiverse.com/search?q=2020+camera+slider+carriage&type=things",
+      "domain": "thingiverse.com",
+      "type": "schematic",
+      "summary": "Reference dimensional drawings for 24mm OD Delrin POM V-wheels, 6mm eccentric nuts, and M5 low-profile bolts.",
+      "keyTakeaways": [
+        "Offset fixed vs. eccentric wheel axle rows by 39.7mm across a 20mm rail web for ±0.75mm preload adjustment."
+      ],
+      "relevanceScore": 0.92,
+      "provider": "Thingiverse",
+      "relevance": "Reference dimensional drawings for 24mm OD Delrin POM V-wheels, 6mm eccentric nuts, and M5 low-profile bolts."
+    }
+  ],
+  "technicalInsights": [
+    "Silent Cinema Operation: TMC2209 StealthChop2 sinusoidal current control keeps acoustic noise under 22 dBA at 30 cm—quiet enough for live dialogue recording.",
+    "Zero-Play Pan Turntable: Combining a 6808-2RS thin-section bearing with a 3:1 60T ring gear decouples camera weight from the pan stepper shaft.",
+    "Field Portability: USB-C PD 12V trigger board runs all 3 NEMA17 steppers for 6+ hours off a standard 20,000mAh laptop power bank."
+  ],
+  "referenceDimensions": {
+    "Linear Rail Span": "Dual 2020 V-Slot rails (80 mm outer width, 1000 mm length)",
+    "Carriage Plate": "124 × 108 × 14 mm (4× 24 mm Delrin V-wheels)",
+    "Pan Reduction Ratio": "3:1 (20T GT2 pinion to 60T ring gear on 6808 bearing)",
+    "Max Camera Payload": "3.5 kg horizontal / 1.8 kg at 35° incline",
+    "Angular Resolution": "0.0018°/microstep pan & tilt, 0.0025 mm/microstep slide"
+  },
+  "objectId": "camera-slider-3axis",
+  "query": "printables motorized 3 axis camera slider pan tilt 2020 extrusion stl"
+}

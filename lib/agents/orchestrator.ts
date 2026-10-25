@@ -547,6 +547,9 @@ export const SHOWCASE_SAMPLE_SLUGS = [
   'art-easel',
   'iphone-magnifier',
   'liquid-handler',
+  'desktop-robot-arm',
+  'bladeless-air-purifier',
+  'camera-slider-3axis',
 ] as const;
 
 const SAMPLE_SLUG_ALIASES: Record<string, string> = {
@@ -561,6 +564,15 @@ const SAMPLE_SLUG_ALIASES: Record<string, string> = {
   'iphone-magnifier-adapter': 'iphone-magnifier',
   'liquid-handler': 'liquid-handler',
   'liquid-handling-robot': 'liquid-handler',
+  'robot-arm': 'desktop-robot-arm',
+  '6-axis-robot-arm': 'desktop-robot-arm',
+  'desktop-robot-arm': 'desktop-robot-arm',
+  'bladeless-fan': 'bladeless-air-purifier',
+  'bladeless-tower-fan': 'bladeless-air-purifier',
+  'bladeless-air-purifier': 'bladeless-air-purifier',
+  'camera-slider': 'camera-slider-3axis',
+  'motorized-camera-slider': 'camera-slider-3axis',
+  'camera-slider-3axis': 'camera-slider-3axis',
 };
 
 export function resolveSampleSlug(id?: string | null): string | null {
@@ -569,9 +581,11 @@ export function resolveSampleSlug(id?: string | null): string | null {
   if (SAMPLE_SLUG_ALIASES[normalized]) {
     return SAMPLE_SLUG_ALIASES[normalized];
   }
-  const sampleDir = path.join(process.cwd(), 'data', 'samples', normalized);
-  if (fs.existsSync(path.join(sampleDir, 'analysis.json'))) {
-    return normalized;
+  for (const sub of ['samples', 'demo']) {
+    const dir = path.join(process.cwd(), 'data', sub, normalized);
+    if (fs.existsSync(path.join(dir, 'analysis.json'))) {
+      return normalized;
+    }
   }
   return null;
 }
@@ -602,6 +616,27 @@ function matchPresetSampleFromOptions(
     text.includes('diy+liquid+handling+robot+3d+printed')
   ) {
     return 'liquid-handler';
+  }
+  if (
+    text.includes('6-axis desktop robot arm') ||
+    text.includes('6+axis+desktop+robot+arm') ||
+    text.includes('argobot')
+  ) {
+    return 'desktop-robot-arm';
+  }
+  if (
+    text.includes('bladeless tower fan') ||
+    text.includes('bladeless+tower+fan') ||
+    text.includes('zephyrcoanda')
+  ) {
+    return 'bladeless-air-purifier';
+  }
+  if (
+    text.includes('3-axis motorized camera slider') ||
+    text.includes('motorized+3+axis+camera+slider') ||
+    text.includes('cineglide')
+  ) {
+    return 'camera-slider-3axis';
   }
   if (
     text.includes('smart autonomous plant watering station') ||
@@ -659,9 +694,12 @@ export function buildSampleManifest(slug: string = SAMPLE_SLUG): ProjectManifest
   const canonicalSlug = resolveSampleSlug(slug) || SAMPLE_SLUG;
   const isCustomSample = canonicalSlug !== SAMPLE_SLUG;
 
-  // Check data/samples/<slug> first for showcase presets, or data/demo for plant-auto-waterer
+  // Check data/samples/<slug> and data/demo/<slug> for showcase presets
   const demoCandidates = isCustomSample
-    ? [path.join(process.cwd(), 'data', 'samples', canonicalSlug)]
+    ? [
+        path.join(process.cwd(), 'data', 'samples', canonicalSlug),
+        path.join(process.cwd(), 'data', 'demo', canonicalSlug),
+      ]
     : [
         path.join(process.cwd(), 'data', 'samples', SAMPLE_SLUG),
         path.join(process.cwd(), 'data', 'demo', SAMPLE_SLUG),
@@ -830,9 +868,11 @@ export function buildSampleManifest(slug: string = SAMPLE_SLUG): ProjectManifest
 export function getProjectFolder(id: string): string | null {
   const sampleSlug = resolveSampleSlug(id);
   if (sampleSlug && sampleSlug !== SAMPLE_SLUG) {
-    const sampleDir = path.join(process.cwd(), 'data', 'samples', sampleSlug);
-    if (fs.existsSync(sampleDir)) {
-      return sampleDir;
+    for (const sub of ['samples', 'demo']) {
+      const sampleDir = path.join(process.cwd(), 'data', sub, sampleSlug);
+      if (fs.existsSync(sampleDir)) {
+        return sampleDir;
+      }
     }
   }
 

@@ -1,0 +1,62 @@
+{
+  "objectName": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "passed": true,
+  "finalScore": 98,
+  "totalRounds": 2,
+  "revisionRoundsUsed": 1,
+  "checksSummary": {
+    "overhangsPass": true,
+    "wallThicknessPass": true,
+    "tolerancesPass": true,
+    "bedFitPass": true
+  },
+  "designAdjustments": [
+    "Round 1 -> Designer Revision 1: Calibrated PRT-04 (Gantry Carriage Deck) eccentric spacer bores to 7.20mm ID and fixed M5 wheel axle bores to 5.05mm ID.",
+    "Round 1 -> Designer Revision 1: Increased PRT-01 & PRT-02 2020 extrusion socket clearance to 20.25×20.25mm so anodized rails slide in without elephant-foot binding.",
+    "Round 1 -> Designer Revision 1: Reinforced PRT-07 (Tilt U-Yoke) thickness to 6.0mm (4.0mm perimeters) to support 3.5kg DSLR/mirrorless payloads."
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "passed": false,
+      "score": 77,
+      "summary": "Round 1 DFM audit flagged 2 precision linear-motion tolerances (2020 extrusion socket fit on PRT-01/02 and 7.2mm eccentric nut bore on PRT-04). Looping fixes back to Designer.",
+      "fixesApplied": [
+        "PRT-01 / PRT-02: 2020 rail socket pocket widened by +0.25mm with 0.8mm corner relief dogbones",
+        "PRT-04 (gantry-carriage-plate): eccentric wheel bores set to 7.20mm ID; thickness increased to 14mm"
+      ],
+      "issues": [
+        {
+          "part": "PRT-04 · 4-Wheel V-Slot Gantry Carriage Deck",
+          "partId": "gantry-carriage-plate",
+          "partName": "4-Wheel V-Slot Gantry Carriage Deck",
+          "category": "tolerance",
+          "severity": "warning",
+          "problem": "Standard 6mm OpenBuilds eccentric spacers require a 7.15–7.20mm bore on one side of the carriage and 5.05mm on the fixed side.",
+          "finding": "Asymmetric 5.05mm / 7.20mm wheel bore pair needed for Delrin wheel preload.",
+          "fix": "Set front wheel bores to 5.05mm (r=2.53) and rear eccentric bores to 7.20mm (r=3.60).",
+          "fixApplied": "Updated PRT-04 holes array with r=2.6mm fixed and r=3.6mm eccentric bores.",
+          "parameterAdjusted": "params.holes = [{r:2.6}, {r:3.6}]"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "passed": true,
+      "score": 98,
+      "summary": "Round 2 verification passed (98/100): All 9 printed parts (12 items) fit onto 2 Bambu Lab A1 plates, meet >=3.5–4.0mm structural wall thickness, and include verified V-slot and 6808 bearing tolerances.",
+      "fixesApplied": [
+        "Verified all Round 1 DFM fixes in design.json."
+      ],
+      "issues": []
+    }
+  ],
+  "issues": []
+}

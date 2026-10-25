@@ -89,7 +89,7 @@ const PRESET_GADGETS = [
     prompt:
       'Bespoke Articulated Tabletop Studio Painting Easel with adjustable tilt and canvas clamp',
     url: 'https://www.amazon.com/s?k=adjustable+tabletop+studio+art+easel',
-    isInstantDemo: false,
+    isInstantDemo: true,
   },
   {
     id: 'iphone-magnifier',
@@ -106,7 +106,7 @@ const PRESET_GADGETS = [
     prompt:
       'iPhone Smartphone Microscope Magnifier Adapter with LED illumination and focus stage',
     url: 'https://www.amazon.com/s?k=smartphone+microscope+adapter+stage',
-    isInstantDemo: false,
+    isInstantDemo: true,
   },
   {
     id: 'liquid-handler',
@@ -123,7 +123,58 @@ const PRESET_GADGETS = [
     prompt:
       'Desktop 96-well plate liquid handling robot / multi-channel pipette workstation',
     url: 'https://www.youtube.com/results?search_query=diy+liquid+handling+robot+3d+printed',
-    isInstantDemo: false,
+    isInstantDemo: true,
+  },
+  {
+    id: 'desktop-robot-arm',
+    folio: 'CODEX V',
+    title: '6-Axis Desktop Robot Arm',
+    latinTitle: 'Brachium Automaton Sex Axium',
+    category: 'ROBOTICS // KINEMATICS',
+    retail: '$899',
+    diy: '$74.50',
+    savings: 'Save $824',
+    savingsPct: '92%',
+    partsSpec: '9 Printed STLs · 7 BOM Parts · 2 Plates',
+    desc: '6808 slew-bearing waist turntable + 3× MG996R & 3× MG90S metal-gear servos + PCA9685 I2C driver + parallel geared gripper.',
+    prompt:
+      '6-Axis Programmable Desktop Robot Arm with parallel servo gripper and slew bearing waist',
+    url: 'https://www.amazon.com/s?k=6+axis+desktop+robot+arm+programmable+servo+kit',
+    isInstantDemo: true,
+  },
+  {
+    id: 'bladeless-air-purifier',
+    folio: 'CODEX VI',
+    title: 'Bladeless HEPA Air Purifier Tower',
+    latinTitle: 'Turris Ventorum Sine Alis',
+    category: 'AERODYNAMICS // FLUIDICS',
+    retail: '$549',
+    diy: '$58.40',
+    savings: 'Save $490',
+    savingsPct: '89%',
+    partsSpec: '9 Printed STLs · 6 BOM Parts · 7 Plates',
+    desc: '360° HEPA H13 intake drum + 24V mixed-flow brushless impeller + Coanda boundary-layer airfoil loop amplifier.',
+    prompt:
+      'Bladeless Tower Fan and HEPA H13 Air Purifier with Coanda airfoil loop',
+    url: 'https://www.amazon.com/s?k=bladeless+tower+fan+hepa+air+purifier',
+    isInstantDemo: true,
+  },
+  {
+    id: 'camera-slider-3axis',
+    folio: 'CODEX VII',
+    title: '3-Axis Motorized Camera Slider',
+    latinTitle: 'Machina Cinematographica Trium Axium',
+    category: 'CINEMATOGRAPHY // MOTION',
+    retail: '$899',
+    diy: '$84.90',
+    savings: 'Save $814',
+    savingsPct: '91%',
+    partsSpec: '9 Printed STLs · 8 BOM Parts · 2 Plates',
+    desc: '800mm 2040 V-slot linear rail + 3× NEMA 17 steppers + TMC2209 silent drivers + GT2 belt drive & pan/tilt gimbal.',
+    prompt:
+      '3-Axis Motorized Camera Slider with pan-tilt head and silent stepper motion control',
+    url: 'https://www.amazon.com/s?k=motorized+3+axis+camera+slider+pan+tilt',
+    isInstantDemo: true,
   },
 ];
 
@@ -223,7 +274,15 @@ export default function LandingPage() {
   const [error, setError] = useState<string | null>(null);
   const [activeAgentPulse, setActiveAgentPulse] = useState(0);
   const [knownSampleIds, setKnownSampleIds] = useState<Set<string>>(
-    new Set(['plant-auto-waterer'])
+    new Set([
+      'plant-auto-waterer',
+      'art-easel',
+      'iphone-magnifier',
+      'liquid-handler',
+      'desktop-robot-arm',
+      'bladeless-air-purifier',
+      'camera-slider-3axis',
+    ])
   );
 
   // Scroll-driven gear drawing & 3D explode progress

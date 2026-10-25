@@ -1,0 +1,610 @@
+{
+  "objectId": "camera-slider-3axis",
+  "objectName": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "currency": "USD",
+  "originalPrice": 899,
+  "purchasedTotal": 75.4,
+  "filamentEstimateUsd": 9.5,
+  "totalEstimatedCost": 84.9,
+  "savingsUsd": 814.1,
+  "savingsPercent": 90.6,
+  "items": [
+    {
+      "id": "bom-2020-extrusion",
+      "partNumber": "OTS-01",
+      "name": "2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)",
+      "category": "hardware",
+      "specification": "20×20mm European standard V-slot profile, 6063-T5 black anodized aluminum, 1000mm length ×2",
+      "qty": 2,
+      "unit": "rails",
+      "unitPrice": 8.45,
+      "totalPrice": 16.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=2020+V+slot+black+anodized+aluminum+extrusion+1000mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=2020+V+slot+black+anodized+aluminum+extrusion+1000mm",
+          "estPrice": 16.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=2020+V+slot+black+anodized+aluminum+extrusion+1000mm",
+          "sourceTitle": "Amazon — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/20mm%20t%20slot%20aluminum%20extrusion",
+          "estPrice": 18.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.homedepot.com/s/20mm%20t%20slot%20aluminum%20extrusion",
+          "sourceTitle": "Home Depot — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#t-slotted-framing/",
+          "estPrice": 19.8,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#t-slotted-framing/",
+          "sourceTitle": "McMaster-Carr — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)"
+        }
+      ],
+      "linkedPartIds": [
+        "extrusion-2020-1m"
+      ],
+      "notes": "Forms the wide 80mm dual-rail track; can also use 500mm or 800mm lengths.",
+      "partId": "extrusion-2020-1m",
+      "specs": "20×20mm European standard V-slot profile, 6063-T5 black anodized aluminum, 1000mm length ×2",
+      "quantity": 2,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)",
+          "url": "https://www.amazon.com/s?k=2020+V+slot+black+anodized+aluminum+extrusion+1000mm",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Home Depot — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)",
+          "url": "https://www.homedepot.com/s/20mm%20t%20slot%20aluminum%20extrusion",
+          "retailer": "Home Depot"
+        },
+        {
+          "title": "McMaster-Carr — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)",
+          "url": "https://www.mcmaster.com/#t-slotted-framing/",
+          "retailer": "McMaster-Carr"
+        }
+      ]
+    },
+    {
+      "id": "bom-nema17-steppers",
+      "partNumber": "OTS-02",
+      "name": "NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)",
+      "category": "electronics",
+      "specification": "1.8° step angle (200 steps/rev), 1.5A/phase, 0.42 N·m holding torque, 5mm D-shaft with 1m cables",
+      "qty": 3,
+      "unit": "pcs",
+      "unitPrice": 6.3,
+      "totalPrice": 18.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+3+pack+42x38mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+3+pack+42x38mm",
+          "estPrice": 18.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+3+pack+42x38mm",
+          "sourceTitle": "Amazon — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=NEMA17+stepper+motor+pack",
+          "estPrice": 20.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=NEMA17+stepper+motor+pack",
+          "sourceTitle": "Walmart — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-nema17-stepper-motor-3pcs.html",
+          "estPrice": 12.4,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-nema17-stepper-motor-3pcs.html",
+          "sourceTitle": "AliExpress — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)"
+        }
+      ],
+      "linkedPartIds": [
+        "nema17-stepper"
+      ],
+      "notes": "Actuates Axis-1 linear slide, Axis-2 360° pan, and Axis-3 camera tilt.",
+      "partId": "nema17-stepper",
+      "specs": "1.8° step angle (200 steps/rev), 1.5A/phase, 0.42 N·m holding torque, 5mm D-shaft with 1m cables",
+      "quantity": 3,
+      "sourceLinks": [
+        {
+          "title": "Amazon — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)",
+          "url": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+3+pack+42x38mm",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)",
+          "url": "https://www.walmart.com/search?q=NEMA17+stepper+motor+pack",
+          "retailer": "Walmart"
+        },
+        {
+          "title": "AliExpress — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)",
+          "url": "https://www.aliexpress.com/w/wholesale-nema17-stepper-motor-3pcs.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-tmc2209",
+      "partNumber": "OTS-03",
+      "name": "BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)",
+      "category": "electronics",
+      "specification": "256-microstep StealthChop2 silent drive, UART current control, sensorless StallGuard4 homing + heatsinks",
+      "qty": 3,
+      "unit": "pcs",
+      "unitPrice": 3.3,
+      "totalPrice": 9.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=TMC2209+stepper+motor+driver+UART+heatsink",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=TMC2209+stepper+motor+driver+UART+heatsink",
+          "estPrice": 9.9,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=TMC2209+stepper+motor+driver+UART+heatsink",
+          "sourceTitle": "Amazon — BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-tmc2209-stepper-driver.html",
+          "estPrice": 5.2,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-tmc2209-stepper-driver.html",
+          "sourceTitle": "AliExpress — BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)"
+        }
+      ],
+      "linkedPartIds": [
+        "tmc2209-drivers"
+      ],
+      "notes": "Ensures whisper-quiet (<22 dBA) motion during video recording.",
+      "partId": "tmc2209-drivers",
+      "specs": "256-microstep StealthChop2 silent drive, UART current control, sensorless StallGuard4 homing + heatsinks",
+      "quantity": 3,
+      "sourceLinks": [
+        {
+          "title": "Amazon — BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)",
+          "url": "https://www.amazon.com/s?k=TMC2209+stepper+motor+driver+UART+heatsink",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "AliExpress — BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)",
+          "url": "https://www.aliexpress.com/w/wholesale-tmc2209-stepper-driver.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-gt2-kit",
+      "partNumber": "OTS-04",
+      "name": "GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers",
+      "category": "hardware",
+      "specification": "3m open-ended GT2-6mm belt + 1× closed-loop 200mm GT2 belt + 3× 20T 5mm-bore pulleys + 2× 5mm bore idlers",
+      "qty": 1,
+      "unit": "kit",
+      "unitPrice": 6.95,
+      "totalPrice": 6.95,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit",
+          "estPrice": 6.95,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit",
+          "sourceTitle": "Amazon — GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=GT2+6mm+timing+belt+pulley+kit",
+          "estPrice": 7.45,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=GT2+6mm+timing+belt+pulley+kit",
+          "sourceTitle": "Walmart — GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers"
+        }
+      ],
+      "linkedPartIds": [
+        "gt2-belt-pulleys"
+      ],
+      "notes": "Drives linear carriage and 3:1 pan/tilt reductions.",
+      "partId": "gt2-belt-pulleys",
+      "specs": "3m open-ended GT2-6mm belt + 1× closed-loop 200mm GT2 belt + 3× 20T 5mm-bore pulleys + 2× 5mm bore idlers",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers",
+          "url": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers",
+          "url": "https://www.walmart.com/search?q=GT2+6mm+timing+belt+pulley+kit",
+          "retailer": "Walmart"
+        }
+      ]
+    },
+    {
+      "id": "bom-wheels-bearings",
+      "partNumber": "OTS-05",
+      "name": "4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing",
+      "category": "hardware",
+      "specification": "4× 24mm OD polycarbonate/POM V-wheels with dual 625RS bearings, 2× 6mm eccentric spacers + 1× 6808-2RS",
+      "qty": 1,
+      "unit": "kit",
+      "unitPrice": 9.5,
+      "totalPrice": 9.5,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=V-slot+POM+delrin+wheels+eccentric+nut+kit",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=V-slot+POM+delrin+wheels+eccentric+nut+kit",
+          "estPrice": 9.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=V-slot+POM+delrin+wheels+eccentric+nut+kit",
+          "sourceTitle": "Amazon — 4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-v-slot-pom-wheels-eccentric.html",
+          "estPrice": 4.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-v-slot-pom-wheels-eccentric.html",
+          "sourceTitle": "AliExpress — 4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing"
+        }
+      ],
+      "linkedPartIds": [
+        "vslot-wheels-bearings"
+      ],
+      "notes": "Preloads carriage onto 2020 V-slot rails and supports 360° pan head.",
+      "partId": "vslot-wheels-bearings",
+      "specs": "4× 24mm OD polycarbonate/POM V-wheels with dual 625RS bearings, 2× 6mm eccentric spacers + 1× 6808-2RS",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing",
+          "url": "https://www.amazon.com/s?k=V-slot+POM+delrin+wheels+eccentric+nut+kit",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "AliExpress — 4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing",
+          "url": "https://www.aliexpress.com/w/wholesale-v-slot-pom-wheels-eccentric.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-esp32-oled",
+      "partNumber": "OTS-06",
+      "name": "ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable",
+      "category": "electronics",
+      "specification": "ESP32-WROOM-32 + I2C SSD1306 OLED + 2.5mm TRS camera shutter release cable + PC817 optocoupler",
+      "qty": 1,
+      "unit": "set",
+      "unitPrice": 7.45,
+      "totalPrice": 7.45,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=ESP32+0.96+OLED+display+board",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=ESP32+0.96+OLED+display+board",
+          "estPrice": 7.45,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=ESP32+0.96+OLED+display+board",
+          "sourceTitle": "Amazon — ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-oled-0.96.html",
+          "estPrice": 3.8,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-esp32-oled-0.96.html",
+          "sourceTitle": "AliExpress — ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable"
+        }
+      ],
+      "linkedPartIds": [
+        "esp32-oled-controller"
+      ],
+      "notes": "Runs multi-axis keyframe planner and shoot-move-shoot bulb intervals.",
+      "partId": "esp32-oled-controller",
+      "specs": "ESP32-WROOM-32 + I2C SSD1306 OLED + 2.5mm TRS camera shutter release cable + PC817 optocoupler",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable",
+          "url": "https://www.amazon.com/s?k=ESP32+0.96+OLED+display+board",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "AliExpress — ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-oled-0.96.html",
+          "retailer": "AliExpress"
+        }
+      ]
+    },
+    {
+      "id": "bom-pd-hardware",
+      "partNumber": "OTS-07",
+      "name": "USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment",
+      "category": "power",
+      "specification": "100W USB-C PD decoy trigger board (12V/15V selectable) + 20× M5 drop-in T-nuts + M5/M3 stainless screws",
+      "qty": 1,
+      "unit": "kit",
+      "unitPrice": 4.9,
+      "totalPrice": 4.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=USB-C+PD+12V+trigger+board+module+M5+T+nuts",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=USB-C+PD+12V+trigger+board+module+M5+T+nuts",
+          "estPrice": 4.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=USB-C+PD+12V+trigger+board+module+M5+T+nuts",
+          "sourceTitle": "Amazon — USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#t-slot-nuts/",
+          "estPrice": 5.8,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#t-slot-nuts/",
+          "sourceTitle": "McMaster-Carr — USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment"
+        }
+      ],
+      "linkedPartIds": [
+        "pd-trigger-battery"
+      ],
+      "notes": "Lets the slider run all day off any USB-C PD laptop power bank.",
+      "partId": "pd-trigger-battery",
+      "specs": "100W USB-C PD decoy trigger board (12V/15V selectable) + 20× M5 drop-in T-nuts + M5/M3 stainless screws",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment",
+          "url": "https://www.amazon.com/s?k=USB-C+PD+12V+trigger+board+module+M5+T+nuts",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr — USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment",
+          "url": "https://www.mcmaster.com/#t-slot-nuts/",
+          "retailer": "McMaster-Carr"
+        }
+      ]
+    },
+    {
+      "id": "bom-arca-clamp",
+      "partNumber": "OTS-08",
+      "name": "50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate",
+      "category": "hardware",
+      "specification": "Anodized aluminum Arca-Swiss dovetail jaw clamp with 1/4\"-20 mounting boss, QR plate & bubble level",
+      "qty": 1,
+      "unit": "set",
+      "unitPrice": 5.9,
+      "totalPrice": 5.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=50mm+Arca+Swiss+quick+release+clamp+plate",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=50mm+Arca+Swiss+quick+release+clamp+plate",
+          "estPrice": 5.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=50mm+Arca+Swiss+quick+release+clamp+plate",
+          "sourceTitle": "Amazon — 50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=Arca+Swiss+quick+release+clamp+plate",
+          "estPrice": 6.5,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.walmart.com/search?q=Arca+Swiss+quick+release+clamp+plate",
+          "sourceTitle": "Walmart — 50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate"
+        }
+      ],
+      "linkedPartIds": [
+        "ball-head-mount"
+      ],
+      "notes": "Bolts directly to PRT-08 tilt cradle.",
+      "partId": "ball-head-mount",
+      "specs": "Anodized aluminum Arca-Swiss dovetail jaw clamp with 1/4\"-20 mounting boss, QR plate & bubble level",
+      "quantity": 1,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate",
+          "url": "https://www.amazon.com/s?k=50mm+Arca+Swiss+quick+release+clamp+plate",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "Walmart — 50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate",
+          "url": "https://www.walmart.com/search?q=Arca+Swiss+quick+release+clamp+plate",
+          "retailer": "Walmart"
+        }
+      ]
+    },
+    {
+      "id": "bom-filament-slider",
+      "partNumber": "FIL-01",
+      "name": "3D Print Filament — Carbon/Black PETG & PLA+ (~495g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm PETG (End Blocks, Outriggers, Carriage, Tilt Yoke) + PLA+ (Pan Housing, 60T Gear, Case)",
+      "qty": 495,
+      "unit": "g",
+      "unitPrice": 0.0192,
+      "totalPrice": 9.5,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=Black+PETG+1.75mm+filament+1kg",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=Black+PETG+1.75mm+filament+1kg",
+          "estPrice": 9.5,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=Black+PETG+1.75mm+filament+1kg",
+          "sourceTitle": "Amazon — 3D Print Filament — Carbon/Black PETG & PLA+ (~495g Total Printed Weight)"
+        }
+      ],
+      "linkedPartIds": [
+        "motor-end-block",
+        "idler-end-block",
+        "outTrigger-leg",
+        "gantry-carriage-plate",
+        "pan-turntable-housing",
+        "pan-ring-gear",
+        "tilt-u-yoke",
+        "camera-arca-cradle",
+        "controller-side-case"
+      ],
+      "notes": "Calculated from compiled OpenSCAD STL meshes across 12 printed items.",
+      "partId": "motor-end-block",
+      "specs": "1.75mm PETG (End Blocks, Outriggers, Carriage, Tilt Yoke) + PLA+ (Pan Housing, 60T Gear, Case)",
+      "quantity": 495,
+      "sourceLinks": [
+        {
+          "title": "Amazon — 3D Print Filament — Carbon/Black PETG & PLA+ (~495g Total Printed Weight)",
+          "url": "https://www.amazon.com/s?k=Black+PETG+1.75mm+filament+1kg",
+          "retailer": "Amazon"
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "purchasedPartsTotal": 75.4,
+    "filamentCostTotal": 9.5,
+    "totalDiyCost": 84.9,
+    "originalRetailPrice": 899,
+    "totalSavings": 814.1,
+    "savingsPercent": 90.6
+  },
+  "priceHunter": {
+    "groundingUsed": true,
+    "retailersCompared": [
+      "Amazon",
+      "McMaster-Carr",
+      "Home Depot",
+      "Walmart",
+      "AliExpress"
+    ],
+    "cheapestPicksCount": 9,
+    "sourceLinks": [
+      {
+        "title": "Amazon — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)",
+        "url": "https://www.amazon.com/s?k=2020+V+slot+black+anodized+aluminum+extrusion+1000mm",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Home Depot — 2020 V-Slot Black Anodized Aluminum Extrusion Linear Rail (2× 1000mm)",
+        "url": "https://www.homedepot.com/s/20mm%20t%20slot%20aluminum%20extrusion",
+        "retailer": "Home Depot"
+      },
+      {
+        "title": "Amazon — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)",
+        "url": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+3+pack+42x38mm",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — NEMA17 Bipolar Stepper Motors 1.8° 42×38mm (Pack of 3 — Slide, Pan, Tilt)",
+        "url": "https://www.walmart.com/search?q=NEMA17+stepper+motor+pack",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)",
+        "url": "https://www.amazon.com/s?k=TMC2209+stepper+motor+driver+UART+heatsink",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "AliExpress — BIGTREETECH TMC2209 V1.3 SilentStepStick UART Stepper Drivers (Pack of 3)",
+        "url": "https://www.aliexpress.com/w/wholesale-tmc2209-stepper-driver.html",
+        "retailer": "AliExpress"
+      },
+      {
+        "title": "Amazon — GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers",
+        "url": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — GT2-6mm Fiberglass Timing Belt (3m) + 3× 20T Aluminum Pulleys + 2× Idlers",
+        "url": "https://www.walmart.com/search?q=GT2+6mm+timing+belt+pulley+kit",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — 4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing",
+        "url": "https://www.amazon.com/s?k=V-slot+POM+delrin+wheels+eccentric+nut+kit",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "AliExpress — 4× Delrin POM V-Slot Wheels (w/ Eccentric Nuts) + 6808-2RS Slew Bearing",
+        "url": "https://www.aliexpress.com/w/wholesale-v-slot-pom-wheels-eccentric.html",
+        "retailer": "AliExpress"
+      },
+      {
+        "title": "Amazon — ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable",
+        "url": "https://www.amazon.com/s?k=ESP32+0.96+OLED+display+board",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "AliExpress — ESP32 Wi-Fi/BLE Board + 0.96\" OLED Display & 2.5mm Shutter Trigger Cable",
+        "url": "https://www.aliexpress.com/w/wholesale-esp32-oled-0.96.html",
+        "retailer": "AliExpress"
+      },
+      {
+        "title": "Amazon — USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment",
+        "url": "https://www.amazon.com/s?k=USB-C+PD+12V+trigger+board+module+M5+T+nuts",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr — USB-C PD 12V/15V Trigger Module + M5 T-Nuts & Socket Screw Assortment",
+        "url": "https://www.mcmaster.com/#t-slot-nuts/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon — 50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate",
+        "url": "https://www.amazon.com/s?k=50mm+Arca+Swiss+quick+release+clamp+plate",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "Walmart — 50mm CNC Aluminum Arca-Swiss Quick-Release Clamp & Plate",
+        "url": "https://www.walmart.com/search?q=Arca+Swiss+quick+release+clamp+plate",
+        "retailer": "Walmart"
+      },
+      {
+        "title": "Amazon — 3D Print Filament — Carbon/Black PETG & PLA+ (~495g Total Printed Weight)",
+        "url": "https://www.amazon.com/s?k=Black+PETG+1.75mm+filament+1kg",
+        "retailer": "Amazon"
+      }
+    ],
+    "updatedAt": "2026-10-25T23:00:00.000Z"
+  }
+}

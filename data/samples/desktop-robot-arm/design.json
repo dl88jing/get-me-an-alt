@@ -1,0 +1,758 @@
+{
+  "objectName": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "designPhilosophy": "Serial 6-DOF vertical kinematic chain in CAD Z-up coordinates with thin-section slew bearing waist, high-torque MG996R proximal joints, lightweight MG90S distal wrist, and synchronous spur-gear gripper.",
+  "overallBoundingBoxMm": [
+    240,
+    210,
+    410
+  ],
+  "printedPartsCount": 9,
+  "purchasedPartsCount": 7,
+  "assemblyNotes": [
+    "All 9 printed part types (10 printed items including 2 gripper jaws) orient flat on two 256×256mm build plates with zero slicer supports.",
+    "Seat the 6808-2RS slew bearing flush into PRT-01 before bolting the J1 MG996R servo horn to PRT-02.",
+    "Center all 6 servos at 1500us neutral pulse via the PCA9685 before fastening the 25T aluminum clamping horns."
+  ],
+  "parts": [
+    {
+      "id": "base-pedestal",
+      "partNumber": "PRT-01",
+      "name": "Weighted Base Pedestal & 6808 Bearing Seat",
+      "kind": "printed",
+      "dims_mm": [
+        150,
+        150,
+        42
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "reservoir",
+        "width": 150,
+        "depth": 150,
+        "height": 42,
+        "wallThickness": 4,
+        "floorThickness": 5,
+        "cornerRadius": 16,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -90
+      ],
+      "color": "#0ea5e9",
+      "bomRef": "bom-filament-arm",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Heavy-duty flanged desktop base housing the J1 azimuth servo, electronics bay, and 6808-2RS slew bearing counterbore.",
+      "roleInAssembly": "Stationary structural foundation and J1 waist bearing race.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 1
+    },
+    {
+      "id": "slew-bearing-6808",
+      "partNumber": "OTS-03",
+      "name": "6808-2RS Thin-Section Slew Bearing + 608ZZ Joint Bearings",
+      "kind": "purchased",
+      "dims_mm": [
+        52,
+        52,
+        7
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 26,
+        "innerRadius": 20,
+        "height": 7
+      },
+      "position": [
+        0,
+        0,
+        38
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -35
+      ],
+      "color": "#94a3b8",
+      "bomRef": "bom-bearings",
+      "material": "52100 Chrome Steel (Purchased)",
+      "quantity": 2,
+      "description": "40mm ID × 52mm OD × 7mm thin-section ball bearing supporting radial and overturning waist moments.",
+      "roleInAssembly": "Low-friction rotary bearing between base pedestal and turntable deck.",
+      "step": 2,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "turntable-plate",
+      "partNumber": "PRT-02",
+      "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
+      "kind": "printed",
+      "dims_mm": [
+        134,
+        134,
+        14
+      ],
+      "shape": "plate_with_holes",
+      "params": {
+        "width": 134,
+        "depth": 134,
+        "thickness": 14,
+        "cornerRadius": 24,
+        "wallThickness": 3.2,
+        "holes": [
+          {
+            "x": 0,
+            "y": 0,
+            "radius": 8
+          },
+          {
+            "x": -36,
+            "y": 0,
+            "radius": 3.2
+          },
+          {
+            "x": 36,
+            "y": 0,
+            "radius": 3.2
+          }
+        ],
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        44
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        10
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-filament-arm",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Rotating waist deck with 16mm center wire pass-through and M3 mounting pattern for the J2 shoulder yoke.",
+      "roleInAssembly": "Rotates ±180° around Z-axis on the J1 waist bearing.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 3
+    },
+    {
+      "id": "shoulder-yoke",
+      "partNumber": "PRT-03",
+      "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+      "kind": "printed",
+      "dims_mm": [
+        94,
+        68,
+        76
+      ],
+      "shape": "bracketL",
+      "params": {
+        "legA": 94,
+        "legB": 76,
+        "width": 68,
+        "thickness": 6,
+        "filletRadius": 6,
+        "wallThickness": 4,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        58
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        55
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-arm",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Reinforced U-channel shoulder clevis supporting the J2 pitch servo and opposing 608ZZ idler trunnion.",
+      "roleInAssembly": "Mounts J2 shoulder actuator to the rotating turntable.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 4
+    },
+    {
+      "id": "servo-mg996r",
+      "partNumber": "OTS-01",
+      "name": "MG996R High-Torque Metal-Gear Digital Servos (J1–J3)",
+      "kind": "purchased",
+      "dims_mm": [
+        40,
+        20,
+        38
+      ],
+      "shape": "box",
+      "params": {
+        "width": 40,
+        "depth": 20,
+        "height": 38
+      },
+      "position": [
+        28,
+        0,
+        88
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        95,
+        0,
+        65
+      ],
+      "color": "#334155",
+      "bomRef": "bom-servo-mg996r",
+      "material": "Metal Gear / Coreless Servo (Purchased)",
+      "quantity": 3,
+      "description": "11 kg·cm high-torque metal-gear digital servos powering J1 waist, J2 shoulder, and J3 elbow joints.",
+      "roleInAssembly": "Primary high-torque actuators for base, shoulder, and elbow.",
+      "step": 5,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "fastener-horn-kit",
+      "partNumber": "OTS-07",
+      "name": "25T Aluminum Clamping Servo Horns & M3 Fastener Kit",
+      "kind": "purchased",
+      "dims_mm": [
+        28,
+        28,
+        12
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 14,
+        "height": 12,
+        "segments": 32
+      },
+      "position": [
+        -28,
+        0,
+        96
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "explode": [
+        -95,
+        0,
+        75
+      ],
+      "color": "#f43f5e",
+      "bomRef": "bom-fasteners-horns",
+      "material": "CNC 6061 Aluminum & 304 Stainless (Purchased)",
+      "quantity": 1,
+      "description": "CNC-machined 25-tooth aluminum disc horns and M3 socket head cap screw assortment.",
+      "roleInAssembly": "Couples servo output splines rigidly to printed arm links.",
+      "step": 6,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "lower-arm-link",
+      "partNumber": "PRT-04",
+      "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
+      "kind": "printed",
+      "dims_mm": [
+        52,
+        44,
+        145
+      ],
+      "shape": "box",
+      "params": {
+        "width": 52,
+        "depth": 44,
+        "height": 145,
+        "wallThickness": 3.6,
+        "cornerRadius": 6,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        118
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -35,
+        115
+      ],
+      "color": "#f59e0b",
+      "bomRef": "bom-filament-arm",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Hollow truss-ribbed main humerus link spanning 145mm between shoulder pitch and elbow pitch axes.",
+      "roleInAssembly": "Primary vertical lifting link between J2 and J3.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 7
+    },
+    {
+      "id": "elbow-housing",
+      "partNumber": "PRT-05",
+      "name": "J3 Offset Elbow Cantilever Servo Housing",
+      "kind": "printed",
+      "dims_mm": [
+        68,
+        54,
+        56
+      ],
+      "shape": "custom_csg",
+      "params": {
+        "preset": "enclosure",
+        "width": 68,
+        "depth": 54,
+        "height": 56,
+        "wallThickness": 3.2,
+        "floorThickness": 3.5,
+        "cornerRadius": 6,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        248
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        175
+      ],
+      "color": "#14b8a6",
+      "bomRef": "bom-filament-arm",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Offset elbow saddle housing the J3 pitch servo and J4 inline wrist-roll drive mount.",
+      "roleInAssembly": "Pivots forearm relative to lower arm and houses J4 roll servo.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 8
+    },
+    {
+      "id": "forearm-tube",
+      "partNumber": "PRT-06",
+      "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
+      "kind": "printed",
+      "dims_mm": [
+        48,
+        48,
+        120
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 22,
+        "innerRadius": 16,
+        "height": 120,
+        "flangeRadius": 24,
+        "flangeHeight": 5,
+        "wallThickness": 3.2,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        294
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        30,
+        235
+      ],
+      "color": "#38bdf8",
+      "bomRef": "bom-filament-arm",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Tubular forearm barrel allowing 270° axial roll rotation with internal wire routing.",
+      "roleInAssembly": "Provides J4 axial roll motion between elbow and wrist clevis.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 9
+    },
+    {
+      "id": "wrist-pitch-clevis",
+      "partNumber": "PRT-07",
+      "name": "J5 Differential Wrist Pitch Clevis Gimbal",
+      "kind": "printed",
+      "dims_mm": [
+        48,
+        42,
+        44
+      ],
+      "shape": "bracketL",
+      "params": {
+        "legA": 48,
+        "legB": 44,
+        "width": 42,
+        "thickness": 4.5,
+        "filletRadius": 4,
+        "wallThickness": 3,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        392
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        295
+      ],
+      "color": "#a855f7",
+      "bomRef": "bom-filament-arm",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Compact U-bracket wrist gimbal carrying the J5 pitch MG90S micro servo.",
+      "roleInAssembly": "Articulates end-effector pitch angle (±95°).",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "servo-mg90s",
+      "partNumber": "OTS-02",
+      "name": "MG90S Micro Metal-Gear Servos (J4–J6 Wrist & Gripper)",
+      "kind": "purchased",
+      "dims_mm": [
+        23,
+        12,
+        29
+      ],
+      "shape": "box",
+      "params": {
+        "width": 23,
+        "depth": 12,
+        "height": 29
+      },
+      "position": [
+        18,
+        0,
+        405
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        85,
+        0,
+        310
+      ],
+      "color": "#475569",
+      "bomRef": "bom-servo-mg90s",
+      "material": "Micro Metal-Gear Servo (Purchased)",
+      "quantity": 3,
+      "description": "Lightweight 13.4g metal-gear micro servos (2.2 kg·cm) driving J4 forearm roll, J5 wrist pitch, and J6 gripper.",
+      "roleInAssembly": "Actuates the 3 distal wrist and gripper degrees of freedom.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "gripper-body",
+      "partNumber": "PRT-08",
+      "name": "J6 Spur-Gear Parallel Gripper Chassis",
+      "kind": "printed",
+      "dims_mm": [
+        64,
+        52,
+        28
+      ],
+      "shape": "plate_with_holes",
+      "params": {
+        "width": 64,
+        "depth": 52,
+        "thickness": 28,
+        "cornerRadius": 6,
+        "wallThickness": 2.8,
+        "holes": [
+          {
+            "x": -16,
+            "y": 8,
+            "radius": 2.5
+          },
+          {
+            "x": 16,
+            "y": 8,
+            "radius": 2.5
+          }
+        ],
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        0,
+        428
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        355
+      ],
+      "color": "#ec4899",
+      "bomRef": "bom-filament-arm",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "End-effector housing with dual M3 pivot bosses and recessed bay for the J6 MG90S gripper servo.",
+      "roleInAssembly": "Mounts parallel gripper linkage to J5 wrist clevis.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "gripper-jaw",
+      "partNumber": "PRT-09",
+      "name": "Compliant Geared Parallel Gripper Jaws (×2)",
+      "kind": "printed",
+      "dims_mm": [
+        32,
+        32,
+        14
+      ],
+      "shape": "gear_simple",
+      "params": {
+        "teeth": 14,
+        "module": 1.8,
+        "boreRadius": 2.5,
+        "thickness": 14,
+        "wallThickness": 2.4,
+        "dfmVerified": true
+      },
+      "position": [
+        0,
+        14,
+        452
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        45,
+        410
+      ],
+      "color": "#f97316",
+      "bomRef": "bom-filament-arm",
+      "material": "PLA+",
+      "quantity": 2,
+      "description": "Meshed 14-tooth spur-gear gripper fingers providing synchronized 0–48mm parallel clamping.",
+      "roleInAssembly": "Grasps objects symmetrically when driven by J6 servo.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 10
+    },
+    {
+      "id": "pca9685-driver",
+      "partNumber": "OTS-04",
+      "name": "PCA9685 16-Channel 12-Bit PWM Servo Driver Board (I2C)",
+      "kind": "purchased",
+      "dims_mm": [
+        62,
+        25,
+        12
+      ],
+      "shape": "box",
+      "params": {
+        "width": 62,
+        "depth": 25,
+        "height": 12
+      },
+      "position": [
+        -92,
+        -24,
+        14
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -145,
+        -45,
+        -25
+      ],
+      "color": "#2563eb",
+      "bomRef": "bom-pca9685",
+      "material": "FR4 PCB / I2C PWM IC (Purchased)",
+      "quantity": 1,
+      "description": "16-channel 12-bit hardware PWM servo driver with terminal block for 6V high-current power bus.",
+      "roleInAssembly": "Generates jitter-free 50Hz PWM pulses for all 6 servos.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "esp32-controller",
+      "partNumber": "OTS-05",
+      "name": "ESP32-S3 Wi-Fi/BLE Inverse-Kinematics Controller Board",
+      "kind": "purchased",
+      "dims_mm": [
+        54,
+        28,
+        10
+      ],
+      "shape": "box",
+      "params": {
+        "width": 54,
+        "depth": 28,
+        "height": 10
+      },
+      "position": [
+        -92,
+        24,
+        14
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -145,
+        45,
+        -25
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-esp32",
+      "material": "FR4 PCB / Dual-Core MCU (Purchased)",
+      "quantity": 1,
+      "description": "240MHz dual-core microcontroller running analytical 6-DOF inverse kinematics and WebSocket web pendant.",
+      "roleInAssembly": "Computes joint angles and streams I2C commands to PCA9685.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    },
+    {
+      "id": "psu-6v-10a",
+      "partNumber": "OTS-06",
+      "name": "6V 10A 60W Regulated Switching Power Supply",
+      "kind": "purchased",
+      "dims_mm": [
+        110,
+        78,
+        36
+      ],
+      "shape": "box",
+      "params": {
+        "width": 110,
+        "depth": 78,
+        "height": 36
+      },
+      "position": [
+        115,
+        0,
+        18
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        175,
+        0,
+        -35
+      ],
+      "color": "#64748b",
+      "bomRef": "bom-psu-6v",
+      "material": "Aluminum Case SMPS (Purchased)",
+      "quantity": 1,
+      "description": "Regulated 6V DC 10A bench power supply providing peak stall current for simultaneous 6-axis motion.",
+      "roleInAssembly": "Powers the PCA9685 servo rail and ESP32 logic regulator.",
+      "step": 10,
+      "infillPercent": 100,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false
+    }
+  ],
+  "summary": [
+    "All 9 printed part types (10 printed items including 2 gripper jaws) orient flat on two 256×256mm build plates with zero slicer supports.",
+    "Seat the 6808-2RS slew bearing flush into PRT-01 before bolting the J1 MG996R servo horn to PRT-02.",
+    "Center all 6 servos at 1500us neutral pulse via the PCA9685 before fastening the 25T aluminum clamping horns."
+  ]
+}

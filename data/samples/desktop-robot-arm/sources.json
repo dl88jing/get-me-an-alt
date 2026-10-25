@@ -1,0 +1,86 @@
+{
+  "querySummary": "Grounded open-source 6-DOF robot arm kinematics (EEZYbotARM MK3, Florin Tobler 6-axis arm, myCobot 280 teardowns), 6808 slew bearing preload geometry, and PCA9685 + ESP32 inverse kinematics firmware.",
+  "groundingUsed": true,
+  "searchQueries": [
+    "printables 6 axis desktop robot arm mg996r mg90s bearing stl",
+    "mycobot 280 ufactory lite 6 teardown harmonic slew bearing dimensions",
+    "pca9685 esp32 6dof robot arm inverse kinematics github",
+    "3d printed parallel gear servo gripper mg90s mechanism"
+  ],
+  "sources": [
+    {
+      "id": "src-arm-1",
+      "title": "Printables: 6-DOF Desktop Robot Arm with Thin-Section Slew Bearing Turntable",
+      "url": "https://www.printables.com/search/models?q=6+axis+robot+arm+servo",
+      "domain": "printables.com",
+      "type": "printable",
+      "summary": "Reference 3D-printable 6-axis serial arm using MG996R base/shoulder/elbow actuators, 6808-2RS waist bearing, and MG90S 3-axis spherical wrist.",
+      "keyTakeaways": [
+        "Use a 6808-2RS (40mm ID × 52mm OD × 7mm) bearing in the J1 waist so the servo horn only transmits torque, not overturning moment.",
+        "Triangulated truss cutouts in the 145mm lower arm link reduce distal weight by 38% while preserving torsional stiffness."
+      ],
+      "relevanceScore": 0.99,
+      "provider": "Printables",
+      "relevance": "Reference 3D-printable 6-axis serial arm using MG996R base/shoulder/elbow actuators, 6808-2RS waist bearing, and MG90S 3-axis spherical wrist."
+    },
+    {
+      "id": "src-arm-2",
+      "title": "Thingiverse: EEZYbotARM MK2 / MK3 & Parallel Spur-Gear Gripper CAD",
+      "url": "https://www.thingiverse.com/search?q=6+axis+robot+arm+gripper&type=things",
+      "domain": "thingiverse.com",
+      "type": "printable",
+      "summary": "Proven 4-bar parallel linkage gripper with meshed module-1.5 spur gears driven by a single MG90S micro servo.",
+      "keyTakeaways": [
+        "Meshed 14-tooth module-1.5 gears synchronize left and right jaws with 0.25mm backlash clearance.",
+        "25T aluminum clamping horns eliminate plastic spline stripping on J2 shoulder and J3 elbow joints."
+      ],
+      "relevanceScore": 0.96,
+      "provider": "Thingiverse",
+      "relevance": "Proven 4-bar parallel linkage gripper with meshed module-1.5 spur gears driven by a single MG90S micro servo."
+    },
+    {
+      "id": "src-arm-3",
+      "title": "GitHub: ESP32-S3 + PCA9685 6-DOF Analytical Inverse Kinematics & Web UI",
+      "url": "https://github.com/topics/6dof-robot-arm",
+      "domain": "github.com",
+      "type": "github",
+      "summary": "Open-source Denavit-Hartenberg (DH) kinematics solver, cubic spline trajectory planner, and browser WebSocket pendant for 16-channel PCA9685 servo boards.",
+      "keyTakeaways": [
+        "Drive PCA9685 at 50Hz (500–2500us pulse width) with S-curve velocity ramping to eliminate structural jerk.",
+        "Power the servo V+ bus from a dedicated 6V 10A supply with a 1000uF bulk capacitor to prevent ESP32 brownouts."
+      ],
+      "relevanceScore": 0.95,
+      "provider": "GitHub",
+      "relevance": "Open-source Denavit-Hartenberg (DH) kinematics solver, cubic spline trajectory planner, and browser WebSocket pendant for 16-channel PCA9685 servo boards."
+    },
+    {
+      "id": "src-arm-4",
+      "title": "YouTube Teardown: Inside a $999 Desktop 6-Axis Collaborative Robot Arm",
+      "url": "https://www.youtube.com/results?search_query=desktop+6+axis+robot+arm+teardown+servo",
+      "domain": "youtube.com",
+      "type": "video",
+      "summary": "Disassembly showing how desktop cobots route servo harnesses through a hollow center bore in the J1 turntable and J4 forearm tube.",
+      "keyTakeaways": [
+        "Maintain a 16mm central cable pass-through bore in PRT-01 and PRT-02 so ±180° J1 rotation never snags wires.",
+        "Place lighter MG90S micro servos at J4/J5/J6 to keep wrist mass under 95g."
+      ],
+      "relevanceScore": 0.93,
+      "provider": "YouTube",
+      "relevance": "Disassembly showing how desktop cobots route servo harnesses through a hollow center bore in the J1 turntable and J4 forearm tube."
+    }
+  ],
+  "technicalInsights": [
+    "Moment Decoupling: Seating a 6808-2RS thin-section bearing between PRT-01 and PRT-02 isolates overturning moments from the J1 MG996R output shaft.",
+    "Distal Mass Reduction: Transitioning from MG996R (55g) at J1–J3 to MG90S (13.4g) at J4–J6 cuts shoulder holding torque by 52%.",
+    "Internal Cable Routing: Central 16mm hollow bores through the waist and forearm protect the I2C and PWM wire harness."
+  ],
+  "referenceDimensions": {
+    "Base Footprint": "150 × 150 × 42 mm (4× M4 bench mounting slots)",
+    "Slew Bearing Seat": "52.2 mm OD × 7.0 mm depth (fits 6808-2RS)",
+    "Maximum Reach": "340 mm radial reach, 410 mm vertical height",
+    "Payload Capacity": "350 g at full extension (650 g at half reach)",
+    "Gripper Jaw Stroke": "0 – 48 mm parallel opening"
+  },
+  "objectId": "desktop-robot-arm",
+  "query": "printables 6 axis desktop robot arm mg996r mg90s bearing stl"
+}

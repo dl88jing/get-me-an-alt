@@ -1,0 +1,410 @@
+{
+  "objectName": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "estimatedTotalMinutes": 65,
+  "difficulty": "Intermediate",
+  "safetyNotes": [
+    "Command all 6 servos to 1500us neutral center pulse using the ESP32 + PCA9685 before bolting the 25T aluminum horns so no joint hits a mechanical hard-stop.",
+    "Adjust the 6V switching power supply output with a multimeter before connecting the ESP32 logic rail."
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "title": "Anchor Weighted Base Pedestal & Seat 6808 Slew Bearing",
+      "partIds": [
+        "base-pedestal",
+        "slew-bearing-6808"
+      ],
+      "tools": [
+        "Rubber Mallet / Arbor Press"
+      ],
+      "note": "Place PRT-01 (Weighted Base Pedestal) on the bench and press the 6808-2RS thin-section bearing (OTS-03) flush into the top 52.18mm counterbore.",
+      "motion": [
+        {
+          "partId": "base-pedestal",
+          "from": [
+            0,
+            0,
+            -90
+          ],
+          "to": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "partId": "slew-bearing-6808",
+          "from": [
+            0,
+            0,
+            110
+          ],
+          "to": [
+            0,
+            0,
+            38
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 1,
+      "description": "Place PRT-01 (Weighted Base Pedestal) on the bench and press the 6808-2RS thin-section bearing (OTS-03) flush into the top 52.18mm counterbore.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 2,
+      "title": "Mount J1 Azimuth Turntable Deck with 25T Aluminum Horn",
+      "partIds": [
+        "turntable-plate",
+        "fastener-horn-kit"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Fasten a 25T aluminum disc horn (OTS-07) to the underside of PRT-02 (Turntable Deck) and seat PRT-02 onto the 6808-2RS bearing race.",
+      "motion": [
+        {
+          "partId": "turntable-plate",
+          "from": [
+            0,
+            0,
+            130
+          ],
+          "to": [
+            0,
+            0,
+            44
+          ]
+        },
+        {
+          "partId": "fastener-horn-kit",
+          "from": [
+            -95,
+            0,
+            140
+          ],
+          "to": [
+            -28,
+            0,
+            96
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 2,
+      "description": "Fasten a 25T aluminum disc horn (OTS-07) to the underside of PRT-02 (Turntable Deck) and seat PRT-02 onto the 6808-2RS bearing race.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 3,
+      "title": "Bolt J2 Shoulder U-Yoke & High-Torque MG996R Servos",
+      "partIds": [
+        "shoulder-yoke",
+        "servo-mg996r"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Bolt PRT-03 (Shoulder U-Yoke) to the turntable deck with 4× M3×12mm socket cap screws and install the J1/J2/J3 MG996R metal-gear servos (OTS-01).",
+      "motion": [
+        {
+          "partId": "shoulder-yoke",
+          "from": [
+            0,
+            0,
+            150
+          ],
+          "to": [
+            0,
+            0,
+            58
+          ]
+        },
+        {
+          "partId": "servo-mg996r",
+          "from": [
+            110,
+            0,
+            145
+          ],
+          "to": [
+            28,
+            0,
+            88
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 3,
+      "description": "Bolt PRT-03 (Shoulder U-Yoke) to the turntable deck with 4× M3×12mm socket cap screws and install the J1/J2/J3 MG996R metal-gear servos (OTS-01).",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 4,
+      "title": "Install J2–J3 Triangulated Truss Lower Arm Link",
+      "partIds": [
+        "lower-arm-link"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Slide the lower trunnion of PRT-04 (Truss Lower Arm Link) between the shoulder yoke arms and bolt to the J2 25T aluminum horn and opposing 608ZZ idler bearing.",
+      "motion": [
+        {
+          "partId": "lower-arm-link",
+          "from": [
+            0,
+            -70,
+            210
+          ],
+          "to": [
+            0,
+            0,
+            118
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 4,
+      "description": "Slide the lower trunnion of PRT-04 (Truss Lower Arm Link) between the shoulder yoke arms and bolt to the J2 25T aluminum horn and opposing 608ZZ idler bearing.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 5,
+      "title": "Couple J3 Cantilever Elbow Housing to Upper Truss",
+      "partIds": [
+        "elbow-housing"
+      ],
+      "tools": [
+        "2.5mm Hex Driver"
+      ],
+      "note": "Align PRT-05 (Elbow Servo Housing) with the top clevis of PRT-04 and secure the J3 MG996R horn and 608ZZ support bearing.",
+      "motion": [
+        {
+          "partId": "elbow-housing",
+          "from": [
+            0,
+            0,
+            340
+          ],
+          "to": [
+            0,
+            0,
+            248
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 5,
+      "description": "Align PRT-05 (Elbow Servo Housing) with the top clevis of PRT-04 and secure the J3 MG996R horn and 608ZZ support bearing.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 6,
+      "title": "Thread Harness & Seat J4 Hollow Wrist-Roll Forearm Barrel",
+      "partIds": [
+        "forearm-tube"
+      ],
+      "tools": [
+        "2.0mm Hex Driver"
+      ],
+      "note": "Route the wrist servo extension leads through the center bore of PRT-06 (Forearm Barrel) and couple its base flange to the J4 roll spline inside PRT-05.",
+      "motion": [
+        {
+          "partId": "forearm-tube",
+          "from": [
+            0,
+            50,
+            390
+          ],
+          "to": [
+            0,
+            0,
+            294
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 6,
+      "description": "Route the wrist servo extension leads through the center bore of PRT-06 (Forearm Barrel) and couple its base flange to the J4 roll spline inside PRT-05.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 7,
+      "title": "Attach J5 Wrist Pitch Clevis & Micro MG90S Servos",
+      "partIds": [
+        "wrist-pitch-clevis",
+        "servo-mg90s"
+      ],
+      "tools": [
+        "1.5mm Hex Driver",
+        "Small Phillips Driver"
+      ],
+      "note": "Fasten PRT-07 (Wrist Pitch Clevis) to the distal flange of PRT-06 and seat the 3× MG90S metal-gear micro servos (OTS-02) into the J4, J5, and J6 mounts.",
+      "motion": [
+        {
+          "partId": "wrist-pitch-clevis",
+          "from": [
+            0,
+            0,
+            470
+          ],
+          "to": [
+            0,
+            0,
+            392
+          ]
+        },
+        {
+          "partId": "servo-mg90s",
+          "from": [
+            90,
+            0,
+            470
+          ],
+          "to": [
+            18,
+            0,
+            405
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 7,
+      "description": "Fasten PRT-07 (Wrist Pitch Clevis) to the distal flange of PRT-06 and seat the 3× MG90S metal-gear micro servos (OTS-02) into the J4, J5, and J6 mounts.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 8,
+      "title": "Mount J6 Parallel Gripper Chassis to Wrist Gimbal",
+      "partIds": [
+        "gripper-body"
+      ],
+      "tools": [
+        "2.0mm Hex Driver"
+      ],
+      "note": "Bolt PRT-08 (Spur-Gear Gripper Chassis) onto the J5 wrist pitch horn and verify unrestricted ±95° wrist articulation.",
+      "motion": [
+        {
+          "partId": "gripper-body",
+          "from": [
+            0,
+            0,
+            505
+          ],
+          "to": [
+            0,
+            0,
+            428
+          ]
+        }
+      ],
+      "actionType": "fasten",
+      "step": 8,
+      "description": "Bolt PRT-08 (Spur-Gear Gripper Chassis) onto the J5 wrist pitch horn and verify unrestricted ±95° wrist articulation.",
+      "action": "fasten",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 9,
+      "title": "Mesh Geared Parallel Gripper Jaws (×2)",
+      "partIds": [
+        "gripper-jaw"
+      ],
+      "tools": [
+        "2.0mm Hex Driver"
+      ],
+      "note": "Set the J6 MG90S servo to closed position, mesh the 14-tooth spur gears of both PRT-09 Gripper Jaws symmetrically, and secure with M3×16mm pivot pins.",
+      "motion": [
+        {
+          "partId": "gripper-jaw",
+          "from": [
+            0,
+            75,
+            520
+          ],
+          "to": [
+            0,
+            14,
+            452
+          ]
+        }
+      ],
+      "actionType": "insert",
+      "step": 9,
+      "description": "Set the J6 MG90S servo to closed position, mesh the 14-tooth spur gears of both PRT-09 Gripper Jaws symmetrically, and secure with M3×16mm pivot pins.",
+      "action": "insert",
+      "cameraHint": "isometric-front"
+    },
+    {
+      "n": 10,
+      "title": "Wire PCA9685 PWM Driver, ESP32-S3 Controller & 6V 10A PSU",
+      "partIds": [
+        "pca9685-driver",
+        "esp32-controller",
+        "psu-6v-10a"
+      ],
+      "tools": [
+        "Wire Strippers",
+        "Terminal Screwdriver"
+      ],
+      "note": "Plug channels 0–5 from the servos into the PCA9685 board (OTS-04), connect SDA/SCL to the ESP32-S3 (OTS-05), and wire the 6V 10A PSU (OTS-06) to the V+ screw terminal.",
+      "motion": [
+        {
+          "partId": "pca9685-driver",
+          "from": [
+            -165,
+            -55,
+            60
+          ],
+          "to": [
+            -92,
+            -24,
+            14
+          ]
+        },
+        {
+          "partId": "esp32-controller",
+          "from": [
+            -165,
+            55,
+            60
+          ],
+          "to": [
+            -92,
+            24,
+            14
+          ]
+        },
+        {
+          "partId": "psu-6v-10a",
+          "from": [
+            195,
+            0,
+            60
+          ],
+          "to": [
+            115,
+            0,
+            18
+          ]
+        }
+      ],
+      "actionType": "connect",
+      "step": 10,
+      "description": "Plug channels 0–5 from the servos into the PCA9685 board (OTS-04), connect SDA/SCL to the ESP32-S3 (OTS-05), and wire the 6V 10A PSU (OTS-06) to the V+ screw terminal.",
+      "action": "connect",
+      "cameraHint": "isometric-front"
+    }
+  ],
+  "objectId": "desktop-robot-arm",
+  "totalSteps": 10,
+  "estimatedMinutes": 65
+}

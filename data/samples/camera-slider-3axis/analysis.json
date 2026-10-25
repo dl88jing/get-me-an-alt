@@ -1,0 +1,87 @@
+{
+  "objectName": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "slug": "camera-slider-3axis",
+  "category": "Cinema & Photography Motion Control",
+  "tagline": "Motorized 2020 V-Slot linear camera dolly with 3× NEMA17 steppers, silent TMC2209 256-microstep drivers, 3:1 herringbone pan/tilt head & ESP32 keyframe controller",
+  "description": "Commercial 3-axis motorized camera sliders like the Edelkrone SliderONE + HeadPLUS ($899–$1,299) or Syrp Genie II 3-Axis kit ($899+) charge nearly $1,000 for CNC brackets around standard V-slot rails and stepper motors. Our DIY build combines 9 rigid PETG/PLA+ printed motion blocks and a 3:1 geared pan/tilt gimbal with $75.40 of off-the-shelf 2020 aluminum extrusion, 3× NEMA17 steppers, silent TMC2209 drivers, Delrin V-wheels, and an ESP32 OLED keyframe controller.",
+  "functionSummary": "Synchronizes linear carriage travel (Axis 1) along dual 2020 V-slot rails via a tensioned GT2-6mm timing belt with continuous 360° pan (Axis 2) and ±90° tilt (Axis 3) driven by three NEMA17 stepper motors under 256-microstep StealthChop TMC2209 control for ultra-smooth video parallax and long-exposure astro time-lapses.",
+  "inputUrl": "https://www.amazon.com/s?k=motorized+3+axis+camera+slider+pan+tilt+time+lapse",
+  "inputType": "url",
+  "originalProduct": {
+    "name": "Edelkrone / Syrp 3-Axis Motorized Camera Slider & Pan-Tilt Motion Head",
+    "brand": "Edelkrone / Syrp / Rhino",
+    "retailPrice": 899,
+    "currency": "USD",
+    "url": "https://www.amazon.com/s?k=motorized+3+axis+camera+slider+pan+tilt+time+lapse",
+    "whyExpensive": "Low-volume cinema gear markup, proprietary app ecosystems, and $250 add-on battery brackets for standard NEMA17 + TMC2209 motion hardware.",
+    "retailPriceUsd": 899
+  },
+  "targetDiyCost": 84.9,
+  "estimatedSavings": 814.1,
+  "estimatedPrintTimeHours": 9.4,
+  "estimatedAssemblyMinutes": 55,
+  "difficulty": "Intermediate",
+  "overallDimensionsMm": [
+    250,
+    190,
+    225
+  ],
+  "keyMechanisms": [
+    "4-wheel Delrin V-Slot gantry carriage with eccentric spacer preload riding on dual 2020 anodized aluminum extrusions",
+    "Closed-loop GT2-6mm fiberglass timing belt drive with M5 sliding idler tensioner block on the right rail end",
+    "Axis-2 360° pan turntable riding on a 6808-2RS thin-section bearing with a 3:1 printed herringbone ring gear reduction",
+    "Axis-3 cantilever tilt U-yoke with Arca-Swiss quick-release clamp driven by a pancake NEMA17 stepper and silent TMC2209 UART drivers"
+  ],
+  "engineeringNotes": [
+    "Print PRT-01 (Motor End Block), PRT-02 (Idler End Block), and PRT-04 (Gantry Carriage Plate) in PETG with 4 perimeters and 40% cubic infill for maximum rail rigidity.",
+    "Print PRT-06 (60T Pan Ring Gear) at 0.16mm layer height with Arachne perimeter generator enabled for smooth tooth engagement.",
+    "All 9 printed part types (12 items including 4 fold-out outrigger legs) pack onto 2 Bambu Lab A1 plates."
+  ],
+  "materialsNeeded": [
+    "PETG Filament (~340g) for rail end blocks, outrigger legs, gantry carriage deck & tilt yoke",
+    "PLA+ Filament (~155g) for pan turntable housing, 60T ring gear, Arca-Swiss cradle & controller case",
+    "2020 V-Slot Extrusions + 3× NEMA17 Steppers + 3× TMC2209 Drivers + GT2 Belt/Pulleys + 4× V-Wheels + 6808 Bearing + ESP32 OLED"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Left 2020 Rail Drive Block & NEMA17 Stepper Mount (96×78×58mm)",
+    "PRT-02: Right 2020 Rail Idler Block with M5 Belt Tensioner (88×78×54mm)",
+    "PRT-03: Fold-Out Articulated All-Terrain Outrigger Legs ×4 (115×36×24mm)",
+    "PRT-04: 4-Wheel V-Slot Gantry Carriage Deck with Eccentric Bores (124×108×14mm)",
+    "PRT-05: Axis-2 Rotary Pan Turntable Housing & 6808 Bearing Seat (102×102×46mm)",
+    "PRT-06: 60-Tooth GT2 Pan Reduction Ring Gear 3:1 (92×92×16mm)",
+    "PRT-07: Axis-3 Cantilever Tilt Gimbal U-Yoke Arm (108×74×88mm)",
+    "PRT-08: Arca-Swiss Quick-Release Camera Tilt Cradle (78×64×24mm)",
+    "PRT-09: Snap-Fit TMC2209 + ESP32 Motion Controller Side Case (92×62×34mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: Dual 2020 V-Slot Black Anodized Aluminum Extrusion Rails (1000mm)",
+    "OTS-02: NEMA17 Bipolar Stepper Motors ×3 (Slide, Pan, Tilt)",
+    "OTS-03: BIGTREETECH TMC2209 SilentStepStick UART Drivers ×3 (256-Microstep)",
+    "OTS-04: 3m GT2-6mm Fiberglass Belt + 3× 20T Aluminum Pulleys + 2× Idlers",
+    "OTS-05: 4× Delrin POM V-Slot Wheels + Eccentric Nuts + 6808-2RS Bearing",
+    "OTS-06: ESP32 + 0.96\" OLED Keyframe Controller & 2.5mm Shutter Trigger Cable",
+    "OTS-07: USB-C PD 12V/20V Trigger Board + M5 T-Nuts & 1/4\"-20 Camera Screw Kit",
+    "OTS-08: Aluminum Arca-Swiss Quick-Release Clamp & Bubble Level"
+  ],
+  "id": "camera-slider-3axis",
+  "name": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "title": "CineGlide Pro 3-Axis Motorized Camera Slider & Pan/Tilt Head",
+  "summary": "Commercial 3-axis motorized camera sliders like the Edelkrone SliderONE + HeadPLUS ($899–$1,299) or Syrp Genie II 3-Axis kit ($899+) charge nearly $1,000 for CNC brackets around standard V-slot rails and stepper motors. Our DIY build combines 9 rigid PETG/PLA+ printed motion blocks and a 3:1 geared pan/tilt gimbal with $75.40 of off-the-shelf 2020 aluminum extrusion, 3× NEMA17 steppers, silent TMC2209 drivers, Delrin V-wheels, and an ESP32 OLED keyframe controller.",
+  "function": "Synchronizes linear carriage travel (Axis 1) along dual 2020 V-slot rails via a tensioned GT2-6mm timing belt with continuous 360° pan (Axis 2) and ±90° tilt (Axis 3) driven by three NEMA17 stepper motors under 256-microstep StealthChop TMC2209 control for ultra-smooth video parallax and long-exposure astro time-lapses.",
+  "originalPrice": 899,
+  "estimatedDiyCost": 84.9,
+  "savingsPercent": 90.6,
+  "estimatedBuildTimeMinutes": 55,
+  "estimatedFilamentGrams": 581.7,
+  "dimensionsMm": {
+    "width": 250,
+    "depth": 190,
+    "height": 225
+  },
+  "mechanisms": [
+    "4-wheel Delrin V-Slot gantry carriage with eccentric spacer preload riding on dual 2020 anodized aluminum extrusions",
+    "Closed-loop GT2-6mm fiberglass timing belt drive with M5 sliding idler tensioner block on the right rail end",
+    "Axis-2 360° pan turntable riding on a 6808-2RS thin-section bearing with a 3:1 printed herringbone ring gear reduction",
+    "Axis-3 cantilever tilt U-yoke with Arca-Swiss quick-release clamp driven by a pancake NEMA17 stepper and silent TMC2209 UART drivers"
+  ]
+}

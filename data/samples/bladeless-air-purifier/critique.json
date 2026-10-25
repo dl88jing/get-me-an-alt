@@ -1,0 +1,62 @@
+{
+  "objectName": "ZephyrCoanda Bladeless Tower Fan & HEPA H13 Air Purifier",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "passed": true,
+  "finalScore": 98,
+  "totalRounds": 2,
+  "revisionRoundsUsed": 1,
+  "checksSummary": {
+    "overhangsPass": true,
+    "wallThicknessPass": true,
+    "tolerancesPass": true,
+    "bedFitPass": true
+  },
+  "designAdjustments": [
+    "Round 1 -> Designer Revision 1: Split the 230mm tall Coanda airfoil loop into PRT-07 (Lower 115mm) and PRT-08 (Upper 115mm) with a tongue-and-groove flange so both halves pack flat on a 256×256mm bed.",
+    "Round 1 -> Designer Revision 1: Increased PRT-04 (Impeller Volute) shell thickness to 3.5mm to prevent acoustic panel resonance.",
+    "Round 1 -> Designer Revision 1: Added 42° self-supporting internal roof taper inside PRT-08 upper crown so zero internal support material is trapped inside the air channel."
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "passed": false,
+      "score": 76,
+      "summary": "Round 1 DFM audit flagged 2 aerodynamic plenum printability issues (internal support removal risk in PRT-08 crown and mid-loop seam leakage). Looping fixes back to Designer.",
+      "fixesApplied": [
+        "PRT-07 / PRT-08: added 0.25mm tongue-and-groove interlocking flange and 42° self-supporting internal crown arch",
+        "PRT-04 (impeller-shroud): increased wallThickness to 3.5mm"
+      ],
+      "issues": [
+        {
+          "part": "PRT-08 · Coanda Airfoil Loop — Upper Jet-Slot Crown",
+          "partId": "coanda-airfoil-upper",
+          "partName": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+          "category": "overhang",
+          "severity": "critical",
+          "problem": "Flat top internal plenum ceiling would require internal slicer supports that cannot be removed through a 1.5mm nozzle slit.",
+          "finding": "Internal air duct must be 100% self-supporting without internal support material.",
+          "fix": "Profile internal plenum ceiling as a 42° gothic teardrop arch.",
+          "fixApplied": "Converted internal plenum crown to 42° self-supporting teardrop arch (supportsRequired = false).",
+          "parameterAdjusted": "params.maxOverhangDeg = 42, supportsRequired = false"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "passed": true,
+      "score": 98,
+      "summary": "Round 2 verification passed (98/100): All 9 printed parts print 100% support-free, fit on 2 Bambu Lab A1 plates, and maintain airtight plenum walls (>=3.0mm).",
+      "fixesApplied": [
+        "Verified all Round 1 aerodynamic & DFM fixes in design.json."
+      ],
+      "issues": []
+    }
+  ],
+  "issues": []
+}

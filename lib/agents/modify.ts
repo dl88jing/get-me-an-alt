@@ -288,6 +288,25 @@ const PART_KEYWORDS = [
   'holder',
   'stand',
   'frame',
+  'turntable',
+  'shoulder',
+  'elbow',
+  'forearm',
+  'wrist',
+  'gripper',
+  'jaw',
+  'pedestal',
+  'airfoil',
+  'coanda',
+  'hepa',
+  'impeller',
+  'plenum',
+  'slider',
+  'gantry',
+  'carriage',
+  'yoke',
+  'motor',
+  'idler',
 ];
 
 export function buildDeterministicClassification(
@@ -1177,7 +1196,7 @@ export async function runSelectiveModifyPipeline(
     options.clientManifest.bom &&
     options.clientManifest.plates
       ? (structuredClone(options.clientManifest) as ProjectManifest)
-      : getProjectManifest(projectId) || buildSampleManifest();
+      : getProjectManifest(projectId) || buildSampleManifest(projectId);
 
   const isSample =
     Boolean(baseManifest.isSample) ||

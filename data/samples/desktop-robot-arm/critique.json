@@ -1,0 +1,75 @@
+{
+  "objectName": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "passed": true,
+  "finalScore": 97,
+  "totalRounds": 2,
+  "revisionRoundsUsed": 1,
+  "checksSummary": {
+    "overhangsPass": true,
+    "wallThicknessPass": true,
+    "tolerancesPass": true,
+    "bedFitPass": true
+  },
+  "designAdjustments": [
+    "Round 1 -> Designer Revision 1: Increased PRT-03 (Shoulder Yoke) root fillet radius to 6.0mm and wall thickness to 4.0mm to handle peak J2 bending torque.",
+    "Round 1 -> Designer Revision 1: Opened PRT-01 6808-2RS bearing pocket diameter by +0.18mm (52.18mm ID) with 45° entry chamfer for press-fit seating.",
+    "Round 1 -> Designer Revision 1: Added 0.25mm involute tooth clearance on PRT-09 spur-gear gripper jaws for smooth zero-backlash meshing."
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "passed": false,
+      "score": 78,
+      "summary": "Round 1 DFM audit flagged 3 mechanical tolerance & stiffness items (6808 bearing interference fit on PRT-01, shoulder root stress concentration on PRT-03, and gear backlash on PRT-09). Looping fixes back to Designer.",
+      "fixesApplied": [
+        "PRT-01 (base-pedestal): 6808 bearing pocket bore set to 52.18mm (+0.18mm radial clearance)",
+        "PRT-03 (shoulder-yoke): wallThickness increased to 4.0mm with 6mm root fillet",
+        "PRT-09 (gripper-jaw): gear tooth profile offset by -0.12mm for 0.24mm mesh clearance"
+      ],
+      "issues": [
+        {
+          "part": "PRT-01 · Weighted Base Pedestal",
+          "partId": "base-pedestal",
+          "partName": "Weighted Base Pedestal",
+          "category": "tolerance",
+          "severity": "warning",
+          "problem": "Nominal 52.00mm bearing pocket will bind on 6808-2RS outer ring due to PETG perimeter shrinkage.",
+          "finding": "Nominal 52.00mm bearing pocket will bind on 6808-2RS outer ring.",
+          "fix": "Widen bearing pocket to 52.18mm and add 1.0mm × 45° lead-in chamfer.",
+          "fixApplied": "Set bearing pocket bore to 52.18mm with 45° chamfer.",
+          "parameterAdjusted": "params.bearingClearanceMm = 0.18"
+        },
+        {
+          "part": "PRT-03 · J2 Dual-Servo Shoulder U-Yoke Bracket",
+          "partId": "shoulder-yoke",
+          "partName": "J2 Dual-Servo Shoulder U-Yoke Bracket",
+          "category": "wall_thickness",
+          "severity": "critical",
+          "problem": "Shoulder clevis arms experience 2.4 N·m peak bending moment under full 340mm arm reach.",
+          "finding": "Clevis root requires >=4.0mm wall thickness and 6mm internal fillet.",
+          "fix": "Increase clevis thickness to 6.0mm and wallThickness to 4.0mm.",
+          "fixApplied": "Increased thickness to 6.0mm and filletRadius to 6.0mm.",
+          "parameterAdjusted": "params.thickness = 6, params.wallThickness = 4.0"
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "passed": true,
+      "score": 97,
+      "summary": "Round 2 verification passed (97/100): All 9 printed parts fit comfortably across 2 Bambu Lab A1 plates, meet >=2.8–4.0mm structural wall thickness, and include calibrated bearing/spline tolerances.",
+      "fixesApplied": [
+        "Verified all Round 1 DFM fixes in design.json."
+      ],
+      "issues": []
+    }
+  ],
+  "issues": []
+}

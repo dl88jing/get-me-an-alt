@@ -1,0 +1,438 @@
+{
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPrintedParts": 9,
+  "argonOpenScadParts": 0,
+  "fallbackParts": 0,
+  "totalAttempts": 0,
+  "parts": [
+    {
+      "partId": "weighted-base-pan",
+      "name": "Acoustic Weighted Base Pan & Vibration Ring",
+      "targetDimsMm": [
+        168,
+        168,
+        32
+      ],
+      "actualDimsMm": [
+        168,
+        168,
+        32
+      ],
+      "scadFile": "parts/weighted-base-pan.scad",
+      "stlFile": "parts/weighted-base-pan.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 620,
+        "volumeMm3": 180880.42,
+        "actualDimsMm": [
+          168,
+          168,
+          32
+        ],
+        "targetDimsMm": [
+          168,
+          168,
+          32
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 620,
+      "volumeMm3": 180880.42,
+      "isManifold": true
+    },
+    {
+      "partId": "hepa-intake-shell",
+      "name": "360° Perforated HEPA Intake Lower Shell",
+      "targetDimsMm": [
+        164,
+        164,
+        125
+      ],
+      "actualDimsMm": [
+        164,
+        164,
+        125
+      ],
+      "scadFile": "parts/hepa-intake-shell.scad",
+      "stlFile": "parts/hepa-intake-shell.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 832,
+        "volumeMm3": 234036.53,
+        "actualDimsMm": [
+          164,
+          164,
+          125
+        ],
+        "targetDimsMm": [
+          164,
+          164,
+          125
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 832,
+      "volumeMm3": 234036.53,
+      "isManifold": true
+    },
+    {
+      "partId": "hepa-filter-frame",
+      "name": "Twist-Lock HEPA H13 Filter Compression Retainer",
+      "targetDimsMm": [
+        160,
+        160,
+        16
+      ],
+      "actualDimsMm": [
+        160,
+        160,
+        16
+      ],
+      "scadFile": "parts/hepa-filter-frame.scad",
+      "stlFile": "parts/hepa-filter-frame.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1008,
+        "volumeMm3": 284614.31,
+        "actualDimsMm": [
+          160,
+          160,
+          16
+        ],
+        "targetDimsMm": [
+          160,
+          160,
+          16
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1008,
+      "volumeMm3": 284614.31,
+      "isManifold": true
+    },
+    {
+      "partId": "impeller-shroud",
+      "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
+      "targetDimsMm": [
+        142,
+        142,
+        74
+      ],
+      "actualDimsMm": [
+        142,
+        142,
+        74
+      ],
+      "scadFile": "parts/impeller-shroud.scad",
+      "stlFile": "parts/impeller-shroud.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1264,
+        "volumeMm3": 208374.49,
+        "actualDimsMm": [
+          142,
+          142,
+          74
+        ],
+        "targetDimsMm": [
+          142,
+          142,
+          74
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1264,
+      "volumeMm3": 208374.49,
+      "isManifold": true
+    },
+    {
+      "partId": "diffuser-stator-cone",
+      "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
+      "targetDimsMm": [
+        146,
+        146,
+        52
+      ],
+      "actualDimsMm": [
+        146,
+        146,
+        52
+      ],
+      "scadFile": "parts/diffuser-stator-cone.scad",
+      "stlFile": "parts/diffuser-stator-cone.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 768,
+        "volumeMm3": 48628.43,
+        "actualDimsMm": [
+          146,
+          146,
+          52
+        ],
+        "targetDimsMm": [
+          146,
+          146,
+          52
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 768,
+      "volumeMm3": 48628.43,
+      "isManifold": true
+    },
+    {
+      "partId": "plenum-neck-collar",
+      "name": "Airfoil Loop Pressurized Plenum Neck Collar",
+      "targetDimsMm": [
+        108,
+        76,
+        46
+      ],
+      "actualDimsMm": [
+        108,
+        76,
+        46
+      ],
+      "scadFile": "parts/plenum-neck-collar.scad",
+      "stlFile": "parts/plenum-neck-collar.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": false,
+        "triangleCount": 1588,
+        "volumeMm3": 75558.28,
+        "actualDimsMm": [
+          108,
+          76,
+          46
+        ],
+        "targetDimsMm": [
+          108,
+          76,
+          46
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1588,
+      "volumeMm3": 75558.28,
+      "isManifold": false
+    },
+    {
+      "partId": "coanda-airfoil-lower",
+      "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
+      "targetDimsMm": [
+        190,
+        190,
+        115
+      ],
+      "actualDimsMm": [
+        190,
+        190,
+        115
+      ],
+      "scadFile": "parts/coanda-airfoil-lower.scad",
+      "stlFile": "parts/coanda-airfoil-lower.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1264,
+        "volumeMm3": 1349562.09,
+        "actualDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "targetDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1264,
+      "volumeMm3": 1349562.09,
+      "isManifold": true
+    },
+    {
+      "partId": "coanda-airfoil-upper",
+      "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
+      "targetDimsMm": [
+        190,
+        190,
+        115
+      ],
+      "actualDimsMm": [
+        190,
+        190,
+        115
+      ],
+      "scadFile": "parts/coanda-airfoil-upper.scad",
+      "stlFile": "parts/coanda-airfoil-upper.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1264,
+        "volumeMm3": 1349562.09,
+        "actualDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "targetDimsMm": [
+          190,
+          190,
+          115
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1264,
+      "volumeMm3": 1349562.09,
+      "isManifold": true
+    },
+    {
+      "partId": "control-bezel-pod",
+      "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
+      "targetDimsMm": [
+        68,
+        44,
+        24
+      ],
+      "actualDimsMm": [
+        68,
+        44,
+        24
+      ],
+      "scadFile": "parts/control-bezel-pod.scad",
+      "stlFile": "parts/control-bezel-pod.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 816,
+        "volumeMm3": 9463.69,
+        "actualDimsMm": [
+          68,
+          44,
+          24
+        ],
+        "targetDimsMm": [
+          68,
+          44,
+          24
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 816,
+      "volumeMm3": 9463.69,
+      "isManifold": true
+    }
+  ]
+}
