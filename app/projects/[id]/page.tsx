@@ -214,6 +214,8 @@ export default function ProjectPage() {
   const PeerMissionControlComp = useMemo(
     () =>
       resolveOptionalPeerComponent([
+        'mission/MissionControl',
+        'mission/index',
         'ui/MissionControl',
         'ui/AgentGraph',
         'ui/AgentTimeline',
@@ -302,28 +304,28 @@ export default function ProjectPage() {
 
   return (
     <div className="space-y-6 pb-16">
-      {/* Top Bar & Savings Summary */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-slate-800 bg-slate-900/75 p-5 sm:flex-row sm:items-center sm:justify-between">
+      {/* Top Bar & Savings Summary (Frosted Obsidian Glass Chrome) */}
+      <div className="flex flex-col gap-4 rounded-2xl glass-panel p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
             <Link
               href="/"
-              className="inline-flex items-center gap-1 text-xs text-slate-400 hover:text-white"
+              className="inline-flex items-center gap-1 font-mono text-xs text-slate-400 hover:text-[#00f5a0] transition-colors"
             >
               <ArrowLeft className="h-3.5 w-3.5" /> All Projects
             </Link>
             <span className="text-slate-700">/</span>
-            <span className="rounded-md border border-slate-700 bg-slate-950 px-2 py-0.5 font-mono text-[11px] text-slate-300">
+            <span className="rounded-md border border-white/10 bg-[#050608] px-2 py-0.5 font-mono text-[11px] text-slate-300">
               data/objects/{manifest.id}
             </span>
             {manifest.isSample && (
-              <span className="rounded-md border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-[11px] font-semibold text-emerald-300">
+              <span className="rounded-md border border-[#00f5a0]/30 bg-[#00f5a0]/10 px-2 py-0.5 font-mono text-[11px] font-semibold text-[#00f5a0]">
                 Pre-Generated Sample
               </span>
             )}
           </div>
 
-          <h1 className="text-2xl font-extrabold text-white sm:text-3xl">
+          <h1 className="font-display text-2xl font-extrabold tracking-tight text-white sm:text-3xl">
             {manifest.title}
           </h1>
           {analysis?.tagline && (
@@ -335,13 +337,13 @@ export default function ProjectPage() {
 
         {/* Savings Pill */}
         {bom && (
-          <div className="flex items-center gap-4 rounded-2xl border border-emerald-500/30 bg-emerald-500/10 px-5 py-3">
+          <div className="flex items-center gap-4 rounded-2xl border border-[#00f5a0]/35 bg-[#00f5a0]/10 px-5 py-3 shadow-electric">
             <div>
-              <div className="text-[11px] uppercase tracking-wider text-emerald-300 font-semibold">
+              <div className="font-mono text-[11px] uppercase tracking-wider text-[#00f5a0] font-semibold">
                 Total DIY Build vs. Retail
               </div>
-              <div className="flex items-baseline gap-2">
-                <span className="text-2xl font-black text-white">
+              <div className="flex items-baseline gap-2 font-mono tabular-nums">
+                <span className="font-display text-2xl font-black text-white">
                   ${bom.summary.totalDiyCost.toFixed(2)}
                 </span>
                 <span className="text-xs text-slate-400 line-through">
@@ -349,7 +351,7 @@ export default function ProjectPage() {
                 </span>
               </div>
             </div>
-            <div className="rounded-xl bg-emerald-400 px-3 py-1.5 text-slate-950 font-black text-xs">
+            <div className="rounded-xl bg-[#00f5a0] px-3 py-1.5 text-[#050608] font-mono font-black text-xs tabular-nums">
               YOU SAVE ${bom.summary.totalSavings.toFixed(2)} (
               {bom.summary.savingsPercent}%)
             </div>
@@ -500,38 +502,46 @@ export default function ProjectPage() {
         )}
       </section>
 
-      {/* Navigation Tabs */}
-      <div className="flex flex-wrap items-center gap-2 border-b border-slate-800 pb-3">
-        {TABS.map((t) => {
-          const Icon = t.icon;
-          const active = activeTab === t.id;
-          return (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => setActiveTab(t.id)}
-              className={`inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-xs font-bold transition-all ${
-                active
-                  ? 'bg-emerald-400 text-slate-950 shadow-lg shadow-emerald-500/20'
-                  : 'border border-slate-800 bg-slate-900/70 text-slate-300 hover:border-slate-700 hover:text-white'
-              }`}
-            >
-              <Icon className="h-4 w-4" />
-              {t.label}
-              {t.badge && (
+      {/* Sticky Glass Navigation Tabs with Animated Active Underline */}
+      <div className="sticky top-[57px] z-40 -mx-1 rounded-2xl border border-white/[0.08] bg-[#050608]/85 backdrop-blur-xl px-3 py-2 shadow-glass">
+        <div className="flex flex-wrap items-center gap-2">
+          {TABS.map((t) => {
+            const Icon = t.icon;
+            const active = activeTab === t.id;
+            return (
+              <button
+                key={t.id}
+                type="button"
+                onClick={() => setActiveTab(t.id)}
+                className={`relative inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-display text-xs font-bold transition-all duration-200 ${
+                  active
+                    ? 'bg-[#00f5a0]/15 text-[#00f5a0] border border-[#00f5a0]/40 shadow-[0_0_24px_-6px_rgba(0,245,160,0.35)]'
+                    : 'border border-transparent bg-white/[0.03] text-slate-300 hover:border-white/10 hover:text-white'
+                }`}
+              >
+                <Icon className="h-4 w-4" />
+                {t.label}
+                {t.badge && (
+                  <span
+                    className={`rounded-md px-1.5 py-0.5 text-[10px] font-mono tabular-nums ${
+                      active
+                        ? 'bg-[#00f5a0] text-[#050608] font-bold'
+                        : 'bg-slate-800/90 text-slate-300'
+                    }`}
+                  >
+                    {t.badge}
+                  </span>
+                )}
                 <span
-                  className={`rounded-md px-1.5 py-0.5 text-[10px] font-mono ${
-                    active
-                      ? 'bg-slate-950/20 text-slate-950'
-                      : 'bg-slate-800 text-slate-300'
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-x-3 -bottom-1 h-0.5 rounded-full bg-gradient-to-r from-[#00f5a0] via-emerald-300 to-sky-400 transition-all duration-300 ${
+                    active ? 'opacity-100 scale-x-100' : 'opacity-0 scale-x-0'
                   }`}
-                >
-                  {t.badge}
-                </span>
-              )}
-            </button>
-          );
-        })}
+                />
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* TAB 1: OVERVIEW */}
