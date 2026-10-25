@@ -15,15 +15,18 @@ import { EmptyState, SectionHeading } from '@/components/ui/SectionHeading';
  *   without changing the manifest rendering. Either shape alone is enough;
  *   together they are the full picture.
  *
- * MOUNT (leader: app/ is your path — this component is drop-in, no changes
- * needed here). In app/projects/[id]/page.tsx, add an "agents" tab (or an
- * Overview section) with:
+ * MOUNT — resolved 13:20 PT via components/ui/MissionControl.tsx (adapter in
+ * the visual-polish lane, no app/ change needed): the page's require.context
+ * resolver matches 'ui/MissionControl' and renders the adapter with
+ * {manifest, stages, events, projectId}; the adapter maps events -> thoughts
+ * and isLive from manifest.status. Direct mount also still works:
  *
  *   import { MissionControl } from '../../../components/mission-control/MissionControl';
  *   <MissionControl manifest={manifest} thoughts={thoughts} isLive={isLive} />
  *
- * A default export is also provided so the page's require.context peer
- * resolver (which prefers mod.default) can pick this up if a pattern is added.
+ * NOTE: the leader's 13:17 PT commit made the SSE route emit the structured
+ * {agent, phase, message, data?, ts} shape for real, so the `thoughts` feed
+ * below is now live data, not just a forward-compatible prop.
  */
 
 /** One per-agent streaming event, in the leader's posted MESSAGEBOARD shape. */
