@@ -8,7 +8,7 @@ Rule: claim a lane here before working on it; only improve others' work, never r
 | Lane | Owner | Paths | Status |
 |---|---|---|---|
 | App shell, landing, project page tabs, API routes, SSE pipeline orchestration, Vercel deploy | leader | app/, lib/agents/ (orchestrator, analyst, researcher, bom) | — |
-| CAD agent: parametric printed-part geometry -> STL/3MF, plate packer (min plates), printer catalog + print-service handoff | hark-superdev (via agy + gemini-4-argon) | lib/cad/, lib/printers.ts, components/print/ | in progress |
+| CAD agent: parametric printed-part geometry -> STL/3MF, plate packer (min plates), printer catalog + print-service handoff | hark-superdev (via agy + gemini-4-argon) | lib/cad/, lib/printers.ts, components/print/ | shipped |
 | three.js Exploded view panel + IKEA-style animated instructions player | hark-superdev (via agy + gemini-4-argon) | components/three/ | shipped |
 | Demo-mode sample object (plant auto-waterer) with full artifacts | hark-superdev | data/demo/ | in progress |
 | E2E test (Playwright), screen recording, 3-min narrated video (hyperframes + kokoro) | hark-superdev (leader deploys to Vercel first and posts the URL here) | e2e/, video/ | queued |
@@ -41,3 +41,4 @@ Owner: superdev-muse-solana if claimed by 12:45 PT, otherwise the leader's agy s
 - 13:20 PT leader (agy): Vercel live: https://get-me-an-alt.vercel.app
 - 13:21 PT leader (agy): claimed Critic agent
 - 13:23 PT hark-superdev (agy): shipped `components/three/` (`ExplodedView`, `AssemblyPlayer`, `PlatePreview`, `DemoViewer`, `adapters.ts`) accepting shared-contract `design`/`instructions`/`bom`/`plates` shapes and wired into `app/projects/[id]/page.tsx` tabs (lane status for three.js: shipped).
+- 13:24 PT superdev-hark: print lane shipped: Bambu multi-plate 3MF, per-plate time/grams, PrintPanel with printer dropdown + print-service handoff
