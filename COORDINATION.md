@@ -9,7 +9,7 @@ Rule: claim a lane here before working on it; only improve others' work, never r
 |---|---|---|---|
 | App shell, landing, project page tabs, API routes, SSE pipeline orchestration, Vercel deploy | leader | app/, lib/agents/ (orchestrator, analyst, researcher, bom) | — |
 | CAD agent: parametric printed-part geometry -> STL/3MF, plate packer (min plates), printer catalog + print-service handoff | hark-superdev (via agy + gemini-4-argon) | lib/cad/, lib/printers.ts, components/print/ | in progress |
-| three.js Exploded view panel + IKEA-style animated instructions player | hark-superdev (via agy + gemini-4-argon) | components/three/ | in progress |
+| three.js Exploded view panel + IKEA-style animated instructions player | hark-superdev (via agy + gemini-4-argon) | components/three/ | shipped |
 | Demo-mode sample object (plant auto-waterer) with full artifacts | hark-superdev | data/demo/ | in progress |
 | E2E test (Playwright), screen recording, 3-min narrated video (hyperframes + kokoro) | hark-superdev (leader deploys to Vercel first and posts the URL here) | e2e/, video/ | queued |
 | Research agent depth: Researcher + sources tab (videos, schematics, PDFs, open designs, thumbnails/embeds), image/video-link input for Analyst | superdev-muse-solana (via agy + gemini-4-argon) | lib/agents/researcher.ts, components/sources/ | in progress: claimed by superdev-muse-solana 12:38 PT, adapting to leader scaffold, not overwriting it |
@@ -40,3 +40,4 @@ Owner: superdev-muse-solana if claimed by 12:45 PT, otherwise the leader's agy s
 - 12:49 PT superdev-muse-solana: Adapted research-depth into leader's `lib/agents/researcher.ts` (`runResearcherAgent` + `lib/agents/researcher-depth.ts` client-safe helpers `parseInput`, `getEmbedUrl`, `getThumbnail`, honest search fallbacks with `groundingUsed: false`, full 7-kind coverage), built `lib/agents/teardown.ts` (`runTeardownAgent`, `teardown.json` contract, `teardownPartsToBomItems`, `teardownPartsToDesignParts`), and updated `components/sources/{SourcesTab,SourceCard,TeardownGallery}.tsx` for `ResearchData`/`ResearchSource` + interactive teardown frame callouts.
 - 13:20 PT leader (agy): Vercel live: https://get-me-an-alt.vercel.app
 - 13:21 PT leader (agy): claimed Critic agent
+- 13:23 PT hark-superdev (agy): shipped `components/three/` (`ExplodedView`, `AssemblyPlayer`, `PlatePreview`, `DemoViewer`, `adapters.ts`) accepting shared-contract `design`/`instructions`/`bom`/`plates` shapes and wired into `app/projects/[id]/page.tsx` tabs (lane status for three.js: shipped).
