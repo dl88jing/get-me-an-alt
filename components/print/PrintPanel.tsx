@@ -1016,10 +1016,70 @@ export function PrintPanel({
                     const svgY =
                       selectedPrinter.bed.y - item.y - item.depth;
                     const minDim = Math.min(item.width, item.depth);
+                    const innerW = Math.max(4, item.width - 5);
+                    const innerH = Math.max(4, item.depth - 4);
+                    const showName = minDim >= 14 && item.width >= 16;
+                    const showDims = item.depth >= 24 && item.width >= 28;
+                    const clipId = `slicer-part-clip-${safePlateIdx}-${idx}`;
+
+                    const copySuffix =
+                      (item.copy ?? 1) > 1 ? ` #${item.copy}` : '';
+                    const fullLabel = `${item.name || item.partId}${copySuffix}`;
+
                     const fontSize = Math.max(
-                      4.2,
-                      Math.min(8.5, minDim * 0.22)
+                      3.8,
+                      Math.min(
+                        7.5,
+                        Math.min(
+                          innerW * 0.13,
+                          innerH * (showDims ? 0.26 : 0.42)
+                        )
+                      )
                     );
+                    const maxLabelChars = Math.max(
+                      3,
+                      Math.floor(innerW / (fontSize * 0.62))
+                    );
+                    const displayLabel =
+                      fullLabel.length > maxLabelChars
+                        ? `${fullLabel
+                            .slice(0, Math.max(2, maxLabelChars - 1))
+                            .trimEnd()}…`
+                        : fullLabel;
+
+                    const fullDimStr = `${Math.round(item.width)}×${Math.round(
+                      item.depth
+                    )}×${Math.round(item.height)}mm${
+                      item.rotated ? ' ↻90°' : ''
+                    }`;
+                    const shortDimStr = `${Math.round(item.width)}×${Math.round(
+                      item.depth
+                    )}mm${item.rotated ? ' ↻' : ''}`;
+                    const minDimStr = `${Math.round(item.width)}×${Math.round(
+                      item.depth
+                    )}`;
+                    const baseDimFontSize = Math.max(
+                      3.4,
+                      Math.min(5.8, fontSize * 0.78)
+                    );
+                    const dimLabel =
+                      fullDimStr.length * baseDimFontSize * 0.6 <= innerW
+                        ? fullDimStr
+                        : shortDimStr.length * baseDimFontSize * 0.6 <= innerW
+                        ? shortDimStr
+                        : minDimStr;
+                    const dimFontSize = Math.min(
+                      baseDimFontSize,
+                      Math.max(3.2, innerW / Math.max(1, dimLabel.length * 0.62))
+                    );
+
+                    const fullTooltip = `${item.name || item.partId}${copySuffix} (${
+                      item.partId
+                    }) — ${Math.round(item.width)}×${Math.round(
+                      item.depth
+                    )}×${Math.round(item.height)} mm${
+                      item.rotated ? ' · Rotated 90°' : ''
+                    }`;
 
                     return (
                       <g
@@ -1031,6 +1091,17 @@ export function PrintPanel({
                         }
                         className="cursor-pointer transition-opacity"
                       >
+                        <title>{fullTooltip}</title>
+                        <clipPath id={clipId}>
+                          <rect
+                            x={item.x + 2}
+                            y={svgY + 1.5}
+                            width={Math.max(0, item.width - 4)}
+                            height={Math.max(0, item.depth - 3)}
+                            rx={2}
+                          />
+                        </clipPath>
+
                         {/* Skirt / Brim ring */}
                         <rect
                           x={item.x - 1.5}
@@ -1058,12 +1129,16 @@ export function PrintPanel({
                           strokeWidth={isHovered ? 1.8 : 1.1}
                         />
 
-                        {/* Label inside footprint if large enough */}
-                        {minDim >= 18 && (
-                          <>
+                        {/* Label inside footprint clipped to box bounds */}
+                        {showName && (
+                          <g clipPath={`url(#${clipId})`}>
                             <text
                               x={item.x + item.width / 2}
-                              y={svgY + item.depth / 2 - (minDim > 34 ? 2 : 0)}
+                              y={
+                                svgY +
+                                item.depth / 2 -
+                                (showDims ? dimFontSize * 0.55 : 0)
+                              }
                               textAnchor="middle"
                               dominantBaseline="middle"
                               fill="#f8fafc"
@@ -1071,26 +1146,22 @@ export function PrintPanel({
                               fontFamily="monospace"
                               fontWeight="bold"
                             >
-                              {item.partId.slice(0, 14)}
-                              {(item.copy ?? 1) > 1 ? ` #${item.copy}` : ''}
+                              {displayLabel}
                             </text>
-                            {minDim > 34 && (
+                            {showDims && (
                               <text
                                 x={item.x + item.width / 2}
-                                y={svgY + item.depth / 2 + fontSize + 1.5}
+                                y={svgY + item.depth / 2 + fontSize * 0.72}
                                 textAnchor="middle"
                                 dominantBaseline="middle"
                                 fill="#cbd5e1"
-                                fontSize={Math.max(3.8, fontSize * 0.78)}
+                                fontSize={dimFontSize}
                                 fontFamily="monospace"
                               >
-                                {Math.round(item.width)}×
-                                {Math.round(item.depth)}×
-                                {Math.round(item.height)}mm
-                                {item.rotated ? ' ↻90°' : ''}
+                                {dimLabel}
                               </text>
                             )}
-                          </>
+                          </g>
                         )}
                       </g>
                     );

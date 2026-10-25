@@ -437,6 +437,51 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
                     const isSel = selectedItemIdx === idx;
                     const cx = item.x + item.w / 2;
                     const cy = item.y + item.h / 2;
+                    const clipId = `plate-preview-clip-${selectedPlateIdx}-${idx}`;
+
+                    const innerW = Math.max(4, item.w - 6);
+                    const innerH = Math.max(4, item.h - 4);
+                    const showName = item.w >= 16 && item.h >= 11;
+                    const showDims = item.w >= 28 && item.h >= 22;
+
+                    const nameFontSize = Math.min(
+                      7.5,
+                      Math.max(4.0, Math.min(innerW * 0.13, innerH * (showDims ? 0.26 : 0.42)))
+                    );
+                    const maxNameChars = Math.max(
+                      3,
+                      Math.floor(innerW / (nameFontSize * 0.62))
+                    );
+                    const fullName = item.name || item.partId;
+                    const truncatedName =
+                      fullName.length > maxNameChars
+                        ? `${fullName.slice(0, Math.max(2, maxNameChars - 1)).trimEnd()}…`
+                        : fullName;
+
+                    const fullDimText = `${Math.round(item.w)}×${Math.round(item.h)}mm${
+                      item.rotated ? " ↻" : ""
+                    }`;
+                    const compactDimText = `${Math.round(item.w)}×${Math.round(item.h)}${
+                      item.rotated ? "↻" : ""
+                    }`;
+                    const rawDimFontSize = Math.min(
+                      6.2,
+                      Math.max(3.6, Math.min(innerW * 0.1, innerH * 0.2))
+                    );
+                    const dimText =
+                      fullDimText.length * rawDimFontSize * 0.6 <= innerW
+                        ? fullDimText
+                        : compactDimText;
+                    const dimFontSize = Math.min(
+                      rawDimFontSize,
+                      Math.max(3.5, innerW / Math.max(1, dimText.length * 0.62))
+                    );
+
+                    const fullTooltip = `${fullName} (${item.partId}) — ${Math.round(
+                      item.w
+                    )}×${Math.round(item.h)} mm${
+                      item.rotated ? " · Rotated 90°" : ""
+                    }`;
 
                     return (
                       <g
@@ -447,6 +492,17 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
                         className="cursor-pointer"
                         data-testid={`plate-item-${item.partId}`}
                       >
+                        <title>{fullTooltip}</title>
+                        <clipPath id={clipId}>
+                          <rect
+                            x={item.x + 2}
+                            y={item.y + 1.5}
+                            width={Math.max(0, item.w - 4)}
+                            height={Math.max(0, item.h - 3)}
+                            rx={2.5}
+                          />
+                        </clipPath>
+
                         {/* Outer Slicer Brim Ring */}
                         <rect
                           x={item.x - 2}
@@ -486,34 +542,36 @@ export const PlatePreview: React.FC<PlatePreviewProps> = ({
                           strokeOpacity={0.5}
                         />
 
-                        {/* Part Name & Dimensions Label */}
-                        <text
-                          x={cx}
-                          y={cy - 2}
-                          textAnchor="middle"
-                          fill="#F8FAFC"
-                          fontSize={Math.min(
-                            8.5,
-                            Math.max(6, item.w * 0.14)
-                          )}
-                          fontFamily="sans-serif"
-                          fontWeight="bold"
-                        >
-                          {item.name.length > 16
-                            ? `${item.name.slice(0, 14)}…`
-                            : item.name}
-                        </text>
-                        <text
-                          x={cx}
-                          y={cy + 8}
-                          textAnchor="middle"
-                          fill="#CBD5E1"
-                          fontSize={Math.min(7, Math.max(5.5, item.w * 0.11))}
-                          fontFamily="monospace"
-                        >
-                          {Math.round(item.w)}×{Math.round(item.h)}mm
-                          {item.rotated ? " ↻" : ""}
-                        </text>
+                        {/* Clipped Part Name & Dimensions Label */}
+                        {showName && (
+                          <g clipPath={`url(#${clipId})`}>
+                            <text
+                              x={cx}
+                              y={showDims ? cy - dimFontSize * 0.55 : cy}
+                              textAnchor="middle"
+                              dominantBaseline="middle"
+                              fill="#F8FAFC"
+                              fontSize={nameFontSize}
+                              fontFamily="sans-serif"
+                              fontWeight="bold"
+                            >
+                              {truncatedName}
+                            </text>
+                            {showDims && (
+                              <text
+                                x={cx}
+                                y={cy + nameFontSize * 0.72}
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                                fill="#CBD5E1"
+                                fontSize={dimFontSize}
+                                fontFamily="monospace"
+                              >
+                                {dimText}
+                              </text>
+                            )}
+                          </g>
+                        )}
                       </g>
                     );
                   })}
