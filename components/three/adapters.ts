@@ -977,7 +977,13 @@ export function resolveAssemblyParts(
     }
   }
 
-  return results;
+  return results.map((item, index) => ({
+    ...item,
+    calloutNumber: item.calloutNumber ?? index + 1,
+    stlFile:
+      item.stlFile ??
+      (item.category === "printed" ? `${item.partId}.stl` : undefined),
+  }));
 }
 
 export { normalizeDesignPart, normalizeDesignSpec, normalizeInstructions, normalizePartShape };

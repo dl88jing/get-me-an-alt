@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import * as THREE from "three";
-import { PartParams, PartShape } from "./types";
+import { STLLoader } from "three/examples/jsm/loaders/STLLoader.js";
+import { PartParams, PartShape, ResolvedAssemblyPart } from "./types";
 
 function pickNum(
   params: PartParams | undefined,
@@ -689,3 +690,293 @@ export const PartGeometry: React.FC<PartGeometryProps> = ({
   );
   return <primitive object={geometry} attach="geometry" />;
 };
+
+/**
+ * Converts an Euler angle value from either degrees (e.g. 90, -90, 180)
+ * or radians (e.g. 1.57, 0.3) into radians.
+ */
+export function toRadians(val: number | undefined): number {
+  if (!val || !Number.isFinite(val)) return 0;
+  if (Math.abs(val) > 0 && Math.abs(val) <= Math.PI * 2 && Math.abs(val) < 6.3) {
+    return val;
+  }
+  return THREE.MathUtils.degToRad(val);
+}
+
+/**
+ * Maps demo/sample printed part IDs (across `data/demo/plant-waterer/design.json`,
+ * `SAMPLE_DESIGN`, and `FALLBACK_PLANT_WATERER_DESIGN`) to the real binary STL files
+ * in `data/demo/plant-waterer/parts/*.stl`.
+ */
+export const DEMO_PART_STL_MAP: Record<string, string> = {
+  // data/demo/plant-waterer/design.json part IDs
+  "reservoir-tank": "reservoir-tank.stl",
+  "reservoir-lid": "reservoir-lid.stl",
+  "pump-mount": "pump-mount.stl",
+  "refill-funnel": "refill-funnel.stl",
+  "controller-box": "controller-box.stl",
+  "controller-bracket": "controller-bracket.stl",
+  "tube-clip": "tube-clip.stl",
+  "drip-stake": "drip-stake.stl",
+  "flow-wheel": "flow-wheel.stl",
+  // lib/sample-data.ts SAMPLE_DESIGN part IDs
+  "pump-cradle": "pump-mount.stl",
+  "drip-manifold": "flow-wheel.stl",
+  "controller-enclosure": "controller-box.stl",
+  "enclosure-cover": "controller-bracket.stl",
+  "emitter-spike": "drip-stake.stl",
+  // components/three/demo.tsx FALLBACK_PLANT_WATERER_DESIGN part IDs
+  reservoir_base: "reservoir-tank.stl",
+  pump_mount_plate: "pump-mount.stl",
+  inner_planter_cup: "reservoir-lid.stl",
+  float_guide_tube: "tube-clip.stl",
+  refill_funnel: "refill-funnel.stl",
+  sensor_bracket: "controller-bracket.stl",
+  flow_dosing_gear: "flow-wheel.stl",
+  drip_rim_clip: "tube-clip.stl",
+};
+
+const STL_GEOMETRY_CACHE = new Map<string, THREE.BufferGeometry | null>();
+const STL_PROMISE_CACHE = new Map<string, Promise<THREE.BufferGeometry | null>>();
+const STL_EDGES_CACHE = new Map<string, THREE.EdgesGeometry>();
+
+let sharedStlLoader: STLLoader | null = null;
+function getStlLoader(): STLLoader {
+  if (!sharedStlLoader) {
+    sharedStlLoader = new STLLoader();
+  }
+  return sharedStlLoader;
+}
+
+/**
+ * Builds candidate STL fetch URLs for a printed part.
+ * Uses `/api/objects/[id]/stl/[filename]` for live objects and `/api/objects/plant-waterer/stl/[filename]`
+ * to load `data/demo/plant-waterer/parts/*.stl` for the demo plant-waterer project.
+ */
+export function getCandidateStlUrls(
+  partId: string,
+  projectId?: string,
+  stlFile?: string
+): string[] {
+  const baseId = String(partId || "")
+    .trim()
+    .replace(/-\d+$/, "");
+  if (!baseId) return [];
+
+  const explicitBase = stlFile
+    ? stlFile.split("/").pop() || `${baseId}.stl`
+    : `${baseId}.stl`;
+  const mappedDemoFile = DEMO_PART_STL_MAP[baseId];
+
+  const isDemoProject =
+    !projectId ||
+    projectId === "plant-auto-waterer" ||
+    projectId === "plant-waterer" ||
+    projectId === "demo" ||
+    projectId === "sample";
+
+  const urls: string[] = [];
+  const pushUnique = (u: string) => {
+    if (!urls.includes(u)) urls.push(u);
+  };
+
+  if (!isDemoProject && projectId) {
+    pushUnique(
+      `/api/objects/${encodeURIComponent(projectId)}/stl/${encodeURIComponent(
+        explicitBase
+      )}`
+    );
+  }
+
+  if (mappedDemoFile) {
+    pushUnique(
+      `/api/objects/plant-waterer/stl/${encodeURIComponent(mappedDemoFile)}`
+    );
+  } else if (isDemoProject) {
+    pushUnique(
+      `/api/objects/plant-waterer/stl/${encodeURIComponent(explicitBase)}`
+    );
+  }
+
+  if (projectId && projectId !== "plant-waterer") {
+    pushUnique(
+      `/api/objects/${encodeURIComponent(projectId)}/stl/${encodeURIComponent(
+        explicitBase
+      )}`
+    );
+  }
+
+  return urls;
+}
+
+/**
+ * Centers and orients a raw STL BufferGeometry (generated on a Z-up print bed)
+ * to Three.js Y-up local coordinates so it aligns with `design.json` position/rotation.
+ */
+export function orientAndCenterStlGeometry(
+  rawGeo: THREE.BufferGeometry,
+  shape: PartShape | string
+): THREE.BufferGeometry {
+  const geo = rawGeo.clone();
+  geo.computeBoundingBox();
+  const box = geo.boundingBox;
+  const sizeX = box ? box.max.x - box.min.x : 30;
+  const sizeY = box ? box.max.y - box.min.y : 30;
+  const sizeZ = box ? box.max.z - box.min.z : 30;
+
+  if (shape === "funnel") {
+    // Support-free funnels are printed upside-down on the bed (wide rim at Z=0, spout at Z=max).
+    // Rotate +90° around X so wide mouth faces +Y (up) and spout points -Y (down).
+    geo.rotateX(Math.PI / 2);
+  } else if (
+    shape === "hook" ||
+    shape === "bracketL" ||
+    shape === "bracket" ||
+    (sizeY > sizeX * 2.2 && sizeY > sizeZ * 2.2)
+  ) {
+    // Elongated stakes/hooks laid along Y on the print bed (e.g. drip-stake.stl)
+    // already have their tall vertical axis along Y.
+  } else {
+    // Standard Z-up print bed STL (reservoir, lid, gear, pump mount, enclosure) ->
+    // rotate -90° around X so print bed X-Y becomes horizontal X-Z and print Z becomes +Y.
+    geo.rotateX(-Math.PI / 2);
+  }
+
+  geo.center();
+  geo.computeVertexNormals();
+  geo.computeBoundingBox();
+  geo.computeBoundingSphere();
+  return geo;
+}
+
+/**
+ * Asynchronously fetches and parses a part's STL via Three's STLLoader,
+ * validating that it is a real closed mesh (rejecting the 2-facet fallback stub)
+ * and orienting/centering it to match `design.json`.
+ */
+export async function loadPartStlGeometry(
+  partId: string,
+  shape: PartShape | string,
+  projectId?: string,
+  stlFile?: string
+): Promise<THREE.BufferGeometry | null> {
+  if (typeof window === "undefined") return null;
+
+  const urls = getCandidateStlUrls(partId, projectId, stlFile);
+  if (urls.length === 0) return null;
+
+  const cacheKey = `${projectId || "demo"}:${partId}:${shape}:${urls.join("|")}`;
+  if (STL_GEOMETRY_CACHE.has(cacheKey)) {
+    return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
+  }
+  const existingPromise = STL_PROMISE_CACHE.get(cacheKey);
+  if (existingPromise) return existingPromise;
+
+  const promise = (async (): Promise<THREE.BufferGeometry | null> => {
+    const loader = getStlLoader();
+    for (const url of urls) {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) continue;
+        const buf = await res.arrayBuffer();
+        if (!buf || buf.byteLength < 84) continue;
+        const parsed = loader.parse(buf);
+        const posAttr = parsed.getAttribute("position");
+        // Reject the 2-facet (6-vertex) missing-file stub from /api/objects/[id]/stl/[filename]
+        if (!posAttr || posAttr.count < 36) {
+          continue;
+        }
+        const oriented = orientAndCenterStlGeometry(parsed, shape);
+        STL_GEOMETRY_CACHE.set(cacheKey, oriented);
+        return oriented;
+      } catch {
+        // Try next candidate URL or fall back to procedural geometry
+      }
+    }
+    STL_GEOMETRY_CACHE.set(cacheKey, null);
+    return null;
+  })();
+
+  STL_PROMISE_CACHE.set(cacheKey, promise);
+  return promise;
+}
+
+/**
+ * React hook that loads the real STL geometry + EdgesGeometry for printed parts
+ * via `STLLoader`, falling back seamlessly to procedural shapes when unavailable.
+ */
+export function usePartGeometryAndEdges(
+  part: Pick<
+    ResolvedAssemblyPart,
+    "partId" | "category" | "shape" | "params" | "dims_mm" | "stlFile"
+  >,
+  projectId?: string,
+  edgeThresholdAngle = 22
+): {
+  geometry: THREE.BufferGeometry;
+  edgesGeometry: THREE.EdgesGeometry;
+  boundRadius: number;
+  isStlLoaded: boolean;
+} {
+  const fallbackGeometry = useMemo(
+    () => buildPartGeometry(part.shape, part.params),
+    [part.shape, part.params]
+  );
+
+  const fallbackEdges = useMemo(
+    () => buildPartEdgesGeometry(part.shape, part.params, edgeThresholdAngle),
+    [part.shape, part.params, edgeThresholdAngle]
+  );
+
+  const [stlGeo, setStlGeo] = useState<THREE.BufferGeometry | null>(() => {
+    if (part.category !== "printed") return null;
+    const urls = getCandidateStlUrls(part.partId, projectId, part.stlFile);
+    const cacheKey = `${projectId || "demo"}:${part.partId}:${part.shape}:${urls.join("|")}`;
+    return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
+  });
+
+  useEffect(() => {
+    if (part.category !== "printed") {
+      setStlGeo(null);
+      return;
+    }
+    let cancelled = false;
+    loadPartStlGeometry(part.partId, part.shape, projectId, part.stlFile).then(
+      (loaded) => {
+        if (!cancelled && loaded) {
+          setStlGeo(loaded);
+        }
+      }
+    );
+    return () => {
+      cancelled = true;
+    };
+  }, [part.partId, part.category, part.shape, part.stlFile, projectId]);
+
+  const activeGeometry = stlGeo || fallbackGeometry;
+
+  const activeEdges = useMemo(() => {
+    if (!stlGeo) return fallbackEdges;
+    const edgeKey = `stl:${projectId || "demo"}:${part.partId}:${edgeThresholdAngle}`;
+    const cached = STL_EDGES_CACHE.get(edgeKey);
+    if (cached) return cached;
+    const computed = new THREE.EdgesGeometry(stlGeo, edgeThresholdAngle);
+    STL_EDGES_CACHE.set(edgeKey, computed);
+    return computed;
+  }, [stlGeo, fallbackEdges, projectId, part.partId, edgeThresholdAngle]);
+
+  const boundRadius = useMemo(() => {
+    if (!activeGeometry.boundingSphere) {
+      activeGeometry.computeBoundingSphere();
+    }
+    return activeGeometry.boundingSphere?.radius ?? 25;
+  }, [activeGeometry]);
+
+  return {
+    geometry: activeGeometry,
+    edgesGeometry: activeEdges,
+    boundRadius,
+    isStlLoaded: Boolean(stlGeo),
+  };
+}
+

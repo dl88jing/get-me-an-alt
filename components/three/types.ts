@@ -314,6 +314,8 @@ export type PartFilterMode = "all" | "printed" | "purchased";
 export interface ResolvedAssemblyPart {
   /** Unique key per assembly placement instance */
   instanceId: string;
+  /** 1-based callout number matching the parts legend */
+  calloutNumber?: number;
   partId: string;
   partNumber?: string;
   name: string;
@@ -330,6 +332,7 @@ export interface ResolvedAssemblyPart {
   rotation: [number, number, number];
   explode: [number, number, number];
   step: number;
+  stlFile?: string;
   bomRef?: string;
   bomLine?: string;
   bomItem?: BomItem;

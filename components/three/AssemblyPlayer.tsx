@@ -19,7 +19,7 @@ import {
   resolveAssemblyParts,
 } from "./types";
 import { adaptInstructions } from "./adapters";
-import { buildPartGeometry, buildPartEdgesGeometry } from "./shapes";
+import { usePartGeometryAndEdges, toRadians } from "./shapes";
 
 export interface AssemblyPlayerProps {
   design?: AnyDesignInput;
@@ -102,31 +102,35 @@ function easeOutCubic(t: number): number {
 
 interface IkeaPartMeshProps {
   part: ResolvedAssemblyPart;
+  calloutNumber: number;
+  projectId?: string;
   status: "assembled" | "active" | "future";
   stepProgress: number; // 0..1 within current step
   action?: string;
   motionVector?: StepMotion;
   activeIndex?: number;
   activeCount?: number;
+  showCallouts?: boolean;
+  isHighlighted?: boolean;
 }
 
 const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
   part,
+  calloutNumber,
+  projectId,
   status,
   stepProgress,
   action,
   motionVector,
   activeIndex = 0,
   activeCount = 1,
+  showCallouts = true,
+  isHighlighted = false,
 }) => {
-  const geometry = useMemo(
-    () => buildPartGeometry(part.shape, part.params),
-    [part.shape, part.params]
-  );
-
-  const edgesGeometry = useMemo(
-    () => buildPartEdgesGeometry(part.shape, part.params, 20),
-    [part.shape, part.params]
+  const { geometry, edgesGeometry, boundRadius } = usePartGeometryAndEdges(
+    part,
+    projectId,
+    20
   );
 
   const gradientMap = useMemo(() => getToonGradientTexture(), []);
@@ -190,28 +194,45 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
     endPos[2] + deltaVec[2] * inv,
   ];
 
-  const spinOffsetDeg =
+  const spinOffsetRad =
     status === "active" && (action === "screw" || action === "fasten")
-      ? inv * 360
+      ? THREE.MathUtils.degToRad(inv * 360)
       : 0;
 
   const eulerRad = new THREE.Euler(
-    THREE.MathUtils.degToRad(part.rotation[0] || 0),
-    THREE.MathUtils.degToRad((part.rotation[1] || 0) + spinOffsetDeg),
-    THREE.MathUtils.degToRad(part.rotation[2] || 0)
+    toRadians(part.rotation[0]),
+    toRadians(part.rotation[1]) + spinOffsetRad,
+    toRadians(part.rotation[2])
   );
 
   const explodeDist = Math.hypot(deltaVec[0], deltaVec[1], deltaVec[2]);
 
   // Paper / IKEA cel-shaded color palette:
-  // Assembled parts: warm technical off-white paper fill (#EAE6DC) with charcoal ink outlines
+  // Assembled parts: warm technical off-white paper fill (#EAE6DF) with charcoal ink outlines
   // Active step parts: warm blueprint sky/amber fill (#BAE6FD for printed, #FDE68A for hardware) with bold black ink outlines
-  const fillHex =
-    status === "assembled"
-      ? "#EAE6DF"
-      : part.category === "purchased"
-      ? "#FDE68A"
-      : "#BAE6FD";
+  const fillHex = isHighlighted
+    ? "#7DD3FC"
+    : status === "assembled"
+    ? "#EAE6DF"
+    : part.category === "purchased"
+    ? "#FDE68A"
+    : "#BAE6FD";
+
+  // Compute callout anchor position relative to part's current 3D position
+  const calloutTargetPos: [number, number, number] = [
+    curPos[0] +
+      (status === "active"
+        ? activeCount > 1
+          ? (activeIndex - (activeCount - 1) / 2) * 28
+          : 28
+        : (calloutNumber % 2 === 0 ? 1 : -1) *
+          Math.min(28, Math.max(16, boundRadius * 0.55))),
+    curPos[1] +
+      (status === "active"
+        ? 18 + (activeIndex % 2) * 14
+        : 12 + (calloutNumber % 3) * 6),
+    curPos[2] + ((calloutNumber % 3) - 1) * 10,
+  ];
 
   return (
     <>
@@ -223,9 +244,9 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
             <group
               position={endPos}
               rotation={[
-                THREE.MathUtils.degToRad(part.rotation[0] || 0),
-                THREE.MathUtils.degToRad(part.rotation[1] || 0),
-                THREE.MathUtils.degToRad(part.rotation[2] || 0),
+                toRadians(part.rotation[0]),
+                toRadians(part.rotation[1]),
+                toRadians(part.rotation[2]),
               ]}
             >
               <lineSegments geometry={edgesGeometry}>
@@ -262,8 +283,16 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
         </group>
       )}
 
-      {/* Main Cel-Shaded Part + Bold Line-Art Edges */}
+      {/* Main Cel-Shaded Part + Inverted-Hull Silhouette + Bold Line-Art Edges */}
       <group position={curPos} rotation={eulerRad}>
+        {/* Back-face silhouette outline for curved STL surfaces */}
+        <mesh geometry={geometry} scale={[1.018, 1.018, 1.018]}>
+          <meshBasicMaterial
+            color={status === "active" || isHighlighted ? "#09090B" : "#27272A"}
+            side={THREE.BackSide}
+          />
+        </mesh>
+
         <mesh geometry={geometry} castShadow receiveShadow>
           <meshToonMaterial
             color={fillHex}
@@ -275,46 +304,53 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
         </mesh>
         <lineSegments geometry={edgesGeometry}>
           <lineBasicMaterial
-            color={status === "active" ? "#09090B" : "#27272A"}
-            linewidth={status === "active" ? 2 : 1.2}
+            color={status === "active" || isHighlighted ? "#09090B" : "#27272A"}
+            linewidth={status === "active" || isHighlighted ? 2 : 1.2}
           />
         </lineSegments>
       </group>
 
-      {/* Callout tag on active parts — placed in world space and clamped inside canvas bounds */}
-      {status === "active" && (
-        <Html
-          position={[
-            Math.max(
-              -38,
-              Math.min(
-                64,
-                curPos[0] +
-                  (activeCount > 1
-                    ? (activeIndex - (activeCount - 1) / 2) * 10
-                    : 0)
-              )
-            ),
-            Math.max(
-              -22,
-              Math.min(
-                62,
-                Math.max(-18, Math.min(26, curPos[1])) +
-                  14 +
-                  (activeIndex === 2 ? -20 : activeIndex * 20)
-              )
-            ),
-            Math.max(-48, Math.min(48, curPos[2])),
-          ]}
-          center
-          distanceFactor={270}
-          zIndexRange={[5, 0]}
-          style={{ pointerEvents: "none" }}
-        >
-          <div className="px-2 py-0.5 rounded bg-zinc-900 text-[#F6F3EA] font-mono text-[11px] font-bold border-2 border-zinc-900 shadow-sm whitespace-nowrap">
-            {part.name}
-          </div>
-        </Html>
+      {/* Numbered Callout with Leader Line on visible parts */}
+      {showCallouts && (
+        <group>
+          <Line
+            points={[curPos, calloutTargetPos]}
+            color={status === "active" || isHighlighted ? "#18181B" : "#52525B"}
+            lineWidth={status === "active" || isHighlighted ? 1.85 : 1.15}
+          />
+          <mesh position={curPos}>
+            <sphereGeometry args={[1.5, 12, 12]} />
+            <meshBasicMaterial
+              color={status === "active" || isHighlighted ? "#18181B" : "#52525B"}
+            />
+          </mesh>
+          <Html
+            position={calloutTargetPos}
+            center
+            distanceFactor={270}
+            zIndexRange={[5, 0]}
+            style={{ pointerEvents: "none" }}
+          >
+            {status === "active" || isHighlighted ? (
+              <div
+                className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-zinc-900 text-[#F6F3EA] font-mono text-[11px] font-bold border-2 border-zinc-900 shadow-md whitespace-nowrap"
+                data-testid={`assembly-callout-${calloutNumber}`}
+              >
+                <span className="w-4 h-4 rounded-full bg-[#F6F3EA] text-zinc-900 font-extrabold text-[10px] flex items-center justify-center shrink-0">
+                  {calloutNumber}
+                </span>
+                <span>{part.name}</span>
+              </div>
+            ) : (
+              <div
+                className="w-5 h-5 rounded-full bg-[#F6F3EA] text-zinc-900 font-mono text-[10px] font-extrabold border-2 border-zinc-900 shadow-sm flex items-center justify-center"
+                data-testid={`assembly-callout-${calloutNumber}`}
+              >
+                {calloutNumber}
+              </div>
+            )}
+          </Html>
+        </group>
       )}
     </>
   );
@@ -477,6 +513,7 @@ const ToolSvgIcon: React.FC<{ tool: ToolKey; className?: string }> = ({
 export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
   design,
   instructions,
+  projectId,
   externalStep,
   onStepDone,
   autoPlay = true,
@@ -522,6 +559,10 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
   const [isPlaying, setIsPlaying] = useState<boolean>(autoPlay);
   const [speed, setSpeed] = useState<number>(initialSpeed);
   const [loop, setLoop] = useState<boolean>(true);
+  const [showCallouts, setShowCallouts] = useState<boolean>(true);
+  const [highlightedInstanceId, setHighlightedInstanceId] = useState<
+    string | null
+  >(null);
   const stepDoneNotifiedRef = useRef<number | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const stepChipsContainerRef = useRef<HTMLDivElement | null>(null);
@@ -694,7 +735,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           </div>
         </div>
 
-        {/* Tool Icon Row */}
+        {/* Tool Icon Row + Callouts Toggle */}
         <div
           className="flex items-center gap-2 bg-[#F6F3EA] px-3 py-2 rounded-xl border-2 border-zinc-900 shrink-0"
           data-testid="tool-icon-row"
@@ -723,6 +764,22 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
               </div>
             );
           })}
+          <button
+            type="button"
+            onClick={() => setShowCallouts((v) => !v)}
+            data-testid="toggle-assembly-callouts"
+            className={`ml-1 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border-2 text-[11px] font-bold transition-all ${
+              showCallouts
+                ? "bg-zinc-900 text-[#F6F3EA] border-zinc-900"
+                : "bg-transparent text-zinc-600 border-zinc-400"
+            }`}
+            title="Toggle numbered part callouts"
+          >
+            <span className="w-4 h-4 rounded-full bg-[#F6F3EA] text-zinc-900 font-mono text-[10px] font-extrabold flex items-center justify-center">
+              #
+            </span>
+            <span className="hidden sm:inline">Callouts</span>
+          </button>
         </div>
       </div>
 
@@ -737,7 +794,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           shadows
           dpr={[1, 2]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
-          camera={{ position: [195, 155, 215], fov: 38, near: 1, far: 2500 }}
+          camera={{ position: [235, 175, 255], fov: 38, near: 1, far: 2500 }}
         >
           <color attach="background" args={["#F6F3EA"]} />
 
@@ -746,10 +803,10 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           <directionalLight position={[180, 260, 190]} intensity={1.35} />
           <directionalLight position={[-150, 120, -120]} intensity={0.45} />
 
-          <group position={[18, 6, 0]}>
+          <group position={[18, -32, 0]}>
             {(() => {
               let activeRunningIdx = 0;
-              return allParts.map((part) => {
+              return allParts.map((part, idx) => {
                 const motionVec = currentMotionByPartId.get(part.partId);
                 const inCurrentStep =
                   Boolean(motionVec) ||
@@ -767,12 +824,16 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                   <IkeaPartMesh
                     key={part.instanceId}
                     part={part}
+                    calloutNumber={part.calloutNumber ?? idx + 1}
+                    projectId={projectId}
                     status={status}
                     stepProgress={stepProgress}
                     action={currentStep.action}
                     motionVector={motionVec}
                     activeIndex={myActiveIdx}
                     activeCount={currentStepParts.length}
+                    showCallouts={showCallouts}
+                    isHighlighted={highlightedInstanceId === part.instanceId}
                   />
                 );
               });
@@ -810,44 +871,55 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             dampingFactor={0.08}
             minDistance={55}
             maxDistance={600}
-            target={[8, 10, 0]}
+            target={[12, 24, 0]}
           />
         </Canvas>
 
-        {/* Left Overlay: Step Parts Hardware Callout Box (IKEA Parts Box style) */}
-        <div className="absolute top-6 left-6 z-10 w-60 max-w-[calc(100%-3rem)] rounded-xl bg-[#F6F3EA]/95 border-2 border-zinc-900 p-3.5 shadow-[4px_4px_0px_#18181B]">
+        {/* Left Overlay: Step Parts Hardware Callout Box & Parts Legend (IKEA Parts Box style) */}
+        <div
+          className="absolute top-6 left-6 z-10 w-64 max-w-[calc(100%-3rem)] rounded-xl bg-[#F6F3EA]/95 border-2 border-zinc-900 p-3.5 shadow-[4px_4px_0px_#18181B]"
+          data-testid="assembly-parts-legend"
+        >
           <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-900/20">
             <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-zinc-900">
-              PARTS IN THIS STEP
+              PARTS LEGEND (STEP {currentStep.n})
             </span>
             <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-zinc-900 text-[#F6F3EA]">
               {currentStepParts.length}×
             </span>
           </div>
 
-          <div className="space-y-1.5">
-            {currentStepParts.map((p) => (
-              <div
-                key={p.instanceId}
-                className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#EFECE1] border border-zinc-900/25"
-              >
-                <div className="flex items-center gap-2 min-w-0">
-                  <span
-                    className={`w-2.5 h-2.5 rounded-sm border border-zinc-900 shrink-0 ${
-                      p.category === "purchased"
-                        ? "bg-amber-300"
-                        : "bg-sky-300"
-                    }`}
-                  />
-                  <span className="font-bold text-zinc-900 truncate">
-                    {p.name}
+          <div className="space-y-1.5 max-h-40 overflow-y-auto pr-0.5">
+            {currentStepParts.map((p) => {
+              const cNum = p.calloutNumber ?? 1;
+              return (
+                <div
+                  key={p.instanceId}
+                  onMouseEnter={() => setHighlightedInstanceId(p.instanceId)}
+                  onMouseLeave={() => setHighlightedInstanceId(null)}
+                  className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#EFECE1] border border-zinc-900/35 hover:border-zinc-900 transition-colors cursor-pointer"
+                >
+                  <div className="flex items-center gap-2 min-w-0">
+                    <span className="w-5 h-5 rounded-full bg-zinc-900 text-[#F6F3EA] font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
+                      {cNum}
+                    </span>
+                    <span
+                      className={`w-2.5 h-2.5 rounded-sm border border-zinc-900 shrink-0 ${
+                        p.category === "purchased"
+                          ? "bg-amber-300"
+                          : "bg-sky-300"
+                      }`}
+                    />
+                    <span className="font-bold text-zinc-900 truncate">
+                      {p.name}
+                    </span>
+                  </div>
+                  <span className="font-mono font-extrabold text-zinc-800 shrink-0">
+                    {p.quantity}×
                   </span>
                 </div>
-                <span className="font-mono font-extrabold text-zinc-800 shrink-0">
-                  {p.quantity}×
-                </span>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
           {/* Intra-step motion scrubber */}
