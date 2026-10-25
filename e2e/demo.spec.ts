@@ -24,7 +24,12 @@ async function saveStepScreenshot(page: Page, name: string): Promise<void> {
   try {
     fs.mkdirSync(SCREENSHOT_DIR, { recursive: true });
     const filePath = path.join(SCREENSHOT_DIR, `${name}.png`);
-    await page.screenshot({ path: filePath, fullPage: false });
+    await page.screenshot({
+      path: filePath,
+      fullPage: false,
+      animations: 'allow',
+      timeout: 10000,
+    });
   } catch (err) {
     console.warn(`[demo.spec] Could not capture screenshot ${name}:`, err);
   }
@@ -214,14 +219,14 @@ test.describe('Get Me An Alt — Full Story Screen Recording Walkthrough', () =>
       }
 
       // Filter chips in SourcesTab if present
-      for (const filterName of [/Videos/i, /Open Designs/i, /All Sources/i]) {
-        const chip = page
-          .locator('[aria-label="Filter sources by category"]')
-          .getByRole('button', { name: filterName })
-          .first();
-        if (await chip.isVisible({ timeout: 1000 }).catch(() => false)) {
-          await chip.click().catch(() => {});
-          await pause(page, 800);
+      const filterBar = page.locator('[aria-label="Filter sources by category"]');
+      if (await filterBar.isVisible({ timeout: 800 }).catch(() => false)) {
+        for (const filterName of [/Videos/i, /Open Designs/i, /All Sources/i]) {
+          const chip = filterBar.getByRole('button', { name: filterName }).first();
+          if (await chip.isVisible({ timeout: 800 }).catch(() => false)) {
+            await chip.click({ timeout: 1500 }).catch(() => {});
+            await pause(page, 800);
+          }
         }
       }
 

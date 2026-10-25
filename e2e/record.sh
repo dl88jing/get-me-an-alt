@@ -55,7 +55,8 @@ echo "    Saved WebM recordings to $OUT_WEBM and $OUT_ASSETS_WEBM"
 echo "==> [3/3] Converting recording to $OUT_MP4 via ffmpeg ..."
 ffmpeg -y -v error \
   -i "$WEBM_FILE" \
-  -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=#090d16,fps=30" \
+  -vf "setpts=1.45*PTS,scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2:color=#090d16,fps=30" \
+  -an \
   -c:v libx264 \
   -pix_fmt yuv420p \
   -preset veryfast \
