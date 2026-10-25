@@ -9,6 +9,8 @@ function detectChromiumExecutable(): string | undefined {
     return process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH;
   }
   const candidates = [
+    '/workspace/work/ms-playwright/chromium-1248/chrome-linux-arm64/chrome',
+    '/workspace/work/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux-arm64/chrome-headless-shell',
     '/home/sandbox/.cache/ms-playwright/chromium-1248/chrome-linux-arm64/chrome',
     '/home/sandbox/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux-arm64/chrome-headless-shell',
   ];
@@ -21,6 +23,14 @@ function detectChromiumExecutable(): string | undefined {
 }
 
 const executablePath = detectChromiumExecutable();
+const extraLibDirs = [
+  '/workspace/work/chromelibs/root/usr/lib/aarch64-linux-gnu',
+  '/workspace/work/chromelibs/root/usr/lib/x86_64-linux-gnu',
+].filter((d) => fs.existsSync(d));
+const ldLibraryPath = [
+  ...extraLibDirs,
+  ...(process.env.LD_LIBRARY_PATH ? [process.env.LD_LIBRARY_PATH] : []),
+].join(':');
 
 export default defineConfig({
   testDir: __dirname,
@@ -46,6 +56,10 @@ export default defineConfig({
     ignoreHTTPSErrors: true,
     launchOptions: {
       ...(executablePath ? { executablePath } : {}),
+      env: {
+        ...process.env,
+        ...(ldLibraryPath ? { LD_LIBRARY_PATH: ldLibraryPath } : {}),
+      },
       args: [
         '--use-gl=angle',
         '--use-angle=swiftshader',

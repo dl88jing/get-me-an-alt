@@ -8,19 +8,9 @@ cd "$ROOT_DIR"
 export BASE_URL="${BASE_URL:-http://localhost:3000}"
 export NODE_PATH="${ROOT_DIR}/node_modules:${ROOT_DIR}/video/node_modules:${NODE_PATH:-}"
 
-if [[ -z "${PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH:-}" ]]; then
-  for candidate in \
-    "/home/sandbox/.cache/ms-playwright/chromium-1248/chrome-linux-arm64/chrome" \
-    "/home/sandbox/.cache/ms-playwright/chromium_headless_shell-1248/chrome-headless-shell-linux-arm64/chrome-headless-shell" \
-    "$(command -v chromium-browser 2>/dev/null || true)" \
-    "$(command -v chromium 2>/dev/null || true)" \
-    "$(command -v google-chrome 2>/dev/null || true)"; do
-    if [[ -n "$candidate" && -x "$candidate" ]]; then
-      export PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH="$candidate"
-      break
-    fi
-  done
-fi
+# Ensure headless Chromium + shared libraries are installed & persisted in /workspace/work
+# shellcheck source=/dev/null
+source "$E2E_DIR/setup-browser.sh"
 
 PW_BIN=""
 for bin in \
