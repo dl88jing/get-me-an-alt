@@ -46,6 +46,8 @@ export default defineConfig({
   outputDir: path.join(__dirname, 'test-results'),
   use: {
     baseURL: BASE_URL,
+    actionTimeout: 4_000,
+    navigationTimeout: 20_000,
     viewport: { width: 1920, height: 1080 },
     video: {
       mode: 'on',

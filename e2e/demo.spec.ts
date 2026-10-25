@@ -341,11 +341,23 @@ test.describe('Get Me An Alt — Full Story Screen Recording Walkthrough', () =>
             await orderModalTrigger.click();
             await pause(page, 1400);
 
-            const jlcLabel = page.getByText(/JLC3DP/i).first();
+            const jlcLabel = page
+              .getByText(/JLC3DP Factory Direct/i)
+              .first();
             if (
               await jlcLabel.isVisible({ timeout: 1500 }).catch(() => false)
             ) {
-              await jlcLabel.click().catch(() => {});
+              await jlcLabel.click({ timeout: 2000 }).catch(() => {});
+              await pause(page, 1200);
+            }
+
+            const xometryLabel = page
+              .getByText(/Xometry Express/i)
+              .first();
+            if (
+              await xometryLabel.isVisible({ timeout: 1500 }).catch(() => false)
+            ) {
+              await xometryLabel.click({ timeout: 2000 }).catch(() => {});
               await pause(page, 1000);
             }
 
@@ -357,7 +369,7 @@ test.describe('Get Me An Alt — Full Story Screen Recording Walkthrough', () =>
             if (
               await closeBtn.isVisible({ timeout: 1500 }).catch(() => false)
             ) {
-              await closeBtn.click().catch(() => {});
+              await closeBtn.click({ timeout: 2000 }).catch(() => {});
               await pause(page, 900);
             }
           }
@@ -521,13 +533,15 @@ test.describe('Get Me An Alt — Full Story Screen Recording Walkthrough', () =>
           .locator('button')
           .filter({ hasText: /dims:.*shape:/i });
         const cardCount = await partCards.count().catch(() => 0);
-        for (let i = 0; i < Math.min(3, cardCount); i++) {
-          await partCards.nth(i).click().catch(() => {});
-          await pause(page, 1000);
+        for (let i = 0; i < Math.min(4, cardCount); i++) {
+          await partCards.nth(i).click({ timeout: 2000 }).catch(() => {});
+          await pause(page, 1400);
         }
 
+        await smoothScrollTo(page, 520, 1600);
         await saveStepScreenshot(page, '10-exploded-3d-view');
-        await pause(page, 1800);
+        await smoothScrollTo(page, 220, 1600);
+        await pause(page, 2500);
       }
     );
   });
