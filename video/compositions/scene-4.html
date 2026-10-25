@@ -1,0 +1,151 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      font-family: "Inter", sans-serif;
+      color: #f8fafc;
+    }
+    #s4-stage {
+      position: absolute;
+      inset: 0;
+      padding: 112px 192px;
+      display: flex;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    #s4-left {
+      width: 660px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .s4-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(16, 185, 129, 0.14);
+      border: 2px solid #10b981;
+      color: #10b981;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      width: fit-content;
+      letter-spacing: 0.06em;
+    }
+    .s4-title {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
+      margin-top: 20px;
+    }
+    .s4-accent {
+      color: #10b981;
+    }
+    .s4-sub {
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+      margin-top: 16px;
+    }
+    .s4-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .s4-card {
+      background: #111827;
+      border: 2px solid #1e293b;
+      border-left: 5px solid #10b981;
+      border-radius: 12px;
+      padding: 16px 20px;
+    }
+    .s4-card-head {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+    .s4-card-body {
+      font-size: 20px;
+      color: #f8fafc;
+      margin-top: 4px;
+    }
+    #s4-right {
+      width: 828px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .s4-caption-bar {
+      background: #111827;
+      border: 2px solid #10b981;
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .s4-cap-title {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .s4-cap-pill {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+  </style>
+  <div id="root" data-composition-id="scene-4" data-width="1920" data-height="1080">
+    <div id="s4-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+      <div id="s4-stage">
+        <div id="s4-left">
+          <div id="s4-head">
+            <div class="s4-badge">04 · STL/3MF PACKER FOR 20+ PRINTERS</div>
+            <h1 class="s4-title">
+              Plate-Optimized <span class="s4-accent">STL &amp; 3MF</span>.<br />
+              Default: <span class="s4-accent">Bambu Lab A1</span>.
+            </h1>
+            <p class="s4-sub">
+              7 watertight STL meshes + multi-plate 3MF bin-packed onto minimum plates across 22 printers—or delivered via print bureau.
+            </p>
+          </div>
+          <div id="s4-list" class="s4-cards">
+            <div class="s4-card">
+              <div class="s4-card-head">DEFAULT BED · BAMBU LAB A1 (256 × 256 × 256 MM)</div>
+              <div class="s4-card-body">1 Build Plate · 7 Watertight STL Parts + All-Plates .3MF</div>
+            </div>
+            <div class="s4-card">
+              <div class="s4-card-head">20+ PRINTER DROPDOWN CATALOG (22 MODELS)</div>
+              <div class="s4-card-body">Bambu A1/mini/P1S/X1C/H2D · Prusa MK4S/Core One · Creality K1 · Voron 2.4</div>
+            </div>
+            <div class="s4-card">
+              <div class="s4-card-head">NO PRINTER? · PRINT-SERVICE DELIVERY</div>
+              <div class="s4-card-body">Instant quote + STL handoff to Craftcloud, JLC3DP, Xometry &amp; Shapeways</div>
+            </div>
+          </div>
+        </div>
+        <div id="s4-right">
+          <div id="s4-bar" class="s4-caption-bar">
+            <span class="s4-cap-title">recording.mp4 · Print Files &amp; Plate Packer</span>
+            <span class="s4-cap-pill">● 1 PLATE (BAMBU A1)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const s4Tl = gsap.timeline({ paused: true });
+    s4Tl.fromTo("#s4-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
+    s4Tl.fromTo("#s4-list", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
+    s4Tl.fromTo("#s4-bar", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.45);
+    window.__timelines["scene-4"] = s4Tl;
+  </script>
+</template>

@@ -1,0 +1,162 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      font-family: "Inter", sans-serif;
+      color: #f8fafc;
+    }
+    #s2-stage {
+      position: absolute;
+      inset: 0;
+      padding: 112px 192px;
+      display: flex;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    #s2-left {
+      width: 660px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .s2-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(16, 185, 129, 0.14);
+      border: 2px solid #10b981;
+      color: #10b981;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      width: fit-content;
+      letter-spacing: 0.06em;
+    }
+    .s2-title {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
+      margin-top: 20px;
+    }
+    .s2-accent {
+      color: #10b981;
+    }
+    .s2-sub {
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+      margin-top: 16px;
+    }
+    .s2-agents {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .s2-agent {
+      background: #111827;
+      border: 2px solid #1e293b;
+      border-left: 5px solid #10b981;
+      border-radius: 12px;
+      padding: 14px 18px;
+    }
+    .s2-agent-name {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+    .s2-agent-role {
+      font-size: 18px;
+      color: #e2e8f0;
+      margin-top: 4px;
+    }
+    #s2-right {
+      width: 828px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .s2-caption-bar {
+      background: #111827;
+      border: 2px solid #10b981;
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .s2-cap-title {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .s2-cap-pill {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+  </style>
+  <div id="root" data-composition-id="scene-2" data-width="1920" data-height="1080">
+    <div id="s2-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+      <div id="s2-stage">
+        <div id="s2-left">
+          <div id="s2-head">
+            <div class="s2-badge">02 · ANTIGRAVITY CLI · RESEARCH + VIDEO TEARDOWN</div>
+            <h1 class="s2-title">
+              6 <span class="s2-accent">Gemini 4 Argon</span> Agents + Video Teardown.
+            </h1>
+            <p class="s2-sub">
+              Run via <code style="color:#10b981;">agy --model gemini-4-argon</code>. Streams SSE to Mission Control, grounds web priors, and extracts frame-by-frame video teardowns.
+            </p>
+          </div>
+          <div id="s2-grid" class="s2-agents">
+            <div class="s2-agent">
+              <div class="s2-agent-name">1. ANALYST</div>
+              <div class="s2-agent-role">Multimodal dims &amp; $149 retail spec</div>
+            </div>
+            <div class="s2-agent">
+              <div class="s2-agent-name">2. RESEARCH + TEARDOWN</div>
+              <div class="s2-agent-role">Search grounding &amp; video frame callouts</div>
+            </div>
+            <div class="s2-agent">
+              <div class="s2-agent-name">3. DESIGNER</div>
+              <div class="s2-agent-role">7 printed vs. 6 purchased parts</div>
+            </div>
+            <div class="s2-agent">
+              <div class="s2-agent-name">4. BOM AGENT</div>
+              <div class="s2-agent-role">Retailer links &amp; 83% savings</div>
+            </div>
+            <div class="s2-agent">
+              <div class="s2-agent-name">5. CAD &amp; PACKER</div>
+              <div class="s2-agent-role">STL/3MF for 20+ printers</div>
+            </div>
+            <div class="s2-agent">
+              <div class="s2-agent-name">6. INSTRUCTIONS</div>
+              <div class="s2-agent-role">IKEA-style 3D step motion</div>
+            </div>
+          </div>
+        </div>
+        <div id="s2-right">
+          <div id="s2-bar" class="s2-caption-bar">
+            <span class="s2-cap-title">recording.mp4 · Live SSE Agent Timeline</span>
+            <span class="s2-cap-pill">● STREAMING 6/6 AGENTS</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const s2Tl = gsap.timeline({ paused: true });
+    s2Tl.fromTo("#s2-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
+    s2Tl.fromTo("#s2-grid", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
+    s2Tl.fromTo("#s2-bar", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.45);
+    window.__timelines["scene-2"] = s2Tl;
+  </script>
+</template>

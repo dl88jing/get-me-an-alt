@@ -1,0 +1,14 @@
+{
+  "name": "gma-presentation-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "HyperFrames + Kokoro TTS presentation video pipeline for Get Me An Alt",
+  "scripts": {
+    "lint": "hyperframes lint .",
+    "check": "hyperframes check .",
+    "render": "./render.sh"
+  },
+  "dependencies": {
+    "hyperframes": "^0.8.199"
+  }
+}

@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1920, height=1080" />
+    <title>Get Me An Alt — Narrated Presentation Video</title>
+    <script src="assets/gsap.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        margin: 0;
+        width: 1920px;
+        height: 1080px;
+        overflow: hidden;
+        background: #090d16;
+        font-family: "Inter", sans-serif;
+      }
+      #root {
+        position: relative;
+        width: 1920px;
+        height: 1080px;
+      }
+      .scene-host {
+        position: absolute;
+        inset: 0;
+        width: 1920px;
+        height: 1080px;
+        z-index: 3;
+      }
+      .rec-viewport {
+        position: absolute;
+        left: 900px;
+        top: 132px;
+        width: 828px;
+        height: 720px;
+        object-fit: cover;
+        border-radius: 16px;
+        border: 2px solid #10b981;
+        background: #0d1f2d;
+        z-index: 2;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      id="root"
+      data-composition-id="main"
+      data-start="0"
+      data-duration="147"
+      data-width="1920"
+      data-height="1080"
+      data-fps="10"
+    >
+      <div
+        id="bg-canvas"
+        style="position: absolute; inset: 0; background: #090d16; z-index: 0"
+      ></div>
+
+      <!-- Scene 1: Title Card & Problem Hook (0s - 18s) -->
+      <div
+        id="scene-1"
+        class="clip scene-host"
+        data-composition-id="scene-1"
+        data-composition-src="compositions/scene-1.html"
+        data-start="0"
+        data-duration="18"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <!-- Scene 2: Input & Live Gemini 4 Argon Agent Timeline (18s - 46s) -->
+      <video
+        id="rec-scene-2"
+        class="clip rec-viewport"
+        src="assets/recording.mp4"
+        muted
+        playsinline
+        data-start="18"
+        data-duration="28"
+        data-media-start="0"
+        data-track-index="0"
+      ></video>
+      <div
+        id="scene-2"
+        class="clip scene-host"
+        data-composition-id="scene-2"
+        data-composition-src="compositions/scene-2.html"
+        data-start="18"
+        data-duration="28"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <!-- Scene 3: Bill of Materials & Instant Savings (46s - 70s) -->
+      <video
+        id="rec-scene-3"
+        class="clip rec-viewport"
+        src="assets/recording.mp4"
+        muted
+        playsinline
+        data-start="46"
+        data-duration="24"
+        data-media-start="28"
+        data-track-index="0"
+      ></video>
+      <div
+        id="scene-3"
+        class="clip scene-host"
+        data-composition-id="scene-3"
+        data-composition-src="compositions/scene-3.html"
+        data-start="46"
+        data-duration="24"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <!-- Scene 4: Parametric CAD, Plate Packing & Print Service (70s - 97s) -->
+      <video
+        id="rec-scene-4"
+        class="clip rec-viewport"
+        src="assets/recording.mp4"
+        muted
+        playsinline
+        data-start="70"
+        data-duration="27"
+        data-media-start="50"
+        data-track-index="0"
+      ></video>
+      <div
+        id="scene-4"
+        class="clip scene-host"
+        data-composition-id="scene-4"
+        data-composition-src="compositions/scene-4.html"
+        data-start="70"
+        data-duration="27"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <!-- Scene 5: Interactive Exploded 3D View & IKEA Assembly (97s - 121s) -->
+      <video
+        id="rec-scene-5"
+        class="clip rec-viewport"
+        src="assets/recording.mp4"
+        muted
+        playsinline
+        data-start="97"
+        data-duration="24"
+        data-media-start="78"
+        data-track-index="0"
+      ></video>
+      <div
+        id="scene-5"
+        class="clip scene-host"
+        data-composition-id="scene-5"
+        data-composition-src="compositions/scene-5.html"
+        data-start="97"
+        data-duration="24"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <!-- Scene 6: Managed Agents Architecture & Closing Title Card (121s - 147s) -->
+      <div
+        id="scene-6"
+        class="clip scene-host"
+        data-composition-id="scene-6"
+        data-composition-src="compositions/scene-6.html"
+        data-start="121"
+        data-duration="26"
+        data-track-index="1"
+        data-track-kind="graphics"
+        data-width="1920"
+        data-height="1080"
+      ></div>
+
+      <!-- Kokoro TTS Voiceover Tracks (af_heart) -->
+      <audio
+        id="vo-scene-1"
+        src="assets/audio/scene-1.wav"
+        data-start="0.3"
+        data-duration="17.365"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-scene-2"
+        src="assets/audio/scene-2.wav"
+        data-start="18.3"
+        data-duration="27.264"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-scene-3"
+        src="assets/audio/scene-3.wav"
+        data-start="46.2"
+        data-duration="23.509"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-scene-4"
+        src="assets/audio/scene-4.wav"
+        data-start="70.3"
+        data-duration="25.728"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-scene-5"
+        src="assets/audio/scene-5.wav"
+        data-start="97.3"
+        data-duration="22.528"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+      <audio
+        id="vo-scene-6"
+        src="assets/audio/scene-6.wav"
+        data-start="121.3"
+        data-duration="24.469"
+        data-track-index="2"
+        data-volume="1"
+      ></audio>
+    </div>
+
+    <script>
+      window.__timelines = window.__timelines || {};
+      const tl = gsap.timeline({ paused: true });
+      window.__timelines["main"] = tl;
+    </script>
+  </body>
+</html>

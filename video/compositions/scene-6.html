@@ -1,0 +1,143 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      background: #090d16;
+      font-family: "Inter", sans-serif;
+      color: #f8fafc;
+    }
+    #s6-stage {
+      position: absolute;
+      inset: 0;
+      padding: 112px 192px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .s6-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(16, 185, 129, 0.14);
+      border: 2px solid #10b981;
+      color: #10b981;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 700;
+      padding: 10px 22px;
+      border-radius: 999px;
+      width: fit-content;
+      letter-spacing: 0.06em;
+    }
+    .s6-title {
+      font-size: 72px;
+      font-weight: 900;
+      line-height: 1.06;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
+      margin-top: 24px;
+    }
+    .s6-accent {
+      color: #10b981;
+    }
+    .s6-sub {
+      font-size: 30px;
+      line-height: 1.4;
+      color: #cbd5e1;
+      margin-top: 18px;
+      max-width: 1440px;
+    }
+    .s6-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+    }
+    .s6-box {
+      background: #111827;
+      border: 2px solid #10b981;
+      border-radius: 20px;
+      padding: 28px 34px;
+    }
+    .s6-box-tag {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+      letter-spacing: 0.06em;
+    }
+    .s6-box-title {
+      font-size: 34px;
+      font-weight: 800;
+      color: #f8fafc;
+      margin-top: 10px;
+    }
+    .s6-box-desc {
+      font-size: 22px;
+      color: #cbd5e1;
+      line-height: 1.38;
+      margin-top: 10px;
+    }
+    .s6-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 2px solid #1e293b;
+      padding-top: 24px;
+    }
+    .s6-cta {
+      font-size: 32px;
+      font-weight: 800;
+      color: #f8fafc;
+    }
+    .s6-hack {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #10b981;
+    }
+  </style>
+  <div id="root" data-composition-id="scene-6" data-width="1920" data-height="1080">
+    <div id="s6-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+      <div id="s6-stage">
+        <div id="s6-top">
+          <div class="s6-badge">06 · BEST USE OF MANAGED AGENTS · GEMINI 4 ARGON</div>
+          <h1 class="s6-title">
+            Built By <span class="s6-accent">Managed Agents</span>.<br />
+            Powered By <span class="s6-accent">Gemini 4 Argon</span>.
+          </h1>
+          <p class="s6-sub">
+            Antigravity CLI orchestrates both our 6-stage runtime hardware compiler and our parallel multi-agent engineering workspace.
+          </p>
+        </div>
+        <div id="s6-boxes" class="s6-grid">
+          <div class="s6-box">
+            <div class="s6-box-tag">RUNTIME PIPELINE · AGY CLI + SSE</div>
+            <div class="s6-box-title">6 Specialized Product Agents</div>
+            <div class="s6-box-desc">
+              Analyst → Researcher → Designer → BOM → CAD → Instructions share typed JSON &amp; STL contracts per object run.
+            </div>
+          </div>
+          <div class="s6-box">
+            <div class="s6-box-tag">BUILD-TIME ORCHESTRATION · PARALLEL LANES</div>
+            <div class="s6-box-title">Multi-Agent Software Engineering</div>
+            <div class="s6-box-desc">
+              Coordinated Antigravity agents built the Next.js shell, CSG CAD engine, Three.js players, and HyperFrames video in parallel.
+            </div>
+          </div>
+        </div>
+        <div id="s6-foot" class="s6-footer">
+          <span class="s6-cta">Get Me An Alt — Paste a Link. Print the Parts. Build Your Alt.</span>
+          <span class="s6-hack">GEMINI 4 ARGON SF HACKATHON 2026</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const s6Tl = gsap.timeline({ paused: true });
+    s6Tl.fromTo("#s6-top", { opacity: 0, y: 26 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.05);
+    s6Tl.fromTo("#s6-boxes", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.55, ease: "power3.out" }, 0.35);
+    s6Tl.fromTo("#s6-foot", { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.55);
+    window.__timelines["scene-6"] = s6Tl;
+  </script>
+</template>

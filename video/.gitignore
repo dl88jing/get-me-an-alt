@@ -1,0 +1,7 @@
+node_modules/
+.hyperframes/
+renders/
+out/
+assets/audio/*.wav
+assets/*.mp4
+assets/*.webm

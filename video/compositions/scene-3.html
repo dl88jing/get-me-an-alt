@@ -1,0 +1,164 @@
+<template>
+  <style>
+    #root {
+      position: absolute;
+      inset: 0;
+      font-family: "Inter", sans-serif;
+      color: #f8fafc;
+    }
+    #s3-stage {
+      position: absolute;
+      inset: 0;
+      padding: 112px 192px;
+      display: flex;
+      justify-content: space-between;
+      gap: 48px;
+    }
+    #s3-left {
+      width: 660px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .s3-badge {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(16, 185, 129, 0.14);
+      border: 2px solid #10b981;
+      color: #10b981;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 999px;
+      width: fit-content;
+      letter-spacing: 0.06em;
+    }
+    .s3-title {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: #f8fafc;
+      margin-top: 20px;
+    }
+    .s3-accent {
+      color: #10b981;
+    }
+    .s3-sub {
+      font-size: 24px;
+      line-height: 1.4;
+      color: #cbd5e1;
+      margin-top: 16px;
+    }
+    .s3-bom-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .s3-bom-row {
+      background: #111827;
+      border: 2px solid #1e293b;
+      border-radius: 12px;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .s3-bom-total {
+      border-color: #10b981;
+      background: #0d1f1a;
+    }
+    .s3-part {
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .s3-store {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      color: #10b981;
+    }
+    #s3-right {
+      width: 828px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .s3-caption-bar {
+      background: #111827;
+      border: 2px solid #10b981;
+      border-radius: 14px;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .s3-cap-title {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 20px;
+      font-weight: 700;
+      color: #f8fafc;
+    }
+    .s3-cap-pill {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 18px;
+      font-weight: 700;
+      color: #10b981;
+    }
+  </style>
+  <div id="root" data-composition-id="scene-3" data-width="1920" data-height="1080">
+    <div id="s3-clip" class="clip" data-start="0" data-duration="35" data-track-index="0">
+      <div id="s3-stage">
+        <div id="s3-left">
+          <div id="s3-head">
+            <div class="s3-badge">03 · BILL OF MATERIALS &amp; RETAILER LINKS</div>
+            <h1 class="s3-title">
+              Real Retailer Links.<br />
+              <span class="s3-accent">Save $124.15</span> (83% Off).
+            </h1>
+            <p class="s3-sub">
+              Live sourcing links across Amazon, Home Depot, Walmart, McMaster-Carr &amp; AliExpress with exact specs and instant savings vs. original.
+            </p>
+          </div>
+          <div id="s3-bom" class="s3-bom-list">
+            <div class="s3-bom-row">
+              <span class="s3-part">5V Brushless Submersible Pump (x1)</span>
+              <span class="s3-store">Amazon / Walmart · $4.50</span>
+            </div>
+            <div class="s3-bom-row">
+              <span class="s3-part">Capacitive Soil Moisture Probe v2.0 (x1)</span>
+              <span class="s3-store">Amazon / AliExpress · $2.80</span>
+            </div>
+            <div class="s3-bom-row">
+              <span class="s3-part">Food-Grade Silicone Tubing 4×6mm 2m</span>
+              <span class="s3-store">Home Depot / Amazon · $3.90</span>
+            </div>
+            <div class="s3-bom-row">
+              <span class="s3-part">ESP32-C3 + MOSFET + M3 Brass Inserts</span>
+              <span class="s3-store">McMaster / Amazon · $10.10</span>
+            </div>
+            <div class="s3-bom-row s3-bom-total">
+              <span class="s3-part">DIY Total (+$3.55 PETG/PLA) vs. $149</span>
+              <span class="s3-store">$24.85 · SAVE $124.15</span>
+            </div>
+          </div>
+        </div>
+        <div id="s3-right">
+          <div id="s3-bar" class="s3-caption-bar">
+            <span class="s3-cap-title">recording.mp4 · BOM Tab &amp; Retailer Links</span>
+            <span class="s3-cap-pill">● $124.15 SAVED (83%)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    window.__timelines = window.__timelines || {};
+    const s3Tl = gsap.timeline({ paused: true });
+    s3Tl.fromTo("#s3-head", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.05);
+    s3Tl.fromTo("#s3-bom", { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0.3);
+    s3Tl.fromTo("#s3-bar", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.45);
+    window.__timelines["scene-3"] = s3Tl;
+  </script>
+</template>

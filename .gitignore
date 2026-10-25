@@ -11,3 +11,17 @@ data/objects/*
 .vercel/
 
 next-env.d.ts
+
+# Video & E2E artifacts / heavy renders
+video/node_modules/
+video/out/
+video/renders/
+video/.hyperframes/
+video/assets/audio/*.wav
+video/assets/*.mp4
+video/assets/*.webm
+e2e/test-results/
+e2e/playwright-report/
+e2e/screenshots/*.png
+e2e/*.webm
+e2e/*.mp4
