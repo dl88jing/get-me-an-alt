@@ -1,0 +1,188 @@
+{
+  "objectId": "plant-waterer",
+  "objectName": "Self-watering plant system (alt to a $129 smart auto-waterer)",
+  "currency": "USD",
+  "originalPrice": 129.0,
+  "purchasedTotal": 29.0,
+  "filamentEstimateUsd": 4.4,
+  "totalEstimatedCost": 33.4,
+  "savingsUsd": 95.6,
+  "savingsPercent": 74.1,
+  "items": [
+    {
+      "id": "bom-pump-5v",
+      "partId": "pump-5v",
+      "name": "5V Mini Submersible Micro Water Pump (3V-5V DC, 120 L/h)",
+      "category": "Fluidics & Actuation",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 4.5,
+      "totalPrice": 4.5,
+      "specs": "DC 3-5V, 0.2A, 120 L/h flow rate, 1.1m max head, 7mm OD outlet nozzle, 1m waterproof lead",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=5V+mini+submersible+water+pump+USB"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=5v+mini+submersible+water+pump"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-5v-mini-submersible-water-pump.html"
+        }
+      ]
+    },
+    {
+      "id": "bom-silicone-tubing",
+      "partId": "silicone-tubing",
+      "name": "Food-Grade Flexible Silicone Tubing 4mm ID x 6mm OD (2 Meters)",
+      "category": "Fluidics & Actuation",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 3.99,
+      "totalPrice": 3.99,
+      "specs": "4mm inner diameter, 6mm outer diameter, 1mm wall, soft flexible silicone rubber",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=4mm+ID+6mm+OD+silicone+tubing"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/1%2F4%20inch%20vinyl%20tubing%20irrigation"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=4mm+6mm+silicone+tubing"
+        }
+      ]
+    },
+    {
+      "id": "bom-moisture-sensor",
+      "partId": "moisture-sensor",
+      "name": "Capacitive Soil Moisture Sensor Module v1.2 (Corrosion Resistant)",
+      "category": "Sensors",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 3.25,
+      "totalPrice": 3.25,
+      "specs": "3.3V-5.5V operating voltage, 0-3.0V analog output, PH2.54-3P connector, coated PCB blade",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=capacitive+soil+moisture+sensor+v1.2"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=capacitive+soil+moisture+sensor"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-capacitive-soil-moisture-sensor-v1.2.html"
+        }
+      ]
+    },
+    {
+      "id": "bom-esp32-mcu",
+      "partId": "esp32-mcu",
+      "name": "ESP32-WROOM-32 Type-C Development Board (or Arduino Nano)",
+      "category": "Electronics & Control",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 5.99,
+      "totalPrice": 5.99,
+      "specs": "Dual-core 240MHz Wi-Fi/BLE MCU, 12-bit ADC, USB-C programming & 5V VIN pass-through",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=ESP32+USB-C+development+board"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=ESP32+development+board+USB+C"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-usb-c-board.html"
+        }
+      ]
+    },
+    {
+      "id": "bom-mosfet-module",
+      "partId": "mosfet-module",
+      "name": "5V Logic-Level MOSFET Switch / Single-Channel Relay Module",
+      "category": "Electronics & Control",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 2.49,
+      "totalPrice": 2.49,
+      "specs": "3.3V/5V logic trigger, up to 5A DC load switching with status LED and screw terminals",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=5V+MOSFET+switch+driver+module+arduino"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=5V+single+channel+relay+module+arduino"
+        },
+        {
+          "retailer": "AliExpress",
+          "url": "https://www.aliexpress.com/w/wholesale-mosfet-switch-module-arduino.html"
+        }
+      ]
+    },
+    {
+      "id": "bom-usbc-power",
+      "partId": "usbc-power",
+      "name": "5V 2A USB-C Wall Power Adapter + 1.5m USB-C Cable",
+      "category": "Power",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 5.99,
+      "totalPrice": 5.99,
+      "specs": "100-240V AC input, 5V DC 2.0A output, UL listed wall plug with 1.5m USB-C cord",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=5V+2A+USB-C+power+adapter+with+cable"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=5V+2A+USB+C+wall+charger+cable"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/USB-C%20wall%20charger%20adapter"
+        }
+      ]
+    },
+    {
+      "id": "bom-wiring-hardware",
+      "partId": "wiring-hardware",
+      "name": "Dupont Jumper Wires (20cm F-F) & M3x10mm Stainless Screws",
+      "category": "Fasteners & Wiring",
+      "qty": 1,
+      "quantity": 1,
+      "unitPrice": 2.79,
+      "totalPrice": 2.79,
+      "specs": "10-pin 20cm female-to-female jumper strip + 4x M3x10mm socket head screws & nuts",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=dupont+jumper+wires+female+to+female+M3+screws"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/M3%20x%2010mm%20stainless%20machine%20screws"
+        },
+        {
+          "retailer": "Walmart",
+          "url": "https://www.walmart.com/search?q=dupont+jumper+wires+female"
+        }
+      ]
+    }
+  ]
+}

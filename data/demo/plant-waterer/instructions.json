@@ -1,0 +1,148 @@
+{
+  "objectId": "plant-waterer",
+  "objectName": "Self-watering plant system (alt to a $129 smart auto-waterer)",
+  "totalSteps": 10,
+  "estimatedMinutes": 25,
+  "steps": [
+    {
+      "step": 1,
+      "title": "Place the 1.4L Water Reservoir Base",
+      "description": "Set the 3D-printed PETG water reservoir tank on a flat surface near your potted plant.",
+      "partIds": ["reservoir-tank"],
+      "action": "place",
+      "cameraHint": {
+        "position": [180, -180, 140],
+        "target": [0, 0, 50],
+        "zoom": 1.1,
+        "angle": "isometric-front"
+      },
+      "tools": ["Flat workbench"]
+    },
+    {
+      "step": 2,
+      "title": "Insert the Submersible Pump Isolation Cradle",
+      "description": "Lower the flanged tubular pump cradle onto the center floor of the reservoir tank with its wide flange facing down.",
+      "partIds": ["pump-mount", "reservoir-tank"],
+      "action": "insert",
+      "cameraHint": {
+        "position": [90, -110, 190],
+        "target": [0, 0, 25],
+        "zoom": 1.35,
+        "angle": "top-angled"
+      },
+      "tools": ["Hands only"]
+    },
+    {
+      "step": 3,
+      "title": "Seat the 5V Submersible Water Pump",
+      "description": "Press the 5V mini submersible pump vertically into the isolation cradle so the intake screen sits 4mm above the floor.",
+      "partIds": ["pump-5v", "pump-mount"],
+      "action": "insert",
+      "cameraHint": {
+        "position": [100, -100, 180],
+        "target": [0, 0, 35],
+        "zoom": 1.4,
+        "angle": "top-cutaway"
+      },
+      "tools": ["Hands only"]
+    },
+    {
+      "step": 4,
+      "title": "Connect the 4/6mm Silicone Delivery Tubing",
+      "description": "Push one end of the 4mm ID silicone tubing firmly onto the pump's top outlet barb.",
+      "partIds": ["silicone-tubing", "pump-5v"],
+      "action": "connect",
+      "cameraHint": {
+        "position": [130, -120, 150],
+        "target": [0, 0, 65],
+        "zoom": 1.3,
+        "angle": "side-closeup"
+      },
+      "tools": ["Scissors or tube cutter"]
+    },
+    {
+      "step": 5,
+      "title": "Snap on the Reservoir Grommet Lid",
+      "description": "Thread the silicone tube through the center 10mm hole and the pump power lead through the side 8mm grommet, then snap the lid onto the reservoir rim.",
+      "partIds": ["reservoir-lid", "reservoir-tank", "silicone-tubing"],
+      "action": "snap",
+      "cameraHint": {
+        "position": [160, -160, 175],
+        "target": [0, 0, 100],
+        "zoom": 1.15,
+        "angle": "isometric-top"
+      },
+      "tools": ["Hands only"]
+    },
+    {
+      "step": 6,
+      "title": "Insert the Top Refill Funnel",
+      "description": "Drop the conical refill funnel into the 22mm corner port on the reservoir lid for easy top-up watering.",
+      "partIds": ["refill-funnel", "reservoir-lid"],
+      "action": "insert",
+      "cameraHint": {
+        "position": [-140, -140, 185],
+        "target": [-32, -32, 110],
+        "zoom": 1.4,
+        "angle": "corner-detail"
+      },
+      "tools": ["Hands only"]
+    },
+    {
+      "step": 7,
+      "title": "Screw the Side-Mount L-Bracket to the Controller Box",
+      "description": "Fasten the 3D-printed L-bracket to the rear mounting holes of the controller enclosure using two M3x10mm stainless screws.",
+      "partIds": ["controller-bracket", "controller-box", "wiring-hardware"],
+      "action": "screw",
+      "cameraHint": {
+        "position": [210, -90, 120],
+        "target": [75, 0, 65],
+        "zoom": 1.45,
+        "angle": "right-side"
+      },
+      "tools": ["2.5mm Hex Key / Phillips Screwdriver"]
+    },
+    {
+      "step": 8,
+      "title": "Mount ESP32 & MOSFET Module Inside the Enclosure",
+      "description": "Snap the ESP32-WROOM-32 board and 5V MOSFET driver module into the controller box bays and connect the 3-wire jumper harness.",
+      "partIds": ["esp32-mcu", "mosfet-module", "controller-box", "wiring-hardware"],
+      "action": "place",
+      "cameraHint": {
+        "position": [220, -60, 140],
+        "target": [90, 0, 60],
+        "zoom": 1.5,
+        "angle": "enclosure-closeup"
+      },
+      "tools": ["Needle-nose pliers (optional)"]
+    },
+    {
+      "step": 9,
+      "title": "Snap Tube Guide Clips & Flow Restrictor Wheel onto Rim",
+      "description": "Thread the silicone tubing through the rotary flow restrictor gear wheel and click the 4 C-clips along the reservoir rim and plant pot edge.",
+      "partIds": ["tube-clip", "flow-wheel", "silicone-tubing"],
+      "action": "snap",
+      "cameraHint": {
+        "position": [110, 170, 165],
+        "target": [15, 50, 105],
+        "zoom": 1.35,
+        "angle": "back-rim"
+      },
+      "tools": ["Hands only"]
+    },
+    {
+      "step": 10,
+      "title": "Insert Soil Emitter Stakes, Moisture Probe & Connect USB-C Power",
+      "description": "Push the 2 drip emitter stakes and the capacitive soil moisture sensor into the plant pot soil, route the tube ends into the stake hooks, and plug in the 5V USB-C power adapter.",
+      "partIds": ["drip-stake", "moisture-sensor", "usbc-power", "silicone-tubing"],
+      "action": "connect",
+      "cameraHint": {
+        "position": [-210, -170, 155],
+        "target": [-35, 0, 55],
+        "zoom": 1.0,
+        "angle": "full-assembly"
+      },
+      "tools": ["Hands only"]
+    }
+  ]
+}

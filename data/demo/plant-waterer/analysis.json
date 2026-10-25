@@ -1,0 +1,34 @@
+{
+  "id": "plant-waterer",
+  "slug": "plant-waterer",
+  "name": "Self-Watering Smart Plant System",
+  "title": "Self-watering plant system (alt to a $129 smart auto-waterer)",
+  "category": "Home & Garden Automation",
+  "originalProduct": {
+    "name": "Smart Wi-Fi Automatic Drip Irrigation & Reservoir System",
+    "brand": "Bespoke Botanics",
+    "retailPriceUsd": 129.0,
+    "url": "https://www.amazon.com/s?k=smart+wifi+automatic+plant+watering+system+reservoir"
+  },
+  "originalPrice": 129.0,
+  "estimatedDiyCost": 33.4,
+  "estimatedSavings": 95.6,
+  "savingsPercent": 74.1,
+  "summary": "A closed-loop automatic plant irrigation system combining a 3D-printed 1.4L modular reservoir, snap-fit port lid, submersible pump isolation cradle, ESP32 controller enclosure, silicone tubing clips, and soil drip emitter stakes with $29 of off-the-shelf electronics.",
+  "function": "Monitors root-zone soil moisture continuously using a corrosion-resistant capacitive probe and triggers a quiet 5V submersible micro-pump through food-grade 4/6mm silicone tubing to deliver precise water doses directly to plant stakes.",
+  "dimensionsMm": {
+    "width": 185,
+    "depth": 140,
+    "height": 165
+  },
+  "mechanisms": [
+    "Capacitive dielectric soil moisture sensing (3.3V analog feedback)",
+    "5V PWM/MOSFET switched centrifugal submersible micro-pump (120 L/h)",
+    "Gravity-isolated top-refill funnel and anti-siphon tubing guide clips",
+    "Root-zone targeted stake drippers with manual rotary flow restrictor wheel"
+  ],
+  "difficulty": "Beginner",
+  "estimatedBuildTimeMinutes": 45,
+  "estimatedPrintTimeHours": 4.2,
+  "estimatedFilamentGrams": 245
+}

@@ -1,0 +1,420 @@
+{
+  "objectName": "Self-watering plant system (alt to a $129 smart auto-waterer)",
+  "summary": "Modular 3D-printed 1.4L reservoir, snap-fit grommet lid, pump isolation cradle, ESP32 side-mount enclosure, tube routing clips, flow wheel, and root-zone dripper stakes paired with 7 off-the-shelf components.",
+  "printedParts": [
+    {
+      "id": "reservoir-tank",
+      "name": "Water Reservoir Base (1.4L)",
+      "shape": "custom_csg",
+      "params": {
+        "preset": "reservoir",
+        "width": 115,
+        "depth": 115,
+        "height": 100,
+        "wallThickness": 3.5,
+        "floorThickness": 4,
+        "cornerRadius": 12
+      },
+      "material": "PETG",
+      "color": "#0ea5e9",
+      "quantity": 1,
+      "description": "Watertight 1.4-liter reservoir bucket with 3.5mm perimeter walls and rounded internal corners."
+    },
+    {
+      "id": "reservoir-lid",
+      "name": "Snap-Fit Reservoir Lid with Port Grommets",
+      "shape": "plate_with_holes",
+      "params": {
+        "width": 120,
+        "depth": 120,
+        "thickness": 7,
+        "cornerRadius": 12,
+        "holes": [
+          { "x": 0, "y": 0, "radius": 5 },
+          { "x": -32, "y": -32, "radius": 11 },
+          { "x": 32, "y": 0, "radius": 4 }
+        ]
+      },
+      "material": "PLA",
+      "color": "#10b981",
+      "quantity": 1,
+      "description": "Top cover with center 10mm outlet tube port, 22mm refill funnel port, and 8mm pump cable grommet."
+    },
+    {
+      "id": "pump-mount",
+      "name": "Submersible Pump Isolation Cradle",
+      "shape": "tube",
+      "params": {
+        "outerRadius": 22,
+        "innerRadius": 16,
+        "height": 32,
+        "flangeRadius": 28,
+        "flangeHeight": 4,
+        "segments": 48
+      },
+      "material": "PETG",
+      "color": "#334155",
+      "quantity": 1,
+      "description": "Centers the 5V submersible micro-pump on the reservoir floor and dampens vibration noise."
+    },
+    {
+      "id": "refill-funnel",
+      "name": "Wide-Mouth Top Refill Funnel",
+      "shape": "funnel",
+      "params": {
+        "topRadius": 24,
+        "spoutRadius": 9,
+        "coneHeight": 24,
+        "spoutHeight": 14,
+        "wallThickness": 2.2,
+        "flangeWidth": 3,
+        "segments": 48
+      },
+      "material": "PLA",
+      "color": "#84cc16",
+      "quantity": 1,
+      "description": "Drop-in conical funnel for spill-free top watering refills without removing the lid."
+    },
+    {
+      "id": "controller-box",
+      "name": "ESP32 & MOSFET Controller Enclosure",
+      "shape": "custom_csg",
+      "params": {
+        "preset": "enclosure",
+        "width": 78,
+        "depth": 54,
+        "height": 28,
+        "wallThickness": 2.8,
+        "floorThickness": 3,
+        "cornerRadius": 6,
+        "holes": [
+          { "x": -22, "y": 0, "radius": 2.0 },
+          { "x": 22, "y": 0, "radius": 2.0 }
+        ]
+      },
+      "material": "PLA",
+      "color": "#1e293b",
+      "quantity": 1,
+      "description": "Protective splash-resistant housing for the ESP32 dev board and 5V MOSFET switching module."
+    },
+    {
+      "id": "controller-bracket",
+      "name": "Reservoir Side-Mount L-Bracket",
+      "shape": "bracketL",
+      "params": {
+        "legA": 42,
+        "legB": 38,
+        "width": 30,
+        "thickness": 4,
+        "filletRadius": 4
+      },
+      "material": "PLA",
+      "color": "#059669",
+      "quantity": 1,
+      "description": "Heavy-duty L-bracket that hangs the electronics enclosure on the side of the water reservoir."
+    },
+    {
+      "id": "tube-clip",
+      "name": "Rim-Snap 6mm Silicone Tube Clip",
+      "shape": "clip",
+      "params": {
+        "innerRadius": 3.2,
+        "wallThickness": 2.4,
+        "height": 12,
+        "openAngleDeg": 76
+      },
+      "material": "PETG",
+      "color": "#14b8a6",
+      "quantity": 4,
+      "description": "Snap-fit C-clips that secure the 4/6mm silicone tubing along the reservoir rim and plant pot edge."
+    },
+    {
+      "id": "drip-stake",
+      "name": "Root-Zone Soil Emitter Stake",
+      "shape": "hook",
+      "params": {
+        "shankLength": 95,
+        "throatRadius": 8,
+        "width": 8,
+        "thickness": 3.6,
+        "tipLength": 10
+      },
+      "material": "PLA",
+      "color": "#f59e0b",
+      "quantity": 2,
+      "description": "Tapered J-hook soil anchor that holds the drip tube outlet directly over the plant root ball."
+    },
+    {
+      "id": "flow-wheel",
+      "name": "Rotary Drip Flow Restrictor Wheel",
+      "shape": "gear_simple",
+      "params": {
+        "teeth": 14,
+        "module": 1.8,
+        "boreRadius": 3.0,
+        "thickness": 7
+      },
+      "material": "PLA",
+      "color": "#f97316",
+      "quantity": 1,
+      "description": "Knurled thumb-gear pinch wheel to fine-tune water flow rate between emitter branches."
+    }
+  ],
+  "purchasedParts": [
+    {
+      "id": "pump-5v",
+      "name": "5V Mini Submersible Water Pump (120 L/h)",
+      "bomLine": "bom-pump-5v",
+      "proxyShape": {
+        "shape": "cylinder",
+        "params": { "radius": 14, "height": 40, "segments": 32 },
+        "color": "#3b82f6"
+      },
+      "quantity": 1,
+      "color": "#3b82f6",
+      "description": "Ultra-quiet 3-5V DC brushless micro submersible centrifugal water pump with 7mm outlet barb."
+    },
+    {
+      "id": "silicone-tubing",
+      "name": "Food-Grade 4mm ID / 6mm OD Silicone Tubing (2m)",
+      "bomLine": "bom-silicone-tubing",
+      "proxyShape": {
+        "shape": "tube",
+        "params": { "outerRadius": 3, "innerRadius": 2, "height": 110, "segments": 24 },
+        "color": "#94a3b8"
+      },
+      "quantity": 1,
+      "color": "#94a3b8",
+      "description": "Flexible kink-resistant 4mm inner / 6mm outer diameter silicone irrigation hose."
+    },
+    {
+      "id": "moisture-sensor",
+      "name": "Capacitive Soil Moisture Sensor v1.2",
+      "bomLine": "bom-moisture-sensor",
+      "proxyShape": {
+        "shape": "box",
+        "params": { "width": 22, "depth": 3, "height": 95, "cornerRadius": 1 },
+        "color": "#eab308"
+      },
+      "quantity": 1,
+      "color": "#eab308",
+      "description": "Corrosion-resistant capacitive probe with onboard 3.3V regulator and analog voltage output."
+    },
+    {
+      "id": "esp32-mcu",
+      "name": "ESP32-WROOM-32 USB-C Development Board",
+      "bomLine": "bom-esp32-mcu",
+      "proxyShape": {
+        "shape": "box",
+        "params": { "width": 52, "depth": 28, "height": 8, "cornerRadius": 1.5 },
+        "color": "#2563eb"
+      },
+      "quantity": 1,
+      "color": "#2563eb",
+      "description": "Wi-Fi + Bluetooth microcontroller that reads soil moisture and triggers timed watering cycles."
+    },
+    {
+      "id": "mosfet-module",
+      "name": "5V Logic-Level MOSFET Switch / Relay Module",
+      "bomLine": "bom-mosfet-module",
+      "proxyShape": {
+        "shape": "box",
+        "params": { "width": 34, "depth": 18, "height": 11, "cornerRadius": 1 },
+        "color": "#dc2626"
+      },
+      "quantity": 1,
+      "color": "#dc2626",
+      "description": "Opto-isolated MOSFET driver module allowing 3.3V ESP32 GPIO pins to switch the 5V water pump."
+    },
+    {
+      "id": "usbc-power",
+      "name": "5V 2A USB-C Power Supply + 1.5m Braided Cable",
+      "bomLine": "bom-usbc-power",
+      "proxyShape": {
+        "shape": "box",
+        "params": { "width": 40, "depth": 26, "height": 36, "cornerRadius": 3 },
+        "color": "#f8fafc"
+      },
+      "quantity": 1,
+      "color": "#f8fafc",
+      "description": "Standard 10W 5V USB-C wall adapter powering both the ESP32 and submersible pump."
+    },
+    {
+      "id": "wiring-hardware",
+      "name": "Dupont Jumper Wires & M3x10mm Stainless Screws",
+      "bomLine": "bom-wiring-hardware",
+      "proxyShape": {
+        "shape": "cylinder",
+        "params": { "radius": 3, "height": 10, "segments": 16 },
+        "color": "#a1a1aa"
+      },
+      "quantity": 1,
+      "color": "#a1a1aa",
+      "description": "Female-to-female 20cm Dupont jumper ribbon and 4x M3x10mm fasteners for bracket mounting."
+    }
+  ],
+  "assembly": [
+    {
+      "id": "node-reservoir-tank",
+      "partId": "reservoir-tank",
+      "copy": 1,
+      "position": [0, 0, 0],
+      "rotation": [0, 0, 0],
+      "explode": [0, 0, -45],
+      "step": 1
+    },
+    {
+      "id": "node-pump-mount",
+      "partId": "pump-mount",
+      "copy": 1,
+      "position": [0, 0, 4],
+      "rotation": [0, 0, 0],
+      "explode": [0, 0, 35],
+      "step": 2
+    },
+    {
+      "id": "node-pump-5v",
+      "partId": "pump-5v",
+      "copy": 1,
+      "position": [0, 0, 8],
+      "rotation": [0, 0, 0],
+      "explode": [0, 0, 75],
+      "step": 3
+    },
+    {
+      "id": "node-silicone-tubing",
+      "partId": "silicone-tubing",
+      "copy": 1,
+      "position": [0, 0, 48],
+      "rotation": [0, 0, 0],
+      "explode": [0, 0, 125],
+      "step": 4
+    },
+    {
+      "id": "node-reservoir-lid",
+      "partId": "reservoir-lid",
+      "copy": 1,
+      "position": [0, 0, 100],
+      "rotation": [0, 0, 0],
+      "explode": [0, 0, 165],
+      "step": 5
+    },
+    {
+      "id": "node-refill-funnel",
+      "partId": "refill-funnel",
+      "copy": 1,
+      "position": [-32, -32, 107],
+      "rotation": [180, 0, 0],
+      "explode": [-45, -45, 210],
+      "step": 6
+    },
+    {
+      "id": "node-controller-bracket",
+      "partId": "controller-bracket",
+      "copy": 1,
+      "position": [62, 0, 68],
+      "rotation": [90, 0, 0],
+      "explode": [65, 0, 15],
+      "step": 7
+    },
+    {
+      "id": "node-wiring-hardware",
+      "partId": "wiring-hardware",
+      "copy": 1,
+      "position": [72, 0, 78],
+      "rotation": [0, 90, 0],
+      "explode": [95, 0, 20],
+      "step": 7
+    },
+    {
+      "id": "node-controller-box",
+      "partId": "controller-box",
+      "copy": 1,
+      "position": [86, 0, 52],
+      "rotation": [0, -90, 0],
+      "explode": [130, 0, 0],
+      "step": 8
+    },
+    {
+      "id": "node-esp32-mcu",
+      "partId": "esp32-mcu",
+      "copy": 1,
+      "position": [92, -10, 58],
+      "rotation": [0, -90, 0],
+      "explode": [175, -25, 25],
+      "step": 8
+    },
+    {
+      "id": "node-mosfet-module",
+      "partId": "mosfet-module",
+      "copy": 1,
+      "position": [92, 16, 58],
+      "rotation": [0, -90, 0],
+      "explode": [175, 25, 25],
+      "step": 8
+    },
+    {
+      "id": "node-tube-clip-1",
+      "partId": "tube-clip",
+      "copy": 1,
+      "position": [0, 58, 104],
+      "rotation": [0, 0, 0],
+      "explode": [0, 85, 175],
+      "step": 9
+    },
+    {
+      "id": "node-tube-clip-2",
+      "partId": "tube-clip",
+      "copy": 2,
+      "position": [30, 58, 104],
+      "rotation": [0, 0, 0],
+      "explode": [40, 85, 175],
+      "step": 9
+    },
+    {
+      "id": "node-flow-wheel",
+      "partId": "flow-wheel",
+      "copy": 1,
+      "position": [15, 42, 108],
+      "rotation": [0, 0, 0],
+      "explode": [25, 65, 195],
+      "step": 9
+    },
+    {
+      "id": "node-drip-stake-1",
+      "partId": "drip-stake",
+      "copy": 1,
+      "position": [-85, 35, 45],
+      "rotation": [90, 0, 0],
+      "explode": [-120, 55, 60],
+      "step": 10
+    },
+    {
+      "id": "node-drip-stake-2",
+      "partId": "drip-stake",
+      "copy": 2,
+      "position": [-85, -35, 45],
+      "rotation": [90, 0, 0],
+      "explode": [-120, -55, 60],
+      "step": 10
+    },
+    {
+      "id": "node-moisture-sensor",
+      "partId": "moisture-sensor",
+      "copy": 1,
+      "position": [-95, 0, 48],
+      "rotation": [0, 0, 0],
+      "explode": [-150, 0, 80],
+      "step": 10
+    },
+    {
+      "id": "node-usbc-power",
+      "partId": "usbc-power",
+      "copy": 1,
+      "position": [110, 0, 18],
+      "rotation": [0, 0, 0],
+      "explode": [185, 0, -35],
+      "step": 10
+    }
+  ]
+}

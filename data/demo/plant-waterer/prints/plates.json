@@ -1,0 +1,369 @@
+{
+  "objectId": "plant-waterer",
+  "printer": {
+    "id": "bambu-a1",
+    "name": "Bambu Lab A1",
+    "brand": "Bambu Lab",
+    "bed": {
+      "x": 256,
+      "y": 256,
+      "z": 256
+    },
+    "multiColor": true
+  },
+  "margin": 5,
+  "spacing": 5,
+  "heuristicUsed": "Skyline-MW-BF (area-desc)",
+  "totalUniqueParts": 9,
+  "totalPrintedItems": 13,
+  "partFiles": [
+    {
+      "partId": "reservoir-tank",
+      "name": "Water Reservoir Base (1.4L)",
+      "shape": "custom_csg",
+      "material": "PETG",
+      "color": "#0ea5e9",
+      "quantity": 1,
+      "file": "part-reservoir-tank.stl",
+      "bytes": 11084,
+      "dimensionsMm": [
+        115,
+        115,
+        100
+      ],
+      "triangleCount": 220,
+      "vertexCount": 112,
+      "edgeCount": 330,
+      "volumeMm3": 196081.9,
+      "isManifold": true
+    },
+    {
+      "partId": "reservoir-lid",
+      "name": "Snap-Fit Reservoir Lid with Port Grommets",
+      "shape": "plate_with_holes",
+      "material": "PLA",
+      "color": "#10b981",
+      "quantity": 1,
+      "file": "part-reservoir-lid.stl",
+      "bytes": 18084,
+      "dimensionsMm": [
+        120,
+        120,
+        7
+      ],
+      "triangleCount": 360,
+      "vertexCount": 176,
+      "edgeCount": 540,
+      "volumeMm3": 96394.42,
+      "isManifold": true
+    },
+    {
+      "partId": "pump-mount",
+      "name": "Submersible Pump Isolation Cradle",
+      "shape": "tube",
+      "material": "PETG",
+      "color": "#334155",
+      "quantity": 1,
+      "file": "part-pump-mount.stl",
+      "bytes": 28884,
+      "dimensionsMm": [
+        56,
+        56,
+        32
+      ],
+      "triangleCount": 576,
+      "vertexCount": 288,
+      "edgeCount": 864,
+      "volumeMm3": 26614.81,
+      "isManifold": true
+    },
+    {
+      "partId": "refill-funnel",
+      "name": "Wide-Mouth Top Refill Funnel",
+      "shape": "funnel",
+      "material": "PLA",
+      "color": "#84cc16",
+      "quantity": 1,
+      "file": "part-refill-funnel.stl",
+      "bytes": 38484,
+      "dimensionsMm": [
+        54,
+        54,
+        38
+      ],
+      "triangleCount": 768,
+      "vertexCount": 384,
+      "edgeCount": 1152,
+      "volumeMm3": 9637.47,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-box",
+      "name": "ESP32 & MOSFET Controller Enclosure",
+      "shape": "custom_csg",
+      "material": "PLA",
+      "color": "#1e293b",
+      "quantity": 1,
+      "file": "part-controller-box.stl",
+      "bytes": 17884,
+      "dimensionsMm": [
+        78,
+        54,
+        28
+      ],
+      "triangleCount": 356,
+      "vertexCount": 176,
+      "edgeCount": 534,
+      "volumeMm3": 29586.1,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-bracket",
+      "name": "Reservoir Side-Mount L-Bracket",
+      "shape": "bracketL",
+      "material": "PLA",
+      "color": "#059669",
+      "quantity": 1,
+      "file": "part-controller-bracket.stl",
+      "bytes": 2284,
+      "dimensionsMm": [
+        42,
+        38,
+        30
+      ],
+      "triangleCount": 44,
+      "vertexCount": 24,
+      "edgeCount": 66,
+      "volumeMm3": 9227.3,
+      "isManifold": true
+    },
+    {
+      "partId": "tube-clip",
+      "name": "Rim-Snap 6mm Silicone Tube Clip",
+      "shape": "clip",
+      "material": "PETG",
+      "color": "#14b8a6",
+      "quantity": 4,
+      "file": "part-tube-clip.stl",
+      "bytes": 11484,
+      "dimensionsMm": [
+        10.49,
+        11.2,
+        12
+      ],
+      "triangleCount": 228,
+      "vertexCount": 116,
+      "edgeCount": 342,
+      "volumeMm3": 631.94,
+      "isManifold": true
+    },
+    {
+      "partId": "drip-stake",
+      "name": "Root-Zone Soil Emitter Stake",
+      "shape": "hook",
+      "material": "PLA",
+      "color": "#f59e0b",
+      "quantity": 2,
+      "file": "part-drip-stake.stl",
+      "bytes": 7484,
+      "dimensionsMm": [
+        23.2,
+        106.6,
+        8
+      ],
+      "triangleCount": 148,
+      "vertexCount": 76,
+      "edgeCount": 222,
+      "volumeMm3": 3015.82,
+      "isManifold": true
+    },
+    {
+      "partId": "flow-wheel",
+      "name": "Rotary Drip Flow Restrictor Wheel",
+      "shape": "gear_simple",
+      "material": "PLA",
+      "color": "#f97316",
+      "quantity": 1,
+      "file": "part-flow-wheel.stl",
+      "bytes": 22484,
+      "dimensionsMm": [
+        28.66,
+        28.8,
+        7
+      ],
+      "triangleCount": 448,
+      "vertexCount": 224,
+      "edgeCount": 672,
+      "volumeMm3": 3137.27,
+      "isManifold": true
+    }
+  ],
+  "plates": [
+    {
+      "index": 0,
+      "file": "plate-1.3mf",
+      "bytes": 234285,
+      "utilization": 0.7556,
+      "maxHeight": 100,
+      "items": [
+        {
+          "partId": "reservoir-lid",
+          "copy": 1,
+          "x": 5,
+          "y": 5,
+          "rotated": false,
+          "width": 120,
+          "depth": 120,
+          "height": 7,
+          "centerX": 65,
+          "centerY": 65
+        },
+        {
+          "partId": "reservoir-tank",
+          "copy": 1,
+          "x": 130,
+          "y": 5,
+          "rotated": false,
+          "width": 115,
+          "depth": 115,
+          "height": 100,
+          "centerX": 187.5,
+          "centerY": 62.5
+        },
+        {
+          "partId": "controller-box",
+          "copy": 1,
+          "x": 130,
+          "y": 125,
+          "rotated": false,
+          "width": 78,
+          "depth": 54,
+          "height": 28,
+          "centerX": 169,
+          "centerY": 152
+        },
+        {
+          "partId": "pump-mount",
+          "copy": 1,
+          "x": 5,
+          "y": 130,
+          "rotated": false,
+          "width": 56,
+          "depth": 56,
+          "height": 32,
+          "centerX": 33,
+          "centerY": 158
+        },
+        {
+          "partId": "refill-funnel",
+          "copy": 1,
+          "x": 66,
+          "y": 130,
+          "rotated": false,
+          "width": 54,
+          "depth": 54,
+          "height": 38,
+          "centerX": 93,
+          "centerY": 157
+        },
+        {
+          "partId": "drip-stake",
+          "copy": 1,
+          "x": 213,
+          "y": 125,
+          "rotated": false,
+          "width": 23.2,
+          "depth": 106.6,
+          "height": 8,
+          "centerX": 224.6,
+          "centerY": 178.3
+        },
+        {
+          "partId": "drip-stake",
+          "copy": 2,
+          "x": 5,
+          "y": 191,
+          "rotated": true,
+          "width": 106.6,
+          "depth": 23.2,
+          "height": 8,
+          "centerX": 58.3,
+          "centerY": 202.6
+        },
+        {
+          "partId": "controller-bracket",
+          "copy": 1,
+          "x": 130,
+          "y": 184,
+          "rotated": false,
+          "width": 42,
+          "depth": 38,
+          "height": 30,
+          "centerX": 151,
+          "centerY": 203
+        },
+        {
+          "partId": "flow-wheel",
+          "copy": 1,
+          "x": 177,
+          "y": 184,
+          "rotated": true,
+          "width": 28.8,
+          "depth": 28.66,
+          "height": 7,
+          "centerX": 191.4,
+          "centerY": 198.33
+        },
+        {
+          "partId": "tube-clip",
+          "copy": 1,
+          "x": 177,
+          "y": 217.66,
+          "rotated": true,
+          "width": 11.2,
+          "depth": 10.49,
+          "height": 12,
+          "centerX": 182.6,
+          "centerY": 222.9
+        },
+        {
+          "partId": "tube-clip",
+          "copy": 2,
+          "x": 193.2,
+          "y": 217.66,
+          "rotated": true,
+          "width": 11.2,
+          "depth": 10.49,
+          "height": 12,
+          "centerX": 198.8,
+          "centerY": 222.9
+        },
+        {
+          "partId": "tube-clip",
+          "copy": 3,
+          "x": 5,
+          "y": 219.2,
+          "rotated": true,
+          "width": 11.2,
+          "depth": 10.49,
+          "height": 12,
+          "centerX": 10.6,
+          "centerY": 224.44
+        },
+        {
+          "partId": "tube-clip",
+          "copy": 4,
+          "x": 21.2,
+          "y": 219.2,
+          "rotated": true,
+          "width": 11.2,
+          "depth": 10.49,
+          "height": 12,
+          "centerX": 26.8,
+          "centerY": 224.44
+        }
+      ]
+    }
+  ],
+  "rejected": []
+}

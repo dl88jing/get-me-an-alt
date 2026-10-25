@@ -1,0 +1,51 @@
+{
+  "objectId": "plant-waterer",
+  "query": "DIY 3D printed ESP32 automatic plant watering system capacitive moisture sensor",
+  "sources": [
+    {
+      "id": "src-printables-waterer",
+      "title": "Printables — 3D Printable Plant Watering Spikes, Stakes & Pump Mounts",
+      "type": "3d-repository",
+      "provider": "Printables",
+      "url": "https://www.printables.com/search/models?q=plant+waterer+pump",
+      "summary": "Open-source community STLs for snap-on hose clips, soil irrigation stakes, and submersible mini-pump cradles.",
+      "relevance": "Reference geometry for 4/6mm silicone tubing snap clips and tapered soil drip stakes."
+    },
+    {
+      "id": "src-thingiverse-irrigation",
+      "title": "Thingiverse — Automatic Plant Irrigation & ESP32 Enclosure Designs",
+      "type": "3d-repository",
+      "provider": "Thingiverse",
+      "url": "https://www.thingiverse.com/search?q=automatic+plant+watering+system&type=things",
+      "summary": "Parametric electronics enclosures for ESP32 / Arduino Nano and reservoir lid cable grommets.",
+      "relevance": "Informs wall thickness (3mm), snap-fit lid tolerances, and ventilation slot layout."
+    },
+    {
+      "id": "src-youtube-esp32-waterer",
+      "title": "YouTube — Build a Smart Auto Plant Waterer with ESP32 & Capacitive Sensor",
+      "type": "video",
+      "provider": "YouTube",
+      "url": "https://www.youtube.com/results?search_query=esp32+automatic+plant+watering+system+capacitive+sensor",
+      "summary": "Step-by-step wiring and calibration guides for v1.2 capacitive soil moisture sensors, 5V MOSFET switching modules, and mini submersible pumps.",
+      "relevance": "Confirms single-supply 5V USB-C power routing and flyback protection for the 5V water pump."
+    },
+    {
+      "id": "src-github-esphome-irrigation",
+      "title": "GitHub — Open-Source ESP32 / ESPHome Plant Irrigation Firmware",
+      "type": "code",
+      "provider": "GitHub",
+      "url": "https://github.com/search?q=esp32+plant+watering+capacitive+sensor&type=repositories",
+      "summary": "Ready-to-flash Arduino and ESPHome firmware with moisture threshold hysteresis, pump run-time safety cutoffs, and Wi-Fi telemetry.",
+      "relevance": "Provides drop-in firmware for the ESP32-WROOM-32 controller board."
+    },
+    {
+      "id": "src-instructables-watering",
+      "title": "Instructables — DIY Automated Desktop Plant Watering Guides",
+      "type": "guide",
+      "provider": "Instructables",
+      "url": "https://www.instructables.com/search/?q=automatic+plant+watering+arduino+pump",
+      "summary": "Mechanical assembly teardowns, tubing routing anti-siphon tips, and waterproofing best practices for capacitive probes.",
+      "relevance": "Validates reservoir lid port placement above waterline to prevent back-siphoning."
+    }
+  ]
+}
