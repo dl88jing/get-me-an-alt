@@ -245,8 +245,16 @@ export default function ProjectPage() {
     );
   }
 
-  const { analysis, sources, design, critique, bom, plates, instructions } =
-    manifest;
+  const {
+    analysis,
+    sources,
+    teardown,
+    design,
+    critique,
+    bom,
+    plates,
+    instructions,
+  } = manifest;
   const activeStage =
     manifest.stages.find((s) => s.id === selectedStageId) ||
     manifest.stages[0];
@@ -527,8 +535,16 @@ export default function ProjectPage() {
           {PeerSourcesComp ? (
             <PeerSourcesComp
               sources={sources}
+              teardown={teardown}
+              bomItems={bom?.items}
+              designParts={design?.parts}
               analysis={analysis}
               projectId={manifest.id}
+              onSelectBomRef={() => setActiveTab('bom')}
+              onSelectDesignPart={(partId: string) => {
+                setSelectedPartId(partId);
+                setActiveTab('exploded');
+              }}
             />
           ) : (
             <>
@@ -584,88 +600,110 @@ export default function ProjectPage() {
       {/* TAB 3: BOM */}
       {activeTab === 'bom' && bom && (
         <div className="space-y-6">
-          {PeerBomComp && (
-            <PeerBomComp bom={bom} analysis={analysis} design={design} />
-          )}
-
-          {/* Summary Cards */}
-          <div className="grid gap-4 sm:grid-cols-4">
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-              <div className="text-xs text-slate-400">Original Commercial Price</div>
-              <div className="mt-1 text-2xl font-bold text-slate-300 line-through">
-                ${bom.summary.originalRetailPrice.toFixed(2)}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-              <div className="text-xs text-slate-400">Off-The-Shelf Hardware</div>
-              <div className="mt-1 text-2xl font-bold text-white">
-                ${bom.summary.purchasedPartsTotal.toFixed(2)}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-              <div className="text-xs text-slate-400">3D Print Filament Est.</div>
-              <div className="mt-1 text-2xl font-bold text-sky-400">
-                ${bom.summary.filamentCostTotal.toFixed(2)}
-              </div>
-            </div>
-            <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4">
-              <div className="text-xs font-semibold text-emerald-300">
-                Total DIY Cost (Save {bom.summary.savingsPercent}%)
-              </div>
-              <div className="mt-1 text-2xl font-black text-emerald-400">
-                ${bom.summary.totalDiyCost.toFixed(2)}
-              </div>
-            </div>
-          </div>
-
-          {/* BOM Line Cards */}
-          <div className="grid gap-4 md:grid-cols-2">
-            {bom.items.map((item) => (
-              <div
-                key={item.id}
-                className="flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/65 p-5 space-y-4"
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-xs font-bold text-emerald-300">
-                      {item.partNumber} · {item.category}
-                    </span>
-                    <span className="text-base font-extrabold text-white">
-                      ${item.totalPrice.toFixed(2)}{' '}
-                      <span className="text-xs font-normal text-slate-400">
-                        (Qty: {item.qty} {item.unit})
-                      </span>
-                    </span>
+          {PeerBomComp ? (
+            <PeerBomComp
+              bom={bom}
+              analysis={analysis}
+              design={design}
+              onSelectPartId={(partId: string) => {
+                setSelectedPartId(partId);
+                setActiveTab('exploded');
+              }}
+            />
+          ) : (
+            <>
+              {/* Summary Cards */}
+              <div className="grid gap-4 sm:grid-cols-4">
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <div className="text-xs text-slate-400">
+                    Original Commercial Price
                   </div>
-
-                  <h4 className="text-sm font-bold text-white">{item.name}</h4>
-                  <p className="text-xs text-slate-400">{item.specification}</p>
-                  {item.notes && (
-                    <p className="text-[11px] text-slate-500">{item.notes}</p>
-                  )}
+                  <div className="mt-1 text-2xl font-bold text-slate-300 line-through">
+                    ${bom.summary.originalRetailPrice.toFixed(2)}
+                  </div>
                 </div>
-
-                {/* Retailer Links */}
-                <div className="flex flex-wrap items-center gap-2 border-t border-slate-800/80 pt-3">
-                  {item.retailerLinks.map((link, i) => (
-                    <a
-                      key={i}
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-emerald-400 hover:text-emerald-300 transition-colors"
-                    >
-                      <span>{link.retailer}</span>
-                      <span className="text-emerald-400">
-                        ${link.estPrice.toFixed(2)}
-                      </span>
-                      <ExternalLink className="h-3 w-3" />
-                    </a>
-                  ))}
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <div className="text-xs text-slate-400">
+                    Off-The-Shelf Hardware
+                  </div>
+                  <div className="mt-1 text-2xl font-bold text-white">
+                    ${bom.summary.purchasedPartsTotal.toFixed(2)}
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <div className="text-xs text-slate-400">
+                    3D Print Filament Est.
+                  </div>
+                  <div className="mt-1 text-2xl font-bold text-sky-400">
+                    ${bom.summary.filamentCostTotal.toFixed(2)}
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 p-4">
+                  <div className="text-xs font-semibold text-emerald-300">
+                    Total DIY Cost (Save {bom.summary.savingsPercent}%)
+                  </div>
+                  <div className="mt-1 text-2xl font-black text-emerald-400">
+                    ${bom.summary.totalDiyCost.toFixed(2)}
+                  </div>
                 </div>
               </div>
-            ))}
-          </div>
+
+              {/* BOM Line Cards */}
+              <div className="grid gap-4 md:grid-cols-2">
+                {bom.items.map((item) => (
+                  <div
+                    key={item.id}
+                    className="flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/65 p-5 space-y-4"
+                  >
+                    <div className="space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-xs font-bold text-emerald-300">
+                          {item.partNumber} · {item.category}
+                        </span>
+                        <span className="text-base font-extrabold text-white">
+                          ${item.totalPrice.toFixed(2)}{' '}
+                          <span className="text-xs font-normal text-slate-400">
+                            (Qty: {item.qty} {item.unit})
+                          </span>
+                        </span>
+                      </div>
+
+                      <h4 className="text-sm font-bold text-white">
+                        {item.name}
+                      </h4>
+                      <p className="text-xs text-slate-400">
+                        {item.specification}
+                      </p>
+                      {item.notes && (
+                        <p className="text-[11px] text-slate-500">
+                          {item.notes}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Retailer Links */}
+                    <div className="flex flex-wrap items-center gap-2 border-t border-slate-800/80 pt-3">
+                      {item.retailerLinks.map((link, i) => (
+                        <a
+                          key={i}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 hover:border-emerald-400 hover:text-emerald-300 transition-colors"
+                        >
+                          <span>{link.retailer}</span>
+                          <span className="text-emerald-400">
+                            ${link.estPrice.toFixed(2)}
+                          </span>
+                          <ExternalLink className="h-3 w-3" />
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
 

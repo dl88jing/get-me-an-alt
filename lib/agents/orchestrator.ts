@@ -24,11 +24,13 @@ import {
   SAMPLE_PLATES,
   SAMPLE_SLUG,
   SAMPLE_SOURCES,
+  SAMPLE_TEARDOWN,
 } from '../sample-data';
 import { getPrinterById } from '../printers';
 import { generateCadBundle } from '../cad';
 import { runAnalystAgent } from './analyst';
 import { runResearcherAgent } from './researcher';
+import { runTeardownAgent } from './teardown';
 import { runDesignerAgent } from './designer';
 import {
   applyCritiqueFixesToDesign,
@@ -583,14 +585,16 @@ export function getProjectEvents(id: string): SsePipelineEvent[] {
 }
 
 export function buildSampleManifest(): ProjectManifest {
-  // Check if hark-superdev has populated data/demo/plant-auto-waterer or data/demo
+  // Check if hark-superdev has populated data/demo/plant-auto-waterer, data/demo/plant-waterer, or data/demo
   const demoCandidates = [
     path.join(process.cwd(), 'data', 'demo', SAMPLE_SLUG),
+    path.join(process.cwd(), 'data', 'demo', 'plant-waterer'),
     path.join(process.cwd(), 'data', 'demo'),
   ];
 
   let analysis = SAMPLE_ANALYSIS;
   let sources = SAMPLE_SOURCES;
+  let teardown = SAMPLE_TEARDOWN;
   let design = SAMPLE_DESIGN;
   let critique = SAMPLE_CRITIQUE;
   let bom = SAMPLE_BOM;
@@ -612,6 +616,14 @@ export function buildSampleManifest(): ProjectManifest {
           ...sources,
           ...JSON.parse(
             fs.readFileSync(path.join(dir, 'sources.json'), 'utf-8')
+          ),
+        };
+      }
+      if (fs.existsSync(path.join(dir, 'teardown.json'))) {
+        teardown = {
+          ...teardown,
+          ...JSON.parse(
+            fs.readFileSync(path.join(dir, 'teardown.json'), 'utf-8')
           ),
         };
       }
@@ -727,6 +739,7 @@ export function buildSampleManifest(): ProjectManifest {
     stages,
     analysis,
     sources,
+    teardown,
     design,
     critique,
     bom,
@@ -1080,7 +1093,7 @@ async function executePipelineStages(
       summary: `Grounded ${researchRes.data.sources.length} reference schematics, teardowns & open-source models`,
     });
 
-    // 2b. Video Teardown Agent SSE telemetry
+    // 2b. Video Teardown Agent
     emitSseEvent(cwd, manifest, {
       agent: 'teardown',
       phase: 'start',
@@ -1088,18 +1101,35 @@ async function executePipelineStages(
         'Extracting timestamped video teardown frames & internal part callouts...',
       data: { stageId: 'teardown', artifactFile: 'teardown.json' },
     });
-    emitSseEvent(cwd, manifest, {
-      agent: 'teardown',
-      phase: 'thought',
-      message:
-        'Analyzed teardown video frames for internal mechanisms, fasteners & print-vs-buy boundaries.',
-      data: { stageId: 'teardown' },
-    });
+    try {
+      const teardownRes = await runTeardownAgent({
+        analysis: manifest.analysis,
+        sources: manifest.sources,
+        cwd,
+        onLog: (entry) => {
+          emitSseEvent(cwd, manifest, {
+            agent: 'teardown',
+            phase: 'thought',
+            message: entry.message,
+            data: { stageId: 'teardown', level: entry.level },
+            ts: entry.timestamp,
+          });
+        },
+      });
+      manifest.teardown = teardownRes.data;
+      saveManifest(cwd, manifest);
+    } catch {
+      // non-fatal teardown fallback
+    }
     emitSseEvent(cwd, manifest, {
       agent: 'teardown',
       phase: 'artifact',
       message: 'Wrote teardown.json & frames/*.jpg',
-      data: { stageId: 'teardown', artifactFile: 'teardown.json' },
+      data: {
+        stageId: 'teardown',
+        artifactFile: 'teardown.json',
+        artifact: manifest.teardown,
+      },
     });
     emitSseEvent(cwd, manifest, {
       agent: 'teardown',

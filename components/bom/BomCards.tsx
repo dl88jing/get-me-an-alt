@@ -70,6 +70,7 @@ export function BomItemCard({
   currency?: string;
   onSelectPartId?: (partId: string) => void;
 }) {
+  if (!item) return null;
   return (
     <article
       id={`bom-item-${item.id}`}
@@ -160,6 +161,7 @@ export function BomTab({
   design?: unknown;
   onSelectPartId?: (partId: string) => void;
 }) {
+  if (!bom) return null;
   return (
     <div className="space-y-6" data-testid="bom-tab">
       <BomSummary bom={bom} />
