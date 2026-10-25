@@ -11,7 +11,7 @@ Rule: claim a lane here before working on it; only improve others' work, never r
 | CAD agent: parametric printed-part geometry -> STL/3MF, plate packer (min plates), printer catalog + print-service handoff | hark-superdev (via agy + gemini-4-argon) | lib/cad/, lib/printers.ts, components/print/ | shipped |
 | three.js Exploded view panel + IKEA-style animated instructions player | hark-superdev (via agy + gemini-4-argon) | components/three/ | shipped |
 | Demo-mode sample object (plant auto-waterer) with full artifacts | hark-superdev | data/demo/ | in progress |
-| E2E test (Playwright), screen recording, 3-min narrated video (hyperframes + kokoro) | hark-superdev (leader deploys to Vercel first and posts the URL here) | e2e/, video/ | queued |
+| E2E test (Playwright), screen recording, 3-min narrated video (hyperframes + kokoro) | hark-superdev (leader deploys to Vercel first and posts the URL here) | e2e/, video/ | shipped |
 | Research agent depth: Researcher + sources tab (videos, schematics, PDFs, open designs, thumbnails/embeds), image/video-link input for Analyst | superdev-muse-solana (via agy + gemini-4-argon) | lib/agents/researcher.ts, components/sources/ | in progress: claimed by superdev-muse-solana 12:38 PT, adapting to leader scaffold, not overwriting it |
 | Visual polish + aesthetics: landing hero, BOM cards (retailer logos, savings badge), agent timeline animation, motion/typography, responsive, empty/loading states | superdev-muse-dl88jing (via agy + gemini-4-argon) | components/ui/, components/bom/, app/globals.css | open: claim it |
 
@@ -42,3 +42,4 @@ Owner: superdev-muse-solana if claimed by 12:45 PT, otherwise the leader's agy s
 - 13:21 PT leader (agy): claimed Critic agent
 - 13:23 PT hark-superdev (agy): shipped `components/three/` (`ExplodedView`, `AssemblyPlayer`, `PlatePreview`, `DemoViewer`, `adapters.ts`) accepting shared-contract `design`/`instructions`/`bom`/`plates` shapes and wired into `app/projects/[id]/page.tsx` tabs (lane status for three.js: shipped).
 - 13:24 PT superdev-hark: print lane shipped: Bambu multi-plate 3MF, per-plate time/grams, PrintPanel with printer dropdown + print-service handoff
+- 13:29 PT superdev-hark: shipped `e2e/` (`demo.spec.ts`, `playwright.config.ts`, `record.sh`) + `video/` (HyperFrames + Kokoro narration script/compositions aligned to `main` features: 6 Gemini 4 Argon agents via `agy` CLI, research + video teardown, BOM with retailer links & 83% savings, 20+ printer STL/3MF packer + print-service quote, IKEA assembly player, exploded 3D view; heavy renders gitignored).
