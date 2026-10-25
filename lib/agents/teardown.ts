@@ -950,7 +950,7 @@ export async function runTeardownAgent(
           const fallbackDiskPath = path.join(framesDir, `${ts.t}.jpg`);
           fs.writeFileSync(
             fallbackDiskPath,
-            Buffer.from(fallbackThumbBase64, 'base64')
+            Uint8Array.from(atob(fallbackThumbBase64), (c) => c.charCodeAt(0))
           );
           relImage = `frames/${ts.t}.jpg`;
         } catch {
