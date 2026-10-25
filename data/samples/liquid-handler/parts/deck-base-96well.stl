@@ -1,0 +1,86 @@
+solid deck-base-96well
+  facet normal 0 0 -1
+    outer loop
+      vertex -105.000 -72.500 0.000
+      vertex 105.000 72.500 0.000
+      vertex 105.000 -72.500 0.000
+    endloop
+  endfacet
+  facet normal 0 0 -1
+    outer loop
+      vertex -105.000 -72.500 0.000
+      vertex -105.000 72.500 0.000
+      vertex 105.000 72.500 0.000
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -105.000 -72.500 22.000
+      vertex 105.000 -72.500 22.000
+      vertex 105.000 72.500 22.000
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -105.000 -72.500 22.000
+      vertex 105.000 72.500 22.000
+      vertex -105.000 72.500 22.000
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -105.000 -72.500 0.000
+      vertex 105.000 -72.500 0.000
+      vertex 105.000 -72.500 22.000
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -105.000 -72.500 0.000
+      vertex 105.000 -72.500 22.000
+      vertex -105.000 -72.500 22.000
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -105.000 72.500 0.000
+      vertex 105.000 72.500 22.000
+      vertex 105.000 72.500 0.000
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -105.000 72.500 0.000
+      vertex -105.000 72.500 22.000
+      vertex 105.000 72.500 22.000
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -105.000 -72.500 0.000
+      vertex -105.000 -72.500 22.000
+      vertex -105.000 72.500 22.000
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -105.000 -72.500 0.000
+      vertex -105.000 72.500 22.000
+      vertex -105.000 72.500 0.000
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 105.000 -72.500 0.000
+      vertex 105.000 72.500 22.000
+      vertex 105.000 -72.500 22.000
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 105.000 -72.500 0.000
+      vertex 105.000 72.500 0.000
+      vertex 105.000 72.500 22.000
+    endloop
+  endfacet
+endsolid deck-base-96well

@@ -1,0 +1,353 @@
+{
+  "objectId": "art-easel",
+  "objectName": "Articulated Tabletop Studio Art Easel",
+  "totalSteps": 6,
+  "estimatedMinutes": 20,
+  "estimatedTotalMinutes": 20,
+  "difficulty": "Beginner",
+  "safetyNotes": [
+    "Print PRT-01 (Base Hub), PRT-02 (Ratchet Hinge), and PRT-04 (Upper Clamp Jaw) in PETG with 4 perimeter walls and 35% gyroid infill for high clamping stiffness.",
+    "All T-slot sliding rails include a 0.25mm lateral clearance so carriages glide smoothly along the 2020 aluminum profile without binding."
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "step": 1,
+      "title": "Step 1: Install Weighted H-Frame Studio Base Hub & Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+      "partIds": [
+        "easel-base-hub",
+        "silicone-grip-pads"
+      ],
+      "tools": [
+        "Flat workbench"
+      ],
+      "note": "Wide-stance H-frame base block with recessed EPDM foot pockets and dual hinge clevis ears. Anchors the easel to the tabletop and houses the lower tilt hinge pivot.",
+      "description": "Wide-stance H-frame base block with recessed EPDM foot pockets and dual hinge clevis ears. Anchors the easel to the tabletop and houses the lower tilt hinge pivot.",
+      "motion": [
+        {
+          "partId": "easel-base-hub",
+          "from": [
+            0,
+            0,
+            -60
+          ],
+          "to": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "partId": "silicone-grip-pads",
+          "from": [
+            -140,
+            107,
+            -82
+          ],
+          "to": [
+            -55,
+            42,
+            -2
+          ]
+        }
+      ],
+      "action": "place",
+      "actionType": "place",
+      "cameraHint": {
+        "position": [
+          165,
+          -170,
+          153
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-front"
+      }
+    },
+    {
+      "n": 2,
+      "step": 2,
+      "title": "Step 2: Install 15°-Step Ratcheting Tilt Mast Hinge & 2020 Black Anodized V-Slot Aluminum Extrusion (400mm) & 302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+      "partIds": [
+        "ratchet-tilt-hinge",
+        "extrusion-spine-2020",
+        "compression-spring-kit"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Toothed quadrant hinge socket that grips the bottom of the 2020 aluminum mast and locks tilt angle. Couples the 2020 aluminum spine to the base hub with positive angular indexing.",
+      "description": "Toothed quadrant hinge socket that grips the bottom of the 2020 aluminum mast and locks tilt angle. Couples the 2020 aluminum spine to the base hub with positive angular indexing.",
+      "motion": [
+        {
+          "partId": "ratchet-tilt-hinge",
+          "from": [
+            0,
+            -69,
+            13
+          ],
+          "to": [
+            0,
+            -14,
+            28
+          ]
+        },
+        {
+          "partId": "extrusion-spine-2020",
+          "from": [
+            0,
+            0,
+            210
+          ],
+          "to": [
+            0,
+            0,
+            125
+          ]
+        },
+        {
+          "partId": "compression-spring-kit",
+          "from": [
+            93,
+            -69,
+            24
+          ],
+          "to": [
+            18,
+            -14,
+            34
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          150,
+          -160,
+          161
+        ],
+        "target": [
+          0,
+          -14,
+          28
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 3,
+      "step": 3,
+      "title": "Step 3: Install 2020 V-Slot Rear Strut Locking Collar & M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+      "partIds": [
+        "rear-strut-collar",
+        "m5-tnut-bolts"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Sliding rear collar that braces the mast tilt quadrant against brush pressure. Reinforces mast inclination angle on the rear V-slot channel.",
+      "description": "Sliding rear collar that braces the mast tilt quadrant against brush pressure. Reinforces mast inclination angle on the rear V-slot channel.",
+      "motion": [
+        {
+          "partId": "rear-strut-collar",
+          "from": [
+            0,
+            -109,
+            165
+          ],
+          "to": [
+            0,
+            -24,
+            120
+          ]
+        },
+        {
+          "partId": "m5-tnut-bolts",
+          "from": [
+            55,
+            43,
+            215
+          ],
+          "to": [
+            0,
+            8,
+            150
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          135,
+          -150,
+          169
+        ],
+        "target": [
+          0,
+          -24,
+          120
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 4,
+      "step": 4,
+      "title": "Step 4: Install Lower Canvas Ledge & Brush Rest Tray",
+      "partIds": [
+        "lower-canvas-tray"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Full-width lower support shelf with integrated brush groove and 2020 V-slot tongue. Supports the bottom edge of the canvas and slides vertically on the 2020 mast.",
+      "description": "Full-width lower support shelf with integrated brush groove and 2020 V-slot tongue. Supports the bottom edge of the canvas and slides vertically on the 2020 mast.",
+      "motion": [
+        {
+          "partId": "lower-canvas-tray",
+          "from": [
+            0,
+            102,
+            78
+          ],
+          "to": [
+            0,
+            22,
+            68
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          120,
+          -140,
+          177
+        ],
+        "target": [
+          0,
+          22,
+          68
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 5,
+      "step": 5,
+      "title": "Step 5: Install Sliding Top Canvas Clamp Jaw",
+      "partIds": [
+        "upper-canvas-clamp"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Inverted L-jaw carriage that clamps the top stretcher bar of the canvas without marring paint. Locks top canvas edge against the 2020 mast via an M5 T-nut.",
+      "description": "Inverted L-jaw carriage that clamps the top stretcher bar of the canvas without marring paint. Locks top canvas edge against the 2020 mast via an M5 T-nut.",
+      "motion": [
+        {
+          "partId": "upper-canvas-clamp",
+          "from": [
+            0,
+            95,
+            280
+          ],
+          "to": [
+            0,
+            20,
+            185
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          105,
+          -130,
+          185
+        ],
+        "target": [
+          0,
+          20,
+          185
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 6,
+      "step": 6,
+      "title": "Step 6: Install Lobed M5 Brass-Insert Rosette Knobs (×3) & M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+      "partIds": [
+        "knurled-lock-knobs",
+        "brass-knurled-nuts"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Six-lobe ergonomic hand knobs with hex pockets for M5 brass thumb nuts. Provides tool-free locking for the tilt hinge, lower tray, and top canvas clamp.",
+      "description": "Six-lobe ergonomic hand knobs with hex pockets for M5 brass thumb nuts. Provides tool-free locking for the tilt hinge, lower tray, and top canvas clamp.",
+      "motion": [
+        {
+          "partId": "knurled-lock-knobs",
+          "from": [
+            131,
+            -63,
+            175
+          ],
+          "to": [
+            36,
+            -18,
+            120
+          ]
+        },
+        {
+          "partId": "brass-knurled-nuts",
+          "from": [
+            -131,
+            -63,
+            175
+          ],
+          "to": [
+            -36,
+            -18,
+            120
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          90,
+          -120,
+          193
+        ],
+        "target": [
+          36,
+          -18,
+          120
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    }
+  ]
+}

@@ -1,0 +1,708 @@
+{
+  "objectName": "Benchtop Lab Pipette Liquid Automaton",
+  "designPhilosophy": "Dual-bay 96-well SBS microplate indexer + MGN9H linear rail XY gantry + T8 leadscrew pipette plunger escapement",
+  "summary": "Entry-level benchtop 96-well plate pipetting robots and automated serial-dilution workstations cost $590–$3,500+. This DIY open-labware alternative pairs 8 precision PETG/PLA+ structural gantry & compliant pipette clamp STLs with MGN9H linear rails, NEMA17 stepper motors, a T8 anti-backlash leadscrew, and a 3-axis ESP32 GRBL controller for $68.50 total.",
+  "overallBoundingBoxMm": [
+    245,
+    195,
+    215
+  ],
+  "printedPartsCount": 8,
+  "purchasedPartsCount": 9,
+  "assemblyNotes": [
+    "Print PRT-01 (96-Well Indexing Deck) and PRT-02/03 (Gantry Uprights) in PETG with 4 perimeters and 35% cubic infill for dimensional stability.",
+    "MGN9H rail mounting ledges include a 0.15mm reference shoulder to guarantee X/Y orthogonality without dial-indicator tramming.",
+    "Packs across 2 build plates on a Bambu Lab A1 (256×256mm bed): Plate 1 holds the 96-well deck + electronics housing + small carriages; Plate 2 holds the left/right portal uprights and Z-cradle."
+  ],
+  "parts": [
+    {
+      "id": "deck-base-96well",
+      "partNumber": "PRT-01",
+      "name": "Dual-Bay SBS 96-Well Microplate Indexing Deck",
+      "kind": "printed",
+      "dims_mm": [
+        210,
+        145,
+        22
+      ],
+      "shape": "box",
+      "params": {
+        "width": 210,
+        "depth": 145,
+        "height": 22,
+        "cornerRadius": 8
+      },
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -65
+      ],
+      "color": "#0ea5e9",
+      "bomRef": "bom-filament-liquid",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Rigid base plate featuring two ANSI/SLAS 127.76×85.48mm 96-well plate nests and tip waste chute.",
+      "roleInAssembly": "Establishes the kinematic datum for both 96-well microplates and anchors the gantry uprights.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 1
+    },
+    {
+      "id": "gantry-upright-left",
+      "partNumber": "PRT-02",
+      "name": "Left Y-Axis Portal Upright & NEMA17 Motor Mount",
+      "kind": "printed",
+      "dims_mm": [
+        58,
+        120,
+        165
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 58,
+        "depth": 120,
+        "height": 165
+      },
+      "position": [
+        -98,
+        0,
+        22
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -145,
+        0,
+        20
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-liquid",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Gusseted left portal column housing the X-axis NEMA17 stepper motor and optical home switch.",
+      "roleInAssembly": "Supports the left end of the MGN9H X-axis bridge rail and drives the GT2 timing belt.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 2
+    },
+    {
+      "id": "gantry-upright-right",
+      "partNumber": "PRT-03",
+      "name": "Right Y-Axis Portal Upright & Idler Pulley Tower",
+      "kind": "printed",
+      "dims_mm": [
+        58,
+        120,
+        165
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 58,
+        "depth": 120,
+        "height": 165
+      },
+      "position": [
+        98,
+        0,
+        22
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        145,
+        0,
+        20
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-liquid",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Right portal column with integrated M3 screw GT2 belt tensioner and MGN9H rail seat.",
+      "roleInAssembly": "Supports the right end of the X-axis rail and tensions the GT2 belt loop.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 2
+    },
+    {
+      "id": "x-carriage-shuttle",
+      "partNumber": "PRT-04",
+      "name": "MGN9H Linear Rail X-Axis Pipette Shuttle Carriage",
+      "kind": "printed",
+      "dims_mm": [
+        66,
+        44,
+        58
+      ],
+      "shape": "box",
+      "params": {
+        "width": 66,
+        "depth": 44,
+        "height": 58,
+        "cornerRadius": 4
+      },
+      "position": [
+        0,
+        0,
+        132
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -75,
+        55
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-filament-liquid",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Precision shuttle block that bolts to the MGN9H bearing block with self-locking GT2 belt teeth.",
+      "roleInAssembly": "Carries the Z-axis pipette assembly along the X-axis linear rail.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 4
+    },
+    {
+      "id": "z-pipette-cradle",
+      "partNumber": "PRT-05",
+      "name": "Compliant Z-Axis Micropipette Barrel Clamp",
+      "kind": "printed",
+      "dims_mm": [
+        52,
+        48,
+        86
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 52,
+        "depth": 48,
+        "height": 86
+      },
+      "position": [
+        0,
+        24,
+        118
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        95,
+        65
+      ],
+      "color": "#f59e0b",
+      "bomRef": "bom-filament-liquid",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Quick-release flexure cradle that holds standard 10–200µL single or 8-channel lab micropipettes.",
+      "roleInAssembly": "Mounts the micropipette vertically to the X-carriage and guides the T8 plunger nut.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 5
+    },
+    {
+      "id": "plunger-escapement-arm",
+      "partNumber": "PRT-06",
+      "name": "T8 Leadscrew Pipette Plunger Actuation Escapement",
+      "kind": "printed",
+      "dims_mm": [
+        44,
+        38,
+        32
+      ],
+      "shape": "box",
+      "params": {
+        "width": 44,
+        "depth": 38,
+        "height": 32,
+        "cornerRadius": 4
+      },
+      "position": [
+        0,
+        24,
+        178
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        95,
+        135
+      ],
+      "color": "#ec4899",
+      "bomRef": "bom-filament-liquid",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Anti-rotation fork mounted on the T8 brass nut that depresses the micropipette thumb plunger.",
+      "roleInAssembly": "Converts NEMA17 T8 leadscrew rotation into sub-microliter plunger strokes.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 6
+    },
+    {
+      "id": "tip-ejector-fork",
+      "partNumber": "PRT-07",
+      "name": "Snap-Fit Disposable Tip Stripping Fork",
+      "kind": "printed",
+      "dims_mm": [
+        48,
+        36,
+        18
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 48,
+        "depth": 36,
+        "height": 18
+      },
+      "position": [
+        0,
+        24,
+        72
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        65,
+        85,
+        -15
+      ],
+      "color": "#14b8a6",
+      "bomRef": "bom-filament-liquid",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Bifurcated stripping collar that ejects used 200µL pipette tips into the deck waste chute.",
+      "roleInAssembly": "Strips disposable tips cleanly at the top of the Z-travel stroke.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 7
+    },
+    {
+      "id": "controller-case-cnc",
+      "partNumber": "PRT-08",
+      "name": "Vented GRBL / ESP32 3-Axis Stepper Electronics Housing",
+      "kind": "printed",
+      "dims_mm": [
+        96,
+        68,
+        34
+      ],
+      "shape": "enclosure",
+      "params": {
+        "width": 96,
+        "depth": 68,
+        "height": 34,
+        "wallThickness": 2.4
+      },
+      "position": [
+        0,
+        -72,
+        18
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -135,
+        -20
+      ],
+      "color": "#a855f7",
+      "bomRef": "bom-filament-liquid",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Rear-mounted electronics bay with cooling louvers and M3 standoffs for the ESP32 GRBL board.",
+      "roleInAssembly": "Encloses and cools the 3-axis ESP32 CNC board and TMC2209 stepper drivers.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 8
+    },
+    {
+      "id": "nema17-steppers",
+      "partNumber": "OTS-01",
+      "name": "NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+      "kind": "purchased",
+      "dims_mm": [
+        42,
+        42,
+        34
+      ],
+      "shape": "box",
+      "params": {
+        "width": 42,
+        "depth": 42,
+        "height": 34
+      },
+      "position": [
+        -98,
+        22,
+        148
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -165,
+        45,
+        95
+      ],
+      "color": "#334155",
+      "bomRef": "bom-nema17-steppers",
+      "material": "Silicon Steel Stator & Hardened 5mm Shaft (Purchased)",
+      "quantity": 1,
+      "description": "Three 1.8° 200-step/rev NEMA17 bipolar stepper motors for X-carriage, Y-deck, and Z-plunger.",
+      "roleInAssembly": "Drives X/Y gantry positioning and T8 leadscrew pipette dispensing.",
+      "step": 3
+    },
+    {
+      "id": "mgn9h-linear-rails",
+      "partNumber": "OTS-02",
+      "name": "MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+      "kind": "purchased",
+      "dims_mm": [
+        200,
+        9,
+        10
+      ],
+      "shape": "box",
+      "params": {
+        "width": 200,
+        "depth": 9,
+        "height": 10
+      },
+      "position": [
+        0,
+        0,
+        128
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -35,
+        90
+      ],
+      "color": "#94a3b8",
+      "bomRef": "bom-mgn9h-rails",
+      "material": "440C Hardened Stainless Steel (Purchased)",
+      "quantity": 1,
+      "description": "Pair of 250mm MGN9 linear rails with preloaded recirculating-ball MGN9H carriage blocks.",
+      "roleInAssembly": "Guides zero-play X/Y motion across the 96-well plate grid.",
+      "step": 3
+    },
+    {
+      "id": "t8-leadscrew-nut",
+      "partNumber": "OTS-03",
+      "name": "T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+      "kind": "purchased",
+      "dims_mm": [
+        8,
+        8,
+        160
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 4,
+        "height": 160
+      },
+      "position": [
+        0,
+        24,
+        150
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -45,
+        95,
+        115
+      ],
+      "color": "#eab308",
+      "bomRef": "bom-t8-leadscrew",
+      "material": "304 Stainless Steel & C360 Brass (Purchased)",
+      "quantity": 1,
+      "description": "Single-start Tr8×2mm leadscrew with spring-loaded anti-backlash brass nut and 5×8mm coupler.",
+      "roleInAssembly": "Translates stepper microsteps into 0.0006mm/microstep linear plunger displacement.",
+      "step": 6
+    },
+    {
+      "id": "gt2-belt-pulleys",
+      "partNumber": "OTS-04",
+      "name": "GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+      "kind": "purchased",
+      "dims_mm": [
+        180,
+        6,
+        14
+      ],
+      "shape": "box",
+      "params": {
+        "width": 180,
+        "depth": 6,
+        "height": 14
+      },
+      "position": [
+        0,
+        12,
+        138
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        55,
+        -45,
+        95
+      ],
+      "color": "#475569",
+      "bomRef": "bom-gt2-belt",
+      "material": "Fiberglass-Reinforced Neoprene & 6061 Aluminum (Purchased)",
+      "quantity": 1,
+      "description": "2m roll of 2mm-pitch GT2 belt with two 20-tooth motor pulleys and two 20T toothed idlers.",
+      "roleInAssembly": "Transmits synchronous motion from the NEMA17 steppers to the X/Y carriages.",
+      "step": 4
+    },
+    {
+      "id": "grbl-esp32-board",
+      "partNumber": "OTS-05",
+      "name": "ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+      "kind": "purchased",
+      "dims_mm": [
+        84,
+        56,
+        16
+      ],
+      "shape": "box",
+      "params": {
+        "width": 84,
+        "depth": 56,
+        "height": 16
+      },
+      "position": [
+        0,
+        -72,
+        24
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -165,
+        10
+      ],
+      "color": "#2563eb",
+      "bomRef": "bom-grbl-board",
+      "material": "4-Layer FR4 PCB & TMC2209 Drivers (Purchased)",
+      "quantity": 1,
+      "description": "Wi-Fi/USB-C 3-axis FluidNC/GRBL-ESP32 motion controller with 256-microstep TMC2209 drivers.",
+      "roleInAssembly": "Executes G-code pipetting protocols over USB-C or browser Wi-Fi UI.",
+      "step": 8
+    },
+    {
+      "id": "optical-endstops",
+      "partNumber": "OTS-06",
+      "name": "Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+      "kind": "purchased",
+      "dims_mm": [
+        28,
+        12,
+        10
+      ],
+      "shape": "box",
+      "params": {
+        "width": 28,
+        "depth": 12,
+        "height": 10
+      },
+      "position": [
+        -86,
+        -12,
+        132
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -130,
+        -55,
+        85
+      ],
+      "color": "#dc2626",
+      "bomRef": "bom-endstops",
+      "material": "FR4 PCB & Omron Micro Switches (Purchased)",
+      "quantity": 1,
+      "description": "Three X/Y/Z zero-reference homing switches with 3-pin XH2.54 harnesses.",
+      "roleInAssembly": "Establishes repeatable 0.05mm home coordinates before indexing into Well A1.",
+      "step": 5
+    },
+    {
+      "id": "pipette-96well-plate",
+      "partNumber": "OTS-07",
+      "name": "Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+      "kind": "purchased",
+      "dims_mm": [
+        128,
+        85,
+        14
+      ],
+      "shape": "box",
+      "params": {
+        "width": 128,
+        "depth": 85,
+        "height": 14
+      },
+      "position": [
+        -38,
+        0,
+        22
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -55,
+        55,
+        -25
+      ],
+      "color": "#38bdf8",
+      "bomRef": "bom-96well-plate",
+      "material": "Virgin Polypropylene ANSI/SLAS Labware (Purchased)",
+      "quantity": 1,
+      "description": "Two standard 96-well (8×12 matrix, 9.0mm pitch) assay plates and universal 200µL tips.",
+      "roleInAssembly": "Snaps into the PRT-01 deck nests for source reagent and target serial dilution.",
+      "step": 1
+    },
+    {
+      "id": "psu-12v-3a",
+      "partNumber": "OTS-08",
+      "name": "12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+      "kind": "purchased",
+      "dims_mm": [
+        48,
+        32,
+        28
+      ],
+      "shape": "box",
+      "params": {
+        "width": 48,
+        "depth": 32,
+        "height": 28
+      },
+      "position": [
+        68,
+        -72,
+        18
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        115,
+        -135,
+        -20
+      ],
+      "color": "#f8fafc",
+      "bomRef": "bom-psu-12v",
+      "material": "UL-Listed Switching Power Supply (Purchased)",
+      "quantity": 1,
+      "description": "100–240V AC to 12V 3A DC power brick supplying the three NEMA17 stepper drivers.",
+      "roleInAssembly": "Powers the ESP32 GRBL controller board and stepper motors.",
+      "step": 8
+    },
+    {
+      "id": "m3-socket-screw-kit",
+      "partNumber": "OTS-09",
+      "name": "M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+      "kind": "purchased",
+      "dims_mm": [
+        10,
+        10,
+        12
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 5,
+        "height": 12
+      },
+      "position": [
+        32,
+        0,
+        132
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "explode": [
+        85,
+        -25,
+        65
+      ],
+      "color": "#cbd5e1",
+      "bomRef": "bom-m3-screw-kit",
+      "material": "304 Stainless Steel & Brass (Purchased)",
+      "quantity": 1,
+      "description": "M3×8mm, M3×12mm, and M3×16mm socket cap screws for MGN9H rails and NEMA17 motor mounts.",
+      "roleInAssembly": "Fastens MGN9H rails, NEMA17 motors, and T8 brass nut to the 3D-printed frame.",
+      "step": 2
+    }
+  ]
+}

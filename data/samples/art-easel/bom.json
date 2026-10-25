@@ -1,0 +1,440 @@
+{
+  "objectId": "art-easel",
+  "objectName": "Articulated Tabletop Studio Art Easel",
+  "currency": "USD",
+  "originalPrice": 189,
+  "purchasedTotal": 22.9,
+  "filamentEstimateUsd": 4.5,
+  "totalEstimatedCost": 27.4,
+  "savingsUsd": 161.6,
+  "savingsPercent": 85,
+  "items": [
+    {
+      "id": "bom-extrusion-2020",
+      "partNumber": "OTS-01",
+      "partId": "extrusion-spine-2020",
+      "name": "2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+      "category": "hardware",
+      "specification": "20mm × 20mm V-Slot 6063-T5 anodized aluminum extrusion, 400mm length, tapped M5 ends",
+      "specs": "20mm × 20mm V-Slot 6063-T5 anodized aluminum extrusion, 400mm length, tapped M5 ends",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pc",
+      "unitPrice": 7.9,
+      "totalPrice": 7.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=2020+v-slot+aluminum+extrusion+400mm+black",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=2020+v-slot+aluminum+extrusion+400mm+black",
+          "estPrice": 7.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=2020+v-slot+aluminum+extrusion+400mm+black",
+          "sourceTitle": "Amazon — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#t-slotted-framing/=20mm",
+          "estPrice": 8.35,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#t-slotted-framing/=20mm",
+          "sourceTitle": "McMaster-Carr — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/20mm%20aluminum%20extrusion",
+          "estPrice": 8.5,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/20mm%20aluminum%20extrusion",
+          "sourceTitle": "Home Depot — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+          "url": "https://www.amazon.com/s?k=2020+v-slot+aluminum+extrusion+400mm+black",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+          "url": "https://www.mcmaster.com/#t-slotted-framing/=20mm",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "extrusion-spine-2020"
+      ],
+      "notes": "Primary vertical mast along which the lower tray and top canvas clamp travel."
+    },
+    {
+      "id": "bom-brass-knurled-nuts",
+      "partNumber": "OTS-02",
+      "partId": "brass-knurled-nuts",
+      "name": "M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+      "category": "hardware",
+      "specification": "DIN 466 M5×0.8mm solid brass knurled thumb nuts + M5×6×7mm heat-set inserts",
+      "specs": "DIN 466 M5×0.8mm solid brass knurled thumb nuts + M5×6×7mm heat-set inserts",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack",
+      "unitPrice": 4.8,
+      "totalPrice": 4.8,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#knurled-thumb-nuts/=m5-brass",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=M5+brass+knurled+thumb+nuts+heat+set+inserts",
+          "estPrice": 5.15,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=M5+brass+knurled+thumb+nuts+heat+set+inserts",
+          "sourceTitle": "Amazon — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#M5%C3%970.8mm/",
+          "estPrice": 4.8,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#M5%C3%970.8mm/",
+          "sourceTitle": "McMaster-Carr — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/M5%20brass%20thumb%20nut",
+          "estPrice": 5.4,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/M5%20brass%20thumb%20nut",
+          "sourceTitle": "Home Depot — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+          "url": "https://www.amazon.com/s?k=M5+brass+knurled+thumb+nuts+heat+set+inserts",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+          "url": "https://www.mcmaster.com/#M5%C3%970.8mm/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "brass-knurled-nuts"
+      ],
+      "notes": "Press-fits into PRT-06 knobs and PRT-02 hinge for smooth, wear-free clamping threads."
+    },
+    {
+      "id": "bom-m5-tnut-bolts",
+      "partNumber": "OTS-03",
+      "partId": "m5-tnut-bolts",
+      "name": "M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+      "category": "hardware",
+      "specification": "10× M5 roll-in spring T-nuts for 2020 slot + 10× M5×20mm 304 stainless socket head screws",
+      "specs": "10× M5 roll-in spring T-nuts for 2020 slot + 10× M5×20mm 304 stainless socket head screws",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack",
+      "unitPrice": 4.2,
+      "totalPrice": 4.2,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#t-slot-nuts/=m5",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=M5+roll+in+T-nuts+2020+extrusion+M5x20mm+screws",
+          "estPrice": 4.55,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=M5+roll+in+T-nuts+2020+extrusion+M5x20mm+screws",
+          "sourceTitle": "Amazon — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#M5%C3%9720mm/",
+          "estPrice": 4.2,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#M5%C3%9720mm/",
+          "sourceTitle": "McMaster-Carr — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/M5%20socket%20head%20cap%20screws",
+          "estPrice": 4.8,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/M5%20socket%20head%20cap%20screws",
+          "sourceTitle": "Home Depot — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+          "url": "https://www.amazon.com/s?k=M5+roll+in+T-nuts+2020+extrusion+M5x20mm+screws",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+          "url": "https://www.mcmaster.com/#M5%C3%9720mm/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "m5-tnut-bolts"
+      ],
+      "notes": "Captures the lower canvas tray, upper clamp jaw, and rear collar inside the 2020 slot."
+    },
+    {
+      "id": "bom-silicone-grip-pads",
+      "partNumber": "OTS-04",
+      "partId": "silicone-grip-pads",
+      "name": "Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+      "category": "hardware",
+      "specification": "20mm × 20mm × 3mm 3M self-adhesive textured EPDM rubber grip pads (pack of 8)",
+      "specs": "20mm × 20mm × 3mm 3M self-adhesive textured EPDM rubber grip pads (pack of 8)",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack",
+      "unitPrice": 3.4,
+      "totalPrice": 3.4,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=adhesive+non+slip+EPDM+rubber+bumper+pads+20mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=adhesive+non+slip+EPDM+rubber+bumper+pads+20mm",
+          "estPrice": 3.4,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=adhesive+non+slip+EPDM+rubber+bumper+pads+20mm",
+          "sourceTitle": "Amazon — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#adhesive-backed-bumper-feet/",
+          "estPrice": 3.85,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#adhesive-backed-bumper-feet/",
+          "sourceTitle": "McMaster-Carr — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/self%20adhesive%20rubber%20bumper%20pads",
+          "estPrice": 4,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/self%20adhesive%20rubber%20bumper%20pads",
+          "sourceTitle": "Home Depot — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+          "url": "https://www.amazon.com/s?k=adhesive+non+slip+EPDM+rubber+bumper+pads+20mm",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+          "url": "https://www.mcmaster.com/#adhesive-backed-bumper-feet/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "silicone-grip-pads"
+      ],
+      "notes": "Prevents tabletop skidding under brush strokes and cushions canvas stretcher bars."
+    },
+    {
+      "id": "bom-compression-spring",
+      "partNumber": "OTS-05",
+      "partId": "compression-spring-kit",
+      "name": "302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+      "category": "hardware",
+      "specification": "8mm OD × 1.0mm wire × 25mm free length 302 stainless compression spring",
+      "specs": "8mm OD × 1.0mm wire × 25mm free length 302 stainless compression spring",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack",
+      "unitPrice": 2.6,
+      "totalPrice": 2.6,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#compression-springs/=stainless-steel",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=8mm+OD+25mm+stainless+compression+spring",
+          "estPrice": 2.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=8mm+OD+25mm+stainless+compression+spring",
+          "sourceTitle": "Amazon — 302 Stainless Compression Detent Spring (8mm OD × 25mm)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#302/",
+          "estPrice": 2.6,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#302/",
+          "sourceTitle": "McMaster-Carr — 302 Stainless Compression Detent Spring (8mm OD × 25mm)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/stainless%20compression%20spring%20assortment",
+          "estPrice": 3.2,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/stainless%20compression%20spring%20assortment",
+          "sourceTitle": "Home Depot — 302 Stainless Compression Detent Spring (8mm OD × 25mm)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+          "url": "https://www.amazon.com/s?k=8mm+OD+25mm+stainless+compression+spring",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — 302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+          "url": "https://www.mcmaster.com/#302/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "compression-spring-kit"
+      ],
+      "notes": "Keeps the 15°-step ratchet hinge engaged while adjusting mast angle."
+    },
+    {
+      "id": "bom-filament-easel",
+      "partNumber": "FIL-01",
+      "partId": "easel-base-hub",
+      "name": "3D Print Filament — PETG & PLA+ (~250g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm PETG & PLA+ filament (~250g from $18/kg spool)",
+      "specs": "1.75mm PETG & PLA+ filament (~250g from $18/kg spool)",
+      "qty": 250,
+      "quantity": 250,
+      "unit": "g",
+      "unitPrice": 0.018,
+      "totalPrice": 4.5,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "estPrice": 4.5,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "sourceTitle": "Amazon — 1.75mm PETG & PLA+ Filament Spool"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#3d-printer-filament/",
+          "estPrice": 5.05,
+          "inStock": true,
+          "sourceUrl": "https://www.mcmaster.com/#3d-printer-filament/",
+          "sourceTitle": "McMaster-Carr — 1.75mm 3D Printer Filament"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 1.75mm PETG & PLA+ Filament Spool",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr — 3D Printing Filament",
+          "url": "https://www.mcmaster.com/#3d-printer-filament/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "easel-base-hub",
+        "ratchet-tilt-hinge",
+        "lower-canvas-tray",
+        "upper-canvas-clamp",
+        "rear-strut-collar",
+        "knurled-lock-knobs"
+      ],
+      "notes": "Estimated from STL mesh volume across all 6 printed parts."
+    }
+  ],
+  "summary": {
+    "purchasedPartsTotal": 22.9,
+    "filamentCostTotal": 4.5,
+    "totalDiyCost": 27.4,
+    "originalRetailPrice": 189,
+    "totalSavings": 161.6,
+    "savingsPercent": 85
+  },
+  "priceHunter": {
+    "groundingUsed": true,
+    "retailersCompared": [
+      "Amazon",
+      "McMaster-Carr",
+      "Home Depot",
+      "Walmart"
+    ],
+    "cheapestPicksCount": 6,
+    "sourceLinks": [
+      {
+        "title": "Amazon Search — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+        "url": "https://www.amazon.com/s?k=2020+v-slot+aluminum+extrusion+400mm+black",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+        "url": "https://www.mcmaster.com/#t-slotted-framing/=20mm",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+        "url": "https://www.amazon.com/s?k=M5+brass+knurled+thumb+nuts+heat+set+inserts",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+        "url": "https://www.mcmaster.com/#M5%C3%970.8mm/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+        "url": "https://www.amazon.com/s?k=M5+roll+in+T-nuts+2020+extrusion+M5x20mm+screws",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+        "url": "https://www.mcmaster.com/#M5%C3%9720mm/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+        "url": "https://www.amazon.com/s?k=adhesive+non+slip+EPDM+rubber+bumper+pads+20mm",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+        "url": "https://www.mcmaster.com/#adhesive-backed-bumper-feet/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — 302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+        "url": "https://www.amazon.com/s?k=8mm+OD+25mm+stainless+compression+spring",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — 302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+        "url": "https://www.mcmaster.com/#302/",
+        "retailer": "McMaster-Carr"
+      }
+    ],
+    "updatedAt": "2026-10-25T20:00:00.000Z"
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "videos": [
+    {
+      "url": "https://www.youtube.com/results?search_query=Benchtop%20Lab%20Pipette%20Liquid%20Automaton%20teardown%20diy",
+      "title": "Teardown: Inside a $590 OpenDrop / Opentrons-Style 96-Well Benchtop Pipette Robot"
+    },
+    {
+      "url": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Benchtop%20Lab%20Pipette%20Liquid%20Automaton",
+      "title": "DIY 3D-Printed Benchtop Lab Pipette Liquid Automaton ($68.50 Full Build)"
+    }
+  ],
+  "note": "Analyzed 4 key disassembly timestamps for Benchtop Lab Pipette Liquid Automaton via Gemini 4 Argon multimodal video inspection.",
+  "generatedAt": "2026-10-25T20:00:00.000Z",
+  "frames": [
+    {
+      "video": "https://www.youtube.com/results?search_query=Benchtop%20Lab%20Pipette%20Liquid%20Automaton%20teardown%20diy",
+      "t": 22,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2300f5a0%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%200%3A22%20(t%3D22s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EDual-Bay%20SBS%2096-Well%20Microplate%20Indexing%20Deck%20%26%20NEMA%2017%20Bipolar%20Stepper%20Motors%201.8%C2%B0%2042%C3%9734mm%20(3-Pack)%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-01%3A%20Dual-Bay%20SBS%2096-Well%20Micro%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-01%3A%20NEMA%2017%20Bipolar%20Stepper%20Mo%20(%2418.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Primary structural frame disassembly exposing Dual-Bay SBS 96-Well Microplate Indexing Deck and NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack).",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Dual-Bay SBS 96-Well Microplate Indexing Deck",
+          "function": "Establishes the kinematic datum for both 96-well microplates and anchors the gantry uprights.",
+          "material": "PETG (4 perimeters, 0.20mm layer)",
+          "dims_mm": [
+            210,
+            145,
+            22
+          ],
+          "fasteners": "Precision counterbored metric fastener seats (0.25mm clearance)",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.97,
+          "partId": "deck-base-96well",
+          "bomRef": "bom-filament-liquid"
+        },
+        {
+          "name": "NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+          "function": "Drives X/Y gantry positioning and T8 leadscrew pipette dispensing.",
+          "material": "Silicon Steel Stator & Hardened 5mm Shaft (Purchased)",
+          "dims_mm": [
+            42,
+            42,
+            34
+          ],
+          "fasteners": "3× NEMA 17 (42×42×34mm) 1.8° step angle, 1.5A, 0.42 Nm holding torque, 1m XH2.54 cables",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+          "confidence": 0.96,
+          "partId": "nema17-steppers",
+          "bomRef": "bom-nema17-steppers"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=Benchtop%20Lab%20Pipette%20Liquid%20Automaton%20teardown%20diy",
+      "t": 64,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A04%20(t%3D64s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3ELeft%20Y-Axis%20Portal%20Upright%20%26%20NEMA17%20Motor%20Mount%20%26%20MGN9H%20250mm%20Miniature%20Stainless%20Linear%20Guide%20Rails%20%2B%20Blocks%20(%C3%972)%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-02%3A%20Left%20Y-Axis%20Portal%20Upright%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-02%3A%20MGN9H%20250mm%20Miniature%20Stai%20(%2413.50)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Core mechanism inspection showing Left Y-Axis Portal Upright & NEMA17 Motor Mount coupled with MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2).",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Left Y-Axis Portal Upright & NEMA17 Motor Mount",
+          "function": "Supports the left end of the MGN9H X-axis bridge rail and drives the GT2 timing belt.",
+          "material": "PETG",
+          "dims_mm": [
+            58,
+            120,
+            165
+          ],
+          "fasteners": "Support-free <=42° overhangs + self-aligning datum ribs",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "gantry-upright-left",
+          "bomRef": "bom-filament-liquid"
+        },
+        {
+          "name": "MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+          "function": "Guides zero-play X/Y motion across the 96-well plate grid.",
+          "material": "440C Hardened Stainless Steel (Purchased)",
+          "dims_mm": [
+            200,
+            9,
+            10
+          ],
+          "fasteners": "2× 250mm MGN9 linear rails + 2× MGN9H long bearing blocks, M3 mounting holes at 20mm pitch",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+          "confidence": 0.96,
+          "partId": "mgn9h-linear-rails",
+          "bomRef": "bom-mgn9h-rails"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Benchtop%20Lab%20Pipette%20Liquid%20Automaton",
+      "t": 112,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23a855f7%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A52%20(t%3D112s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3ERight%20Y-Axis%20Portal%20Upright%20%26%20Idler%20Pulley%20Tower%20%26%20T8%C3%972mm%20Pitch%20Stainless%20Leadscrew%20(200mm)%20%2B%20Anti-Backlash%20Brass%20Nut%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-03%3A%20Right%20Y-Axis%20Portal%20Uprigh%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-03%3A%20T8%C3%972mm%20Pitch%20Stainless%20Lea%20(%246.40)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Precision sub-assembly closeup highlighting Right Y-Axis Portal Upright & Idler Pulley Tower and T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Right Y-Axis Portal Upright & Idler Pulley Tower",
+          "function": "Supports the right end of the X-axis rail and tensions the GT2 belt loop.",
+          "material": "PETG",
+          "dims_mm": [
+            58,
+            120,
+            165
+          ],
+          "fasteners": "0.25mm sliding fit clearance",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "gantry-upright-right",
+          "bomRef": "bom-filament-liquid"
+        },
+        {
+          "name": "T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+          "function": "Translates stepper microsteps into 0.0006mm/microstep linear plunger displacement.",
+          "material": "304 Stainless Steel & C360 Brass (Purchased)",
+          "dims_mm": [
+            8,
+            8,
+            160
+          ],
+          "fasteners": "Tr8×2mm (2mm lead, 2mm pitch) 200mm stainless leadscrew + spring anti-backlash nut + 5×8mm coupler",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+          "confidence": 0.95,
+          "partId": "t8-leadscrew-nut",
+          "bomRef": "bom-t8-leadscrew"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Benchtop%20Lab%20Pipette%20Liquid%20Automaton",
+      "t": 158,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23f59e0b%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23f59e0b%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23f59e0b%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%202%3A38%20(t%3D158s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EMGN9H%20Linear%20Rail%20X-Axis%20Pipette%20Shuttle%20Carriage%20%26%20GT2%206mm%20Fiberglass%20Timing%20Belt%20(2m)%20%2B%2020T%205mm%20Bore%20Pulleys%20%26%20Idlers%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23f59e0b%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23f59e0b%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-04%3A%20MGN9H%20Linear%20Rail%20X-Axis%20P%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-04%3A%20GT2%206mm%20Fiberglass%20Timing%20%20(%245.20)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Final calibration and functional test of MGN9H Linear Rail X-Axis Pipette Shuttle Carriage with GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "MGN9H Linear Rail X-Axis Pipette Shuttle Carriage",
+          "function": "Carries the Z-axis pipette assembly along the X-axis linear rail.",
+          "material": "PETG",
+          "dims_mm": [
+            66,
+            44,
+            58
+          ],
+          "fasteners": "Snap-fit / thumb-screw retention",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.94,
+          "partId": "x-carriage-shuttle",
+          "bomRef": "bom-filament-liquid"
+        },
+        {
+          "name": "GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+          "function": "Transmits synchronous motion from the NEMA17 steppers to the X/Y carriages.",
+          "material": "Fiberglass-Reinforced Neoprene & 6061 Aluminum (Purchased)",
+          "dims_mm": [
+            180,
+            6,
+            14
+          ],
+          "fasteners": "2m GT2 6mm open timing belt + 2× 20T 5mm bore pulleys + 2× 20T 3mm bore idler bearings",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+          "confidence": 0.97,
+          "partId": "gt2-belt-pulleys",
+          "bomRef": "bom-gt2-belt"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,368 @@
+{
+  "objectId": "iphone-magnifier",
+  "objectName": "iPhone Macro Microscope & Slide Stage",
+  "currency": "USD",
+  "originalPrice": 119,
+  "purchasedTotal": 14.1,
+  "filamentEstimateUsd": 2.1,
+  "totalEstimatedCost": 16.2,
+  "savingsUsd": 102.8,
+  "savingsPercent": 86,
+  "items": [
+    {
+      "id": "bom-achromatic-lens",
+      "partNumber": "OTS-01",
+      "partId": "achromatic-lens-100x",
+      "name": "12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+      "category": "hardware",
+      "specification": "18mm OD × 12mm focal length cemented achromatic doublet glass lens, MgF2 anti-reflective coating",
+      "specs": "18mm OD × 12mm focal length cemented achromatic doublet glass lens, MgF2 anti-reflective coating",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pc",
+      "unitPrice": 5.9,
+      "totalPrice": 5.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=18mm+achromatic+doublet+glass+lens+macro+microscope",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=18mm+achromatic+doublet+glass+lens+macro+microscope",
+          "estPrice": 5.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=18mm+achromatic+doublet+glass+lens+macro+microscope",
+          "sourceTitle": "Amazon — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#optical-lenses/",
+          "estPrice": 6.35,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#optical-lenses/",
+          "sourceTitle": "McMaster-Carr — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=100x+pocket+microscope+replacement+glass+lens",
+          "estPrice": 6.5,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=100x+pocket+microscope+replacement+glass+lens",
+          "sourceTitle": "Home Depot — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+          "url": "https://www.amazon.com/s?k=18mm+achromatic+doublet+glass+lens+macro+microscope",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+          "url": "https://www.mcmaster.com/#optical-lenses/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "achromatic-lens-100x"
+      ],
+      "notes": "Primary high-NA objective lens delivering flat-field 100× magnification on the iPhone sensor."
+    },
+    {
+      "id": "bom-usb-led-ring",
+      "partNumber": "OTS-02",
+      "partId": "usb-led-ring-5v",
+      "name": "5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+      "category": "electronics",
+      "specification": "40mm OD / 26mm ID 5V USB SMD2835 LED ring light with inline 10-step brightness dimmer",
+      "specs": "40mm OD / 26mm ID 5V USB SMD2835 LED ring light with inline 10-step brightness dimmer",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pc",
+      "unitPrice": 3.6,
+      "totalPrice": 3.6,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=5V+USB+microscope+LED+ring+light+40mm+dimmer",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=5V+USB+microscope+LED+ring+light+40mm+dimmer",
+          "estPrice": 3.6,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=5V+USB+microscope+LED+ring+light+40mm+dimmer",
+          "sourceTitle": "Amazon — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#led-task-lights/",
+          "estPrice": 4.05,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#led-task-lights/",
+          "sourceTitle": "McMaster-Carr — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=usb+microscope+led+ring+light",
+          "estPrice": 4.2,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=usb+microscope+led+ring+light",
+          "sourceTitle": "Home Depot — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+          "url": "https://www.amazon.com/s?k=5V+USB+microscope+LED+ring+light+40mm+dimmer",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+          "url": "https://www.mcmaster.com/#led-task-lights/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "usb-led-ring-5v"
+      ],
+      "notes": "Seats inside PRT-04 diffuser ring to illuminate slides and surface specimens."
+    },
+    {
+      "id": "bom-m3-focus-screw",
+      "partNumber": "OTS-03",
+      "partId": "m3-focus-screw",
+      "name": "M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+      "category": "hardware",
+      "specification": "M3×0.5mm × 40mm knurled head brass thumbscrew + 5mm OD stainless spring + 2× M3 brass nuts",
+      "specs": "M3×0.5mm × 40mm knurled head brass thumbscrew + 5mm OD stainless spring + 2× M3 brass nuts",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "set",
+      "unitPrice": 2.5,
+      "totalPrice": 2.5,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#thumb-screws/=m3-brass",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=M3x40mm+brass+knurled+thumb+screw+spring+nut",
+          "estPrice": 2.85,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=M3x40mm+brass+knurled+thumb+screw+spring+nut",
+          "sourceTitle": "Amazon — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#M3%C3%9740mm/",
+          "estPrice": 2.5,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#M3%C3%9740mm/",
+          "sourceTitle": "McMaster-Carr — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/M3%20brass%20machine%20screws",
+          "estPrice": 3.1,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/M3%20brass%20machine%20screws",
+          "sourceTitle": "Home Depot — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+          "url": "https://www.amazon.com/s?k=M3x40mm+brass+knurled+thumb+screw+spring+nut",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+          "url": "https://www.mcmaster.com/#M3%C3%9740mm/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "m3-focus-screw"
+      ],
+      "notes": "Drives the PRT-03 dovetail stage vertically with 0.5mm/rev fine focus resolution."
+    },
+    {
+      "id": "bom-glass-slides",
+      "partNumber": "OTS-04",
+      "partId": "glass-slides-clips",
+      "name": "25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+      "category": "consumable",
+      "specification": "12× 25×75×1.0mm pre-cleaned borosilicate glass slides + 20× #1.5 coverslips + 2× spring clips",
+      "specs": "12× 25×75×1.0mm pre-cleaned borosilicate glass slides + 20× #1.5 coverslips + 2× spring clips",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "box",
+      "unitPrice": 2.1,
+      "totalPrice": 2.1,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=25x75mm+glass+microscope+slides+and+coverslips",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=25x75mm+glass+microscope+slides+and+coverslips",
+          "estPrice": 2.1,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=25x75mm+glass+microscope+slides+and+coverslips",
+          "sourceTitle": "Amazon — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#microscope-slides/",
+          "estPrice": 2.55,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#microscope-slides/",
+          "sourceTitle": "McMaster-Carr — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=glass+microscope+slides+coverslips",
+          "estPrice": 2.7,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=glass+microscope+slides+coverslips",
+          "sourceTitle": "Home Depot — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+          "url": "https://www.amazon.com/s?k=25x75mm+glass+microscope+slides+and+coverslips",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+          "url": "https://www.mcmaster.com/#microscope-slides/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "glass-slides-clips"
+      ],
+      "notes": "Holds biological or material specimens flat in the focal plane of PRT-03."
+    },
+    {
+      "id": "bom-filament-magnifier",
+      "partNumber": "FIL-01",
+      "partId": "phone-clamp-chassis",
+      "name": "3D Print Filament — PETG & PLA+ (~110g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm PETG & PLA+ filament (~110g from $18/kg spool)",
+      "specs": "1.75mm PETG & PLA+ filament (~110g from $18/kg spool)",
+      "qty": 110,
+      "quantity": 110,
+      "unit": "g",
+      "unitPrice": 0.018,
+      "totalPrice": 2.1,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "estPrice": 2.1,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "sourceTitle": "Amazon — 1.75mm PETG & PLA+ Filament Spool"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#3d-printer-filament/",
+          "estPrice": 2.65,
+          "inStock": true,
+          "sourceUrl": "https://www.mcmaster.com/#3d-printer-filament/",
+          "sourceTitle": "McMaster-Carr — 1.75mm 3D Printer Filament"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 1.75mm PETG & PLA+ Filament Spool",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr — 3D Printing Filament",
+          "url": "https://www.mcmaster.com/#3d-printer-filament/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "phone-clamp-chassis",
+        "doublet-lens-barrel",
+        "xyz-focus-sled",
+        "led-ring-diffuser"
+      ],
+      "notes": "Estimated from STL mesh volume across all 4 printed parts."
+    }
+  ],
+  "summary": {
+    "purchasedPartsTotal": 14.1,
+    "filamentCostTotal": 2.1,
+    "totalDiyCost": 16.2,
+    "originalRetailPrice": 119,
+    "totalSavings": 102.8,
+    "savingsPercent": 86
+  },
+  "priceHunter": {
+    "groundingUsed": true,
+    "retailersCompared": [
+      "Amazon",
+      "McMaster-Carr",
+      "Home Depot",
+      "Walmart"
+    ],
+    "cheapestPicksCount": 5,
+    "sourceLinks": [
+      {
+        "title": "Amazon Search — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+        "url": "https://www.amazon.com/s?k=18mm+achromatic+doublet+glass+lens+macro+microscope",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+        "url": "https://www.mcmaster.com/#optical-lenses/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+        "url": "https://www.amazon.com/s?k=5V+USB+microscope+LED+ring+light+40mm+dimmer",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+        "url": "https://www.mcmaster.com/#led-task-lights/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+        "url": "https://www.amazon.com/s?k=M3x40mm+brass+knurled+thumb+screw+spring+nut",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+        "url": "https://www.mcmaster.com/#M3%C3%9740mm/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+        "url": "https://www.amazon.com/s?k=25x75mm+glass+microscope+slides+and+coverslips",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+        "url": "https://www.mcmaster.com/#microscope-slides/",
+        "retailer": "McMaster-Carr"
+      }
+    ],
+    "updatedAt": "2026-10-25T20:00:00.000Z"
+  }
+}

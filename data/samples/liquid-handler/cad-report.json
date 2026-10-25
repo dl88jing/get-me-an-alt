@@ -1,0 +1,495 @@
+{
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPrintedParts": 8,
+  "argonOpenScadParts": 8,
+  "fallbackParts": 0,
+  "totalAttempts": 8,
+  "parts": [
+    {
+      "partId": "deck-base-96well",
+      "name": "Dual-Bay SBS 96-Well Microplate Indexing Deck",
+      "targetDimsMm": [
+        210,
+        145,
+        22
+      ],
+      "actualDimsMm": [
+        210,
+        145,
+        22
+      ],
+      "scadFile": "parts/deck-base-96well.scad",
+      "stlFile": "parts/deck-base-96well.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            210,
+            145,
+            22
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 214368,
+        "actualDimsMm": [
+          210,
+          145,
+          22
+        ],
+        "targetDimsMm": [
+          210,
+          145,
+          22
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 214368,
+      "isManifold": true
+    },
+    {
+      "partId": "gantry-upright-left",
+      "name": "Left Y-Axis Portal Upright & NEMA17 Motor Mount",
+      "targetDimsMm": [
+        58,
+        120,
+        165
+      ],
+      "actualDimsMm": [
+        58,
+        120,
+        165
+      ],
+      "scadFile": "parts/gantry-upright-left.scad",
+      "stlFile": "parts/gantry-upright-left.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            58,
+            120,
+            165
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 367488,
+        "actualDimsMm": [
+          58,
+          120,
+          165
+        ],
+        "targetDimsMm": [
+          58,
+          120,
+          165
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 367488,
+      "isManifold": true
+    },
+    {
+      "partId": "gantry-upright-right",
+      "name": "Right Y-Axis Portal Upright & Idler Pulley Tower",
+      "targetDimsMm": [
+        58,
+        120,
+        165
+      ],
+      "actualDimsMm": [
+        58,
+        120,
+        165
+      ],
+      "scadFile": "parts/gantry-upright-right.scad",
+      "stlFile": "parts/gantry-upright-right.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            58,
+            120,
+            165
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 367488,
+        "actualDimsMm": [
+          58,
+          120,
+          165
+        ],
+        "targetDimsMm": [
+          58,
+          120,
+          165
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 367488,
+      "isManifold": true
+    },
+    {
+      "partId": "x-carriage-shuttle",
+      "name": "MGN9H Linear Rail X-Axis Pipette Shuttle Carriage",
+      "targetDimsMm": [
+        66,
+        44,
+        58
+      ],
+      "actualDimsMm": [
+        66,
+        44,
+        58
+      ],
+      "scadFile": "parts/x-carriage-shuttle.scad",
+      "stlFile": "parts/x-carriage-shuttle.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            66,
+            44,
+            58
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 53898.24,
+        "actualDimsMm": [
+          66,
+          44,
+          58
+        ],
+        "targetDimsMm": [
+          66,
+          44,
+          58
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 53898.24,
+      "isManifold": true
+    },
+    {
+      "partId": "z-pipette-cradle",
+      "name": "Compliant Z-Axis Micropipette Barrel Clamp",
+      "targetDimsMm": [
+        52,
+        48,
+        86
+      ],
+      "actualDimsMm": [
+        52,
+        48,
+        86
+      ],
+      "scadFile": "parts/z-pipette-cradle.scad",
+      "stlFile": "parts/z-pipette-cradle.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            52,
+            48,
+            86
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 68689.92,
+        "actualDimsMm": [
+          52,
+          48,
+          86
+        ],
+        "targetDimsMm": [
+          52,
+          48,
+          86
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 68689.92,
+      "isManifold": true
+    },
+    {
+      "partId": "plunger-escapement-arm",
+      "name": "T8 Leadscrew Pipette Plunger Actuation Escapement",
+      "targetDimsMm": [
+        44,
+        38,
+        32
+      ],
+      "actualDimsMm": [
+        44,
+        38,
+        32
+      ],
+      "scadFile": "parts/plunger-escapement-arm.scad",
+      "stlFile": "parts/plunger-escapement-arm.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            44,
+            38,
+            32
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 17121.28,
+        "actualDimsMm": [
+          44,
+          38,
+          32
+        ],
+        "targetDimsMm": [
+          44,
+          38,
+          32
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 17121.28,
+      "isManifold": true
+    },
+    {
+      "partId": "tip-ejector-fork",
+      "name": "Snap-Fit Disposable Tip Stripping Fork",
+      "targetDimsMm": [
+        48,
+        36,
+        18
+      ],
+      "actualDimsMm": [
+        48,
+        36,
+        18
+      ],
+      "scadFile": "parts/tip-ejector-fork.scad",
+      "stlFile": "parts/tip-ejector-fork.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            48,
+            36,
+            18
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 9953.28,
+        "actualDimsMm": [
+          48,
+          36,
+          18
+        ],
+        "targetDimsMm": [
+          48,
+          36,
+          18
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 9953.28,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-case-cnc",
+      "name": "Vented GRBL / ESP32 3-Axis Stepper Electronics Housing",
+      "targetDimsMm": [
+        96,
+        68,
+        34
+      ],
+      "actualDimsMm": [
+        96,
+        68,
+        34
+      ],
+      "scadFile": "parts/controller-case-cnc.scad",
+      "stlFile": "parts/controller-case-cnc.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            96,
+            68,
+            34
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 71024.64,
+        "actualDimsMm": [
+          96,
+          68,
+          34
+        ],
+        "targetDimsMm": [
+          96,
+          68,
+          34
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 71024.64,
+      "isManifold": true
+    }
+  ]
+}

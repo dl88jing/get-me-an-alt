@@ -542,9 +542,80 @@ export function synthesizeEventsFromManifest(
   return events;
 }
 
+export const SHOWCASE_SAMPLE_SLUGS = [
+  SAMPLE_SLUG,
+  'art-easel',
+  'iphone-magnifier',
+  'liquid-handler',
+] as const;
+
+const SAMPLE_SLUG_ALIASES: Record<string, string> = {
+  [SAMPLE_SLUG]: SAMPLE_SLUG,
+  'plant-waterer': SAMPLE_SLUG,
+  demo: SAMPLE_SLUG,
+  sample: SAMPLE_SLUG,
+  'art-easel': 'art-easel',
+  'tabletop-studio-art-easel': 'art-easel',
+  'articulated-tabletop-studio-art-easel': 'art-easel',
+  'iphone-magnifier': 'iphone-magnifier',
+  'iphone-magnifier-adapter': 'iphone-magnifier',
+  'liquid-handler': 'liquid-handler',
+  'liquid-handling-robot': 'liquid-handler',
+};
+
+export function resolveSampleSlug(id?: string | null): string | null {
+  if (!id) return null;
+  const normalized = id.trim().toLowerCase();
+  if (SAMPLE_SLUG_ALIASES[normalized]) {
+    return SAMPLE_SLUG_ALIASES[normalized];
+  }
+  const sampleDir = path.join(process.cwd(), 'data', 'samples', normalized);
+  if (fs.existsSync(path.join(sampleDir, 'analysis.json'))) {
+    return normalized;
+  }
+  return null;
+}
+
+function matchPresetSampleFromOptions(
+  options: CreateProjectOptions
+): string | null {
+  if (options.inlineImage) return null;
+  const direct =
+    resolveSampleSlug(options.prompt) || resolveSampleSlug(options.url);
+  if (direct) return direct;
+
+  const text = `${options.prompt || ''} ${options.url || ''}`.toLowerCase();
+  if (
+    text.includes('articulated tabletop studio painting easel') ||
+    text.includes('adjustable+tabletop+studio+art+easel')
+  ) {
+    return 'art-easel';
+  }
+  if (
+    text.includes('iphone smartphone microscope magnifier adapter') ||
+    text.includes('smartphone+microscope+adapter+stage')
+  ) {
+    return 'iphone-magnifier';
+  }
+  if (
+    text.includes('desktop 96-well plate liquid handling robot') ||
+    text.includes('diy+liquid+handling+robot+3d+printed')
+  ) {
+    return 'liquid-handler';
+  }
+  if (
+    text.includes('smart autonomous plant watering station') ||
+    text.includes('smart+automatic+plant+watering+system+reservoir')
+  ) {
+    return SAMPLE_SLUG;
+  }
+  return null;
+}
+
 export function getProjectEvents(id: string): SsePipelineEvent[] {
-  if (id === SAMPLE_SLUG || id === 'demo' || id === 'sample') {
-    return synthesizeEventsFromManifest(buildSampleManifest());
+  const sampleSlug = resolveSampleSlug(id);
+  if (sampleSlug) {
+    return synthesizeEventsFromManifest(buildSampleManifest(sampleSlug));
   }
 
   const mem = memoryEvents.get(id);
@@ -584,13 +655,19 @@ export function getProjectEvents(id: string): SsePipelineEvent[] {
   return [];
 }
 
-export function buildSampleManifest(): ProjectManifest {
-  // Check if hark-superdev has populated data/demo/plant-auto-waterer, data/demo/plant-waterer, or data/demo
-  const demoCandidates = [
-    path.join(process.cwd(), 'data', 'demo', SAMPLE_SLUG),
-    path.join(process.cwd(), 'data', 'demo', 'plant-waterer'),
-    path.join(process.cwd(), 'data', 'demo'),
-  ];
+export function buildSampleManifest(slug: string = SAMPLE_SLUG): ProjectManifest {
+  const canonicalSlug = resolveSampleSlug(slug) || SAMPLE_SLUG;
+  const isCustomSample = canonicalSlug !== SAMPLE_SLUG;
+
+  // Check data/samples/<slug> first for showcase presets, or data/demo for plant-auto-waterer
+  const demoCandidates = isCustomSample
+    ? [path.join(process.cwd(), 'data', 'samples', canonicalSlug)]
+    : [
+        path.join(process.cwd(), 'data', 'samples', SAMPLE_SLUG),
+        path.join(process.cwd(), 'data', 'demo', SAMPLE_SLUG),
+        path.join(process.cwd(), 'data', 'demo', 'plant-waterer'),
+        path.join(process.cwd(), 'data', 'demo'),
+      ];
 
   let analysis = SAMPLE_ANALYSIS;
   let sources = SAMPLE_SOURCES;
@@ -679,11 +756,11 @@ export function buildSampleManifest(): ProjectManifest {
     durationMs: 3200,
     runner: 'sample' as const,
     command: `agy -p "<${st.id}-prompt>" --model gemini-4-argon --output-format json`,
-    conversationId: `argon-${st.id}-demo`,
+    conversationId: `argon-${st.id}-${canonicalSlug}`,
     tokensUsed: { input: 2450, output: 890, total: 3340 },
     summary:
       st.id === 'critic'
-        ? `Verified in ${critique.totalRounds} rounds (${critique.finalScore}/100 — 4 Round-1 DFM fixes looped back to Designer)`
+        ? `Verified in ${critique.totalRounds} rounds (${critique.finalScore}/100 — DFM fixes looped back to Designer)`
         : `Completed ${st.name} -> ${st.artifactFile}`,
     logs:
       st.id === 'critic'
@@ -696,12 +773,12 @@ export function buildSampleManifest(): ProjectManifest {
             {
               timestamp: now,
               level: 'warn' as const,
-              message: `Round 1 DFM audit flagged 4 printability issues (wall thickness on PRT-01, bayonet/fastener tolerances on PRT-02 & PRT-04, barb overhang on PRT-06) — looping fixes back to Designer (Revision 1).`,
+              message: `Round 1 DFM audit flagged printability adjustments on ${analysis.objectName} — looping fixes back to Designer (Revision 1).`,
             },
             {
               timestamp: now,
               level: 'info' as const,
-              message: `Designer Revision 1 applied 4 parametric fixes to design.json; running Critic Round 2 verification...`,
+              message: `Designer Revision 1 applied parametric DFM fixes to design.json; running Critic Round 2 verification...`,
             },
             {
               timestamp: now,
@@ -724,15 +801,17 @@ export function buildSampleManifest(): ProjectManifest {
   }));
 
   return {
-    id: SAMPLE_SLUG,
-    slug: SAMPLE_SLUG,
+    id: canonicalSlug,
+    slug: canonicalSlug,
     title: analysis.objectName,
     createdAt: now,
     updatedAt: now,
     status: 'completed',
     isSample: true,
     input: {
-      prompt: 'Smart Terracotta Plant Auto-Waterer (Sustee / Blumat Digital DIY Alt)',
+      prompt: isCustomSample
+        ? `${analysis.objectName} — ${analysis.tagline}`
+        : 'Smart Terracotta Plant Auto-Waterer (Sustee / Blumat Digital DIY Alt)',
       url: analysis.inputUrl,
       printerId: 'bambu-a1',
     },
@@ -749,6 +828,14 @@ export function buildSampleManifest(): ProjectManifest {
 }
 
 export function getProjectFolder(id: string): string | null {
+  const sampleSlug = resolveSampleSlug(id);
+  if (sampleSlug && sampleSlug !== SAMPLE_SLUG) {
+    const sampleDir = path.join(process.cwd(), 'data', 'samples', sampleSlug);
+    if (fs.existsSync(sampleDir)) {
+      return sampleDir;
+    }
+  }
+
   const objectsDir = getObjectsDir();
   const directPath = path.join(objectsDir, id);
   if (fs.existsSync(directPath)) {
@@ -774,8 +861,9 @@ export function getProjectFolder(id: string): string | null {
 }
 
 export function getProjectManifest(id: string): ProjectManifest | null {
-  if (id === SAMPLE_SLUG || id === 'demo' || id === 'sample') {
-    return buildSampleManifest();
+  const sampleSlug = resolveSampleSlug(id);
+  if (sampleSlug) {
+    return buildSampleManifest(sampleSlug);
   }
 
   if (memoryManifests.has(id)) {
@@ -801,7 +889,10 @@ export function getProjectManifest(id: string): ProjectManifest | null {
 }
 
 export function listRecentProjects(): ProjectManifest[] {
-  const results: ProjectManifest[] = [buildSampleManifest()];
+  const sampleSet = new Set<string>(SHOWCASE_SAMPLE_SLUGS);
+  const results: ProjectManifest[] = SHOWCASE_SAMPLE_SLUGS.map((slug) =>
+    buildSampleManifest(slug)
+  );
   try {
     const objectsDir = getObjectsDir();
     if (fs.existsSync(objectsDir)) {
@@ -811,7 +902,7 @@ export function listRecentProjects(): ProjectManifest[] {
         if (fs.existsSync(mp)) {
           try {
             const m = JSON.parse(fs.readFileSync(mp, 'utf-8')) as ProjectManifest;
-            if (m.id !== SAMPLE_SLUG) {
+            if (!sampleSet.has(m.id)) {
               results.push(m);
             }
           } catch {
@@ -840,6 +931,11 @@ export interface CreateProjectOptions {
 export function startProjectPipeline(
   options: CreateProjectOptions
 ): ProjectManifest {
+  const matchedPresetSlug = matchPresetSampleFromOptions(options);
+  if (matchedPresetSlug) {
+    return buildSampleManifest(matchedPresetSlug);
+  }
+
   const urlSlug = options.url
     ? options.url
         .replace(/^https?:\/\/(www\.|store\.|us\.)?/i, '')
@@ -906,8 +1002,9 @@ export function startProjectPipeline(
 }
 
 export function ensurePipelineRunning(id: string): ProjectManifest | null {
-  if (id === SAMPLE_SLUG || id === 'demo' || id === 'sample') {
-    return buildSampleManifest();
+  const sampleSlug = resolveSampleSlug(id);
+  if (sampleSlug) {
+    return buildSampleManifest(sampleSlug);
   }
 
   let manifest = getProjectManifest(id);

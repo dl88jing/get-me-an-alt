@@ -1,0 +1,342 @@
+{
+  "objectName": "iPhone Macro Microscope & Slide Stage",
+  "designPhilosophy": "Fine-pitch dovetail XYZ focus sled + clip-on 100× glass doublet lens barrel + 5V warm coaxial LED ring diffuser",
+  "summary": "Bespoke smartphone microscope adapters with integrated slide stages sell for $99–$149 despite holding a $6 glass doublet lens and basic LED ring. This DIY alternative combines 4 precision-printed optical mounts and a dovetail focus stage with an off-the-shelf 100× achromatic doublet, USB coaxial LED ring, and M3 brass leadscrew for $16.20 total.",
+  "overallBoundingBoxMm": [
+    105,
+    92,
+    84
+  ],
+  "printedPartsCount": 4,
+  "purchasedPartsCount": 4,
+  "assemblyNotes": [
+    "Print PRT-02 (Doublet Lens Barrel) in matte black PLA+ to eliminate internal stray light reflections along the optical axis.",
+    "Print PRT-04 (LED Ring Diffuser) in natural/white translucent PETG with 2 perimeter walls and 15% lightning infill for uniform specimen illumination.",
+    "All 4 printed STL parts pack onto 1 single Bambu Lab A1 build plate (2h 08m print time, 110g total filament)."
+  ],
+  "parts": [
+    {
+      "id": "phone-clamp-chassis",
+      "partNumber": "PRT-01",
+      "name": "Universal iPhone Camera Alignment Saddle",
+      "kind": "printed",
+      "dims_mm": [
+        88,
+        62,
+        24
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 88,
+        "depth": 62,
+        "height": 24
+      },
+      "position": [
+        0,
+        0,
+        56
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        95
+      ],
+      "color": "#0ea5e9",
+      "bomRef": "bom-filament-magnifier",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Slide-on smartphone saddle with M26×1.5mm optical turret thread centered over the primary camera lens.",
+      "roleInAssembly": "Registers the optical axis of the doublet barrel directly over the iPhone main camera.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 1
+    },
+    {
+      "id": "doublet-lens-barrel",
+      "partNumber": "PRT-02",
+      "name": "Threaded 100× Achromatic Doublet Lens Barrel",
+      "kind": "printed",
+      "dims_mm": [
+        36,
+        36,
+        28
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 18,
+        "innerRadius": 9,
+        "height": 28
+      },
+      "position": [
+        0,
+        0,
+        32
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -55,
+        45
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-magnifier",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Baffled cylindrical optical cell with snap-fit retaining lip for the 18mm OD 100× achromatic doublet.",
+      "roleInAssembly": "Holds OTS-01 glass doublet lens coaxial with the iPhone camera and threads into PRT-01.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 2
+    },
+    {
+      "id": "xyz-focus-sled",
+      "partNumber": "PRT-03",
+      "name": "Fine-Pitch Dovetail Z-Focus & XY Slide Stage",
+      "kind": "printed",
+      "dims_mm": [
+        92,
+        78,
+        32
+      ],
+      "shape": "box",
+      "params": {
+        "width": 92,
+        "depth": 78,
+        "height": 32,
+        "cornerRadius": 6
+      },
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -55
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-filament-magnifier",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "60° dovetail focus carriage with 25×75mm slide recess, bottom condenser aperture, and M3 leadscrew bore.",
+      "roleInAssembly": "Translates the microscope slide smoothly along the Z-axis for crisp 100× focusing.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.16,
+      "supportsRequired": false,
+      "step": 4
+    },
+    {
+      "id": "led-ring-diffuser",
+      "partNumber": "PRT-04",
+      "name": "Snap-Fit Warm White Coaxial LED Diffuser Ring",
+      "kind": "printed",
+      "dims_mm": [
+        48,
+        48,
+        12
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 24,
+        "innerRadius": 12,
+        "height": 12
+      },
+      "position": [
+        0,
+        0,
+        22
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        65,
+        0,
+        20
+      ],
+      "color": "#f59e0b",
+      "bomRef": "bom-filament-magnifier",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Translucent annular housing that snaps around the lens barrel and diffuses the 5V SMD LED ring.",
+      "roleInAssembly": "Provides shadow-free ring illumination across opaque and translucent specimens.",
+      "infillPercent": 15,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 3
+    },
+    {
+      "id": "achromatic-lens-100x",
+      "partNumber": "OTS-01",
+      "name": "12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+      "kind": "purchased",
+      "dims_mm": [
+        18,
+        18,
+        8
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 9,
+        "height": 8
+      },
+      "position": [
+        0,
+        0,
+        38
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -60,
+        -45,
+        50
+      ],
+      "color": "#38bdf8",
+      "bomRef": "bom-achromatic-lens",
+      "material": "AR-Coated Crown/Flint Optical Glass (Purchased)",
+      "quantity": 1,
+      "description": "Cemented two-element achromatic glass doublet lens corrected for chromatic and spherical aberration.",
+      "roleInAssembly": "Primary high-NA objective lens delivering flat-field 100× magnification on the iPhone sensor.",
+      "step": 2
+    },
+    {
+      "id": "usb-led-ring-5v",
+      "partNumber": "OTS-02",
+      "name": "5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+      "kind": "purchased",
+      "dims_mm": [
+        42,
+        42,
+        4
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 21,
+        "innerRadius": 13,
+        "height": 4
+      },
+      "position": [
+        0,
+        0,
+        20
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        85,
+        25,
+        20
+      ],
+      "color": "#fde047",
+      "bomRef": "bom-usb-led-ring",
+      "material": "Aluminum-Backed LED PCB + USB Cord (Purchased)",
+      "quantity": 1,
+      "description": "8-LED high-CRI warm/neutral white annular illuminator powered from any USB-C bank or phone adapter.",
+      "roleInAssembly": "Seats inside PRT-04 diffuser ring to illuminate slides and surface specimens.",
+      "step": 3
+    },
+    {
+      "id": "m3-focus-screw",
+      "partNumber": "OTS-03",
+      "name": "M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+      "kind": "purchased",
+      "dims_mm": [
+        10,
+        10,
+        40
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 5,
+        "height": 40
+      },
+      "position": [
+        38,
+        0,
+        14
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        85,
+        -35,
+        -25
+      ],
+      "color": "#eab308",
+      "bomRef": "bom-m3-focus-screw",
+      "material": "Solid Brass & 302 Stainless Spring Steel (Purchased)",
+      "quantity": 1,
+      "description": "Knurled M3×0.5mm×40mm brass focus screw with preload spring and captive brass hex nut.",
+      "roleInAssembly": "Drives the PRT-03 dovetail stage vertically with 0.5mm/rev fine focus resolution.",
+      "step": 4
+    },
+    {
+      "id": "glass-slides-clips",
+      "partNumber": "OTS-04",
+      "name": "25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+      "kind": "purchased",
+      "dims_mm": [
+        75,
+        25,
+        2
+      ],
+      "shape": "box",
+      "params": {
+        "width": 75,
+        "depth": 25,
+        "height": 2
+      },
+      "position": [
+        0,
+        0,
+        12
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -75,
+        45,
+        -15
+      ],
+      "color": "#94a3b8",
+      "bomRef": "bom-glass-slides",
+      "material": "Optical Borosilicate Glass & Spring Steel (Purchased)",
+      "quantity": 1,
+      "description": "Standard 1mm-thick ground-edge 25×75mm glass microscope slides with #1.5 coverslips.",
+      "roleInAssembly": "Holds biological or material specimens flat in the focal plane of PRT-03.",
+      "step": 5
+    }
+  ]
+}

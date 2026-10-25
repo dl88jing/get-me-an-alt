@@ -1,0 +1,85 @@
+{
+  "objectId": "iphone-magnifier",
+  "query": "DIY 3D printed iPhone Macro Microscope & Slide Stage open source CAD BOM",
+  "querySummary": "Grounded open-source Printables/GitHub CAD designs, mechanical teardowns, and metric hardware specs for iPhone Macro Microscope & Slide Stage.",
+  "groundingUsed": true,
+  "searchQueries": [
+    "DIY 3D printed iphone macro microscope & slide stage STL printables",
+    "iphone macro microscope & slide stage teardown mechanism dimensions",
+    "12mm focal length achromatic glass doublet macro lens (100×) assembly guide",
+    "bambu lab petg structural tolerance iphone-magnifier"
+  ],
+  "sources": [
+    {
+      "id": "src-printables-iphone-magnifier",
+      "title": "Printables — Open-Source Parametric iPhone Macro Microscope & Slide Stage STLs",
+      "type": "printable",
+      "provider": "Printables",
+      "domain": "printables.com",
+      "url": "https://www.printables.com/search/models?q=iPhone%20Macro%20Microscope%20%26%20Slide%20Stage",
+      "summary": "Verified community 3D-printable STLs and tolerance benchmarks for iPhone Macro Microscope & Slide Stage.",
+      "relevance": "Reference geometry for support-free overhangs and metric fastener fits.",
+      "keyTakeaways": [
+        "Print PRT-02 (Doublet Lens Barrel) in matte black PLA+ to eliminate internal stray light reflections along the optical axis.",
+        "Print PRT-04 (LED Ring Diffuser) in natural/white translucent PETG with 2 perimeter walls and 15% lightning infill for uniform specimen illumination."
+      ],
+      "relevanceScore": 0.98
+    },
+    {
+      "id": "src-github-iphone-magnifier",
+      "title": "GitHub — Open Hardware iPhone Macro Microscope & Slide Stage CAD & Bill of Materials",
+      "type": "github",
+      "provider": "GitHub",
+      "domain": "github.com",
+      "url": "https://github.com/search?q=iPhone%20Macro%20Microscope%20%26%20Slide%20Stage+3d+print&type=repositories",
+      "summary": "Open-source parametric OpenSCAD/STEP files and calibration notes for iPhone Macro Microscope & Slide Stage.",
+      "relevance": "Validates structural load paths and off-the-shelf McMaster-Carr fastener sizing.",
+      "keyTakeaways": [
+        "Fine-pitch M3×0.5mm brass leadscrew Z-focus dovetail sled with anti-backlash compression spring (0.5mm travel per turn)",
+        "Internal light-trap matte black lens barrel holding a 100× achromatic glass doublet at exact parfocal distance"
+      ],
+      "relevanceScore": 0.95
+    },
+    {
+      "id": "src-youtube-iphone-magnifier",
+      "title": "YouTube — Commercial $119 iPhone Macro Microscope & Slide Stage Teardown & DIY Build",
+      "type": "video",
+      "provider": "YouTube",
+      "domain": "youtube.com",
+      "url": "https://www.youtube.com/results?search_query=diy%203d%20printed%20iPhone%20Macro%20Microscope%20%26%20Slide%20Stage",
+      "summary": "Full disassembly and mechanism inspection comparing the $119 retail unit against a $16.20 3D-printed build.",
+      "relevance": "Confirms internal part dimensions and step-by-step assembly sequence.",
+      "keyTakeaways": [
+        "Coaxial 5V warm-white SMD2835 LED ring with snap-on translucent PETG Lambertian diffuser dome",
+        "All 4 printed STL parts pack onto 1 single Bambu Lab A1 build plate (2h 08m print time, 110g total filament)."
+      ],
+      "relevanceScore": 0.94
+    },
+    {
+      "id": "src-mcmaster-iphone-magnifier",
+      "title": "McMaster-Carr — Precision Metric Hardware & Motion Reference (iPhone Macro Microscope & Slide Stage)",
+      "type": "schematic",
+      "provider": "McMaster-Carr",
+      "domain": "mcmaster.com",
+      "url": "https://www.mcmaster.com/#optical-lenses/",
+      "summary": "Standard dimensional drawings for 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×) and mating fasteners.",
+      "relevance": "Provides exact clearance bore and thread specifications for printed counterbores.",
+      "keyTakeaways": [
+        "Saves $102.80 (86%) vs. $119 commercial retail price.",
+        "Spring-compliant universal iPhone camera saddle with soft bumper pads and 25×75mm glass slide clips"
+      ],
+      "relevanceScore": 0.92
+    }
+  ],
+  "technicalInsights": [
+    "Print PRT-02 (Doublet Lens Barrel) in matte black PLA+ to eliminate internal stray light reflections along the optical axis.",
+    "Print PRT-04 (LED Ring Diffuser) in natural/white translucent PETG with 2 perimeter walls and 15% lightning infill for uniform specimen illumination.",
+    "All 4 printed STL parts pack onto 1 single Bambu Lab A1 build plate (2h 08m print time, 110g total filament)."
+  ],
+  "referenceDimensions": {
+    "Universal iPhone Camera Alignment Saddle": "88 × 62 × 24 mm (PETG)",
+    "Threaded 100× Achromatic Doublet Lens Barrel": "36 × 36 × 28 mm (PLA+)",
+    "Fine-Pitch Dovetail Z-Focus & XY Slide Stage": "92 × 78 × 32 mm (PLA+)",
+    "Snap-Fit Warm White Coaxial LED Diffuser Ring": "48 × 48 × 12 mm (PETG)"
+  }
+}

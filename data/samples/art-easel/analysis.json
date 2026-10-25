@@ -1,0 +1,81 @@
+{
+  "id": "art-easel",
+  "slug": "art-easel",
+  "objectName": "Articulated Tabletop Studio Art Easel",
+  "name": "Articulated Tabletop Studio Art Easel",
+  "title": "Articulated Tabletop Studio Art Easel",
+  "category": "Studio & Workshop Hardware",
+  "tagline": "Ratcheting 0°–85° tilt mast + quick-lock canvas clamp jaws + 2020 aluminum extrusion spine + knurled M5 brass knobs",
+  "description": "Commercial beechwood and anodized studio tabletop easels cost $165–$215 for basic tilt hinges and sliding canvas blocks. This DIY alternative combines 6 rigid PETG/PLA+ printed brackets and ratcheting quadrants with a $7.90 2020 V-slot aluminum extrusion spine and McMaster-Carr M5 brass knurled thumb hardware for $27.40 total.",
+  "summary": "Commercial beechwood and anodized studio tabletop easels cost $165–$215 for basic tilt hinges and sliding canvas blocks. This DIY alternative combines 6 rigid PETG/PLA+ printed brackets and ratcheting quadrants with a $7.90 2020 V-slot aluminum extrusion spine and McMaster-Carr M5 brass knurled thumb hardware for $27.40 total.",
+  "functionSummary": "Holds stretched canvases from 100mm to 360mm tall on a rigid 400mm 2020 V-slot aluminum mast with a 15°-increment ratcheting tilt quadrant, non-slip EPDM jaw pads, and tool-free M5 brass knurled locking knobs.",
+  "function": "Holds stretched canvases from 100mm to 360mm tall on a rigid 400mm 2020 V-slot aluminum mast with a 15°-increment ratcheting tilt quadrant, non-slip EPDM jaw pads, and tool-free M5 brass knurled locking knobs.",
+  "inputUrl": "https://www.amazon.com/s?k=adjustable+tabletop+studio+art+easel",
+  "inputType": "url",
+  "originalProduct": {
+    "name": "Bespoke Bottega Studio H-Frame Easel",
+    "brand": "Mabef / Soho Urban Artist",
+    "retailPrice": 189,
+    "retailPriceUsd": 189,
+    "currency": "USD",
+    "url": "https://www.amazon.com/s?k=adjustable+tabletop+studio+art+easel",
+    "whyExpensive": "Boutique art-supply retail markup on milled hardwood/aluminum joinery and proprietary brass thumb fittings over $22.90 of standard 2020 extrusion and metric M5 hardware."
+  },
+  "originalPrice": 189,
+  "targetDiyCost": 27.4,
+  "estimatedDiyCost": 27.4,
+  "estimatedSavings": 161.6,
+  "savingsPercent": 85,
+  "estimatedPrintTimeHours": 4.7,
+  "estimatedAssemblyMinutes": 20,
+  "estimatedBuildTimeMinutes": 20,
+  "estimatedFilamentGrams": 250,
+  "difficulty": "Beginner",
+  "overallDimensionsMm": [
+    220,
+    240,
+    410
+  ],
+  "dimensionsMm": {
+    "width": 220,
+    "depth": 240,
+    "height": 410
+  },
+  "keyMechanisms": [
+    "15°-step ratcheting tilt mast quadrant with spring-loaded M5 detent lock (0° flat watercolor to 85° oil portrait)",
+    "2020 V-slot anodized aluminum spine with zero-play roll-in M5 T-nut sliding carriages",
+    "Upper quick-release canvas clamp jaw and lower brush-ledge tray with EPDM rubber grip pads",
+    "Rear triangulation strut collar with heat-set M5 brass inserts and ergonomic 3D-printed rosette knobs"
+  ],
+  "mechanisms": [
+    "15°-step ratcheting tilt mast quadrant with spring-loaded M5 detent lock (0° flat watercolor to 85° oil portrait)",
+    "2020 V-slot anodized aluminum spine with zero-play roll-in M5 T-nut sliding carriages",
+    "Upper quick-release canvas clamp jaw and lower brush-ledge tray with EPDM rubber grip pads",
+    "Rear triangulation strut collar with heat-set M5 brass inserts and ergonomic 3D-printed rosette knobs"
+  ],
+  "engineeringNotes": [
+    "Print PRT-01 (Base Hub), PRT-02 (Ratchet Hinge), and PRT-04 (Upper Clamp Jaw) in PETG with 4 perimeter walls and 35% gyroid infill for high clamping stiffness.",
+    "All T-slot sliding rails include a 0.25mm lateral clearance so carriages glide smoothly along the 2020 aluminum profile without binding.",
+    "All 6 printed STL parts (8 total items including ×3 knobs) pack onto 1 single 256×256mm Bambu Lab A1 build plate with zero support material."
+  ],
+  "materialsNeeded": [
+    "PETG Filament (~178g) for structural base hub, ratcheting tilt hinge, upper clamp jaw & strut collar",
+    "PLA+ Filament (~72g) for lower canvas tray & 3× ergonomic M5 rosette lock knobs",
+    "400mm 2020 V-Slot Aluminum Extrusion + M5 Brass Knurled Nuts + M5×20mm T-Nut Bolts + EPDM Grip Pads"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Weighted H-Frame Studio Base Hub (145×120×28mm)",
+    "PRT-02: 15°-Step Ratcheting Tilt Mast Hinge (64×58×42mm)",
+    "PRT-03: Lower Canvas Ledge & Brush Rest Tray (160×48×32mm)",
+    "PRT-04: Sliding Top Canvas Clamp Jaw (68×46×34mm)",
+    "PRT-05: 2020 V-Slot Rear Strut Locking Collar (44×42×26mm)",
+    "PRT-06: Lobed M5 Brass-Insert Rosette Knobs (×3) (34×34×18mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: 2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+    "OTS-02: M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+    "OTS-03: M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+    "OTS-04: Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+    "OTS-05: 302 Stainless Compression Detent Spring (8mm OD × 25mm)"
+  ]
+}

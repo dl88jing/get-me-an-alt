@@ -1,0 +1,722 @@
+{
+  "objectId": "liquid-handler",
+  "objectName": "Benchtop Lab Pipette Liquid Automaton",
+  "currency": "USD",
+  "originalPrice": 590,
+  "purchasedTotal": 61.3,
+  "filamentEstimateUsd": 7.2,
+  "totalEstimatedCost": 68.5,
+  "savingsUsd": 521.5,
+  "savingsPercent": 88,
+  "items": [
+    {
+      "id": "bom-nema17-steppers",
+      "partNumber": "OTS-01",
+      "partId": "nema17-steppers",
+      "name": "NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+      "category": "electronics",
+      "specification": "3× NEMA 17 (42×42×34mm) 1.8° step angle, 1.5A, 0.42 Nm holding torque, 1m XH2.54 cables",
+      "specs": "3× NEMA 17 (42×42×34mm) 1.8° step angle, 1.5A, 0.42 Nm holding torque, 1m XH2.54 cables",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack (3)",
+      "unitPrice": 18.9,
+      "totalPrice": 18.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+42x34mm+3+pack+3d+printer",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+42x34mm+3+pack+3d+printer",
+          "estPrice": 18.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+42x34mm+3+pack+3d+printer",
+          "sourceTitle": "Amazon — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#stepper-motors/=nema-17",
+          "estPrice": 19.35,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#stepper-motors/=nema-17",
+          "sourceTitle": "McMaster-Carr — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=NEMA+17+stepper+motor+3+pack",
+          "estPrice": 19.5,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=NEMA+17+stepper+motor+3+pack",
+          "sourceTitle": "Home Depot — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+          "url": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+42x34mm+3+pack+3d+printer",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+          "url": "https://www.mcmaster.com/#stepper-motors/=nema-17",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "nema17-steppers"
+      ],
+      "notes": "Drives X/Y gantry positioning and T8 leadscrew pipette dispensing."
+    },
+    {
+      "id": "bom-mgn9h-rails",
+      "partNumber": "OTS-02",
+      "partId": "mgn9h-linear-rails",
+      "name": "MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+      "category": "hardware",
+      "specification": "2× 250mm MGN9 linear rails + 2× MGN9H long bearing blocks, M3 mounting holes at 20mm pitch",
+      "specs": "2× 250mm MGN9 linear rails + 2× MGN9H long bearing blocks, M3 mounting holes at 20mm pitch",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pair",
+      "unitPrice": 13.5,
+      "totalPrice": 13.5,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=MGN9H+250mm+linear+rail+guide+stainless+2pcs",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=MGN9H+250mm+linear+rail+guide+stainless+2pcs",
+          "estPrice": 13.5,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=MGN9H+250mm+linear+rail+guide+stainless+2pcs",
+          "sourceTitle": "Amazon — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#linear-guide-rails/=miniature",
+          "estPrice": 13.95,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#linear-guide-rails/=miniature",
+          "sourceTitle": "McMaster-Carr — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.aliexpress.com/w/wholesale-mgn9h-250mm-linear-rail.html",
+          "estPrice": 14.1,
+          "inStock": true,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-mgn9h-250mm-linear-rail.html",
+          "sourceTitle": "Home Depot — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+          "url": "https://www.amazon.com/s?k=MGN9H+250mm+linear+rail+guide+stainless+2pcs",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+          "url": "https://www.mcmaster.com/#linear-guide-rails/=miniature",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "mgn9h-linear-rails"
+      ],
+      "notes": "Guides zero-play X/Y motion across the 96-well plate grid."
+    },
+    {
+      "id": "bom-t8-leadscrew",
+      "partNumber": "OTS-03",
+      "partId": "t8-leadscrew-nut",
+      "name": "T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+      "category": "hardware",
+      "specification": "Tr8×2mm (2mm lead, 2mm pitch) 200mm stainless leadscrew + spring anti-backlash nut + 5×8mm coupler",
+      "specs": "Tr8×2mm (2mm lead, 2mm pitch) 200mm stainless leadscrew + spring anti-backlash nut + 5×8mm coupler",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "set",
+      "unitPrice": 6.4,
+      "totalPrice": 6.4,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#metric-lead-screws/=8mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=T8+2mm+lead+200mm+leadscrew+anti+backlash+brass+nut+coupler",
+          "estPrice": 6.75,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=T8+2mm+lead+200mm+leadscrew+anti+backlash+brass+nut+coupler",
+          "sourceTitle": "Amazon — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#T8%C3%972mm/",
+          "estPrice": 6.4,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#T8%C3%972mm/",
+          "sourceTitle": "McMaster-Carr — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=T8+lead+screw+200mm+brass+nut",
+          "estPrice": 7,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=T8+lead+screw+200mm+brass+nut",
+          "sourceTitle": "Home Depot — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+          "url": "https://www.amazon.com/s?k=T8+2mm+lead+200mm+leadscrew+anti+backlash+brass+nut+coupler",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+          "url": "https://www.mcmaster.com/#T8%C3%972mm/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "t8-leadscrew-nut"
+      ],
+      "notes": "Translates stepper microsteps into 0.0006mm/microstep linear plunger displacement."
+    },
+    {
+      "id": "bom-gt2-belt",
+      "partNumber": "OTS-04",
+      "partId": "gt2-belt-pulleys",
+      "name": "GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+      "category": "hardware",
+      "specification": "2m GT2 6mm open timing belt + 2× 20T 5mm bore pulleys + 2× 20T 3mm bore idler bearings",
+      "specs": "2m GT2 6mm open timing belt + 2× 20T 5mm bore pulleys + 2× 20T 3mm bore idler bearings",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "kit",
+      "unitPrice": 5.2,
+      "totalPrice": 5.2,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit+3d+printer",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit+3d+printer",
+          "estPrice": 5.2,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit+3d+printer",
+          "sourceTitle": "Amazon — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#timing-belts/=gt2",
+          "estPrice": 5.65,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#timing-belts/=gt2",
+          "sourceTitle": "McMaster-Carr — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=GT2+6mm+timing+belt+20T+pulley",
+          "estPrice": 5.8,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=GT2+6mm+timing+belt+20T+pulley",
+          "sourceTitle": "Home Depot — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+          "url": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit+3d+printer",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+          "url": "https://www.mcmaster.com/#timing-belts/=gt2",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "gt2-belt-pulleys"
+      ],
+      "notes": "Transmits synchronous motion from the NEMA17 steppers to the X/Y carriages."
+    },
+    {
+      "id": "bom-grbl-board",
+      "partNumber": "OTS-05",
+      "partId": "grbl-esp32-board",
+      "name": "ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+      "category": "electronics",
+      "specification": "MKS TinyBee / DLC32 ESP32 3-axis GRBL controller + 3× TMC2209 UART stepper driver modules",
+      "specs": "MKS TinyBee / DLC32 ESP32 3-axis GRBL controller + 3× TMC2209 UART stepper driver modules",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "set",
+      "unitPrice": 8.9,
+      "totalPrice": 8.9,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=ESP32+GRBL+3+axis+CNC+controller+board+TMC2209",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=ESP32+GRBL+3+axis+CNC+controller+board+TMC2209",
+          "estPrice": 8.9,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=ESP32+GRBL+3+axis+CNC+controller+board+TMC2209",
+          "sourceTitle": "Amazon — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-grbl-controller-tmc2209.html",
+          "estPrice": 9.35,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.aliexpress.com/w/wholesale-esp32-grbl-controller-tmc2209.html",
+          "sourceTitle": "McMaster-Carr — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=3+axis+GRBL+CNC+controller+board",
+          "estPrice": 9.5,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=3+axis+GRBL+CNC+controller+board",
+          "sourceTitle": "Home Depot — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+          "url": "https://www.amazon.com/s?k=ESP32+GRBL+3+axis+CNC+controller+board+TMC2209",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+          "url": "https://www.aliexpress.com/w/wholesale-esp32-grbl-controller-tmc2209.html",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "grbl-esp32-board"
+      ],
+      "notes": "Executes G-code pipetting protocols over USB-C or browser Wi-Fi UI."
+    },
+    {
+      "id": "bom-endstops",
+      "partNumber": "OTS-06",
+      "partId": "optical-endstops",
+      "name": "Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+      "category": "electronics",
+      "specification": "3× optical/lever limit switch modules with LED indicator and 70cm 3-pin cables",
+      "specs": "3× optical/lever limit switch modules with LED indicator and 70cm 3-pin cables",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack (3)",
+      "unitPrice": 2.4,
+      "totalPrice": 2.4,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=3d+printer+limit+switch+endstop+3+pin+cable+3+pack",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=3d+printer+limit+switch+endstop+3+pin+cable+3+pack",
+          "estPrice": 2.4,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=3d+printer+limit+switch+endstop+3+pin+cable+3+pack",
+          "sourceTitle": "Amazon — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#limit-switches/=subminiature",
+          "estPrice": 2.85,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#limit-switches/=subminiature",
+          "sourceTitle": "McMaster-Carr — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=3d+printer+endstop+limit+switch",
+          "estPrice": 3,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=3d+printer+endstop+limit+switch",
+          "sourceTitle": "Home Depot — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+          "url": "https://www.amazon.com/s?k=3d+printer+limit+switch+endstop+3+pin+cable+3+pack",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+          "url": "https://www.mcmaster.com/#limit-switches/=subminiature",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "optical-endstops"
+      ],
+      "notes": "Establishes repeatable 0.05mm home coordinates before indexing into Well A1."
+    },
+    {
+      "id": "bom-96well-plate",
+      "partNumber": "OTS-07",
+      "partId": "pipette-96well-plate",
+      "name": "Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+      "category": "consumable",
+      "specification": "ANSI/SLAS 1-2004 96-well flat-bottom clear microplates (127.76×85.48mm) + 96× 200µL tips",
+      "specs": "ANSI/SLAS 1-2004 96-well flat-bottom clear microplates (127.76×85.48mm) + 96× 200µL tips",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pack",
+      "unitPrice": 2.2,
+      "totalPrice": 2.2,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=96+well+microplate+flat+bottom+200uL+pipette+tips",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=96+well+microplate+flat+bottom+200uL+pipette+tips",
+          "estPrice": 2.2,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=96+well+microplate+flat+bottom+200uL+pipette+tips",
+          "sourceTitle": "Amazon — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#Well-Plates/",
+          "estPrice": 2.65,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#Well-Plates/",
+          "sourceTitle": "McMaster-Carr — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.walmart.com/search?q=96+well+plate+lab+pipette+tips",
+          "estPrice": 2.8,
+          "inStock": true,
+          "sourceUrl": "https://www.walmart.com/search?q=96+well+plate+lab+pipette+tips",
+          "sourceTitle": "Home Depot — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+          "url": "https://www.amazon.com/s?k=96+well+microplate+flat+bottom+200uL+pipette+tips",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+          "url": "https://www.mcmaster.com/#Well-Plates/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "pipette-96well-plate"
+      ],
+      "notes": "Snaps into the PRT-01 deck nests for source reagent and target serial dilution."
+    },
+    {
+      "id": "bom-psu-12v",
+      "partNumber": "OTS-08",
+      "partId": "psu-12v-3a",
+      "name": "12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+      "category": "power",
+      "specification": "12V DC 3.0A (36W) UL-listed power supply adapter, 5.5×2.1mm barrel plug",
+      "specs": "12V DC 3.0A (36W) UL-listed power supply adapter, 5.5×2.1mm barrel plug",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "pc",
+      "unitPrice": 2.1,
+      "totalPrice": 2.1,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=12V+3A+DC+power+supply+adapter+5.5x2.1mm",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=12V+3A+DC+power+supply+adapter+5.5x2.1mm",
+          "estPrice": 2.1,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=12V+3A+DC+power+supply+adapter+5.5x2.1mm",
+          "sourceTitle": "Amazon — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#ac-to-dc-power-supplies/=12v",
+          "estPrice": 2.55,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.mcmaster.com/#ac-to-dc-power-supplies/=12v",
+          "sourceTitle": "McMaster-Carr — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/12V%203A%20power%20adapter",
+          "estPrice": 2.7,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/12V%203A%20power%20adapter",
+          "sourceTitle": "Home Depot — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+          "url": "https://www.amazon.com/s?k=12V+3A+DC+power+supply+adapter+5.5x2.1mm",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+          "url": "https://www.mcmaster.com/#ac-to-dc-power-supplies/=12v",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "psu-12v-3a"
+      ],
+      "notes": "Powers the ESP32 GRBL controller board and stepper motors."
+    },
+    {
+      "id": "bom-m3-screw-kit",
+      "partNumber": "OTS-09",
+      "partId": "m3-socket-screw-kit",
+      "name": "M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+      "category": "hardware",
+      "specification": "50pc M3×8/12/16mm 304 stainless socket head cap screws + 20pc M3×4×5mm brass heat-set inserts",
+      "specs": "50pc M3×8/12/16mm 304 stainless socket head cap screws + 20pc M3×4×5mm brass heat-set inserts",
+      "qty": 1,
+      "quantity": 1,
+      "unit": "kit",
+      "unitPrice": 1.7,
+      "totalPrice": 1.7,
+      "primaryRetailer": "McMaster-Carr",
+      "primaryUrl": "https://www.mcmaster.com/#socket-head-cap-screws/=m3",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=M3+stainless+socket+head+cap+screw+assortment+heat+set+inserts",
+          "estPrice": 2.05,
+          "inStock": true,
+          "isCheapest": false,
+          "sourceUrl": "https://www.amazon.com/s?k=M3+stainless+socket+head+cap+screw+assortment+heat+set+inserts",
+          "sourceTitle": "Amazon — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#M3/",
+          "estPrice": 1.7,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.mcmaster.com/#M3/",
+          "sourceTitle": "McMaster-Carr — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit"
+        },
+        {
+          "retailer": "Home Depot",
+          "url": "https://www.homedepot.com/s/M3%20stainless%20socket%20cap%20screws",
+          "estPrice": 2.3,
+          "inStock": true,
+          "sourceUrl": "https://www.homedepot.com/s/M3%20stainless%20socket%20cap%20screws",
+          "sourceTitle": "Home Depot — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+          "url": "https://www.amazon.com/s?k=M3+stainless+socket+head+cap+screw+assortment+heat+set+inserts",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr Catalog — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+          "url": "https://www.mcmaster.com/#M3/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "m3-socket-screw-kit"
+      ],
+      "notes": "Fastens MGN9H rails, NEMA17 motors, and T8 brass nut to the 3D-printed frame."
+    },
+    {
+      "id": "bom-filament-liquid",
+      "partNumber": "FIL-01",
+      "partId": "deck-base-96well",
+      "name": "3D Print Filament — PETG & PLA+ (~400g Total Printed Weight)",
+      "category": "printed-filament",
+      "specification": "1.75mm PETG & PLA+ filament (~400g from $18/kg spool)",
+      "specs": "1.75mm PETG & PLA+ filament (~400g from $18/kg spool)",
+      "qty": 400,
+      "quantity": 400,
+      "unit": "g",
+      "unitPrice": 0.018,
+      "totalPrice": 7.2,
+      "primaryRetailer": "Amazon",
+      "primaryUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+      "retailerLinks": [
+        {
+          "retailer": "Amazon",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "estPrice": 7.2,
+          "inStock": true,
+          "isCheapest": true,
+          "sourceUrl": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "sourceTitle": "Amazon — 1.75mm PETG & PLA+ Filament Spool"
+        },
+        {
+          "retailer": "McMaster-Carr",
+          "url": "https://www.mcmaster.com/#3d-printer-filament/",
+          "estPrice": 7.75,
+          "inStock": true,
+          "sourceUrl": "https://www.mcmaster.com/#3d-printer-filament/",
+          "sourceTitle": "McMaster-Carr — 1.75mm 3D Printer Filament"
+        }
+      ],
+      "sourceLinks": [
+        {
+          "title": "Amazon Search — 1.75mm PETG & PLA+ Filament Spool",
+          "url": "https://www.amazon.com/s?k=PETG+PLA+Pro+1.75mm+3D+printer+filament+1kg+spool",
+          "retailer": "Amazon"
+        },
+        {
+          "title": "McMaster-Carr — 3D Printing Filament",
+          "url": "https://www.mcmaster.com/#3d-printer-filament/",
+          "retailer": "McMaster-Carr"
+        }
+      ],
+      "linkedPartIds": [
+        "deck-base-96well",
+        "gantry-upright-left",
+        "gantry-upright-right",
+        "x-carriage-shuttle",
+        "z-pipette-cradle",
+        "plunger-escapement-arm",
+        "tip-ejector-fork",
+        "controller-case-cnc"
+      ],
+      "notes": "Estimated from STL mesh volume across all 8 printed parts."
+    }
+  ],
+  "summary": {
+    "purchasedPartsTotal": 61.3,
+    "filamentCostTotal": 7.2,
+    "totalDiyCost": 68.5,
+    "originalRetailPrice": 590,
+    "totalSavings": 521.5,
+    "savingsPercent": 88
+  },
+  "priceHunter": {
+    "groundingUsed": true,
+    "retailersCompared": [
+      "Amazon",
+      "McMaster-Carr",
+      "Home Depot",
+      "Walmart"
+    ],
+    "cheapestPicksCount": 10,
+    "sourceLinks": [
+      {
+        "title": "Amazon Search — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+        "url": "https://www.amazon.com/s?k=NEMA+17+stepper+motor+42x34mm+3+pack+3d+printer",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+        "url": "https://www.mcmaster.com/#stepper-motors/=nema-17",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+        "url": "https://www.amazon.com/s?k=MGN9H+250mm+linear+rail+guide+stainless+2pcs",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+        "url": "https://www.mcmaster.com/#linear-guide-rails/=miniature",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+        "url": "https://www.amazon.com/s?k=T8+2mm+lead+200mm+leadscrew+anti+backlash+brass+nut+coupler",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+        "url": "https://www.mcmaster.com/#T8%C3%972mm/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+        "url": "https://www.amazon.com/s?k=GT2+6mm+timing+belt+20T+pulley+idler+kit+3d+printer",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+        "url": "https://www.mcmaster.com/#timing-belts/=gt2",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+        "url": "https://www.amazon.com/s?k=ESP32+GRBL+3+axis+CNC+controller+board+TMC2209",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+        "url": "https://www.aliexpress.com/w/wholesale-esp32-grbl-controller-tmc2209.html",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+        "url": "https://www.amazon.com/s?k=3d+printer+limit+switch+endstop+3+pin+cable+3+pack",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+        "url": "https://www.mcmaster.com/#limit-switches/=subminiature",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+        "url": "https://www.amazon.com/s?k=96+well+microplate+flat+bottom+200uL+pipette+tips",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+        "url": "https://www.mcmaster.com/#Well-Plates/",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+        "url": "https://www.amazon.com/s?k=12V+3A+DC+power+supply+adapter+5.5x2.1mm",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+        "url": "https://www.mcmaster.com/#ac-to-dc-power-supplies/=12v",
+        "retailer": "McMaster-Carr"
+      },
+      {
+        "title": "Amazon Search — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+        "url": "https://www.amazon.com/s?k=M3+stainless+socket+head+cap+screw+assortment+heat+set+inserts",
+        "retailer": "Amazon"
+      },
+      {
+        "title": "McMaster-Carr Catalog — M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+        "url": "https://www.mcmaster.com/#M3/",
+        "retailer": "McMaster-Carr"
+      }
+    ],
+    "updatedAt": "2026-10-25T20:00:00.000Z"
+  }
+}

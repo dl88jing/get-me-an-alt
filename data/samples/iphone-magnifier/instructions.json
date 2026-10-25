@@ -1,0 +1,280 @@
+{
+  "objectId": "iphone-magnifier",
+  "objectName": "iPhone Macro Microscope & Slide Stage",
+  "totalSteps": 5,
+  "estimatedMinutes": 15,
+  "estimatedTotalMinutes": 15,
+  "difficulty": "Beginner",
+  "safetyNotes": [
+    "Print PRT-02 (Doublet Lens Barrel) in matte black PLA+ to eliminate internal stray light reflections along the optical axis.",
+    "Print PRT-04 (LED Ring Diffuser) in natural/white translucent PETG with 2 perimeter walls and 15% lightning infill for uniform specimen illumination."
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "step": 1,
+      "title": "Step 1: Install Universal iPhone Camera Alignment Saddle",
+      "partIds": [
+        "phone-clamp-chassis"
+      ],
+      "tools": [
+        "Flat workbench"
+      ],
+      "note": "Slide-on smartphone saddle with M26×1.5mm optical turret thread centered over the primary camera lens. Registers the optical axis of the doublet barrel directly over the iPhone main camera.",
+      "description": "Slide-on smartphone saddle with M26×1.5mm optical turret thread centered over the primary camera lens. Registers the optical axis of the doublet barrel directly over the iPhone main camera.",
+      "motion": [
+        {
+          "partId": "phone-clamp-chassis",
+          "from": [
+            0,
+            0,
+            151
+          ],
+          "to": [
+            0,
+            0,
+            56
+          ]
+        }
+      ],
+      "action": "place",
+      "actionType": "place",
+      "cameraHint": {
+        "position": [
+          165,
+          -170,
+          153
+        ],
+        "target": [
+          0,
+          0,
+          56
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-front"
+      }
+    },
+    {
+      "n": 2,
+      "step": 2,
+      "title": "Step 2: Install Threaded 100× Achromatic Doublet Lens Barrel & 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+      "partIds": [
+        "doublet-lens-barrel",
+        "achromatic-lens-100x"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Baffled cylindrical optical cell with snap-fit retaining lip for the 18mm OD 100× achromatic doublet. Holds OTS-01 glass doublet lens coaxial with the iPhone camera and threads into PRT-01.",
+      "description": "Baffled cylindrical optical cell with snap-fit retaining lip for the 18mm OD 100× achromatic doublet. Holds OTS-01 glass doublet lens coaxial with the iPhone camera and threads into PRT-01.",
+      "motion": [
+        {
+          "partId": "doublet-lens-barrel",
+          "from": [
+            0,
+            -55,
+            77
+          ],
+          "to": [
+            0,
+            0,
+            32
+          ]
+        },
+        {
+          "partId": "achromatic-lens-100x",
+          "from": [
+            -60,
+            -45,
+            88
+          ],
+          "to": [
+            0,
+            0,
+            38
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          150,
+          -160,
+          161
+        ],
+        "target": [
+          0,
+          0,
+          32
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 3,
+      "step": 3,
+      "title": "Step 3: Install Snap-Fit Warm White Coaxial LED Diffuser Ring & 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+      "partIds": [
+        "led-ring-diffuser",
+        "usb-led-ring-5v"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Translucent annular housing that snaps around the lens barrel and diffuses the 5V SMD LED ring. Provides shadow-free ring illumination across opaque and translucent specimens.",
+      "description": "Translucent annular housing that snaps around the lens barrel and diffuses the 5V SMD LED ring. Provides shadow-free ring illumination across opaque and translucent specimens.",
+      "motion": [
+        {
+          "partId": "led-ring-diffuser",
+          "from": [
+            65,
+            0,
+            42
+          ],
+          "to": [
+            0,
+            0,
+            22
+          ]
+        },
+        {
+          "partId": "usb-led-ring-5v",
+          "from": [
+            85,
+            25,
+            40
+          ],
+          "to": [
+            0,
+            0,
+            20
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          135,
+          -150,
+          169
+        ],
+        "target": [
+          0,
+          0,
+          22
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 4,
+      "step": 4,
+      "title": "Step 4: Install Fine-Pitch Dovetail Z-Focus & XY Slide Stage & M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+      "partIds": [
+        "xyz-focus-sled",
+        "m3-focus-screw"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "60° dovetail focus carriage with 25×75mm slide recess, bottom condenser aperture, and M3 leadscrew bore. Translates the microscope slide smoothly along the Z-axis for crisp 100× focusing.",
+      "description": "60° dovetail focus carriage with 25×75mm slide recess, bottom condenser aperture, and M3 leadscrew bore. Translates the microscope slide smoothly along the Z-axis for crisp 100× focusing.",
+      "motion": [
+        {
+          "partId": "xyz-focus-sled",
+          "from": [
+            0,
+            0,
+            -55
+          ],
+          "to": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "partId": "m3-focus-screw",
+          "from": [
+            123,
+            -35,
+            -11
+          ],
+          "to": [
+            38,
+            0,
+            14
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          120,
+          -140,
+          177
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 5,
+      "step": 5,
+      "title": "Step 5: Install 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+      "partIds": [
+        "glass-slides-clips"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Standard 1mm-thick ground-edge 25×75mm glass microscope slides with #1.5 coverslips. Holds biological or material specimens flat in the focal plane of PRT-03.",
+      "description": "Standard 1mm-thick ground-edge 25×75mm glass microscope slides with #1.5 coverslips. Holds biological or material specimens flat in the focal plane of PRT-03.",
+      "motion": [
+        {
+          "partId": "glass-slides-clips",
+          "from": [
+            -75,
+            45,
+            -3
+          ],
+          "to": [
+            0,
+            0,
+            12
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          105,
+          -130,
+          185
+        ],
+        "target": [
+          0,
+          0,
+          12
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    }
+  ]
+}

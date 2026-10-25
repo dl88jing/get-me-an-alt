@@ -1,0 +1,86 @@
+solid plunger-escapement-arm
+  facet normal 0 0 -1
+    outer loop
+      vertex -22.000 -19.000 0.000
+      vertex 22.000 19.000 0.000
+      vertex 22.000 -19.000 0.000
+    endloop
+  endfacet
+  facet normal 0 0 -1
+    outer loop
+      vertex -22.000 -19.000 0.000
+      vertex -22.000 19.000 0.000
+      vertex 22.000 19.000 0.000
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -22.000 -19.000 32.000
+      vertex 22.000 -19.000 32.000
+      vertex 22.000 19.000 32.000
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -22.000 -19.000 32.000
+      vertex 22.000 19.000 32.000
+      vertex -22.000 19.000 32.000
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -22.000 -19.000 0.000
+      vertex 22.000 -19.000 0.000
+      vertex 22.000 -19.000 32.000
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -22.000 -19.000 0.000
+      vertex 22.000 -19.000 32.000
+      vertex -22.000 -19.000 32.000
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -22.000 19.000 0.000
+      vertex 22.000 19.000 32.000
+      vertex 22.000 19.000 0.000
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -22.000 19.000 0.000
+      vertex -22.000 19.000 32.000
+      vertex 22.000 19.000 32.000
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -22.000 -19.000 0.000
+      vertex -22.000 -19.000 32.000
+      vertex -22.000 19.000 32.000
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -22.000 -19.000 0.000
+      vertex -22.000 19.000 32.000
+      vertex -22.000 19.000 0.000
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 22.000 -19.000 0.000
+      vertex 22.000 19.000 32.000
+      vertex 22.000 -19.000 32.000
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 22.000 -19.000 0.000
+      vertex 22.000 19.000 0.000
+      vertex 22.000 19.000 32.000
+    endloop
+  endfacet
+endsolid plunger-escapement-arm

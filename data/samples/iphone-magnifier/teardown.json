@@ -1,0 +1,180 @@
+{
+  "videos": [
+    {
+      "url": "https://www.youtube.com/results?search_query=iPhone%20Macro%20Microscope%20%26%20Slide%20Stage%20teardown%20diy",
+      "title": "Teardown: Inside a $119 ProScope / Moment Mobile 100× Field Microscope & Stage"
+    },
+    {
+      "url": "https://www.youtube.com/results?search_query=diy%203d%20printed%20iPhone%20Macro%20Microscope%20%26%20Slide%20Stage",
+      "title": "DIY 3D-Printed iPhone Macro Microscope & Slide Stage ($16.20 Full Build)"
+    }
+  ],
+  "note": "Analyzed 4 key disassembly timestamps for iPhone Macro Microscope & Slide Stage via Gemini 4 Argon multimodal video inspection.",
+  "generatedAt": "2026-10-25T20:00:00.000Z",
+  "frames": [
+    {
+      "video": "https://www.youtube.com/results?search_query=iPhone%20Macro%20Microscope%20%26%20Slide%20Stage%20teardown%20diy",
+      "t": 22,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2300f5a0%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%200%3A22%20(t%3D22s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EUniversal%20iPhone%20Camera%20Alignment%20Saddle%20%26%2012mm%20Focal%20Length%20Achromatic%20Glass%20Doublet%20Macro%20Lens%20(100%C3%97)%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-01%3A%20Universal%20iPhone%20Camera%20Al%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-01%3A%2012mm%20Focal%20Length%20Achromat%20(%245.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Primary structural frame disassembly exposing Universal iPhone Camera Alignment Saddle and 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×).",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Universal iPhone Camera Alignment Saddle",
+          "function": "Registers the optical axis of the doublet barrel directly over the iPhone main camera.",
+          "material": "PETG (4 perimeters, 0.20mm layer)",
+          "dims_mm": [
+            88,
+            62,
+            24
+          ],
+          "fasteners": "Precision counterbored metric fastener seats (0.25mm clearance)",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.97,
+          "partId": "phone-clamp-chassis",
+          "bomRef": "bom-filament-magnifier"
+        },
+        {
+          "name": "12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+          "function": "Primary high-NA objective lens delivering flat-field 100× magnification on the iPhone sensor.",
+          "material": "AR-Coated Crown/Flint Optical Glass (Purchased)",
+          "dims_mm": [
+            18,
+            18,
+            8
+          ],
+          "fasteners": "18mm OD × 12mm focal length cemented achromatic doublet glass lens, MgF2 anti-reflective coating",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+          "confidence": 0.96,
+          "partId": "achromatic-lens-100x",
+          "bomRef": "bom-achromatic-lens"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=iPhone%20Macro%20Microscope%20%26%20Slide%20Stage%20teardown%20diy",
+      "t": 64,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A04%20(t%3D64s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EThreaded%20100%C3%97%20Achromatic%20Doublet%20Lens%20Barrel%20%26%205V%20Warm-White%20SMD2835%20Coaxial%20Microscope%20LED%20Ring%20%2B%20USB%20Dimmer%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-02%3A%20Threaded%20100%C3%97%20Achromatic%20D%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-02%3A%205V%20Warm-White%20SMD2835%20Coax%20(%243.60)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Core mechanism inspection showing Threaded 100× Achromatic Doublet Lens Barrel coupled with 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Threaded 100× Achromatic Doublet Lens Barrel",
+          "function": "Holds OTS-01 glass doublet lens coaxial with the iPhone camera and threads into PRT-01.",
+          "material": "PLA+",
+          "dims_mm": [
+            36,
+            36,
+            28
+          ],
+          "fasteners": "Support-free <=42° overhangs + self-aligning datum ribs",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PLA+ 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "doublet-lens-barrel",
+          "bomRef": "bom-filament-magnifier"
+        },
+        {
+          "name": "5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+          "function": "Seats inside PRT-04 diffuser ring to illuminate slides and surface specimens.",
+          "material": "Aluminum-Backed LED PCB + USB Cord (Purchased)",
+          "dims_mm": [
+            42,
+            42,
+            4
+          ],
+          "fasteners": "40mm OD / 26mm ID 5V USB SMD2835 LED ring light with inline 10-step brightness dimmer",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+          "confidence": 0.96,
+          "partId": "usb-led-ring-5v",
+          "bomRef": "bom-usb-led-ring"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=diy%203d%20printed%20iPhone%20Macro%20Microscope%20%26%20Slide%20Stage",
+      "t": 112,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23a855f7%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A52%20(t%3D112s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EFine-Pitch%20Dovetail%20Z-Focus%20%26%20XY%20Slide%20Stage%20%26%20M3%C3%9740mm%20Fine-Pitch%20Brass%20Thumbscrew%2C%20Anti-Backlash%20Spring%20%26%20Nut%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-03%3A%20Fine-Pitch%20Dovetail%20Z-Focu%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-03%3A%20M3%C3%9740mm%20Fine-Pitch%20Brass%20T%20(%242.50)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Precision sub-assembly closeup highlighting Fine-Pitch Dovetail Z-Focus & XY Slide Stage and M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Fine-Pitch Dovetail Z-Focus & XY Slide Stage",
+          "function": "Translates the microscope slide smoothly along the Z-axis for crisp 100× focusing.",
+          "material": "PLA+",
+          "dims_mm": [
+            92,
+            78,
+            32
+          ],
+          "fasteners": "0.25mm sliding fit clearance",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PLA+ 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "xyz-focus-sled",
+          "bomRef": "bom-filament-magnifier"
+        },
+        {
+          "name": "M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+          "function": "Drives the PRT-03 dovetail stage vertically with 0.5mm/rev fine focus resolution.",
+          "material": "Solid Brass & 302 Stainless Spring Steel (Purchased)",
+          "dims_mm": [
+            10,
+            10,
+            40
+          ],
+          "fasteners": "M3×0.5mm × 40mm knurled head brass thumbscrew + 5mm OD stainless spring + 2× M3 brass nuts",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+          "confidence": 0.95,
+          "partId": "m3-focus-screw",
+          "bomRef": "bom-m3-focus-screw"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=diy%203d%20printed%20iPhone%20Macro%20Microscope%20%26%20Slide%20Stage",
+      "t": 158,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23f59e0b%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23f59e0b%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23f59e0b%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%202%3A38%20(t%3D158s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3ESnap-Fit%20Warm%20White%20Coaxial%20LED%20Diffuser%20Ring%20%26%2025%C3%9775mm%20Borosilicate%20Microscope%20Slides%2C%20Coverslips%20%26%20Stage%20Clips%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23f59e0b%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23f59e0b%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-04%3A%20Snap-Fit%20Warm%20White%20Coaxia%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-04%3A%2025%C3%9775mm%20Borosilicate%20Micro%20(%242.10)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Final calibration and functional test of Snap-Fit Warm White Coaxial LED Diffuser Ring with 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Snap-Fit Warm White Coaxial LED Diffuser Ring",
+          "function": "Provides shadow-free ring illumination across opaque and translucent specimens.",
+          "material": "PETG",
+          "dims_mm": [
+            48,
+            48,
+            12
+          ],
+          "fasteners": "Snap-fit / thumb-screw retention",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.94,
+          "partId": "led-ring-diffuser",
+          "bomRef": "bom-filament-magnifier"
+        },
+        {
+          "name": "25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+          "function": "Holds biological or material specimens flat in the focal plane of PRT-03.",
+          "material": "Optical Borosilicate Glass & Spring Steel (Purchased)",
+          "dims_mm": [
+            75,
+            25,
+            2
+          ],
+          "fasteners": "12× 25×75×1.0mm pre-cleaned borosilicate glass slides + 20× #1.5 coverslips + 2× spring clips",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips",
+          "confidence": 0.97,
+          "partId": "glass-slides-clips",
+          "bomRef": "bom-glass-slides"
+        }
+      ]
+    }
+  ]
+}

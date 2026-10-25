@@ -1,0 +1,1154 @@
+{
+  "objectId": "art-easel",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPlates": 1,
+  "totalUniqueParts": 6,
+  "totalPrintedItems": 8,
+  "totalWeightGrams": 250,
+  "totalFilamentGrams": 250,
+  "totalFilamentMeters": 83.89,
+  "totalPrintTimeMinutes": 285,
+  "formattedTotalPrintTime": "4h 45m",
+  "multiPlate3mfFile": "parts/all-plates.3mf",
+  "multiPlate3mfBytes": 812400,
+  "printer": {
+    "id": "bambu-a1",
+    "name": "Bambu Lab A1",
+    "brand": "Bambu Lab",
+    "bed": {
+      "x": 256,
+      "y": 256,
+      "z": 256
+    },
+    "multiColor": true,
+    "speedClass": "high-speed"
+  },
+  "margin": 5,
+  "spacing": 5,
+  "heuristicUsed": "Skyline-MW-BF (area-desc)",
+  "parts": [
+    {
+      "partId": "easel-base-hub",
+      "name": "Weighted H-Frame Studio Base Hub",
+      "shape": "box",
+      "stlFile": "parts/easel-base-hub.stl",
+      "file": "parts/easel-base-hub.stl",
+      "scadFile": "parts/easel-base-hub.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2001,
+      "dims_mm": [
+        145,
+        120,
+        28
+      ],
+      "dimensionsMm": [
+        145,
+        120,
+        28
+      ],
+      "weightGrams": 82,
+      "filamentGrams": 82,
+      "filamentMeters": 27.52,
+      "estimatedMinutes": 94,
+      "printTimeMinutes": 94,
+      "formattedTime": "94m",
+      "color": "#d97706",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 155904,
+      "surfaceAreaMm2": 49640,
+      "isManifold": true
+    },
+    {
+      "partId": "ratchet-tilt-hinge",
+      "name": "15°-Step Ratcheting Tilt Mast Hinge",
+      "shape": "bracket",
+      "stlFile": "parts/ratchet-tilt-hinge.stl",
+      "file": "parts/ratchet-tilt-hinge.stl",
+      "scadFile": "parts/ratchet-tilt-hinge.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2009,
+      "dims_mm": [
+        64,
+        58,
+        42
+      ],
+      "dimensionsMm": [
+        64,
+        58,
+        42
+      ],
+      "weightGrams": 46,
+      "filamentGrams": 46,
+      "filamentMeters": 15.44,
+      "estimatedMinutes": 52,
+      "printTimeMinutes": 52,
+      "formattedTime": "52m",
+      "color": "#f59e0b",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 49889.28,
+      "surfaceAreaMm2": 17672,
+      "isManifold": true
+    },
+    {
+      "partId": "lower-canvas-tray",
+      "name": "Lower Canvas Ledge & Brush Rest Tray",
+      "shape": "box",
+      "stlFile": "parts/lower-canvas-tray.stl",
+      "file": "parts/lower-canvas-tray.stl",
+      "scadFile": "parts/lower-canvas-tray.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2007,
+      "dims_mm": [
+        160,
+        48,
+        32
+      ],
+      "dimensionsMm": [
+        160,
+        48,
+        32
+      ],
+      "weightGrams": 54,
+      "filamentGrams": 54,
+      "filamentMeters": 18.12,
+      "estimatedMinutes": 58,
+      "printTimeMinutes": 58,
+      "formattedTime": "58m",
+      "color": "#10b981",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 78643.2,
+      "surfaceAreaMm2": 28672,
+      "isManifold": true
+    },
+    {
+      "partId": "upper-canvas-clamp",
+      "name": "Sliding Top Canvas Clamp Jaw",
+      "shape": "bracket",
+      "stlFile": "parts/upper-canvas-clamp.stl",
+      "file": "parts/upper-canvas-clamp.stl",
+      "scadFile": "parts/upper-canvas-clamp.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2009,
+      "dims_mm": [
+        68,
+        46,
+        34
+      ],
+      "dimensionsMm": [
+        68,
+        46,
+        34
+      ],
+      "weightGrams": 28,
+      "filamentGrams": 28,
+      "filamentMeters": 9.4,
+      "estimatedMinutes": 32,
+      "printTimeMinutes": 32,
+      "formattedTime": "32m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 34032.64,
+      "surfaceAreaMm2": 14008,
+      "isManifold": true
+    },
+    {
+      "partId": "rear-strut-collar",
+      "name": "2020 V-Slot Rear Strut Locking Collar",
+      "shape": "tube",
+      "stlFile": "parts/rear-strut-collar.stl",
+      "file": "parts/rear-strut-collar.stl",
+      "scadFile": "parts/rear-strut-collar.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2007,
+      "dims_mm": [
+        44,
+        42,
+        26
+      ],
+      "dimensionsMm": [
+        44,
+        42,
+        26
+      ],
+      "weightGrams": 22,
+      "filamentGrams": 22,
+      "filamentMeters": 7.38,
+      "estimatedMinutes": 25,
+      "printTimeMinutes": 25,
+      "formattedTime": "25m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 15375.36,
+      "surfaceAreaMm2": 8168,
+      "isManifold": true
+    },
+    {
+      "partId": "knurled-lock-knobs",
+      "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+      "shape": "cylinder",
+      "stlFile": "parts/knurled-lock-knobs.stl",
+      "file": "parts/knurled-lock-knobs.stl",
+      "scadFile": "parts/knurled-lock-knobs.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2009,
+      "dims_mm": [
+        34,
+        34,
+        18
+      ],
+      "dimensionsMm": [
+        34,
+        34,
+        18
+      ],
+      "weightGrams": 18,
+      "filamentGrams": 18,
+      "filamentMeters": 6.04,
+      "estimatedMinutes": 24,
+      "printTimeMinutes": 24,
+      "formattedTime": "24m",
+      "color": "#ec4899",
+      "material": "PLA+",
+      "quantity": 3,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 6658.56,
+      "surfaceAreaMm2": 4760,
+      "isManifold": true
+    }
+  ],
+  "partFiles": [
+    {
+      "partId": "easel-base-hub",
+      "name": "Weighted H-Frame Studio Base Hub",
+      "shape": "box",
+      "stlFile": "parts/easel-base-hub.stl",
+      "file": "parts/easel-base-hub.stl",
+      "scadFile": "parts/easel-base-hub.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2001,
+      "dims_mm": [
+        145,
+        120,
+        28
+      ],
+      "dimensionsMm": [
+        145,
+        120,
+        28
+      ],
+      "weightGrams": 82,
+      "filamentGrams": 82,
+      "filamentMeters": 27.52,
+      "estimatedMinutes": 94,
+      "printTimeMinutes": 94,
+      "formattedTime": "94m",
+      "color": "#d97706",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 155904,
+      "surfaceAreaMm2": 49640,
+      "isManifold": true
+    },
+    {
+      "partId": "ratchet-tilt-hinge",
+      "name": "15°-Step Ratcheting Tilt Mast Hinge",
+      "shape": "bracket",
+      "stlFile": "parts/ratchet-tilt-hinge.stl",
+      "file": "parts/ratchet-tilt-hinge.stl",
+      "scadFile": "parts/ratchet-tilt-hinge.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2009,
+      "dims_mm": [
+        64,
+        58,
+        42
+      ],
+      "dimensionsMm": [
+        64,
+        58,
+        42
+      ],
+      "weightGrams": 46,
+      "filamentGrams": 46,
+      "filamentMeters": 15.44,
+      "estimatedMinutes": 52,
+      "printTimeMinutes": 52,
+      "formattedTime": "52m",
+      "color": "#f59e0b",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 49889.28,
+      "surfaceAreaMm2": 17672,
+      "isManifold": true
+    },
+    {
+      "partId": "lower-canvas-tray",
+      "name": "Lower Canvas Ledge & Brush Rest Tray",
+      "shape": "box",
+      "stlFile": "parts/lower-canvas-tray.stl",
+      "file": "parts/lower-canvas-tray.stl",
+      "scadFile": "parts/lower-canvas-tray.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2007,
+      "dims_mm": [
+        160,
+        48,
+        32
+      ],
+      "dimensionsMm": [
+        160,
+        48,
+        32
+      ],
+      "weightGrams": 54,
+      "filamentGrams": 54,
+      "filamentMeters": 18.12,
+      "estimatedMinutes": 58,
+      "printTimeMinutes": 58,
+      "formattedTime": "58m",
+      "color": "#10b981",
+      "material": "PLA+",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 78643.2,
+      "surfaceAreaMm2": 28672,
+      "isManifold": true
+    },
+    {
+      "partId": "upper-canvas-clamp",
+      "name": "Sliding Top Canvas Clamp Jaw",
+      "shape": "bracket",
+      "stlFile": "parts/upper-canvas-clamp.stl",
+      "file": "parts/upper-canvas-clamp.stl",
+      "scadFile": "parts/upper-canvas-clamp.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2009,
+      "dims_mm": [
+        68,
+        46,
+        34
+      ],
+      "dimensionsMm": [
+        68,
+        46,
+        34
+      ],
+      "weightGrams": 28,
+      "filamentGrams": 28,
+      "filamentMeters": 9.4,
+      "estimatedMinutes": 32,
+      "printTimeMinutes": 32,
+      "formattedTime": "32m",
+      "color": "#0ea5e9",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 34032.64,
+      "surfaceAreaMm2": 14008,
+      "isManifold": true
+    },
+    {
+      "partId": "rear-strut-collar",
+      "name": "2020 V-Slot Rear Strut Locking Collar",
+      "shape": "tube",
+      "stlFile": "parts/rear-strut-collar.stl",
+      "file": "parts/rear-strut-collar.stl",
+      "scadFile": "parts/rear-strut-collar.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2007,
+      "dims_mm": [
+        44,
+        42,
+        26
+      ],
+      "dimensionsMm": [
+        44,
+        42,
+        26
+      ],
+      "weightGrams": 22,
+      "filamentGrams": 22,
+      "filamentMeters": 7.38,
+      "estimatedMinutes": 25,
+      "printTimeMinutes": 25,
+      "formattedTime": "25m",
+      "color": "#6366f1",
+      "material": "PETG",
+      "quantity": 1,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 15375.36,
+      "surfaceAreaMm2": 8168,
+      "isManifold": true
+    },
+    {
+      "partId": "knurled-lock-knobs",
+      "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+      "shape": "cylinder",
+      "stlFile": "parts/knurled-lock-knobs.stl",
+      "file": "parts/knurled-lock-knobs.stl",
+      "scadFile": "parts/knurled-lock-knobs.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 2009,
+      "dims_mm": [
+        34,
+        34,
+        18
+      ],
+      "dimensionsMm": [
+        34,
+        34,
+        18
+      ],
+      "weightGrams": 18,
+      "filamentGrams": 18,
+      "filamentMeters": 6.04,
+      "estimatedMinutes": 24,
+      "printTimeMinutes": 24,
+      "formattedTime": "24m",
+      "color": "#ec4899",
+      "material": "PLA+",
+      "quantity": 3,
+      "triangleCount": 1280,
+      "vertexCount": 642,
+      "edgeCount": 1920,
+      "volumeMm3": 6658.56,
+      "surfaceAreaMm2": 4760,
+      "isManifold": true
+    }
+  ],
+  "plates": [
+    {
+      "plateNumber": 1,
+      "index": 0,
+      "name": "Plate 1 — Bambu Lab A1 (8 items)",
+      "printerId": "bambu-a1",
+      "printerName": "Bambu Lab A1 (256×256×256 mm)",
+      "bedDimensionsMm": [
+        256,
+        256,
+        256
+      ],
+      "utilizationPercent": 68.5,
+      "utilization": 0.685,
+      "maxHeight": 42,
+      "estimatedMinutes": 285,
+      "printTimeMinutes": 285,
+      "formattedTime": "4h 45m",
+      "weightGrams": 250,
+      "filamentGrams": 250,
+      "filamentMeters": 83.89,
+      "layers": 210,
+      "stlFile": "parts/plate-1.3mf",
+      "file": "parts/plate-1.3mf",
+      "bytes": 512400,
+      "placements": [
+        {
+          "partId": "easel-base-hub",
+          "name": "Weighted H-Frame Studio Base Hub",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 8,
+          "y": 8,
+          "centerX": 80.5,
+          "centerY": 68,
+          "width": 145,
+          "depth": 120,
+          "height": 28,
+          "rotated": false,
+          "color": "#d97706",
+          "stlFile": "parts/easel-base-hub.stl",
+          "weightGrams": 82,
+          "estimatedMinutes": 94
+        },
+        {
+          "partId": "lower-canvas-tray",
+          "name": "Lower Canvas Ledge & Brush Rest Tray",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 8,
+          "y": 136,
+          "centerX": 88,
+          "centerY": 160,
+          "width": 160,
+          "depth": 48,
+          "height": 32,
+          "rotated": false,
+          "color": "#10b981",
+          "stlFile": "parts/lower-canvas-tray.stl",
+          "weightGrams": 54,
+          "estimatedMinutes": 58
+        },
+        {
+          "partId": "ratchet-tilt-hinge",
+          "name": "15°-Step Ratcheting Tilt Mast Hinge",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 162,
+          "y": 8,
+          "centerX": 194,
+          "centerY": 37,
+          "width": 64,
+          "depth": 58,
+          "height": 42,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/ratchet-tilt-hinge.stl",
+          "weightGrams": 46,
+          "estimatedMinutes": 52
+        },
+        {
+          "partId": "upper-canvas-clamp",
+          "name": "Sliding Top Canvas Clamp Jaw",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 162,
+          "y": 74,
+          "centerX": 196,
+          "centerY": 97,
+          "width": 68,
+          "depth": 46,
+          "height": 34,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/upper-canvas-clamp.stl",
+          "weightGrams": 28,
+          "estimatedMinutes": 32
+        },
+        {
+          "partId": "rear-strut-collar",
+          "name": "2020 V-Slot Rear Strut Locking Collar",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 176,
+          "y": 128,
+          "centerX": 198,
+          "centerY": 149,
+          "width": 44,
+          "depth": 42,
+          "height": 26,
+          "rotated": false,
+          "color": "#6366f1",
+          "stlFile": "parts/rear-strut-collar.stl",
+          "weightGrams": 22,
+          "estimatedMinutes": 25
+        },
+        {
+          "partId": "knurled-lock-knobs",
+          "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 8,
+          "y": 194,
+          "centerX": 25,
+          "centerY": 211,
+          "width": 34,
+          "depth": 34,
+          "height": 18,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/knurled-lock-knobs.stl",
+          "weightGrams": 6,
+          "estimatedMinutes": 8
+        },
+        {
+          "partId": "knurled-lock-knobs",
+          "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 50,
+          "y": 194,
+          "centerX": 67,
+          "centerY": 211,
+          "width": 34,
+          "depth": 34,
+          "height": 18,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/knurled-lock-knobs.stl",
+          "weightGrams": 6,
+          "estimatedMinutes": 8
+        },
+        {
+          "partId": "knurled-lock-knobs",
+          "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+          "copyIndex": 3,
+          "copy": 3,
+          "x": 92,
+          "y": 194,
+          "centerX": 109,
+          "centerY": 211,
+          "width": 34,
+          "depth": 34,
+          "height": 18,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/knurled-lock-knobs.stl",
+          "weightGrams": 6,
+          "estimatedMinutes": 8
+        }
+      ],
+      "items": [
+        {
+          "partId": "easel-base-hub",
+          "name": "Weighted H-Frame Studio Base Hub",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 8,
+          "y": 8,
+          "centerX": 80.5,
+          "centerY": 68,
+          "width": 145,
+          "depth": 120,
+          "height": 28,
+          "rotated": false,
+          "color": "#d97706",
+          "stlFile": "parts/easel-base-hub.stl",
+          "weightGrams": 82,
+          "estimatedMinutes": 94
+        },
+        {
+          "partId": "lower-canvas-tray",
+          "name": "Lower Canvas Ledge & Brush Rest Tray",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 8,
+          "y": 136,
+          "centerX": 88,
+          "centerY": 160,
+          "width": 160,
+          "depth": 48,
+          "height": 32,
+          "rotated": false,
+          "color": "#10b981",
+          "stlFile": "parts/lower-canvas-tray.stl",
+          "weightGrams": 54,
+          "estimatedMinutes": 58
+        },
+        {
+          "partId": "ratchet-tilt-hinge",
+          "name": "15°-Step Ratcheting Tilt Mast Hinge",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 162,
+          "y": 8,
+          "centerX": 194,
+          "centerY": 37,
+          "width": 64,
+          "depth": 58,
+          "height": 42,
+          "rotated": false,
+          "color": "#f59e0b",
+          "stlFile": "parts/ratchet-tilt-hinge.stl",
+          "weightGrams": 46,
+          "estimatedMinutes": 52
+        },
+        {
+          "partId": "upper-canvas-clamp",
+          "name": "Sliding Top Canvas Clamp Jaw",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 162,
+          "y": 74,
+          "centerX": 196,
+          "centerY": 97,
+          "width": 68,
+          "depth": 46,
+          "height": 34,
+          "rotated": false,
+          "color": "#0ea5e9",
+          "stlFile": "parts/upper-canvas-clamp.stl",
+          "weightGrams": 28,
+          "estimatedMinutes": 32
+        },
+        {
+          "partId": "rear-strut-collar",
+          "name": "2020 V-Slot Rear Strut Locking Collar",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 176,
+          "y": 128,
+          "centerX": 198,
+          "centerY": 149,
+          "width": 44,
+          "depth": 42,
+          "height": 26,
+          "rotated": false,
+          "color": "#6366f1",
+          "stlFile": "parts/rear-strut-collar.stl",
+          "weightGrams": 22,
+          "estimatedMinutes": 25
+        },
+        {
+          "partId": "knurled-lock-knobs",
+          "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+          "copyIndex": 1,
+          "copy": 1,
+          "x": 8,
+          "y": 194,
+          "centerX": 25,
+          "centerY": 211,
+          "width": 34,
+          "depth": 34,
+          "height": 18,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/knurled-lock-knobs.stl",
+          "weightGrams": 6,
+          "estimatedMinutes": 8
+        },
+        {
+          "partId": "knurled-lock-knobs",
+          "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+          "copyIndex": 2,
+          "copy": 2,
+          "x": 50,
+          "y": 194,
+          "centerX": 67,
+          "centerY": 211,
+          "width": 34,
+          "depth": 34,
+          "height": 18,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/knurled-lock-knobs.stl",
+          "weightGrams": 6,
+          "estimatedMinutes": 8
+        },
+        {
+          "partId": "knurled-lock-knobs",
+          "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+          "copyIndex": 3,
+          "copy": 3,
+          "x": 92,
+          "y": 194,
+          "centerX": 109,
+          "centerY": 211,
+          "width": 34,
+          "depth": 34,
+          "height": 18,
+          "rotated": false,
+          "color": "#ec4899",
+          "stlFile": "parts/knurled-lock-knobs.stl",
+          "weightGrams": 6,
+          "estimatedMinutes": 8
+        }
+      ]
+    }
+  ],
+  "rejected": [],
+  "cadReport": {
+    "printerId": "bambu-a1",
+    "printerName": "Bambu Lab A1",
+    "bedDimensionsMm": [
+      256,
+      256,
+      256
+    ],
+    "totalPrintedParts": 6,
+    "argonOpenScadParts": 6,
+    "fallbackParts": 0,
+    "totalAttempts": 6,
+    "parts": [
+      {
+        "partId": "easel-base-hub",
+        "name": "Weighted H-Frame Studio Base Hub",
+        "targetDimsMm": [
+          145,
+          120,
+          28
+        ],
+        "actualDimsMm": [
+          145,
+          120,
+          28
+        ],
+        "scadFile": "parts/easel-base-hub.scad",
+        "stlFile": "parts/easel-base-hub.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 18400,
+            "actualDimsMm": [
+              145,
+              120,
+              28
+            ],
+            "triangleCount": 1280
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1280,
+          "volumeMm3": 155904,
+          "actualDimsMm": [
+            145,
+            120,
+            28
+          ],
+          "targetDimsMm": [
+            145,
+            120,
+            28
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1280,
+        "volumeMm3": 155904,
+        "isManifold": true
+      },
+      {
+        "partId": "ratchet-tilt-hinge",
+        "name": "15°-Step Ratcheting Tilt Mast Hinge",
+        "targetDimsMm": [
+          64,
+          58,
+          42
+        ],
+        "actualDimsMm": [
+          64,
+          58,
+          42
+        ],
+        "scadFile": "parts/ratchet-tilt-hinge.scad",
+        "stlFile": "parts/ratchet-tilt-hinge.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 18400,
+            "actualDimsMm": [
+              64,
+              58,
+              42
+            ],
+            "triangleCount": 1280
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1280,
+          "volumeMm3": 49889.28,
+          "actualDimsMm": [
+            64,
+            58,
+            42
+          ],
+          "targetDimsMm": [
+            64,
+            58,
+            42
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1280,
+        "volumeMm3": 49889.28,
+        "isManifold": true
+      },
+      {
+        "partId": "lower-canvas-tray",
+        "name": "Lower Canvas Ledge & Brush Rest Tray",
+        "targetDimsMm": [
+          160,
+          48,
+          32
+        ],
+        "actualDimsMm": [
+          160,
+          48,
+          32
+        ],
+        "scadFile": "parts/lower-canvas-tray.scad",
+        "stlFile": "parts/lower-canvas-tray.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 18400,
+            "actualDimsMm": [
+              160,
+              48,
+              32
+            ],
+            "triangleCount": 1280
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1280,
+          "volumeMm3": 78643.2,
+          "actualDimsMm": [
+            160,
+            48,
+            32
+          ],
+          "targetDimsMm": [
+            160,
+            48,
+            32
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1280,
+        "volumeMm3": 78643.2,
+        "isManifold": true
+      },
+      {
+        "partId": "upper-canvas-clamp",
+        "name": "Sliding Top Canvas Clamp Jaw",
+        "targetDimsMm": [
+          68,
+          46,
+          34
+        ],
+        "actualDimsMm": [
+          68,
+          46,
+          34
+        ],
+        "scadFile": "parts/upper-canvas-clamp.scad",
+        "stlFile": "parts/upper-canvas-clamp.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 18400,
+            "actualDimsMm": [
+              68,
+              46,
+              34
+            ],
+            "triangleCount": 1280
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1280,
+          "volumeMm3": 34032.64,
+          "actualDimsMm": [
+            68,
+            46,
+            34
+          ],
+          "targetDimsMm": [
+            68,
+            46,
+            34
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1280,
+        "volumeMm3": 34032.64,
+        "isManifold": true
+      },
+      {
+        "partId": "rear-strut-collar",
+        "name": "2020 V-Slot Rear Strut Locking Collar",
+        "targetDimsMm": [
+          44,
+          42,
+          26
+        ],
+        "actualDimsMm": [
+          44,
+          42,
+          26
+        ],
+        "scadFile": "parts/rear-strut-collar.scad",
+        "stlFile": "parts/rear-strut-collar.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 18400,
+            "actualDimsMm": [
+              44,
+              42,
+              26
+            ],
+            "triangleCount": 1280
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1280,
+          "volumeMm3": 15375.36,
+          "actualDimsMm": [
+            44,
+            42,
+            26
+          ],
+          "targetDimsMm": [
+            44,
+            42,
+            26
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1280,
+        "volumeMm3": 15375.36,
+        "isManifold": true
+      },
+      {
+        "partId": "knurled-lock-knobs",
+        "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+        "targetDimsMm": [
+          34,
+          34,
+          18
+        ],
+        "actualDimsMm": [
+          34,
+          34,
+          18
+        ],
+        "scadFile": "parts/knurled-lock-knobs.scad",
+        "stlFile": "parts/knurled-lock-knobs.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 18400,
+            "actualDimsMm": [
+              34,
+              34,
+              18
+            ],
+            "triangleCount": 1280
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1280,
+          "volumeMm3": 6658.56,
+          "actualDimsMm": [
+            34,
+            34,
+            18
+          ],
+          "targetDimsMm": [
+            34,
+            34,
+            18
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1280,
+        "volumeMm3": 6658.56,
+        "isManifold": true
+      }
+    ]
+  }
+}

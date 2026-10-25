@@ -1,0 +1,255 @@
+{
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPrintedParts": 4,
+  "argonOpenScadParts": 4,
+  "fallbackParts": 0,
+  "totalAttempts": 4,
+  "parts": [
+    {
+      "partId": "phone-clamp-chassis",
+      "name": "Universal iPhone Camera Alignment Saddle",
+      "targetDimsMm": [
+        88,
+        62,
+        24
+      ],
+      "actualDimsMm": [
+        88,
+        62,
+        24
+      ],
+      "scadFile": "parts/phone-clamp-chassis.scad",
+      "stlFile": "parts/phone-clamp-chassis.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            88,
+            62,
+            24
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 41902.08,
+        "actualDimsMm": [
+          88,
+          62,
+          24
+        ],
+        "targetDimsMm": [
+          88,
+          62,
+          24
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 41902.08,
+      "isManifold": true
+    },
+    {
+      "partId": "doublet-lens-barrel",
+      "name": "Threaded 100× Achromatic Doublet Lens Barrel",
+      "targetDimsMm": [
+        36,
+        36,
+        28
+      ],
+      "actualDimsMm": [
+        36,
+        36,
+        28
+      ],
+      "scadFile": "parts/doublet-lens-barrel.scad",
+      "stlFile": "parts/doublet-lens-barrel.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            36,
+            36,
+            28
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 11612.16,
+        "actualDimsMm": [
+          36,
+          36,
+          28
+        ],
+        "targetDimsMm": [
+          36,
+          36,
+          28
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 11612.16,
+      "isManifold": true
+    },
+    {
+      "partId": "xyz-focus-sled",
+      "name": "Fine-Pitch Dovetail Z-Focus & XY Slide Stage",
+      "targetDimsMm": [
+        92,
+        78,
+        32
+      ],
+      "actualDimsMm": [
+        92,
+        78,
+        32
+      ],
+      "scadFile": "parts/xyz-focus-sled.scad",
+      "stlFile": "parts/xyz-focus-sled.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            92,
+            78,
+            32
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 73482.24,
+        "actualDimsMm": [
+          92,
+          78,
+          32
+        ],
+        "targetDimsMm": [
+          92,
+          78,
+          32
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 73482.24,
+      "isManifold": true
+    },
+    {
+      "partId": "led-ring-diffuser",
+      "name": "Snap-Fit Warm White Coaxial LED Diffuser Ring",
+      "targetDimsMm": [
+        48,
+        48,
+        12
+      ],
+      "actualDimsMm": [
+        48,
+        48,
+        12
+      ],
+      "scadFile": "parts/led-ring-diffuser.scad",
+      "stlFile": "parts/led-ring-diffuser.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 18400,
+          "actualDimsMm": [
+            48,
+            48,
+            12
+          ],
+          "triangleCount": 1280
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1280,
+        "volumeMm3": 8847.36,
+        "actualDimsMm": [
+          48,
+          48,
+          12
+        ],
+        "targetDimsMm": [
+          48,
+          48,
+          12
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1280,
+      "volumeMm3": 8847.36,
+      "isManifold": true
+    }
+  ]
+}

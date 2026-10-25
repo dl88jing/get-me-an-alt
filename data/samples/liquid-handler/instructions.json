@@ -1,0 +1,499 @@
+{
+  "objectId": "liquid-handler",
+  "objectName": "Benchtop Lab Pipette Liquid Automaton",
+  "totalSteps": 8,
+  "estimatedMinutes": 45,
+  "estimatedTotalMinutes": 45,
+  "difficulty": "Intermediate",
+  "safetyNotes": [
+    "Print PRT-01 (96-Well Indexing Deck) and PRT-02/03 (Gantry Uprights) in PETG with 4 perimeters and 35% cubic infill for dimensional stability.",
+    "MGN9H rail mounting ledges include a 0.15mm reference shoulder to guarantee X/Y orthogonality without dial-indicator tramming."
+  ],
+  "steps": [
+    {
+      "n": 1,
+      "step": 1,
+      "title": "Step 1: Install Dual-Bay SBS 96-Well Microplate Indexing Deck & Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+      "partIds": [
+        "deck-base-96well",
+        "pipette-96well-plate"
+      ],
+      "tools": [
+        "Flat workbench"
+      ],
+      "note": "Rigid base plate featuring two ANSI/SLAS 127.76×85.48mm 96-well plate nests and tip waste chute. Establishes the kinematic datum for both 96-well microplates and anchors the gantry uprights.",
+      "description": "Rigid base plate featuring two ANSI/SLAS 127.76×85.48mm 96-well plate nests and tip waste chute. Establishes the kinematic datum for both 96-well microplates and anchors the gantry uprights.",
+      "motion": [
+        {
+          "partId": "deck-base-96well",
+          "from": [
+            0,
+            0,
+            -65
+          ],
+          "to": [
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "partId": "pipette-96well-plate",
+          "from": [
+            -93,
+            55,
+            -3
+          ],
+          "to": [
+            -38,
+            0,
+            22
+          ]
+        }
+      ],
+      "action": "place",
+      "actionType": "place",
+      "cameraHint": {
+        "position": [
+          165,
+          -170,
+          153
+        ],
+        "target": [
+          0,
+          0,
+          0
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-front"
+      }
+    },
+    {
+      "n": 2,
+      "step": 2,
+      "title": "Step 2: Install Left Y-Axis Portal Upright & NEMA17 Motor Mount & Right Y-Axis Portal Upright & Idler Pulley Tower & M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit",
+      "partIds": [
+        "gantry-upright-left",
+        "gantry-upright-right",
+        "m3-socket-screw-kit"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Gusseted left portal column housing the X-axis NEMA17 stepper motor and optical home switch. Supports the left end of the MGN9H X-axis bridge rail and drives the GT2 timing belt.",
+      "description": "Gusseted left portal column housing the X-axis NEMA17 stepper motor and optical home switch. Supports the left end of the MGN9H X-axis bridge rail and drives the GT2 timing belt.",
+      "motion": [
+        {
+          "partId": "gantry-upright-left",
+          "from": [
+            -243,
+            0,
+            42
+          ],
+          "to": [
+            -98,
+            0,
+            22
+          ]
+        },
+        {
+          "partId": "gantry-upright-right",
+          "from": [
+            243,
+            0,
+            42
+          ],
+          "to": [
+            98,
+            0,
+            22
+          ]
+        },
+        {
+          "partId": "m3-socket-screw-kit",
+          "from": [
+            117,
+            -25,
+            197
+          ],
+          "to": [
+            32,
+            0,
+            132
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          150,
+          -160,
+          161
+        ],
+        "target": [
+          -98,
+          0,
+          22
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 3,
+      "step": 3,
+      "title": "Step 3: Install NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack) & MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+      "partIds": [
+        "nema17-steppers",
+        "mgn9h-linear-rails"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Three 1.8° 200-step/rev NEMA17 bipolar stepper motors for X-carriage, Y-deck, and Z-plunger. Drives X/Y gantry positioning and T8 leadscrew pipette dispensing.",
+      "description": "Three 1.8° 200-step/rev NEMA17 bipolar stepper motors for X-carriage, Y-deck, and Z-plunger. Drives X/Y gantry positioning and T8 leadscrew pipette dispensing.",
+      "motion": [
+        {
+          "partId": "nema17-steppers",
+          "from": [
+            -263,
+            67,
+            243
+          ],
+          "to": [
+            -98,
+            22,
+            148
+          ]
+        },
+        {
+          "partId": "mgn9h-linear-rails",
+          "from": [
+            0,
+            -35,
+            218
+          ],
+          "to": [
+            0,
+            0,
+            128
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          135,
+          -150,
+          169
+        ],
+        "target": [
+          -98,
+          22,
+          148
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 4,
+      "step": 4,
+      "title": "Step 4: Install MGN9H Linear Rail X-Axis Pipette Shuttle Carriage & GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+      "partIds": [
+        "x-carriage-shuttle",
+        "gt2-belt-pulleys"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Precision shuttle block that bolts to the MGN9H bearing block with self-locking GT2 belt teeth. Carries the Z-axis pipette assembly along the X-axis linear rail.",
+      "description": "Precision shuttle block that bolts to the MGN9H bearing block with self-locking GT2 belt teeth. Carries the Z-axis pipette assembly along the X-axis linear rail.",
+      "motion": [
+        {
+          "partId": "x-carriage-shuttle",
+          "from": [
+            0,
+            -75,
+            187
+          ],
+          "to": [
+            0,
+            0,
+            132
+          ]
+        },
+        {
+          "partId": "gt2-belt-pulleys",
+          "from": [
+            55,
+            -33,
+            233
+          ],
+          "to": [
+            0,
+            12,
+            138
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          120,
+          -140,
+          177
+        ],
+        "target": [
+          0,
+          0,
+          132
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 5,
+      "step": 5,
+      "title": "Step 5: Install Compliant Z-Axis Micropipette Barrel Clamp & Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+      "partIds": [
+        "z-pipette-cradle",
+        "optical-endstops"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Quick-release flexure cradle that holds standard 10–200µL single or 8-channel lab micropipettes. Mounts the micropipette vertically to the X-carriage and guides the T8 plunger nut.",
+      "description": "Quick-release flexure cradle that holds standard 10–200µL single or 8-channel lab micropipettes. Mounts the micropipette vertically to the X-carriage and guides the T8 plunger nut.",
+      "motion": [
+        {
+          "partId": "z-pipette-cradle",
+          "from": [
+            0,
+            119,
+            183
+          ],
+          "to": [
+            0,
+            24,
+            118
+          ]
+        },
+        {
+          "partId": "optical-endstops",
+          "from": [
+            -216,
+            -67,
+            217
+          ],
+          "to": [
+            -86,
+            -12,
+            132
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          105,
+          -130,
+          185
+        ],
+        "target": [
+          0,
+          24,
+          118
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 6,
+      "step": 6,
+      "title": "Step 6: Install T8 Leadscrew Pipette Plunger Actuation Escapement & T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+      "partIds": [
+        "plunger-escapement-arm",
+        "t8-leadscrew-nut"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Anti-rotation fork mounted on the T8 brass nut that depresses the micropipette thumb plunger. Converts NEMA17 T8 leadscrew rotation into sub-microliter plunger strokes.",
+      "description": "Anti-rotation fork mounted on the T8 brass nut that depresses the micropipette thumb plunger. Converts NEMA17 T8 leadscrew rotation into sub-microliter plunger strokes.",
+      "motion": [
+        {
+          "partId": "plunger-escapement-arm",
+          "from": [
+            0,
+            119,
+            313
+          ],
+          "to": [
+            0,
+            24,
+            178
+          ]
+        },
+        {
+          "partId": "t8-leadscrew-nut",
+          "from": [
+            -45,
+            119,
+            265
+          ],
+          "to": [
+            0,
+            24,
+            150
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          90,
+          -120,
+          193
+        ],
+        "target": [
+          0,
+          24,
+          178
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 7,
+      "step": 7,
+      "title": "Step 7: Install Snap-Fit Disposable Tip Stripping Fork",
+      "partIds": [
+        "tip-ejector-fork"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Bifurcated stripping collar that ejects used 200µL pipette tips into the deck waste chute. Strips disposable tips cleanly at the top of the Z-travel stroke.",
+      "description": "Bifurcated stripping collar that ejects used 200µL pipette tips into the deck waste chute. Strips disposable tips cleanly at the top of the Z-travel stroke.",
+      "motion": [
+        {
+          "partId": "tip-ejector-fork",
+          "from": [
+            65,
+            109,
+            57
+          ],
+          "to": [
+            0,
+            24,
+            72
+          ]
+        }
+      ],
+      "action": "fasten",
+      "actionType": "fasten",
+      "cameraHint": {
+        "position": [
+          75,
+          -110,
+          201
+        ],
+        "target": [
+          0,
+          24,
+          72
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    },
+    {
+      "n": 8,
+      "step": 8,
+      "title": "Step 8: Install Vented GRBL / ESP32 3-Axis Stepper Electronics Housing & ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers & 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+      "partIds": [
+        "controller-case-cnc",
+        "grbl-esp32-board",
+        "psu-12v-3a"
+      ],
+      "tools": [
+        "2.5mm / 3mm Hex Key",
+        "Hands"
+      ],
+      "note": "Rear-mounted electronics bay with cooling louvers and M3 standoffs for the ESP32 GRBL board. Encloses and cools the 3-axis ESP32 CNC board and TMC2209 stepper drivers.",
+      "description": "Rear-mounted electronics bay with cooling louvers and M3 standoffs for the ESP32 GRBL board. Encloses and cools the 3-axis ESP32 CNC board and TMC2209 stepper drivers.",
+      "motion": [
+        {
+          "partId": "controller-case-cnc",
+          "from": [
+            0,
+            -207,
+            -2
+          ],
+          "to": [
+            0,
+            -72,
+            18
+          ]
+        },
+        {
+          "partId": "grbl-esp32-board",
+          "from": [
+            0,
+            -237,
+            34
+          ],
+          "to": [
+            0,
+            -72,
+            24
+          ]
+        },
+        {
+          "partId": "psu-12v-3a",
+          "from": [
+            183,
+            -207,
+            -2
+          ],
+          "to": [
+            68,
+            -72,
+            18
+          ]
+        }
+      ],
+      "action": "insert",
+      "actionType": "insert",
+      "cameraHint": {
+        "position": [
+          60,
+          -100,
+          209
+        ],
+        "target": [
+          0,
+          -72,
+          18
+        ],
+        "zoom": 1.2,
+        "angle": "isometric-top"
+      }
+    }
+  ]
+}

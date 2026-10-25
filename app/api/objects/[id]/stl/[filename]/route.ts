@@ -33,6 +33,8 @@ export async function GET(
           path.join(folder, safeFile),
         ]
       : []),
+    path.join(process.cwd(), 'data', 'samples', id, 'parts', safeFile),
+    path.join(process.cwd(), 'data', 'samples', id, safeFile),
     path.join(process.cwd(), 'data', 'demo', id, 'parts', safeFile),
     path.join(process.cwd(), 'data', 'demo', 'plant-waterer', 'parts', safeFile),
     ...(aliasedDemoFile

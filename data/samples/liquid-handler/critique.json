@@ -1,0 +1,83 @@
+{
+  "objectName": "Benchtop Lab Pipette Liquid Automaton",
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1 (256×256×256 mm)",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "passed": true,
+  "finalScore": 97,
+  "totalRounds": 2,
+  "revisionRoundsUsed": 1,
+  "checksSummary": {
+    "overhangsPass": true,
+    "wallThicknessPass": true,
+    "tolerancesPass": true,
+    "bedFitPass": true
+  },
+  "designAdjustments": [
+    "Round 1 -> Designer Revision 1: Increased PRT-01 (Dual-Bay SBS 96-Well Microplate Indexing Deck) structural perimeter wall to 3.2mm (4 walls) with 2.0mm root fillets.",
+    "Round 1 -> Designer Revision 1: Widened mating sliding/fastener clearance on PRT-02 (Left Y-Axis Portal Upright & NEMA17 Motor Mount) from 0.08mm to 0.25mm with 45° lead-in chamfers."
+  ],
+  "rounds": [
+    {
+      "round": 1,
+      "passed": false,
+      "score": 79,
+      "summary": "Round 1 DFM audit flagged 2 printability improvements on PRT-01 and PRT-02; looping back to Designer.",
+      "checks": {
+        "overhangsPass": true,
+        "wallThicknessPass": false,
+        "tolerancesPass": false,
+        "bedFitPass": true
+      },
+      "fixesApplied": [
+        "Thickened PRT-01 load-bearing walls to 3.2mm.",
+        "Adjusted PRT-02 mating clearance to 0.25mm."
+      ],
+      "issues": [
+        {
+          "part": "PRT-01 · Dual-Bay SBS 96-Well Microplate Indexing Deck",
+          "partId": "deck-base-96well",
+          "partName": "Dual-Bay SBS 96-Well Microplate Indexing Deck",
+          "category": "wall_thickness",
+          "severity": "warning",
+          "problem": "Initial 1.6mm wall thickness around primary clamping boss shows localized deflection under load.",
+          "finding": "Initial 1.6mm wall thickness around primary clamping boss shows localized deflection under load.",
+          "fix": "Increase wall thickness to 3.2mm (4 perimeters) and add 2.0mm gusset fillets.",
+          "fixApplied": "Increased wall thickness to 3.2mm and added 2.0mm gusset fillets."
+        },
+        {
+          "part": "PRT-02 · Left Y-Axis Portal Upright & NEMA17 Motor Mount",
+          "partId": "gantry-upright-left",
+          "partName": "Left Y-Axis Portal Upright & NEMA17 Motor Mount",
+          "category": "tolerance",
+          "severity": "warning",
+          "problem": "Nominal 0.08mm sliding/thread clearance may bind due to FDM seam ridge.",
+          "finding": "Nominal 0.08mm sliding/thread clearance may bind due to FDM seam ridge.",
+          "fix": "Widen radial clearance to 0.25mm and add 1.0mm × 45° entry chamfer.",
+          "fixApplied": "Widened clearance to 0.25mm with 45° entry chamfer."
+        }
+      ]
+    },
+    {
+      "round": 2,
+      "passed": true,
+      "score": 97,
+      "summary": "Round 2 DFM verification PASSED (97/100): all 8 printed parts fit Bambu Lab A1 (256×256×256mm) with zero supports.",
+      "checks": {
+        "overhangsPass": true,
+        "wallThicknessPass": true,
+        "tolerancesPass": true,
+        "bedFitPass": true
+      },
+      "fixesApplied": [
+        "Verified all 8 printed parts pass overhangs <=42°, walls >=2.4mm, tolerances >=0.25mm & bed fit."
+      ],
+      "issues": []
+    }
+  ],
+  "issues": []
+}

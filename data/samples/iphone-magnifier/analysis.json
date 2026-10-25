@@ -1,0 +1,78 @@
+{
+  "id": "iphone-magnifier",
+  "slug": "iphone-magnifier",
+  "objectName": "iPhone Macro Microscope & Slide Stage",
+  "name": "iPhone Macro Microscope & Slide Stage",
+  "title": "iPhone Macro Microscope & Slide Stage",
+  "category": "Precision Optics & Mobile Lab",
+  "tagline": "Fine-pitch dovetail XYZ focus sled + clip-on 100× glass doublet lens barrel + 5V warm coaxial LED ring diffuser",
+  "description": "Bespoke smartphone microscope adapters with integrated slide stages sell for $99–$149 despite holding a $6 glass doublet lens and basic LED ring. This DIY alternative combines 4 precision-printed optical mounts and a dovetail focus stage with an off-the-shelf 100× achromatic doublet, USB coaxial LED ring, and M3 brass leadscrew for $16.20 total.",
+  "summary": "Bespoke smartphone microscope adapters with integrated slide stages sell for $99–$149 despite holding a $6 glass doublet lens and basic LED ring. This DIY alternative combines 4 precision-printed optical mounts and a dovetail focus stage with an off-the-shelf 100× achromatic doublet, USB coaxial LED ring, and M3 brass leadscrew for $16.20 total.",
+  "functionSummary": "Clamps over the main wide camera of any iPhone (13/14/15/16/Pro), aligns a 12mm-focal-length 100× achromatic glass doublet over a backlit 25×75mm microscope slide stage, and provides sub-millimeter Z-focus via an M3×0.5mm brass thumbscrew.",
+  "function": "Clamps over the main wide camera of any iPhone (13/14/15/16/Pro), aligns a 12mm-focal-length 100× achromatic glass doublet over a backlit 25×75mm microscope slide stage, and provides sub-millimeter Z-focus via an M3×0.5mm brass thumbscrew.",
+  "inputUrl": "https://www.amazon.com/s?k=smartphone+microscope+adapter+stage",
+  "inputType": "url",
+  "originalProduct": {
+    "name": "ProScope / Moment Mobile 100× Field Microscope & Stage",
+    "brand": "ProScope Micro / Moment Optics",
+    "retailPrice": 119,
+    "retailPriceUsd": 119,
+    "currency": "USD",
+    "url": "https://www.amazon.com/s?k=smartphone+microscope+adapter+stage",
+    "whyExpensive": "Specialty scientific/optical accessory brand markup on CNC-machined anodized clips over $14.10 of standard optical glass doublet, SMD LED ring, and M3 brass screw hardware."
+  },
+  "originalPrice": 119,
+  "targetDiyCost": 16.2,
+  "estimatedDiyCost": 16.2,
+  "estimatedSavings": 102.8,
+  "savingsPercent": 86,
+  "estimatedPrintTimeHours": 2.1,
+  "estimatedAssemblyMinutes": 15,
+  "estimatedBuildTimeMinutes": 15,
+  "estimatedFilamentGrams": 110,
+  "difficulty": "Beginner",
+  "overallDimensionsMm": [
+    105,
+    92,
+    84
+  ],
+  "dimensionsMm": {
+    "width": 105,
+    "depth": 92,
+    "height": 84
+  },
+  "keyMechanisms": [
+    "Fine-pitch M3×0.5mm brass leadscrew Z-focus dovetail sled with anti-backlash compression spring (0.5mm travel per turn)",
+    "Internal light-trap matte black lens barrel holding a 100× achromatic glass doublet at exact parfocal distance",
+    "Coaxial 5V warm-white SMD2835 LED ring with snap-on translucent PETG Lambertian diffuser dome",
+    "Spring-compliant universal iPhone camera saddle with soft bumper pads and 25×75mm glass slide clips"
+  ],
+  "mechanisms": [
+    "Fine-pitch M3×0.5mm brass leadscrew Z-focus dovetail sled with anti-backlash compression spring (0.5mm travel per turn)",
+    "Internal light-trap matte black lens barrel holding a 100× achromatic glass doublet at exact parfocal distance",
+    "Coaxial 5V warm-white SMD2835 LED ring with snap-on translucent PETG Lambertian diffuser dome",
+    "Spring-compliant universal iPhone camera saddle with soft bumper pads and 25×75mm glass slide clips"
+  ],
+  "engineeringNotes": [
+    "Print PRT-02 (Doublet Lens Barrel) in matte black PLA+ to eliminate internal stray light reflections along the optical axis.",
+    "Print PRT-04 (LED Ring Diffuser) in natural/white translucent PETG with 2 perimeter walls and 15% lightning infill for uniform specimen illumination.",
+    "All 4 printed STL parts pack onto 1 single Bambu Lab A1 build plate (2h 08m print time, 110g total filament)."
+  ],
+  "materialsNeeded": [
+    "Matte Black PLA+ Filament (~56g) for stray-light-baffled lens barrel & dovetail XYZ slide stage",
+    "PETG Filament (~54g) for compliant iPhone camera saddle & translucent coaxial LED diffuser ring",
+    "100× Achromatic Glass Doublet Lens + 5V USB LED Ring + M3×40mm Brass Focus Screw + 25×75mm Glass Slides"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Universal iPhone Camera Alignment Saddle (88×62×24mm)",
+    "PRT-02: Threaded 100× Achromatic Doublet Lens Barrel (36×36×28mm)",
+    "PRT-03: Fine-Pitch Dovetail Z-Focus & XY Slide Stage (92×78×32mm)",
+    "PRT-04: Snap-Fit Warm White Coaxial LED Diffuser Ring (48×48×12mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: 12mm Focal Length Achromatic Glass Doublet Macro Lens (100×)",
+    "OTS-02: 5V Warm-White SMD2835 Coaxial Microscope LED Ring + USB Dimmer",
+    "OTS-03: M3×40mm Fine-Pitch Brass Thumbscrew, Anti-Backlash Spring & Nut",
+    "OTS-04: 25×75mm Borosilicate Microscope Slides, Coverslips & Stage Clips"
+  ]
+}

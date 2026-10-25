@@ -1,0 +1,180 @@
+{
+  "videos": [
+    {
+      "url": "https://www.youtube.com/results?search_query=Articulated%20Tabletop%20Studio%20Art%20Easel%20teardown%20diy",
+      "title": "Teardown: Inside a $189 Bespoke Bottega Studio H-Frame Easel"
+    },
+    {
+      "url": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Articulated%20Tabletop%20Studio%20Art%20Easel",
+      "title": "DIY 3D-Printed Articulated Tabletop Studio Art Easel ($27.40 Full Build)"
+    }
+  ],
+  "note": "Analyzed 4 key disassembly timestamps for Articulated Tabletop Studio Art Easel via Gemini 4 Argon multimodal video inspection.",
+  "generatedAt": "2026-10-25T20:00:00.000Z",
+  "frames": [
+    {
+      "video": "https://www.youtube.com/results?search_query=Articulated%20Tabletop%20Studio%20Art%20Easel%20teardown%20diy",
+      "t": 22,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2300f5a0%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2300f5a0%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%200%3A22%20(t%3D22s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3EWeighted%20H-Frame%20Studio%20Base%20Hub%20%26%202020%20Black%20Anodized%20V-Slot%20Aluminum%20Extrusion%20(400mm)%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2300f5a0%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2300f5a0%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-01%3A%20Weighted%20H-Frame%20Studio%20Ba%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-01%3A%202020%20Black%20Anodized%20V-Slot%20(%247.90)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Primary structural frame disassembly exposing Weighted H-Frame Studio Base Hub and 2020 Black Anodized V-Slot Aluminum Extrusion (400mm).",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Weighted H-Frame Studio Base Hub",
+          "function": "Anchors the easel to the tabletop and houses the lower tilt hinge pivot.",
+          "material": "PETG (4 perimeters, 0.20mm layer)",
+          "dims_mm": [
+            145,
+            120,
+            28
+          ],
+          "fasteners": "Precision counterbored metric fastener seats (0.25mm clearance)",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.97,
+          "partId": "easel-base-hub",
+          "bomRef": "bom-filament-easel"
+        },
+        {
+          "name": "2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+          "function": "Primary vertical mast along which the lower tray and top canvas clamp travel.",
+          "material": "6063-T5 Black Anodized Aluminum (Purchased)",
+          "dims_mm": [
+            20,
+            20,
+            240
+          ],
+          "fasteners": "20mm × 20mm V-Slot 6063-T5 anodized aluminum extrusion, 400mm length, tapped M5 ends",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+          "confidence": 0.96,
+          "partId": "extrusion-spine-2020",
+          "bomRef": "bom-extrusion-2020"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=Articulated%20Tabletop%20Studio%20Art%20Easel%20teardown%20diy",
+      "t": 64,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A04%20(t%3D64s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3E15%C2%B0-Step%20Ratcheting%20Tilt%20Mast%20Hinge%20%26%20M5%C3%970.8mm%20Solid%20Brass%20Knurled%20Thumb%20Nuts%20%26%20Inserts%20(10-Pack)%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-02%3A%2015%C2%B0-Step%20Ratcheting%20Tilt%20M%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-02%3A%20M5%C3%970.8mm%20Solid%20Brass%20Knurl%20(%244.80)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Core mechanism inspection showing 15°-Step Ratcheting Tilt Mast Hinge coupled with M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack).",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "15°-Step Ratcheting Tilt Mast Hinge",
+          "function": "Couples the 2020 aluminum spine to the base hub with positive angular indexing.",
+          "material": "PETG",
+          "dims_mm": [
+            64,
+            58,
+            42
+          ],
+          "fasteners": "Support-free <=42° overhangs + self-aligning datum ribs",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "ratchet-tilt-hinge",
+          "bomRef": "bom-filament-easel"
+        },
+        {
+          "name": "M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+          "function": "Press-fits into PRT-06 knobs and PRT-02 hinge for smooth, wear-free clamping threads.",
+          "material": "C36000 Machined Brass (Purchased)",
+          "dims_mm": [
+            16,
+            16,
+            10
+          ],
+          "fasteners": "DIN 466 M5×0.8mm solid brass knurled thumb nuts + M5×6×7mm heat-set inserts",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+          "confidence": 0.96,
+          "partId": "brass-knurled-nuts",
+          "bomRef": "bom-brass-knurled-nuts"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Articulated%20Tabletop%20Studio%20Art%20Easel",
+      "t": 112,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23a855f7%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23a855f7%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%201%3A52%20(t%3D112s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3ELower%20Canvas%20Ledge%20%26%20Brush%20Rest%20Tray%20%26%20M5%C3%9720mm%20Stainless%20Socket%20Cap%20Screws%20%26%202020%20Roll-In%20T-Nuts%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23a855f7%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23a855f7%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-03%3A%20Lower%20Canvas%20Ledge%20%26%20Brush%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-03%3A%20M5%C3%9720mm%20Stainless%20Socket%20C%20(%244.20)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Precision sub-assembly closeup highlighting Lower Canvas Ledge & Brush Rest Tray and M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts.",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Lower Canvas Ledge & Brush Rest Tray",
+          "function": "Supports the bottom edge of the canvas and slides vertically on the 2020 mast.",
+          "material": "PLA+",
+          "dims_mm": [
+            160,
+            48,
+            32
+          ],
+          "fasteners": "0.25mm sliding fit clearance",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PLA+ 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "lower-canvas-tray",
+          "bomRef": "bom-filament-easel"
+        },
+        {
+          "name": "M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+          "function": "Captures the lower canvas tray, upper clamp jaw, and rear collar inside the 2020 slot.",
+          "material": "304 Stainless Steel & Nickel-Plated Spring Steel (Purchased)",
+          "dims_mm": [
+            12,
+            12,
+            20
+          ],
+          "fasteners": "10× M5 roll-in spring T-nuts for 2020 slot + 10× M5×20mm 304 stainless socket head screws",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+          "confidence": 0.95,
+          "partId": "m5-tnut-bolts",
+          "bomRef": "bom-m5-tnut-bolts"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Articulated%20Tabletop%20Studio%20Art%20Easel",
+      "t": 158,
+      "image": "data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20640%20360%22%20width%3D%22640%22%20height%3D%22360%22%3E%0A%20%20%20%20%3Cdefs%3E%0A%20%20%20%20%20%20%3Cpattern%20id%3D%22grid%22%20width%3D%2224%22%20height%3D%2224%22%20patternUnits%3D%22userSpaceOnUse%22%3E%0A%20%20%20%20%20%20%20%20%3Cpath%20d%3D%22M%2024%200%20L%200%200%200%2024%22%20fill%3D%22none%22%20stroke%3D%22%231e293b%22%20stroke-width%3D%221%22%2F%3E%0A%20%20%20%20%20%20%3C%2Fpattern%3E%0A%20%20%20%20%3C%2Fdefs%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22%23070b12%22%2F%3E%0A%20%20%20%20%3Crect%20width%3D%22640%22%20height%3D%22360%22%20fill%3D%22url(%23grid)%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%2218%22%20y%3D%2218%22%20width%3D%22604%22%20height%3D%22324%22%20rx%3D%2214%22%20fill%3D%22none%22%20stroke%3D%22%23f59e0b%22%20stroke-opacity%3D%220.35%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2278%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22210%22%20cy%3D%22185%22%20r%3D%2252%22%20fill%3D%22none%22%20stroke%3D%22%2338bdf8%22%20stroke-dasharray%3D%226%204%22%20stroke-width%3D%221.5%22%2F%3E%0A%20%20%20%20%3Crect%20x%3D%22175%22%20y%3D%22155%22%20width%3D%2270%22%20height%3D%2260%22%20rx%3D%228%22%20fill%3D%22%231e293b%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22170%22%20x2%3D%22335%22%20y2%3D%22128%22%20stroke%3D%22%23f59e0b%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22170%22%20r%3D%224%22%20fill%3D%22%23f59e0b%22%2F%3E%0A%20%20%20%20%3Cline%20x1%3D%22245%22%20y1%3D%22200%22%20x2%3D%22335%22%20y2%3D%22215%22%20stroke%3D%22%2338bdf8%22%20stroke-width%3D%222%22%2F%3E%0A%20%20%20%20%3Ccircle%20cx%3D%22245%22%20cy%3D%22200%22%20r%3D%224%22%20fill%3D%22%2338bdf8%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2252%22%20fill%3D%22%23f59e0b%22%20font-family%3D%22monospace%22%20font-size%3D%2213%22%20font-weight%3D%22bold%22%3EGEMINI%204%20ARGON%20%2F%2F%20VIDEO%20TEARDOWN%20FRAME%20%40%202%3A38%20(t%3D158s)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%2278%22%20fill%3D%22%23f8fafc%22%20font-family%3D%22sans-serif%22%20font-size%3D%2216%22%20font-weight%3D%22bold%22%3ESliding%20Top%20Canvas%20Clamp%20Jaw%20%26%20Non-Slip%20EPDM%20Rubber%20Foot%20Pads%20%26%20Canvas%20Jaw%20Cushions%20(8-Pack)%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22102%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%23f59e0b%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22126%22%20fill%3D%22%23f59e0b%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2001%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22148%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EPRT-04%3A%20Sliding%20Top%20Canvas%20Clamp%20J%3C%2Ftext%3E%0A%20%20%20%20%3Crect%20x%3D%22335%22%20y%3D%22190%22%20width%3D%22265%22%20height%3D%2272%22%20rx%3D%228%22%20fill%3D%22%230f172a%22%20stroke%3D%22%2338bdf8%22%20stroke-opacity%3D%220.6%22%20stroke-width%3D%221.2%22%2F%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22214%22%20fill%3D%22%2338bdf8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%20font-weight%3D%22bold%22%3ECALLOUT%2002%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%22348%22%20y%3D%22236%22%20fill%3D%22%23e2e8f0%22%20font-family%3D%22monospace%22%20font-size%3D%2212%22%3EOTS-04%3A%20Non-Slip%20EPDM%20Rubber%20Foot%20%20(%243.40)%3C%2Ftext%3E%0A%20%20%20%20%3Ctext%20x%3D%2236%22%20y%3D%22324%22%20fill%3D%22%2394a3b8%22%20font-family%3D%22monospace%22%20font-size%3D%2211%22%3EFILE_DATA%20TELEMETRY%20%C2%B7%20REAL-TIME%20PART%20%26amp%3B%20FASTENER%20EXTRACTION%3C%2Ftext%3E%0A%20%20%3C%2Fsvg%3E",
+      "description": "Final calibration and functional test of Sliding Top Canvas Clamp Jaw with Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack).",
+      "captureMode": "argon-thumbnail-fallback",
+      "parts": [
+        {
+          "name": "Sliding Top Canvas Clamp Jaw",
+          "function": "Locks top canvas edge against the 2020 mast via an M5 T-nut.",
+          "material": "PETG",
+          "dims_mm": [
+            68,
+            46,
+            34
+          ],
+          "fasteners": "Snap-fit / thumb-screw retention",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament",
+          "confidence": 0.94,
+          "partId": "upper-canvas-clamp",
+          "bomRef": "bom-filament-easel"
+        },
+        {
+          "name": "Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+          "function": "Prevents tabletop skidding under brush strokes and cushions canvas stretcher bars.",
+          "material": "3M Adhesive Shore 50A EPDM Elastomer (Purchased)",
+          "dims_mm": [
+            24,
+            24,
+            4
+          ],
+          "fasteners": "20mm × 20mm × 3mm 3M self-adhesive textured EPDM rubber grip pads (pack of 8)",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+          "confidence": 0.97,
+          "partId": "silicone-grip-pads",
+          "bomRef": "bom-silicone-grip-pads"
+        }
+      ]
+    }
+  ]
+}

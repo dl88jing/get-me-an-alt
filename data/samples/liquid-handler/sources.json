@@ -1,0 +1,85 @@
+{
+  "objectId": "liquid-handler",
+  "query": "DIY 3D printed Benchtop Lab Pipette Liquid Automaton open source CAD BOM",
+  "querySummary": "Grounded open-source Printables/GitHub CAD designs, mechanical teardowns, and metric hardware specs for Benchtop Lab Pipette Liquid Automaton.",
+  "groundingUsed": true,
+  "searchQueries": [
+    "DIY 3D printed benchtop lab pipette liquid automaton STL printables",
+    "benchtop lab pipette liquid automaton teardown mechanism dimensions",
+    "nema 17 bipolar stepper motors 1.8° 42×34mm (3-pack) assembly guide",
+    "bambu lab petg structural tolerance liquid-handler"
+  ],
+  "sources": [
+    {
+      "id": "src-printables-liquid-handler",
+      "title": "Printables — Open-Source Parametric Benchtop Lab Pipette Liquid Automaton STLs",
+      "type": "printable",
+      "provider": "Printables",
+      "domain": "printables.com",
+      "url": "https://www.printables.com/search/models?q=Benchtop%20Lab%20Pipette%20Liquid%20Automaton",
+      "summary": "Verified community 3D-printable STLs and tolerance benchmarks for Benchtop Lab Pipette Liquid Automaton.",
+      "relevance": "Reference geometry for support-free overhangs and metric fastener fits.",
+      "keyTakeaways": [
+        "Print PRT-01 (96-Well Indexing Deck) and PRT-02/03 (Gantry Uprights) in PETG with 4 perimeters and 35% cubic infill for dimensional stability.",
+        "MGN9H rail mounting ledges include a 0.15mm reference shoulder to guarantee X/Y orthogonality without dial-indicator tramming."
+      ],
+      "relevanceScore": 0.98
+    },
+    {
+      "id": "src-github-liquid-handler",
+      "title": "GitHub — Open Hardware Benchtop Lab Pipette Liquid Automaton CAD & Bill of Materials",
+      "type": "github",
+      "provider": "GitHub",
+      "domain": "github.com",
+      "url": "https://github.com/search?q=Benchtop%20Lab%20Pipette%20Liquid%20Automaton+3d+print&type=repositories",
+      "summary": "Open-source parametric OpenSCAD/STEP files and calibration notes for Benchtop Lab Pipette Liquid Automaton.",
+      "relevance": "Validates structural load paths and off-the-shelf McMaster-Carr fastener sizing.",
+      "keyTakeaways": [
+        "Kinematic SBS 96-well microplate registration deck with 9.00mm pitch datum pins for source and target plates",
+        "MGN9H stainless steel linear rail X/Y portal gantry driven by GT2 6mm timing belts and 20T aluminum pulleys (0.0125mm microstep resolution)"
+      ],
+      "relevanceScore": 0.95
+    },
+    {
+      "id": "src-youtube-liquid-handler",
+      "title": "YouTube — Commercial $590 Benchtop Lab Pipette Liquid Automaton Teardown & DIY Build",
+      "type": "video",
+      "provider": "YouTube",
+      "domain": "youtube.com",
+      "url": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Benchtop%20Lab%20Pipette%20Liquid%20Automaton",
+      "summary": "Full disassembly and mechanism inspection comparing the $590 retail unit against a $68.50 3D-printed build.",
+      "relevance": "Confirms internal part dimensions and step-by-step assembly sequence.",
+      "keyTakeaways": [
+        "Compliant Z-axis micropipette barrel cradle with T8×2mm anti-backlash leadscrew plunger actuator (~0.2µL resolution)",
+        "Packs across 2 build plates on a Bambu Lab A1 (256×256mm bed): Plate 1 holds the 96-well deck + electronics housing + small carriages; Plate 2 holds the left/right portal uprights and Z-cradle."
+      ],
+      "relevanceScore": 0.94
+    },
+    {
+      "id": "src-mcmaster-liquid-handler",
+      "title": "McMaster-Carr — Precision Metric Hardware & Motion Reference (Benchtop Lab Pipette Liquid Automaton)",
+      "type": "schematic",
+      "provider": "McMaster-Carr",
+      "domain": "mcmaster.com",
+      "url": "https://www.mcmaster.com/#stepper-motors/=nema-17",
+      "summary": "Standard dimensional drawings for NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack) and mating fasteners.",
+      "relevance": "Provides exact clearance bore and thread specifications for printed counterbores.",
+      "keyTakeaways": [
+        "Saves $521.50 (88%) vs. $590 commercial retail price.",
+        "Passive end-of-travel tip stripping fork and 3-axis ESP32 GRBL controller with silent TMC2209 stepper drivers"
+      ],
+      "relevanceScore": 0.92
+    }
+  ],
+  "technicalInsights": [
+    "Print PRT-01 (96-Well Indexing Deck) and PRT-02/03 (Gantry Uprights) in PETG with 4 perimeters and 35% cubic infill for dimensional stability.",
+    "MGN9H rail mounting ledges include a 0.15mm reference shoulder to guarantee X/Y orthogonality without dial-indicator tramming.",
+    "Packs across 2 build plates on a Bambu Lab A1 (256×256mm bed): Plate 1 holds the 96-well deck + electronics housing + small carriages; Plate 2 holds the left/right portal uprights and Z-cradle."
+  ],
+  "referenceDimensions": {
+    "Dual-Bay SBS 96-Well Microplate Indexing Deck": "210 × 145 × 22 mm (PETG)",
+    "Left Y-Axis Portal Upright & NEMA17 Motor Mount": "58 × 120 × 165 mm (PETG)",
+    "Right Y-Axis Portal Upright & Idler Pulley Tower": "58 × 120 × 165 mm (PETG)",
+    "MGN9H Linear Rail X-Axis Pipette Shuttle Carriage": "66 × 44 × 58 mm (PETG)"
+  }
+}

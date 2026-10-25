@@ -1,0 +1,464 @@
+{
+  "objectName": "Articulated Tabletop Studio Art Easel",
+  "designPhilosophy": "Ratcheting 0°–85° tilt mast + quick-lock canvas clamp jaws + 2020 aluminum extrusion spine + knurled M5 brass knobs",
+  "summary": "Commercial beechwood and anodized studio tabletop easels cost $165–$215 for basic tilt hinges and sliding canvas blocks. This DIY alternative combines 6 rigid PETG/PLA+ printed brackets and ratcheting quadrants with a $7.90 2020 V-slot aluminum extrusion spine and McMaster-Carr M5 brass knurled thumb hardware for $27.40 total.",
+  "overallBoundingBoxMm": [
+    220,
+    240,
+    410
+  ],
+  "printedPartsCount": 6,
+  "purchasedPartsCount": 5,
+  "assemblyNotes": [
+    "Print PRT-01 (Base Hub), PRT-02 (Ratchet Hinge), and PRT-04 (Upper Clamp Jaw) in PETG with 4 perimeter walls and 35% gyroid infill for high clamping stiffness.",
+    "All T-slot sliding rails include a 0.25mm lateral clearance so carriages glide smoothly along the 2020 aluminum profile without binding.",
+    "All 6 printed STL parts (8 total items including ×3 knobs) pack onto 1 single 256×256mm Bambu Lab A1 build plate with zero support material."
+  ],
+  "parts": [
+    {
+      "id": "easel-base-hub",
+      "partNumber": "PRT-01",
+      "name": "Weighted H-Frame Studio Base Hub",
+      "kind": "printed",
+      "dims_mm": [
+        145,
+        120,
+        28
+      ],
+      "shape": "box",
+      "params": {
+        "width": 145,
+        "depth": 120,
+        "height": 28,
+        "cornerRadius": 8
+      },
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        -60
+      ],
+      "color": "#d97706",
+      "bomRef": "bom-filament-easel",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Wide-stance H-frame base block with recessed EPDM foot pockets and dual hinge clevis ears.",
+      "roleInAssembly": "Anchors the easel to the tabletop and houses the lower tilt hinge pivot.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 1
+    },
+    {
+      "id": "ratchet-tilt-hinge",
+      "partNumber": "PRT-02",
+      "name": "15°-Step Ratcheting Tilt Mast Hinge",
+      "kind": "printed",
+      "dims_mm": [
+        64,
+        58,
+        42
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 64,
+        "depth": 58,
+        "height": 42
+      },
+      "position": [
+        0,
+        -14,
+        28
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -55,
+        -15
+      ],
+      "color": "#f59e0b",
+      "bomRef": "bom-filament-easel",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Toothed quadrant hinge socket that grips the bottom of the 2020 aluminum mast and locks tilt angle.",
+      "roleInAssembly": "Couples the 2020 aluminum spine to the base hub with positive angular indexing.",
+      "infillPercent": 40,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 2
+    },
+    {
+      "id": "lower-canvas-tray",
+      "partNumber": "PRT-03",
+      "name": "Lower Canvas Ledge & Brush Rest Tray",
+      "kind": "printed",
+      "dims_mm": [
+        160,
+        48,
+        32
+      ],
+      "shape": "box",
+      "params": {
+        "width": 160,
+        "depth": 48,
+        "height": 32,
+        "cornerRadius": 4
+      },
+      "position": [
+        0,
+        22,
+        68
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        80,
+        10
+      ],
+      "color": "#10b981",
+      "bomRef": "bom-filament-easel",
+      "material": "PLA+",
+      "quantity": 1,
+      "description": "Full-width lower support shelf with integrated brush groove and 2020 V-slot tongue.",
+      "roleInAssembly": "Supports the bottom edge of the canvas and slides vertically on the 2020 mast.",
+      "infillPercent": 25,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 4
+    },
+    {
+      "id": "upper-canvas-clamp",
+      "partNumber": "PRT-04",
+      "name": "Sliding Top Canvas Clamp Jaw",
+      "kind": "printed",
+      "dims_mm": [
+        68,
+        46,
+        34
+      ],
+      "shape": "bracket",
+      "params": {
+        "width": 68,
+        "depth": 46,
+        "height": 34
+      },
+      "position": [
+        0,
+        20,
+        185
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        75,
+        95
+      ],
+      "color": "#0ea5e9",
+      "bomRef": "bom-filament-easel",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Inverted L-jaw carriage that clamps the top stretcher bar of the canvas without marring paint.",
+      "roleInAssembly": "Locks top canvas edge against the 2020 mast via an M5 T-nut.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 5
+    },
+    {
+      "id": "rear-strut-collar",
+      "partNumber": "PRT-05",
+      "name": "2020 V-Slot Rear Strut Locking Collar",
+      "kind": "printed",
+      "dims_mm": [
+        44,
+        42,
+        26
+      ],
+      "shape": "tube",
+      "params": {
+        "outerRadius": 22,
+        "innerRadius": 11,
+        "height": 26
+      },
+      "position": [
+        0,
+        -24,
+        120
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        -85,
+        45
+      ],
+      "color": "#6366f1",
+      "bomRef": "bom-filament-easel",
+      "material": "PETG",
+      "quantity": 1,
+      "description": "Sliding rear collar that braces the mast tilt quadrant against brush pressure.",
+      "roleInAssembly": "Reinforces mast inclination angle on the rear V-slot channel.",
+      "infillPercent": 35,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 3
+    },
+    {
+      "id": "knurled-lock-knobs",
+      "partNumber": "PRT-06",
+      "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
+      "kind": "printed",
+      "dims_mm": [
+        34,
+        34,
+        18
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 17,
+        "height": 18
+      },
+      "position": [
+        36,
+        -18,
+        120
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "explode": [
+        95,
+        -45,
+        55
+      ],
+      "color": "#ec4899",
+      "bomRef": "bom-filament-easel",
+      "material": "PLA+",
+      "quantity": 3,
+      "description": "Six-lobe ergonomic hand knobs with hex pockets for M5 brass thumb nuts.",
+      "roleInAssembly": "Provides tool-free locking for the tilt hinge, lower tray, and top canvas clamp.",
+      "infillPercent": 30,
+      "layerHeightMm": 0.2,
+      "supportsRequired": false,
+      "step": 6
+    },
+    {
+      "id": "extrusion-spine-2020",
+      "partNumber": "OTS-01",
+      "name": "2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+      "kind": "purchased",
+      "dims_mm": [
+        20,
+        20,
+        240
+      ],
+      "shape": "box",
+      "params": {
+        "width": 20,
+        "depth": 20,
+        "height": 240
+      },
+      "position": [
+        0,
+        0,
+        125
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        0,
+        0,
+        85
+      ],
+      "color": "#475569",
+      "bomRef": "bom-extrusion-2020",
+      "material": "6063-T5 Black Anodized Aluminum (Purchased)",
+      "quantity": 1,
+      "description": "Precision 20×20mm V-slot linear aluminum profile acting as the rigid vertical spine.",
+      "roleInAssembly": "Primary vertical mast along which the lower tray and top canvas clamp travel.",
+      "step": 2
+    },
+    {
+      "id": "brass-knurled-nuts",
+      "partNumber": "OTS-02",
+      "name": "M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
+      "kind": "purchased",
+      "dims_mm": [
+        16,
+        16,
+        10
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 8,
+        "height": 10
+      },
+      "position": [
+        -36,
+        -18,
+        120
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "explode": [
+        -95,
+        -45,
+        55
+      ],
+      "color": "#eab308",
+      "bomRef": "bom-brass-knurled-nuts",
+      "material": "C36000 Machined Brass (Purchased)",
+      "quantity": 1,
+      "description": "Precision diamond-knurled solid brass M5 thumb nuts and heat-set threaded inserts.",
+      "roleInAssembly": "Press-fits into PRT-06 knobs and PRT-02 hinge for smooth, wear-free clamping threads.",
+      "step": 6
+    },
+    {
+      "id": "m5-tnut-bolts",
+      "partNumber": "OTS-03",
+      "name": "M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
+      "kind": "purchased",
+      "dims_mm": [
+        12,
+        12,
+        20
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 6,
+        "height": 20
+      },
+      "position": [
+        0,
+        8,
+        150
+      ],
+      "rotation": [
+        90,
+        0,
+        0
+      ],
+      "explode": [
+        55,
+        35,
+        65
+      ],
+      "color": "#94a3b8",
+      "bomRef": "bom-m5-tnut-bolts",
+      "material": "304 Stainless Steel & Nickel-Plated Spring Steel (Purchased)",
+      "quantity": 1,
+      "description": "Roll-in ball-spring M5 T-nuts for 2020 extrusion paired with M5×20mm & M5×35mm socket screws.",
+      "roleInAssembly": "Captures the lower canvas tray, upper clamp jaw, and rear collar inside the 2020 slot.",
+      "step": 3
+    },
+    {
+      "id": "silicone-grip-pads",
+      "partNumber": "OTS-04",
+      "name": "Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
+      "kind": "purchased",
+      "dims_mm": [
+        24,
+        24,
+        4
+      ],
+      "shape": "box",
+      "params": {
+        "width": 24,
+        "depth": 24,
+        "height": 4
+      },
+      "position": [
+        -55,
+        42,
+        -2
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "explode": [
+        -85,
+        65,
+        -80
+      ],
+      "color": "#334155",
+      "bomRef": "bom-silicone-grip-pads",
+      "material": "3M Adhesive Shore 50A EPDM Elastomer (Purchased)",
+      "quantity": 1,
+      "description": "High-friction adhesive rubber bumper pads for the H-frame base and canvas clamp jaws.",
+      "roleInAssembly": "Prevents tabletop skidding under brush strokes and cushions canvas stretcher bars.",
+      "step": 1
+    },
+    {
+      "id": "compression-spring-kit",
+      "partNumber": "OTS-05",
+      "name": "302 Stainless Compression Detent Spring (8mm OD × 25mm)",
+      "kind": "purchased",
+      "dims_mm": [
+        8,
+        8,
+        25
+      ],
+      "shape": "cylinder",
+      "params": {
+        "radius": 4,
+        "height": 25
+      },
+      "position": [
+        18,
+        -14,
+        34
+      ],
+      "rotation": [
+        0,
+        90,
+        0
+      ],
+      "explode": [
+        75,
+        -55,
+        -10
+      ],
+      "color": "#cbd5e1",
+      "bomRef": "bom-compression-spring",
+      "material": "302 Stainless Spring Wire (Purchased)",
+      "quantity": 1,
+      "description": "Precision ground-end compression spring that preloads the ratcheting tilt hinge teeth.",
+      "roleInAssembly": "Keeps the 15°-step ratchet hinge engaged while adjusting mast angle.",
+      "step": 2
+    }
+  ]
+}

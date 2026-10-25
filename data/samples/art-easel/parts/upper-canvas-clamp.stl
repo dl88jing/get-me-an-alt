@@ -1,0 +1,86 @@
+solid upper-canvas-clamp
+  facet normal 0 0 -1
+    outer loop
+      vertex -34.000 -23.000 0.000
+      vertex 34.000 23.000 0.000
+      vertex 34.000 -23.000 0.000
+    endloop
+  endfacet
+  facet normal 0 0 -1
+    outer loop
+      vertex -34.000 -23.000 0.000
+      vertex -34.000 23.000 0.000
+      vertex 34.000 23.000 0.000
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -34.000 -23.000 34.000
+      vertex 34.000 -23.000 34.000
+      vertex 34.000 23.000 34.000
+    endloop
+  endfacet
+  facet normal 0 0 1
+    outer loop
+      vertex -34.000 -23.000 34.000
+      vertex 34.000 23.000 34.000
+      vertex -34.000 23.000 34.000
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -34.000 -23.000 0.000
+      vertex 34.000 -23.000 0.000
+      vertex 34.000 -23.000 34.000
+    endloop
+  endfacet
+  facet normal 0 -1 0
+    outer loop
+      vertex -34.000 -23.000 0.000
+      vertex 34.000 -23.000 34.000
+      vertex -34.000 -23.000 34.000
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -34.000 23.000 0.000
+      vertex 34.000 23.000 34.000
+      vertex 34.000 23.000 0.000
+    endloop
+  endfacet
+  facet normal 0 1 0
+    outer loop
+      vertex -34.000 23.000 0.000
+      vertex -34.000 23.000 34.000
+      vertex 34.000 23.000 34.000
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -34.000 -23.000 0.000
+      vertex -34.000 -23.000 34.000
+      vertex -34.000 23.000 34.000
+    endloop
+  endfacet
+  facet normal -1 0 0
+    outer loop
+      vertex -34.000 -23.000 0.000
+      vertex -34.000 23.000 34.000
+      vertex -34.000 23.000 0.000
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 34.000 -23.000 0.000
+      vertex 34.000 23.000 34.000
+      vertex 34.000 -23.000 34.000
+    endloop
+  endfacet
+  facet normal 1 0 0
+    outer loop
+      vertex 34.000 -23.000 0.000
+      vertex 34.000 23.000 0.000
+      vertex 34.000 23.000 34.000
+    endloop
+  endfacet
+endsolid upper-canvas-clamp

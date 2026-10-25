@@ -1,0 +1,87 @@
+{
+  "id": "liquid-handler",
+  "slug": "liquid-handler",
+  "objectName": "Benchtop Lab Pipette Liquid Automaton",
+  "name": "Benchtop Lab Pipette Liquid Automaton",
+  "title": "Benchtop Lab Pipette Liquid Automaton",
+  "category": "Laboratory Automation & Robotics",
+  "tagline": "Dual-bay 96-well SBS microplate indexer + MGN9H linear rail XY gantry + T8 leadscrew pipette plunger escapement",
+  "description": "Entry-level benchtop 96-well plate pipetting robots and automated serial-dilution workstations cost $590–$3,500+. This DIY open-labware alternative pairs 8 precision PETG/PLA+ structural gantry & compliant pipette clamp STLs with MGN9H linear rails, NEMA17 stepper motors, a T8 anti-backlash leadscrew, and a 3-axis ESP32 GRBL controller for $68.50 total.",
+  "summary": "Entry-level benchtop 96-well plate pipetting robots and automated serial-dilution workstations cost $590–$3,500+. This DIY open-labware alternative pairs 8 precision PETG/PLA+ structural gantry & compliant pipette clamp STLs with MGN9H linear rails, NEMA17 stepper motors, a T8 anti-backlash leadscrew, and a 3-axis ESP32 GRBL controller for $68.50 total.",
+  "functionSummary": "Indexes across standard SBS 96-well microplates (9.0mm well pitch) along MGN9H stainless linear rails while actuating a standard single- or 8-channel micropipette plunger via a T8×2mm pitch leadscrew for automated serial dilutions and reagent dispensing.",
+  "function": "Indexes across standard SBS 96-well microplates (9.0mm well pitch) along MGN9H stainless linear rails while actuating a standard single- or 8-channel micropipette plunger via a T8×2mm pitch leadscrew for automated serial dilutions and reagent dispensing.",
+  "inputUrl": "https://www.youtube.com/results?search_query=diy+liquid+handling+robot+3d+printed",
+  "inputType": "url",
+  "originalProduct": {
+    "name": "OpenDrop / Opentrons-Style 96-Well Benchtop Pipette Robot",
+    "brand": "OpenDrop Lab / Gilson Automated",
+    "retailPrice": 590,
+    "retailPriceUsd": 590,
+    "currency": "USD",
+    "url": "https://www.youtube.com/results?search_query=diy+liquid+handling+robot+3d+printed",
+    "whyExpensive": "Proprietary clinical/biotech instrument pricing and closed-source firmware over $61.30 of standard CNC 3D-printer motion hardware (NEMA17 steppers, MGN9H rails, T8 leadscrew, ESP32 GRBL board)."
+  },
+  "originalPrice": 590,
+  "targetDiyCost": 68.5,
+  "estimatedDiyCost": 68.5,
+  "estimatedSavings": 521.5,
+  "savingsPercent": 88,
+  "estimatedPrintTimeHours": 7.6,
+  "estimatedAssemblyMinutes": 45,
+  "estimatedBuildTimeMinutes": 45,
+  "estimatedFilamentGrams": 400,
+  "difficulty": "Intermediate",
+  "overallDimensionsMm": [
+    245,
+    195,
+    215
+  ],
+  "dimensionsMm": {
+    "width": 245,
+    "depth": 195,
+    "height": 215
+  },
+  "keyMechanisms": [
+    "Kinematic SBS 96-well microplate registration deck with 9.00mm pitch datum pins for source and target plates",
+    "MGN9H stainless steel linear rail X/Y portal gantry driven by GT2 6mm timing belts and 20T aluminum pulleys (0.0125mm microstep resolution)",
+    "Compliant Z-axis micropipette barrel cradle with T8×2mm anti-backlash leadscrew plunger actuator (~0.2µL resolution)",
+    "Passive end-of-travel tip stripping fork and 3-axis ESP32 GRBL controller with silent TMC2209 stepper drivers"
+  ],
+  "mechanisms": [
+    "Kinematic SBS 96-well microplate registration deck with 9.00mm pitch datum pins for source and target plates",
+    "MGN9H stainless steel linear rail X/Y portal gantry driven by GT2 6mm timing belts and 20T aluminum pulleys (0.0125mm microstep resolution)",
+    "Compliant Z-axis micropipette barrel cradle with T8×2mm anti-backlash leadscrew plunger actuator (~0.2µL resolution)",
+    "Passive end-of-travel tip stripping fork and 3-axis ESP32 GRBL controller with silent TMC2209 stepper drivers"
+  ],
+  "engineeringNotes": [
+    "Print PRT-01 (96-Well Indexing Deck) and PRT-02/03 (Gantry Uprights) in PETG with 4 perimeters and 35% cubic infill for dimensional stability.",
+    "MGN9H rail mounting ledges include a 0.15mm reference shoulder to guarantee X/Y orthogonality without dial-indicator tramming.",
+    "Packs across 2 build plates on a Bambu Lab A1 (256×256mm bed): Plate 1 holds the 96-well deck + electronics housing + small carriages; Plate 2 holds the left/right portal uprights and Z-cradle."
+  ],
+  "materialsNeeded": [
+    "PETG Filament (~342g) for 96-well SBS deck, left/right gantry uprights, MGN9H shuttle, Z-pipette cradle & tip ejector",
+    "PLA+ Filament (~58g) for T8 plunger escapement arm & vented ESP32 GRBL controller enclosure",
+    "3× NEMA17 Steppers + 2× MGN9H 250mm Linear Rails + T8 Leadscrew + GT2 Belt Kit + ESP32 GRBL TMC2209 Board"
+  ],
+  "whatGetsPrinted": [
+    "PRT-01: Dual-Bay SBS 96-Well Microplate Indexing Deck (210×145×22mm)",
+    "PRT-02: Left Y-Axis Portal Upright & NEMA17 Motor Mount (58×120×165mm)",
+    "PRT-03: Right Y-Axis Portal Upright & Idler Pulley Tower (58×120×165mm)",
+    "PRT-04: MGN9H Linear Rail X-Axis Pipette Shuttle Carriage (66×44×58mm)",
+    "PRT-05: Compliant Z-Axis Micropipette Barrel Clamp (52×48×86mm)",
+    "PRT-06: T8 Leadscrew Pipette Plunger Actuation Escapement (44×38×32mm)",
+    "PRT-07: Snap-Fit Disposable Tip Stripping Fork (48×36×18mm)",
+    "PRT-08: Vented GRBL / ESP32 3-Axis Stepper Electronics Housing (96×68×34mm)"
+  ],
+  "whatGetsBought": [
+    "OTS-01: NEMA 17 Bipolar Stepper Motors 1.8° 42×34mm (3-Pack)",
+    "OTS-02: MGN9H 250mm Miniature Stainless Linear Guide Rails + Blocks (×2)",
+    "OTS-03: T8×2mm Pitch Stainless Leadscrew (200mm) + Anti-Backlash Brass Nut",
+    "OTS-04: GT2 6mm Fiberglass Timing Belt (2m) + 20T 5mm Bore Pulleys & Idlers",
+    "OTS-05: ESP32 GRBL 3-Axis CNC Controller Board + 3× TMC2209 Silent Drivers",
+    "OTS-06: Optical / Micro Limit Switch Homing Sensors with Cables (3-Pack)",
+    "OTS-07: Standard SBS 96-Well Flat-Bottom Microplates (2×) & 200µL Tip Rack",
+    "OTS-08: 12V 3A 36W Regulated DC Power Supply Adapter (5.5×2.1mm)",
+    "OTS-09: M3 Stainless Socket Head Cap Screws & Brass Heat-Set Insert Kit"
+  ]
+}

@@ -1,0 +1,85 @@
+{
+  "objectId": "art-easel",
+  "query": "DIY 3D printed Articulated Tabletop Studio Art Easel open source CAD BOM",
+  "querySummary": "Grounded open-source Printables/GitHub CAD designs, mechanical teardowns, and metric hardware specs for Articulated Tabletop Studio Art Easel.",
+  "groundingUsed": true,
+  "searchQueries": [
+    "DIY 3D printed articulated tabletop studio art easel STL printables",
+    "articulated tabletop studio art easel teardown mechanism dimensions",
+    "2020 black anodized v-slot aluminum extrusion (400mm) assembly guide",
+    "bambu lab petg structural tolerance art-easel"
+  ],
+  "sources": [
+    {
+      "id": "src-printables-art-easel",
+      "title": "Printables — Open-Source Parametric Articulated Tabletop Studio Art Easel STLs",
+      "type": "printable",
+      "provider": "Printables",
+      "domain": "printables.com",
+      "url": "https://www.printables.com/search/models?q=Articulated%20Tabletop%20Studio%20Art%20Easel",
+      "summary": "Verified community 3D-printable STLs and tolerance benchmarks for Articulated Tabletop Studio Art Easel.",
+      "relevance": "Reference geometry for support-free overhangs and metric fastener fits.",
+      "keyTakeaways": [
+        "Print PRT-01 (Base Hub), PRT-02 (Ratchet Hinge), and PRT-04 (Upper Clamp Jaw) in PETG with 4 perimeter walls and 35% gyroid infill for high clamping stiffness.",
+        "All T-slot sliding rails include a 0.25mm lateral clearance so carriages glide smoothly along the 2020 aluminum profile without binding."
+      ],
+      "relevanceScore": 0.98
+    },
+    {
+      "id": "src-github-art-easel",
+      "title": "GitHub — Open Hardware Articulated Tabletop Studio Art Easel CAD & Bill of Materials",
+      "type": "github",
+      "provider": "GitHub",
+      "domain": "github.com",
+      "url": "https://github.com/search?q=Articulated%20Tabletop%20Studio%20Art%20Easel+3d+print&type=repositories",
+      "summary": "Open-source parametric OpenSCAD/STEP files and calibration notes for Articulated Tabletop Studio Art Easel.",
+      "relevance": "Validates structural load paths and off-the-shelf McMaster-Carr fastener sizing.",
+      "keyTakeaways": [
+        "15°-step ratcheting tilt mast quadrant with spring-loaded M5 detent lock (0° flat watercolor to 85° oil portrait)",
+        "2020 V-slot anodized aluminum spine with zero-play roll-in M5 T-nut sliding carriages"
+      ],
+      "relevanceScore": 0.95
+    },
+    {
+      "id": "src-youtube-art-easel",
+      "title": "YouTube — Commercial $189 Articulated Tabletop Studio Art Easel Teardown & DIY Build",
+      "type": "video",
+      "provider": "YouTube",
+      "domain": "youtube.com",
+      "url": "https://www.youtube.com/results?search_query=diy%203d%20printed%20Articulated%20Tabletop%20Studio%20Art%20Easel",
+      "summary": "Full disassembly and mechanism inspection comparing the $189 retail unit against a $27.40 3D-printed build.",
+      "relevance": "Confirms internal part dimensions and step-by-step assembly sequence.",
+      "keyTakeaways": [
+        "Upper quick-release canvas clamp jaw and lower brush-ledge tray with EPDM rubber grip pads",
+        "All 6 printed STL parts (8 total items including ×3 knobs) pack onto 1 single 256×256mm Bambu Lab A1 build plate with zero support material."
+      ],
+      "relevanceScore": 0.94
+    },
+    {
+      "id": "src-mcmaster-art-easel",
+      "title": "McMaster-Carr — Precision Metric Hardware & Motion Reference (Articulated Tabletop Studio Art Easel)",
+      "type": "schematic",
+      "provider": "McMaster-Carr",
+      "domain": "mcmaster.com",
+      "url": "https://www.mcmaster.com/#t-slotted-framing/=20mm",
+      "summary": "Standard dimensional drawings for 2020 Black Anodized V-Slot Aluminum Extrusion (400mm) and mating fasteners.",
+      "relevance": "Provides exact clearance bore and thread specifications for printed counterbores.",
+      "keyTakeaways": [
+        "Saves $161.60 (85%) vs. $189 commercial retail price.",
+        "Rear triangulation strut collar with heat-set M5 brass inserts and ergonomic 3D-printed rosette knobs"
+      ],
+      "relevanceScore": 0.92
+    }
+  ],
+  "technicalInsights": [
+    "Print PRT-01 (Base Hub), PRT-02 (Ratchet Hinge), and PRT-04 (Upper Clamp Jaw) in PETG with 4 perimeter walls and 35% gyroid infill for high clamping stiffness.",
+    "All T-slot sliding rails include a 0.25mm lateral clearance so carriages glide smoothly along the 2020 aluminum profile without binding.",
+    "All 6 printed STL parts (8 total items including ×3 knobs) pack onto 1 single 256×256mm Bambu Lab A1 build plate with zero support material."
+  ],
+  "referenceDimensions": {
+    "Weighted H-Frame Studio Base Hub": "145 × 120 × 28 mm (PETG)",
+    "15°-Step Ratcheting Tilt Mast Hinge": "64 × 58 × 42 mm (PETG)",
+    "Lower Canvas Ledge & Brush Rest Tray": "160 × 48 × 32 mm (PLA+)",
+    "Sliding Top Canvas Clamp Jaw": "68 × 46 × 34 mm (PETG)"
+  }
+}
