@@ -308,7 +308,7 @@ export default function ProjectPage() {
 
   return (
     <div className="space-y-6 pb-16">
-      {/* Top Bar & Savings Summary (Florentine Codex Chrome) */}
+      {/* Top Bar & Savings Summary */}
       <div className="flex flex-col gap-4 rounded-2xl gilded-frame codex-folio p-5 sm:flex-row sm:items-center sm:justify-between">
         <div className="space-y-1.5">
           <div className="flex flex-wrap items-center gap-2">
@@ -316,7 +316,7 @@ export default function ProjectPage() {
               href="/"
               className="inline-flex items-center gap-1 font-mono text-xs text-[#bda782] hover:text-[#f3d478] transition-colors"
             >
-              <ArrowLeft className="h-3.5 w-3.5" /> Return to Bottega
+              <ArrowLeft className="h-3.5 w-3.5" /> Back to Get Me An Alt
             </Link>
             <span className="text-[#5c4930]">/</span>
             <span className="rounded-md border border-[#d4af37]/25 bg-[#0c0906] px-2 py-0.5 font-mono text-[11px] text-[#e6d3b3]">
@@ -324,7 +324,7 @@ export default function ProjectPage() {
             </span>
             {manifest.isSample && (
               <span className="rounded-md border border-[#d4af37]/45 bg-[#d4af37]/15 px-2 py-0.5 font-codex text-[10px] font-bold uppercase tracking-wider text-[#f3d478]">
-                Illuminated Codex Sample
+                Featured Sample Build
               </span>
             )}
           </div>
@@ -344,7 +344,7 @@ export default function ProjectPage() {
           <div className="flex items-center gap-4 rounded-2xl border border-[#d4af37]/50 bg-gradient-to-r from-[#d4af37]/15 via-[#14100b] to-[#d4af37]/10 px-5 py-3 shadow-electric">
             <div>
               <div className="font-codex text-[10px] uppercase tracking-widest text-[#f3d478] font-bold">
-                Bottega DIY vs. Merchant Price
+                DIY Build vs. Retail Price
               </div>
               <div className="flex items-baseline gap-2 font-mono tabular-nums">
                 <span className="font-display text-2xl sm:text-3xl font-bold text-[#f5ebd6]">
@@ -465,7 +465,7 @@ export default function ProjectPage() {
 
               <h3 className="font-display text-2xl font-bold text-[#f5ebd6]">
                 Why the Commercial Version Costs $
-                {analysis.originalProduct.retailPrice} — and How Our Bottega Beats It
+                {analysis.originalProduct.retailPrice} — and How This DIY Build Beats It
               </h3>
               <p className="text-sm text-[#e6d3b3] leading-relaxed">
                 {analysis.description}
@@ -486,7 +486,7 @@ export default function ProjectPage() {
               <div className="rounded-2xl border border-[#b89b4a]/40 bg-[#1d1710]/85 p-5 space-y-3">
                 <div className="flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                   <Printer className="h-4 w-4 text-[#b89b4a]" />
-                  3D-Printed Vessels ({analysis.whatGetsPrinted.length})
+                  3D-Printed Parts ({analysis.whatGetsPrinted.length})
                 </div>
                 <ul className="space-y-2 text-xs text-[#e6d3b3]">
                   {analysis.whatGetsPrinted.map((item, i) => (
@@ -501,7 +501,7 @@ export default function ProjectPage() {
               <div className="rounded-2xl border border-[#d4af37]/35 bg-[#d4af37]/[0.07] p-5 space-y-3">
                 <div className="flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                   <ShoppingCart className="h-4 w-4" />
-                  Merchant Guild Hardware ({analysis.whatGetsBought.length})
+                  Off-the-Shelf Hardware ({analysis.whatGetsBought.length})
                 </div>
                 <ul className="space-y-2 text-xs text-[#e6d3b3]">
                   {analysis.whatGetsBought.map((item, i) => (
@@ -521,7 +521,7 @@ export default function ProjectPage() {
           <div className="space-y-6">
             <div className="rounded-2xl codex-folio p-5 space-y-4">
               <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
-                Key Mechanisms (De Mechanica)
+                Key Mechanisms
               </h3>
               <ul className="space-y-2.5 text-xs text-[#e6d3b3]">
                 {analysis.keyMechanisms.map((m, i) => (
@@ -537,7 +537,7 @@ export default function ProjectPage() {
 
             <div className="rounded-2xl codex-folio p-5 space-y-3">
               <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
-                DFM &amp; Slicer Marginalia
+                DFM &amp; Slicer Notes
               </h3>
               <ul className="space-y-2 text-xs text-[#e6d3b3]">
                 {analysis.engineeringNotes.map((n, i) => (

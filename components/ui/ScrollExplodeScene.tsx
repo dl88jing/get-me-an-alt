@@ -7,7 +7,7 @@ import * as THREE from 'three';
 export interface ExplodeSamplePart {
   id: string;
   code: string;
-  folioRef: string;
+  partRef: string;
   name: string;
   latinNote: string;
   kind: 'printed' | 'purchased';
@@ -26,9 +26,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'sensor-cap',
     code: 'PRT-01',
-    folioRef: 'FIG. I · CORONA',
+    partRef: 'PART 01 · TOP CAP',
     name: 'Bayonet Top Cap & Sensor Collar',
-    latinNote: 'Operculum superius cum annulo clausurae',
+    latinNote: 'Quarter-turn bayonet cap with integrated sensor pass-through',
     kind: 'printed',
     dims: '112 × 112 × 18 mm',
     cost: '$0.62 PETG',
@@ -43,9 +43,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'o-ring',
     code: 'BOM-01',
-    folioRef: 'FIG. II · ANNULUS',
+    partRef: 'PART 02 · O-RING',
     name: 'Nitrile 105mm Sealing O-Ring Gasket',
-    latinNote: 'Vinculum elasticum contra fluxum aquae',
+    latinNote: 'Watertight compression seal between top cap and reservoir',
     kind: 'purchased',
     dims: '105 × 105 × 3.5 mm',
     cost: '$1.40 McMaster',
@@ -60,9 +60,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'reservoir-body',
     code: 'PRT-02',
-    folioRef: 'FIG. III · VAS AQUARIUM',
+    partRef: 'PART 03 · RESERVOIR',
     name: '750mL Fluted Hydro-Reservoir Vessel',
-    latinNote: 'Vas cylindricum striatum ad aquam servandam',
+    latinNote: '3-perimeter watertight PETG tank with sight-glass ribs',
     kind: 'printed',
     dims: '110 × 110 × 145 mm',
     cost: '$1.85 PETG',
@@ -77,9 +77,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'submersible-pump',
     code: 'BOM-02',
-    folioRef: 'FIG. IV · COCHLEA',
+    partRef: 'PART 04 · 5V PUMP',
     name: '5V Low-Noise Brushless Impeller Pump',
-    latinNote: 'Machina hydraulica rotunda submersa',
+    latinNote: 'Submersible micro-impeller pump rated for 120L/h flow',
     kind: 'purchased',
     dims: '38 × 28 × 32 mm',
     cost: '$5.90 Amazon',
@@ -94,9 +94,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'capacitive-probe',
     code: 'BOM-03',
-    folioRef: 'FIG. V · SPECULUM TERRAE',
+    partRef: 'PART 05 · SOIL PROBE',
     name: 'Capacitive Soil Moisture Probe v2.0',
-    latinNote: 'Lamina sensoria humorem terrae mensurans',
+    latinNote: 'Corrosion-resistant analog capacitive moisture sensor blade',
     kind: 'purchased',
     dims: '98 × 23 × 4 mm',
     cost: '$3.80 DigiKey',
@@ -111,9 +111,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'manifold-ring',
     code: 'PRT-03',
-    folioRef: 'FIG. VI · DISTRIBUTOR',
+    partRef: 'PART 06 · MANIFOLD',
     name: '4-Port Anti-Siphon Drip Manifold',
-    latinNote: 'Canalis quadripartitus guttatim distribuens',
+    latinNote: '4-way barbed outlet splitter with anti-siphon air break',
     kind: 'printed',
     dims: '84 × 84 × 24 mm',
     cost: '$0.48 PETG',
@@ -128,9 +128,9 @@ export const SAMPLE_EXPLODE_PARTS: ExplodeSamplePart[] = [
   {
     id: 'electronics-dock',
     code: 'PRT-04',
-    folioRef: 'FIG. VII · BASIS',
+    partRef: 'PART 07 · BASE DOCK',
     name: 'Weighted Twist-Lock Base Chassis + M3 Inserts',
-    latinNote: 'Fundamentum ponderosum cum cochleis aeneis',
+    latinNote: 'Dry electronics bay with M3 brass heat-set insert bosses',
     kind: 'printed',
     dims: '118 × 118 × 32 mm',
     cost: '$0.90 PETG',
@@ -441,7 +441,7 @@ export default function ScrollExplodeScene({
       <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-[#d4af37]/30 bg-[#14100b]/90 px-4 py-3">
         <div className="flex items-center gap-3">
           <span className="font-codex text-xs font-bold uppercase tracking-widest text-[#f3d478]">
-            Transmutation Stage:
+            View Mode:
           </span>
           <span
             className={`rounded-full px-3 py-0.5 font-mono text-xs font-bold transition-colors ${
@@ -453,10 +453,10 @@ export default function ScrollExplodeScene({
             }`}
           >
             {effectiveReality < 0.35
-              ? 'I · Da Vinci Sepia Ink Sketch (Codex Vellum)'
+              ? '1 · Sepia Technical Sketch'
               : effectiveReality < 0.75
-              ? 'II · Alchemical CAD Transmutation (Sketch → Solid)'
-              : 'III · Fabricated Reality (PETG + Sourced Hardware)'}
+              ? '2 · Wireframe + Solid Blend (Sketch → CAD)'
+              : '3 · 3D-Printed PETG + Retail Hardware'}
           </span>
         </div>
 
@@ -474,7 +474,7 @@ export default function ScrollExplodeScene({
                 : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
             }`}
           >
-            I. Ink Sketch
+            1. Ink Sketch
           </button>
           <button
             type="button"
@@ -488,7 +488,7 @@ export default function ScrollExplodeScene({
                 : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
             }`}
           >
-            II. Half-Transmuted
+            2. Blend
           </button>
           <button
             type="button"
@@ -502,7 +502,7 @@ export default function ScrollExplodeScene({
                 : 'border border-[#d4af37]/25 bg-[#0c0906] text-[#bda782] hover:text-[#f5ebd6]'
             }`}
           >
-            III. Full Reality
+            3. 3D Solid
           </button>
           {(manualReality !== null || manualExplode !== null) && (
             <button
@@ -586,7 +586,7 @@ export default function ScrollExplodeScene({
             />
           </svg>
 
-          {/* Top-Left Codex Marginalia & Telemetry */}
+          {/* Top-Left Telemetry */}
           <div
             className={`pointer-events-none absolute top-3.5 left-4 z-10 space-y-0.5 font-mono text-[11px] transition-colors ${
               isSketchDominant ? 'text-[#3b2410]' : 'text-[#f3d478]'
@@ -595,15 +595,15 @@ export default function ScrollExplodeScene({
             <div className="flex items-center gap-2 font-bold">
               <span className="inline-block h-2 w-2 rounded-full bg-current animate-pulse" />
               <span>
-                FOLIO III // REALITY: {Math.round(effectiveReality * 100)}% ·
+                3D VIEWPORT // SOLID: {Math.round(effectiveReality * 100)}% ·
                 EXPLODE: {Math.round(effectiveExplode * 100)}%
               </span>
             </div>
             <div className="text-[10px] opacity-80">
               <span className="mirror-script">
-                LEONARDO BOTTEGA · PROPORTIO DIVINA
+                GET ME AN ALT · PARAMETRIC CAD
               </span>{' '}
-              — Hover any vessel part
+              — Hover any part
             </div>
           </div>
 
@@ -618,7 +618,7 @@ export default function ScrollExplodeScene({
             PLATE: 256×256×256mm · BAMBU A1
           </div>
 
-          {/* Hand-drawn Callout Leader Badge on Viewport */}
+          {/* Callout Leader Badge on Viewport */}
           <div
             className={`pointer-events-none hidden sm:flex absolute top-16 right-4 z-10 max-w-[215px] flex-col rounded-xl border p-2.5 font-mono text-[10px] transition-all ${
               isSketchDominant
@@ -627,7 +627,7 @@ export default function ScrollExplodeScene({
             }`}
           >
             <span className="font-codex font-bold text-[11px] text-[#b45309] dark:text-[#f3d478]">
-              {selectedPart.folioRef}
+              {selectedPart.partRef}
             </span>
             <span className="font-semibold truncate">{selectedPart.name}</span>
             <span className="italic opacity-80 font-display text-xs">
@@ -705,12 +705,12 @@ export default function ScrollExplodeScene({
           </div>
         </div>
 
-        {/* Right Column: Da Vinci Codex Anatomy & Component Ledger */}
+        {/* Right Column: Part Inspector & Component List */}
         <div className="lg:col-span-4 flex flex-col justify-between rounded-2xl codex-folio p-5 space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between border-b border-[#d4af37]/20 pb-3">
               <span className="font-codex text-[11px] uppercase tracking-widest text-[#d4af37]">
-                ANATOMIA MECHANICA
+                PART INSPECTOR
               </span>
               <span
                 className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-bold uppercase ${
@@ -720,14 +720,14 @@ export default function ScrollExplodeScene({
                 }`}
               >
                 {selectedPart.kind === 'printed'
-                  ? '3D Printed Vessel'
-                  : 'Merchant Guild BOM'}
+                  ? '3D-Printed Part'
+                  : 'Off-the-Shelf BOM'}
               </span>
             </div>
 
             <div>
               <div className="font-mono text-xs text-[#f3d478]">
-                {selectedPart.folioRef} · {selectedPart.code}
+                {selectedPart.partRef} · {selectedPart.code}
               </div>
               <h4 className="font-display text-xl font-bold text-[#f5ebd6] mt-0.5">
                 {selectedPart.name}
@@ -739,13 +739,13 @@ export default function ScrollExplodeScene({
 
             <div className="grid grid-cols-2 gap-2.5 pt-1 font-mono text-xs">
               <div className="rounded-xl border border-[#d4af37]/20 bg-[#0c0906]/90 p-2.5">
-                <div className="text-[10px] text-[#bda782]">PROPORTIONS</div>
+                <div className="text-[10px] text-[#bda782]">DIMENSIONS</div>
                 <div className="text-[#f5ebd6] font-semibold mt-0.5 tabular-nums">
                   {selectedPart.dims}
                 </div>
               </div>
               <div className="rounded-xl border border-[#d4af37]/20 bg-[#0c0906]/90 p-2.5">
-                <div className="text-[10px] text-[#bda782]">FLORINS / COST</div>
+                <div className="text-[10px] text-[#bda782]">EST. COST</div>
                 <div className="text-[#f3d478] font-bold mt-0.5 tabular-nums">
                   {selectedPart.cost}
                 </div>
@@ -756,7 +756,7 @@ export default function ScrollExplodeScene({
           {/* Interactive Part List */}
           <div className="space-y-1.5 pt-2">
             <div className="font-mono text-[10px] uppercase tracking-wider text-[#bda782]">
-              Inspect Codex Sub-Assemblies ({SAMPLE_EXPLODE_PARTS.length} Folios)
+              Inspect Assembly Parts ({SAMPLE_EXPLODE_PARTS.length} Parts)
             </div>
             <div className="space-y-1.5 max-h-[240px] overflow-y-auto pr-1">
               {SAMPLE_EXPLODE_PARTS.map((item) => {

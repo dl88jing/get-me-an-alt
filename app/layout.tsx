@@ -40,9 +40,9 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title:
-    'Get Me An Alt — The RenAIssance Edition | Da Vinci’s Workshop for Hardware',
+    'Get Me An Alt — DIY 3D-Printable Alternatives to Expensive Gadgets',
   description:
-    'Every invention begins as a sketch. Be the Da Vinci of everything you can’t afford—turn any gadget link, video, or photo into 3D-printable STLs and a sourced retail BOM via Managed Gemini 4 Argon Agents.',
+    'Paste any gadget link, video, or photo and get a DIY alternative with 3D-printable STLs, a sourced retail BOM, and animated assembly instructions powered by Managed Gemini 4 Argon Agents.',
 };
 
 export default function RootLayout({
@@ -96,39 +96,39 @@ export default function RootLayout({
                     </span>
                     <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/40 bg-[#d4af37]/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[#f3d478]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#d4af37] animate-pulse" />
-                      Codex Argon · MMXXVI
+                      Gemini 4 Argon
                     </span>
                   </div>
                   <p className="font-mono text-[10px] tracking-[0.1em] text-[#bda782] hidden xl:block whitespace-nowrap">
-                    BOTTEGA DI LEONARDO // SKETCH TO 3D-PRINTED REALITY &amp; RETAIL BOM
+                    DIY 3D-PRINTED PARTS + OFF-THE-SHELF RETAIL BOM
                   </p>
                 </div>
               </Link>
 
               <nav className="flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0">
                 <Link
-                  href="/#folio-study"
+                  href="/#pipeline-story"
                   className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="font-codex text-[#d4af37]">II.</span> The Study
+                  <span className="font-codex text-[#d4af37]">2.</span> Agent Pipeline
                 </Link>
                 <Link
-                  href="/#folio-bom"
+                  href="/#savings-story"
                   className="hidden xl:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="font-codex text-[#d4af37]">III.</span> The Ledger
+                  <span className="font-codex text-[#d4af37]">3.</span> BOM &amp; Savings
                 </Link>
                 <Link
-                  href="/#folio-machine"
+                  href="/#exploded-story"
                   className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="font-codex text-[#d4af37]">IV.</span> Sketch → Reality
+                  <span className="font-codex text-[#d4af37]">4.</span> Exploded 3D View
                 </Link>
                 <Link
-                  href="/#folio-assembly"
+                  href="/#showcase-gallery"
                   className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="font-codex text-[#d4af37]">V.</span> Masterworks
+                  <span className="font-codex text-[#d4af37]">5.</span> Sample Builds
                 </Link>
 
                 <Link
@@ -136,7 +136,7 @@ export default function RootLayout({
                   className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/55 bg-gradient-to-r from-[#d4af37]/20 via-[#d4af37]/15 to-[#b87333]/20 px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] shadow-[0_0_24px_-6px_rgba(212,175,55,0.4)] hover:bg-[#d4af37] hover:text-[#140e07] transition-all duration-200 whitespace-nowrap"
                 >
                   <span className="h-2 w-2 rounded-full bg-current animate-pulse shrink-0" />
-                  <span className="font-codex tracking-wide">Open Folio I</span>
+                  <span className="font-codex tracking-wide">Live Demo</span>
                   <span className="hidden sm:inline font-mono text-[11px] opacity-90">
                     ($149 → $24.85)
                   </span>

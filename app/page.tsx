@@ -33,7 +33,7 @@ const ScrollExplodeScene = dynamic(
     ssr: false,
     loading: () => (
       <div className="min-h-[460px] rounded-2xl border border-[#d4af37]/30 bg-[#14100b] p-8 flex items-center justify-center font-mono text-xs text-[#e6d3b3] skeleton-shimmer">
-        PREPARING LEONARDO CODEX VIEWPORT // 256×256×256MM...
+        PREPARING 3D EXPLODED VIEWPORT // 256×256×256MM...
       </div>
     ),
   }
@@ -59,10 +59,10 @@ const POPULAR_PRINTERS = [
 const PRESET_GADGETS = [
   {
     id: 'plant-auto-waterer',
-    folio: 'CODEX I',
+    badge: 'BUILD 01',
     title: 'Smart Plant Auto-Waterer',
-    latinTitle: 'Machina Hydraulica Botanica',
-    category: 'HYDRAULICS // AUTOMATA',
+    latinTitle: 'Autonomous Soil-Sensing Hydro-Station',
+    category: 'HOME & GARDEN // FLUIDICS',
     retail: '$149',
     diy: '$24.85',
     savings: 'Save $124',
@@ -76,10 +76,10 @@ const PRESET_GADGETS = [
   },
   {
     id: 'art-easel',
-    folio: 'CODEX II',
+    badge: 'BUILD 02',
     title: 'Articulated Tabletop Studio Art Easel',
-    latinTitle: 'Pluteus Pictoris Articulatus',
-    category: 'BOTTEGA MECHANICS // STUDIO',
+    latinTitle: 'Multi-Angle Studio Tabletop Easel',
+    category: 'ART & STUDIO // MECHANICS',
     retail: '$189',
     diy: '$27.40',
     savings: 'Save $161',
@@ -93,9 +93,9 @@ const PRESET_GADGETS = [
   },
   {
     id: 'iphone-magnifier',
-    folio: 'CODEX III',
+    badge: 'BUILD 03',
     title: 'iPhone Macro Microscope & Slide Stage',
-    latinTitle: 'Speculum Opticum Microscopium',
+    latinTitle: '100x Compound Lens & XYZ Focus Stage',
     category: 'OPTICS // PRECISION STAGE',
     retail: '$119',
     diy: '$16.20',
@@ -110,10 +110,10 @@ const PRESET_GADGETS = [
   },
   {
     id: 'liquid-handler',
-    folio: 'CODEX IV',
+    badge: 'BUILD 04',
     title: 'Benchtop Lab Pipette Liquid Automaton',
-    latinTitle: 'Automaton Alchymicum Mensurae',
-    category: 'ALCHEMICAL LAB // GANTRY',
+    latinTitle: '96-Well Multi-Channel Pipette Gantry',
+    category: 'LAB AUTOMATION // GANTRY',
     retail: '$590',
     diy: '$68.50',
     savings: 'Save $521',
@@ -127,9 +127,9 @@ const PRESET_GADGETS = [
   },
   {
     id: 'desktop-robot-arm',
-    folio: 'CODEX V',
+    badge: 'BUILD 05',
     title: '6-Axis Desktop Robot Arm',
-    latinTitle: 'Brachium Automaton Sex Axium',
+    latinTitle: '6-DOF Servo Articulated Manipulator',
     category: 'ROBOTICS // KINEMATICS',
     retail: '$899',
     diy: '$74.50',
@@ -144,9 +144,9 @@ const PRESET_GADGETS = [
   },
   {
     id: 'bladeless-air-purifier',
-    folio: 'CODEX VI',
+    badge: 'BUILD 06',
     title: 'Bladeless HEPA Air Purifier Tower',
-    latinTitle: 'Turris Ventorum Sine Alis',
+    latinTitle: 'Coanda Airfoil Loop & H13 HEPA Tower',
     category: 'AERODYNAMICS // FLUIDICS',
     retail: '$549',
     diy: '$58.40',
@@ -161,9 +161,9 @@ const PRESET_GADGETS = [
   },
   {
     id: 'camera-slider-3axis',
-    folio: 'CODEX VII',
+    badge: 'BUILD 07',
     title: '3-Axis Motorized Camera Slider',
-    latinTitle: 'Machina Cinematographica Trium Axium',
+    latinTitle: '800mm Linear Rail & Pan-Tilt Motion Rig',
     category: 'CINEMATOGRAPHY // MOTION',
     retail: '$899',
     diy: '$84.90',
@@ -183,52 +183,52 @@ const AGENT_STAGES = [
     step: '01',
     roman: 'I',
     name: 'Analyst',
-    latinRole: 'Deconstructor Visus',
+    latinRole: 'Product & Dimension Analyst',
     artifact: 'analysis.json',
-    desc: 'Gemini 4 Argon multimodal study of URLs, videos & sketches into proportions, mechanisms, and retail markup.',
+    desc: 'Gemini 4 Argon multimodal analysis of URLs, videos & photos into dimensions, mechanisms, and retail markup.',
     icon: Cpu,
   },
   {
     step: '02',
     roman: 'II',
     name: 'Researcher',
-    latinRole: 'Inquisitor Fontium',
+    latinRole: 'Web & Video Teardown Search',
     artifact: 'sources.json + teardown.json',
-    desc: 'Google Search grounding + video teardown frame dissection for schematics, Printables & open codices.',
+    desc: 'Google Search grounding + video teardown frame extraction for schematics, Printables & open-source designs.',
     icon: Search,
   },
   {
     step: '03',
     roman: 'III',
     name: 'Designer',
-    latinRole: 'Architectus Parametricus',
+    latinRole: 'Parametric CAD Architect',
     artifact: 'design.json',
-    desc: 'Separates printed vessels from guild hardware, computing CSG proportions and 3D explosion vectors.',
+    desc: 'Separates 3D-printed parts from off-the-shelf hardware, computing CSG dimensions and 3D explosion vectors.',
     icon: Layers,
   },
   {
     step: '04',
     roman: 'IV',
     name: 'Critic',
-    latinRole: 'Censor Proportionum',
+    latinRole: 'DFM Printability Critic',
     artifact: 'critique.json',
-    desc: 'DFM printability tribunal verifying overhangs <=45°, wall thickness, tolerances & bed fit in a revision loop.',
+    desc: 'DFM printability review verifying overhangs <=45°, wall thickness, tolerances & bed fit in a revision loop.',
     icon: ShieldCheck,
   },
   {
     step: '05',
     roman: 'V',
     name: 'BOM & Price Hunter',
-    latinRole: 'Mercator Tabulae',
+    latinRole: 'Retail Sourcing & Price Hunter',
     artifact: 'bom.json',
-    desc: 'Live grounded sourcing across Amazon, Home Depot, Walmart & McMaster-Carr to secure the lowest price.',
+    desc: 'Live grounded sourcing across Amazon, Home Depot, Walmart & McMaster-Carr to find the lowest price.',
     icon: ShoppingCart,
   },
   {
     step: '06',
     roman: 'VI',
     name: 'CAD & Packer',
-    latinRole: 'Faber Geometriae',
+    latinRole: 'OpenSCAD & Plate Packer',
     artifact: 'plates.json + *.3mf',
     desc: 'OpenSCAD-WASM parametric STL compilation with 3x self-healing retry + 2D bin-packing onto fewest plates.',
     icon: Box,
@@ -237,9 +237,9 @@ const AGENT_STAGES = [
     step: '07',
     roman: 'VII',
     name: 'Instructions',
-    latinRole: 'Magister Ordinis',
+    latinRole: '3D Assembly Choreographer',
     artifact: 'instructions.json',
-    desc: 'IKEA-style step-by-step animated 3D assembly treatise with insertion vectors & tool callouts.',
+    desc: 'IKEA-style step-by-step animated 3D assembly guide with insertion vectors & tool callouts.',
     icon: Wrench,
   },
 ];
@@ -250,11 +250,11 @@ const RETAILER_MARQUEE = [
   { name: 'BAMBU LAB', tag: '256×256MM 3MF PLATES' },
   { name: 'HOME DEPOT', tag: 'EXTRUSIONS & TUBING' },
   { name: 'DIGIKEY', tag: 'SENSORS & CONTROLLERS' },
-  { name: 'PRINTABLES', tag: 'OPEN CODEX PRIORS' },
+  { name: 'PRINTABLES', tag: 'OPEN-SOURCE CAD PRIORS' },
   { name: 'ALIEXPRESS', tag: 'DIRECT MOTION PARTS' },
   { name: 'WALMART', tag: 'COMMODITY HARDWARE' },
   { name: 'PRUSA RESEARCH', tag: 'MK4S / CORE ONE PROFILES' },
-  { name: 'CRAFTCLOUD', tag: 'ON-DEMAND PRINT GUILD' },
+  { name: 'CRAFTCLOUD', tag: 'ON-DEMAND PRINT SERVICE' },
   { name: 'JLC3DP', tag: 'FACTORY SLA / MJF / FDM' },
   { name: 'VORON DESIGN', tag: '350MM GANTRY SUPPORT' },
 ];
@@ -434,7 +434,7 @@ export default function LandingPage() {
     e.preventDefault();
     if (!inputValue.trim() && !imageFile) {
       setError(
-        'Inscribe a product link, video link, description, or upload a sketch/photo first.'
+        'Paste a product link, video link, description, or upload a photo first.'
       );
       return;
     }
@@ -601,22 +601,22 @@ export default function LandingPage() {
           />
         </svg>
 
-        {/* Top Codex Marginalia & Mirror-Script Bar */}
+        {/* Top Section Header & Spec Bar */}
         <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-b border-[#d4af37]/25 pb-4 mb-8 font-mono text-[11px] text-[#bda782]">
           <span className="inline-flex items-center gap-2 text-[#f3d478]">
             <Compass className="h-3.5 w-3.5 text-[#d4af37] animate-spin-slow" />
             <span className="font-codex tracking-widest">
-              FOLIO I · DE VISIONE MECHANICA
+              1. PASTE A LINK, VIDEO, OR PHOTO
             </span>
           </span>
 
           <span
             className="group inline-flex items-center gap-2 rounded-full border border-[#d4af37]/25 bg-[#14100b]/80 px-3 py-0.5 text-[10px] text-[#e6d3b3]"
-            title="Hover to decipher Leonardo's mirror-script annotation"
+            title="Hover to read hardware specification note"
           >
             <Feather className="h-3 w-3 text-[#d4af37]" />
             <span className="mirror-script font-mono tracking-wider">
-              LA NATURA È PIENA DI INFINITE RAGIONI · CODEX ARGON
+              3D-PRINTED PARTS + OFF-THE-SHELF HARDWARE · GEMINI 4 ARGON
             </span>
             <span className="text-[#d4af37]/75 hidden sm:inline">
               (hover mirror script)
@@ -628,41 +628,41 @@ export default function LandingPage() {
           </span>
         </div>
 
-        {/* Central Codex Vision Copy + Command Bar */}
+        {/* Central Hero Copy + Command Bar */}
         <div className="relative z-10 mx-auto max-w-4xl text-center space-y-6">
           <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/45 bg-[#d4af37]/12 px-4 py-1.5 font-mono text-xs font-medium text-[#f3d478] shadow-[0_0_28px_-4px_rgba(212,175,55,0.4)]">
             <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
             <span>
-              The RenAIssance Edition · Managed Gemini 4 Argon Scholars
+              Get Me An Alt · Managed Gemini 4 Argon Agents
             </span>
           </div>
 
           <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.02em] text-[#f5ebd6] leading-[0.98]">
             Every invention begins as a sketch.{' '}
             <span className="block mt-1 italic font-normal bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#e6c365] bg-clip-text text-transparent">
-              Be the Da Vinci of everything you can&apos;t afford.
+              Get a DIY alternative to anything you can&apos;t afford.
             </span>
           </h1>
 
           <p className="text-sm sm:text-lg text-[#e6d3b3] max-w-2xl mx-auto leading-relaxed font-sans">
             Paste any pricey commercial gadget link, YouTube video, or upload a
-            sketch/photo. Seven autonomous Gemini 4 Argon agents dissect its
-            anatomy into{' '}
+            photo. Seven autonomous Gemini 4 Argon agents decompose it
+            into{' '}
             <strong className="text-[#f5ebd6] font-semibold">
               plate-packed 3D-printable STLs &amp; 3MFs
             </strong>
             , a{' '}
             <strong className="text-[#f5ebd6] font-semibold">
-              grounded merchant BOM
+              grounded retail BOM
             </strong>
             , and{' '}
             <strong className="text-[#f5ebd6] font-semibold">
-              animated codex assembly instructions
+              animated 3D assembly instructions
             </strong>
             .
           </p>
 
-          {/* Prominent Codex Command Bar (Paste Link / Upload Photo / Video) */}
+          {/* Prominent Command Bar (Paste Link / Upload Photo / Video) */}
           <form
             onSubmit={handleStartPipeline}
             onDragOver={(e) => {
@@ -695,7 +695,7 @@ export default function LandingPage() {
                 {submitting ? (
                   <>
                     <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#140e07] border-t-transparent" />
-                    Summoning Scholars...
+                    Running Agents...
                   </>
                 ) : (
                   <>
@@ -724,10 +724,10 @@ export default function LandingPage() {
                 >
                   <Upload className="h-3.5 w-3.5 text-[#f3d478]" />
                   {isDraggingPhoto
-                    ? 'Drop sketch/photo to upload'
+                    ? 'Drop photo to upload'
                     : imageFile
-                      ? `Sketch/Photo: ${imageFile.name}`
-                      : 'Upload or Drop Sketch / Photo'}
+                      ? `Photo: ${imageFile.name}`
+                      : 'Upload or Drop Photo'}
                   <input
                     type="file"
                     accept="image/*"
@@ -754,7 +754,7 @@ export default function LandingPage() {
               <div className="flex items-center gap-2">
                 <Printer className="h-3.5 w-3.5 text-[#f3d478]" />
                 <span className="font-mono text-[11px] text-[#bda782]">
-                  Target Forge:
+                  Target Printer:
                 </span>
                 <select
                   value={printerId}
@@ -785,14 +785,14 @@ export default function LandingPage() {
             >
               <Zap className="h-4 w-4 text-[#f3d478]" />
               <span>
-                Inspect Illuminated Folio I: Smart Plant Auto-Waterer ($149
+                Explore Featured Build: Smart Plant Auto-Waterer ($149
                 Retail → $24.85 DIY · Save 83%)
               </span>
             </Link>
           </div>
         </div>
 
-        {/* Ornate Gilded Museum Gallery Diptych: Graded Hero Video + Renaissance Oil Painting */}
+        {/* Ornate Gilded Gallery Diptych: Graded Hero Video + Still-Life Art */}
         <div className="relative z-10 mt-10 grid gap-6 lg:grid-cols-12 items-stretch">
           {/* Left Frame: Graded Sepia/Chiaroscuro Hardware Video in Ornate Gilded Frame */}
           <div className="lg:col-span-7 relative overflow-hidden rounded-2xl gilded-frame bg-[#0c0906] min-h-[260px] sm:min-h-[320px] flex flex-col justify-between p-5">
@@ -842,7 +842,7 @@ export default function LandingPage() {
 
             <div className="relative z-10 flex items-center justify-between">
               <span className="rounded-md border border-[#d4af37]/50 bg-[#0c0906]/85 px-2.5 py-1 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                GALLERIA I · AUTOMATA FABRICATION
+                LIVE PREVIEW · MULTI-PLATE 3D PRINTING
               </span>
               <span className="font-mono text-[10px] text-[#e6d3b3] bg-[#0c0906]/75 px-2.5 py-1 rounded border border-[#d4af37]/25">
                 FIG. 01 // SEPIA CHIAROSCURO GRADE
@@ -854,7 +854,7 @@ export default function LandingPage() {
                 PLATE-PACKED OPENSCAD GEOMETRY
               </div>
               <h3 className="font-display italic text-xl sm:text-2xl font-bold text-[#f5ebd6]">
-                “Where the master’s compass meets the autonomous 3D forge.”
+                “Parametric OpenSCAD parts packed onto a single build plate.”
               </h3>
               <p className="text-xs text-[#e6d3b3]">
                 Hover the frame to lift the sepia patina and reveal full-color
@@ -863,11 +863,11 @@ export default function LandingPage() {
             </div>
           </div>
 
-          {/* Right Frame: Generated Da Vinci Workshop Oil Painting + Parchment Callout */}
+          {/* Right Frame: Generated Illustration + Parchment Callout */}
           <div className="lg:col-span-5 relative overflow-hidden rounded-2xl gilded-frame bg-[#14100b] min-h-[260px] sm:min-h-[320px] flex flex-col justify-between p-5">
             <img
               src="/media/renaissance/davinci-workshop-hero.webp"
-              alt="Da Vinci candlelit Florentine workshop with codex gear sketches and 3D-printed botanical waterer"
+              alt="Renaissance still-life illustration of mechanical gear sketches and a 3D-printed plant auto-waterer"
               className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-85 transition-transform duration-700 hover:scale-105"
             />
             <div
@@ -877,7 +877,7 @@ export default function LandingPage() {
 
             <div className="relative z-10 flex items-center justify-between">
               <span className="rounded-md border border-[#d4af37]/50 bg-[#0c0906]/85 px-2.5 py-1 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                BOTTEGA DI FIRENZE · MMXXVI
+                GET ME AN ALT · FEATURED BUILD
               </span>
               <span className="rounded-full bg-[#c84b31]/90 px-2.5 py-0.5 font-codex text-[10px] font-bold text-[#f5ebd6] shadow">
                 83% SAVED
@@ -886,15 +886,15 @@ export default function LandingPage() {
 
             <div className="relative z-10 rounded-xl parchment-sheet p-3.5 space-y-1">
               <div className="flex items-center justify-between font-mono text-[10px] font-bold text-[#5c3a1d]">
-                <span>CODEX ATLANTICUS · FOLIO 114R</span>
-                <span className="mirror-script">LEONARDO</span>
+                <span>SMART PLANT AUTO-WATERER · BOM SUMMARY</span>
+                <span className="mirror-script">SAVE 83%</span>
               </div>
               <p className="font-display italic text-sm font-semibold text-[#2b1d0e] leading-snug">
-                “First study the science, then follow the practice born of that
-                science.”
+                “Print the custom housing at home; source standard pumps and
+                sensors for pennies.”
               </p>
               <div className="font-mono text-[10px] text-[#5c3a1d]">
-                7 Printed PETG Vessels ($4.25) + 4 Guild Components ($20.60) ={' '}
+                7 Printed PETG Parts ($4.25) + 4 Off-the-Shelf Parts ($20.60) ={' '}
                 <strong>$24.85 Total</strong>
               </div>
             </div>
@@ -903,7 +903,7 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          MERCHANT GUILD & FABRICATION ECOSYSTEM MARQUEE
+          SUPPORTED RETAILERS & 3D PRINTERS MARQUEE
       ===================================================================== */}
       <section
         aria-label="Supported Retailers and Printers"
@@ -931,10 +931,10 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          FOLIO II — THE STUDY: 7 MANAGED GEMINI 4 ARGON AGENTS & SCROLL GEARS
+          2. AGENT PIPELINE: 7 MANAGED GEMINI 4 ARGON AGENTS & SCROLL GEARS
       ===================================================================== */}
       <section
-        id="folio-study"
+        id="agent-pipeline"
         ref={studySectionRef}
         className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
       >
@@ -945,17 +945,17 @@ export default function LandingPage() {
           <div className="lg:col-span-8 space-y-2">
             <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
               <ScrollText className="h-4 w-4" />
-              FOLIO II · THE STUDY (DE SEPTEM ARTIFICIBUS)
+              2. MANAGED AGENT PIPELINE
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6]">
-              Seven Managed Gemini 4 Argon Scholars.{' '}
+              Seven Managed Gemini 4 Argon Agents.{' '}
               <span className="italic font-normal text-[#f3d478]">
-                Zero Manual Drafting.
+                Zero Manual CAD.
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl leading-relaxed">
-              Each stage invokes an autonomous Gemini 4 Argon scholar via the
-              Antigravity CLI or grounded REST API, inscribing structured codex
+              Each stage runs a specialized Gemini 4 Argon agent via the
+              Antigravity CLI or grounded REST API, writing structured build
               artifacts into{' '}
               <code className="font-mono text-[#f3d478]">
                 data/objects/&lt;slug&gt;-&lt;id&gt;/
@@ -968,11 +968,11 @@ export default function LandingPage() {
           <div className="lg:col-span-4 flex items-center justify-between gap-4 rounded-2xl border border-[#d4af37]/30 bg-[#0c0906]/85 p-4">
             <div className="space-y-1">
               <div className="font-codex text-[10px] uppercase tracking-widest text-[#f3d478]">
-                FIG. II · ROTA DENTATA
+                LIVE TELEMETRY · SSE STREAM
               </div>
               <p className="font-display italic text-sm text-[#e6d3b3]">
-                Scroll-drawn ink escapement ({Math.round(gearScrollProgress * 100)}
-                % inscribed)
+                Scroll-driven gear kinematics ({Math.round(gearScrollProgress * 100)}
+                % complete)
               </p>
               <div className="font-mono text-[10px] text-[#bda782]">
                 agy -p &quot;...&quot; --model gemini-4-argon
@@ -982,7 +982,7 @@ export default function LandingPage() {
             <svg
               viewBox="0 0 120 120"
               className="h-20 w-20 shrink-0 text-[#d4af37]"
-              aria-label="Da Vinci ink gear sketch animated on scroll"
+              aria-label="Mechanical gear illustration animated on scroll"
             >
               <g
                 style={{
@@ -1064,7 +1064,7 @@ export default function LandingPage() {
                 <div className="space-y-2">
                   <div className="flex items-center justify-between">
                     <span className="font-codex text-[11px] font-bold text-[#f3d478]">
-                      FOLIO II.{stage.roman}
+                      STAGE {stage.step}
                     </span>
                     <Icon
                       className={`h-4 w-4 transition-colors ${
@@ -1102,10 +1102,10 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          FOLIO III — THE BILL OF MATERIALS (IL LIBRO DEI CONTI) & OIL PAINTING
+          3. BILL OF MATERIALS & RETAIL SAVINGS
       ===================================================================== */}
       <section
-        id="folio-bom"
+        id="bom-section"
         ref={savingsSectionRef}
         className="rounded-3xl codex-folio p-6 sm:p-10"
       >
@@ -1115,37 +1115,37 @@ export default function LandingPage() {
           <div className="lg:col-span-5 space-y-5">
             <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
               <TrendingDown className="h-4 w-4" />
-              FOLIO III · THE BILL OF MATERIALS (IL LIBRO DEI CONTI)
+              3. BILL OF MATERIALS &amp; RETAIL PRICE COMPARISON
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6] leading-tight">
-              Break the Merchant Monopoly.{' '}
+              Skip the Brand Markup.{' '}
               <span className="italic font-normal text-[#f3d478]">
-                Keep 83% of the Florins.
+                Save 83% on Hardware.
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#e6d3b3] leading-relaxed">
               Bespoke consumer hardware is 80% injection-molded plastic housing
               around $20 of standard pumps, sensors, and metric fasteners. Our
               BOM &amp; Price Hunter agents ground live prices across Amazon,
-              McMaster-Carr, Home Depot, and Walmart while your printer forges
-              the vessel overnight.
+              McMaster-Carr, Home Depot, and Walmart while your printer builds
+              the custom housing overnight.
             </p>
 
-            {/* Framed Renaissance Painting: Master Inventor Transmuting Sketch to Machine */}
+            {/* Framed Illustration: Technical Drawing to 3D Machine */}
             <div className="relative overflow-hidden rounded-2xl gilded-frame bg-[#0c0906] p-3">
               <div className="grid sm:grid-cols-12 gap-3 items-center">
                 <img
                   src="/media/renaissance/sketch-to-machine.webp"
-                  alt="Renaissance master inventor holding brass dividers over a vellum scroll as a 3D machine materializes"
+                  alt="Illustrated brass dividers over a technical drawing as a 3D-printed assembly materializes"
                   className="sm:col-span-5 h-36 w-full rounded-xl object-cover border border-[#d4af37]/30"
                 />
                 <div className="sm:col-span-7 space-y-1.5 px-1">
                   <div className="font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                    TABULA ARBITRAGII · VERIFIED LEDGER
+                    PRICE HUNTER · VERIFIED RETAIL LINKS
                   </div>
                   <p className="font-display italic text-base text-[#f5ebd6] leading-snug">
-                    “Why pay a prince’s ransom for molded resin when the codex
-                    grants you the geometry?”
+                    “Why pay $149 for injection-molded plastic when you can
+                    print the body for $4.25 and buy the pump for $5.90?”
                   </p>
                   <Link
                     href="/projects/plant-auto-waterer"
@@ -1163,7 +1163,7 @@ export default function LandingPage() {
           <div className="lg:col-span-7 grid gap-4 sm:grid-cols-3">
             <div className="rounded-2xl border border-[#d4af37]/55 bg-gradient-to-br from-[#d4af37]/20 via-[#d4af37]/[0.08] to-transparent p-5 space-y-2">
               <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
-                PATRON SAVINGS
+                YOUR SAVINGS
               </div>
               <div className="font-display text-5xl sm:text-6xl font-bold text-[#f3d478] tabular-nums tracking-tight">
                 {savingsCount}%
@@ -1175,7 +1175,7 @@ export default function LandingPage() {
 
             <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
               <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#bda782]">
-                BOTTEGA DIY TOTAL
+                DIY BUILD TOTAL
               </div>
               <div className="font-display text-4xl sm:text-5xl font-bold text-[#f5ebd6] tabular-nums tracking-tight">
                 ${diyCostCount.toFixed(2)}
@@ -1183,13 +1183,13 @@ export default function LandingPage() {
               <p className="font-mono text-xs text-[#bda782]">
                 vs.{' '}
                 <span className="line-through text-[#c84b31]">$149.00</span>{' '}
-                merchant retail
+                retail price
               </p>
             </div>
 
             <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
               <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
-                SINGLE-PLATE FORGE
+                SINGLE-PLATE PRINT
               </div>
               <div className="font-display text-4xl sm:text-5xl font-bold text-[#f3d478] tabular-nums tracking-tight">
                 1 Plate
@@ -1199,14 +1199,14 @@ export default function LandingPage() {
               </p>
             </div>
 
-            {/* Parchment Ledger Breakdown Bar */}
+            {/* Parchment Cost Breakdown Bar */}
             <div className="sm:col-span-3 rounded-2xl parchment-sheet p-5 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
                 <span className="font-codex font-bold text-[#2b1d0e]">
-                  FOLIO III LEDGER // SMART PLANT AUTO-WATERER
+                  COST BREAKDOWN // SMART PLANT AUTO-WATERER
                 </span>
                 <span className="rounded-full bg-[#c84b31] px-3 py-0.5 font-codex text-[11px] font-bold text-[#f5ebd6]">
-                  SIGILLUM · YOU KEEP $124.15 (83.3%)
+                  YOU SAVE $124.15 (83.3%)
                 </span>
               </div>
               <div className="h-3.5 w-full rounded-full bg-[#2b1d0e]/20 overflow-hidden flex border border-[#5c3a1d]/40">
@@ -1233,11 +1233,11 @@ export default function LandingPage() {
                 </span>
                 <span className="inline-flex items-center gap-1.5 font-semibold">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#b45309]" />
-                  $20.60 Guild Hardware (14%)
+                  $20.60 Off-the-Shelf Hardware (14%)
                 </span>
                 <span className="inline-flex items-center gap-1.5 font-semibold">
                   <span className="h-2.5 w-2.5 rounded-full bg-[#c84b31]" />
-                  $124.15 Merchant Markup Eliminated (83%)
+                  $124.15 Retail Markup Saved (83%)
                 </span>
               </div>
             </div>
@@ -1246,10 +1246,10 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          FOLIO IV — THE MACHINE: SKETCH -> REALITY 3D EXPLODED VIEW
+          4. SKETCH -> REALITY 3D EXPLODED VIEW
       ===================================================================== */}
       <section
-        id="folio-machine"
+        id="exploded-view"
         ref={explodeSectionRef}
         className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
       >
@@ -1258,39 +1258,40 @@ export default function LandingPage() {
           <div className="space-y-2">
             <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
               <Layers className="h-4 w-4" />
-              FOLIO IV · THE MACHINE (DE TRANSMUTATIONE SKETCH AD REM)
+              4. INTERACTIVE SKETCH-TO-REALITY 3D EXPLODED VIEW
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6]">
-              From Sepia Quill on Parchment{' '}
+              From Concept Sketch{' '}
               <span className="italic font-normal text-[#f3d478]">
-                to Living 3D-Printed Reality.
+                to 3D-Printed Reality.
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl leading-relaxed">
-              As you scroll through Folio IV, watch the vessel transmute from a{' '}
+              As you scroll through this section, watch the assembly transition
+              from a{' '}
               <strong className="text-[#f5ebd6]">
-                Da Vinci pen-and-ink codex drawing on vellum
+                sepia pen-and-ink technical sketch on parchment
               </strong>{' '}
               into{' '}
               <strong className="text-[#f5ebd6]">
                 watertight bronze-gilded PETG and burnished brass hardware
               </strong>
-              —exploding along its `[x, y, z]` datum axis.
+              —exploding along its `[x, y, z]` assembly axis.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
             <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/40 bg-[#e6d3b3]/15 px-3 py-1.5 text-[#f3d478]">
               <span className="h-2 w-2 rounded-full bg-[#e6d3b3]" />
-              Sepia Codex Sketch
+              Sepia Ink Sketch
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-3 py-1.5 text-[#f3d478]">
               <span className="h-2 w-2 rounded-full bg-[#b89b4a]" />
-              Printed PETG Vessel
+              3D-Printed PETG
             </span>
             <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/35 bg-[#d4af37]/10 px-3 py-1.5 text-[#f3d478]">
               <span className="h-2 w-2 rounded-full bg-[#d4af37]" />
-              Purchased Guild BOM
+              Off-the-Shelf BOM
             </span>
           </div>
         </div>
@@ -1299,25 +1300,25 @@ export default function LandingPage() {
       </section>
 
       {/* =====================================================================
-          FOLIO V — THE ASSEMBLY & MASTERWORKS CODEX GALLERY
+          5. SAMPLE DIY BUILDS & PRESETS GALLERY
       ===================================================================== */}
-      <section id="folio-assembly" className="space-y-6">
+      <section id="sample-builds" className="space-y-6">
         <div id="showcase-gallery" className="-mt-4" />
         <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
           <div className="space-y-1.5">
             <div className="font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-              FOLIO V · THE ASSEMBLY &amp; MASTERWORKS GALLERY
+              5. SAMPLE DIY BUILDS &amp; PRESETS
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
-              Commission a Masterwork from the{' '}
+              Explore Ready-to-Print{' '}
               <span className="italic font-normal text-[#f3d478]">
-                Codex Atlanticus
+                Sample Builds
               </span>
             </h2>
             <p className="text-xs sm:text-sm text-[#e6d3b3]">
-              Select any commission below to inspect the illuminated engineering
-              codex, 3MF build plates, and IKEA-style animated assembly
-              choreography.
+              Select any build below to inspect its bill of materials,
+              plate-packed STLs &amp; 3MFs, exploded 3D view, and IKEA-style
+              animated assembly guide.
             </p>
           </div>
         </div>
@@ -1337,11 +1338,11 @@ export default function LandingPage() {
                 <div className="space-y-3">
                   <div className="flex items-center justify-between gap-2">
                     <span className="rounded-md bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[10px] font-bold text-[#f3d478] border border-[#d4af37]/40">
-                      {item.folio} · {item.savings} ({item.savingsPct})
+                      {item.badge} · {item.savings} ({item.savingsPct})
                     </span>
                     {isReadySample && (
                       <span className="rounded-md bg-[#b89b4a]/20 px-2 py-0.5 font-codex text-[10px] font-semibold text-[#f3d478] border border-[#b89b4a]/40">
-                        Illuminated Demo
+                        Instant Demo
                       </span>
                     )}
                   </div>
@@ -1378,7 +1379,7 @@ export default function LandingPage() {
                       </span>
                     </div>
                     <span className="inline-flex items-center gap-1 font-codex text-[11px] font-bold text-[#f5ebd6] group-hover:text-[#f3d478]">
-                      Open Folio <ArrowRight className="h-3.5 w-3.5" />
+                      Open Build <ArrowRight className="h-3.5 w-3.5" />
                     </span>
                   </div>
                 </div>
@@ -1392,20 +1393,20 @@ export default function LandingPage() {
       <ShowcaseBuild />
 
       {/* =====================================================================
-          CODEX COLOPHON / FOOTER CTA
+          FOOTER CTA
       ===================================================================== */}
       <footer className="relative overflow-hidden rounded-3xl gilded-frame bg-gradient-to-r from-[#14100b] via-[#1f170e] to-[#14100b] p-8 sm:p-10">
         <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
           <div className="space-y-2 max-w-xl">
             <div className="font-codex text-xs font-bold uppercase tracking-[0.2em] text-[#f3d478]">
-              COLOPHON // BOTTEGA DI GEMINI IV ARGON
+              GET ME AN ALT // POWERED BY GEMINI 4 ARGON
             </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
-              Ready to turn your next sketch into a real machine?
+              Ready to turn any gadget into a 3D-printable DIY build?
             </h2>
             <p className="text-xs sm:text-sm text-[#e6d3b3]">
-              Inscribe any product link above or enter our flagship Smart Plant
-              Auto-Waterer codex with self-healing OpenSCAD STLs, Bambu 3MF
+              Paste any product link above or explore our flagship Smart Plant
+              Auto-Waterer build with self-healing OpenSCAD STLs, Bambu 3MF
               plates, and animated 3D assembly instructions.
             </p>
           </div>
@@ -1415,13 +1416,13 @@ export default function LandingPage() {
               href="#hero-command"
               className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/40 bg-[#d4af37]/10 px-5 py-3 font-codex text-xs font-bold text-[#f5ebd6] hover:border-[#f3d478] transition-colors"
             >
-              Inscribe a Product Link
+              Paste a Product Link
             </a>
             <Link
               href="/projects/plant-auto-waterer"
               className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-6 py-3 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
             >
-              Open Illuminated Demo Project <ArrowRight className="h-4 w-4" />
+              Open Live Demo Project <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
         </div>

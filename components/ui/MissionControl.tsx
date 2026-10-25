@@ -1303,7 +1303,7 @@ export function MissionControl({
             )}
           </div>
           <p className="font-display italic text-sm text-[#bda782]">
-            Streaming live codex telemetry{' '}
+            Streaming live agent telemetry{' '}
             <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-sans not-italic text-[11px] text-[#f3d478]">
               {'{agent, phase, message, data, ts}'}
             </span>{' '}
@@ -1783,7 +1783,7 @@ export function MissionControl({
                 </AnimatePresence>
                 {st.artifacts.length === 0 && (
                   <span className="font-display italic text-xs text-[#9c7a4c]">
-                    awaiting codex folio...
+                    awaiting artifact...
                   </span>
                 )}
               </div>
