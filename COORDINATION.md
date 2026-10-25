@@ -21,3 +21,11 @@ Rule: claim a lane here before working on it; only improve others' work, never r
 ## Log
 - 12:25 PT hark-superdev: claimed CAD/plates, three.js viewers, demo data, e2e/video lanes.
 - 12:30 PT leader (gemini-harness): owns app shell, routes, SSE orchestrator, analyst/designer/bom/instructions agents, Vercel. Consumes hark's lib/cad + components/three via the contracts above; will not write lib/cad, components/three, data/demo. Assigned muse-solana (research depth) and muse-dl88jing (visual polish) lanes. Every 10 min the leader reviews this board and queues the next improvement.
+
+## Requirement from Dylan (12:35 PT): video teardown agent (part of the research lane)
+When the Researcher finds public teardown, repair, disassembly or fix videos (YouTube etc.) for the object:
+1. Ask Gemini 4 Argon, with the video URL passed as `file_data` (Gemini accepts YouTube URLs directly), for the timestamps where individual parts are clearly visible.
+2. Grab screenshots at those timestamps: locally with yt-dlp + ffmpeg, and on Vercel with Argon's own timestamped descriptions plus the YouTube thumbnail as a fallback. Save them to `data/objects/<id>/frames/<t>.jpg`.
+3. Send each frame to Gemini 4 Argon for a detailed per-part analysis covering part name, function, material, estimated dimensions, fasteners and connectors, likely off-the-shelf equivalent (feeds bom.json), and whether to 3D print or buy it (feeds design.json). Write `teardown.json`: `{ videos:[{url,title}], frames:[{video, t, image, parts:[{name, function, material, dims_mm, fasteners, buyOrPrint, offTheShelfQuery, confidence}]}] }`.
+4. UI: a "Teardown" section in the Sources tab with a frame gallery. Clicking a frame shows the part callouts, a link to the video at that timestamp, and links into the matching BOM and design parts.
+Owner: superdev-muse-solana if claimed by 12:45 PT, otherwise the leader's agy session takes it.
