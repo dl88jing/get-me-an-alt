@@ -549,6 +549,10 @@ export interface GeneratedStlArtifact {
   fileName: string;
   /** Relative path from object folder, e.g. `parts/reservoir-tank.stl` */
   stlFile: string;
+  /** Optional relative path to OpenSCAD source, e.g. `parts/reservoir-tank.scad` */
+  scadFile?: string;
+  scadSource?: string;
+  cadEngine?: "openscad-wasm" | "procedural";
   bytes: Uint8Array;
   byteLength: number;
   dims_mm: [number, number, number];
@@ -606,6 +610,8 @@ export interface UnifiedPlatesArtifact {
     shape: DesignPartShape;
     stlFile: string;
     file: string;
+    scadFile?: string;
+    cadEngine?: "openscad-wasm" | "procedural";
     bytes: number;
     dims_mm: [number, number, number];
     dimensionsMm: [number, number, number];
@@ -634,6 +640,8 @@ export interface UnifiedPlatesArtifact {
     quantity: number;
     file: string;
     stlFile: string;
+    scadFile?: string;
+    cadEngine?: "openscad-wasm" | "procedural";
     bytes: number;
     dimensionsMm: [number, number, number];
     dims_mm: [number, number, number];
@@ -733,19 +741,42 @@ export function generateCadBundle(
     printerId?: string;
     objectId?: string;
     packOptions?: PackOptions;
+    meshOverrides?: Map<string, TriangleMesh> | Record<string, TriangleMesh>;
+    scadSources?: Map<string, string> | Record<string, string>;
   } = {}
 ): CadGenerationBundle {
   const design = normalizeDesignSpec(designInput);
   const printer = getPrinterById(options.printerId ?? DEFAULT_PRINTER_ID);
   const printedParts = design.parts.filter((p) => p.kind === "printed");
 
+  const getOverrideMesh = (partId: string): TriangleMesh | undefined => {
+    if (!options.meshOverrides) return undefined;
+    if (options.meshOverrides instanceof Map) {
+      return options.meshOverrides.get(partId);
+    }
+    return options.meshOverrides[partId];
+  };
+
+  const getScadSource = (partId: string): string | undefined => {
+    if (!options.scadSources) return undefined;
+    if (options.scadSources instanceof Map) {
+      return options.scadSources.get(partId);
+    }
+    return options.scadSources[partId];
+  };
+
   const meshesById = new Map<string, TriangleMesh>();
   const stlArtifacts: GeneratedStlArtifact[] = [];
 
   for (const part of printedParts) {
-    const mesh = generatePartMesh(part);
+    const overrideMesh = getOverrideMesh(part.id);
+    const scadSource = getScadSource(part.id);
+    const mesh = overrideMesh ?? generatePartMesh(part);
     const manifold = validateManifold(mesh);
-    const stlBytes = meshToBinaryStl(mesh, `GetMeAnAlt ${part.id} (${part.shape})`);
+    const stlBytes = meshToBinaryStl(
+      mesh,
+      `GetMeAnAlt ${part.id} (${overrideMesh ? "openscad-wasm" : part.shape})`
+    );
 
     const dims_mm: [number, number, number] = [
       round2(mesh.bbox.size[0]),
@@ -765,6 +796,7 @@ export function generateCadBundle(
 
     const fileName = `${part.id}.stl`;
     const stlFile = `parts/${fileName}`;
+    const scadFile = scadSource ? `parts/${part.id}.scad` : undefined;
 
     meshesById.set(part.id, mesh);
     stlArtifacts.push({
@@ -776,6 +808,9 @@ export function generateCadBundle(
       quantity: part.quantity ?? 1,
       fileName,
       stlFile,
+      scadFile,
+      scadSource,
+      cadEngine: overrideMesh ? "openscad-wasm" : "procedural",
       bytes: stlBytes,
       byteLength: stlBytes.byteLength,
       dims_mm,
@@ -935,6 +970,8 @@ export function generateCadBundle(
       shape: art.shape,
       stlFile: art.stlFile,
       file: art.stlFile,
+      scadFile: art.scadFile,
+      cadEngine: art.cadEngine,
       bytes: art.byteLength,
       dims_mm: art.dims_mm,
       dimensionsMm: art.dims_mm,

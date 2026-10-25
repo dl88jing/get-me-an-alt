@@ -1,16 +1,17 @@
 import * as fs from "node:fs";
 import * as path from "node:path";
 import { fileURLToPath } from "node:url";
-import { DEFAULT_PRINTER_ID } from "../lib/printers";
+import { runCadAgent } from "../lib/agents/cad";
 import {
+  compileAndValidateOpenScad,
   DesignPartShape,
-  generateCadBundle,
   generatePartMesh,
   normalizeDesignSpec,
   normalizeInstructions,
   PRINTED_PART_SHAPES,
   validateManifold,
 } from "../lib/cad";
+import { DEFAULT_PRINTER_ID } from "../lib/printers";
 
 function verifyAllParametricShapes(): void {
   console.log("=== Verifying parametric shape generators & aliases (2-manifold check) ===");
@@ -87,57 +88,46 @@ function verifyAllParametricShapes(): void {
   }
 }
 
-function verifyLegacyAdapterCompatibility(): void {
-  console.log("\n=== Verifying dual-schema adapter compatibility ===");
-  const legacyDesign = {
-    objectName: "Legacy Schema Test",
-    printedParts: [
-      {
-        id: "base-box",
-        name: "Base Box",
-        shape: "box",
-        params: { width: 50, depth: 40, height: 20 },
-        color: "#0ea5e9",
-        quantity: 1,
-      },
-    ],
-    purchasedParts: [
-      {
-        id: "motor-1",
-        name: "5V Motor",
-        bomLine: "bom-motor-1",
-        proxyShape: { shape: "cylinder", params: { radius: 10, height: 25 } },
-      },
-    ],
-    assembly: [
-      { partId: "base-box", position: [0, 0, 0], rotation: [0, 0, 0], explode: [0, 0, -30], step: 1 },
-      { partId: "motor-1", position: [0, 0, 20], rotation: [0, 0, 0], explode: [0, 0, 40], step: 2 },
-    ],
-  };
+async function verifyOpenScadWasmCompilerAndValidator(): Promise<void> {
+  console.log("\n=== Verifying openscad-wasm compiler & bounding-box validator ===");
 
-  const normalized = normalizeDesignSpec(legacyDesign);
-  if (normalized.parts.length !== 2 || normalized.parts[0].kind !== "printed" || normalized.parts[1].kind !== "purchased") {
-    throw new Error("Legacy design adapter failed to produce flat parts[] array.");
+  // 1. Valid OpenSCAD script within 15% of [40, 30, 20]
+  const validRes = await compileAndValidateOpenScad(
+    `$fn=32; difference() { cube([40, 30, 20], center=true); cylinder(h=25, d=3.4, center=true); }`,
+    { targetDimsMm: [40, 30, 20], toleranceRatio: 0.15 }
+  );
+  if (!validRes.ok || !validRes.validation?.valid) {
+    throw new Error(`Expected valid OpenSCAD to pass: ${validRes.errorFeedback}`);
   }
+  console.log(
+    `  [OK] Valid OpenSCAD compiled in ${validRes.compile.durationMs}ms: tris=${validRes.validation.triangleCount}, bbox=[${validRes.validation.actualDimsMm.join("x")}] mm`
+  );
 
-  const legacyInstructions = {
-    steps: [
-      { step: 1, title: "Place Base", description: "Put base on table", partIds: ["base-box"], tools: [] },
-      { step: 2, title: "Insert Motor", description: "Drop motor in", partIds: ["motor-1", "base-box"], tools: ["M3 Hex"] },
-    ],
-  };
-  const normInst = normalizeInstructions(legacyInstructions, normalized);
-  if (
-    normInst.steps.length !== 2 ||
-    normInst.steps[1].motion.length !== 1 ||
-    normInst.steps[1].motion[0].partId !== "motor-1"
-  ) {
-    throw new Error("Legacy instructions adapter failed to synthesize motion[].");
+  // 2. Syntax error check
+  const syntaxRes = await compileAndValidateOpenScad(`cube([40, 30, );`, {
+    targetDimsMm: [40, 30, 20],
+  });
+  if (syntaxRes.ok) {
+    throw new Error("Expected syntax error OpenSCAD to fail.");
   }
-  console.log("  [OK] Adapters accept both shared-contract and legacy schemas.");
+  console.log(`  [OK] Syntax error caught: ${syntaxRes.errorFeedback}`);
+
+  // 3. Bounding box >15% mismatch check
+  const bboxRes = await compileAndValidateOpenScad(`cube([80, 30, 20]);`, {
+    targetDimsMm: [40, 30, 20],
+    toleranceRatio: 0.15,
+  });
+  if (bboxRes.ok) {
+    throw new Error("Expected oversized bounding box OpenSCAD to fail validation.");
+  }
+  console.log(`  [OK] BBox 15% tolerance check caught: ${bboxRes.errorFeedback}`);
 }
 
-function generateArtifactsForFolder(targetDir: string, objectId: string, printerId = DEFAULT_PRINTER_ID): void {
+async function generateArtifactsForFolder(
+  targetDir: string,
+  objectId: string,
+  printerId = DEFAULT_PRINTER_ID
+): Promise<void> {
   const partsDir = path.join(targetDir, "parts");
   fs.mkdirSync(partsDir, { recursive: true });
 
@@ -149,110 +139,107 @@ function generateArtifactsForFolder(targetDir: string, objectId: string, printer
 
   const designPath = path.join(targetDir, "design.json");
   const rawDesign = JSON.parse(fs.readFileSync(designPath, "utf-8"));
-  const bundle = generateCadBundle(rawDesign, { printerId, objectId });
+  const analysisPath = path.join(targetDir, "analysis.json");
+  const rawAnalysis = fs.existsSync(analysisPath)
+    ? JSON.parse(fs.readFileSync(analysisPath, "utf-8"))
+    : undefined;
 
-  console.log(`\n=== Generating STLs & Plates for '${bundle.design.objectName}' in ${targetDir} ===`);
   console.log(
-    `Target Printer: ${bundle.printer.name} (${bundle.printer.bed.x}x${bundle.printer.bed.y}x${bundle.printer.bed.z} mm)`
+    `\n=== Running Argon CAD Agent (OpenSCAD -> openscad-wasm -> STL/3MF) in ${targetDir} ===`
   );
 
-  for (const art of bundle.stlArtifacts) {
-    if (!art.manifold.isManifold) {
-      throw new Error(
-        `Part '${art.partId}' (${art.shape}) failed manifold validation: ${JSON.stringify(art.manifold)}`
-      );
-    }
+  const sseEvents: Array<{ phase: string; message: string }> = [];
 
-    const view = new DataView(art.bytes.buffer, art.bytes.byteOffset, art.bytes.byteLength);
-    const headerTriCount = view.getUint32(80, true);
-    const expectedByteLen = 84 + headerTriCount * 50;
-    if (headerTriCount !== art.manifold.triangleCount || art.byteLength !== expectedByteLen) {
-      throw new Error(
-        `Invalid STL binary structure for ${art.partId}: tris=${headerTriCount}, bytes=${art.byteLength}`
-      );
-    }
+  // Run Argon CAD loop on 4 representative printed parts + parametric OpenSCAD WASM on all printed parts
+  const cadResult = await runCadAgent({
+    design: rawDesign,
+    analysis: rawAnalysis,
+    cwd: targetDir,
+    objectId,
+    printerId,
+    maxRetries: 3,
+    preferRestForSpeed: true,
+    argonPartIds: [
+      "reservoir-tank",
+      "reservoir-lid",
+      "controller-box",
+      "controller-bracket",
+    ],
+    onLog: (entry) => {
+      console.log(`  [CAD ${entry.level.toUpperCase()}] ${entry.message}`);
+    },
+    onEvent: (ev) => {
+      sseEvents.push({ phase: ev.phase, message: ev.message });
+    },
+  });
 
-    const stlAbsPath = path.join(targetDir, art.stlFile);
-    fs.writeFileSync(stlAbsPath, art.bytes);
+  const { bundle, cadReport } = cadResult.data;
+
+  for (const partRep of cadReport.parts) {
+    const scadAbs = path.join(targetDir, partRep.scadFile);
+    const stlAbs = path.join(targetDir, partRep.stlFile);
+    if (!fs.existsSync(scadAbs) || !fs.existsSync(stlAbs)) {
+      throw new Error(`Missing ${partRep.scadFile} or ${partRep.stlFile}`);
+    }
     console.log(
-      `  [STL] ${art.stlFile.padEnd(28)} | qty=${art.quantity} | dims=${art.dims_mm
-        .map((d) => d.toFixed(1))
-        .join("x")} mm | ${art.filamentGrams}g | ~${art.formattedTime} | area=${(
-        art.surfaceAreaMm2 / 100
-      ).toFixed(1)} cm^2 | manifold=true`
+      `  [PART] ${partRep.partId.padEnd(20)} | engine=${partRep.engine.padEnd(
+        19
+      )} | attempts=${partRep.attemptsCount} | bbox=[${partRep.actualDimsMm.join(
+        "x"
+      )}] mm (target [${partRep.targetDimsMm.join("x")}]) | tris=${
+        partRep.triangleCount
+      }`
     );
   }
-
-  if (bundle.packResult.rejected.length > 0) {
-    throw new Error(
-      `Unexpected rejected parts on printer bed: ${JSON.stringify(bundle.packResult.rejected)}`
-    );
-  }
-
-  for (const plate3mf of bundle.plate3mfArtifacts) {
-    if (
-      plate3mf.byteLength < 22 ||
-      plate3mf.bytes[0] !== 0x50 ||
-      plate3mf.bytes[1] !== 0x4b ||
-      plate3mf.bytes[2] !== 0x03 ||
-      plate3mf.bytes[3] !== 0x04
-    ) {
-      throw new Error(`Generated 3MF ${plate3mf.fileName} is not a valid ZIP archive.`);
-    }
-    const outPath = path.join(targetDir, plate3mf.relativePath);
-    fs.writeFileSync(outPath, plate3mf.bytes);
-    const plateInfo = bundle.platesJson.plates[plate3mf.index];
-    console.log(
-      `  [3MF] ${plate3mf.relativePath.padEnd(28)} | size=${plate3mf.byteLength} B | ${plateInfo?.weightGrams ?? 0}g | ~${plateInfo?.formattedTime ?? ""} (${bundle.packResult.heuristicUsed})`
-    );
-  }
-
-  // Write multi-plate Bambu-friendly 3MF (one plate per packed bed in a single 3MF)
-  const multi3mf = bundle.multiPlate3mfArtifact;
-  if (
-    multi3mf.byteLength < 22 ||
-    multi3mf.bytes[0] !== 0x50 ||
-    multi3mf.bytes[1] !== 0x4b
-  ) {
-    throw new Error(`Generated multi-plate 3MF ${multi3mf.fileName} is not a valid ZIP archive.`);
-  }
-  const multiOutPath = path.join(targetDir, multi3mf.relativePath);
-  fs.writeFileSync(multiOutPath, multi3mf.bytes);
-  console.log(
-    `  [3MF] ${multi3mf.relativePath.padEnd(28)} | size=${multi3mf.byteLength} B | ${multi3mf.plateCount} packed plate(s) in 1 Bambu 3MF`
-  );
-
-  const platesJsonPath = path.join(targetDir, "plates.json");
-  fs.writeFileSync(platesJsonPath, JSON.stringify(bundle.platesJson, null, 2) + "\n", "utf-8");
 
   // Validate instructions.json motion vectors against design.json
   const instructionsPath = path.join(targetDir, "instructions.json");
   if (fs.existsSync(instructionsPath)) {
     const rawInstructions = JSON.parse(fs.readFileSync(instructionsPath, "utf-8"));
-    const normInstructions = normalizeInstructions(rawInstructions, bundle.design);
-    fs.writeFileSync(instructionsPath, JSON.stringify(normInstructions, null, 2) + "\n", "utf-8");
-    console.log(`  [OK] Verified instructions.json (${normInstructions.steps.length} steps with motion:{partId,from,to}[]).`);
+    const normInstructions = normalizeInstructions(
+      rawInstructions,
+      normalizeDesignSpec(rawDesign)
+    );
+    fs.writeFileSync(
+      instructionsPath,
+      JSON.stringify(normInstructions, null, 2) + "\n",
+      "utf-8"
+    );
+    console.log(
+      `  [OK] Verified instructions.json (${normInstructions.steps.length} steps with motion:{partId,from,to}[]).`
+    );
   }
 
   console.log(
-    `\nWrote ${platesJsonPath} (${bundle.platesJson.totalPlates} plate(s), ${bundle.platesJson.totalPrintedItems} total printed items, ${bundle.platesJson.totalWeightGrams}g total).`
+    `\nCompleted CAD Agent in ${(cadResult.durationMs / 1000).toFixed(1)}s (runner=${
+      cadResult.runner
+    }, SSE events=${sseEvents.length}, plates=${
+      bundle.platesJson.totalPlates
+    }, weight=${bundle.platesJson.totalWeightGrams}g, time=${
+      bundle.platesJson.formattedTotalPrintTime
+    }).`
   );
 }
 
-function main(): void {
+async function main(): Promise<void> {
   verifyAllParametricShapes();
-  verifyLegacyAdapterCompatibility();
+  await verifyOpenScadWasmCompilerAndValidator();
 
   const scriptDir = path.dirname(fileURLToPath(import.meta.url));
   const rootDir = path.resolve(scriptDir, "..");
-  const nodeProcess = (globalThis as { process?: { argv?: string[]; cwd?: () => string } }).process;
+  const nodeProcess = (
+    globalThis as { process?: { argv?: string[]; cwd?: () => string } }
+  ).process;
   const cliTarget = nodeProcess?.argv?.[2];
   const targetDir = cliTarget
     ? path.resolve(nodeProcess?.cwd ? nodeProcess.cwd() : rootDir, cliTarget)
     : path.join(rootDir, "data", "demo", "plant-waterer");
   const objectId = path.basename(targetDir);
 
-  generateArtifactsForFolder(targetDir, objectId, DEFAULT_PRINTER_ID);
+  await generateArtifactsForFolder(targetDir, objectId, DEFAULT_PRINTER_ID);
 }
 
-main();
+main().catch((err) => {
+  console.error(err);
+  process.exit(1);
+});

@@ -10,13 +10,13 @@
   "totalPlates": 1,
   "totalUniqueParts": 9,
   "totalPrintedItems": 13,
-  "totalWeightGrams": 248.9,
-  "totalFilamentGrams": 248.9,
-  "totalFilamentMeters": 83.4,
+  "totalWeightGrams": 249.1,
+  "totalFilamentGrams": 249.1,
+  "totalFilamentMeters": 83.51,
   "totalPrintTimeMinutes": 370,
   "formattedTotalPrintTime": "6h 10m",
   "multiPlate3mfFile": "parts/all-plates.3mf",
-  "multiPlate3mfBytes": 245885,
+  "multiPlate3mfBytes": 1169291,
   "printer": {
     "id": "bambu-a1",
     "name": "Bambu Lab A1",
@@ -39,7 +39,9 @@
       "shape": "custom_csg",
       "stlFile": "parts/reservoir-tank.stl",
       "file": "parts/reservoir-tank.stl",
-      "bytes": 11084,
+      "scadFile": "parts/reservoir-tank.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 67484,
       "dims_mm": [
         115,
         115,
@@ -50,21 +52,21 @@
         115,
         100
       ],
-      "weightGrams": 135.7,
-      "filamentGrams": 135.7,
-      "filamentMeters": 45.49,
-      "estimatedMinutes": 189,
-      "printTimeMinutes": 189,
-      "formattedTime": "3h 9m",
+      "weightGrams": 146.1,
+      "filamentGrams": 146.1,
+      "filamentMeters": 48.97,
+      "estimatedMinutes": 202,
+      "printTimeMinutes": 202,
+      "formattedTime": "3h 22m",
       "color": "#0ea5e9",
       "material": "PETG",
       "quantity": 1,
-      "triangleCount": 220,
-      "vertexCount": 112,
-      "edgeCount": 330,
-      "volumeMm3": 196081.9,
-      "surfaceAreaMm2": 110167.24,
-      "isManifold": true
+      "triangleCount": 1348,
+      "vertexCount": 673,
+      "edgeCount": 2021,
+      "volumeMm3": 220867.47,
+      "surfaceAreaMm2": 112214.15,
+      "isManifold": false
     },
     {
       "partId": "reservoir-lid",
@@ -72,7 +74,9 @@
       "shape": "plate_with_holes",
       "stlFile": "parts/reservoir-lid.stl",
       "file": "parts/reservoir-lid.stl",
-      "bytes": 18084,
+      "scadFile": "parts/reservoir-lid.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 187684,
       "dims_mm": [
         120,
         120,
@@ -83,20 +87,20 @@
         120,
         7
       ],
-      "weightGrams": 49.2,
-      "filamentGrams": 49.2,
-      "filamentMeters": 16.49,
-      "estimatedMinutes": 62,
-      "printTimeMinutes": 62,
-      "formattedTime": "1h 2m",
+      "weightGrams": 37.4,
+      "filamentGrams": 37.4,
+      "filamentMeters": 12.53,
+      "estimatedMinutes": 48,
+      "printTimeMinutes": 48,
+      "formattedTime": "48m",
       "color": "#10b981",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 360,
-      "vertexCount": 176,
-      "edgeCount": 540,
-      "volumeMm3": 96394.42,
-      "surfaceAreaMm2": 31631.58,
+      "triangleCount": 3752,
+      "vertexCount": 1864,
+      "edgeCount": 5628,
+      "volumeMm3": 53357.45,
+      "surfaceAreaMm2": 34159.3,
       "isManifold": true
     },
     {
@@ -105,7 +109,9 @@
       "shape": "tube",
       "stlFile": "parts/pump-mount.stl",
       "file": "parts/pump-mount.stl",
-      "bytes": 28884,
+      "scadFile": "parts/pump-mount.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 76884,
       "dims_mm": [
         56,
         56,
@@ -116,20 +122,20 @@
         56,
         32
       ],
-      "weightGrams": 15,
-      "filamentGrams": 15,
-      "filamentMeters": 5.04,
-      "estimatedMinutes": 28,
-      "printTimeMinutes": 28,
-      "formattedTime": "28m",
+      "weightGrams": 14.5,
+      "filamentGrams": 14.5,
+      "filamentMeters": 4.87,
+      "estimatedMinutes": 27,
+      "printTimeMinutes": 27,
+      "formattedTime": "27m",
       "color": "#334155",
       "material": "PETG",
       "quantity": 1,
-      "triangleCount": 576,
-      "vertexCount": 288,
-      "edgeCount": 864,
-      "volumeMm3": 26614.81,
-      "surfaceAreaMm2": 11093.64,
+      "triangleCount": 1536,
+      "vertexCount": 752,
+      "edgeCount": 2304,
+      "volumeMm3": 24152.23,
+      "surfaceAreaMm2": 11521.63,
       "isManifold": true
     },
     {
@@ -138,6 +144,8 @@
       "shape": "funnel",
       "stlFile": "parts/refill-funnel.stl",
       "file": "parts/refill-funnel.stl",
+      "scadFile": "parts/refill-funnel.scad",
+      "cadEngine": "openscad-wasm",
       "bytes": 38484,
       "dims_mm": [
         54,
@@ -149,9 +157,9 @@
         54,
         38
       ],
-      "weightGrams": 7.9,
-      "filamentGrams": 7.9,
-      "filamentMeters": 2.64,
+      "weightGrams": 7.2,
+      "filamentGrams": 7.2,
+      "filamentMeters": 2.42,
       "estimatedMinutes": 20,
       "printTimeMinutes": 20,
       "formattedTime": "20m",
@@ -161,8 +169,8 @@
       "triangleCount": 768,
       "vertexCount": 384,
       "edgeCount": 1152,
-      "volumeMm3": 9637.47,
-      "surfaceAreaMm2": 8424.04,
+      "volumeMm3": 7627.09,
+      "surfaceAreaMm2": 8207.16,
       "isManifold": true
     },
     {
@@ -171,7 +179,9 @@
       "shape": "custom_csg",
       "stlFile": "parts/controller-box.stl",
       "file": "parts/controller-box.stl",
-      "bytes": 17884,
+      "scadFile": "parts/controller-box.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 263084,
       "dims_mm": [
         78,
         54,
@@ -182,20 +192,20 @@
         54,
         28
       ],
-      "weightGrams": 21.3,
-      "filamentGrams": 21.3,
-      "filamentMeters": 7.13,
-      "estimatedMinutes": 34,
-      "printTimeMinutes": 34,
-      "formattedTime": "34m",
+      "weightGrams": 23.2,
+      "filamentGrams": 23.2,
+      "filamentMeters": 7.79,
+      "estimatedMinutes": 36,
+      "printTimeMinutes": 36,
+      "formattedTime": "36m",
       "color": "#1e293b",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 356,
-      "vertexCount": 176,
-      "edgeCount": 534,
-      "volumeMm3": 29586.1,
-      "surfaceAreaMm2": 21387.33,
+      "triangleCount": 5260,
+      "vertexCount": 2604,
+      "edgeCount": 7890,
+      "volumeMm3": 32830.02,
+      "surfaceAreaMm2": 23177.5,
       "isManifold": true
     },
     {
@@ -204,7 +214,9 @@
       "shape": "bracketL",
       "stlFile": "parts/controller-bracket.stl",
       "file": "parts/controller-bracket.stl",
-      "bytes": 2284,
+      "scadFile": "parts/controller-bracket.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 74284,
       "dims_mm": [
         42,
         38,
@@ -215,20 +227,20 @@
         38,
         30
       ],
-      "weightGrams": 6.8,
-      "filamentGrams": 6.8,
-      "filamentMeters": 2.29,
-      "estimatedMinutes": 17,
-      "printTimeMinutes": 17,
-      "formattedTime": "17m",
+      "weightGrams": 7.4,
+      "filamentGrams": 7.4,
+      "filamentMeters": 2.47,
+      "estimatedMinutes": 18,
+      "printTimeMinutes": 18,
+      "formattedTime": "18m",
       "color": "#059669",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 44,
-      "vertexCount": 24,
-      "edgeCount": 66,
-      "volumeMm3": 9227.3,
-      "surfaceAreaMm2": 5363.11,
+      "triangleCount": 1484,
+      "vertexCount": 734,
+      "edgeCount": 2226,
+      "volumeMm3": 9634.39,
+      "surfaceAreaMm2": 6018.9,
       "isManifold": true
     },
     {
@@ -237,15 +249,17 @@
       "shape": "clip",
       "stlFile": "parts/tube-clip.stl",
       "file": "parts/tube-clip.stl",
-      "bytes": 11484,
+      "scadFile": "parts/tube-clip.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 15084,
       "dims_mm": [
         10.49,
-        11.2,
+        10.15,
         12
       ],
       "dimensionsMm": [
         10.49,
-        11.2,
+        10.15,
         12
       ],
       "weightGrams": 4.8,
@@ -257,11 +271,11 @@
       "color": "#14b8a6",
       "material": "PETG",
       "quantity": 4,
-      "triangleCount": 228,
-      "vertexCount": 116,
-      "edgeCount": 342,
-      "volumeMm3": 631.94,
-      "surfaceAreaMm2": 705.16,
+      "triangleCount": 300,
+      "vertexCount": 152,
+      "edgeCount": 450,
+      "volumeMm3": 568.72,
+      "surfaceAreaMm2": 659.39,
       "isManifold": true
     },
     {
@@ -270,7 +284,9 @@
       "shape": "hook",
       "stlFile": "parts/drip-stake.stl",
       "file": "parts/drip-stake.stl",
-      "bytes": 7484,
+      "scadFile": "parts/drip-stake.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 10884,
       "dims_mm": [
         23.2,
         106.6,
@@ -281,20 +297,20 @@
         106.6,
         8
       ],
-      "weightGrams": 5.8,
-      "filamentGrams": 5.8,
-      "filamentMeters": 1.92,
+      "weightGrams": 6,
+      "filamentGrams": 6,
+      "filamentMeters": 2.02,
       "estimatedMinutes": 14,
       "printTimeMinutes": 14,
       "formattedTime": "14m",
       "color": "#f59e0b",
       "material": "PLA",
       "quantity": 2,
-      "triangleCount": 148,
-      "vertexCount": 76,
-      "edgeCount": 222,
-      "volumeMm3": 3015.82,
-      "surfaceAreaMm2": 2964.76,
+      "triangleCount": 216,
+      "vertexCount": 110,
+      "edgeCount": 324,
+      "volumeMm3": 3278.87,
+      "surfaceAreaMm2": 3021.99,
       "isManifold": true
     },
     {
@@ -303,31 +319,33 @@
       "shape": "gear_simple",
       "stlFile": "parts/flow-wheel.stl",
       "file": "parts/flow-wheel.stl",
-      "bytes": 22484,
+      "scadFile": "parts/flow-wheel.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 26084,
       "dims_mm": [
-        28.66,
-        28.8,
+        28.7,
+        28.53,
         7
       ],
       "dimensionsMm": [
-        28.66,
-        28.8,
+        28.7,
+        28.53,
         7
       ],
-      "weightGrams": 2.4,
-      "filamentGrams": 2.4,
-      "filamentMeters": 0.8,
+      "weightGrams": 2.5,
+      "filamentGrams": 2.5,
+      "filamentMeters": 0.84,
       "estimatedMinutes": 6,
       "printTimeMinutes": 6,
       "formattedTime": "6m",
       "color": "#f97316",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 448,
-      "vertexCount": 224,
-      "edgeCount": 672,
-      "volumeMm3": 3137.27,
-      "surfaceAreaMm2": 2123.28,
+      "triangleCount": 520,
+      "vertexCount": 260,
+      "edgeCount": 780,
+      "volumeMm3": 3364.67,
+      "surfaceAreaMm2": 2184.55,
       "isManifold": true
     }
   ],
@@ -338,7 +356,9 @@
       "shape": "custom_csg",
       "stlFile": "parts/reservoir-tank.stl",
       "file": "parts/reservoir-tank.stl",
-      "bytes": 11084,
+      "scadFile": "parts/reservoir-tank.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 67484,
       "dims_mm": [
         115,
         115,
@@ -349,21 +369,21 @@
         115,
         100
       ],
-      "weightGrams": 135.7,
-      "filamentGrams": 135.7,
-      "filamentMeters": 45.49,
-      "estimatedMinutes": 189,
-      "printTimeMinutes": 189,
-      "formattedTime": "3h 9m",
+      "weightGrams": 146.1,
+      "filamentGrams": 146.1,
+      "filamentMeters": 48.97,
+      "estimatedMinutes": 202,
+      "printTimeMinutes": 202,
+      "formattedTime": "3h 22m",
       "color": "#0ea5e9",
       "material": "PETG",
       "quantity": 1,
-      "triangleCount": 220,
-      "vertexCount": 112,
-      "edgeCount": 330,
-      "volumeMm3": 196081.9,
-      "surfaceAreaMm2": 110167.24,
-      "isManifold": true
+      "triangleCount": 1348,
+      "vertexCount": 673,
+      "edgeCount": 2021,
+      "volumeMm3": 220867.47,
+      "surfaceAreaMm2": 112214.15,
+      "isManifold": false
     },
     {
       "partId": "reservoir-lid",
@@ -371,7 +391,9 @@
       "shape": "plate_with_holes",
       "stlFile": "parts/reservoir-lid.stl",
       "file": "parts/reservoir-lid.stl",
-      "bytes": 18084,
+      "scadFile": "parts/reservoir-lid.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 187684,
       "dims_mm": [
         120,
         120,
@@ -382,20 +404,20 @@
         120,
         7
       ],
-      "weightGrams": 49.2,
-      "filamentGrams": 49.2,
-      "filamentMeters": 16.49,
-      "estimatedMinutes": 62,
-      "printTimeMinutes": 62,
-      "formattedTime": "1h 2m",
+      "weightGrams": 37.4,
+      "filamentGrams": 37.4,
+      "filamentMeters": 12.53,
+      "estimatedMinutes": 48,
+      "printTimeMinutes": 48,
+      "formattedTime": "48m",
       "color": "#10b981",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 360,
-      "vertexCount": 176,
-      "edgeCount": 540,
-      "volumeMm3": 96394.42,
-      "surfaceAreaMm2": 31631.58,
+      "triangleCount": 3752,
+      "vertexCount": 1864,
+      "edgeCount": 5628,
+      "volumeMm3": 53357.45,
+      "surfaceAreaMm2": 34159.3,
       "isManifold": true
     },
     {
@@ -404,7 +426,9 @@
       "shape": "tube",
       "stlFile": "parts/pump-mount.stl",
       "file": "parts/pump-mount.stl",
-      "bytes": 28884,
+      "scadFile": "parts/pump-mount.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 76884,
       "dims_mm": [
         56,
         56,
@@ -415,20 +439,20 @@
         56,
         32
       ],
-      "weightGrams": 15,
-      "filamentGrams": 15,
-      "filamentMeters": 5.04,
-      "estimatedMinutes": 28,
-      "printTimeMinutes": 28,
-      "formattedTime": "28m",
+      "weightGrams": 14.5,
+      "filamentGrams": 14.5,
+      "filamentMeters": 4.87,
+      "estimatedMinutes": 27,
+      "printTimeMinutes": 27,
+      "formattedTime": "27m",
       "color": "#334155",
       "material": "PETG",
       "quantity": 1,
-      "triangleCount": 576,
-      "vertexCount": 288,
-      "edgeCount": 864,
-      "volumeMm3": 26614.81,
-      "surfaceAreaMm2": 11093.64,
+      "triangleCount": 1536,
+      "vertexCount": 752,
+      "edgeCount": 2304,
+      "volumeMm3": 24152.23,
+      "surfaceAreaMm2": 11521.63,
       "isManifold": true
     },
     {
@@ -437,6 +461,8 @@
       "shape": "funnel",
       "stlFile": "parts/refill-funnel.stl",
       "file": "parts/refill-funnel.stl",
+      "scadFile": "parts/refill-funnel.scad",
+      "cadEngine": "openscad-wasm",
       "bytes": 38484,
       "dims_mm": [
         54,
@@ -448,9 +474,9 @@
         54,
         38
       ],
-      "weightGrams": 7.9,
-      "filamentGrams": 7.9,
-      "filamentMeters": 2.64,
+      "weightGrams": 7.2,
+      "filamentGrams": 7.2,
+      "filamentMeters": 2.42,
       "estimatedMinutes": 20,
       "printTimeMinutes": 20,
       "formattedTime": "20m",
@@ -460,8 +486,8 @@
       "triangleCount": 768,
       "vertexCount": 384,
       "edgeCount": 1152,
-      "volumeMm3": 9637.47,
-      "surfaceAreaMm2": 8424.04,
+      "volumeMm3": 7627.09,
+      "surfaceAreaMm2": 8207.16,
       "isManifold": true
     },
     {
@@ -470,7 +496,9 @@
       "shape": "custom_csg",
       "stlFile": "parts/controller-box.stl",
       "file": "parts/controller-box.stl",
-      "bytes": 17884,
+      "scadFile": "parts/controller-box.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 263084,
       "dims_mm": [
         78,
         54,
@@ -481,20 +509,20 @@
         54,
         28
       ],
-      "weightGrams": 21.3,
-      "filamentGrams": 21.3,
-      "filamentMeters": 7.13,
-      "estimatedMinutes": 34,
-      "printTimeMinutes": 34,
-      "formattedTime": "34m",
+      "weightGrams": 23.2,
+      "filamentGrams": 23.2,
+      "filamentMeters": 7.79,
+      "estimatedMinutes": 36,
+      "printTimeMinutes": 36,
+      "formattedTime": "36m",
       "color": "#1e293b",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 356,
-      "vertexCount": 176,
-      "edgeCount": 534,
-      "volumeMm3": 29586.1,
-      "surfaceAreaMm2": 21387.33,
+      "triangleCount": 5260,
+      "vertexCount": 2604,
+      "edgeCount": 7890,
+      "volumeMm3": 32830.02,
+      "surfaceAreaMm2": 23177.5,
       "isManifold": true
     },
     {
@@ -503,7 +531,9 @@
       "shape": "bracketL",
       "stlFile": "parts/controller-bracket.stl",
       "file": "parts/controller-bracket.stl",
-      "bytes": 2284,
+      "scadFile": "parts/controller-bracket.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 74284,
       "dims_mm": [
         42,
         38,
@@ -514,20 +544,20 @@
         38,
         30
       ],
-      "weightGrams": 6.8,
-      "filamentGrams": 6.8,
-      "filamentMeters": 2.29,
-      "estimatedMinutes": 17,
-      "printTimeMinutes": 17,
-      "formattedTime": "17m",
+      "weightGrams": 7.4,
+      "filamentGrams": 7.4,
+      "filamentMeters": 2.47,
+      "estimatedMinutes": 18,
+      "printTimeMinutes": 18,
+      "formattedTime": "18m",
       "color": "#059669",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 44,
-      "vertexCount": 24,
-      "edgeCount": 66,
-      "volumeMm3": 9227.3,
-      "surfaceAreaMm2": 5363.11,
+      "triangleCount": 1484,
+      "vertexCount": 734,
+      "edgeCount": 2226,
+      "volumeMm3": 9634.39,
+      "surfaceAreaMm2": 6018.9,
       "isManifold": true
     },
     {
@@ -536,15 +566,17 @@
       "shape": "clip",
       "stlFile": "parts/tube-clip.stl",
       "file": "parts/tube-clip.stl",
-      "bytes": 11484,
+      "scadFile": "parts/tube-clip.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 15084,
       "dims_mm": [
         10.49,
-        11.2,
+        10.15,
         12
       ],
       "dimensionsMm": [
         10.49,
-        11.2,
+        10.15,
         12
       ],
       "weightGrams": 4.8,
@@ -556,11 +588,11 @@
       "color": "#14b8a6",
       "material": "PETG",
       "quantity": 4,
-      "triangleCount": 228,
-      "vertexCount": 116,
-      "edgeCount": 342,
-      "volumeMm3": 631.94,
-      "surfaceAreaMm2": 705.16,
+      "triangleCount": 300,
+      "vertexCount": 152,
+      "edgeCount": 450,
+      "volumeMm3": 568.72,
+      "surfaceAreaMm2": 659.39,
       "isManifold": true
     },
     {
@@ -569,7 +601,9 @@
       "shape": "hook",
       "stlFile": "parts/drip-stake.stl",
       "file": "parts/drip-stake.stl",
-      "bytes": 7484,
+      "scadFile": "parts/drip-stake.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 10884,
       "dims_mm": [
         23.2,
         106.6,
@@ -580,20 +614,20 @@
         106.6,
         8
       ],
-      "weightGrams": 5.8,
-      "filamentGrams": 5.8,
-      "filamentMeters": 1.92,
+      "weightGrams": 6,
+      "filamentGrams": 6,
+      "filamentMeters": 2.02,
       "estimatedMinutes": 14,
       "printTimeMinutes": 14,
       "formattedTime": "14m",
       "color": "#f59e0b",
       "material": "PLA",
       "quantity": 2,
-      "triangleCount": 148,
-      "vertexCount": 76,
-      "edgeCount": 222,
-      "volumeMm3": 3015.82,
-      "surfaceAreaMm2": 2964.76,
+      "triangleCount": 216,
+      "vertexCount": 110,
+      "edgeCount": 324,
+      "volumeMm3": 3278.87,
+      "surfaceAreaMm2": 3021.99,
       "isManifold": true
     },
     {
@@ -602,31 +636,33 @@
       "shape": "gear_simple",
       "stlFile": "parts/flow-wheel.stl",
       "file": "parts/flow-wheel.stl",
-      "bytes": 22484,
+      "scadFile": "parts/flow-wheel.scad",
+      "cadEngine": "openscad-wasm",
+      "bytes": 26084,
       "dims_mm": [
-        28.66,
-        28.8,
+        28.7,
+        28.53,
         7
       ],
       "dimensionsMm": [
-        28.66,
-        28.8,
+        28.7,
+        28.53,
         7
       ],
-      "weightGrams": 2.4,
-      "filamentGrams": 2.4,
-      "filamentMeters": 0.8,
+      "weightGrams": 2.5,
+      "filamentGrams": 2.5,
+      "filamentMeters": 0.84,
       "estimatedMinutes": 6,
       "printTimeMinutes": 6,
       "formattedTime": "6m",
       "color": "#f97316",
       "material": "PLA",
       "quantity": 1,
-      "triangleCount": 448,
-      "vertexCount": 224,
-      "edgeCount": 672,
-      "volumeMm3": 3137.27,
-      "surfaceAreaMm2": 2123.28,
+      "triangleCount": 520,
+      "vertexCount": 260,
+      "edgeCount": 780,
+      "volumeMm3": 3364.67,
+      "surfaceAreaMm2": 2184.55,
       "isManifold": true
     }
   ],
@@ -642,19 +678,19 @@
         256,
         256
       ],
-      "utilizationPercent": 75.56,
-      "utilization": 0.7556,
+      "utilizationPercent": 75.48,
+      "utilization": 0.7548,
       "maxHeight": 100,
       "estimatedMinutes": 370,
       "printTimeMinutes": 370,
       "formattedTime": "6h 10m",
-      "weightGrams": 248.9,
-      "filamentGrams": 248.9,
-      "filamentMeters": 83.4,
+      "weightGrams": 249.1,
+      "filamentGrams": 249.1,
+      "filamentMeters": 83.51,
       "layers": 500,
       "stlFile": "parts/plate-1.3mf",
       "file": "parts/plate-1.3mf",
-      "bytes": 245865,
+      "bytes": 1169271,
       "placements": [
         {
           "partId": "reservoir-lid",
@@ -671,8 +707,8 @@
           "rotated": false,
           "color": "#10b981",
           "stlFile": "parts/reservoir-lid.stl",
-          "weightGrams": 49.2,
-          "estimatedMinutes": 62
+          "weightGrams": 37.4,
+          "estimatedMinutes": 48
         },
         {
           "partId": "reservoir-tank",
@@ -689,8 +725,8 @@
           "rotated": false,
           "color": "#0ea5e9",
           "stlFile": "parts/reservoir-tank.stl",
-          "weightGrams": 135.7,
-          "estimatedMinutes": 189
+          "weightGrams": 146.1,
+          "estimatedMinutes": 202
         },
         {
           "partId": "controller-box",
@@ -707,8 +743,8 @@
           "rotated": false,
           "color": "#1e293b",
           "stlFile": "parts/controller-box.stl",
-          "weightGrams": 21.3,
-          "estimatedMinutes": 34
+          "weightGrams": 23.2,
+          "estimatedMinutes": 36
         },
         {
           "partId": "pump-mount",
@@ -725,8 +761,8 @@
           "rotated": false,
           "color": "#334155",
           "stlFile": "parts/pump-mount.stl",
-          "weightGrams": 15,
-          "estimatedMinutes": 28
+          "weightGrams": 14.5,
+          "estimatedMinutes": 27
         },
         {
           "partId": "refill-funnel",
@@ -743,7 +779,7 @@
           "rotated": false,
           "color": "#84cc16",
           "stlFile": "parts/refill-funnel.stl",
-          "weightGrams": 7.9,
+          "weightGrams": 7.2,
           "estimatedMinutes": 20
         },
         {
@@ -761,7 +797,7 @@
           "rotated": false,
           "color": "#f59e0b",
           "stlFile": "parts/drip-stake.stl",
-          "weightGrams": 2.9,
+          "weightGrams": 3,
           "estimatedMinutes": 7
         },
         {
@@ -779,7 +815,7 @@
           "rotated": true,
           "color": "#f59e0b",
           "stlFile": "parts/drip-stake.stl",
-          "weightGrams": 2.9,
+          "weightGrams": 3,
           "estimatedMinutes": 7
         },
         {
@@ -797,8 +833,8 @@
           "rotated": false,
           "color": "#059669",
           "stlFile": "parts/controller-bracket.stl",
-          "weightGrams": 6.8,
-          "estimatedMinutes": 17
+          "weightGrams": 7.4,
+          "estimatedMinutes": 18
         },
         {
           "partId": "flow-wheel",
@@ -807,15 +843,15 @@
           "copy": 1,
           "x": 177,
           "y": 184,
-          "centerX": 191.4,
-          "centerY": 198.33,
-          "width": 28.8,
-          "depth": 28.66,
+          "centerX": 191.35,
+          "centerY": 198.26,
+          "width": 28.7,
+          "depth": 28.53,
           "height": 7,
-          "rotated": true,
+          "rotated": false,
           "color": "#f97316",
           "stlFile": "parts/flow-wheel.stl",
-          "weightGrams": 2.4,
+          "weightGrams": 2.5,
           "estimatedMinutes": 6
         },
         {
@@ -824,13 +860,13 @@
           "copyIndex": 1,
           "copy": 1,
           "x": 177,
-          "y": 217.66,
-          "centerX": 182.6,
-          "centerY": 222.9,
-          "width": 11.2,
-          "depth": 10.49,
+          "y": 217.53,
+          "centerX": 182.24,
+          "centerY": 222.61,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -841,14 +877,14 @@
           "name": "Rim-Snap 6mm Silicone Tube Clip",
           "copyIndex": 2,
           "copy": 2,
-          "x": 193.2,
-          "y": 217.66,
-          "centerX": 198.8,
-          "centerY": 222.9,
-          "width": 11.2,
-          "depth": 10.49,
+          "x": 192.49,
+          "y": 217.53,
+          "centerX": 197.73,
+          "centerY": 222.61,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -861,12 +897,12 @@
           "copy": 3,
           "x": 5,
           "y": 219.2,
-          "centerX": 10.6,
-          "centerY": 224.44,
-          "width": 11.2,
-          "depth": 10.49,
+          "centerX": 10.24,
+          "centerY": 224.28,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -877,14 +913,14 @@
           "name": "Rim-Snap 6mm Silicone Tube Clip",
           "copyIndex": 4,
           "copy": 4,
-          "x": 21.2,
+          "x": 20.49,
           "y": 219.2,
-          "centerX": 26.8,
-          "centerY": 224.44,
-          "width": 11.2,
-          "depth": 10.49,
+          "centerX": 25.73,
+          "centerY": 224.28,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -907,8 +943,8 @@
           "rotated": false,
           "color": "#10b981",
           "stlFile": "parts/reservoir-lid.stl",
-          "weightGrams": 49.2,
-          "estimatedMinutes": 62
+          "weightGrams": 37.4,
+          "estimatedMinutes": 48
         },
         {
           "partId": "reservoir-tank",
@@ -925,8 +961,8 @@
           "rotated": false,
           "color": "#0ea5e9",
           "stlFile": "parts/reservoir-tank.stl",
-          "weightGrams": 135.7,
-          "estimatedMinutes": 189
+          "weightGrams": 146.1,
+          "estimatedMinutes": 202
         },
         {
           "partId": "controller-box",
@@ -943,8 +979,8 @@
           "rotated": false,
           "color": "#1e293b",
           "stlFile": "parts/controller-box.stl",
-          "weightGrams": 21.3,
-          "estimatedMinutes": 34
+          "weightGrams": 23.2,
+          "estimatedMinutes": 36
         },
         {
           "partId": "pump-mount",
@@ -961,8 +997,8 @@
           "rotated": false,
           "color": "#334155",
           "stlFile": "parts/pump-mount.stl",
-          "weightGrams": 15,
-          "estimatedMinutes": 28
+          "weightGrams": 14.5,
+          "estimatedMinutes": 27
         },
         {
           "partId": "refill-funnel",
@@ -979,7 +1015,7 @@
           "rotated": false,
           "color": "#84cc16",
           "stlFile": "parts/refill-funnel.stl",
-          "weightGrams": 7.9,
+          "weightGrams": 7.2,
           "estimatedMinutes": 20
         },
         {
@@ -997,7 +1033,7 @@
           "rotated": false,
           "color": "#f59e0b",
           "stlFile": "parts/drip-stake.stl",
-          "weightGrams": 2.9,
+          "weightGrams": 3,
           "estimatedMinutes": 7
         },
         {
@@ -1015,7 +1051,7 @@
           "rotated": true,
           "color": "#f59e0b",
           "stlFile": "parts/drip-stake.stl",
-          "weightGrams": 2.9,
+          "weightGrams": 3,
           "estimatedMinutes": 7
         },
         {
@@ -1033,8 +1069,8 @@
           "rotated": false,
           "color": "#059669",
           "stlFile": "parts/controller-bracket.stl",
-          "weightGrams": 6.8,
-          "estimatedMinutes": 17
+          "weightGrams": 7.4,
+          "estimatedMinutes": 18
         },
         {
           "partId": "flow-wheel",
@@ -1043,15 +1079,15 @@
           "copy": 1,
           "x": 177,
           "y": 184,
-          "centerX": 191.4,
-          "centerY": 198.33,
-          "width": 28.8,
-          "depth": 28.66,
+          "centerX": 191.35,
+          "centerY": 198.26,
+          "width": 28.7,
+          "depth": 28.53,
           "height": 7,
-          "rotated": true,
+          "rotated": false,
           "color": "#f97316",
           "stlFile": "parts/flow-wheel.stl",
-          "weightGrams": 2.4,
+          "weightGrams": 2.5,
           "estimatedMinutes": 6
         },
         {
@@ -1060,13 +1096,13 @@
           "copyIndex": 1,
           "copy": 1,
           "x": 177,
-          "y": 217.66,
-          "centerX": 182.6,
-          "centerY": 222.9,
-          "width": 11.2,
-          "depth": 10.49,
+          "y": 217.53,
+          "centerX": 182.24,
+          "centerY": 222.61,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -1077,14 +1113,14 @@
           "name": "Rim-Snap 6mm Silicone Tube Clip",
           "copyIndex": 2,
           "copy": 2,
-          "x": 193.2,
-          "y": 217.66,
-          "centerX": 198.8,
-          "centerY": 222.9,
-          "width": 11.2,
-          "depth": 10.49,
+          "x": 192.49,
+          "y": 217.53,
+          "centerX": 197.73,
+          "centerY": 222.61,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -1097,12 +1133,12 @@
           "copy": 3,
           "x": 5,
           "y": 219.2,
-          "centerX": 10.6,
-          "centerY": 224.44,
-          "width": 11.2,
-          "depth": 10.49,
+          "centerX": 10.24,
+          "centerY": 224.28,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -1113,14 +1149,14 @@
           "name": "Rim-Snap 6mm Silicone Tube Clip",
           "copyIndex": 4,
           "copy": 4,
-          "x": 21.2,
+          "x": 20.49,
           "y": 219.2,
-          "centerX": 26.8,
-          "centerY": 224.44,
-          "width": 11.2,
-          "depth": 10.49,
+          "centerX": 25.73,
+          "centerY": 224.28,
+          "width": 10.49,
+          "depth": 10.15,
           "height": 12,
-          "rotated": true,
+          "rotated": false,
           "color": "#14b8a6",
           "stlFile": "parts/tube-clip.stl",
           "weightGrams": 1.2,
@@ -1129,5 +1165,495 @@
       ]
     }
   ],
-  "rejected": []
+  "rejected": [],
+  "cadReport": {
+    "printerId": "bambu-a1",
+    "printerName": "Bambu Lab A1",
+    "bedDimensionsMm": [
+      256,
+      256,
+      256
+    ],
+    "totalPrintedParts": 9,
+    "argonOpenScadParts": 4,
+    "fallbackParts": 0,
+    "totalAttempts": 4,
+    "parts": [
+      {
+        "partId": "reservoir-tank",
+        "name": "Water Reservoir Base (1.4L)",
+        "targetDimsMm": [
+          115,
+          115,
+          100
+        ],
+        "actualDimsMm": [
+          115,
+          115,
+          100
+        ],
+        "scadFile": "parts/reservoir-tank.scad",
+        "stlFile": "parts/reservoir-tank.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 37721,
+            "actualDimsMm": [
+              115,
+              115,
+              100
+            ],
+            "triangleCount": 1348
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": false,
+          "triangleCount": 1348,
+          "volumeMm3": 220867.47,
+          "actualDimsMm": [
+            115,
+            115,
+            100
+          ],
+          "targetDimsMm": [
+            115,
+            115,
+            100
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1348,
+        "volumeMm3": 220867.47,
+        "isManifold": false
+      },
+      {
+        "partId": "reservoir-lid",
+        "name": "Snap-Fit Reservoir Lid with Port Grommets",
+        "targetDimsMm": [
+          120,
+          120,
+          7
+        ],
+        "actualDimsMm": [
+          120,
+          120,
+          7
+        ],
+        "scadFile": "parts/reservoir-lid.scad",
+        "stlFile": "parts/reservoir-lid.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 42889,
+            "actualDimsMm": [
+              120,
+              120,
+              7
+            ],
+            "triangleCount": 3752
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 3752,
+          "volumeMm3": 53357.45,
+          "actualDimsMm": [
+            120,
+            120,
+            7
+          ],
+          "targetDimsMm": [
+            120,
+            120,
+            7
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 3752,
+        "volumeMm3": 53357.45,
+        "isManifold": true
+      },
+      {
+        "partId": "pump-mount",
+        "name": "Submersible Pump Isolation Cradle",
+        "targetDimsMm": [
+          56,
+          56,
+          32
+        ],
+        "actualDimsMm": [
+          56,
+          56,
+          32
+        ],
+        "scadFile": "parts/pump-mount.scad",
+        "stlFile": "parts/pump-mount.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1536,
+          "volumeMm3": 24152.23,
+          "actualDimsMm": [
+            56,
+            56,
+            32
+          ],
+          "targetDimsMm": [
+            56,
+            56,
+            32
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1536,
+        "volumeMm3": 24152.23,
+        "isManifold": true
+      },
+      {
+        "partId": "refill-funnel",
+        "name": "Wide-Mouth Top Refill Funnel",
+        "targetDimsMm": [
+          54,
+          54,
+          38
+        ],
+        "actualDimsMm": [
+          54,
+          54,
+          38
+        ],
+        "scadFile": "parts/refill-funnel.scad",
+        "stlFile": "parts/refill-funnel.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 768,
+          "volumeMm3": 7627.09,
+          "actualDimsMm": [
+            54,
+            54,
+            38
+          ],
+          "targetDimsMm": [
+            54,
+            54,
+            38
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 768,
+        "volumeMm3": 7627.09,
+        "isManifold": true
+      },
+      {
+        "partId": "controller-box",
+        "name": "ESP32 & MOSFET Controller Enclosure",
+        "targetDimsMm": [
+          78,
+          54,
+          28
+        ],
+        "actualDimsMm": [
+          78,
+          54,
+          28
+        ],
+        "scadFile": "parts/controller-box.scad",
+        "stlFile": "parts/controller-box.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 51661,
+            "actualDimsMm": [
+              78,
+              54,
+              28
+            ],
+            "triangleCount": 5260
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 5260,
+          "volumeMm3": 32830.02,
+          "actualDimsMm": [
+            78,
+            54,
+            28
+          ],
+          "targetDimsMm": [
+            78,
+            54,
+            28
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 5260,
+        "volumeMm3": 32830.02,
+        "isManifold": true
+      },
+      {
+        "partId": "controller-bracket",
+        "name": "Reservoir Side-Mount L-Bracket",
+        "targetDimsMm": [
+          42,
+          38,
+          30
+        ],
+        "actualDimsMm": [
+          42,
+          38,
+          30
+        ],
+        "scadFile": "parts/controller-bracket.scad",
+        "stlFile": "parts/controller-bracket.stl",
+        "engine": "argon-openscad",
+        "attemptsCount": 1,
+        "attempts": [
+          {
+            "attempt": 1,
+            "runner": "gemini-rest",
+            "ok": true,
+            "durationMs": 22190,
+            "actualDimsMm": [
+              42,
+              38,
+              30
+            ],
+            "triangleCount": 1484
+          }
+        ],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 1484,
+          "volumeMm3": 9634.39,
+          "actualDimsMm": [
+            42,
+            38,
+            30
+          ],
+          "targetDimsMm": [
+            42,
+            38,
+            30
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 1484,
+        "volumeMm3": 9634.39,
+        "isManifold": true
+      },
+      {
+        "partId": "tube-clip",
+        "name": "Rim-Snap 6mm Silicone Tube Clip",
+        "targetDimsMm": [
+          10.49,
+          11.2,
+          12
+        ],
+        "actualDimsMm": [
+          10.49,
+          10.15,
+          12
+        ],
+        "scadFile": "parts/tube-clip.scad",
+        "stlFile": "parts/tube-clip.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 300,
+          "volumeMm3": 568.72,
+          "actualDimsMm": [
+            10.49,
+            10.15,
+            12
+          ],
+          "targetDimsMm": [
+            10.49,
+            11.2,
+            12
+          ],
+          "axisErrorsRatio": [
+            0,
+            0.09,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 300,
+        "volumeMm3": 568.72,
+        "isManifold": true
+      },
+      {
+        "partId": "drip-stake",
+        "name": "Root-Zone Soil Emitter Stake",
+        "targetDimsMm": [
+          23.2,
+          106.6,
+          8
+        ],
+        "actualDimsMm": [
+          23.2,
+          106.6,
+          8
+        ],
+        "scadFile": "parts/drip-stake.scad",
+        "stlFile": "parts/drip-stake.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 216,
+          "volumeMm3": 3278.87,
+          "actualDimsMm": [
+            23.2,
+            106.6,
+            8
+          ],
+          "targetDimsMm": [
+            23.2,
+            106.6,
+            8
+          ],
+          "axisErrorsRatio": [
+            0,
+            0,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 216,
+        "volumeMm3": 3278.87,
+        "isManifold": true
+      },
+      {
+        "partId": "flow-wheel",
+        "name": "Rotary Drip Flow Restrictor Wheel",
+        "targetDimsMm": [
+          28.69,
+          28.8,
+          7
+        ],
+        "actualDimsMm": [
+          28.7,
+          28.53,
+          7
+        ],
+        "scadFile": "parts/flow-wheel.scad",
+        "stlFile": "parts/flow-wheel.stl",
+        "engine": "parametric-openscad",
+        "attemptsCount": 1,
+        "attempts": [],
+        "validation": {
+          "valid": true,
+          "nonEmpty": true,
+          "withinDimsTolerance": true,
+          "fitsPrinterBed": true,
+          "isManifold": true,
+          "triangleCount": 520,
+          "volumeMm3": 3364.67,
+          "actualDimsMm": [
+            28.7,
+            28.53,
+            7
+          ],
+          "targetDimsMm": [
+            28.69,
+            28.8,
+            7
+          ],
+          "axisErrorsRatio": [
+            0,
+            0.01,
+            0
+          ],
+          "errors": []
+        },
+        "triangleCount": 520,
+        "volumeMm3": 3364.67,
+        "isManifold": true
+      }
+    ]
+  }
 }

@@ -1,0 +1,490 @@
+{
+  "printerId": "bambu-a1",
+  "printerName": "Bambu Lab A1",
+  "bedDimensionsMm": [
+    256,
+    256,
+    256
+  ],
+  "totalPrintedParts": 9,
+  "argonOpenScadParts": 4,
+  "fallbackParts": 0,
+  "totalAttempts": 4,
+  "parts": [
+    {
+      "partId": "reservoir-tank",
+      "name": "Water Reservoir Base (1.4L)",
+      "targetDimsMm": [
+        115,
+        115,
+        100
+      ],
+      "actualDimsMm": [
+        115,
+        115,
+        100
+      ],
+      "scadFile": "parts/reservoir-tank.scad",
+      "stlFile": "parts/reservoir-tank.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 37721,
+          "actualDimsMm": [
+            115,
+            115,
+            100
+          ],
+          "triangleCount": 1348
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": false,
+        "triangleCount": 1348,
+        "volumeMm3": 220867.47,
+        "actualDimsMm": [
+          115,
+          115,
+          100
+        ],
+        "targetDimsMm": [
+          115,
+          115,
+          100
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1348,
+      "volumeMm3": 220867.47,
+      "isManifold": false
+    },
+    {
+      "partId": "reservoir-lid",
+      "name": "Snap-Fit Reservoir Lid with Port Grommets",
+      "targetDimsMm": [
+        120,
+        120,
+        7
+      ],
+      "actualDimsMm": [
+        120,
+        120,
+        7
+      ],
+      "scadFile": "parts/reservoir-lid.scad",
+      "stlFile": "parts/reservoir-lid.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 42889,
+          "actualDimsMm": [
+            120,
+            120,
+            7
+          ],
+          "triangleCount": 3752
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 3752,
+        "volumeMm3": 53357.45,
+        "actualDimsMm": [
+          120,
+          120,
+          7
+        ],
+        "targetDimsMm": [
+          120,
+          120,
+          7
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 3752,
+      "volumeMm3": 53357.45,
+      "isManifold": true
+    },
+    {
+      "partId": "pump-mount",
+      "name": "Submersible Pump Isolation Cradle",
+      "targetDimsMm": [
+        56,
+        56,
+        32
+      ],
+      "actualDimsMm": [
+        56,
+        56,
+        32
+      ],
+      "scadFile": "parts/pump-mount.scad",
+      "stlFile": "parts/pump-mount.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1536,
+        "volumeMm3": 24152.23,
+        "actualDimsMm": [
+          56,
+          56,
+          32
+        ],
+        "targetDimsMm": [
+          56,
+          56,
+          32
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1536,
+      "volumeMm3": 24152.23,
+      "isManifold": true
+    },
+    {
+      "partId": "refill-funnel",
+      "name": "Wide-Mouth Top Refill Funnel",
+      "targetDimsMm": [
+        54,
+        54,
+        38
+      ],
+      "actualDimsMm": [
+        54,
+        54,
+        38
+      ],
+      "scadFile": "parts/refill-funnel.scad",
+      "stlFile": "parts/refill-funnel.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 768,
+        "volumeMm3": 7627.09,
+        "actualDimsMm": [
+          54,
+          54,
+          38
+        ],
+        "targetDimsMm": [
+          54,
+          54,
+          38
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 768,
+      "volumeMm3": 7627.09,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-box",
+      "name": "ESP32 & MOSFET Controller Enclosure",
+      "targetDimsMm": [
+        78,
+        54,
+        28
+      ],
+      "actualDimsMm": [
+        78,
+        54,
+        28
+      ],
+      "scadFile": "parts/controller-box.scad",
+      "stlFile": "parts/controller-box.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 51661,
+          "actualDimsMm": [
+            78,
+            54,
+            28
+          ],
+          "triangleCount": 5260
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 5260,
+        "volumeMm3": 32830.02,
+        "actualDimsMm": [
+          78,
+          54,
+          28
+        ],
+        "targetDimsMm": [
+          78,
+          54,
+          28
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 5260,
+      "volumeMm3": 32830.02,
+      "isManifold": true
+    },
+    {
+      "partId": "controller-bracket",
+      "name": "Reservoir Side-Mount L-Bracket",
+      "targetDimsMm": [
+        42,
+        38,
+        30
+      ],
+      "actualDimsMm": [
+        42,
+        38,
+        30
+      ],
+      "scadFile": "parts/controller-bracket.scad",
+      "stlFile": "parts/controller-bracket.stl",
+      "engine": "argon-openscad",
+      "attemptsCount": 1,
+      "attempts": [
+        {
+          "attempt": 1,
+          "runner": "gemini-rest",
+          "ok": true,
+          "durationMs": 22190,
+          "actualDimsMm": [
+            42,
+            38,
+            30
+          ],
+          "triangleCount": 1484
+        }
+      ],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 1484,
+        "volumeMm3": 9634.39,
+        "actualDimsMm": [
+          42,
+          38,
+          30
+        ],
+        "targetDimsMm": [
+          42,
+          38,
+          30
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 1484,
+      "volumeMm3": 9634.39,
+      "isManifold": true
+    },
+    {
+      "partId": "tube-clip",
+      "name": "Rim-Snap 6mm Silicone Tube Clip",
+      "targetDimsMm": [
+        10.49,
+        11.2,
+        12
+      ],
+      "actualDimsMm": [
+        10.49,
+        10.15,
+        12
+      ],
+      "scadFile": "parts/tube-clip.scad",
+      "stlFile": "parts/tube-clip.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 300,
+        "volumeMm3": 568.72,
+        "actualDimsMm": [
+          10.49,
+          10.15,
+          12
+        ],
+        "targetDimsMm": [
+          10.49,
+          11.2,
+          12
+        ],
+        "axisErrorsRatio": [
+          0,
+          0.09,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 300,
+      "volumeMm3": 568.72,
+      "isManifold": true
+    },
+    {
+      "partId": "drip-stake",
+      "name": "Root-Zone Soil Emitter Stake",
+      "targetDimsMm": [
+        23.2,
+        106.6,
+        8
+      ],
+      "actualDimsMm": [
+        23.2,
+        106.6,
+        8
+      ],
+      "scadFile": "parts/drip-stake.scad",
+      "stlFile": "parts/drip-stake.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 216,
+        "volumeMm3": 3278.87,
+        "actualDimsMm": [
+          23.2,
+          106.6,
+          8
+        ],
+        "targetDimsMm": [
+          23.2,
+          106.6,
+          8
+        ],
+        "axisErrorsRatio": [
+          0,
+          0,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 216,
+      "volumeMm3": 3278.87,
+      "isManifold": true
+    },
+    {
+      "partId": "flow-wheel",
+      "name": "Rotary Drip Flow Restrictor Wheel",
+      "targetDimsMm": [
+        28.69,
+        28.8,
+        7
+      ],
+      "actualDimsMm": [
+        28.7,
+        28.53,
+        7
+      ],
+      "scadFile": "parts/flow-wheel.scad",
+      "stlFile": "parts/flow-wheel.stl",
+      "engine": "parametric-openscad",
+      "attemptsCount": 1,
+      "attempts": [],
+      "validation": {
+        "valid": true,
+        "nonEmpty": true,
+        "withinDimsTolerance": true,
+        "fitsPrinterBed": true,
+        "isManifold": true,
+        "triangleCount": 520,
+        "volumeMm3": 3364.67,
+        "actualDimsMm": [
+          28.7,
+          28.53,
+          7
+        ],
+        "targetDimsMm": [
+          28.69,
+          28.8,
+          7
+        ],
+        "axisErrorsRatio": [
+          0,
+          0.01,
+          0
+        ],
+        "errors": []
+      },
+      "triangleCount": 520,
+      "volumeMm3": 3364.67,
+      "isManifold": true
+    }
+  ]
+}

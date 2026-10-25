@@ -9,7 +9,10 @@ Zero-dependency TypeScript CAD engine for generating watertight 3D-printable mes
 - `lib/cad/geometry.ts` — `generatePartMesh(part)`, `validateManifold(mesh)`, `transformMesh(mesh, opts)`, `TriangleMesh`.
 - `lib/cad/stl.ts` — `meshToBinaryStl(mesh, label)`, `writePlate3mf(items, opts)`, `createStoreZip(entries)`.
 - `lib/cad/packer.ts` — `packParts(parts, bed, opts)`, `packPrintedParts(parts, bed, opts)`.
+- `lib/cad/estimate.ts` — `estimatePartPrint(mesh, opts)`, `estimatePlatePrint(items, opts)`, `formatPrintDuration(minutes)`.
+- `lib/cad/openscad.ts` — `compileOpenScadToStl(scadCode)`, `validateOpenScadMesh(mesh, opts)`, `compileAndValidateOpenScad(scadCode, opts)`, `parseStlToMesh(bytes)`, `generateParametricOpenScad(part)`.
 - `lib/cad/adapters.ts` — `normalizeDesignSpec(raw)`, `normalizeDesignPart(raw)`, `normalizeInstructions(raw, design)`, `generateCadBundle(design, opts)`.
+- `lib/agents/cad.ts` — `runCadAgent(input)`: Gemini 4 Argon OpenSCAD -> `openscad-wasm-prebuilt` STL compiler with 3x compile/validation retry loop, SSE event emission, plate packer, print-time/grams estimation, and Bambu multi-plate 3MF export.
 
 ## Usage in API Routes & UI Components
 
