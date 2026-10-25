@@ -43,29 +43,52 @@ export async function runAnalystAgent(
   input: AnalystInput
 ): Promise<RunAgentResult<ObjectAnalysis>> {
   let scrapedContext = '';
+  let scrapedTitle = '';
   if (input.url && /^https?:\/\//i.test(input.url)) {
     try {
       const ctrl = new AbortController();
       const t = setTimeout(() => ctrl.abort(), 2200);
-      const r = await fetch(input.url, {
+      const isYoutube = /youtube\.com\/watch|youtu\.be\//i.test(input.url);
+      const targetFetchUrl = isYoutube
+        ? `https://www.youtube.com/oembed?url=${encodeURIComponent(input.url)}&format=json`
+        : input.url;
+      const r = await fetch(targetFetchUrl, {
         headers: { 'User-Agent': 'Mozilla/5.0 (compatible; GetMeAnAltBot/1.0)' },
         signal: ctrl.signal,
       });
       clearTimeout(t);
       if (r.ok) {
-        const html = (await r.text()).slice(0, 24000);
-        const title = html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]?.trim();
-        const desc = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i)?.[1]?.trim();
-        if (title || desc) scrapedContext = `Scraped Page Info: ${title || ''} — ${desc || ''}`;
+        if (isYoutube) {
+          const oembed = await r.json().catch(() => null);
+          if (oembed?.title) {
+            scrapedTitle = String(oembed.title).trim();
+            scrapedContext = `Scraped YouTube Video Info: ${scrapedTitle} by ${oembed.author_name || 'Creator'}`;
+          }
+        } else {
+          const html = (await r.text()).slice(0, 24000);
+          const title = html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]?.trim();
+          const desc = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i)?.[1]?.trim();
+          if (title && !/^youtube$/i.test(title)) {
+            scrapedTitle = title.replace(/\s*[-|—]\s*(YouTube|Amazon\.com.*|iFixit.*)$/i, '').trim();
+          }
+          if (title || desc) scrapedContext = `Scraped Page Info: ${title || ''} — ${desc || ''}`;
+        }
       }
     } catch {
       // scrape blocked/timed out; fall back to URL slug + Gemini knowledge
     }
   }
+  const cleanedImageName = input.imageName
+    ?.replace(/\.(jpe?g|png|webp|gif|bmp|svg|heic|avif)$/i, '')
+    .replace(/[-_]+/g, ' ')
+    .trim();
+  const humanizedUrl = input.url ? humanizeUrl(input.url.trim()) : '';
   const userSubject =
     input.prompt?.trim() ||
-    (input.url ? humanizeUrl(input.url.trim()) : '') ||
-    input.imageName ||
+    scrapedTitle ||
+    (!/^youtube\s+watch$/i.test(humanizedUrl) ? humanizedUrl : '') ||
+    cleanedImageName ||
+    humanizedUrl ||
     'Smart Plant Auto-Waterer';
 
   const inputType: ObjectAnalysis['inputType'] = input.inlineImage
