@@ -649,58 +649,60 @@ export default function ProjectPage() {
       {/* TAB 2: SOURCES */}
       {activeTab === 'sources' && sources && (
         <div className="space-y-6">
-          {PeerSourcesComp && (
+          {PeerSourcesComp ? (
             <PeerSourcesComp
               sources={sources}
               analysis={analysis}
               projectId={manifest.id}
             />
-          )}
-
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-3">
-            <div className="flex items-center justify-between">
-              <h3 className="text-base font-bold text-white">
-                Gemini 4 Argon Grounded Web Research & Open-Source Priors
-              </h3>
-              <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-0.5 text-xs text-sky-300">
-                Google Search Grounding Active
-              </span>
-            </div>
-            <p className="text-xs text-slate-300">{sources.querySummary}</p>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {sources.sources.map((src) => (
-              <a
-                key={src.id}
-                href={src.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-emerald-500/50 transition-all"
-              >
-                <div className="space-y-2.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="rounded-md bg-slate-800 px-2 py-0.5 font-mono uppercase text-emerald-300">
-                      {src.type} · {src.domain}
-                    </span>
-                    <ExternalLink className="h-4 w-4 text-slate-400 group-hover:text-emerald-400" />
-                  </div>
-                  <h4 className="text-sm font-bold text-white group-hover:text-emerald-300">
-                    {src.title}
-                  </h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    {src.summary}
-                  </p>
+          ) : (
+            <>
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-3">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-base font-bold text-white">
+                    Gemini 4 Argon Grounded Web Research & Open-Source Priors
+                  </h3>
+                  <span className="rounded-full border border-sky-500/30 bg-sky-500/10 px-3 py-0.5 text-xs text-sky-300">
+                    Google Search Grounding Active
+                  </span>
                 </div>
+                <p className="text-xs text-slate-300">{sources.querySummary}</p>
+              </div>
 
-                <ul className="mt-4 space-y-1 border-t border-slate-800/80 pt-3 text-[11px] text-slate-300">
-                  {src.keyTakeaways.map((tk, i) => (
-                    <li key={i}>• {tk}</li>
-                  ))}
-                </ul>
-              </a>
-            ))}
-          </div>
+              <div className="grid gap-4 md:grid-cols-2">
+                {sources.sources.map((src) => (
+                  <a
+                    key={src.id}
+                    href={src.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/60 p-5 hover:border-emerald-500/50 transition-all"
+                  >
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="rounded-md bg-slate-800 px-2 py-0.5 font-mono uppercase text-emerald-300">
+                          {src.type} · {src.domain}
+                        </span>
+                        <ExternalLink className="h-4 w-4 text-slate-400 group-hover:text-emerald-400" />
+                      </div>
+                      <h4 className="text-sm font-bold text-white group-hover:text-emerald-300">
+                        {src.title}
+                      </h4>
+                      <p className="text-xs text-slate-400 leading-relaxed">
+                        {src.summary}
+                      </p>
+                    </div>
+
+                    <ul className="mt-4 space-y-1 border-t border-slate-800/80 pt-3 text-[11px] text-slate-300">
+                      {src.keyTakeaways.map((tk, i) => (
+                        <li key={i}>• {tk}</li>
+                      ))}
+                    </ul>
+                  </a>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -803,118 +805,120 @@ export default function ProjectPage() {
               projectId={manifest.id}
             />
           ) : (
-            <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200 flex items-center justify-between">
-              <span>
-                3D Plate Viewer slot ready — automatically mounts{' '}
-                <code>components/print/</code> when present. Below are the live generated plates & STL downloads from{' '}
-                <code>plates.json</code> and <code>parts/*.stl</code>.
-              </span>
-              <button
-                type="button"
-                onClick={() => setShowOrderModal(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-400 px-3.5 py-2 text-xs font-bold text-slate-950"
-              >
-                <Truck className="h-3.5 w-3.5" /> No Printer? Order Prints
-              </button>
-            </div>
-          )}
+            <>
+              <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200 flex items-center justify-between">
+                <span>
+                  3D Plate Viewer slot ready — automatically mounts{' '}
+                  <code>components/print/</code> when present. Below are the live generated plates & STL downloads from{' '}
+                  <code>plates.json</code> and <code>parts/*.stl</code>.
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setShowOrderModal(true)}
+                  className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-400 px-3.5 py-2 text-xs font-bold text-slate-950"
+                >
+                  <Truck className="h-3.5 w-3.5" /> No Printer? Order Prints
+                </button>
+              </div>
 
-          {/* Plates Summary */}
-          <div className="grid gap-4 md:grid-cols-2">
-            {plates.plates.map((plate) => (
-              <div
-                key={plate.plateNumber}
-                className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4"
-              >
-                <div className="flex items-center justify-between">
-                  <div>
-                    <h4 className="text-base font-bold text-white">
-                      {plate.name}
-                    </h4>
-                    <p className="text-xs text-slate-400">
-                      Printer: {plate.printerName} (
-                      {plate.bedDimensionsMm.join('×')} mm) · Utilization:{' '}
-                      {plate.utilizationPercent}%
-                    </p>
-                  </div>
-                  <div className="text-right text-xs text-slate-300">
-                    <div className="font-bold text-emerald-400">
-                      {plate.weightGrams}g filament
+              {/* Plates Summary */}
+              <div className="grid gap-4 md:grid-cols-2">
+                {plates.plates.map((plate) => (
+                  <div
+                    key={plate.plateNumber}
+                    className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-base font-bold text-white">
+                          {plate.name}
+                        </h4>
+                        <p className="text-xs text-slate-400">
+                          Printer: {plate.printerName} (
+                          {plate.bedDimensionsMm.join('×')} mm) · Utilization:{' '}
+                          {plate.utilizationPercent}%
+                        </p>
+                      </div>
+                      <div className="text-right text-xs text-slate-300">
+                        <div className="font-bold text-emerald-400">
+                          {plate.weightGrams}g filament
+                        </div>
+                        <div>~{plate.estimatedMinutes} min</div>
+                      </div>
                     </div>
-                    <div>~{plate.estimatedMinutes} min</div>
+
+                    {/* 2D Bed Preview */}
+                    <div className="relative mx-auto aspect-square max-w-[260px] rounded-xl border border-slate-700 bg-slate-950 p-3 flex items-center justify-center overflow-hidden">
+                      <div className="absolute inset-0 bg-grid-pattern opacity-40" />
+                      <div className="relative z-10 text-center space-y-1">
+                        <Box className="mx-auto h-6 w-6 text-emerald-400" />
+                        <div className="text-xs font-bold text-white">
+                          {plate.placements.length} Packed Parts
+                        </div>
+                        <div className="text-[10px] text-slate-400">
+                          {plate.bedDimensionsMm[0]} × {plate.bedDimensionsMm[1]} mm
+                          Build Plate
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                ))}
+              </div>
+
+              {/* Individual STL Parts Table */}
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
+                    Individual Printable STL Files (parts/*.stl)
+                  </h3>
+                  <button
+                    type="button"
+                    onClick={() => setShowOrderModal(true)}
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20"
+                  >
+                    <Truck className="h-3.5 w-3.5" /> Request Print Bureau Quote
+                    (Craftcloud / JLC3DP / Xometry)
+                  </button>
                 </div>
 
-                {/* 2D Bed Preview */}
-                <div className="relative mx-auto aspect-square max-w-[260px] rounded-xl border border-slate-700 bg-slate-950 p-3 flex items-center justify-center overflow-hidden">
-                  <div className="absolute inset-0 bg-grid-pattern opacity-40" />
-                  <div className="relative z-10 text-center space-y-1">
-                    <Box className="mx-auto h-6 w-6 text-emerald-400" />
-                    <div className="text-xs font-bold text-white">
-                      {plate.placements.length} Packed Parts
-                    </div>
-                    <div className="text-[10px] text-slate-400">
-                      {plate.bedDimensionsMm[0]} × {plate.bedDimensionsMm[1]} mm
-                      Build Plate
-                    </div>
-                  </div>
+                <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+                  {plates.parts.map((part) => {
+                    const fileBase = part.stlFile.split('/').pop() || `${part.partId}.stl`;
+                    return (
+                      <div
+                        key={part.partId}
+                        className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/70 p-3.5"
+                      >
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-2">
+                            <span
+                              className="h-3 w-3 rounded-full"
+                              style={{ backgroundColor: part.color }}
+                            />
+                            <span className="text-xs font-bold text-white">
+                              {part.name}
+                            </span>
+                          </div>
+                          <div className="text-[11px] text-slate-400 font-mono">
+                            {part.dims_mm.join('×')}mm · {part.weightGrams}g ·{' '}
+                            {part.material}
+                          </div>
+                        </div>
+
+                        <a
+                          href={`/api/objects/${manifest.id}/stl/${fileBase}`}
+                          download={fileBase}
+                          className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-emerald-300 hover:border-emerald-400"
+                        >
+                          <Download className="h-3.5 w-3.5" /> STL
+                        </a>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
-            ))}
-          </div>
-
-          {/* Individual STL Parts Table */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5 space-y-4">
-            <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
-                Individual Printable STL Files (parts/*.stl)
-              </h3>
-              <button
-                type="button"
-                onClick={() => setShowOrderModal(true)}
-                className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-500/20"
-              >
-                <Truck className="h-3.5 w-3.5" /> Request Print Bureau Quote
-                (Craftcloud / JLC3DP / Xometry)
-              </button>
-            </div>
-
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {plates.parts.map((part) => {
-                const fileBase = part.stlFile.split('/').pop() || `${part.partId}.stl`;
-                return (
-                  <div
-                    key={part.partId}
-                    className="flex items-center justify-between rounded-xl border border-slate-800 bg-slate-950/70 p-3.5"
-                  >
-                    <div className="space-y-1">
-                      <div className="flex items-center gap-2">
-                        <span
-                          className="h-3 w-3 rounded-full"
-                          style={{ backgroundColor: part.color }}
-                        />
-                        <span className="text-xs font-bold text-white">
-                          {part.name}
-                        </span>
-                      </div>
-                      <div className="text-[11px] text-slate-400 font-mono">
-                        {part.dims_mm.join('×')}mm · {part.weightGrams}g ·{' '}
-                        {part.material}
-                      </div>
-                    </div>
-
-                    <a
-                      href={`/api/objects/${manifest.id}/stl/${fileBase}`}
-                      download={fileBase}
-                      className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-900 px-2.5 py-1.5 text-xs font-semibold text-emerald-300 hover:border-emerald-400"
-                    >
-                      <Download className="h-3.5 w-3.5" /> STL
-                    </a>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+            </>
+          )}
         </div>
       )}
 
@@ -928,125 +932,127 @@ export default function ProjectPage() {
               projectId={manifest.id}
             />
           ) : (
-            <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200">
-              IKEA-Style Three.js Animated Player slot ready — dynamically imports{' '}
-              <code>components/three/</code> when present. Step through the{' '}
-              <code>instructions.json</code> motion choreography below:
-            </div>
-          )}
+            <>
+              <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200">
+                IKEA-Style Three.js Animated Player slot ready — dynamically imports{' '}
+                <code>components/three/</code> when present. Step through the{' '}
+                <code>instructions.json</code> motion choreography below:
+              </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            {/* Step Player Card */}
-            <div className="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-5">
-              {(() => {
-                const step =
-                  instructions.steps[activeStepIdx] || instructions.steps[0];
-                if (!step) return null;
-                return (
-                  <>
-                    <div className="flex items-center justify-between">
-                      <span className="rounded-lg bg-emerald-400 px-3 py-1 text-xs font-black text-slate-950">
-                        STEP {step.n} OF {instructions.steps.length}
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <button
-                          type="button"
-                          disabled={activeStepIdx === 0}
-                          onClick={() =>
-                            setActiveStepIdx((i) => Math.max(0, i - 1))
-                          }
-                          className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 disabled:opacity-40"
-                        >
-                          Prev
-                        </button>
-                        <button
-                          type="button"
-                          disabled={
-                            activeStepIdx >= instructions.steps.length - 1
-                          }
-                          onClick={() =>
-                            setActiveStepIdx((i) =>
-                              Math.min(instructions.steps.length - 1, i + 1)
-                            )
-                          }
-                          className="inline-flex items-center gap-1 rounded-lg bg-emerald-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 disabled:opacity-40"
-                        >
-                          <Play className="h-3 w-3" /> Next Step
-                        </button>
-                      </div>
-                    </div>
-
-                    <h3 className="text-xl font-bold text-white">
-                      {step.title}
-                    </h3>
-                    <p className="text-sm text-slate-300 leading-relaxed">
-                      {step.note}
-                    </p>
-
-                    <div className="grid gap-3 sm:grid-cols-2">
-                      <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-1.5">
-                        <div className="text-[11px] font-bold uppercase text-slate-400">
-                          Parts Involved
-                        </div>
-                        <div className="flex flex-wrap gap-1.5">
-                          {step.partIds.map((pid) => (
-                            <span
-                              key={pid}
-                              className="rounded bg-emerald-500/15 px-2 py-0.5 font-mono text-xs text-emerald-300"
+              <div className="grid gap-6 lg:grid-cols-3">
+                {/* Step Player Card */}
+                <div className="lg:col-span-2 rounded-2xl border border-slate-800 bg-slate-900/60 p-6 space-y-5">
+                  {(() => {
+                    const step =
+                      instructions.steps[activeStepIdx] || instructions.steps[0];
+                    if (!step) return null;
+                    return (
+                      <>
+                        <div className="flex items-center justify-between">
+                          <span className="rounded-lg bg-emerald-400 px-3 py-1 text-xs font-black text-slate-950">
+                            STEP {step.n} OF {instructions.steps.length}
+                          </span>
+                          <div className="flex items-center gap-2">
+                            <button
+                              type="button"
+                              disabled={activeStepIdx === 0}
+                              onClick={() =>
+                                setActiveStepIdx((i) => Math.max(0, i - 1))
+                              }
+                              className="rounded-lg border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-semibold text-slate-200 disabled:opacity-40"
                             >
-                              {pid}
-                            </span>
-                          ))}
+                              Prev
+                            </button>
+                            <button
+                              type="button"
+                              disabled={
+                                activeStepIdx >= instructions.steps.length - 1
+                              }
+                              onClick={() =>
+                                setActiveStepIdx((i) =>
+                                  Math.min(instructions.steps.length - 1, i + 1)
+                                )
+                              }
+                              className="inline-flex items-center gap-1 rounded-lg bg-emerald-400 px-3.5 py-1.5 text-xs font-bold text-slate-950 disabled:opacity-40"
+                            >
+                              <Play className="h-3 w-3" /> Next Step
+                            </button>
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-1.5">
-                        <div className="text-[11px] font-bold uppercase text-slate-400">
-                          3D Motion Vectors (from → to mm)
-                        </div>
-                        <div className="space-y-1 font-mono text-[11px] text-slate-300">
-                          {step.motion.map((m, idx) => (
-                            <div key={idx}>
-                              {m.partId}: [{m.from.join(', ')}] → [
-                              {m.to.join(', ')}]
+                        <h3 className="text-xl font-bold text-white">
+                          {step.title}
+                        </h3>
+                        <p className="text-sm text-slate-300 leading-relaxed">
+                          {step.note}
+                        </p>
+
+                        <div className="grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-1.5">
+                            <div className="text-[11px] font-bold uppercase text-slate-400">
+                              Parts Involved
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </>
-                );
-              })()}
-            </div>
+                            <div className="flex flex-wrap gap-1.5">
+                              {step.partIds.map((pid) => (
+                                <span
+                                  key={pid}
+                                  className="rounded bg-emerald-500/15 px-2 py-0.5 font-mono text-xs text-emerald-300"
+                                >
+                                  {pid}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
 
-            {/* Step List */}
-            <div className="space-y-2.5">
-              {instructions.steps.map((s, idx) => (
-                <button
-                  key={s.n}
-                  type="button"
-                  onClick={() => setActiveStepIdx(idx)}
-                  className={`w-full rounded-xl border p-3.5 text-left transition-all ${
-                    idx === activeStepIdx
-                      ? 'border-emerald-400 bg-emerald-500/10'
-                      : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
-                  }`}
-                >
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-mono font-bold text-emerald-400">
-                      STEP 0{s.n}
-                    </span>
-                    <span className="text-[11px] text-slate-400">
-                      {s.partIds.length} part(s)
-                    </span>
-                  </div>
-                  <div className="mt-1 text-xs font-bold text-white">
-                    {s.title}
-                  </div>
-                </button>
-              ))}
-            </div>
-          </div>
+                          <div className="rounded-xl border border-slate-800 bg-slate-950/70 p-3.5 space-y-1.5">
+                            <div className="text-[11px] font-bold uppercase text-slate-400">
+                              3D Motion Vectors (from → to mm)
+                            </div>
+                            <div className="space-y-1 font-mono text-[11px] text-slate-300">
+                              {step.motion.map((m, idx) => (
+                                <div key={idx}>
+                                  {m.partId}: [{m.from.join(', ')}] → [
+                                  {m.to.join(', ')}]
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })()}
+                </div>
+
+                {/* Step List */}
+                <div className="space-y-2.5">
+                  {instructions.steps.map((s, idx) => (
+                    <button
+                      key={s.n}
+                      type="button"
+                      onClick={() => setActiveStepIdx(idx)}
+                      className={`w-full rounded-xl border p-3.5 text-left transition-all ${
+                        idx === activeStepIdx
+                          ? 'border-emerald-400 bg-emerald-500/10'
+                          : 'border-slate-800 bg-slate-900/50 hover:border-slate-700'
+                      }`}
+                    >
+                      <div className="flex items-center justify-between text-xs">
+                        <span className="font-mono font-bold text-emerald-400">
+                          STEP 0{s.n}
+                        </span>
+                        <span className="text-[11px] text-slate-400">
+                          {s.partIds.length} part(s)
+                        </span>
+                      </div>
+                      <div className="mt-1 text-xs font-bold text-white">
+                        {s.title}
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
         </div>
       )}
 
@@ -1060,89 +1066,91 @@ export default function ProjectPage() {
               projectId={manifest.id}
             />
           ) : (
-            <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200">
-              Interactive Three.js Exploded View slot ready — dynamically imports{' '}
-              <code>components/three/</code> when present. Inspect the parametric assembly graph (
-              <code>design.json</code>) below:
-            </div>
-          )}
+            <>
+              <div className="rounded-xl border border-sky-500/30 bg-sky-950/15 p-4 text-xs text-sky-200">
+                Interactive Three.js Exploded View slot ready — dynamically imports{' '}
+                <code>components/three/</code> when present. Inspect the parametric assembly graph (
+                <code>design.json</code>) below:
+              </div>
 
-          <div className="grid gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2 grid gap-3 sm:grid-cols-2">
-              {design.parts.map((part) => {
-                const isSelected = selectedPart?.id === part.id;
-                return (
-                  <button
-                    key={part.id}
-                    type="button"
-                    onClick={() => setSelectedPartId(part.id)}
-                    className={`rounded-xl border p-4 text-left transition-all ${
-                      isSelected
-                        ? 'border-emerald-400 bg-emerald-500/10'
-                        : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                    }`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <span className="flex items-center gap-2 text-xs font-mono font-bold text-slate-300">
-                        <span
-                          className="h-3 w-3 rounded-full"
-                          style={{ backgroundColor: part.color }}
-                        />
-                        {part.partNumber || part.id}
-                      </span>
-                      <span
-                        className={`rounded px-2 py-0.5 text-[10px] font-bold uppercase ${
-                          part.kind === 'printed'
-                            ? 'bg-emerald-500/15 text-emerald-300'
-                            : 'bg-sky-500/15 text-sky-300'
+              <div className="grid gap-6 lg:grid-cols-3">
+                <div className="lg:col-span-2 grid gap-3 sm:grid-cols-2">
+                  {design.parts.map((part) => {
+                    const isSelected = selectedPart?.id === part.id;
+                    return (
+                      <button
+                        key={part.id}
+                        type="button"
+                        onClick={() => setSelectedPartId(part.id)}
+                        className={`rounded-xl border p-4 text-left transition-all ${
+                          isSelected
+                            ? 'border-emerald-400 bg-emerald-500/10'
+                            : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
                         }`}
                       >
-                        {part.kind}
+                        <div className="flex items-center justify-between">
+                          <span className="flex items-center gap-2 text-xs font-mono font-bold text-slate-300">
+                            <span
+                              className="h-3 w-3 rounded-full"
+                              style={{ backgroundColor: part.color }}
+                            />
+                            {part.partNumber || part.id}
+                          </span>
+                          <span
+                            className={`rounded px-2 py-0.5 text-[10px] font-bold uppercase ${
+                              part.kind === 'printed'
+                                ? 'bg-emerald-500/15 text-emerald-300'
+                                : 'bg-sky-500/15 text-sky-300'
+                            }`}
+                          >
+                            {part.kind}
+                          </span>
+                        </div>
+                        <div className="mt-2 text-sm font-bold text-white">
+                          {part.name}
+                        </div>
+                        <div className="mt-1 font-mono text-[11px] text-slate-400">
+                          dims: {part.dims_mm.join('×')}mm · shape: {part.shape}
+                        </div>
+                      </button>
+                    );
+                  })}
+                </div>
+
+                {/* Part Inspector Panel */}
+                {selectedPart && (
+                  <div className="rounded-2xl border border-slate-800 bg-slate-900/75 p-5 space-y-4">
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs text-emerald-400">
+                        {selectedPart.id}
+                      </span>
+                      <span className="rounded bg-slate-800 px-2 py-0.5 text-xs text-slate-200">
+                        {selectedPart.material}
                       </span>
                     </div>
-                    <div className="mt-2 text-sm font-bold text-white">
-                      {part.name}
-                    </div>
-                    <div className="mt-1 font-mono text-[11px] text-slate-400">
-                      dims: {part.dims_mm.join('×')}mm · shape: {part.shape}
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+                    <h3 className="text-lg font-bold text-white">
+                      {selectedPart.name}
+                    </h3>
+                    <p className="text-xs text-slate-300 leading-relaxed">
+                      {selectedPart.description}
+                    </p>
 
-            {/* Part Inspector Panel */}
-            {selectedPart && (
-              <div className="rounded-2xl border border-slate-800 bg-slate-900/75 p-5 space-y-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-mono text-xs text-emerald-400">
-                    {selectedPart.id}
-                  </span>
-                  <span className="rounded bg-slate-800 px-2 py-0.5 text-xs text-slate-200">
-                    {selectedPart.material}
-                  </span>
-                </div>
-                <h3 className="text-lg font-bold text-white">
-                  {selectedPart.name}
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  {selectedPart.description}
-                </p>
-
-                <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-950 p-3.5 font-mono text-xs text-slate-300">
-                  <div>dims_mm: [{selectedPart.dims_mm.join(', ')}]</div>
-                  <div>position: [{selectedPart.position.join(', ')}]</div>
-                  <div>explode: [{selectedPart.explode.join(', ')}]</div>
-                  <div>shape: {selectedPart.shape}</div>
-                  {selectedPart.bomRef && (
-                    <div className="text-emerald-400">
-                      bomRef: {selectedPart.bomRef}
+                    <div className="space-y-2 rounded-xl border border-slate-800 bg-slate-950 p-3.5 font-mono text-xs text-slate-300">
+                      <div>dims_mm: [{selectedPart.dims_mm.join(', ')}]</div>
+                      <div>position: [{selectedPart.position.join(', ')}]</div>
+                      <div>explode: [{selectedPart.explode.join(', ')}]</div>
+                      <div>shape: {selectedPart.shape}</div>
+                      {selectedPart.bomRef && (
+                        <div className="text-emerald-400">
+                          bomRef: {selectedPart.bomRef}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </>
+          )}
         </div>
       )}
 
