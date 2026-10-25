@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { ShowcaseBuild } from '../components/ui/ShowcaseBuild';
 import {
   ArrowRight,
   Box,
@@ -429,6 +430,9 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+
+      {/* Showcase: finished build */}
+      <ShowcaseBuild />
 
       {/* Managed Agents Pipeline Overview */}
       <section className="rounded-2xl border border-slate-800 bg-slate-900/50 p-6 space-y-5">
