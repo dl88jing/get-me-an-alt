@@ -2,7 +2,7 @@ import type { AgentStatus, ProjectManifest } from '@/lib/types';
 import { EmptyState, SectionHeading } from '@/components/ui/SectionHeading';
 
 /**
- * Mission Control — the "Best use of Managed Agents" centerpiece (visual-polish lane).
+ * Mission Control — the live agent graph for "Best use of Managed Agents".
  *
  * Dual-shape by design, because the two contracts in this repo disagree:
  * - The live SSE route emits the full ProjectManifest on every update
@@ -15,11 +15,19 @@ import { EmptyState, SectionHeading } from '@/components/ui/SectionHeading';
  *   without changing the manifest rendering. Either shape alone is enough;
  *   together they are the full picture.
  *
- * Mounting is the leader's call (app/ is the leader's path): this component is
- * intentionally page-agnostic — pass it the latest manifest from the stream.
+ * MOUNT (leader: app/ is your path — this component is drop-in, no changes
+ * needed here). In app/projects/[id]/page.tsx, add an "agents" tab (or an
+ * Overview section) with:
+ *
+ *   import { MissionControl } from '../../../components/mission-control/MissionControl';
+ *   <MissionControl manifest={manifest} thoughts={thoughts} isLive={isLive} />
+ *
+ * A default export is also provided so the page's require.context peer
+ * resolver (which prefers mod.default) can pick this up if a pattern is added.
  */
 
 /** One per-agent streaming event, in the leader's posted MESSAGEBOARD shape. */
+
 export interface StreamThought {
   agent: string;
   phase: 'start' | 'thought' | 'artifact' | 'done' | 'error';
@@ -212,6 +220,7 @@ export function MissionControl({
                   {latestLogs.map((log, j) => (
                     <li
                       key={`${log.timestamp}-${j}`}
+                      title={log.message}
                       className="truncate font-mono text-xs text-[#8b98a9]"
                     >
                       {log.message}
@@ -268,3 +277,5 @@ export function MissionControl({
     </div>
   );
 }
+
+export default MissionControl;
