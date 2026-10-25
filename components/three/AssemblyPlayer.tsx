@@ -102,6 +102,8 @@ interface IkeaPartMeshProps {
   status: "assembled" | "active" | "future";
   stepProgress: number; // 0..1 within current step
   action?: string;
+  activeIndex?: number;
+  activeCount?: number;
 }
 
 const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
@@ -109,6 +111,8 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
   status,
   stepProgress,
   action,
+  activeIndex = 0,
+  activeCount = 1,
 }) => {
   const geometry = useMemo(
     () => buildPartGeometry(part.shape, part.params),
@@ -259,22 +263,43 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
             linewidth={status === "active" ? 2 : 1.2}
           />
         </lineSegments>
-
-        {/* Callout number tag on active parts */}
-        {status === "active" && (
-          <Html
-            position={[0, 18, 0]}
-            center
-            distanceFactor={270}
-            zIndexRange={[10, 0]}
-            style={{ pointerEvents: "none" }}
-          >
-            <div className="px-2 py-0.5 rounded bg-zinc-900 text-[#F6F3EA] font-mono text-[11px] font-bold border-2 border-zinc-900 shadow-sm whitespace-nowrap">
-              {part.name}
-            </div>
-          </Html>
-        )}
       </group>
+
+      {/* Callout tag on active parts — placed in world space and clamped inside canvas bounds */}
+      {status === "active" && (
+        <Html
+          position={[
+            Math.max(
+              -38,
+              Math.min(
+                64,
+                curPos[0] +
+                  (activeCount > 1
+                    ? (activeIndex - (activeCount - 1) / 2) * 10
+                    : 0)
+              )
+            ),
+            Math.max(
+              -22,
+              Math.min(
+                62,
+                Math.max(-18, Math.min(26, curPos[1])) +
+                  14 +
+                  (activeIndex === 2 ? -20 : activeIndex * 20)
+              )
+            ),
+            Math.max(-48, Math.min(48, curPos[2])),
+          ]}
+          center
+          distanceFactor={270}
+          zIndexRange={[5, 0]}
+          style={{ pointerEvents: "none" }}
+        >
+          <div className="px-2 py-0.5 rounded bg-zinc-900 text-[#F6F3EA] font-mono text-[11px] font-bold border-2 border-zinc-900 shadow-sm whitespace-nowrap">
+            {part.name}
+          </div>
+        </Html>
+      )}
     </>
   );
 };
@@ -477,6 +502,9 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
   const [speed, setSpeed] = useState<number>(initialSpeed);
   const [loop, setLoop] = useState<boolean>(true);
   const stepDoneNotifiedRef = useRef<number | null>(null);
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const stepChipsContainerRef = useRef<HTMLDivElement | null>(null);
+  const stepChipRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
 
   const currentStep = steps[Math.min(currentStepIdx, steps.length - 1)] || {
     n: 1,
@@ -484,6 +512,24 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     partIds: [],
     action: "place",
   };
+
+  // Scroll the active step chip into view inside the horizontal chips container
+  useEffect(() => {
+    if (rootRef.current && rootRef.current.scrollLeft !== 0) {
+      rootRef.current.scrollLeft = 0;
+    }
+    const container = stepChipsContainerRef.current;
+    const chip = stepChipRefs.current.get(currentStepIdx);
+    if (!container || !chip) return;
+    const chipLeft = chip.offsetLeft;
+    const chipWidth = chip.offsetWidth;
+    const containerWidth = container.clientWidth;
+    const targetLeft = Math.max(
+      0,
+      chipLeft - containerWidth / 2 + chipWidth / 2
+    );
+    container.scrollTo({ left: targetLeft, behavior: "smooth" });
+  }, [currentStepIdx]);
 
   // Synchronize with externalStep when provided for deterministic video capture
   useEffect(() => {
@@ -528,7 +574,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     const clamped = Math.max(0, Math.min(totalSteps - 1, idx));
     stepDoneNotifiedRef.current = null;
     setCurrentStepIdx(clamped);
-    setStepProgress(0.15);
+    setStepProgress(isPlaying ? 0.18 : 0.55);
   };
 
   // Determine which tools are active for the current step
@@ -565,13 +611,19 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
 
   return (
     <div
-      className={`relative w-full h-[660px] min-h-[560px] rounded-2xl overflow-hidden bg-[#F6F3EA] text-zinc-900 border-2 border-zinc-900 shadow-2xl flex flex-col select-none ${className}`}
+      ref={rootRef}
+      onScroll={(e) => {
+        if (e.currentTarget.scrollLeft !== 0) {
+          e.currentTarget.scrollLeft = 0;
+        }
+      }}
+      className={`relative w-full max-w-full min-w-0 h-[660px] min-h-[560px] rounded-2xl overflow-hidden bg-[#F6F3EA] text-zinc-900 border-2 border-zinc-900 shadow-2xl flex flex-col select-none ${className}`}
       data-testid="assembly-player-root"
     >
       {/* Top Manual Header Bar — IKEA Blueprint Frame */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-4 px-5 py-3.5 bg-[#EFECE1] border-b-2 border-zinc-900">
+      <div className="relative z-10 w-full max-w-full min-w-0 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 px-5 py-3.5 bg-[#EFECE1] border-b-2 border-zinc-900">
         {/* Big Numbered Step Badge + Title */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 min-w-0 flex-1">
           <div
             className="w-14 h-14 rounded-xl bg-zinc-900 text-[#F6F3EA] flex flex-col items-center justify-center font-black tracking-tighter shadow-md shrink-0"
             data-testid="step-badge-number"
@@ -584,23 +636,23 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             </span>
           </div>
 
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="px-2 py-0.5 rounded bg-zinc-900 text-[#F6F3EA] font-mono text-[10px] font-bold uppercase tracking-widest">
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="px-2 py-0.5 rounded bg-zinc-900 text-[#F6F3EA] font-mono text-[10px] font-bold uppercase tracking-widest shrink-0">
                 {currentStep.action}
               </span>
-              <span className="text-xs font-mono font-bold text-zinc-600 uppercase tracking-wider">
+              <span className="text-xs font-mono font-bold text-zinc-600 uppercase tracking-wider shrink-0">
                 STAGE {currentStepIdx + 1} OF {totalSteps}
               </span>
             </div>
             <h3
-              className="text-lg font-extrabold text-zinc-950 tracking-tight leading-snug mt-0.5"
+              className="text-base sm:text-lg font-extrabold text-zinc-950 tracking-tight leading-snug mt-0.5 truncate"
               data-testid="step-title"
             >
               {currentStep.title}
             </h3>
             {currentStep.note && (
-              <p className="text-xs text-zinc-700 font-medium mt-0.5 max-w-xl">
+              <p className="text-xs text-zinc-700 font-medium mt-0.5 line-clamp-2 break-words">
                 {currentStep.note}
               </p>
             )}
@@ -609,7 +661,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
 
         {/* Tool Icon Row */}
         <div
-          className="flex items-center gap-2 bg-[#F6F3EA] px-3 py-2 rounded-xl border-2 border-zinc-900"
+          className="flex items-center gap-2 bg-[#F6F3EA] px-3 py-2 rounded-xl border-2 border-zinc-900 shrink-0"
           data-testid="tool-icon-row"
         >
           <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 mr-1">
@@ -640,11 +692,13 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
       </div>
 
       {/* Main Middle Canvas + Step Parts Callout Overlay */}
-      <div className="relative flex-1 w-full overflow-hidden">
+      <div className="relative flex-1 w-full max-w-full min-w-0 min-h-0 overflow-hidden">
         {/* Inner IKEA Page Frame Lines */}
         <div className="absolute inset-3 border border-zinc-900/20 rounded-lg pointer-events-none z-10" />
 
         <Canvas
+          className="w-full h-full block"
+          style={{ width: "100%", height: "100%", display: "block" }}
           shadows
           dpr={[1, 2]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
@@ -657,31 +711,37 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           <directionalLight position={[180, 260, 190]} intensity={1.35} />
           <directionalLight position={[-150, 120, -120]} intensity={0.45} />
 
-          <group position={[0, 8, 0]}>
-            {allParts.map((part) => {
-              const inCurrentStep =
-                part.step === currentStep.n ||
-                (currentStep.partIds || []).includes(part.partId);
-              const status: "assembled" | "active" | "future" = inCurrentStep
-                ? "active"
-                : part.step < currentStep.n
-                ? "assembled"
-                : "future";
+          <group position={[18, 6, 0]}>
+            {(() => {
+              let activeRunningIdx = 0;
+              return allParts.map((part) => {
+                const inCurrentStep =
+                  part.step === currentStep.n ||
+                  (currentStep.partIds || []).includes(part.partId);
+                const status: "assembled" | "active" | "future" = inCurrentStep
+                  ? "active"
+                  : part.step < currentStep.n
+                  ? "assembled"
+                  : "future";
+                const myActiveIdx = inCurrentStep ? activeRunningIdx++ : 0;
 
-              return (
-                <IkeaPartMesh
-                  key={part.instanceId}
-                  part={part}
-                  status={status}
-                  stepProgress={stepProgress}
-                  action={currentStep.action}
-                />
-              );
-            })}
+                return (
+                  <IkeaPartMesh
+                    key={part.instanceId}
+                    part={part}
+                    status={status}
+                    stepProgress={stepProgress}
+                    action={currentStep.action}
+                    activeIndex={myActiveIdx}
+                    activeCount={currentStepParts.length}
+                  />
+                );
+              });
+            })()}
           </group>
 
           {/* Subtle Paper Ground Shadow & Reference Ring */}
-          <group position={[0, -56, 0]}>
+          <group position={[18, -56, 0]}>
             <ContactShadows
               position={[0, 0.1, 0]}
               opacity={0.22}
@@ -711,12 +771,12 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             dampingFactor={0.08}
             minDistance={55}
             maxDistance={600}
-            target={[0, 12, 0]}
+            target={[8, 10, 0]}
           />
         </Canvas>
 
         {/* Left Overlay: Step Parts Hardware Callout Box (IKEA Parts Box style) */}
-        <div className="absolute top-6 left-6 z-10 w-64 max-w-[calc(100%-3rem)] rounded-xl bg-[#F6F3EA]/95 border-2 border-zinc-900 p-3.5 shadow-[4px_4px_0px_#18181B]">
+        <div className="absolute top-6 left-6 z-10 w-60 max-w-[calc(100%-3rem)] rounded-xl bg-[#F6F3EA]/95 border-2 border-zinc-900 p-3.5 shadow-[4px_4px_0px_#18181B]">
           <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-900/20">
             <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-zinc-900">
               PARTS IN THIS STEP
@@ -805,19 +865,27 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
       </div>
 
       {/* Bottom Transport Controls & Step Scrubber Bar */}
-      <div className="relative z-10 px-5 py-3 bg-[#EFECE1] border-t-2 border-zinc-900 flex flex-col gap-2.5">
-        {/* Step Scrubber Pills */}
-        <div className="flex items-center gap-1.5">
+      <div className="relative z-10 w-full max-w-full min-w-0 px-5 py-3 bg-[#EFECE1] border-t-2 border-zinc-900 flex flex-col gap-2.5">
+        {/* Horizontally Scrollable Step Scrubber Chips */}
+        <div
+          ref={stepChipsContainerRef}
+          data-testid="step-chips-scroll-row"
+          className="w-full max-w-full min-w-0 flex items-center gap-2 overflow-x-auto pb-1 scroll-smooth"
+        >
           {steps.map((s, idx) => {
             const isCurr = idx === currentStepIdx;
             const isDone = idx < currentStepIdx;
             return (
               <button
                 key={s.n}
+                ref={(el) => {
+                  if (el) stepChipRefs.current.set(idx, el);
+                  else stepChipRefs.current.delete(idx);
+                }}
                 type="button"
                 onClick={() => handleSelectStep(idx)}
                 data-testid={`step-pill-${s.n}`}
-                className={`flex-1 py-1.5 px-2 rounded-lg border-2 font-mono text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
+                className={`shrink-0 py-1.5 px-3 rounded-lg border-2 font-mono text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   isCurr
                     ? "bg-zinc-900 text-[#F6F3EA] border-zinc-900 shadow-sm"
                     : isDone
@@ -826,7 +894,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                 }`}
               >
                 <span>{String(s.n).padStart(2, "0")}</span>
-                <span className="hidden lg:inline truncate font-sans font-semibold text-[11px]">
+                <span className="font-sans font-semibold text-[11px]">
                   {s.title}
                 </span>
               </button>
@@ -835,7 +903,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
         </div>
 
         {/* Transport Controls Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="w-full max-w-full min-w-0 flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-2">
             {/* Prev Button */}
             <button
@@ -876,7 +944,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           </div>
 
           {/* Continuous Overall Step Scrubber */}
-          <div className="flex items-center gap-2 flex-1 max-w-xs">
+          <div className="flex items-center gap-2 flex-1 max-w-xs min-w-[160px]">
             <span className="text-[11px] font-mono font-bold text-zinc-700 shrink-0">
               SCRUB
             </span>
