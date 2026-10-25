@@ -2,33 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Get Me An Alt — dark, premium, product-y theme (visual-polish lane).
-   Leader scaffold tokens + grid pattern merged with polish-lane tokens
-   and component utilities. Tokens line up with tailwind.config.ts. */
+/* Get Me An Alt — "The RenAIssance Edition" / Da Vinci's Workshop Global Visual System.
+   Blends classical Florentine chiaroscuro oil painting, aged vellum/parchment textures,
+   iron-gall sepia ink drawings, and gilded serif typography with modern CAD precision. */
 
 :root {
-  --background: #050608;
-  --surface-1: #0a0d12;
-  --surface-2: #10151e;
-  --surface-3: #161d2a;
-  --foreground: #f4f7fb;
-  --foreground-muted: #94a3b8;
-  --accent-electric: #00f5a0;
-  --accent-electric-glow: rgba(0, 245, 160, 0.28);
-  --accent-cyan: #38bdf8;
-  --accent-signal: #ff6b2b;
-  --border-hairline: rgba(255, 255, 255, 0.08);
-  --border-specular: rgba(255, 255, 255, 0.16);
-  --border: #232c38;
-  --accent-soft: rgba(63, 185, 80, 0.14);
-  --glass-bg: rgba(10, 13, 18, 0.74);
+  --background: #0c0906;
+  --surface-1: #14100b;
+  --surface-2: #1d1710;
+  --surface-3: #282016;
+  --foreground: #f5ebd6;
+  --foreground-muted: #bda782;
+  --parchment-light: #f5ebd6;
+  --parchment-warm: #e6d3b3;
+  --parchment-deep: #d4bc94;
+  --sepia-ink: #2b1d0e;
+  --sepia-line: #9c7a4c;
+  --gilded-gold: #d4af37;
+  --gilded-bright: #f3d478;
+  --accent-electric: #d4af37;
+  --accent-electric-glow: rgba(212, 175, 55, 0.3);
+  --accent-soft: rgba(212, 175, 55, 0.14);
+  --accent-cyan: #52b788;
+  --accent-signal: #c84b31;
+  --border: rgba(212, 175, 55, 0.18);
+  --border-hairline: rgba(212, 175, 55, 0.16);
+  --border-specular: rgba(243, 212, 120, 0.28);
+  --glass-bg: rgba(20, 15, 10, 0.82);
   --radius-sm: 0.5rem;
   --radius-md: 0.875rem;
   --radius-lg: 1.25rem;
   --radius-xl: 1.75rem;
-  --shadow-glass: 0 24px 64px -16px rgba(0, 0, 0, 0.78),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
-  --shadow-electric: 0 0 40px -8px rgba(0, 245, 160, 0.38);
+  --shadow-glass: 0 28px 72px -16px rgba(0, 0, 0, 0.88),
+    inset 0 1px 0 0 rgba(243, 212, 120, 0.18);
+  --shadow-electric: 0 0 42px -8px rgba(212, 175, 55, 0.42);
   --cursor-x: 50vw;
   --cursor-y: 30vh;
 }
@@ -49,56 +56,115 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Precision engineering blueprint grid with radial vignette */
+/* Da Vinci Codex Drafting Grid & Compass Hairlines */
 .bg-grid-pattern {
-  background-size: 36px 36px;
-  background-image: linear-gradient(
+  background-size: 44px 44px;
+  background-image:
+    radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.08), transparent 65%),
+    linear-gradient(
       to right,
-      rgba(255, 255, 255, 0.035) 1px,
+      rgba(212, 175, 55, 0.045) 1px,
       transparent 1px
     ),
     linear-gradient(
       to bottom,
-      rgba(255, 255, 255, 0.035) 1px,
+      rgba(212, 175, 55, 0.045) 1px,
       transparent 1px
     );
 }
 
-/* Tactile SVG Film Grain Overlay */
+/* Tactile Vellum & Oil Canvas Grain Overlay */
 .film-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
 }
 
-/* Global Ambient Cursor Spotlight */
+/* Candlelit Chiaroscuro Ambient Cursor Spotlight */
 .cursor-ambient-glow {
   background: radial-gradient(
-    650px circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
-    rgba(0, 245, 160, 0.055),
-    rgba(56, 189, 248, 0.025) 35%,
+    700px circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
+    rgba(212, 175, 55, 0.075),
+    rgba(184, 115, 51, 0.035) 38%,
     transparent 70%
   );
 }
 
-/* Frosted Obsidian Glass Surfaces */
+/* Chiaroscuro Workshop Glass Surfaces */
 .glass-panel {
-  background: var(--glass-bg);
-  backdrop-filter: blur(20px) saturate(160%);
-  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  background: linear-gradient(160deg, rgba(25, 19, 13, 0.88) 0%, rgba(14, 10, 7, 0.92) 100%);
+  backdrop-filter: blur(20px) saturate(150%);
+  -webkit-backdrop-filter: blur(20px) saturate(150%);
   border: 1px solid var(--border-hairline);
   box-shadow: var(--shadow-glass);
 }
 
 .glass-command-bar {
-  background: rgba(8, 11, 16, 0.82);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  box-shadow: 0 28px 80px -16px rgba(0, 0, 0, 0.88),
-    0 0 48px -12px rgba(0, 245, 160, 0.18),
-    inset 0 1px 0 0 rgba(255, 255, 255, 0.16);
+  background: linear-gradient(165deg, rgba(28, 20, 13, 0.92) 0%, rgba(15, 11, 7, 0.95) 100%);
+  backdrop-filter: blur(24px) saturate(170%);
+  -webkit-backdrop-filter: blur(24px) saturate(170%);
+  border: 1px solid rgba(212, 175, 55, 0.34);
+  box-shadow: 0 28px 80px -16px rgba(0, 0, 0, 0.92),
+    0 0 52px -12px rgba(212, 175, 55, 0.24),
+    inset 0 1px 0 0 rgba(243, 212, 120, 0.25);
 }
 
-/* Card-level interactive cursor spotlight */
+/* Ornate Gilded Museum Gallery Frame */
+.gilded-frame {
+  position: relative;
+  border: 2px solid rgba(212, 175, 55, 0.55);
+  box-shadow:
+    0 32px 90px -20px rgba(0, 0, 0, 0.95),
+    0 0 0 1px rgba(43, 29, 14, 0.9),
+    0 0 0 6px rgba(212, 175, 55, 0.16),
+    inset 0 0 48px rgba(0, 0, 0, 0.75),
+    inset 0 1px 0 0 rgba(243, 212, 120, 0.45);
+}
+
+/* Warm Illuminated Parchment / Vellum Folio Sheet */
+.parchment-sheet {
+  background:
+    radial-gradient(circle at 50% 35%, rgba(251, 244, 226, 0.96), rgba(230, 209, 172, 0.94) 68%, rgba(206, 178, 132, 0.96) 100%);
+  color: #2b1d0e;
+  border: 1px solid rgba(139, 101, 56, 0.45);
+  box-shadow:
+    0 20px 50px -15px rgba(0, 0, 0, 0.7),
+    inset 0 0 42px rgba(139, 98, 48, 0.22);
+}
+
+/* Dark Codex Folio Panel with Vellum Underlay */
+.codex-folio {
+  position: relative;
+  background:
+    linear-gradient(170deg, rgba(24, 18, 12, 0.93) 0%, rgba(14, 10, 7, 0.96) 100%);
+  border: 1px solid rgba(212, 175, 55, 0.24);
+  box-shadow:
+    0 26px 68px -18px rgba(0, 0, 0, 0.88),
+    inset 0 0 60px rgba(212, 175, 55, 0.04),
+    inset 0 1px 0 0 rgba(243, 212, 120, 0.18);
+}
+
+/* Graded Sepia/Chiaroscuro Video Overlay */
+.sepia-video-grade {
+  filter: sepia(0.58) contrast(1.12) brightness(0.78) saturate(1.15);
+  transition: filter 700ms ease;
+}
+.sepia-video-grade:hover {
+  filter: sepia(0.28) contrast(1.08) brightness(0.88) saturate(1.1);
+}
+
+/* Da Vinci Left-Handed Mirror Script (flips readable on hover) */
+.mirror-script {
+  display: inline-block;
+  transform: scaleX(-1);
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.3s ease;
+  cursor: help;
+}
+.mirror-script:hover,
+.group:hover .mirror-script {
+  transform: scaleX(1);
+  color: #f3d478;
+}
+
+/* Card-level interactive candlelit spotlight */
 .spotlight-card {
   position: relative;
   overflow: hidden;
@@ -110,7 +176,7 @@ body {
   pointer-events: none;
   background: radial-gradient(
     420px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
-    rgba(0, 245, 160, 0.11),
+    rgba(212, 175, 55, 0.14),
     transparent 65%
   );
   opacity: 0;
@@ -129,28 +195,29 @@ body {
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(16, 21, 30, 0.8) 0%,
-    rgba(30, 41, 59, 0.55) 50%,
-    rgba(16, 21, 30, 0.8) 100%
+    rgba(24, 18, 12, 0.85) 0%,
+    rgba(58, 43, 26, 0.55) 50%,
+    rgba(24, 18, 12, 0.85) 100%
   );
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
 }
 
-/* Custom sleek scrollbars */
+/* Custom gilded scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #050608;
+  background: #0c0906;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #3a2c1d;
   border-radius: 9999px;
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #574129;
 }
 
 /* Respect prefers-reduced-motion across all animations & smooth scroll */
@@ -167,19 +234,20 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
 @layer components {
   .card {
-    @apply rounded-2xl border bg-[#11161d] shadow-sm;
+    @apply rounded-2xl border bg-[#14100b] shadow-sm;
     border-color: var(--border);
   }
   .card-hover {
-    @apply transition-colors hover:border-[#3fb950]/50;
+    @apply transition-colors hover:border-[#d4af37]/55;
   }
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.14em] text-[#8b98a9];
+    @apply text-xs font-semibold uppercase tracking-[0.16em] text-[#d4af37];
   }
   .skeleton {
-    @apply animate-pulse rounded-md bg-[#232c38];
+    @apply animate-pulse rounded-md bg-[#282016];
   }
 }
 
@@ -197,10 +265,19 @@ body {
 @keyframes gma-timeline-dot {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(63, 185, 80, 0.45);
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.45);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(63, 185, 80, 0);
+    box-shadow: 0 0 0 6px rgba(212, 175, 55, 0);
+  }
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 
@@ -210,4 +287,8 @@ body {
 
 .animate-timeline-dot {
   animation: gma-timeline-dot 1.8s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 48s linear infinite;
 }

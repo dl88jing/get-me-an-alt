@@ -1,13 +1,26 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { Space_Grotesk, Inter, JetBrains_Mono } from 'next/font/google';
+import {
+  Cormorant_Garamond,
+  Cinzel,
+  Inter,
+  JetBrains_Mono,
+} from 'next/font/google';
 import SmoothScrollProvider from '@/components/ui/SmoothScrollProvider';
 import './globals.css';
 
-const spaceGrotesk = Space_Grotesk({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ['latin'],
   weight: ['500', '600', '700'],
+  style: ['normal', 'italic'],
   variable: '--font-display',
+  display: 'swap',
+});
+
+const cinzel = Cinzel({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-codex',
   display: 'swap',
 });
 
@@ -26,9 +39,10 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Get Me An Alt — Don’t Buy It. Print & Build The Hardware Alt.',
+  title:
+    'Get Me An Alt — The RenAIssance Edition | Da Vinci’s Workshop for Hardware',
   description:
-    'Paste a product link, video, or photo of any pricey gadget. A swarm of managed Gemini 4 Argon agents reverse-engineers it into plate-packed 3D-printed STLs + off-the-shelf hardware.',
+    'Every invention begins as a sketch. Be the Da Vinci of everything you can’t afford—turn any gadget link, video, or photo into 3D-printable STLs and a sourced retail BOM via Managed Gemini 4 Argon Agents.',
 };
 
 export default function RootLayout({
@@ -39,13 +53,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`dark ${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable}`}
+      className={`dark ${cormorantGaramond.variable} ${cinzel.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="relative bg-[#050608] text-slate-100 antialiased selection:bg-[#00f5a0]/30 selection:text-[#00f5a0] bg-grid-pattern">
-        {/* Tactile film grain & cursor-follow ambient spotlight */}
+      <body className="relative bg-[#0c0906] text-[#f5ebd6] antialiased selection:bg-[#d4af37]/30 selection:text-[#f3d478] bg-grid-pattern">
+        {/* Tactile vellum/canvas grain & candlelit ambient spotlight */}
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-30 film-grain opacity-70"
+          className="pointer-events-none fixed inset-0 z-30 film-grain opacity-75"
         />
         <div
           aria-hidden="true"
@@ -53,59 +67,77 @@ export default function RootLayout({
         />
 
         <SmoothScrollProvider>
-          {/* Sticky Frosted Obsidian Glass Header */}
-          <header className="sticky top-0 z-50 border-b border-white/[0.08] bg-[#050608]/80 backdrop-blur-xl shadow-[inset_0_-1px_0_0_rgba(255,255,255,0.04)]">
-            <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3 sm:px-6">
-              <Link href="/" className="flex items-center gap-3.5 group">
-                <div className="relative flex h-9 w-9 items-center justify-center rounded-lg border border-[#00f5a0]/40 bg-gradient-to-br from-[#00f5a0] via-emerald-400 to-sky-400 text-[#050608] font-display font-bold text-lg shadow-[0_0_24px_-4px_rgba(0,245,160,0.45)] transition-transform duration-300 group-hover:scale-105">
-                  A
-                  <span className="absolute -bottom-0.5 -right-0.5 h-2 w-2 rounded-full bg-[#050608] p-0.5">
-                    <span className="block h-full w-full rounded-full bg-[#00f5a0]" />
+          {/* Sticky Florentine Codex Header */}
+          <header className="sticky top-0 z-50 border-b border-[#d4af37]/25 bg-[#0c0906]/85 backdrop-blur-xl shadow-[inset_0_-1px_0_0_rgba(243,212,120,0.08)]">
+            <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
+              <Link href="/" className="flex items-center gap-3.5 group shrink-0">
+                <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#d4af37]/60 bg-gradient-to-br from-[#f3d478] via-[#d4af37] to-[#8c6218] text-[#140e07] font-codex font-bold text-lg shadow-[0_0_26px_-4px_rgba(212,175,55,0.55)] transition-transform duration-300 group-hover:scale-105">
+                  {/* Vitruvian Circle + Square Emblem */}
+                  <svg
+                    viewBox="0 0 36 36"
+                    className="h-6 w-6 text-[#140e07]"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.8"
+                  >
+                    <circle cx="18" cy="18" r="13" />
+                    <rect x="7.5" y="7.5" width="21" height="21" />
+                    <path d="M18 6v24M6 18h24" strokeOpacity="0.45" />
+                    <circle cx="18" cy="18" r="3" fill="currentColor" />
+                  </svg>
+                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-[#0c0906] p-0.5">
+                    <span className="block h-full w-full rounded-full bg-[#d4af37]" />
                   </span>
                 </div>
                 <div>
-                  <div className="flex items-center gap-2.5">
-                    <span className="font-display text-base font-bold tracking-tight text-white group-hover:text-[#00f5a0] transition-colors">
+                  <div className="flex items-center gap-2.5 whitespace-nowrap">
+                    <span className="font-codex text-base sm:text-lg font-bold tracking-wider text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors">
                       Get Me An Alt
                     </span>
-                    <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#00f5a0]/30 bg-[#00f5a0]/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[#00f5a0]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#00f5a0] animate-pulse" />
-                      Gemini 4 Argon
+                    <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/40 bg-[#d4af37]/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[#f3d478]">
+                      <span className="h-1.5 w-1.5 rounded-full bg-[#d4af37] animate-pulse" />
+                      Codex Argon · MMXXVI
                     </span>
                   </div>
-                  <p className="font-mono text-[11px] tracking-tight text-slate-400 hidden md:block">
-                    REVERSE-ENGINEER BESPOKE HARDWARE → STL PLATES + RETAIL BOM
+                  <p className="font-mono text-[10px] tracking-[0.1em] text-[#bda782] hidden xl:block whitespace-nowrap">
+                    BOTTEGA DI LEONARDO // SKETCH TO 3D-PRINTED REALITY &amp; RETAIL BOM
                   </p>
                 </div>
               </Link>
 
-              <nav className="flex items-center gap-2 sm:gap-3">
+              <nav className="flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0">
                 <Link
-                  href="/#pipeline-story"
-                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs text-slate-300 hover:bg-white/[0.05] hover:text-white transition-colors"
+                  href="/#folio-study"
+                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="text-[#00f5a0]">01</span> Pipeline
+                  <span className="font-codex text-[#d4af37]">II.</span> The Study
                 </Link>
                 <Link
-                  href="/#exploded-story"
-                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs text-slate-300 hover:bg-white/[0.05] hover:text-white transition-colors"
+                  href="/#folio-bom"
+                  className="hidden xl:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="text-[#00f5a0]">02</span> 3D Explode
+                  <span className="font-codex text-[#d4af37]">III.</span> The Ledger
                 </Link>
                 <Link
-                  href="/#showcase-gallery"
-                  className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-mono text-xs text-slate-300 hover:bg-white/[0.05] hover:text-white transition-colors"
+                  href="/#folio-machine"
+                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
-                  <span className="text-[#00f5a0]">03</span> Gallery
+                  <span className="font-codex text-[#d4af37]">IV.</span> Sketch → Reality
+                </Link>
+                <Link
+                  href="/#folio-assembly"
+                  className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
+                >
+                  <span className="font-codex text-[#d4af37]">V.</span> Masterworks
                 </Link>
 
                 <Link
                   href="/projects/plant-auto-waterer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#00f5a0]/40 bg-[#00f5a0]/10 px-3.5 py-1.5 text-xs font-semibold text-[#00f5a0] shadow-[0_0_24px_-6px_rgba(0,245,160,0.3)] hover:bg-[#00f5a0] hover:text-[#050608] transition-all duration-200"
+                  className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/55 bg-gradient-to-r from-[#d4af37]/20 via-[#d4af37]/15 to-[#b87333]/20 px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] shadow-[0_0_24px_-6px_rgba(212,175,55,0.4)] hover:bg-[#d4af37] hover:text-[#140e07] transition-all duration-200 whitespace-nowrap"
                 >
-                  <span className="h-2 w-2 rounded-full bg-current animate-pulse" />
-                  <span>Instant Demo</span>
-                  <span className="hidden sm:inline font-mono text-[11px] opacity-85">
+                  <span className="h-2 w-2 rounded-full bg-current animate-pulse shrink-0" />
+                  <span className="font-codex tracking-wide">Open Folio I</span>
+                  <span className="hidden sm:inline font-mono text-[11px] opacity-90">
                     ($149 → $24.85)
                   </span>
                 </Link>
