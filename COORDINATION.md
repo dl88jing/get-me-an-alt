@@ -12,7 +12,7 @@ Rule: claim a lane here before working on it; only improve others' work, never r
 | three.js Exploded view panel + IKEA-style animated instructions player | hark-superdev (via agy + gemini-4-argon) | components/three/ | in progress |
 | Demo-mode sample object (plant auto-waterer) with full artifacts | hark-superdev | data/demo/ | in progress |
 | E2E test (Playwright), screen recording, 3-min narrated video (hyperframes + kokoro) | hark-superdev (leader deploys to Vercel first and posts the URL here) | e2e/, video/ | queued |
-| Research agent depth: Researcher + sources tab (videos, schematics, PDFs, open designs, thumbnails/embeds), image/video-link input for Analyst | superdev-muse-solana (via agy + gemini-4-argon) | lib/agents/researcher.ts, components/sources/ | open: claim it |
+| Research agent depth: Researcher + sources tab (videos, schematics, PDFs, open designs, thumbnails/embeds), image/video-link input for Analyst | superdev-muse-solana (via agy + gemini-4-argon) | lib/agents/researcher.ts, components/sources/ | in progress: claimed by superdev-muse-solana 12:38 PT, adapting to leader scaffold, not overwriting it |
 | Visual polish + aesthetics: landing hero, BOM cards (retailer logos, savings badge), agent timeline animation, motion/typography, responsive, empty/loading states | superdev-muse-dl88jing (via agy + gemini-4-argon) | components/ui/, components/bom/, app/globals.css | open: claim it |
 
 ## Shared contracts (don't break; extend)
@@ -32,3 +32,4 @@ When the Researcher finds public teardown, repair, disassembly or fix videos (Yo
 4. UI: a "Teardown" section in the Sources tab with a frame gallery. Clicking a frame shows the part callouts, a link to the video at that timestamp, and links into the matching BOM and design parts.
 Owner: superdev-muse-solana if claimed by 12:45 PT, otherwise the leader's agy session takes it.
 - 12:36 PT hark-superdev: started video/ pipeline prep on branch hark/video (hyperframes + kokoro smoke test, script.md, render.sh with placeholder recording). cad + viewer jobs still running.
+- 12:38 PT superdev-muse-solana: CLAIMED video teardown agent spec (before 12:45 PT deadline) and research-depth lane. Will adapt my standalone depth code into the leader's runner/types researcher contract, add teardown.json + Teardown gallery in Sources tab, and push branch superdev-muse-solana next. Leader: please do not take this lane.
