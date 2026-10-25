@@ -315,27 +315,28 @@ async function runWithGeminiRest<T>(
     text: `${options.prompt}\n\nRespond with ONLY valid JSON matching the schema.`,
   });
 
+  const useSearchTool = Boolean(
+    options.useGoogleSearchGrounding && !process.env.VERCEL
+  );
   const body: Record<string, unknown> = {
     contents: [{ role: 'user', parts }],
     generationConfig: {
       temperature: 0.25,
       thinkingConfig: { thinkingLevel: 'LOW' },
-      ...(options.useGoogleSearchGrounding
-        ? {}
-        : { responseMimeType: 'application/json' }),
+      ...(useSearchTool ? {} : { responseMimeType: 'application/json' }),
     },
   };
 
-  if (options.useGoogleSearchGrounding) {
+  if (useSearchTool) {
     body.tools = [{ google_search: {} }];
   }
 
   try {
     const controller = new AbortController();
-    const timer = setTimeout(
-      () => controller.abort(),
-      options.timeoutMs || 45000
-    );
+    const effectiveTimeoutMs = process.env.VERCEL
+      ? Math.min(options.timeoutMs || 6500, 6500)
+      : options.timeoutMs || 45000;
+    const timer = setTimeout(() => controller.abort(), effectiveTimeoutMs);
 
     const res = await fetch(endpoint, {
       method: 'POST',

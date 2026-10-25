@@ -34,8 +34,8 @@ const ldLibraryPath = [
 
 export default defineConfig({
   testDir: __dirname,
-  testMatch: /demo\.spec\.ts/,
-  timeout: 180_000,
+  testMatch: /(demo|live\/.*)\.spec\.ts/,
+  timeout: 360_000,
   expect: {
     timeout: 15_000,
   },
@@ -46,14 +46,14 @@ export default defineConfig({
   outputDir: path.join(__dirname, 'test-results'),
   use: {
     baseURL: BASE_URL,
-    actionTimeout: 4_000,
-    navigationTimeout: 20_000,
+    actionTimeout: 15_000,
+    navigationTimeout: 30_000,
     viewport: { width: 1920, height: 1080 },
     video: {
       mode: 'on',
       size: { width: 1920, height: 1080 },
     },
-    screenshot: 'on',
+    screenshot: 'off',
     trace: 'off',
     ignoreHTTPSErrors: true,
     launchOptions: {

@@ -171,7 +171,9 @@ export async function runCadAgent(
   >
 > {
   const startTime = Date.now();
-  const maxRetries = Math.max(1, Math.min(3, input.maxRetries ?? 3));
+  const maxRetries = input.preferRestForSpeed
+    ? 1
+    : Math.max(1, Math.min(3, input.maxRetries ?? 3));
   const design = normalizeDesignSpec(input.design);
   const printer = getPrinterById(input.printerId ?? DEFAULT_PRINTER_ID);
   const bedDimsMm: [number, number, number] = [
@@ -260,7 +262,9 @@ export async function runCadAgent(
     const stlRelPath = `parts/${part.id}.stl`;
     const scadAbsPath = path.join(input.cwd, scadRelPath);
 
-    const shouldCallArgon = !argonFilterSet || argonFilterSet.has(part.id);
+    const shouldCallArgon = argonFilterSet
+      ? argonFilterSet.has(part.id)
+      : !input.preferRestForSpeed || idx === 0;
     const attempts: CadPartAttemptLog[] = [];
 
     let compiledMesh: TriangleMesh | undefined;
@@ -301,7 +305,7 @@ export async function runCadAgent(
           prompt,
           cwd: input.cwd,
           preferRestForSpeed: input.preferRestForSpeed,
-          timeoutMs: 30000,
+          timeoutMs: input.preferRestForSpeed ? 6000 : 30000,
           onLog: (entry) => {
             input.onLog?.(entry);
           },
@@ -392,6 +396,9 @@ export async function runCadAgent(
             attempt,
             error: lastError,
           });
+          if (agentRes.runner === "deterministic") {
+            break;
+          }
         }
       }
     }

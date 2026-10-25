@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
+  ensurePipelineRunning,
   getProjectEvents,
   getProjectManifest,
 } from '@/lib/agents/orchestrator';
@@ -11,7 +12,8 @@ export async function GET(
   _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const manifest = getProjectManifest(params.id);
+  const manifest =
+    getProjectManifest(params.id) || ensurePipelineRunning(params.id);
   if (!manifest) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }
