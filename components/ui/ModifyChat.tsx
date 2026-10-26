@@ -195,6 +195,8 @@ export function ModifyChat({
   const [history, setHistory] = useState<ModifyDiffSummary[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   const baselineManifestRef = useRef<ProjectManifest | null>(null);
   useEffect(() => {
     if (manifest && !baselineManifestRef.current) {
@@ -491,131 +493,116 @@ export function ModifyChat({
     });
   }
 
+  const showBody = isExpanded || isRunning || Boolean(latestDiff);
+
   return (
     <section
       aria-label="Ask Argon to Modify — Selective Agent Re-Orchestration"
-      className="codex-folio bg-grid-pattern relative overflow-hidden rounded-2xl border border-[#d4af37]/30 p-4 sm:p-6 space-y-4 shadow-electric"
+      className="surface-card rounded-2xl p-3.5 sm:px-5 sm:py-4 space-y-3"
     >
-      {/* Ambient Glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-20 -top-20 h-48 w-72 rounded-full bg-[#d4af37]/12 blur-3xl"
-      />
-
-      {/* Top Header Bar */}
-      <div className="relative flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/50 bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
-              <Sparkles className="h-3.5 w-3.5" />
+      {/* Compact Header + Inline Command Bar */}
+      <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5">
+            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#e5bd47]/45 bg-[#231d15] px-2.5 py-1 text-xs font-bold text-[#f3d478]">
+              <Sparkles className="h-3.5 w-3.5 text-[#e5bd47]" />
               Ask Argon to Modify
             </span>
-            <span className="rounded-md border border-[#d4af37]/30 bg-[#14100b] px-2 py-0.5 font-codex text-[11px] text-[#e6d3b3]">
-              Selective DAG Router · gemini-4-argon
-            </span>
+            <p className="hidden sm:inline text-sm text-[#dfd3be]">
+              Re-runs only the agents affected by your change.
+            </p>
             {history.length > 0 && (
-              <span className="rounded-md border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-2 py-0.5 font-codex text-[11px] font-semibold text-[#f3d478]">
-                {history.length} modification{history.length === 1 ? '' : 's'}{' '}
-                applied
+              <span className="rounded-md border border-[#e5bd47]/40 bg-[#e5bd47]/15 px-2 py-0.5 text-xs font-semibold text-[#f3d478]">
+                {history.length} applied
               </span>
             )}
           </div>
-          <p className="text-xs text-[#e6d3b3]">
-            Request any dimensional, hardware, cost, or printer-bed change —
-            Gemini 4 Argon classifies which downstream agents are affected and
-            re-runs <strong className="text-[#f5ebd6]">only those stages</strong>{' '}
-            live in Mission Control above.
-          </p>
-        </div>
 
-        {history.length > 0 && (
-          <button
-            type="button"
-            disabled={isRunning}
-            onClick={handleResetBaseline}
-            className="inline-flex items-center gap-1.5 self-start rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3 py-1.5 font-codex text-xs font-semibold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6] disabled:opacity-40"
-          >
-            <RotateCcw className="h-3.5 w-3.5 text-[#f3d478]" />
-            Reset to Baseline
-          </button>
-        )}
-      </div>
-
-      {/* Quick Suggestion Pills */}
-      <div className="flex flex-wrap items-center gap-2">
-        <span className="font-codex text-[11px] uppercase tracking-wider text-[#bda782]">
-          Try:
-        </span>
-        {PRESET_SUGGESTIONS.map((preset) => (
-          <button
-            key={preset.label}
-            type="button"
-            disabled={isRunning}
-            onClick={() => handleRunModify(preset.prompt)}
-            className="group inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/25 bg-[#14100b]/90 px-3 py-1.5 text-xs text-[#e6d3b3] transition-all hover:border-[#f3d478]/60 hover:bg-[#d4af37]/15 hover:text-[#f5ebd6] disabled:opacity-40"
-          >
-            <span className="font-semibold">{preset.label}</span>
-            <span className="rounded bg-[#1d1710] border border-[#d4af37]/25 px-1.5 py-0.5 font-codex text-[10px] text-[#f3d478] group-hover:bg-[#d4af37]/25">
-              {preset.badge}
-            </span>
-          </button>
-        ))}
-      </div>
-
-      {/* Input Command Bar */}
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          handleRunModify();
-        }}
-        className="glass-command-bar relative flex flex-col gap-2.5 rounded-2xl p-2.5 sm:flex-row sm:items-center"
-      >
-        <div className="flex flex-1 items-center gap-2.5 px-2">
-          <Zap className="h-4 w-4 shrink-0 text-[#f3d478]" />
-          <input
-            type="text"
-            value={promptText}
-            disabled={isRunning}
-            onChange={(e) => setPromptText(e.target.value)}
-            placeholder='Ask Argon to modify (e.g., "make the reservoir 2x bigger", "use cheaper parts", "fit a Bambu A1 mini bed")...'
-            aria-label="Ask Argon to modify this project"
-            className="w-full bg-transparent text-xs sm:text-sm text-[#f5ebd6] placeholder-[#bda782]/75 focus:outline-none disabled:opacity-60"
-          />
-        </div>
-
-        {/* Live Predicted Agent Routing Pill while typing */}
-        {promptText.trim().length > 2 && !isRunning && (
-          <div className="hidden xl:flex items-center gap-1.5 rounded-xl border border-[#d4af37]/25 bg-[#14100b] px-2.5 py-1 font-codex text-[10px] text-[#e6d3b3]">
-            <span className="text-[#bda782]">Will re-run:</span>
-            {predictedAgents.map((ag) => (
-              <span
-                key={ag}
-                className="rounded bg-[#d4af37]/15 border border-[#d4af37]/35 px-1.5 py-0.5 font-bold text-[#f3d478]"
+          <div className="flex items-center gap-2">
+            {history.length > 0 && (
+              <button
+                type="button"
+                disabled={isRunning}
+                onClick={handleResetBaseline}
+                className="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] disabled:opacity-40"
               >
-                {AGENT_META[ag]?.label || ag}
-              </span>
-            ))}
+                <RotateCcw className="h-3.5 w-3.5 text-[#f3d478]" />
+                Reset
+              </button>
+            )}
+            <button
+              type="button"
+              onClick={() => setIsExpanded((prev) => !prev)}
+              aria-expanded={showBody}
+              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
+            >
+              <span>{showBody ? 'Hide Presets' : 'Presets & Options'}</span>
+            </button>
           </div>
-        )}
+        </div>
 
-        <button
-          type="submit"
-          disabled={isRunning || !promptText.trim()}
-          className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold uppercase tracking-wider text-[#140e07] transition-all hover:brightness-110 disabled:opacity-40 shrink-0"
+        {/* Compact Input Command Bar */}
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleRunModify();
+          }}
+          className="flex flex-1 max-w-2xl items-center gap-2"
         >
-          {isRunning ? (
-            <>
-              <Loader2 className="h-4 w-4 animate-spin" />
-              Re-Orchestrating...
-            </>
-          ) : (
-            <>
-              <Send className="h-3.5 w-3.5" />
-              Ask Argon
-            </>
-          )}
-        </button>
-      </form>
+          <div className="relative flex-1">
+            <Zap className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 h-4 w-4 text-[#e5bd47]" />
+            <input
+              type="text"
+              value={promptText}
+              disabled={isRunning}
+              onFocus={() => setIsExpanded(true)}
+              onChange={(e) => setPromptText(e.target.value)}
+              placeholder='Modify build (e.g., "make reservoir 2x bigger", "use cheaper parts")...'
+              aria-label="Ask Argon to modify this project"
+              className="w-full min-h-[44px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-10 pr-3 py-2 text-sm text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478] disabled:opacity-60"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isRunning || !promptText.trim()}
+            className="btn-primary-gold min-h-[44px] px-4 py-2 text-xs sm:text-sm shrink-0 disabled:opacity-40"
+          >
+            {isRunning ? (
+              <>
+                <Loader2 className="h-4 w-4 animate-spin" />
+                Running...
+              </>
+            ) : (
+              <>
+                <Send className="h-3.5 w-3.5" />
+                Ask Argon
+              </>
+            )}
+          </button>
+        </form>
+      </div>
+
+      {/* Collapsible Preset Chips & Routing Preview */}
+      {showBody && (
+        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#dfd3be]/15">
+          <span className="text-xs font-medium text-[#b5a48b]">Presets:</span>
+          {PRESET_SUGGESTIONS.map((preset) => (
+            <button
+              key={preset.label}
+              type="button"
+              disabled={isRunning}
+              onClick={() => handleRunModify(preset.prompt)}
+              className="inline-flex min-h-[36px] items-center gap-2 rounded-lg border border-[#dfd3be]/20 bg-[#231d15] px-3 py-1.5 text-xs font-medium text-[#faf4e8] hover:border-[#f3d478] hover:bg-[#2e261c] disabled:opacity-40"
+            >
+              <span>{preset.label}</span>
+              <span className="rounded bg-[#0c0a08] px-1.5 py-0.5 font-mono text-[10px] text-[#b5a48b]">
+                {preset.agentsPreview.length}a
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Live Execution Progress Strip */}
       {isRunning && (

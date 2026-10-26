@@ -742,6 +742,7 @@ export function MissionControl({
   const [isPaused, setIsPaused] = useState(false);
   const [speedMultiplier, setSpeedMultiplier] = useState<1 | 2>(1);
   const [streamConnected, setStreamConnected] = useState(false);
+  const [detailsOpen, setDetailsOpen] = useState(false);
 
   const replayDeckRef = useRef<SsePipelineEvent[]>([]);
   const replayCursorRef = useRef<number>(0);
@@ -1262,66 +1263,49 @@ export function MissionControl({
   const effectiveLive =
     isLive ?? (manifest.status === 'running' || isReplaying || streamConnected);
 
+  const showFullGraph = detailsOpen || manifest.status === 'running' || isReplaying;
+
   return (
     <section
       aria-label="Mission Control — Gemini 4 Argon Managed Agent Pipeline"
-      className="codex-folio bg-grid-pattern relative overflow-hidden rounded-2xl border border-[#d4af37]/30 p-4 sm:p-6 space-y-5"
+      className="surface-card relative overflow-hidden rounded-2xl p-4 sm:px-5 sm:py-4 space-y-3"
     >
-      {/* Ambient Candlelit & Gilded Radial Highlights */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-24 left-1/3 h-56 w-96 rounded-full bg-[#d4af37]/12 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 right-1/4 h-56 w-96 rounded-full bg-[#b89b4a]/10 blur-3xl"
-      />
+      {/* Compact Header, Telemetry & Toggle Controls */}
+      <div className="relative flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-wrap items-center gap-3">
+          <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#e5bd47]/45 bg-[#231d15] px-2.5 py-1 text-xs font-bold text-[#f3d478]">
+            <Activity className="h-3.5 w-3.5 text-[#f3d478]" />
+            9-Agent Pipeline
+          </span>
 
-      {/* Top Header & Replay Controls */}
-      <div className="relative flex flex-col gap-3 border-b border-[#d4af37]/20 pb-4 lg:flex-row lg:items-center lg:justify-between">
-        <div className="space-y-1">
-          <div className="flex flex-wrap items-center gap-2.5">
-            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/50 bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
-              <Activity className="h-3.5 w-3.5 text-[#f3d478]" />
-              Mission Control · Managed Agents
-            </span>
-            <h2 className="font-display text-lg sm:text-2xl font-bold tracking-tight text-[#f5ebd6]">
-              Gemini 4 Argon 9-Agent Pipeline — “{manifest.title}”
-            </h2>
-            {(activeLoopPulse || loopCompleted) && (
-              <span
-                className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 font-codex text-[10px] font-bold uppercase tracking-wider ${
-                  activeLoopPulse
-                    ? 'border-[#f3d478]/70 bg-[#d4af37]/25 text-[#f3d478]'
-                    : 'border-[#d4af37]/40 bg-[#d4af37]/12 text-[#e6d3b3]'
-                }`}
-              >
-                <GitCompare className="h-3 w-3 text-[#f3d478]" />
-                Critic → Designer Loop:{' '}
-                {activeLoopPulse ? 'Revising design.json...' : '2-Round Verified'}
-              </span>
-            )}
-          </div>
-          <p className="font-display italic text-sm text-[#bda782]">
-            Streaming live agent telemetry{' '}
-            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-mono not-italic text-[11px] text-[#f3d478]">
-              {'{agent, phase, message, data, ts}'}
-            </span>{' '}
-            from{' '}
-            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-mono not-italic text-[11px] text-[#e6d3b3]">
-              /api/objects/{projectId}/stream
-            </span>
-          </p>
+          <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#faf4e8]">
+            <span
+              className={`inline-block h-2 w-2 rounded-full ${
+                completedCount === MISSION_NODES.length && !isReplaying
+                  ? 'bg-[#c2a353]'
+                  : failedCount > 0
+                  ? 'bg-[#d95338]'
+                  : 'bg-[#f3d478] animate-timeline-dot'
+              }`}
+            />
+            {completedCount === MISSION_NODES.length && !isReplaying
+              ? `${completedCount}/${MISSION_NODES.length} Agents Verified`
+              : `${completedCount}/${MISSION_NODES.length} Running`}
+          </span>
+
+          <span className="hidden sm:inline text-xs font-mono text-[#b5a48b] tabular-nums">
+            {formatTokens(totalTokensCount)} tok · {formatMs(totalElapsedMs)} · {totalArtifactsCount} artifacts
+          </span>
         </div>
 
-        {/* Replay Controls */}
+        {/* Replay & Expand Controls */}
         <div className="flex flex-wrap items-center gap-2">
           {isReplaying ? (
             <>
               <button
                 type="button"
                 onClick={() => setIsPaused((p) => !p)}
-                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-2.5 py-1.5 font-codex text-xs font-semibold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6]"
+                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478]"
               >
                 {isPaused ? (
                   <>
@@ -1329,21 +1313,21 @@ export function MissionControl({
                   </>
                 ) : (
                   <>
-                    <Pause className="h-3.5 w-3.5 text-[#d4af37]" /> Pause
+                    <Pause className="h-3.5 w-3.5 text-[#e5bd47]" /> Pause
                   </>
                 )}
               </button>
               <button
                 type="button"
                 onClick={() => setSpeedMultiplier((s) => (s === 1 ? 2 : 1))}
-                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-2 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
+                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
               >
                 {speedMultiplier}x
               </button>
               <button
                 type="button"
                 onClick={finishImmediately}
-                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-2.5 py-1.5 font-codex text-xs font-semibold text-[#bda782] hover:border-[#d4af37]/60 hover:text-[#f5ebd6]"
+                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478]"
               >
                 <FastForward className="h-3.5 w-3.5" /> Skip
               </button>
@@ -1351,79 +1335,32 @@ export function MissionControl({
           ) : (
             <button
               type="button"
-              onClick={handleReplayClick}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37]/25 transition-colors"
+              onClick={() => {
+                setDetailsOpen(true);
+                handleReplayClick();
+              }}
+              className="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
             >
               <RotateCcw className="h-3.5 w-3.5" />
-              Replay Agent Graph
+              Replay Graph
             </button>
           )}
+
+          <button
+            type="button"
+            onClick={() => setDetailsOpen((o) => !o)}
+            aria-expanded={showFullGraph}
+            className="inline-flex min-h-[38px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
+          >
+            <span>{showFullGraph ? 'Hide Agent Logs' : 'Inspect Agent Graph & Logs'}</span>
+          </button>
         </div>
       </div>
 
-      {/* Overall Telemetry Bar (Consolidated from muse-dl88jing's MissionControl) */}
-      <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-xl border border-[#d4af37]/25 bg-[#14100b]/95 px-4 py-3 text-xs tabular-nums">
-        <span className="flex items-center gap-2 font-codex font-semibold text-[#f5ebd6]">
-          <span
-            className={`inline-block h-2.5 w-2.5 rounded-full ${
-              completedCount === MISSION_NODES.length && !isReplaying
-                ? 'bg-[#b89b4a]'
-                : failedCount > 0
-                ? 'bg-[#c84b31]'
-                : 'bg-[#f3d478] animate-timeline-dot'
-            }`}
-          />
-          {completedCount === MISSION_NODES.length && !isReplaying
-            ? 'Build complete'
-            : failedCount > 0
-            ? 'Build failed'
-            : effectiveLive
-            ? 'Streaming live'
-            : 'Build in progress'}
-        </span>
-
-        <span className="text-[#bda782]">
-          <strong className="font-codex text-[#f3d478]">
-            {completedCount}/{MISSION_NODES.length}
-          </strong>{' '}
-          agents done
-          {failedCount > 0 ? ` · ${failedCount} failed` : ''}
-        </span>
-
-        <span className="inline-flex items-center gap-1 text-[#bda782]">
-          <Cpu className="h-3.5 w-3.5 text-[#d4af37]" />
-          <strong className="font-codex text-[#e6d3b3]">
-            {formatTokens(totalTokensCount)}
-          </strong>{' '}
-          tokens
-        </span>
-
-        <span className="inline-flex items-center gap-1 text-[#bda782]">
-          <Clock className="h-3.5 w-3.5 text-[#f3d478]" />
-          <strong className="font-codex text-[#f3d478]">
-            {formatMs(totalElapsedMs)}
-          </strong>{' '}
-          elapsed
-        </span>
-
-        <span className="inline-flex items-center gap-1 text-[#bda782]">
-          <FileCode className="h-3.5 w-3.5 text-[#b89b4a]" />
-          <strong className="font-codex text-[#e6d3b3]">{totalArtifactsCount}</strong>{' '}
-          artifacts
-        </span>
-
-        <div className="min-w-[140px] flex-1">
-          <div className="h-2 overflow-hidden rounded-full border border-[#d4af37]/25 bg-[#282016]">
-            <div
-              className="h-full rounded-full bg-gradient-to-r from-[#b89b4a] via-[#d4af37] to-[#f3d478] transition-all duration-300"
-              style={{ width: `${progressPercent}%` }}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Directed Agent Graph Topology SVG (with Critic -> Designer Revision Loop) */}
-      <div className="relative overflow-x-auto rounded-xl border border-[#d4af37]/25 bg-[#120d08]/95 p-3 shadow-inner">
+      {/* Directed Agent Graph Topology SVG (always available when expanded or replaying) */}
+      {showFullGraph && (
+        <div className="space-y-4 pt-2 border-t border-[#dfd3be]/15">
+          <div className="relative overflow-x-auto rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-3">
         <svg
           viewBox="0 0 1120 228"
           className="h-[185px] min-w-[860px] w-full select-none"
@@ -1914,6 +1851,8 @@ export function MissionControl({
           </ul>
         </div>
       </div>
+      </div>
+      )}
     </section>
   );
 }
