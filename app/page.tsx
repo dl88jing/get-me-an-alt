@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
@@ -12,8 +12,10 @@ import {
   Box,
   ChevronDown,
   Cpu,
+  FileText,
   Layers,
   Link2,
+  Play,
   Printer,
   RotateCcw,
   Search,
@@ -22,6 +24,7 @@ import {
   Sparkles,
   Upload,
   Wrench,
+  X,
 } from 'lucide-react';
 
 const ScrollExplodeScene = dynamic(
@@ -213,9 +216,57 @@ const AGENT_STAGES = [
   },
 ];
 
+function detectInputModality(raw: string): {
+  kind: 'youtube' | 'url' | 'prompt';
+  label: 'YouTube Video' | 'Product URL' | 'Text Prompt';
+  host?: string;
+} | null {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  const isYoutube =
+    /^(https?:\/\/)?(www\.|m\.)?(youtube\.com\/(watch|shorts|embed|results|live)|youtu\.be\/)/i.test(
+      trimmed
+    );
+  if (isYoutube) {
+    return {
+      kind: 'youtube',
+      label: 'YouTube Video',
+      host: 'youtube.com',
+    };
+  }
+
+  const isUrl =
+    /^(https?:\/\/|www\.)\S+/i.test(trimmed) ||
+    /^[a-z0-9-]+(\.[a-z0-9-]+)+\/\S+/i.test(trimmed);
+  if (isUrl) {
+    let host: string | undefined;
+    try {
+      const normalized = /^https?:\/\//i.test(trimmed)
+        ? trimmed
+        : `https://${trimmed}`;
+      host = new URL(normalized).hostname.replace(/^www\./i, '');
+    } catch {
+      host = undefined;
+    }
+    return {
+      kind: 'url',
+      label: 'Product URL',
+      host,
+    };
+  }
+
+  return {
+    kind: 'prompt',
+    label: 'Text Prompt',
+  };
+}
+
 export default function LandingPage() {
   const router = useRouter();
+  const heroInputRef = useRef<HTMLInputElement | null>(null);
   const [inputValue, setInputValue] = useState('');
+  const [justPasted, setJustPasted] = useState(false);
   const [printerId, setPrinterId] = useState('bambu-a1');
   const [imageFile, setImageFile] = useState<{
     name: string;
@@ -242,6 +293,48 @@ export default function LandingPage() {
       'camera-slider-3axis',
     ])
   );
+
+  const detectedModality = useMemo(
+    () => detectInputModality(inputValue),
+    [inputValue]
+  );
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const isCmdK =
+        (e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k';
+      const target = e.target as HTMLElement | null;
+      const isEditable =
+        target &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable);
+
+      if (
+        isCmdK ||
+        (e.key === '/' &&
+          !isEditable &&
+          !e.metaKey &&
+          !e.ctrlKey &&
+          !e.altKey)
+      ) {
+        e.preventDefault();
+        heroInputRef.current?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center',
+        });
+        heroInputRef.current?.focus();
+      } else if (
+        e.key === 'Escape' &&
+        document.activeElement === heroInputRef.current
+      ) {
+        heroInputRef.current?.blur();
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, []);
 
   useEffect(() => {
     fetch('/api/objects')
@@ -326,9 +419,12 @@ export default function LandingPage() {
     setLastFailedPreset(null);
 
     const trimmed = inputValue.trim();
-    const normalizedInput = /^www\./i.test(trimmed)
-      ? `https://${trimmed}`
-      : trimmed;
+    const isDetectedUrl =
+      detectedModality?.kind === 'url' || detectedModality?.kind === 'youtube';
+    const normalizedInput =
+      isDetectedUrl && !/^https?:\/\//i.test(trimmed)
+        ? `https://${trimmed}`
+        : trimmed;
     const isUrl = /^https?:\/\//i.test(normalizedInput);
 
     try {
@@ -412,10 +508,19 @@ export default function LandingPage() {
       return;
     }
     setError(null);
-    const inputEl = document.querySelector<HTMLInputElement>(
-      '#hero-command input[type="text"]'
-    );
-    inputEl?.focus();
+    heroInputRef.current?.focus();
+  };
+
+  const handleInputPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
+    const file = e.clipboardData?.files?.[0];
+    if (file && file.type.startsWith('image/')) {
+      e.preventDefault();
+      handleImageFile(file);
+      return;
+    }
+    setError(null);
+    setJustPasted(true);
+    window.setTimeout(() => setJustPasted(false), 1600);
   };
 
   return (
@@ -465,14 +570,75 @@ export default function LandingPage() {
           >
             <div className="flex flex-col gap-2 sm:flex-row sm:gap-3">
               <div className="relative flex-1 min-w-0">
-                <Link2 className="pointer-events-none absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-[#e5bd47]" />
+                {detectedModality?.kind === 'youtube' ? (
+                  <Play className="pointer-events-none absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-[#e5bd47]" />
+                ) : detectedModality?.kind === 'prompt' ? (
+                  <FileText className="pointer-events-none absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-[#e5bd47]" />
+                ) : (
+                  <Link2 className="pointer-events-none absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-[#e5bd47]" />
+                )}
                 <input
+                  ref={heroInputRef}
                   type="text"
                   value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
+                  onChange={(e) => {
+                    setInputValue(e.target.value);
+                    if (error) setError(null);
+                  }}
+                  onPaste={handleInputPaste}
+                  aria-label="Paste a product link, YouTube URL, or describe any gadget"
                   placeholder="Paste a product link, YouTube URL, or describe any gadget..."
-                  className="w-full min-h-[44px] sm:min-h-[48px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-10 sm:pl-12 pr-3 sm:pr-4 py-2 sm:py-3 text-sm sm:text-base text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478]"
+                  className={`w-full min-h-[44px] sm:min-h-[48px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-10 sm:pl-12 ${
+                    detectedModality
+                      ? 'pr-36 sm:pr-44'
+                      : 'pr-3 sm:pr-24'
+                  } py-2 sm:py-3 text-sm sm:text-base text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478]`}
                 />
+                <div className="
+                  absolute right-2 sm:right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1
+                ">
+                  {detectedModality ? (
+                    <>
+                      <span
+                        data-testid="input-modality-chip"
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-bold tracking-wide transition-all ${
+                          justPasted
+                            ? 'border-[#f3d478] bg-[#e5bd47]/25 text-[#faf4e8] shadow-[0_0_12px_rgba(243,212,120,0.35)]'
+                            : detectedModality.kind === 'youtube'
+                            ? 'border-[#e5bd47]/60 bg-[#231d15] text-[#f3d478]'
+                            : detectedModality.kind === 'url'
+                            ? 'border-[#e5bd47]/50 bg-[#231d15] text-[#f3d478]'
+                            : 'border-[#dfd3be]/35 bg-[#231d15] text-[#dfd3be]'
+                        }`}
+                      >
+                        <span className="h-1.5 w-1.5 rounded-full bg-[#e5bd47]" />
+                        <span>{detectedModality.label}</span>
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setInputValue('');
+                          setError(null);
+                          heroInputRef.current?.focus();
+                        }}
+                        aria-label="Clear input"
+                        className="inline-flex h-7 w-7 items-center justify-center rounded-lg text-[#b5a48b] hover:bg-[#231d15] hover:text-[#faf4e8] transition-colors"
+                      >
+                        <X className="h-3.5 w-3.5" />
+                      </button>
+                    </>
+                  ) : (
+                    <div
+                      data-testid="command-shortcut-hint"
+                      aria-hidden="true"
+                      className="pointer-events-none hidden sm:inline-flex items-center gap-1 rounded-lg border border-[#dfd3be]/20 bg-[#17130e] px-2 py-1 font-mono text-[11px] font-medium text-[#b5a48b]"
+                    >
+                      <kbd className="font-mono text-[#dfd3be]">/</kbd>
+                      <span className="text-[#b5a48b]/70">or</span>
+                      <kbd className="font-mono text-[#dfd3be]">⌘K</kbd>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <button
