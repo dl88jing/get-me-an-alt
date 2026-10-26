@@ -20,16 +20,16 @@
       "name": "Weighted Base Pedestal & 6808 Bearing Seat",
       "kind": "printed",
       "dims_mm": [
-        150,
-        150,
-        42
+        148,
+        148,
+        40
       ],
-      "shape": "custom_csg",
+      "shape": "cylinder",
       "params": {
-        "preset": "reservoir",
-        "width": 150,
-        "depth": 150,
-        "height": 42,
+        "rolePreset": "arm_base_pedestal",
+        "width": 148,
+        "depth": 148,
+        "height": 40,
         "wallThickness": 4,
         "floorThickness": 5,
         "cornerRadius": 16,
@@ -48,7 +48,7 @@
       "explode": [
         0,
         0,
-        -90
+        -55
       ],
       "color": "#d4af37",
       "bomRef": "bom-filament-arm",
@@ -67,20 +67,20 @@
       "name": "6808-2RS Thin-Section Slew Bearing + 608ZZ Joint Bearings",
       "kind": "purchased",
       "dims_mm": [
-        52,
-        52,
-        7
+        68,
+        68,
+        8
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 26,
-        "innerRadius": 20,
-        "height": 7
+        "outerRadius": 34,
+        "innerRadius": 24,
+        "height": 8
       },
       "position": [
         0,
         0,
-        38
+        22
       ],
       "rotation": [
         0,
@@ -90,7 +90,7 @@
       "explode": [
         0,
         0,
-        -35
+        -25
       ],
       "color": "#bda782",
       "bomRef": "bom-bearings",
@@ -109,40 +109,23 @@
       "name": "J1 Azimuth Rotary Turntable & Ring Gear Deck",
       "kind": "printed",
       "dims_mm": [
-        134,
-        134,
+        126,
+        126,
         14
       ],
-      "shape": "plate_with_holes",
+      "shape": "gear_simple",
       "params": {
-        "width": 134,
-        "depth": 134,
+        "rolePreset": "turntable_ring_deck",
+        "width": 126,
+        "depth": 126,
+        "height": 14,
         "thickness": 14,
-        "cornerRadius": 24,
-        "wallThickness": 3.2,
-        "holes": [
-          {
-            "x": 0,
-            "y": 0,
-            "radius": 8
-          },
-          {
-            "x": -36,
-            "y": 0,
-            "radius": 3.2
-          },
-          {
-            "x": 36,
-            "y": 0,
-            "radius": 3.2
-          }
-        ],
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        44
+        30
       ],
       "rotation": [
         0,
@@ -152,7 +135,7 @@
       "explode": [
         0,
         0,
-        10
+        0
       ],
       "color": "#b89b4a",
       "bomRef": "bom-filament-arm",
@@ -171,24 +154,23 @@
       "name": "J2 Dual-Servo Shoulder U-Yoke Bracket",
       "kind": "printed",
       "dims_mm": [
-        94,
-        68,
-        76
+        86,
+        52,
+        62
       ],
       "shape": "bracketL",
       "params": {
-        "legA": 94,
-        "legB": 76,
-        "width": 68,
-        "thickness": 6,
-        "filletRadius": 6,
-        "wallThickness": 4,
+        "rolePreset": "u_yoke_clevis",
+        "width": 86,
+        "depth": 52,
+        "height": 62,
+        "thickness": 8,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        58
+        62
       ],
       "rotation": [
         0,
@@ -198,7 +180,7 @@
       "explode": [
         0,
         0,
-        55
+        28
       ],
       "color": "#c87d4b",
       "bomRef": "bom-filament-arm",
@@ -223,14 +205,16 @@
       ],
       "shape": "box",
       "params": {
+        "rolePreset": "servo_motor",
         "width": 40,
         "depth": 20,
-        "height": 38
+        "height": 38,
+        "eulerDeg": [0, 0, -90]
       },
       "position": [
-        28,
+        52,
         0,
-        88
+        72
       ],
       "rotation": [
         0,
@@ -238,9 +222,9 @@
         0
       ],
       "explode": [
-        95,
+        85,
         0,
-        65
+        32
       ],
       "color": "#5c4930",
       "bomRef": "bom-servo-mg996r",
@@ -261,18 +245,19 @@
       "dims_mm": [
         28,
         28,
-        12
+        10
       ],
       "shape": "cylinder",
       "params": {
         "radius": 14,
-        "height": 12,
-        "segments": 32
+        "height": 10,
+        "segments": 32,
+        "eulerDeg": [0, 0, 90]
       },
       "position": [
-        -28,
+        -46,
         0,
-        96
+        72
       ],
       "rotation": [
         0,
@@ -280,9 +265,9 @@
         0
       ],
       "explode": [
-        -95,
+        -80,
         0,
-        75
+        32
       ],
       "color": "#c84b31",
       "bomRef": "bom-fasteners-horns",
@@ -301,15 +286,16 @@
       "name": "J2–J3 Triangulated Truss Lower Arm Link (145mm)",
       "kind": "printed",
       "dims_mm": [
-        52,
-        44,
-        145
+        50,
+        38,
+        118
       ],
       "shape": "box",
       "params": {
-        "width": 52,
-        "depth": 44,
-        "height": 145,
+        "rolePreset": "arm_truss_link",
+        "width": 50,
+        "depth": 38,
+        "height": 118,
         "wallThickness": 3.6,
         "cornerRadius": 6,
         "dfmVerified": true
@@ -317,7 +303,7 @@
       "position": [
         0,
         0,
-        118
+        124
       ],
       "rotation": [
         0,
@@ -326,8 +312,8 @@
       ],
       "explode": [
         0,
-        -35,
-        115
+        0,
+        68
       ],
       "color": "#d4af37",
       "bomRef": "bom-filament-arm",
@@ -346,25 +332,23 @@
       "name": "J3 Offset Elbow Cantilever Servo Housing",
       "kind": "printed",
       "dims_mm": [
-        68,
-        54,
-        56
+        62,
+        48,
+        48
       ],
       "shape": "custom_csg",
       "params": {
-        "preset": "enclosure",
-        "width": 68,
-        "depth": 54,
-        "height": 56,
+        "rolePreset": "elbow_knuckle",
+        "width": 62,
+        "depth": 48,
+        "height": 48,
         "wallThickness": 3.2,
-        "floorThickness": 3.5,
-        "cornerRadius": 6,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        248
+        184
       ],
       "rotation": [
         0,
@@ -374,7 +358,7 @@
       "explode": [
         0,
         0,
-        175
+        108
       ],
       "color": "#9c7a4c",
       "bomRef": "bom-filament-arm",
@@ -393,24 +377,23 @@
       "name": "J4 Hollow Wrist-Roll Forearm Barrel (120mm)",
       "kind": "printed",
       "dims_mm": [
-        48,
-        48,
-        120
+        44,
+        44,
+        96
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 22,
-        "innerRadius": 16,
-        "height": 120,
-        "flangeRadius": 24,
-        "flangeHeight": 5,
+        "rolePreset": "forearm_barrel",
+        "outerRadius": 21,
+        "innerRadius": 15,
+        "height": 96,
         "wallThickness": 3.2,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        294
+        248
       ],
       "rotation": [
         0,
@@ -419,8 +402,8 @@
       ],
       "explode": [
         0,
-        30,
-        235
+        0,
+        148
       ],
       "color": "#e6c365",
       "bomRef": "bom-filament-arm",
@@ -439,24 +422,23 @@
       "name": "J5 Differential Wrist Pitch Clevis Gimbal",
       "kind": "printed",
       "dims_mm": [
-        48,
-        42,
-        44
+        52,
+        38,
+        42
       ],
       "shape": "bracketL",
       "params": {
-        "legA": 48,
-        "legB": 44,
-        "width": 42,
-        "thickness": 4.5,
-        "filletRadius": 4,
-        "wallThickness": 3,
+        "rolePreset": "u_yoke_clevis",
+        "width": 52,
+        "depth": 38,
+        "height": 42,
+        "thickness": 6,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        392
+        310
       ],
       "rotation": [
         0,
@@ -466,7 +448,7 @@
       "explode": [
         0,
         0,
-        295
+        188
       ],
       "color": "#b87333",
       "bomRef": "bom-filament-arm",
@@ -485,20 +467,22 @@
       "name": "MG90S Micro Metal-Gear Servos (J4–J6 Wrist & Gripper)",
       "kind": "purchased",
       "dims_mm": [
-        23,
-        12,
-        29
+        24,
+        13,
+        28
       ],
       "shape": "box",
       "params": {
-        "width": 23,
-        "depth": 12,
-        "height": 29
+        "rolePreset": "servo_motor",
+        "width": 24,
+        "depth": 13,
+        "height": 28,
+        "eulerDeg": [0, 0, -90]
       },
       "position": [
-        18,
+        34,
         0,
-        405
+        316
       ],
       "rotation": [
         0,
@@ -506,9 +490,9 @@
         0
       ],
       "explode": [
-        85,
+        72,
         0,
-        310
+        195
       ],
       "color": "#7a5c38",
       "bomRef": "bom-servo-mg90s",
@@ -527,35 +511,22 @@
       "name": "J6 Spur-Gear Parallel Gripper Chassis",
       "kind": "printed",
       "dims_mm": [
-        64,
-        52,
-        28
+        70,
+        36,
+        32
       ],
-      "shape": "plate_with_holes",
+      "shape": "box",
       "params": {
-        "width": 64,
-        "depth": 52,
-        "thickness": 28,
-        "cornerRadius": 6,
-        "wallThickness": 2.8,
-        "holes": [
-          {
-            "x": -16,
-            "y": 8,
-            "radius": 2.5
-          },
-          {
-            "x": 16,
-            "y": 8,
-            "radius": 2.5
-          }
-        ],
+        "rolePreset": "parallel_gripper_body",
+        "width": 70,
+        "depth": 36,
+        "height": 32,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        428
+        342
       ],
       "rotation": [
         0,
@@ -565,7 +536,7 @@
       "explode": [
         0,
         0,
-        355
+        225
       ],
       "color": "#c84b31",
       "bomRef": "bom-filament-arm",
@@ -584,23 +555,23 @@
       "name": "Compliant Geared Parallel Gripper Jaws (×2)",
       "kind": "printed",
       "dims_mm": [
-        32,
-        32,
-        14
+        52,
+        18,
+        46
       ],
-      "shape": "gear_simple",
+      "shape": "box",
       "params": {
-        "teeth": 14,
-        "module": 1.8,
-        "boreRadius": 2.5,
-        "thickness": 14,
-        "wallThickness": 2.4,
+        "rolePreset": "parallel_gripper_jaws",
+        "span": 52,
+        "width": 52,
+        "depth": 18,
+        "height": 46,
         "dfmVerified": true
       },
       "position": [
         0,
-        14,
-        452
+        0,
+        376
       ],
       "rotation": [
         0,
@@ -609,8 +580,8 @@
       ],
       "explode": [
         0,
-        45,
-        410
+        0,
+        265
       ],
       "color": "#b45309",
       "bomRef": "bom-filament-arm",
@@ -641,8 +612,8 @@
       },
       "position": [
         -92,
-        -24,
-        14
+        -22,
+        -12
       ],
       "rotation": [
         0,
@@ -650,9 +621,9 @@
         0
       ],
       "explode": [
-        -145,
-        -45,
-        -25
+        -75,
+        -30,
+        -45
       ],
       "color": "#8c6218",
       "bomRef": "bom-pca9685",
@@ -683,8 +654,8 @@
       },
       "position": [
         -92,
-        24,
-        14
+        22,
+        -12
       ],
       "rotation": [
         0,
@@ -692,9 +663,9 @@
         0
       ],
       "explode": [
-        -145,
-        45,
-        -25
+        -75,
+        30,
+        -45
       ],
       "color": "#b89b4a",
       "bomRef": "bom-esp32",
@@ -724,9 +695,9 @@
         "height": 36
       },
       "position": [
-        115,
+        105,
         0,
-        18
+        -4
       ],
       "rotation": [
         0,
@@ -734,9 +705,9 @@
         0
       ],
       "explode": [
-        175,
+        85,
         0,
-        -35
+        -45
       ],
       "color": "#9c7a4c",
       "bomRef": "bom-psu-6v",
