@@ -211,7 +211,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
 
   const explodeDist = Math.hypot(deltaVec[0], deltaVec[1], deltaVec[2]);
 
-  // Renaissance Codex cel-shaded color palette:
+  // Gilded cel-shaded color palette:
   // Assembled parts: warm vellum/parchment ivory fill (#E6D3B3) with sepia ink outlines
   // Active step parts: warm terracotta/bronze (#C86D51 for printed) or brushed brass (#D4AF37 for hardware)
   const fillHex = isHighlighted
@@ -625,10 +625,28 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
   const [highlightedInstanceId, setHighlightedInstanceId] = useState<
     string | null
   >(null);
+  const [activeKeyFlash, setActiveKeyFlash] = useState<
+    "space" | "left" | "right" | null
+  >(null);
+  const keyFlashTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const stepDoneNotifiedRef = useRef<number | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
   const stepChipsContainerRef = useRef<HTMLDivElement | null>(null);
   const stepChipRefs = useRef<Map<number, HTMLButtonElement>>(new Map());
+
+  const triggerKeyFlash = useCallback((key: "space" | "left" | "right") => {
+    setActiveKeyFlash(key);
+    if (keyFlashTimerRef.current) clearTimeout(keyFlashTimerRef.current);
+    keyFlashTimerRef.current = setTimeout(() => {
+      setActiveKeyFlash(null);
+    }, 220);
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (keyFlashTimerRef.current) clearTimeout(keyFlashTimerRef.current);
+    };
+  }, []);
 
   const currentStep = steps[Math.min(currentStepIdx, steps.length - 1)] || {
     n: 1,
@@ -694,49 +712,88 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     });
   }, [totalSteps, loop]);
 
+  const handleTogglePlayPause = useCallback(() => {
+    setIsPlaying((prev) => {
+      const next = !prev;
+      if (next) {
+        setStepProgress((prog) => (prog >= 0.99 ? 0 : prog));
+      }
+      return next;
+    });
+  }, []);
+
   const handleSelectStep = useCallback(
     (idx: number) => {
       const clamped = Math.max(0, Math.min(totalSteps - 1, idx));
       stepDoneNotifiedRef.current = null;
       setCurrentStepIdx(clamped);
-      setStepProgress(isPlaying ? 0.18 : 0.65);
+      setStepProgress(isPlaying ? 0.18 : 0.55);
     },
     [totalSteps, isPlaying]
   );
 
-  // Keyboard navigation (ArrowLeft / ArrowRight / Space) when not typing in an input
+  // Keyboard shortcuts: Space (play/pause), ArrowLeft (prev step), ArrowRight (next step)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      const tag = (e.target as HTMLElement | null)?.tagName?.toLowerCase();
-      if (
-        tag === "input" ||
-        tag === "textarea" ||
-        tag === "select" ||
-        (e.target as HTMLElement | null)?.isContentEditable
-      ) {
-        return;
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const target = e.target as HTMLElement | null;
+      let isRangeInput = false;
+      if (target) {
+        const tag = target.tagName;
+        isRangeInput =
+          tag === "INPUT" && (target as HTMLInputElement).type === "range";
+        const isTextEntry =
+          tag === "TEXTAREA" ||
+          tag === "SELECT" ||
+          target.isContentEditable ||
+          (tag === "INPUT" && !isRangeInput);
+        if (isTextEntry) return;
+
+        // Do not hijack keyboard focus when user is on an interactive control outside the player
+        if (
+          rootRef.current &&
+          !rootRef.current.contains(target) &&
+          (tag === "BUTTON" ||
+            tag === "A" ||
+            target.getAttribute("role") === "tab" ||
+            target.closest('[role="dialog"]'))
+        ) {
+          return;
+        }
       }
-      if (e.key === "ArrowLeft") {
+
+      if (e.key === " " || e.code === "Space") {
         e.preventDefault();
-        setIsPlaying(false);
-        handleSelectStep(currentStepIdx - 1);
-      } else if (e.key === "ArrowRight") {
+        handleTogglePlayPause();
+        triggerKeyFlash("space");
+      } else if (e.key === "ArrowLeft" && !isRangeInput) {
         e.preventDefault();
-        setIsPlaying(false);
-        handleSelectStep(currentStepIdx + 1);
-      } else if (e.key === " ") {
-        e.preventDefault();
-        setIsPlaying((prev) => {
-          if (!prev && stepProgress >= 0.99) {
-            setStepProgress(0);
+        setCurrentStepIdx((prev) => {
+          const next = Math.max(0, prev - 1);
+          if (next !== prev) {
+            stepDoneNotifiedRef.current = null;
+            setStepProgress(isPlaying ? 0.18 : 0.55);
           }
-          return !prev;
+          return next;
         });
+        triggerKeyFlash("left");
+      } else if (e.key === "ArrowRight" && !isRangeInput) {
+        e.preventDefault();
+        setCurrentStepIdx((prev) => {
+          const next = Math.min(totalSteps - 1, prev + 1);
+          if (next !== prev) {
+            stepDoneNotifiedRef.current = null;
+            setStepProgress(isPlaying ? 0.18 : 0.55);
+          }
+          return next;
+        });
+        triggerKeyFlash("right");
       }
     };
+
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [currentStepIdx, handleSelectStep, stepProgress]);
+  }, [handleTogglePlayPause, isPlaying, totalSteps, triggerKeyFlash]);
 
   const toggleCompletedStep = (stepNum: number, e?: React.MouseEvent) => {
     e?.stopPropagation();
@@ -801,563 +858,674 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
   const overallProgress =
     ((currentStepIdx + stepProgress) / Math.max(1, totalSteps)) * 100;
 
+  const overallScrubberValueText = `Step ${currentStep.n} of ${totalSteps}: ${currentStep.title} (${Math.round(
+    overallProgress
+  )}% overall, ${currentStepParts.length} ${
+    currentStepParts.length === 1 ? "part" : "parts"
+  })`;
+
+  const motionScrubberValueText = `Step ${currentStep.n} (${
+    currentStep.title
+  }) motion ${Math.round(stepProgress * 100)}% complete`;
+
+  const srStepAnnouncement = useMemo(() => {
+    const partSummary =
+      currentStepParts.length > 0
+        ? currentStepParts.map((p) => `${p.quantity}x ${p.name}`).join(", ")
+        : "no parts listed";
+    const toolSummary =
+      currentStep.tools && currentStep.tools.length > 0
+        ? currentStep.tools.join(", ")
+        : "hand";
+    return `Step ${currentStep.n} of ${totalSteps}: ${
+      currentStep.title
+    }. Action: ${currentStep.action || "place"}. Parts (${
+      currentStepParts.length
+    }): ${partSummary}. Tools: ${toolSummary}.${
+      currentStep.note ? ` ${currentStep.note}` : ""
+    } ${isPlaying ? "Playing." : "Paused."}`;
+  }, [currentStep, totalSteps, currentStepParts, isPlaying]);
+
   return (
     <div className="space-y-4 w-full max-w-full min-w-0" data-testid="assembly-player">
+    <div
+      ref={rootRef}
+      role="region"
+      aria-label="Interactive 3D Assembly Instructions Player"
+      tabIndex={0}
+      onScroll={(e) => {
+        if (e.currentTarget.scrollLeft !== 0) {
+          e.currentTarget.scrollLeft = 0;
+        }
+      }}
+      className={`relative w-full max-w-full min-w-0 h-auto sm:h-[680px] min-h-[560px] rounded-2xl overflow-hidden bg-[#0c0906] text-[#f5ebd6] border border-[#d4af37]/35 shadow-2xl flex flex-col select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] ${className}`}
+      data-testid="assembly-player-root"
+    >
+      {/* Screen-Reader Polite Live Region for Step & Playback Announcements */}
       <div
-        ref={rootRef}
-        onScroll={(e) => {
-          if (e.currentTarget.scrollLeft !== 0) {
-            e.currentTarget.scrollLeft = 0;
-          }
-        }}
-        className={`relative w-full max-w-full min-w-0 h-auto md:h-[540px] rounded-2xl overflow-hidden bg-[#0c0906] text-[#f5ebd6] border border-[#d4af37]/35 shadow-2xl flex flex-col select-none ${className}`}
-        data-testid="assembly-player-root"
+        role="status"
+        aria-live="polite"
+        aria-atomic="true"
+        className="sr-only"
+        data-testid="step-sr-announcer"
       >
-        {/* Top Manual Header Bar */}
-        <div className="relative z-20 w-full max-w-full min-w-0 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-2 sm:gap-3.5 px-3.5 py-2.5 sm:px-5 sm:py-3 bg-[#14100b]/95 border-b border-[#d4af37]/25">
-          {/* Big Numbered Step Badge + Title */}
-          <div className="flex items-start sm:items-center gap-3 sm:gap-4 w-full min-w-0 lg:flex-1">
-            <div
-              className="w-11 h-11 sm:w-13 sm:h-13 rounded-xl bg-gradient-to-br from-[#282016] to-[#14100b] text-[#f3d478] border border-[#d4af37]/55 flex flex-col items-center justify-center font-black tracking-tighter shadow-md shrink-0 px-2.5 py-1.5"
-              data-testid="step-badge-number"
-            >
-              <span className="text-[8px] sm:text-[9px] font-codex uppercase tracking-widest text-[#bda782] leading-none">
-                STEP
-              </span>
-              <span className="font-display text-xl sm:text-2xl leading-none mt-0.5 text-[#f3d478] tabular-nums">
-                {String(currentStep.n).padStart(2, "0")}
-              </span>
-            </div>
+        {srStepAnnouncement}
+      </div>
 
-            <div className="min-w-0 flex-1">
-              <div className="flex items-center gap-2 flex-wrap">
-                <span className="px-2 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/45 font-codex text-[10px] font-bold uppercase tracking-widest shrink-0">
-                  {currentStep.action}
-                </span>
-                <span className="text-[11px] sm:text-xs font-mono font-bold text-[#bda782] uppercase tracking-wider shrink-0 tabular-nums">
-                  STAGE {currentStepIdx + 1} OF {totalSteps}
-                </span>
-                {currentStepIdx > 0 && (
+      {/* Top Manual Header Bar */}
+      <div className="relative z-10 w-full max-w-full min-w-0 flex flex-wrap lg:flex-nowrap items-center justify-between gap-2.5 sm:gap-4 px-3.5 py-2.5 sm:px-5 sm:py-3.5 bg-[#14100b]/95 border-b border-[#d4af37]/25">
+        {/* Big Numbered Step Badge + Title */}
+        <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
+          <div
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gradient-to-br from-[#282016] to-[#14100b] text-[#f3d478] border border-[#d4af37]/55 flex flex-col items-center justify-center font-black tracking-tighter shadow-md shrink-0"
+            data-testid="step-badge-number"
+          >
+            <span className="text-[9px] font-codex uppercase tracking-widest text-[#bda782] leading-none">
+              STEP
+            </span>
+            <span className="font-display text-xl sm:text-2xl leading-none mt-0.5 text-[#f3d478] tabular-nums">
+              {String(currentStep.n).padStart(2, "0")}
+            </span>
+          </div>
+
+          <div className="min-w-0 flex-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="px-2 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/45 font-codex text-[10px] font-bold uppercase tracking-widest shrink-0">
+                {currentStep.action}
+              </span>
+              <span className="text-xs font-mono font-bold text-[#bda782] uppercase tracking-wider shrink-0 tabular-nums">
+                STAGE {currentStepIdx + 1} OF {totalSteps}
+              </span>
+              {currentStepIdx > 0 && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsPlaying(false);
+                    handleSelectStep(0);
+                  }}
+                  data-testid="restart-step-1-btn"
+                  className="inline-flex items-center gap-1 rounded border border-[#d4af37]/35 bg-[#0c0906] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#f3d478] hover:border-[#f3d478] transition-colors"
+                  title="Jump back to Step 01"
+                >
+                  ↺ Step 01
+                </button>
+              )}
+            </div>
+            <h3
+              className="font-display text-base sm:text-xl font-bold text-[#f5ebd6] tracking-tight leading-snug mt-0.5 line-clamp-2 sm:truncate"
+              data-testid="step-title"
+            >
+              {currentStep.title}
+            </h3>
+            {currentStep.note && (
+              <div className="mt-0.5">
+                <p
+                  className={`text-xs text-[#e6d3b3] font-medium leading-relaxed break-words ${
+                    noteExpanded ? "" : "line-clamp-2 sm:line-clamp-1"
+                  }`}
+                >
+                  {currentStep.note}
+                </p>
+                {currentStep.note.length > 95 && (
                   <button
                     type="button"
-                    onClick={() => {
-                      setIsPlaying(false);
-                      handleSelectStep(0);
-                    }}
-                    data-testid="restart-step-1-btn"
-                    className="inline-flex items-center gap-1 rounded border border-[#d4af37]/35 bg-[#0c0906] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#f3d478] hover:border-[#f3d478] transition-colors"
-                    title="Jump back to Step 01"
+                    onClick={() => setNoteExpanded((v) => !v)}
+                    className="sm:hidden mt-0.5 text-[11px] font-semibold text-[#f3d478] underline"
                   >
-                    ↺ Step 01
+                    {noteExpanded ? "Show less" : "Read full note"}
                   </button>
                 )}
               </div>
-              <h3
-                className="font-display text-base sm:text-xl font-bold text-[#f5ebd6] tracking-tight leading-snug mt-0.5 line-clamp-2 sm:truncate"
-                data-testid="step-title"
-              >
-                {currentStep.title}
-              </h3>
-              {currentStep.note && (
-                <div className="mt-0.5">
-                  <p
-                    className={`text-xs text-[#e6d3b3] font-medium leading-relaxed break-words ${
-                      noteExpanded ? "" : "line-clamp-2 sm:line-clamp-1"
-                    }`}
-                  >
-                    {currentStep.note}
-                  </p>
-                  {currentStep.note.length > 95 && (
-                    <button
-                      type="button"
-                      onClick={() => setNoteExpanded((v) => !v)}
-                      className="sm:hidden mt-0.5 text-[11px] font-semibold text-[#f3d478] underline"
-                    >
-                      {noteExpanded ? "Show less" : "Read full note"}
-                    </button>
-                  )}
-                </div>
-              )}
-            </div>
-          </div>
-
-          {/* Tool Icon Row + Callouts Toggle */}
-          <div
-            className="flex items-center justify-between sm:justify-start gap-1.5 sm:gap-2 bg-[#0c0906] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl border border-[#d4af37]/30 w-full lg:w-auto shrink-0 max-w-full overflow-x-auto no-scrollbar"
-            data-testid="tool-icon-row"
-          >
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#bda782] mr-0.5">
-                TOOLS:
-              </span>
-              {TOOL_CATALOG.map((tool) => {
-                const isActive = activeToolIds.has(tool.id);
-                return (
-                  <div
-                    key={tool.id}
-                    title={tool.label}
-                    data-testid={`tool-icon-${tool.id}`}
-                    data-active={isActive ? "true" : "false"}
-                    className={`flex items-center gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border transition-all ${
-                      isActive
-                        ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65 shadow-sm"
-                        : "bg-transparent text-[#bda782]/60 border-[#d4af37]/15 opacity-60"
-                    }`}
-                  >
-                    <ToolSvgIcon tool={tool.id} className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span className="font-codex text-[11px] font-bold tracking-tight hidden sm:inline">
-                      {tool.label.split(" ")[0]}
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-            <button
-              type="button"
-              onClick={() => setShowCallouts((v) => !v)}
-              data-testid="toggle-assembly-callouts"
-              className={`ml-0.5 flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border font-codex text-[11px] font-bold transition-all shrink-0 ${
-                showCallouts
-                  ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/60"
-                  : "bg-transparent text-[#bda782] border-[#d4af37]/25"
-              }`}
-              title="Toggle numbered part callouts"
-            >
-              <span className="w-4 h-4 rounded-full bg-[#d4af37] text-[#140e07] font-mono text-[10px] font-extrabold flex items-center justify-center">
-                #
-              </span>
-              <span>Callouts</span>
-            </button>
+            )}
           </div>
         </div>
 
-        {/* Main Middle Canvas + Step Parts Callout Overlay */}
-        <div className="relative z-0 isolate w-full max-w-full min-w-0 h-[210px] sm:h-[290px] md:h-auto md:flex-1 min-h-0 overflow-hidden">
-          {/* Inner Frame Lines */}
-          <div className="absolute inset-2.5 sm:inset-3 border border-[#d4af37]/20 rounded-lg pointer-events-none z-10" />
-
-          <Canvas
-            className="w-full h-full block"
-            style={{ width: "100%", height: "100%", display: "block" }}
-            shadows
-            dpr={[1, 2]}
-            gl={{ preserveDrawingBuffer: true, antialias: true }}
-            camera={{
-              position: playerFraming.defaultCamPos,
-              fov: 38,
-              near: 1,
-              far: 3000,
-            }}
-          >
-            <color attach="background" args={["#0C0906"]} />
-
-            {/* Warm Chiaroscuro Technical Illustration Lighting */}
-            <ambientLight intensity={1.05} />
-            <directionalLight
-              position={[180, 260, 190]}
-              intensity={1.35}
-              color="#FFF4D6"
-            />
-            <directionalLight
-              position={[-150, 120, -120]}
-              intensity={0.5}
-              color="#D4AF37"
-            />
-
-            <group position={[18, -32, 0]}>
-              {(() => {
-                let activeRunningIdx = 0;
-                return allParts.map((part, idx) => {
-                  const motionVec = currentMotionByPartId.get(part.partId);
-                  const inCurrentStep =
-                    Boolean(motionVec) ||
-                    part.step === currentStep.n ||
-                    (part.step > currentStep.n &&
-                      (currentStep.partIds || []).includes(part.partId));
-                  const status: "assembled" | "active" | "future" = inCurrentStep
-                    ? "active"
-                    : part.step < currentStep.n
-                    ? "assembled"
-                    : "future";
-                  const myActiveIdx = inCurrentStep ? activeRunningIdx++ : 0;
-
-                  return (
-                    <IkeaPartMesh
-                      key={part.instanceId}
-                      part={part}
-                      calloutNumber={part.calloutNumber ?? idx + 1}
-                      projectId={projectId}
-                      status={status}
-                      stepProgress={stepProgress}
-                      action={currentStep.action}
-                      motionVector={motionVec}
-                      activeIndex={myActiveIdx}
-                      activeCount={currentStepParts.length}
-                      showCallouts={showCallouts}
-                      isHighlighted={highlightedInstanceId === part.instanceId}
-                    />
-                  );
-                });
-              })()}
-            </group>
-
-            {/* Subtle Sepia Ground Shadow & Reference Grid */}
-            <group position={[18, playerFraming.groundY, 0]}>
-              <ContactShadows
-                position={[0, 0.1, 0]}
-                opacity={0.45}
-                scale={Math.max(320, playerFraming.gridSpan)}
-                blur={2.5}
-                far={200}
-                color="#050302"
-              />
-              <gridHelper
-                args={[playerFraming.gridSpan, 14, "#5C4930", "#282016"]}
-                position={[0, 0, 0]}
-              />
-            </group>
-
-            <StepAnimationTicker
-              isPlaying={isPlaying}
-              speed={speed}
-              externalStep={externalStep}
-              stepProgress={stepProgress}
-              setStepProgress={setStepProgress}
-              onAdvanceStep={handleAdvanceStep}
-            />
-
-            <PlayerCameraRig
-              defaultTarget={playerFraming.defaultTarget}
-              defaultCamPos={playerFraming.defaultCamPos}
-              fitDistance={playerFraming.fitDistance}
-            />
-          </Canvas>
-
-          {/* Desktop Left Overlay: Step Parts Hardware Callout Box & Parts Legend */}
-          <div
-            className="hidden md:block absolute top-4 left-4 z-20 w-60 max-w-[calc(100%-2rem)] rounded-xl bg-[#14100b]/94 border border-[#d4af37]/40 p-3 shadow-2xl backdrop-blur-md"
-            data-testid="assembly-parts-legend"
-          >
-            <div className="flex items-center justify-between pb-1.5 mb-2 border-b border-[#d4af37]/20">
-              <span className="text-[11px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
-                PARTS LEGEND (STEP {currentStep.n})
-              </span>
-              <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40 tabular-nums">
-                {currentStepParts.length}×
-              </span>
-            </div>
-
-            <div className="space-y-1.5 max-h-32 overflow-y-auto pr-0.5">
-              {currentStepParts.map((p) => {
-                const cNum = p.calloutNumber ?? 1;
-                return (
-                  <div
-                    key={p.instanceId}
-                    onMouseEnter={() => setHighlightedInstanceId(p.instanceId)}
-                    onMouseLeave={() => setHighlightedInstanceId(null)}
-                    className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#0c0906]/90 border border-[#d4af37]/25 hover:border-[#d4af37]/65 transition-colors cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2 min-w-0">
-                      <span className="w-5 h-5 rounded-full bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
-                        {cNum}
-                      </span>
-                      <span
-                        className={`w-2.5 h-2.5 rounded-sm border border-[#d4af37]/50 shrink-0 ${
-                          p.category === "purchased"
-                            ? "bg-[#d4af37]"
-                            : "bg-[#c86d51]"
-                        }`}
-                      />
-                      <span className="font-semibold text-[#f5ebd6] truncate">
-                        {p.name}
-                      </span>
-                    </div>
-                    <span className="font-mono font-extrabold text-[#f3d478] shrink-0 tabular-nums">
-                      {p.quantity}×
-                    </span>
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Intra-step motion scrubber */}
-            <div className="mt-2.5 pt-2 border-t border-[#d4af37]/20">
-              <div className="flex items-center justify-between text-[10px] font-codex font-bold text-[#bda782] mb-1">
-                <span>MOTION TIMELINE</span>
-                <span className="font-mono text-[#f3d478] tabular-nums">
-                  {Math.round(stepProgress * 100)}%
+        {/* Tool Icon Row + Callouts Toggle */}
+        <div
+          className="flex items-center gap-1.5 sm:gap-2 bg-[#0c0906] px-2.5 py-1.5 sm:px-3 sm:py-2 rounded-xl border border-[#d4af37]/30 shrink-0 max-w-full overflow-x-auto"
+          data-testid="tool-icon-row"
+        >
+          <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#bda782] mr-0.5 sm:mr-1 shrink-0">
+            TOOLS:
+          </span>
+          {TOOL_CATALOG.map((tool) => {
+            const isActive = activeToolIds.has(tool.id);
+            return (
+              <div
+                key={tool.id}
+                title={tool.label}
+                data-testid={`tool-icon-${tool.id}`}
+                data-active={isActive ? "true" : "false"}
+                className={`flex items-center gap-1.5 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border transition-all shrink-0 ${
+                  isActive
+                    ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65 shadow-sm"
+                    : "bg-transparent text-[#bda782]/60 border-[#d4af37]/15 opacity-60"
+                }`}
+              >
+                <ToolSvgIcon tool={tool.id} className="w-4 h-4" />
+                <span className="font-codex text-[11px] font-bold tracking-tight hidden sm:inline">
+                  {tool.label.split(" ")[0]}
                 </span>
               </div>
-              <input
-                type="range"
-                min={0}
-                max={1}
-                step={0.01}
-                value={stepProgress}
-                onChange={(e) => {
-                  setIsPlaying(false);
-                  setStepProgress(parseFloat(e.target.value));
-                }}
-                aria-label="Intra-step motion scrubber"
-                data-testid="step-motion-scrubber"
-                className="w-full h-1.5 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
-              />
-            </div>
-          </div>
-
-          {/* Bottom-Right Assembly Hint Badge */}
-          <div className="hidden md:flex absolute bottom-4 right-4 z-20 items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#14100b]/94 border border-[#d4af37]/40 shadow-2xl backdrop-blur-md">
-            <svg
-              className="w-5 h-5 text-[#f3d478] shrink-0"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="5" r="2.5" />
-              <path d="M7 21v-6l-2-3 3-4h8l3 4-2 3v6" />
-              <path d="M9 14h6" />
-            </svg>
-            <div className="text-[11px] leading-tight">
-              <div className="font-codex font-bold text-[#f5ebd6] uppercase tracking-tight">
-                {currentStep.action === "screw"
-                  ? "Fasten securely — do not overtighten PLA"
-                  : currentStep.action === "snap"
-                  ? "Align tabs until an audible click is heard"
-                  : currentStep.action === "connect"
-                  ? "Push tubing 10mm onto barbed fitting"
-                  : "Follow dashed vector arrows for alignment"}
-              </div>
-              <div className="text-[#bda782] font-mono text-[10px]">
-                Drag to orbit · Scroll to zoom · ←/→ steps · Space play
-              </div>
-            </div>
-          </div>
+            );
+          })}
+          <button
+            type="button"
+            onClick={() => setShowCallouts((v) => !v)}
+            aria-pressed={showCallouts}
+            data-testid="toggle-assembly-callouts"
+            className={`ml-0.5 sm:ml-1 flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border font-codex text-[11px] font-bold transition-all shrink-0 ${
+              showCallouts
+                ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/60"
+                : "bg-transparent text-[#bda782] border-[#d4af37]/25"
+            }`}
+            title="Toggle numbered part callouts"
+          >
+            <span className="w-4 h-4 rounded-full bg-[#d4af37] text-[#140e07] font-mono text-[10px] font-extrabold flex items-center justify-center">
+              #
+            </span>
+            <span className="hidden sm:inline">Callouts</span>
+          </button>
         </div>
+      </div>
 
-        {/* Mobile Docked Step Parts & Motion Bar (prevents covering the 3D canvas on 390x844) */}
-        <div className="md:hidden relative z-20 w-full bg-[#14100b] border-t border-[#d4af37]/25 px-3.5 py-2 space-y-2">
-          <div className="flex items-center justify-between gap-2 overflow-x-auto no-scrollbar">
-            <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#f3d478] shrink-0">
-              PARTS ({currentStepParts.length}):
-            </span>
-            <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-              {currentStepParts.map((p) => {
-                const cNum = p.calloutNumber ?? 1;
+      {/* Main Middle Canvas + Step Parts Callout Overlay */}
+      <div className="relative w-full max-w-full min-w-0 h-[250px] sm:h-auto sm:flex-1 sm:min-h-0 overflow-hidden z-0 isolate">
+        {/* Inner Frame Lines */}
+        <div className="absolute inset-2.5 sm:inset-3 border border-[#d4af37]/20 rounded-lg pointer-events-none z-10" />
+
+        <Canvas
+          className="w-full h-full block"
+          style={{ width: "100%", height: "100%", display: "block" }}
+          shadows
+          dpr={[1, 2]}
+          gl={{ preserveDrawingBuffer: true, antialias: true }}
+          camera={{
+            position: playerFraming.defaultCamPos,
+            fov: 38,
+            near: 1,
+            far: 3000,
+          }}
+        >
+          <color attach="background" args={["#0C0906"]} />
+
+          {/* Warm Chiaroscuro Technical Illustration Lighting */}
+          <ambientLight intensity={1.05} />
+          <directionalLight
+            position={[180, 260, 190]}
+            intensity={1.35}
+            color="#FFF4D6"
+          />
+          <directionalLight
+            position={[-150, 120, -120]}
+            intensity={0.5}
+            color="#D4AF37"
+          />
+
+          <group position={[18, -32, 0]}>
+            {(() => {
+              let activeRunningIdx = 0;
+              return allParts.map((part, idx) => {
+                const motionVec = currentMotionByPartId.get(part.partId);
+                const inCurrentStep =
+                  Boolean(motionVec) ||
+                  part.step === currentStep.n ||
+                  (part.step > currentStep.n &&
+                    (currentStep.partIds || []).includes(part.partId));
+                const status: "assembled" | "active" | "future" = inCurrentStep
+                  ? "active"
+                  : part.step < currentStep.n
+                  ? "assembled"
+                  : "future";
+                const myActiveIdx = inCurrentStep ? activeRunningIdx++ : 0;
+
                 return (
-                  <button
-                    key={p.instanceId}
-                    type="button"
-                    onClick={() =>
-                      setHighlightedInstanceId((cur) =>
-                        cur === p.instanceId ? null : p.instanceId
-                      )
-                    }
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/30 bg-[#0c0906] px-2 py-1 text-[11px] shrink-0"
-                  >
-                    <span className="w-4 h-4 rounded-full bg-[#d4af37]/25 text-[#f3d478] font-mono text-[10px] font-bold flex items-center justify-center">
-                      {cNum}
-                    </span>
-                    <span className="font-medium text-[#f5ebd6] max-w-[140px] truncate">
-                      {p.name}
-                    </span>
-                    <span className="font-mono text-[#f3d478] font-bold">
-                      {p.quantity}×
-                    </span>
-                  </button>
+                  <IkeaPartMesh
+                    key={part.instanceId}
+                    part={part}
+                    calloutNumber={part.calloutNumber ?? idx + 1}
+                    projectId={projectId}
+                    status={status}
+                    stepProgress={stepProgress}
+                    action={currentStep.action}
+                    motionVector={motionVec}
+                    activeIndex={myActiveIdx}
+                    activeCount={currentStepParts.length}
+                    showCallouts={showCallouts}
+                    isHighlighted={highlightedInstanceId === part.instanceId}
+                  />
                 );
-              })}
-            </div>
-          </div>
-          <div className="flex items-center gap-2.5">
-            <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#bda782] shrink-0">
-              MOTION
-            </span>
-            <input
-              type="range"
-              min={0}
-              max={1}
-              step={0.01}
-              value={stepProgress}
-              onChange={(e) => {
-                setIsPlaying(false);
-                setStepProgress(parseFloat(e.target.value));
-              }}
-              aria-label="Intra-step motion scrubber mobile"
-              className="flex-1 h-1.5 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
+              });
+            })()}
+          </group>
+
+          {/* Subtle Sepia Ground Shadow & Reference Grid */}
+          <group position={[18, playerFraming.groundY, 0]}>
+            <ContactShadows
+              position={[0, 0.1, 0]}
+              opacity={0.45}
+              scale={Math.max(320, playerFraming.gridSpan)}
+              blur={2.5}
+              far={200}
+              color="#050302"
             />
-            <span className="text-[11px] font-mono font-bold text-[#f3d478] w-9 text-right tabular-nums">
-              {Math.round(stepProgress * 100)}%
-            </span>
-          </div>
-        </div>
+            <gridHelper
+              args={[playerFraming.gridSpan, 14, "#5C4930", "#282016"]}
+              position={[0, 0, 0]}
+            />
+          </group>
 
-        {/* Bottom Transport Controls & Step Scrubber Bar */}
-        <div className="relative z-20 w-full max-w-full min-w-0 px-3.5 py-2.5 sm:px-5 sm:py-3 bg-[#14100b]/95 border-t border-[#d4af37]/25 flex flex-col gap-2">
-          {/* Horizontally Scrollable Step Scrubber Chips with Left/Right Scroll Buttons */}
-          <div className="flex items-center gap-1.5 w-full max-w-full min-w-0">
-            <button
-              type="button"
-              onClick={() => scrollStepStripBy(-260)}
-              aria-label="Scroll steps left"
-              className="hidden sm:inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#d4af37]/30 bg-[#0c0906] text-xs font-bold text-[#f3d478] hover:border-[#f3d478] transition-colors"
-            >
-              ‹
-            </button>
-            <div
-              ref={stepChipsContainerRef}
-              data-testid="step-chips-scroll-row"
-              className="flex-1 max-w-full min-w-0 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-0.5 scroll-smooth"
-            >
-              {steps.map((s, idx) => {
-                const isCurr = idx === currentStepIdx;
-                const isDone =
-                  idx < currentStepIdx || completedStepNums.has(s.n);
-                return (
-                  <button
-                    key={s.n}
-                    ref={(el) => {
-                      if (el) stepChipRefs.current.set(idx, el);
-                      else stepChipRefs.current.delete(idx);
-                    }}
-                    type="button"
-                    onClick={() => handleSelectStep(idx)}
-                    data-testid={`step-pill-${s.n}`}
-                    className={`shrink-0 py-1 px-2.5 sm:py-1.5 sm:px-3 rounded-lg border font-mono text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
-                      isCurr
-                        ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65 shadow-sm"
-                        : isDone
-                        ? "bg-[#1d1710] text-[#e6d3b3] border-[#d4af37]/30 hover:border-[#d4af37]/50"
-                        : "bg-[#0c0906] text-[#bda782] border-[#d4af37]/15 hover:border-[#d4af37]/40"
-                    }`}
-                  >
-                    <span className="tabular-nums">
-                      {String(s.n).padStart(2, "0")}
-                    </span>
-                    <span className="font-sans font-semibold text-[11px] max-w-[170px] sm:max-w-none truncate">
-                      {s.title}
-                    </span>
-                  </button>
-                );
-              })}
+          <StepAnimationTicker
+            isPlaying={isPlaying}
+            speed={speed}
+            externalStep={externalStep}
+            stepProgress={stepProgress}
+            setStepProgress={setStepProgress}
+            onAdvanceStep={handleAdvanceStep}
+          />
+
+          <PlayerCameraRig
+            defaultTarget={playerFraming.defaultTarget}
+            defaultCamPos={playerFraming.defaultCamPos}
+            fitDistance={playerFraming.fitDistance}
+          />
+        </Canvas>
+
+        {/* Bottom-Right Assembly Hint Badge */}
+        <div className="hidden md:flex absolute bottom-5 right-5 z-10 items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#14100b]/94 border border-[#d4af37]/40 shadow-2xl backdrop-blur-md">
+          <svg
+            className="w-6 h-6 text-[#f3d478] shrink-0"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <circle cx="12" cy="5" r="2.5" />
+            <path d="M7 21v-6l-2-3 3-4h8l3 4-2 3v6" />
+            <path d="M9 14h6" />
+          </svg>
+          <div className="text-[11px] leading-tight">
+            <div className="font-codex font-bold text-[#f5ebd6] uppercase tracking-tight">
+              {currentStep.action === "screw"
+                ? "Fasten securely — do not overtighten PLA"
+                : currentStep.action === "snap"
+                ? "Align tabs until an audible click is heard"
+                : currentStep.action === "connect"
+                ? "Push tubing 10mm onto barbed fitting"
+                : "Follow dashed vector arrows for alignment"}
             </div>
-            <button
-              type="button"
-              onClick={() => scrollStepStripBy(260)}
-              aria-label="Scroll steps right"
-              className="hidden sm:inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#d4af37]/30 bg-[#0c0906] text-xs font-bold text-[#f3d478] hover:border-[#f3d478] transition-colors"
-            >
-              ›
-            </button>
-          </div>
-
-          {/* Transport Controls Row */}
-          <div className="w-full max-w-full min-w-0 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              {/* Prev Button */}
-              <button
-                type="button"
-                onClick={() => handleSelectStep(currentStepIdx - 1)}
-                disabled={currentStepIdx === 0}
-                data-testid="prev-step-btn"
-                className="min-h-[36px] px-2.5 sm:px-3 py-1.5 rounded-lg border border-[#d4af37]/35 bg-[#0c0906] hover:bg-[#1d1710] disabled:opacity-40 font-codex text-xs font-bold text-[#e6d3b3] transition-colors"
-              >
-                ← Prev
-              </button>
-
-              {/* Play / Pause Button */}
-              <button
-                type="button"
-                onClick={() => {
-                  if (!isPlaying && stepProgress >= 0.99) {
-                    setStepProgress(0);
-                  }
-                  setIsPlaying((p) => !p);
-                }}
-                data-testid="play-pause-btn"
-                className="min-h-[36px] px-3.5 sm:px-4 py-1.5 rounded-lg border border-[#d4af37] bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] hover:brightness-110 text-[#140e07] font-codex text-xs font-extrabold tracking-wide transition-all flex items-center gap-1.5"
-              >
-                <span>{isPlaying ? "⏸ Pause" : "▶ Play"}</span>
-              </button>
-
-              {/* Next Button */}
-              <button
-                type="button"
-                onClick={() => handleSelectStep(currentStepIdx + 1)}
-                disabled={currentStepIdx >= totalSteps - 1}
-                data-testid="next-step-btn"
-                className="min-h-[36px] px-2.5 sm:px-3 py-1.5 rounded-lg border border-[#d4af37]/35 bg-[#0c0906] hover:bg-[#1d1710] disabled:opacity-40 font-codex text-xs font-bold text-[#e6d3b3] transition-colors"
-              >
-                Next →
-              </button>
-            </div>
-
-            {/* Continuous Overall Step Scrubber */}
-            <div className="hidden sm:flex items-center gap-2 flex-1 max-w-xs min-w-[140px]">
-              <span className="text-[11px] font-codex font-bold text-[#bda782] shrink-0">
-                SCRUB
-              </span>
-              <input
-                type="range"
-                min={0}
-                max={totalSteps - 0.01}
-                step={0.02}
-                value={currentStepIdx + stepProgress * 0.99}
-                onChange={(e) => {
-                  const v = parseFloat(e.target.value);
-                  const idx = Math.min(totalSteps - 1, Math.floor(v));
-                  const frac = Math.min(1, v - idx);
-                  setIsPlaying(false);
-                  setCurrentStepIdx(idx);
-                  setStepProgress(frac);
-                }}
-                aria-label="Full assembly step scrubber"
-                data-testid="overall-step-scrubber"
-                className="w-full h-2 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
-              />
-              <span className="text-[11px] font-mono font-bold text-[#f3d478] w-10 text-right tabular-nums">
-                {Math.round(overallProgress)}%
-              </span>
-            </div>
-
-            {/* Speed & Loop Controls */}
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              <div className="inline-flex rounded-lg border border-[#d4af37]/30 bg-[#0c0906] p-0.5">
-                {[0.5, 1, 1.5, 2].map((spd) => (
-                  <button
-                    key={spd}
-                    type="button"
-                    onClick={() => setSpeed(spd)}
-                    data-testid={`speed-${spd}`}
-                    className={`px-1.5 sm:px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-colors ${
-                      speed === spd
-                        ? "bg-[#d4af37] text-[#140e07]"
-                        : "text-[#bda782] hover:bg-[#1d1710]"
-                    }`}
-                  >
-                    {spd}×
-                  </button>
-                ))}
-              </div>
-
-              <button
-                type="button"
-                onClick={() => setLoop((l) => !l)}
-                data-testid="loop-toggle-btn"
-                className={`px-2 sm:px-2.5 py-1.5 rounded-lg border font-codex text-xs font-bold transition-colors ${
-                  loop
-                    ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/60"
-                    : "bg-[#0c0906] text-[#bda782] border-[#d4af37]/25"
-                }`}
-                title="Toggle autoplay loop"
-              >
-                ↻ <span className="hidden sm:inline">Loop </span>
-                {loop ? "ON" : "OFF"}
-              </button>
+            <div className="text-[#bda782] font-mono text-[10px]">
+              Drag to orbit · Scroll to zoom · Space Play/Pause · ←/→ Step
             </div>
           </div>
         </div>
       </div>
+
+      {/* Step Parts Hardware Callout Box & Intra-Step Motion Scrubber (Floating Top-Left on Desktop, Docked Below Canvas on Mobile) */}
+      <div
+        className="relative sm:absolute sm:top-[88px] sm:left-5 z-10 w-full sm:w-64 sm:max-w-[calc(100%-2.5rem)] sm:rounded-xl bg-[#14100b]/95 border-t sm:border border-[#d4af37]/35 px-3.5 py-2 sm:p-3.5 shadow-2xl backdrop-blur-md"
+        data-testid="assembly-parts-legend"
+      >
+        <div className="flex items-center justify-between pb-1.5 sm:pb-2 mb-1.5 sm:mb-2 border-b border-[#d4af37]/20">
+          <span className="text-[10px] sm:text-[11px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
+            PARTS LEGEND (STEP {currentStep.n})
+          </span>
+          <span className="text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40 tabular-nums">
+            {currentStepParts.length}×
+          </span>
+        </div>
+
+        <div className="flex sm:block gap-1.5 sm:space-y-1.5 overflow-x-auto sm:max-h-36 sm:overflow-y-auto pr-0.5">
+          {currentStepParts.map((p) => {
+            const cNum = p.calloutNumber ?? 1;
+            return (
+              <div
+                key={p.instanceId}
+                onMouseEnter={() => setHighlightedInstanceId(p.instanceId)}
+                onMouseLeave={() => setHighlightedInstanceId(null)}
+                onClick={() =>
+                  setHighlightedInstanceId((prev) =>
+                    prev === p.instanceId ? null : p.instanceId
+                  )
+                }
+                className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#0c0906]/90 border border-[#d4af37]/25 hover:border-[#d4af37]/65 transition-colors cursor-pointer shrink-0 sm:shrink"
+              >
+                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                  <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
+                    {cNum}
+                  </span>
+                  <span
+                    className={`w-2.5 h-2.5 rounded-sm border border-[#d4af37]/50 shrink-0 ${
+                      p.category === "purchased"
+                        ? "bg-[#d4af37]"
+                        : "bg-[#c86d51]"
+                    }`}
+                  />
+                  <span className="font-semibold text-[#f5ebd6] truncate max-w-[160px] sm:max-w-none">
+                    {p.name}
+                  </span>
+                </div>
+                <span className="font-mono font-extrabold text-[#f3d478] shrink-0 tabular-nums">
+                  {p.quantity}×
+                </span>
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Intra-step motion scrubber */}
+        <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2.5 border-t border-[#d4af37]/20">
+          <div className="flex items-center justify-between text-[10px] font-codex font-bold text-[#bda782] mb-1">
+            <span>MOTION TIMELINE</span>
+            <span className="font-mono text-[#f3d478] tabular-nums">
+              {Math.round(stepProgress * 100)}%
+            </span>
+          </div>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.01}
+            value={stepProgress}
+            aria-label="Intra-step motion scrubber"
+            aria-valuetext={motionScrubberValueText}
+            onChange={(e) => {
+              setIsPlaying(false);
+              setStepProgress(parseFloat(e.target.value));
+            }}
+            data-testid="step-motion-scrubber"
+            className="w-full h-1.5 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
+          />
+        </div>
+      </div>
+
+      {/* Bottom Transport Controls, Step Scrubber & Keyboard Shortcut Bar */}
+      <div className="relative z-10 w-full max-w-full min-w-0 px-3.5 py-2.5 sm:px-5 sm:py-3 bg-[#14100b]/95 border-t border-[#d4af37]/25 flex flex-col gap-2">
+        {/* Horizontally Scrollable Step Scrubber Chips with Left/Right Scroll Buttons */}
+        <div className="flex items-center gap-1.5 w-full max-w-full min-w-0">
+          <button
+            type="button"
+            onClick={() => scrollStepStripBy(-260)}
+            aria-label="Scroll steps left"
+            className="hidden sm:inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#d4af37]/30 bg-[#0c0906] text-xs font-bold text-[#f3d478] hover:border-[#f3d478] transition-colors"
+          >
+            ‹
+          </button>
+          <div
+            ref={stepChipsContainerRef}
+            role="group"
+            aria-label="Assembly steps"
+            data-testid="step-chips-scroll-row"
+            className="flex-1 max-w-full min-w-0 flex items-center gap-1.5 sm:gap-2 overflow-x-auto no-scrollbar pb-1 scroll-smooth"
+          >
+            {steps.map((s, idx) => {
+              const isCurr = idx === currentStepIdx;
+              const isDone =
+                idx < currentStepIdx || completedStepNums.has(s.n);
+              return (
+                <button
+                  key={s.n}
+                  ref={(el) => {
+                    if (el) stepChipRefs.current.set(idx, el);
+                    else stepChipRefs.current.delete(idx);
+                  }}
+                  type="button"
+                  aria-current={isCurr ? "step" : undefined}
+                  aria-label={`Step ${s.n} of ${totalSteps}: ${s.title}${
+                    isCurr ? " (current step)" : isDone ? " (completed)" : ""
+                  }`}
+                  onClick={() => handleSelectStep(idx)}
+                  data-testid={`step-pill-${s.n}`}
+                  className={`shrink-0 py-1.5 px-2.5 sm:px-3 rounded-lg border font-mono text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                    isCurr
+                      ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65 shadow-sm"
+                      : isDone
+                      ? "bg-[#1d1710] text-[#e6d3b3] border-[#d4af37]/30 hover:border-[#d4af37]/50"
+                      : "bg-[#0c0906] text-[#bda782] border-[#d4af37]/15 hover:border-[#d4af37]/40"
+                  }`}
+                >
+                  <span className="tabular-nums">
+                    {String(s.n).padStart(2, "0")}
+                  </span>
+                  <span className="font-sans font-semibold text-[11px] max-w-[170px] sm:max-w-none truncate">
+                    {s.title}
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+          <button
+            type="button"
+            onClick={() => scrollStepStripBy(260)}
+            aria-label="Scroll steps right"
+            className="hidden sm:inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-lg border border-[#d4af37]/30 bg-[#0c0906] text-xs font-bold text-[#f3d478] hover:border-[#f3d478] transition-colors"
+          >
+            ›
+          </button>
+        </div>
+
+        {/* Transport Controls Row */}
+        <div className="w-full max-w-full min-w-0 flex flex-wrap items-center justify-between gap-2 sm:gap-3">
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {/* Prev Button with visible ← keycap hint */}
+            <button
+              type="button"
+              onClick={() => handleSelectStep(currentStepIdx - 1)}
+              disabled={currentStepIdx === 0}
+              aria-label={`Previous step (${
+                currentStepIdx > 0
+                  ? `Step ${steps[currentStepIdx - 1]?.n}: ${
+                      steps[currentStepIdx - 1]?.title
+                    }`
+                  : "at first step"
+              })`}
+              aria-keyshortcuts="ArrowLeft"
+              title="Previous step (←)"
+              data-testid="prev-step-btn"
+              className={`min-h-[38px] px-2.5 sm:px-3 py-1.5 rounded-lg border bg-[#0c0906] hover:bg-[#1d1710] disabled:opacity-40 font-codex text-xs font-bold text-[#e6d3b3] transition-all flex items-center gap-1.5 ${
+                activeKeyFlash === "left"
+                  ? "border-[#f3d478] ring-1 ring-[#f3d478]"
+                  : "border-[#d4af37]/35"
+              }`}
+            >
+              <kbd className="px-1.5 py-0.5 rounded bg-[#1d1710] border border-[#d4af37]/45 font-mono text-[10px] font-bold text-[#f3d478] leading-none shadow-inner">
+                ←
+              </kbd>
+              <span>Prev</span>
+            </button>
+
+            {/* Play / Pause Button with crisp SVG icon + visible Space keycap hint */}
+            <button
+              type="button"
+              onClick={handleTogglePlayPause}
+              aria-label={
+                isPlaying
+                  ? `Pause assembly animation at Step ${currentStep.n}`
+                  : `Play assembly animation at Step ${currentStep.n}`
+              }
+              aria-keyshortcuts="Space"
+              title={
+                isPlaying
+                  ? "Pause step animation (Space)"
+                  : "Play step animation (Space)"
+              }
+              data-testid="play-pause-btn"
+              className={`min-h-[38px] px-3 sm:px-3.5 py-1.5 rounded-lg border border-[#d4af37] bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] hover:brightness-110 text-[#140e07] font-codex text-xs font-extrabold tracking-wide transition-all flex items-center gap-1.5 ${
+                activeKeyFlash === "space"
+                  ? "ring-2 ring-[#faf4e8] brightness-110"
+                  : ""
+              }`}
+            >
+              {isPlaying ? (
+                <svg
+                  className="w-3.5 h-3.5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <rect x="6" y="4" width="4" height="16" rx="1" />
+                  <rect x="14" y="4" width="4" height="16" rx="1" />
+                </svg>
+              ) : (
+                <svg
+                  className="w-3.5 h-3.5 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <polygon points="6,4 20,12 6,20" />
+                </svg>
+              )}
+              <span>{isPlaying ? "Pause" : "Play"}</span>
+              <kbd className="inline-block px-1.5 py-0.5 rounded bg-[#140e07]/20 border border-[#140e07]/40 font-mono text-[10px] font-extrabold text-[#140e07] leading-none">
+                Space
+              </kbd>
+            </button>
+
+            {/* Next Button with visible → keycap hint */}
+            <button
+              type="button"
+              onClick={() => handleSelectStep(currentStepIdx + 1)}
+              disabled={currentStepIdx >= totalSteps - 1}
+              aria-label={`Next step (${
+                currentStepIdx + 1 < totalSteps
+                  ? `Step ${steps[currentStepIdx + 1]?.n}: ${
+                      steps[currentStepIdx + 1]?.title
+                    }`
+                  : "at final step"
+              })`}
+              aria-keyshortcuts="ArrowRight"
+              title="Next step (→)"
+              data-testid="next-step-btn"
+              className={`min-h-[38px] px-2.5 sm:px-3 py-1.5 rounded-lg border bg-[#0c0906] hover:bg-[#1d1710] disabled:opacity-40 font-codex text-xs font-bold text-[#e6d3b3] transition-all flex items-center gap-1.5 ${
+                activeKeyFlash === "right"
+                  ? "border-[#f3d478] ring-1 ring-[#f3d478]"
+                  : "border-[#d4af37]/35"
+              }`}
+            >
+              <span>Next</span>
+              <kbd className="px-1.5 py-0.5 rounded bg-[#1d1710] border border-[#d4af37]/45 font-mono text-[10px] font-bold text-[#f3d478] leading-none shadow-inner">
+                →
+              </kbd>
+            </button>
+          </div>
+
+          {/* Continuous Overall Step Scrubber with aria-valuetext */}
+          <div className="flex items-center gap-2 flex-1 max-w-xs min-w-[140px]">
+            <span className="text-[11px] font-codex font-bold text-[#bda782] shrink-0">
+              SCRUB
+            </span>
+            <input
+              type="range"
+              min={0}
+              max={totalSteps - 0.01}
+              step={0.02}
+              value={currentStepIdx + stepProgress * 0.99}
+              aria-label="Full assembly step scrubber"
+              aria-valuetext={overallScrubberValueText}
+              onChange={(e) => {
+                const v = parseFloat(e.target.value);
+                const idx = Math.min(totalSteps - 1, Math.floor(v));
+                const frac = Math.min(1, v - idx);
+                setIsPlaying(false);
+                setCurrentStepIdx(idx);
+                setStepProgress(frac);
+              }}
+              data-testid="overall-step-scrubber"
+              className="w-full h-2 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
+            />
+            <span className="text-[11px] font-mono font-bold text-[#f3d478] w-10 text-right tabular-nums">
+              {Math.round(overallProgress)}%
+            </span>
+          </div>
+
+          {/* Keyboard Shortcut Bar + Speed & Loop Controls */}
+          <div className="flex items-center gap-2 flex-wrap">
+            {/* Visible Keyboard Shortcut Bar */}
+            <div
+              role="note"
+              aria-label="Keyboard shortcuts: Space to play or pause, Left and Right arrow keys for previous or next step"
+              data-testid="keyboard-shortcut-bar"
+              className="inline-flex items-center gap-1.5 sm:gap-2 px-2 sm:px-2.5 py-1 rounded-lg bg-[#0c0906] border border-[#d4af37]/25 text-[10px] sm:text-[11px] text-[#bda782]"
+            >
+              <span className="inline-flex items-center gap-1">
+                <kbd
+                  className={`px-1.5 py-0.5 rounded border font-mono text-[10px] font-bold leading-none transition-colors ${
+                    activeKeyFlash === "space"
+                      ? "bg-[#d4af37] text-[#140e07] border-[#f3d478]"
+                      : "bg-[#1d1710] text-[#f3d478] border-[#d4af37]/40"
+                  }`}
+                >
+                  Space
+                </kbd>
+                <span className="font-medium text-[#e6d3b3]">Play/Pause</span>
+              </span>
+              <span className="text-[#d4af37]/40">·</span>
+              <span className="inline-flex items-center gap-1">
+                <kbd
+                  className={`px-1.5 py-0.5 rounded border font-mono text-[10px] font-bold leading-none transition-colors ${
+                    activeKeyFlash === "left"
+                      ? "bg-[#d4af37] text-[#140e07] border-[#f3d478]"
+                      : "bg-[#1d1710] text-[#f3d478] border-[#d4af37]/40"
+                  }`}
+                >
+                  ←
+                </kbd>
+                <kbd
+                  className={`px-1.5 py-0.5 rounded border font-mono text-[10px] font-bold leading-none transition-colors ${
+                    activeKeyFlash === "right"
+                      ? "bg-[#d4af37] text-[#140e07] border-[#f3d478]"
+                      : "bg-[#1d1710] text-[#f3d478] border-[#d4af37]/40"
+                  }`}
+                >
+                  →
+                </kbd>
+                <span className="font-medium text-[#e6d3b3]">Step</span>
+              </span>
+            </div>
+
+            <div
+              className="inline-flex rounded-lg border border-[#d4af37]/30 bg-[#0c0906] p-0.5"
+              role="group"
+              aria-label="Playback speed"
+            >
+              {[0.5, 1, 1.5, 2].map((spd) => (
+                <button
+                  key={spd}
+                  type="button"
+                  onClick={() => setSpeed(spd)}
+                  aria-pressed={speed === spd}
+                  aria-label={`Playback speed ${spd}x`}
+                  data-testid={`speed-${spd}`}
+                  className={`px-2 py-1 rounded text-[11px] font-mono font-bold transition-colors ${
+                    speed === spd
+                      ? "bg-[#d4af37] text-[#140e07]"
+                      : "text-[#bda782] hover:bg-[#1d1710]"
+                  }`}
+                >
+                  {spd}×
+                </button>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setLoop((l) => !l)}
+              aria-pressed={loop}
+              data-testid="loop-toggle-btn"
+              className={`min-h-[34px] px-2.5 py-1 rounded-lg border font-codex text-xs font-bold transition-colors ${
+                loop
+                  ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/60"
+                  : "bg-[#0c0906] text-[#bda782] border-[#d4af37]/25"
+              }`}
+              title="Toggle autoplay loop"
+            >
+              ↻ Loop {loop ? "ON" : "OFF"}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
 
       {/* Complete Scannable Step-by-Step Manual & Workbench Checklist */}
       <div
