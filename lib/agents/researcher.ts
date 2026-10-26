@@ -2,7 +2,12 @@ import fs from 'fs';
 import path from 'path';
 import { AgentLogEntry, ObjectAnalysis, ResearchData, ResearchSource } from '../types';
 import { SAMPLE_SOURCES } from '../sample-data';
-import { runGeminiAgent, RunAgentResult } from './runner';
+import {
+  loadProductImagesFromCwd,
+  runGeminiAgent,
+  RunAgentResult,
+} from './runner';
+import { InlineImageInput } from './page-fetch';
 import {
   ALL_SOURCE_KINDS,
   AnalysisSummary,
@@ -50,6 +55,7 @@ export interface ResearcherInput {
   cwd: string;
   onLog?: (entry: AgentLogEntry) => void;
   input?: ResearchInput;
+  inlineImages?: InlineImageInput[];
 }
 
 function toSlug(value: string): string {
@@ -483,12 +489,17 @@ export async function runResearcherAgent(
   });
 
   const honestFallbacks = buildHonestSearchSources(analysis, input.input);
+  const effectiveImages =
+    input.inlineImages && input.inlineImages.length > 0
+      ? input.inlineImages
+      : loadProductImagesFromCwd(input.cwd, analysis.productImages);
 
   const prompt = `You are the Researcher Agent (Stage 2 of 6) in "Get Me An Alt", powered by Gemini 4 Argon with Google Search grounding.
 Target DIY project: "${analysis.objectName}" (${analysis.category})
 Input classification: ${parsedInput.kind}${parsedInput.platform ? ` (${parsedInput.platform})` : ''}
 Function: ${analysis.functionSummary}
 Key mechanisms: ${analysis.keyMechanisms.join('; ')}
+${effectiveImages.length > 0 ? 'Product reference image(s) are attached. Inspect the visual silhouette, proportions, hull/chassis profile, and visible sub-assemblies so referenceDimensions and technicalInsights match the real silhouette and give mm transforms (long axis along X for vehicles/boats).' : ''}
 
 Search for teardowns, schematics, PDF datasheets/manuals, open-source 3D models (Printables, Thingiverse, GitHub), YouTube build/teardown guides, Instructables assembly guides, and off-the-shelf part references for "${analysis.objectName}".
 CRITICAL RULE: Never invent or guess an unverified deep PDF URL or fake video ID. Use real grounded URLs from Google Search OR honest search URLs (e.g. https://www.printables.com/search/models?q=..., https://www.youtube.com/results?search_query=..., https://github.com/search?q=..., https://www.ifixit.com/Search?query=..., https://www.instructables.com/search/?q=..., https://www.google.com/search?q=...+filetype:pdf).
@@ -550,6 +561,7 @@ Include at least 7 diverse sources covering kinds: "video", "schematic", "pdf", 
     retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'sources.json',
+    inlineImages: effectiveImages,
     useGoogleSearchGrounding: true,
     timeoutMs: 25000,
     onLog: input.onLog,

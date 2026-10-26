@@ -435,7 +435,7 @@ export async function runAnalystAgent(
 The user wants a DIY 3D-printed + off-the-shelf alternative to the following pricey commercial product:
 Target Product: "${resolvedTitle}" (Brand: ${resolvedBrand})
 ${input.url ? `Source URL: ${input.url}` : ''}
-${scrapedContext ? `${scrapedContext}\n` : ''}${input.inlineImage ? 'An image of the target object is attached. Inspect its geometry, mechanisms, and commercial price.' : ''}
+${scrapedContext ? `${scrapedContext}\n` : ''}${combinedInlineImages.length > 0 ? `${combinedInlineImages.length} product image(s) are attached. Inspect the visual silhouette, proportions, hull/chassis profile, superstructure, and mechanisms carefully. Give overallDimensionsMm: [X, Y, Z] in mm (for vehicles, boats, ships, aircraft, or horizontal assemblies, orient the long axis along X, height along Y, and beam/width along Z).` : ''}
 
 Analyze "${resolvedTitle}" specifically (never substitute a different gadget) and return ONLY a JSON object matching this exact TypeScript interface:
 {
@@ -463,11 +463,11 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
   "keyMechanisms": ["3 to 4 key mechanical or electronic mechanisms specific to ${resolvedTitle}"],
   "engineeringNotes": ["3 practical 3D printing & structural engineering notes (infill, perimeters, tolerances)"],
   "materialsNeeded": ["Recommended filament types and off-the-shelf hardware summary for ${resolvedTitle}"],
-  "whatGetsPrinted": ["5 to 6 specific 3D printed parts with PRT-01..PRT-06 prefixes for ${resolvedTitle}"],
+  "whatGetsPrinted": ["5 to 6 specific 3D printed parts with PRT-01..PRT-06 prefixes matching the real silhouette of ${resolvedTitle}"],
   "whatGetsBought": ["3 to 4 specific off-the-shelf parts with OTS-01..OTS-04 prefixes for ${resolvedTitle}"]
 }`;
 
-  const retryPrompt = `Reverse-engineer "${resolvedTitle}" (${resolvedBrand}) into a DIY 3D-printed + off-the-shelf build. Return ONLY valid JSON with keys: objectName, slug, category, tagline, description, functionSummary, inputType ("${inputType}"), originalProduct ({name, brand, retailPrice, currency:"USD", url, whyExpensive}), targetDiyCost, estimatedSavings, estimatedPrintTimeHours, estimatedAssemblyMinutes, difficulty ("Beginner"|"Intermediate"|"Advanced"), overallDimensionsMm ([x,y,z]), keyMechanisms (3 strings), engineeringNotes (3 strings), materialsNeeded (3 strings), whatGetsPrinted (5 strings PRT-01..PRT-05), whatGetsBought (4 strings OTS-01..OTS-04).`;
+  const retryPrompt = `Reverse-engineer "${resolvedTitle}" (${resolvedBrand}) into a DIY 3D-printed + off-the-shelf build matching its real visual silhouette (orient long axis along X in overallDimensionsMm for vehicles/boats). Return ONLY valid JSON with keys: objectName, slug, category, tagline, description, functionSummary, inputType ("${inputType}"), originalProduct ({name, brand, retailPrice, currency:"USD", url, whyExpensive}), targetDiyCost, estimatedSavings, estimatedPrintTimeHours, estimatedAssemblyMinutes, difficulty ("Beginner"|"Intermediate"|"Advanced"), overallDimensionsMm ([x,y,z]), keyMechanisms (3 strings), engineeringNotes (3 strings), materialsNeeded (3 strings), whatGetsPrinted (5 strings PRT-01..PRT-05), whatGetsBought (4 strings OTS-01..OTS-04).`;
 
   const result = await runGeminiAgent<ObjectAnalysis>({
     stageName: 'Analyst',
@@ -475,7 +475,7 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
     retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'analysis.json',
-    inlineImage: input.inlineImage,
+    inlineImages: combinedInlineImages,
     preferRestForSpeed: true,
     timeoutMs: 30000,
     onLog: input.onLog,

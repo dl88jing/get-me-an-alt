@@ -3,6 +3,11 @@ import fs from 'fs';
 import os from 'os';
 import path from 'path';
 import { AgentLogEntry, RunnerMode } from '../types';
+import {
+  InlineImageData,
+  InlineImageInput,
+  resolveInlineImages,
+} from './page-fetch';
 
 export interface RunAgentOptions<T> {
   stageName: string;
@@ -14,6 +19,7 @@ export interface RunAgentOptions<T> {
     mimeType: string;
     base64Data: string;
   };
+  inlineImages?: InlineImageInput[];
   useGoogleSearchGrounding?: boolean;
   preferRestForSpeed?: boolean;
   timeoutMs?: number;
@@ -21,6 +27,38 @@ export interface RunAgentOptions<T> {
   pipelineBudgetMs?: number;
   onLog?: (entry: AgentLogEntry) => void;
   fallbackGenerator: () => T;
+}
+
+export function loadProductImagesFromCwd(
+  cwd?: string,
+  fallbackUrls?: string[]
+): InlineImageInput[] {
+  const results: InlineImageInput[] = [];
+  if (cwd) {
+    try {
+      const imgFile = path.join(cwd, 'product-images.json');
+      if (fs.existsSync(imgFile)) {
+        const parsed = JSON.parse(fs.readFileSync(imgFile, 'utf-8'));
+        if (Array.isArray(parsed)) {
+          for (const item of parsed) {
+            if (item && typeof item === 'object' && item.base64Data) {
+              results.push(item as InlineImageData);
+            }
+          }
+        }
+      }
+    } catch {
+      // ignore
+    }
+  }
+  if (results.length === 0 && Array.isArray(fallbackUrls)) {
+    for (const u of fallbackUrls) {
+      if (typeof u === 'string' && u.trim()) {
+        results.push(u.trim());
+      }
+    }
+  }
+  return results.slice(0, 3);
 }
 
 export const GLOBAL_PIPELINE_BUDGET_MS = 240_000;
@@ -332,6 +370,7 @@ async function runWithGeminiRest<T>(
   apiKey: string,
   model: string,
   emitLog: (level: AgentLogEntry['level'], message: string) => void,
+  resolvedImages: InlineImageData[],
   isRetry = false
 ): Promise<RunAgentResult<T> | null> {
   const startTime = Date.now();
@@ -344,15 +383,15 @@ async function runWithGeminiRest<T>(
 
   emitLog(
     'cmd',
-    `POST ${endpoint} ${useSearchTool ? '[tools: google_search]' : '[responseMimeType: application/json]'}${options.inlineImage ? ' [+inlineData image]' : ''}${isRetry ? ' [retry: compact+LOW]' : ''}`
+    `POST ${endpoint} ${useSearchTool ? '[tools: google_search]' : '[responseMimeType: application/json]'}${resolvedImages.length > 0 ? ` [+inlineData ${resolvedImages.length} image(s)]` : ''}${isRetry ? ' [retry: compact+LOW]' : ''}`
   );
 
   const parts: Array<Record<string, unknown>> = [];
-  if (options.inlineImage) {
+  for (const img of resolvedImages.slice(0, 3)) {
     parts.push({
       inlineData: {
-        mimeType: options.inlineImage.mimeType,
-        data: options.inlineImage.base64Data,
+        mimeType: img.mimeType,
+        data: img.base64Data,
       },
     });
   }
@@ -498,10 +537,26 @@ export async function runGeminiAgent<T>(
 
   fs.mkdirSync(options.cwd, { recursive: true });
 
+  const rawImageInputs: InlineImageInput[] = [];
+  if (options.inlineImage?.base64Data) {
+    rawImageInputs.push(options.inlineImage);
+  }
+  if (Array.isArray(options.inlineImages)) {
+    rawImageInputs.push(...options.inlineImages);
+  }
+  const resolvedImages =
+    rawImageInputs.length > 0
+      ? await resolveInlineImages(
+          rawImageInputs,
+          3,
+          Math.floor(1.5 * 1024 * 1024)
+        )
+      : [];
+
   if (apiKey) {
     if (
       agyBin &&
-      !options.inlineImage &&
+      resolvedImages.length === 0 &&
       !options.useGoogleSearchGrounding &&
       !options.preferRestForSpeed
     ) {
@@ -528,6 +583,7 @@ export async function runGeminiAgent<T>(
       apiKey,
       model,
       emitLog,
+      resolvedImages,
       false
     );
     if (restResult) {
@@ -555,6 +611,7 @@ export async function runGeminiAgent<T>(
         apiKey,
         model,
         emitLog,
+        resolvedImages,
         true
       );
       if (retryResult) {

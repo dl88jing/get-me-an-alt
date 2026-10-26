@@ -29,9 +29,11 @@ import {
 } from "../types";
 import {
   getRemainingPipelineBudgetMs,
+  loadProductImagesFromCwd,
   runGeminiAgent,
   RunAgentResult,
 } from "./runner";
+import { InlineImageInput } from "./page-fetch";
 
 export interface CadPartAttemptLog {
   attempt: number;
@@ -87,6 +89,7 @@ export interface CadAgentInput {
   argonPartIds?: string[];
   /** Prefer Gemini REST over agy CLI for faster per-part turnarounds */
   preferRestForSpeed?: boolean;
+  inlineImages?: InlineImageInput[];
   manifest?: ProjectManifest;
   onLog?: (entry: AgentLogEntry) => void;
   onEvent?: (event: SsePipelineEvent) => void;
@@ -402,7 +405,8 @@ Mandatory OpenSCAD Geometry & Shared-Frame Assembly Rules:
 3. Build centered around X=0, Y=0 on the Z-up print bed (Z >= 0) with \`$fn = 36;\` and walls >= 1.8mm so CGAL compiles in < 0.8s. Do NOT use external \`include\`/\`use\` libraries or 3D \`minkowski()\`.
 4. Shared 3D Assembly Frame (\`assemblyTransform\`):
    - Origin \`[0, 0, 0]\` is the bottom-center of the assembled "${objectName}".
-   - \`X\` = left/right width (mm), \`Y\` = vertical height UP from base (mm, Y >= 0), \`Z\` = front/back depth (mm).
+   - \`X\` = primary horizontal length axis (mm), \`Y\` = vertical height UP from base (mm, Y >= 0), \`Z\` = width / beam / front-back depth (mm).
+   - LONG AXIS ALONG X FOR VEHICLES / BOATS / HORIZONTAL ASSEMBLIES: Match the product silhouette from any attached product images. For boats, tugboats, ships, vehicles, aircraft, or horizontal assemblies, orient the LONG AXIS along \`X\` (e.g. bow/front hull section at \`+X\`, midships hull near \`X = 0\`, stern/rear hull at \`-X\`, deck & wheelhouse/superstructure above at \`+Y\`, and twin nozzles/thrusters offset in \`±Z\`).
    - When the compiled OpenSCAD STL is loaded into the 3D viewer, its OpenSCAD +Z axis is automatically oriented along Three.js +Y (up) and centered at its bounding box center. Use \`rotation: [0, 0, 0]\` when the part's print +Z axis points straight up (+Y) in the assembly, or specify Euler angles \`[rx, ry, rz]\` in degrees (e.g. \`[90, 0, 0]\` for a vertical ring/faceplate printed flat on the bed).
    - \`position: [x, y, z]\` MUST place "${part.name}" at its true mating location in mm relative to the other parts in the assembly table so the assembled parts form the exact silhouette of "${objectName}".
    - \`explode: [ex, ey, ez]\` MUST be the outward disassembly vector in mm (magnitude 45..110 mm) along the axis this part separates during teardown.
@@ -533,6 +537,10 @@ export async function runCadAgent(
     14000,
     Math.max(7000, remainingBudgetAtStart - 36000)
   );
+  const effectiveImages =
+    input.inlineImages && input.inlineImages.length > 0
+      ? input.inlineImages
+      : loadProductImagesFromCwd(input.cwd, input.analysis?.productImages);
 
   // Step 1: Run Gemini 4 Argon OpenSCAD + assembly-transform synthesis in parallel across all printed parts
   const parallelSynthResults = await Promise.all(
@@ -579,6 +587,7 @@ export async function runCadAgent(
         stageName: `CAD-${part.id}`,
         prompt,
         cwd: input.cwd,
+        inlineImages: effectiveImages,
         preferRestForSpeed: true,
         timeoutMs: perPartTimeoutMs,
         onLog: (entry) => {
@@ -723,6 +732,7 @@ export async function runCadAgent(
           stageName: `CAD-${part.id}-retry`,
           prompt: retryPrompt,
           cwd: input.cwd,
+          inlineImages: effectiveImages,
           preferRestForSpeed: true,
           timeoutMs: 14000,
           fallbackGenerator: () => ({

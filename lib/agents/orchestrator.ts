@@ -1302,6 +1302,7 @@ async function executePipelineStages(
       cwd,
       onLog: makeLogger('analyst'),
     });
+    const productInlineImages = analystRes.inlineImages || [];
     manifest.analysis = analystRes.data;
     manifest.title = analystRes.data.objectName;
     finishStage('analyst', {
@@ -1326,6 +1327,7 @@ async function executePipelineStages(
     const researchPromise = runResearcherAgent({
       analysis: manifest.analysis,
       cwd,
+      inlineImages: productInlineImages,
       onLog: makeLogger('researcher'),
     }).then((researchRes) => {
       manifest.sources = researchRes.data;
@@ -1399,6 +1401,7 @@ async function executePipelineStages(
       teardown: manifest.teardown,
       printerId: targetPrinterId,
       cwd,
+      inlineImages: productInlineImages,
       onLog: makeLogger('designer'),
     });
     manifest.design = designRes.data;
@@ -1531,6 +1534,7 @@ async function executePipelineStages(
             revisionRound: round,
             printerId: targetPrinterId,
             cwd,
+            inlineImages: productInlineImages,
             onLog: criticLogger,
           });
 
@@ -1662,6 +1666,7 @@ async function executePipelineStages(
           printerId: targetPrinterId,
           maxRetries: 2,
           preferRestForSpeed: Boolean(process.env.VERCEL),
+          inlineImages: productInlineImages,
           onLog: (entry) => {
             const st = getStage('cad');
             st.logs.push(entry);

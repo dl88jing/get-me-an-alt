@@ -12,7 +12,12 @@ import {
 import { SAMPLE_DESIGN } from '../sample-data';
 import { getPrinterById } from '../printers';
 import { applyCritiqueFixesToDesign } from './critic';
-import { runGeminiAgent, RunAgentResult } from './runner';
+import { InlineImageInput } from './page-fetch';
+import {
+  loadProductImagesFromCwd,
+  runGeminiAgent,
+  RunAgentResult,
+} from './runner';
 
 export interface DesignerInput {
   analysis: ObjectAnalysis;
@@ -24,6 +29,7 @@ export interface DesignerInput {
   critiqueIssues?: CritiqueIssue[];
   revisionRound?: number;
   printerId?: string;
+  inlineImages?: InlineImageInput[];
 }
 
 const PALETTE = [
@@ -50,6 +56,16 @@ export async function runDesignerAgent(
       input.critiqueIssues
   );
   const printer = getPrinterById(input.printerId);
+  const effectiveImages =
+    input.inlineImages && input.inlineImages.length > 0
+      ? input.inlineImages
+      : loadProductImagesFromCwd(input.cwd, analysis.productImages);
+
+  const silhouetteInstruction = `SILHOUETTE & 3D TRANSFORM RULES (Shared Three.js Y-up coordinate frame in mm):
+- Match the real product's visual silhouette, proportions, and sub-assembly layout shown in the attached product image(s) and description.
+- Give all part "dims_mm": [x, y, z], "position": [x, y, z], "rotation": [rx, ry, rz], and "explode": [ex, ey, ez] in millimeters (mm).
+- Coordinate convention: Y = vertical height UP from base (mm), X = primary horizontal length axis (mm), Z = width / beam / lateral depth (mm).
+- LONG AXIS ALONG X FOR VEHICLES / BOATS / HORIZONTAL ASSEMBLIES: For boats, tugboats, ships, vehicles, aircraft, trains, or horizontal sliders, orient the LONG AXIS along X (e.g., bow/front hull at +X, midships hull near X=0, stern/rear hull at -X; deck, cabin/wheelhouse, and superstructure above at +Y; port/starboard nozzles, thrusters, or outriggers offset in ±Z). NEVER stack horizontal hull sections vertically along Y.`;
 
   const prompt = isRevision
     ? `You are the Designer / Architect Agent in "Get Me An Alt", powered by Gemini 4 Argon.
@@ -75,6 +91,7 @@ Revise design.json to fix every Critic issue above:
 1. Fit every printed part's dims_mm within [${printer.bed.x - 10}, ${printer.bed.z - 10}, ${printer.bed.y - 10}] mm.
 2. Ensure params.wallThickness >= 2.4 (or 3.2 for fluid tubes), params.clearanceMm = 0.30, params.fastenerHoleClearanceMm = 0.20, params.maxOverhangDeg = 42, params.dfmVerified = true, and supportsRequired = false on all printed parts.
 3. Preserve all part IDs, partNumbers, positions, explode vectors, and the exact shared design.json contract.
+${silhouetteInstruction}
 
 Return ONLY valid JSON matching the DesignSpec schema.`
     : `You are the Designer / Architect Agent (Stage 3 of 7) in "Get Me An Alt", powered by Gemini 4 Argon.
@@ -86,6 +103,8 @@ Context from Analyst & Researcher:
 - Printed parts planned: ${JSON.stringify(analysis.whatGetsPrinted)}
 - Purchased parts planned: ${JSON.stringify(analysis.whatGetsBought)}
 - Technical insights: ${JSON.stringify(sources.technicalInsights)}
+
+${silhouetteInstruction}
 
 Follow the exact shared contract for design.json parts:
 Each part in "parts" MUST have:
@@ -237,7 +256,7 @@ Return ONLY valid JSON matching:
     parts: fallbackParts,
   };
 
-  const retryPrompt = `Decompose "${analysis.objectName}" into 5 3D-printed parts ("kind":"printed", PRT-01..PRT-05) and 3 off-the-shelf parts ("kind":"purchased", OTS-01..OTS-03) for printer ${printer.name}. Planned printed: ${JSON.stringify(defaultPrintedLabels.slice(0, 5))}. Planned purchased: ${JSON.stringify(defaultBoughtLabels.slice(0, 3))}. Return ONLY valid JSON with keys: objectName, designPhilosophy, overallBoundingBoxMm, printedPartsCount, purchasedPartsCount, assemblyNotes (3 strings), parts (each with id, partNumber, name, kind, dims_mm:[w,h,d], shape, params, position:[x,y,z], rotation:[0,0,0], explode:[ex,ey,ez], color, material, quantity:1, description, roleInAssembly).`;
+  const retryPrompt = `Decompose "${analysis.objectName}" into 5 3D-printed parts ("kind":"printed", PRT-01..PRT-05) and 3 off-the-shelf parts ("kind":"purchased", OTS-01..OTS-03) for printer ${printer.name}. Planned printed: ${JSON.stringify(defaultPrintedLabels.slice(0, 5))}. Planned purchased: ${JSON.stringify(defaultBoughtLabels.slice(0, 3))}. Match the product silhouette and give mm transforms in Y-up coordinates (long axis along X for vehicles/boats: bow +X, midships 0, stern -X, superstructure +Y). Return ONLY valid JSON with keys: objectName, designPhilosophy, overallBoundingBoxMm, printedPartsCount, purchasedPartsCount, assemblyNotes (3 strings), parts (each with id, partNumber, name, kind, dims_mm:[w,h,d], shape, params, position:[x,y,z], rotation:[0,0,0], explode:[ex,ey,ez], color, material, quantity:1, description, roleInAssembly).`;
 
   const result = await runGeminiAgent<DesignSpec>({
     stageName: isRevision
@@ -247,6 +266,7 @@ Return ONLY valid JSON matching:
     retryPrompt: isRevision ? undefined : retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'design.json',
+    inlineImages: effectiveImages,
     preferRestForSpeed: true,
     timeoutMs: isRevision ? 20000 : 30000,
     onLog: input.onLog,
