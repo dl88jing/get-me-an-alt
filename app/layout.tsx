@@ -94,12 +94,12 @@ export default function RootLayout({
                     <span className="font-codex text-base sm:text-lg font-bold tracking-wider text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors">
                       Get Me An Alt
                     </span>
-                    <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/40 bg-[#d4af37]/10 px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-widest text-[#f3d478]">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/40 bg-[#d4af37]/10 px-2.5 py-0.5 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
                       <span className="h-1.5 w-1.5 rounded-full bg-[#d4af37] animate-pulse" />
                       Gemini 4 Argon
                     </span>
                   </div>
-                  <p className="font-mono text-[10px] tracking-[0.1em] text-[#bda782] hidden xl:block whitespace-nowrap">
+                  <p className="font-codex text-[10px] tracking-[0.12em] text-[#bda782] hidden xl:block whitespace-nowrap">
                     DIY 3D-PRINTED PARTS + OFF-THE-SHELF RETAIL BOM
                   </p>
                 </div>
@@ -108,25 +108,25 @@ export default function RootLayout({
               <nav className="flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0">
                 <Link
                   href="/#pipeline-story"
-                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
+                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
                   <span className="font-codex text-[#d4af37]">2.</span> Agent Pipeline
                 </Link>
                 <Link
                   href="/#savings-story"
-                  className="hidden xl:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
+                  className="hidden xl:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
                   <span className="font-codex text-[#d4af37]">3.</span> BOM &amp; Savings
                 </Link>
                 <Link
                   href="/#exploded-story"
-                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
+                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
                   <span className="font-codex text-[#d4af37]">4.</span> Exploded 3D View
                 </Link>
                 <Link
                   href="/#showcase-gallery"
-                  className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-mono text-xs text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
+                  className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
                 >
                   <span className="font-codex text-[#d4af37]">5.</span> Sample Builds
                 </Link>

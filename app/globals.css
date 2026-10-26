@@ -24,7 +24,7 @@
   --accent-electric-glow: rgba(212, 175, 55, 0.3);
   --accent-soft: rgba(212, 175, 55, 0.14);
   --accent-bronze: #b89b4a;
-  --accent-cyan: #b89b4a;
+  --accent-gold: #d4af37;
   --accent-signal: #c84b31;
   --border: rgba(212, 175, 55, 0.18);
   --border-hairline: rgba(212, 175, 55, 0.16);
@@ -245,7 +245,7 @@ body {
     @apply transition-colors hover:border-[#d4af37]/55;
   }
   .eyebrow {
-    @apply text-xs font-semibold uppercase tracking-[0.16em] text-[#d4af37];
+    @apply font-codex text-xs font-bold uppercase tracking-[0.16em] text-[#d4af37];
   }
   .skeleton {
     @apply animate-pulse rounded-md bg-[#282016];
