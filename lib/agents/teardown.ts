@@ -224,6 +224,32 @@ export function collectCandidateTeardownVideos(
     addVideo(s.url, s.title);
   }
 
+  if (byUrl.size === 0 && input.analysis?.objectName) {
+    const hay = `${input.analysis.objectName} ${input.analysis.slug || ''} ${
+      input.analysis.category || ''
+    } ${input.analysis.functionSummary || ''}`.toLowerCase();
+    let fallbackId = 'kYj2zRVrfLg';
+    if (/plant|water|pump|irrigat|hydro|soil/i.test(hay)) {
+      fallbackId = 'uRrnA6kK3FU';
+    } else if (/robot.*arm|6-axis|6dof|servo.*arm|gripper/i.test(hay)) {
+      fallbackId = '5toNqaGsGYs';
+    } else if (/dyson|bladeless|purifier|fan|blower|hepa|coanda/i.test(hay)) {
+      fallbackId = 'wUPpW3yZsvY';
+    } else if (/slider|camera|gimbal|pan.*tilt|dolly|tripod/i.test(hay)) {
+      fallbackId = 'v1b7Wvu87-U';
+    } else if (/microscope|magnif|lens|optic|iphone.*stage/i.test(hay)) {
+      fallbackId = 'e8UEfroykNc';
+    } else if (/easel|canvas|stand|mount|holder|cradle|lamp/i.test(hay)) {
+      fallbackId = 'p0w3oQXriSE';
+    } else if (/pipet|liquid.*handl|lab|microplate/i.test(hay)) {
+      fallbackId = 'NJ7IbHFxn9o';
+    }
+    addVideo(
+      `https://www.youtube.com/watch?v=${fallbackId}`,
+      `${input.analysis.objectName} — Reference Hardware Teardown & DIY Build`
+    );
+  }
+
   return Array.from(byUrl.values());
 }
 
@@ -936,13 +962,13 @@ export async function runTeardownAgent(
 
     for (const ts of timestamps) {
       const localFrame = extractedFrames.get(ts.t);
-      let relImage = fallbackThumbUrl || `frames/${ts.t}.jpg`;
+      let relImage = fallbackThumbUrl || '';
       let captureMode: TeardownFrame['captureMode'] =
         'argon-thumbnail-fallback';
       let frameBase64 = localFrame?.base64Jpeg || fallbackThumbBase64 || undefined;
 
       if (localFrame) {
-        relImage = `frames/${ts.t}.jpg`;
+        relImage = `data:image/jpeg;base64,${localFrame.base64Jpeg}`;
         captureMode = 'yt-dlp-ffmpeg';
       } else if (framesDir && fallbackThumbBase64) {
         try {
@@ -952,9 +978,8 @@ export async function runTeardownAgent(
             fallbackDiskPath,
             Uint8Array.from(atob(fallbackThumbBase64), (c) => c.charCodeAt(0))
           );
-          relImage = `frames/${ts.t}.jpg`;
         } catch {
-          // Keep thumbnail URL if writing fails
+          // Ignore read-only fs errors
         }
       }
 

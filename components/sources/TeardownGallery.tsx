@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { BomItem, DesignPart } from '../../lib/types';
 import type {
   TeardownData,
@@ -10,6 +10,8 @@ import type {
 } from '../../lib/agents/teardown';
 import {
   buildTimestampedVideoUrl,
+  extractVimeoId,
+  extractYouTubeId,
   formatTimestamp,
   getThumbnail,
 } from '../../lib/agents/researcher-depth';
@@ -86,15 +88,75 @@ function buildCodexFallbackSvg(frame: TeardownFrame, idx: number): string {
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
 
+function resolveFrameVideoUrl(
+  frame: TeardownFrame,
+  videos: TeardownVideo[] = []
+): string | undefined {
+  const candidates = [frame.video, ...videos.map((v) => v.url)].filter(
+    (u): u is string => Boolean(u && u.trim())
+  );
+
+  for (const url of candidates) {
+    if (
+      extractYouTubeId(url) ||
+      extractVimeoId(url) ||
+      /\.(mp4|webm)(\?.*)?$/i.test(url)
+    ) {
+      return url.trim();
+    }
+  }
+
+  return candidates[0]?.trim();
+}
+
+function buildEmbedVideoSrc(
+  videoUrl: string | undefined,
+  startSeconds: number,
+  autoplay = false
+): string | null {
+  if (!videoUrl) return null;
+  const t = Math.max(0, Math.floor(Number(startSeconds) || 0));
+
+  const ytId = extractYouTubeId(videoUrl);
+  if (ytId) {
+    const params = new URLSearchParams({
+      start: String(t),
+      rel: '0',
+      modestbranding: '1',
+      playsinline: '1',
+      enablejsapi: '1',
+    });
+    if (autoplay) {
+      params.set('autoplay', '1');
+    }
+    return `https://www.youtube-nocookie.com/embed/${ytId}?${params.toString()}`;
+  }
+
+  const vimeoId = extractVimeoId(videoUrl);
+  if (vimeoId) {
+    return `https://player.vimeo.com/video/${vimeoId}?autoplay=${
+      autoplay ? 1 : 0
+    }#t=${t}s`;
+  }
+
+  return null;
+}
+
 /**
  * Resolves a browser-renderable image URL for a teardown frame, repairing any
  * unescaped `&` inside legacy `data:image/svg+xml` strings and falling back to
  * a Renaissance codex illustration so `<img src>` always succeeds.
  */
-function resolveFrameImageSrc(frame: TeardownFrame, idx = 0): string {
+function resolveFrameImageSrc(
+  frame: TeardownFrame,
+  idx = 0,
+  videos: TeardownVideo[] = []
+): string {
+  const resolvedVideo = resolveFrameVideoUrl(frame, videos);
   const candidates = [
-    frame.image,
     frame.thumbnailUrl,
+    resolvedVideo ? getThumbnail(resolvedVideo) : undefined,
+    frame.image,
     getThumbnail(frame.video),
   ];
 
@@ -111,7 +173,7 @@ function resolveFrameImageSrc(frame: TeardownFrame, idx = 0): string {
         try {
           const decoded = decodeURIComponent(payload);
           const fixedXml = decoded.replace(
-            /&(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);)/g,
+            /&(?:amp?(?![a-zA-Z0-9#]+;)|(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);))/g,
             '&amp;'
           );
           return `${prefix}${encodeURIComponent(fixedXml)}`;
@@ -151,20 +213,63 @@ export function TeardownGallery({
   );
 
   const [selectedIdx, setSelectedIdx] = useState(0);
+  const [seekNonce, setSeekNonce] = useState(0);
+  const [autoplay, setAutoplay] = useState(false);
   const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const activeIndex =
     frames.length > 0 ? Math.min(selectedIdx, frames.length - 1) : 0;
   const activeFrame: TeardownFrame | undefined = frames[activeIndex];
 
+  const handleSelectAndSeek = useCallback(
+    (idx: number, shouldAutoplay = true) => {
+      const targetFrame = frames[idx];
+      setSelectedIdx(idx);
+      setAutoplay(shouldAutoplay);
+      setSeekNonce((n) => n + 1);
+
+      if (
+        targetFrame &&
+        idx === activeIndex &&
+        iframeRef.current?.contentWindow
+      ) {
+        try {
+          iframeRef.current.contentWindow.postMessage(
+            JSON.stringify({
+              event: 'command',
+              func: 'seekTo',
+              args: [Math.max(0, Math.floor(Number(targetFrame.t) || 0)), true],
+            }),
+            '*'
+          );
+          if (shouldAutoplay) {
+            iframeRef.current.contentWindow.postMessage(
+              JSON.stringify({
+                event: 'command',
+                func: 'playVideo',
+                args: [],
+              }),
+              '*'
+            );
+          }
+        } catch {
+          // iframe reload via key handles seeking
+        }
+      }
+    },
+    [frames, activeIndex]
+  );
+
   const stepFrame = useCallback(
     (delta: number) => {
       if (frames.length <= 1) return;
-      setSelectedIdx((prev) => (prev + delta + frames.length) % frames.length);
+      const nextIdx = (activeIndex + delta + frames.length) % frames.length;
+      handleSelectAndSeek(nextIdx, false);
     },
-    [frames.length]
+    [frames.length, activeIndex, handleSelectAndSeek]
   );
 
   useEffect(() => {
@@ -236,10 +341,17 @@ export function TeardownGallery({
     return null;
   }
 
+  const activeVideoUrl = activeFrame
+    ? resolveFrameVideoUrl(activeFrame, videos)
+    : videos[0]?.url;
+  const activeEmbedUrl = activeFrame
+    ? buildEmbedVideoSrc(activeVideoUrl, activeFrame.t, autoplay)
+    : null;
+
   const activeImgSrc = activeFrame
     ? failedImages[activeIndex]
       ? buildCodexFallbackSvg(activeFrame, activeIndex)
-      : resolveFrameImageSrc(activeFrame, activeIndex)
+      : resolveFrameImageSrc(activeFrame, activeIndex, videos)
     : '';
 
   const activeTsLabel = activeFrame ? formatTimestamp(activeFrame.t) : '0:00';
@@ -335,9 +447,10 @@ export function TeardownGallery({
               </span>
               <span className="text-[#d4af37]/40">·</span>
               <span>
-                Use <kbd className="rounded border border-[#d4af37]/30 bg-[#14100b] px-1.5 py-0.5 font-mono text-[10px] text-[#f3d478]">←</kbd>{' '}
+                Click any timestamp card to seek the embedded video player, or{' '}
+                <kbd className="rounded border border-[#d4af37]/30 bg-[#14100b] px-1.5 py-0.5 font-mono text-[10px] text-[#f3d478]">←</kbd>{' '}
                 <kbd className="rounded border border-[#d4af37]/30 bg-[#14100b] px-1.5 py-0.5 font-mono text-[10px] text-[#f3d478]">→</kbd>{' '}
-                keys to step frames, or click the main plate to enlarge
+                to step frames
               </span>
             </div>
 
@@ -374,7 +487,7 @@ export function TeardownGallery({
               const isSelected = idx === activeIndex;
               const thumbSrc = failedImages[idx]
                 ? buildCodexFallbackSvg(frame, idx)
-                : resolveFrameImageSrc(frame, idx);
+                : resolveFrameImageSrc(frame, idx, videos);
               const tsLabel = formatTimestamp(frame.t);
               const partSummary =
                 frame.parts.map((p: TeardownPart) => p.name).join(' · ') ||
@@ -386,7 +499,7 @@ export function TeardownGallery({
                   type="button"
                   role="tab"
                   aria-selected={isSelected}
-                  onClick={() => setSelectedIdx(idx)}
+                  onClick={() => handleSelectAndSeek(idx, true)}
                   className={`group flex flex-col overflow-hidden rounded-xl border text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] ${
                     isSelected
                       ? 'border-[#f3d478] bg-[#d4af37]/15 shadow-[0_0_25px_-6px_rgba(212,175,55,0.45)] ring-1 ring-[#f3d478]/50'
@@ -414,13 +527,16 @@ export function TeardownGallery({
                     />
                     <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906]/85 via-transparent to-transparent" />
                     <span
-                      className={`absolute bottom-1.5 left-1.5 rounded border px-1.5 py-0.5 font-mono text-[11px] font-semibold tabular-nums ${
+                      className={`absolute bottom-1.5 left-1.5 inline-flex items-center gap-1 rounded border px-1.5 py-0.5 font-mono text-[11px] font-semibold tabular-nums ${
                         isSelected
                           ? 'border-[#f3d478]/60 bg-[#14100b]/95 text-[#f3d478]'
                           : 'border-[#d4af37]/30 bg-[#0c0906]/90 text-[#e6d3b3]'
                       }`}
                     >
-                      {tsLabel} ({frame.t}s)
+                      <span aria-hidden="true">▶</span>
+                      <span>
+                        {tsLabel} ({frame.t}s)
+                      </span>
                     </span>
                     <span className="absolute right-1.5 top-1.5 rounded border border-[#d4af37]/30 bg-[#0c0906]/90 px-1.5 py-0.5 font-mono text-[10px] text-[#f3d478]">
                       {frame.parts.length}{' '}
@@ -451,87 +567,122 @@ export function TeardownGallery({
           {/* Active Frame Detail + Part Callouts */}
           {activeFrame && (
             <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
-              {/* Left: Frame Viewer + Tasteful Metadata & Part Chips Bar */}
+              {/* Left: Embedded Video Player (or Frame Image) + Tasteful Metadata & Part Chips Bar */}
               <div className="flex flex-col justify-between rounded-2xl border border-[#d4af37]/30 bg-[#120e0a]/90 p-4 shadow-xl lg:col-span-5">
                 <div>
-                  <button
-                    type="button"
-                    onClick={() => setLightboxOpen(true)}
-                    aria-label={`Open full-screen lightbox for frame at ${activeTsLabel}`}
-                    className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] text-left shadow-inner focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
-                  >
-                    {!loadedImages[activeIndex] && (
-                      <div
-                        className="skeleton-shimmer absolute inset-0"
-                        aria-hidden="true"
+                  {activeEmbedUrl ? (
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] shadow-inner">
+                      <iframe
+                        ref={iframeRef}
+                        key={`${activeEmbedUrl}-${seekNonce}`}
+                        src={activeEmbedUrl}
+                        title={`Teardown video at ${activeTsLabel} (t=${activeFrame.t}s)`}
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowFullScreen
+                        className="h-full w-full border-0"
                       />
-                    )}
-                    <img
-                      src={activeImgSrc}
-                      alt={`Teardown frame at ${activeTsLabel}: ${activeFrame.parts
-                        .map((p) => p.name)
-                        .join(', ')}`}
-                      onLoad={() =>
-                        setLoadedImages((prev) => ({
-                          ...prev,
-                          [activeIndex]: true,
-                        }))
-                      }
-                      onError={() => {
-                        setFailedImages((prev) => ({
-                          ...prev,
-                          [activeIndex]: true,
-                        }));
-                        setLoadedImages((prev) => ({
-                          ...prev,
-                          [activeIndex]: true,
-                        }));
-                      }}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
-                    />
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906]/80 via-transparent to-[#0c0906]/30" />
-
-                    {/* Top-left timestamp badge */}
-                    <div className="absolute left-2.5 top-2.5 flex items-center gap-1.5">
-                      <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906]/90 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] backdrop-blur-sm tabular-nums">
-                        t = {activeFrame.t}s ({activeTsLabel})
-                      </span>
-                      <span className="rounded-md border border-emerald-500/35 bg-emerald-950/85 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-300 backdrop-blur-sm tabular-nums">
-                        {activeMeanConfidence}% conf
-                      </span>
-                    </div>
-
-                    {/* Top-right expand affordance */}
-                    <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1 rounded-md border border-[#d4af37]/40 bg-[#0c0906]/85 px-2 py-0.5 font-codex text-[10px] uppercase tracking-wider text-[#e6d3b3] opacity-90 transition-all group-hover:border-[#f3d478] group-hover:bg-[#14100b] group-hover:text-[#f3d478]">
-                      ⤢ Enlarge Plate
-                    </span>
-
-                    {/* Bottom overlay part callout pills */}
-                    <div className="absolute bottom-2.5 left-2.5 right-2.5 flex flex-wrap items-center gap-1.5">
-                      {activeFrame.parts.map((pt, i) => (
-                        <span
-                          key={`${pt.name}-${i}`}
-                          className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-[11px] font-medium backdrop-blur-sm ${
-                            pt.buyOrPrint === 'print'
-                              ? 'border-emerald-500/45 bg-[#0c0906]/90 text-emerald-300'
-                              : 'border-[#d4af37]/45 bg-[#0c0906]/90 text-[#f3d478]'
-                          }`}
-                        >
-                          <span className="font-mono text-[10px] opacity-80">
-                            {pt.buyOrPrint === 'print' ? '3D' : 'OTS'}
-                          </span>
-                          <span className="max-w-[180px] truncate">
-                            {pt.name}
-                          </span>
+                      <div className="pointer-events-none absolute left-2.5 top-2.5 flex items-center gap-1.5">
+                        <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906]/90 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] backdrop-blur-sm tabular-nums">
+                          t = {activeFrame.t}s ({activeTsLabel})
                         </span>
-                      ))}
+                        <span className="rounded-md border border-emerald-500/35 bg-emerald-950/85 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-300 backdrop-blur-sm tabular-nums">
+                          {activeMeanConfidence}% conf
+                        </span>
+                      </div>
                     </div>
-                  </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => setLightboxOpen(true)}
+                      aria-label={`Open full-screen lightbox for frame at ${activeTsLabel}`}
+                      className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] text-left shadow-inner focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
+                    >
+                      {!loadedImages[activeIndex] && (
+                        <div
+                          className="skeleton-shimmer absolute inset-0"
+                          aria-hidden="true"
+                        />
+                      )}
+                      <img
+                        src={activeImgSrc}
+                        alt={`Teardown frame at ${activeTsLabel}: ${activeFrame.parts
+                          .map((p) => p.name)
+                          .join(', ')}`}
+                        onLoad={() =>
+                          setLoadedImages((prev) => ({
+                            ...prev,
+                            [activeIndex]: true,
+                          }))
+                        }
+                        onError={() => {
+                          setFailedImages((prev) => ({
+                            ...prev,
+                            [activeIndex]: true,
+                          }));
+                          setLoadedImages((prev) => ({
+                            ...prev,
+                            [activeIndex]: true,
+                          }));
+                        }}
+                        className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.02]"
+                      />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906]/80 via-transparent to-[#0c0906]/30" />
+
+                      {/* Top-left timestamp badge */}
+                      <div className="absolute left-2.5 top-2.5 flex items-center gap-1.5">
+                        <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906]/90 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] backdrop-blur-sm tabular-nums">
+                          t = {activeFrame.t}s ({activeTsLabel})
+                        </span>
+                        <span className="rounded-md border border-emerald-500/35 bg-emerald-950/85 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-300 backdrop-blur-sm tabular-nums">
+                          {activeMeanConfidence}% conf
+                        </span>
+                      </div>
+
+                      {/* Top-right expand affordance */}
+                      <span className="absolute right-2.5 top-2.5 inline-flex items-center gap-1 rounded-md border border-[#d4af37]/40 bg-[#0c0906]/85 px-2 py-0.5 font-codex text-[10px] uppercase tracking-wider text-[#e6d3b3] opacity-90 transition-all group-hover:border-[#f3d478] group-hover:bg-[#14100b] group-hover:text-[#f3d478]">
+                        ⤢ Enlarge Plate
+                      </span>
+                    </button>
+                  )}
 
                   {activeFrame.description && (
                     <p className="mt-3 text-xs leading-relaxed text-[#e6d3b3]">
                       {activeFrame.description}
                     </p>
+                  )}
+
+                  {/* Captured Disassembly Frame Image Preview alongside Embedded Video Player */}
+                  {activeEmbedUrl && activeImgSrc && (
+                    <button
+                      type="button"
+                      onClick={() => setLightboxOpen(true)}
+                      className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2 text-left transition-all hover:border-[#f3d478]/60 hover:bg-[#17120c]"
+                    >
+                      <div className="flex min-w-0 items-center gap-3">
+                        <img
+                          src={activeImgSrc}
+                          alt={`Captured frame plate at ${activeTsLabel}`}
+                          onError={() =>
+                            setFailedImages((prev) => ({
+                              ...prev,
+                              [activeIndex]: true,
+                            }))
+                          }
+                          className="h-12 w-20 shrink-0 rounded-lg border border-[#d4af37]/30 bg-[#0c0906] object-cover"
+                        />
+                        <div className="min-w-0">
+                          <p className="font-codex text-[10px] font-bold uppercase tracking-wider text-[#f3d478]">
+                            Disassembly Frame Plate · {activeTsLabel}
+                          </p>
+                          <p className="truncate text-[11px] text-[#e6d3b3]">
+                            {activeFrame.parts.map((p) => p.name).join(' + ')}
+                          </p>
+                        </div>
+                      </div>
+                      <span className="shrink-0 rounded-md border border-[#d4af37]/35 bg-[#14100b] px-2 py-1 font-codex text-[10px] uppercase tracking-wider text-[#f3d478]">
+                        ⤢ Enlarge
+                      </span>
+                    </button>
                   )}
                 </div>
 
@@ -602,18 +753,33 @@ export function TeardownGallery({
                       <span>{activeMeanConfidence}% mean confidence</span>
                     </div>
 
-                    <a
-                      href={buildTimestampedVideoUrl(
-                        activeFrame.video,
-                        activeFrame.t
+                    <div className="flex flex-wrap items-center gap-2">
+                      <button
+                        type="button"
+                        onClick={() => handleSelectAndSeek(activeIndex, true)}
+                        className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/50 bg-[#d4af37]/20 px-3.5 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] transition-all hover:border-[#f3d478] hover:bg-[#d4af37]/30 hover:text-[#f5ebd6]"
+                      >
+                        <span aria-hidden="true">▶</span>
+                        <span>
+                          Watch video @ {activeTsLabel} (t={activeFrame.t}s)
+                        </span>
+                      </button>
+                      {activeVideoUrl && (
+                        <a
+                          href={buildTimestampedVideoUrl(
+                            activeVideoUrl,
+                            activeFrame.t
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-1 rounded-xl border border-[#d4af37]/30 bg-[#14100b] px-2.5 py-1.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#e6d3b3] transition-all hover:border-[#f3d478] hover:text-[#f3d478]"
+                          title="Open video at this timestamp on YouTube"
+                        >
+                          <span>YouTube</span>
+                          <span aria-hidden="true">↗</span>
+                        </a>
                       )}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/50 bg-[#d4af37]/20 px-3.5 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] transition-all hover:border-[#f3d478] hover:bg-[#d4af37]/30 hover:text-[#f5ebd6]"
-                    >
-                      <span>Watch at {activeTsLabel}</span>
-                      <span aria-hidden="true">↗</span>
-                    </a>
+                    </div>
                   </div>
                 </div>
               </div>
