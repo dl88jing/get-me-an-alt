@@ -626,7 +626,11 @@ export default function ScrollExplodeScene({
                 : 'border-[#d4af37]/30 bg-[#14100b]/90 text-[#f5ebd6]'
             }`}
           >
-            <span className="font-codex font-bold text-[11px] text-[#b45309] dark:text-[#f3d478]">
+            <span
+              className={`font-codex font-bold text-[11px] ${
+                isSketchDominant ? 'text-[#5c3a1d]' : 'text-[#f3d478]'
+              }`}
+            >
               {selectedPart.partRef}
             </span>
             <span className="font-semibold truncate">{selectedPart.name}</span>

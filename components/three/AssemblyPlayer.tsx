@@ -207,16 +207,16 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
 
   const explodeDist = Math.hypot(deltaVec[0], deltaVec[1], deltaVec[2]);
 
-  // Paper / IKEA cel-shaded color palette:
-  // Assembled parts: warm technical off-white paper fill (#EAE6DF) with charcoal ink outlines
-  // Active step parts: warm blueprint sky/amber fill (#BAE6FD for printed, #FDE68A for hardware) with bold black ink outlines
+  // Renaissance Codex cel-shaded color palette:
+  // Assembled parts: warm vellum/parchment ivory fill (#E6D3B3) with sepia ink outlines
+  // Active step parts: warm terracotta/bronze (#C86D51 for printed) or brushed brass (#D4AF37 for hardware)
   const fillHex = isHighlighted
-    ? "#7DD3FC"
+    ? "#F3D478"
     : status === "assembled"
-    ? "#EAE6DF"
+    ? "#E6D3B3"
     : part.category === "purchased"
-    ? "#FDE68A"
-    : "#BAE6FD";
+    ? "#D4AF37"
+    : "#C86D51";
 
   // Compute callout anchor position relative to part's current 3D position
   const calloutTargetPos: [number, number, number] = [
@@ -251,9 +251,9 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
             >
               <lineSegments geometry={edgesGeometry}>
                 <lineBasicMaterial
-                  color="#64748B"
+                  color="#9C7A4C"
                   transparent
-                  opacity={0.38 * (1 - eased * 0.6)}
+                  opacity={0.45 * (1 - eased * 0.6)}
                 />
               </lineSegments>
             </group>
@@ -262,7 +262,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
           {/* Dashed trajectory vector line */}
           <Line
             points={[startPos, endPos]}
-            color="#18181B"
+            color="#D4AF37"
             lineWidth={2}
             dashed
             dashScale={0.35}
@@ -277,7 +277,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
               quaternion={arrowTransform.quat}
             >
               <coneGeometry args={[3.6, 9.5, 16]} />
-              <meshBasicMaterial color="#18181B" />
+              <meshBasicMaterial color="#F3D478" />
             </mesh>
           )}
         </group>
@@ -288,7 +288,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
         {/* Back-face silhouette outline for curved STL surfaces */}
         <mesh geometry={geometry} scale={[1.018, 1.018, 1.018]}>
           <meshBasicMaterial
-            color={status === "active" || isHighlighted ? "#09090B" : "#27272A"}
+            color={status === "active" || isHighlighted ? "#F3D478" : "#2B1D0E"}
             side={THREE.BackSide}
           />
         </mesh>
@@ -304,7 +304,7 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
         </mesh>
         <lineSegments geometry={edgesGeometry}>
           <lineBasicMaterial
-            color={status === "active" || isHighlighted ? "#09090B" : "#27272A"}
+            color={status === "active" || isHighlighted ? "#2B1D0E" : "#3B2410"}
             linewidth={status === "active" || isHighlighted ? 2 : 1.2}
           />
         </lineSegments>
@@ -315,13 +315,13 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
         <group>
           <Line
             points={[curPos, calloutTargetPos]}
-            color={status === "active" || isHighlighted ? "#18181B" : "#52525B"}
+            color={status === "active" || isHighlighted ? "#F3D478" : "#9C7A4C"}
             lineWidth={status === "active" || isHighlighted ? 1.85 : 1.15}
           />
           <mesh position={curPos}>
             <sphereGeometry args={[1.5, 12, 12]} />
             <meshBasicMaterial
-              color={status === "active" || isHighlighted ? "#18181B" : "#52525B"}
+              color={status === "active" || isHighlighted ? "#F3D478" : "#9C7A4C"}
             />
           </mesh>
           <Html
@@ -333,17 +333,17 @@ const IkeaPartMesh: React.FC<IkeaPartMeshProps> = ({
           >
             {status === "active" || isHighlighted ? (
               <div
-                className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-zinc-900 text-[#F6F3EA] font-mono text-[11px] font-bold border-2 border-zinc-900 shadow-md whitespace-nowrap"
+                className="flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-[#14100b] text-[#f5ebd6] font-mono text-[11px] font-bold border-2 border-[#d4af37] shadow-md whitespace-nowrap"
                 data-testid={`assembly-callout-${calloutNumber}`}
               >
-                <span className="w-4 h-4 rounded-full bg-[#F6F3EA] text-zinc-900 font-extrabold text-[10px] flex items-center justify-center shrink-0">
+                <span className="w-4 h-4 rounded-full bg-[#d4af37] text-[#140e07] font-extrabold text-[10px] flex items-center justify-center shrink-0">
                   {calloutNumber}
                 </span>
                 <span>{part.name}</span>
               </div>
             ) : (
               <div
-                className="w-5 h-5 rounded-full bg-[#F6F3EA] text-zinc-900 font-mono text-[10px] font-extrabold border-2 border-zinc-900 shadow-sm flex items-center justify-center"
+                className="w-5 h-5 rounded-full bg-[#14100b]/95 text-[#f3d478] font-mono text-[10px] font-extrabold border-2 border-[#d4af37]/75 shadow-sm flex items-center justify-center"
                 data-testid={`assembly-callout-${calloutNumber}`}
               >
                 {calloutNumber}
@@ -693,42 +693,42 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           e.currentTarget.scrollLeft = 0;
         }
       }}
-      className={`relative w-full max-w-full min-w-0 h-[660px] min-h-[560px] rounded-2xl overflow-hidden bg-[#F6F3EA] text-zinc-900 border-2 border-zinc-900 shadow-2xl flex flex-col select-none ${className}`}
+      className={`relative w-full max-w-full min-w-0 h-[660px] min-h-[560px] rounded-2xl overflow-hidden bg-[#0c0906] text-[#f5ebd6] border border-[#d4af37]/35 shadow-2xl flex flex-col select-none ${className}`}
       data-testid="assembly-player-root"
     >
-      {/* Top Manual Header Bar — IKEA Blueprint Frame */}
-      <div className="relative z-10 w-full max-w-full min-w-0 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 px-5 py-3.5 bg-[#EFECE1] border-b-2 border-zinc-900">
+      {/* Top Manual Header Bar — Gilded Codex Frame */}
+      <div className="relative z-10 w-full max-w-full min-w-0 flex flex-wrap lg:flex-nowrap items-center justify-between gap-4 px-5 py-3.5 bg-[#14100b]/95 border-b border-[#d4af37]/25">
         {/* Big Numbered Step Badge + Title */}
         <div className="flex items-center gap-4 min-w-0 flex-1">
           <div
-            className="w-14 h-14 rounded-xl bg-zinc-900 text-[#F6F3EA] flex flex-col items-center justify-center font-black tracking-tighter shadow-md shrink-0"
+            className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#282016] to-[#14100b] text-[#f3d478] border border-[#d4af37]/55 flex flex-col items-center justify-center font-black tracking-tighter shadow-md shrink-0"
             data-testid="step-badge-number"
           >
-            <span className="text-[9px] font-mono uppercase tracking-widest text-zinc-400 leading-none">
+            <span className="text-[9px] font-codex uppercase tracking-widest text-[#bda782] leading-none">
               STEP
             </span>
-            <span className="text-2xl leading-none mt-0.5">
+            <span className="font-display text-2xl leading-none mt-0.5 text-[#f3d478]">
               {String(currentStep.n).padStart(2, "0")}
             </span>
           </div>
 
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="px-2 py-0.5 rounded bg-zinc-900 text-[#F6F3EA] font-mono text-[10px] font-bold uppercase tracking-widest shrink-0">
+              <span className="px-2 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/45 font-codex text-[10px] font-bold uppercase tracking-widest shrink-0">
                 {currentStep.action}
               </span>
-              <span className="text-xs font-mono font-bold text-zinc-600 uppercase tracking-wider shrink-0">
+              <span className="text-xs font-mono font-bold text-[#bda782] uppercase tracking-wider shrink-0">
                 STAGE {currentStepIdx + 1} OF {totalSteps}
               </span>
             </div>
             <h3
-              className="text-base sm:text-lg font-extrabold text-zinc-950 tracking-tight leading-snug mt-0.5 truncate"
+              className="font-display text-lg sm:text-xl font-bold text-[#f5ebd6] tracking-tight leading-snug mt-0.5 truncate"
               data-testid="step-title"
             >
               {currentStep.title}
             </h3>
             {currentStep.note && (
-              <p className="text-xs text-zinc-700 font-medium mt-0.5 line-clamp-2 break-words">
+              <p className="text-xs text-[#e6d3b3] font-medium mt-0.5 line-clamp-2 break-words">
                 {currentStep.note}
               </p>
             )}
@@ -737,10 +737,10 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
 
         {/* Tool Icon Row + Callouts Toggle */}
         <div
-          className="flex items-center gap-2 bg-[#F6F3EA] px-3 py-2 rounded-xl border-2 border-zinc-900 shrink-0"
+          className="flex items-center gap-2 bg-[#0c0906] px-3 py-2 rounded-xl border border-[#d4af37]/30 shrink-0"
           data-testid="tool-icon-row"
         >
-          <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-zinc-600 mr-1">
+          <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#bda782] mr-1">
             TOOLS:
           </span>
           {TOOL_CATALOG.map((tool) => {
@@ -751,14 +751,14 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                 title={tool.label}
                 data-testid={`tool-icon-${tool.id}`}
                 data-active={isActive ? "true" : "false"}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border-2 transition-all ${
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border transition-all ${
                   isActive
-                    ? "bg-zinc-900 text-[#F6F3EA] border-zinc-900 shadow-sm scale-105"
-                    : "bg-transparent text-zinc-500 border-zinc-300 opacity-60"
+                    ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65 shadow-sm scale-105"
+                    : "bg-transparent text-[#bda782]/60 border-[#d4af37]/15 opacity-60"
                 }`}
               >
                 <ToolSvgIcon tool={tool.id} className="w-4 h-4" />
-                <span className="text-[11px] font-bold tracking-tight hidden sm:inline">
+                <span className="font-codex text-[11px] font-bold tracking-tight hidden sm:inline">
                   {tool.label.split(" ")[0]}
                 </span>
               </div>
@@ -768,14 +768,14 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             type="button"
             onClick={() => setShowCallouts((v) => !v)}
             data-testid="toggle-assembly-callouts"
-            className={`ml-1 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border-2 text-[11px] font-bold transition-all ${
+            className={`ml-1 flex items-center gap-1 px-2.5 py-1.5 rounded-lg border font-codex text-[11px] font-bold transition-all ${
               showCallouts
-                ? "bg-zinc-900 text-[#F6F3EA] border-zinc-900"
-                : "bg-transparent text-zinc-600 border-zinc-400"
+                ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/60"
+                : "bg-transparent text-[#bda782] border-[#d4af37]/25"
             }`}
             title="Toggle numbered part callouts"
           >
-            <span className="w-4 h-4 rounded-full bg-[#F6F3EA] text-zinc-900 font-mono text-[10px] font-extrabold flex items-center justify-center">
+            <span className="w-4 h-4 rounded-full bg-[#d4af37] text-[#140e07] font-mono text-[10px] font-extrabold flex items-center justify-center">
               #
             </span>
             <span className="hidden sm:inline">Callouts</span>
@@ -785,8 +785,8 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
 
       {/* Main Middle Canvas + Step Parts Callout Overlay */}
       <div className="relative flex-1 w-full max-w-full min-w-0 min-h-0 overflow-hidden">
-        {/* Inner IKEA Page Frame Lines */}
-        <div className="absolute inset-3 border border-zinc-900/20 rounded-lg pointer-events-none z-10" />
+        {/* Inner Codex Folio Frame Lines */}
+        <div className="absolute inset-3 border border-[#d4af37]/20 rounded-lg pointer-events-none z-10" />
 
         <Canvas
           className="w-full h-full block"
@@ -796,12 +796,20 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           gl={{ preserveDrawingBuffer: true, antialias: true }}
           camera={{ position: [235, 175, 255], fov: 38, near: 1, far: 2500 }}
         >
-          <color attach="background" args={["#F6F3EA"]} />
+          <color attach="background" args={["#0C0906"]} />
 
-          {/* Bright Even Technical Illustration Lighting */}
-          <ambientLight intensity={1.15} />
-          <directionalLight position={[180, 260, 190]} intensity={1.35} />
-          <directionalLight position={[-150, 120, -120]} intensity={0.45} />
+          {/* Warm Chiaroscuro Technical Illustration Lighting */}
+          <ambientLight intensity={1.05} />
+          <directionalLight
+            position={[180, 260, 190]}
+            intensity={1.35}
+            color="#FFF4D6"
+          />
+          <directionalLight
+            position={[-150, 120, -120]}
+            intensity={0.5}
+            color="#D4AF37"
+          />
 
           <group position={[18, -32, 0]}>
             {(() => {
@@ -840,18 +848,18 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             })()}
           </group>
 
-          {/* Subtle Paper Ground Shadow & Reference Ring */}
+          {/* Subtle Sepia Ground Shadow & Reference Grid */}
           <group position={[18, -56, 0]}>
             <ContactShadows
               position={[0, 0.1, 0]}
-              opacity={0.22}
+              opacity={0.45}
               scale={320}
               blur={2.5}
               far={160}
-              color="#18181B"
+              color="#050302"
             />
             <gridHelper
-              args={[300, 12, "#D6D1C4", "#E5E0D3"]}
+              args={[300, 12, "#5C4930", "#282016"]}
               position={[0, 0, 0]}
             />
           </group>
@@ -875,16 +883,16 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           />
         </Canvas>
 
-        {/* Left Overlay: Step Parts Hardware Callout Box & Parts Legend (IKEA Parts Box style) */}
+        {/* Left Overlay: Step Parts Hardware Callout Box & Parts Legend */}
         <div
-          className="absolute top-6 left-6 z-10 w-64 max-w-[calc(100%-3rem)] rounded-xl bg-[#F6F3EA]/95 border-2 border-zinc-900 p-3.5 shadow-[4px_4px_0px_#18181B]"
+          className="absolute top-6 left-6 z-10 w-64 max-w-[calc(100%-3rem)] rounded-xl bg-[#14100b]/94 border border-[#d4af37]/40 p-3.5 shadow-2xl backdrop-blur-md"
           data-testid="assembly-parts-legend"
         >
-          <div className="flex items-center justify-between pb-2 mb-2 border-b border-zinc-900/20">
-            <span className="text-[11px] font-mono font-extrabold uppercase tracking-wider text-zinc-900">
+          <div className="flex items-center justify-between pb-2 mb-2 border-b border-[#d4af37]/20">
+            <span className="text-[11px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
               PARTS LEGEND (STEP {currentStep.n})
             </span>
-            <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-zinc-900 text-[#F6F3EA]">
+            <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40">
               {currentStepParts.length}×
             </span>
           </div>
@@ -897,24 +905,24 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                   key={p.instanceId}
                   onMouseEnter={() => setHighlightedInstanceId(p.instanceId)}
                   onMouseLeave={() => setHighlightedInstanceId(null)}
-                  className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#EFECE1] border border-zinc-900/35 hover:border-zinc-900 transition-colors cursor-pointer"
+                  className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#0c0906]/90 border border-[#d4af37]/25 hover:border-[#d4af37]/65 transition-colors cursor-pointer"
                 >
                   <div className="flex items-center gap-2 min-w-0">
-                    <span className="w-5 h-5 rounded-full bg-zinc-900 text-[#F6F3EA] font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
+                    <span className="w-5 h-5 rounded-full bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
                       {cNum}
                     </span>
                     <span
-                      className={`w-2.5 h-2.5 rounded-sm border border-zinc-900 shrink-0 ${
+                      className={`w-2.5 h-2.5 rounded-sm border border-[#d4af37]/50 shrink-0 ${
                         p.category === "purchased"
-                          ? "bg-amber-300"
-                          : "bg-sky-300"
+                          ? "bg-[#d4af37]"
+                          : "bg-[#c86d51]"
                       }`}
                     />
-                    <span className="font-bold text-zinc-900 truncate">
+                    <span className="font-semibold text-[#f5ebd6] truncate">
                       {p.name}
                     </span>
                   </div>
-                  <span className="font-mono font-extrabold text-zinc-800 shrink-0">
+                  <span className="font-mono font-extrabold text-[#f3d478] shrink-0">
                     {p.quantity}×
                   </span>
                 </div>
@@ -923,10 +931,12 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           </div>
 
           {/* Intra-step motion scrubber */}
-          <div className="mt-3 pt-2.5 border-t border-zinc-900/20">
-            <div className="flex items-center justify-between text-[10px] font-mono font-bold text-zinc-700 mb-1">
+          <div className="mt-3 pt-2.5 border-t border-[#d4af37]/20">
+            <div className="flex items-center justify-between text-[10px] font-codex font-bold text-[#bda782] mb-1">
               <span>MOTION TIMELINE</span>
-              <span>{Math.round(stepProgress * 100)}%</span>
+              <span className="font-mono text-[#f3d478]">
+                {Math.round(stepProgress * 100)}%
+              </span>
             </div>
             <input
               type="range"
@@ -940,15 +950,15 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
               }}
               aria-label="Intra-step motion scrubber"
               data-testid="step-motion-scrubber"
-              className="w-full h-1.5 bg-zinc-300 rounded-lg appearance-none cursor-pointer accent-zinc-900"
+              className="w-full h-1.5 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
             />
           </div>
         </div>
 
-        {/* Bottom-Right IKEA Assembly Mascot / Hint Badge */}
-        <div className="hidden md:flex absolute bottom-6 right-6 z-10 items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#F6F3EA]/95 border-2 border-zinc-900 shadow-[3px_3px_0px_#18181B]">
+        {/* Bottom-Right Assembly Hint Badge */}
+        <div className="hidden md:flex absolute bottom-6 right-6 z-10 items-center gap-2.5 px-3.5 py-2 rounded-xl bg-[#14100b]/94 border border-[#d4af37]/40 shadow-2xl backdrop-blur-md">
           <svg
-            className="w-6 h-6 text-zinc-900 shrink-0"
+            className="w-6 h-6 text-[#f3d478] shrink-0"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -959,7 +969,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             <path d="M9 14h6" />
           </svg>
           <div className="text-[11px] leading-tight">
-            <div className="font-extrabold text-zinc-900 uppercase tracking-tight">
+            <div className="font-codex font-bold text-[#f5ebd6] uppercase tracking-tight">
               {currentStep.action === "screw"
                 ? "Fasten securely — do not overtighten PLA"
                 : currentStep.action === "snap"
@@ -968,7 +978,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                 ? "Push tubing 10mm onto barbed fitting"
                 : "Follow dashed vector arrows for alignment"}
             </div>
-            <div className="text-zinc-600 font-mono text-[10px]">
+            <div className="text-[#bda782] font-mono text-[10px]">
               Drag to orbit · Scroll to zoom manual figure
             </div>
           </div>
@@ -976,7 +986,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
       </div>
 
       {/* Bottom Transport Controls & Step Scrubber Bar */}
-      <div className="relative z-10 w-full max-w-full min-w-0 px-5 py-3 bg-[#EFECE1] border-t-2 border-zinc-900 flex flex-col gap-2.5">
+      <div className="relative z-10 w-full max-w-full min-w-0 px-5 py-3 bg-[#14100b]/95 border-t border-[#d4af37]/25 flex flex-col gap-2.5">
         {/* Horizontally Scrollable Step Scrubber Chips */}
         <div
           ref={stepChipsContainerRef}
@@ -996,12 +1006,12 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                 type="button"
                 onClick={() => handleSelectStep(idx)}
                 data-testid={`step-pill-${s.n}`}
-                className={`shrink-0 py-1.5 px-3 rounded-lg border-2 font-mono text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+                className={`shrink-0 py-1.5 px-3 rounded-lg border font-mono text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
                   isCurr
-                    ? "bg-zinc-900 text-[#F6F3EA] border-zinc-900 shadow-sm"
+                    ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65 shadow-sm"
                     : isDone
-                    ? "bg-zinc-800/15 text-zinc-900 border-zinc-900/50 hover:bg-zinc-800/25"
-                    : "bg-[#F6F3EA] text-zinc-600 border-zinc-400 hover:border-zinc-900"
+                    ? "bg-[#1d1710] text-[#e6d3b3] border-[#d4af37]/30 hover:border-[#d4af37]/50"
+                    : "bg-[#0c0906] text-[#bda782] border-[#d4af37]/15 hover:border-[#d4af37]/40"
                 }`}
               >
                 <span>{String(s.n).padStart(2, "0")}</span>
@@ -1022,7 +1032,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
               onClick={() => handleSelectStep(currentStepIdx - 1)}
               disabled={currentStepIdx === 0}
               data-testid="prev-step-btn"
-              className="px-3 py-1.5 rounded-lg border-2 border-zinc-900 bg-[#F6F3EA] hover:bg-zinc-200 disabled:opacity-40 text-xs font-extrabold text-zinc-900 transition-colors"
+              className="px-3 py-1.5 rounded-lg border border-[#d4af37]/35 bg-[#0c0906] hover:bg-[#1d1710] disabled:opacity-40 font-codex text-xs font-bold text-[#e6d3b3] transition-colors"
             >
               ← Prev
             </button>
@@ -1037,7 +1047,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                 setIsPlaying((p) => !p);
               }}
               data-testid="play-pause-btn"
-              className="px-4 py-1.5 rounded-lg border-2 border-zinc-900 bg-zinc-900 hover:bg-zinc-800 text-[#F6F3EA] text-xs font-extrabold tracking-wide transition-colors flex items-center gap-1.5"
+              className="px-4 py-1.5 rounded-lg border border-[#d4af37] bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] hover:brightness-110 text-[#140e07] font-codex text-xs font-extrabold tracking-wide transition-all flex items-center gap-1.5"
             >
               <span>{isPlaying ? "⏸ Pause" : "▶ Play"}</span>
             </button>
@@ -1048,7 +1058,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
               onClick={() => handleSelectStep(currentStepIdx + 1)}
               disabled={currentStepIdx >= totalSteps - 1}
               data-testid="next-step-btn"
-              className="px-3 py-1.5 rounded-lg border-2 border-zinc-900 bg-[#F6F3EA] hover:bg-zinc-200 disabled:opacity-40 text-xs font-extrabold text-zinc-900 transition-colors"
+              className="px-3 py-1.5 rounded-lg border border-[#d4af37]/35 bg-[#0c0906] hover:bg-[#1d1710] disabled:opacity-40 font-codex text-xs font-bold text-[#e6d3b3] transition-colors"
             >
               Next →
             </button>
@@ -1056,7 +1066,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
 
           {/* Continuous Overall Step Scrubber */}
           <div className="flex items-center gap-2 flex-1 max-w-xs min-w-[160px]">
-            <span className="text-[11px] font-mono font-bold text-zinc-700 shrink-0">
+            <span className="text-[11px] font-codex font-bold text-[#bda782] shrink-0">
               SCRUB
             </span>
             <input
@@ -1075,16 +1085,16 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
               }}
               aria-label="Full assembly step scrubber"
               data-testid="overall-step-scrubber"
-              className="w-full h-2 bg-zinc-300 rounded-lg appearance-none cursor-pointer accent-zinc-900"
+              className="w-full h-2 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
             />
-            <span className="text-[11px] font-mono font-bold text-zinc-800 w-10 text-right">
+            <span className="text-[11px] font-mono font-bold text-[#f3d478] w-10 text-right">
               {Math.round(overallProgress)}%
             </span>
           </div>
 
           {/* Speed & Loop Controls */}
           <div className="flex items-center gap-2">
-            <div className="inline-flex rounded-lg border-2 border-zinc-900 bg-[#F6F3EA] p-0.5">
+            <div className="inline-flex rounded-lg border border-[#d4af37]/30 bg-[#0c0906] p-0.5">
               {[0.5, 1, 1.5, 2].map((spd) => (
                 <button
                   key={spd}
@@ -1093,8 +1103,8 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
                   data-testid={`speed-${spd}`}
                   className={`px-2 py-0.5 rounded text-[11px] font-mono font-bold transition-colors ${
                     speed === spd
-                      ? "bg-zinc-900 text-[#F6F3EA]"
-                      : "text-zinc-700 hover:bg-zinc-200"
+                      ? "bg-[#d4af37] text-[#140e07]"
+                      : "text-[#bda782] hover:bg-[#1d1710]"
                   }`}
                 >
                   {spd}×
@@ -1106,10 +1116,10 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
               type="button"
               onClick={() => setLoop((l) => !l)}
               data-testid="loop-toggle-btn"
-              className={`px-2.5 py-1.5 rounded-lg border-2 border-zinc-900 text-xs font-bold transition-colors ${
+              className={`px-2.5 py-1.5 rounded-lg border font-codex text-xs font-bold transition-colors ${
                 loop
-                  ? "bg-zinc-900 text-[#F6F3EA]"
-                  : "bg-[#F6F3EA] text-zinc-700"
+                  ? "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/60"
+                  : "bg-[#0c0906] text-[#bda782] border-[#d4af37]/25"
               }`}
               title="Toggle autoplay loop"
             >
