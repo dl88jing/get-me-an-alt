@@ -187,42 +187,37 @@ export function SourcesTab(props: SourcesTabProps) {
 
   return (
     <section
-      className="w-full space-y-5 text-zinc-100"
+      className="w-full space-y-6 text-[#f5ebd6]"
       aria-label="Research Sources, Open-Source References & Video Teardown"
     >
       {/* Header Bar */}
-      <div className="flex flex-col gap-4 rounded-2xl border border-zinc-800/90 bg-zinc-900/60 p-5 backdrop-blur-sm sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-4 rounded-2xl codex-folio p-5 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <div className="flex flex-wrap items-center gap-2.5">
-            <h2 className="text-lg font-semibold tracking-tight text-white">
-              Research &amp; Open Designs
+            <h2 className="font-display text-xl font-bold tracking-tight text-[#f5ebd6]">
+              Research &amp; Open-Source Priors
             </h2>
-            <span className="rounded-full border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 font-mono text-xs font-medium text-emerald-300">
+            <span className="rounded-full border border-[#d4af37]/35 bg-[#d4af37]/15 px-2.5 py-0.5 font-mono text-xs font-medium text-[#f3d478] tabular-nums">
               {filteredSources.length} of {normalized.items.length} sources
             </span>
             <span
-              className={`rounded-md border px-2 py-0.5 font-mono text-xs ${
+              className={`rounded-full border px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider ${
                 normalized.groundingUsed
-                  ? 'border-emerald-500/30 bg-emerald-500/10 text-emerald-300'
-                  : 'border-amber-500/30 bg-amber-500/10 text-amber-300'
+                  ? 'border-emerald-500/35 bg-emerald-950/40 text-emerald-300'
+                  : 'border-[#d4af37]/35 bg-[#d4af37]/15 text-[#f3d478]'
               }`}
             >
               {normalized.groundingUsed
                 ? 'Google Search Grounded'
-                : 'Verified Search Fallbacks'}
+                : 'Verified Platform References'}
             </span>
-            {normalized.inputKind && (
-              <span className="rounded-md border border-zinc-800 bg-zinc-950/70 px-2 py-0.5 font-mono text-xs text-zinc-400">
-                input: {normalized.inputKind}
-              </span>
-            )}
           </div>
-          <p className="mt-1.5 text-sm text-zinc-400">
+          <p className="mt-1.5 text-sm text-[#c7ae87]">
             {normalized.querySummary || (
               <>
                 Grounded videos, printable CAD repositories, schematics, PDF
                 datasheets, and teardown guides for{' '}
-                <span className="font-mono text-zinc-200">
+                <span className="font-semibold text-[#f5ebd6]">
                   {normalized.objectLabel}
                 </span>
                 .
@@ -243,12 +238,12 @@ export function SourcesTab(props: SourcesTabProps) {
             onChange={(e: { target: { value: string } }) => setQuery(e.target.value)}
             placeholder="Filter by title, domain, takeaway..."
             aria-label="Filter sources by keyword or domain"
-            className="w-full rounded-xl border border-zinc-800 bg-zinc-950/90 py-2 pl-9 pr-8 text-sm text-zinc-100 placeholder-zinc-500 transition-colors focus:border-emerald-500/60 focus:outline-none focus:ring-2 focus:ring-emerald-500/30"
+            className="w-full rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 py-2 pl-9 pr-8 text-sm text-[#f5ebd6] placeholder-[#bda782]/60 transition-colors focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
           />
           <svg
             viewBox="0 0 20 20"
             fill="currentColor"
-            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-zinc-500"
+            className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[#bda782]"
             aria-hidden="true"
           >
             <path
@@ -262,7 +257,7 @@ export function SourcesTab(props: SourcesTabProps) {
               type="button"
               onClick={() => setQuery('')}
               aria-label="Clear search query"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-zinc-400 hover:text-zinc-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-[#bda782] hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
             >
               ×
             </button>
@@ -270,22 +265,15 @@ export function SourcesTab(props: SourcesTabProps) {
         </div>
       </div>
 
-      {/* Fallback Banner when groundingUsed is false */}
-      {normalized.fallbackUsed && (
-        <div
-          role="status"
-          aria-live="polite"
-          className="flex items-start gap-3 rounded-xl border border-amber-500/30 bg-amber-500/10 px-4 py-3 text-sm text-amber-200"
-        >
-          <div>
-            <p className="font-medium text-amber-100">
-              Verified Search Starting Points Active (groundingUsed: false)
-            </p>
-            <p className="mt-0.5 text-xs leading-relaxed text-amber-200/85">
-              Live Gemini Search grounding returned no verified deep links or ran in deterministic mode. To prevent fabricated PDFs or 404 URLs, entries use honest platform search URLs across Printables, Thingiverse, GitHub, YouTube, iFixit, and Instructables.
-            </p>
-          </div>
-        </div>
+      {/* Video Teardown Section (TeardownGallery) — Featured prominently at the top of Sources */}
+      {props.teardown && (
+        <TeardownGallery
+          teardown={props.teardown}
+          bomItems={props.bomItems}
+          designParts={props.designParts}
+          onSelectBomRef={props.onSelectBomRef}
+          onSelectDesignPart={props.onSelectDesignPart}
+        />
       )}
 
       {/* Technical Insights & Reference Dimensions (from ResearchData) */}
@@ -293,15 +281,15 @@ export function SourcesTab(props: SourcesTabProps) {
         dimensionEntries.length > 0) && (
         <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
           {normalized.technicalInsights.length > 0 && (
-            <div className="rounded-2xl border border-zinc-800/90 bg-zinc-900/50 p-4 lg:col-span-7">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-emerald-400">
+            <div className="rounded-2xl codex-folio p-5 lg:col-span-7">
+              <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                 Engineering &amp; Teardown Insights
               </h3>
-              <ul className="mt-2.5 space-y-1.5 text-xs text-zinc-300">
+              <ul className="mt-3 space-y-2 text-xs text-[#e6d3b3]">
                 {normalized.technicalInsights.map((insight: string, idx: number) => (
-                  <li key={idx} className="flex items-start gap-2">
+                  <li key={idx} className="flex items-start gap-2.5">
                     <span
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d4af37]"
                       aria-hidden="true"
                     />
                     <span className="leading-relaxed">{insight}</span>
@@ -312,20 +300,20 @@ export function SourcesTab(props: SourcesTabProps) {
           )}
 
           {dimensionEntries.length > 0 && (
-            <div className="rounded-2xl border border-zinc-800/90 bg-zinc-900/50 p-4 lg:col-span-5">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-cyan-400">
+            <div className="rounded-2xl codex-folio p-5 lg:col-span-5">
+              <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                 Reference Dimensions &amp; Standards
               </h3>
-              <dl className="mt-2.5 grid grid-cols-1 gap-2 sm:grid-cols-2">
+              <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {dimensionEntries.map(([label, val]) => (
                   <div
                     key={label}
-                    className="rounded-lg border border-zinc-800/80 bg-zinc-950/60 p-2"
+                    className="rounded-xl border border-[#d4af37]/20 bg-[#0c0906]/80 p-2.5"
                   >
-                    <dt className="truncate text-[11px] text-zinc-400">
+                    <dt className="truncate text-[11px] text-[#bda782]">
                       {label}
                     </dt>
-                    <dd className="mt-0.5 font-mono text-xs font-semibold text-zinc-100">
+                    <dd className="mt-0.5 font-mono text-xs font-semibold text-[#f5ebd6]">
                       {val}
                     </dd>
                   </div>
@@ -334,17 +322,6 @@ export function SourcesTab(props: SourcesTabProps) {
             </div>
           )}
         </div>
-      )}
-
-      {/* Video Teardown Section (TeardownGallery) */}
-      {props.teardown && (
-        <TeardownGallery
-          teardown={props.teardown}
-          bomItems={props.bomItems}
-          designParts={props.designParts}
-          onSelectBomRef={props.onSelectBomRef}
-          onSelectDesignPart={props.onSelectDesignPart}
-        />
       )}
 
       {/* Kind Filter Chips */}
@@ -363,18 +340,18 @@ export function SourcesTab(props: SourcesTabProps) {
               onClick={() => setSelectedKind(kind)}
               aria-pressed={active}
               aria-label={`Filter by ${FILTER_LABELS[kind]} (${count})`}
-              className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
+              className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] ${
                 active
-                  ? 'border-emerald-500/50 bg-emerald-500/20 text-emerald-200 shadow-sm'
-                  : 'border-zinc-800 bg-zinc-900/70 text-zinc-400 hover:border-zinc-700 hover:text-zinc-200'
+                  ? 'border-[#f3d478]/70 bg-[#d4af37]/20 text-[#f3d478] shadow-sm'
+                  : 'border-[#d4af37]/20 bg-[#14100b]/85 text-[#c7ae87] hover:border-[#d4af37]/45 hover:text-[#f5ebd6]'
               }`}
             >
               <span>{FILTER_LABELS[kind]}</span>
               <span
-                className={`rounded-full px-1.5 py-0.2 font-mono text-[11px] ${
+                className={`rounded-full px-1.5 py-0.2 font-mono text-[11px] tabular-nums ${
                   active
-                    ? 'bg-emerald-500/30 text-emerald-100'
-                    : 'bg-zinc-800 text-zinc-400'
+                    ? 'bg-[#d4af37]/30 text-[#f5ebd6]'
+                    : 'bg-[#0c0906] text-[#bda782]'
                 }`}
               >
                 {count}
@@ -395,11 +372,11 @@ export function SourcesTab(props: SourcesTabProps) {
           ))}
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-zinc-800 bg-zinc-900/40 px-6 py-12 text-center">
-          <p className="text-sm font-medium text-zinc-300">
+        <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-[#d4af37]/30 bg-[#14100b]/60 px-6 py-12 text-center">
+          <p className="font-display text-base font-bold text-[#f5ebd6]">
             No research sources match the current filter.
           </p>
-          <p className="mt-1 text-xs text-zinc-500">
+          <p className="mt-1 text-xs text-[#bda782]">
             Try selecting &ldquo;All Sources&rdquo; or clearing your search query.
           </p>
           <button
@@ -408,7 +385,7 @@ export function SourcesTab(props: SourcesTabProps) {
               setSelectedKind('all');
               setQuery('');
             }}
-            className="mt-4 rounded-lg border border-zinc-700 bg-zinc-800 px-3.5 py-1.5 text-xs font-medium text-zinc-200 hover:bg-zinc-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            className="mt-4 rounded-xl border border-[#d4af37]/40 bg-[#d4af37]/15 px-3.5 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] hover:bg-[#d4af37]/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
           >
             Reset filters
           </button>

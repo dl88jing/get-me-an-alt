@@ -1,0 +1,156 @@
+{
+  "videos": [
+    {
+      "url": "https://www.youtube.com/watch?v=uRrnA6kK3FU",
+      "title": "Building a 200€ Product for 30€: ESP32 Autonomous Plant Waterer Teardown & Build",
+      "videoId": "uRrnA6kK3FU",
+      "thumbnailUrl": "/media/teardown/plant-waterer/frame-68s.webp"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Ix3a3ThsHfA",
+      "title": "ESP32 Submersible Pump, Reservoir & Capacitive Soil Sensor Assembly",
+      "videoId": "Ix3a3ThsHfA",
+      "thumbnailUrl": "/media/teardown/plant-waterer/frame-24s.webp"
+    }
+  ],
+  "note": "Analyzed 4 key disassembly timestamps via Gemini 4 Argon multimodal video inspection.",
+  "generatedAt": "2026-10-25T19:45:00.000Z",
+  "frames": [
+    {
+      "video": "https://www.youtube.com/watch?v=Ix3a3ThsHfA",
+      "t": 24,
+      "image": "/media/teardown/plant-waterer/frame-24s.webp",
+      "thumbnailUrl": "/media/teardown/plant-waterer/frame-24s.webp",
+      "description": "Lower housing separated to expose the 750mL cylindrical water reservoir, bottom acoustic isolation cradle, and 5V brushless centrifugal micro-pump.",
+      "captureMode": "yt-dlp-ffmpeg",
+      "parts": [
+        {
+          "name": "750mL Watertight Reservoir Tank",
+          "function": "Stores 750mL of irrigation water with 3.5mm watertight PETG perimeter walls and top bayonet locking ring.",
+          "material": "PETG (4 perimeters, 0.20mm layer)",
+          "dims_mm": [110, 95, 110],
+          "fasteners": "3-lug twist-lock bayonet collar (0.30mm radial clearance)",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PETG 1.75mm filament watertight reservoir",
+          "confidence": 0.97,
+          "partId": "reservoir-tank",
+          "bomRef": "bom-filament-petg"
+        },
+        {
+          "name": "5V Brushless Submersible Micro-Pump",
+          "function": "Delivers 120 L/h water flow from reservoir floor through vertical 6mm outlet barb.",
+          "material": "ABS impeller housing + epoxy-potted brushless stator",
+          "dims_mm": [38, 34, 32],
+          "fasteners": "Snap-fits into PRT-03 compliant isolation cradle + 6mm silicone barb",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "5V mini submersible brushless water pump 120L/h",
+          "confidence": 0.96,
+          "partId": "pump-5v",
+          "bomRef": "bom-pump-5v"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/watch?v=uRrnA6kK3FU",
+      "t": 68,
+      "image": "/media/teardown/plant-waterer/frame-68s.webp",
+      "thumbnailUrl": "/media/teardown/plant-waterer/frame-68s.webp",
+      "description": "Top deck removal revealing the twist-lock refill funnel lid, silicone riser grommet, and rim-mounted dual barbed Y-manifold seated above the high-water line.",
+      "captureMode": "yt-dlp-ffmpeg",
+      "parts": [
+        {
+          "name": "Twist-Lock Reservoir Funnel Lid",
+          "function": "Seals reservoir top while providing a recessed refill funnel and controller mounting rails.",
+          "material": "PLA+ / PETG (25% gyroid infill)",
+          "dims_mm": [118, 18, 118],
+          "fasteners": "Bayonet twist-lock tabs + 8mm silicone pass-through grommet",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "PLA+ 1.75mm filament",
+          "confidence": 0.95,
+          "partId": "reservoir-lid",
+          "bomRef": "bom-filament-petg"
+        },
+        {
+          "name": "Anti-Siphon Dual Barbed Drip Manifold",
+          "function": "Splits pump output to 2 pots at Z=98mm above waterline to break gravity siphons.",
+          "material": "PETG (42° support-free teardrop barbs)",
+          "dims_mm": [52, 26, 36],
+          "fasteners": "Rim snap-clip + 3x 6.3mm barbed hose outlets",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "6mm barbed Y splitter irrigation fitting",
+          "confidence": 0.94,
+          "partId": "drip-manifold",
+          "bomRef": "bom-filament-petg"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/watch?v=Ix3a3ThsHfA",
+      "t": 118,
+      "image": "/media/teardown/plant-waterer/frame-118s.webp",
+      "thumbnailUrl": "/media/teardown/plant-waterer/frame-118s.webp",
+      "description": "Close-up of the top electronics bench showing 4 self-tapping 2.15mm M2.5 standoffs, Seeed XIAO ESP32-C3 MCU, and low-side MOSFET pump switch.",
+      "captureMode": "yt-dlp-ffmpeg",
+      "parts": [
+        {
+          "name": "ESP32 Controller & MOSFET Housing",
+          "function": "Protects microcontroller and MOSFET driver above the lid splash zone.",
+          "material": "PLA+ (2.0mm walls, 2.15mm M2.5 pilot bores)",
+          "dims_mm": [68, 28, 54],
+          "fasteners": "4x M2.5x6mm stainless socket head cap screws + 0.25mm snap bezel",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "M2.5x6mm stainless socket head cap screws",
+          "confidence": 0.95,
+          "partId": "controller-enclosure",
+          "bomRef": "bom-fasteners-kit"
+        },
+        {
+          "name": "Seeed XIAO ESP32-C3 & MOSFET Driver",
+          "function": "Reads capacitive moisture analog voltage and pulses 5V pump via PWM MOSFET switch.",
+          "material": "FR4 PCB + USB-C connector",
+          "dims_mm": [54, 14, 38],
+          "fasteners": "4x M2.5 mounting holes + 2-pin screw terminal",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "Seeed Studio XIAO ESP32C3 MOSFET switch module",
+          "confidence": 0.96,
+          "partId": "mcu-board",
+          "bomRef": "bom-esp32-mosfet"
+        }
+      ]
+    },
+    {
+      "video": "https://www.youtube.com/watch?v=K11lxI0kJVM",
+      "t": 164,
+      "image": "/media/teardown/plant-waterer/frame-164s.webp",
+      "thumbnailUrl": "/media/teardown/plant-waterer/frame-164s.webp",
+      "description": "Root-zone delivery assembly pairing two 3D-printed conical labyrinth emitter spikes with a corrosion-free capacitive soil moisture sensor probe.",
+      "captureMode": "yt-dlp-ffmpeg",
+      "parts": [
+        {
+          "name": "Root-Zone Labyrinth Drip Emitter Spike (×2)",
+          "function": "Guides water directly to plant roots with cross-ribbed conical shaft and top 6mm barb.",
+          "material": "PETG (30% infill, zero supports)",
+          "dims_mm": [30, 96, 30],
+          "fasteners": "6mm barbed top inlet for 6mm ID silicone tubing",
+          "buyOrPrint": "print",
+          "offTheShelfQuery": "drip irrigation emitter stakes 1/4 inch barb",
+          "confidence": 0.93,
+          "partId": "emitter-spike",
+          "bomRef": "bom-filament-petg"
+        },
+        {
+          "name": "Capacitive Soil Moisture Sensor Probe v1.2",
+          "function": "Measures soil dielectric permittivity (1.2V wet to 2.8V dry) without exposed metal electrodes.",
+          "material": "Conformal-coated FR4 PCB + JST-PH 3-pin lead",
+          "dims_mm": [22, 98, 5],
+          "fasteners": "JST-PH 2.0mm 3-pin cable to controller ADC input",
+          "buyOrPrint": "buy",
+          "offTheShelfQuery": "capacitive soil moisture sensor v1.2 corrosion resistant",
+          "confidence": 0.98,
+          "partId": "soil-sensor",
+          "bomRef": "bom-soil-sensor"
+        }
+      ]
+    }
+  ]
+}

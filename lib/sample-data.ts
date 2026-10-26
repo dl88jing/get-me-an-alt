@@ -1200,37 +1200,59 @@ export const SAMPLE_CRITIQUE: CritiqueData = {
   ],
 };
 
-function makeBlueprintFrameSvg(
+function escapeXml(str: string): string {
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+export function makeBlueprintFrameSvg(
   timeLabel: string,
   title: string,
   callouts: string[],
-  accent = '#00f5a0'
+  accent = '#d4af37'
 ): string {
+  const safeTime = escapeXml(timeLabel);
+  const safeTitle = escapeXml(title);
+  const safeCallout1 = escapeXml(callouts[0] || '');
+  const safeCallout2 = escapeXml(callouts[1] || '');
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360">
     <defs>
-      <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
-        <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#1e293b" stroke-width="1"/>
+      <radialGradient id="vellum" cx="50%" cy="42%" r="68%">
+        <stop offset="0%" stop-color="#281e14"/>
+        <stop offset="65%" stop-color="#19130c"/>
+        <stop offset="100%" stop-color="#0f0b07"/>
+      </radialGradient>
+      <pattern id="codexGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+        <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#d4af37" stroke-opacity="0.12" stroke-width="1"/>
       </pattern>
     </defs>
-    <rect width="640" height="360" fill="#070b12"/>
-    <rect width="640" height="360" fill="url(#grid)"/>
-    <rect x="18" y="18" width="604" height="324" rx="14" fill="none" stroke="${accent}" stroke-opacity="0.35" stroke-width="1.5"/>
-    <circle cx="210" cy="185" r="78" fill="#0f172a" stroke="${accent}" stroke-width="2"/>
-    <circle cx="210" cy="185" r="52" fill="none" stroke="#38bdf8" stroke-dasharray="6 4" stroke-width="1.5"/>
-    <rect x="175" y="155" width="70" height="60" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2"/>
-    <line x1="245" y1="170" x2="335" y2="128" stroke="${accent}" stroke-width="2"/>
-    <circle cx="245" cy="170" r="4" fill="${accent}"/>
-    <line x1="245" y1="200" x2="335" y2="215" stroke="#38bdf8" stroke-width="2"/>
-    <circle cx="245" cy="200" r="4" fill="#38bdf8"/>
-    <text x="36" y="52" fill="${accent}" font-family="monospace" font-size="13" font-weight="bold">GEMINI 4 ARGON // VIDEO TEARDOWN FRAME @ ${timeLabel}</text>
-    <text x="36" y="78" fill="#f8fafc" font-family="sans-serif" font-size="16" font-weight="bold">${title}</text>
-    <rect x="335" y="102" width="265" height="72" rx="8" fill="#0f172a" stroke="${accent}" stroke-opacity="0.6" stroke-width="1.2"/>
-    <text x="348" y="126" fill="${accent}" font-family="monospace" font-size="11" font-weight="bold">CALLOUT 01</text>
-    <text x="348" y="148" fill="#e2e8f0" font-family="monospace" font-size="12">${callouts[0] || ''}</text>
-    <rect x="335" y="190" width="265" height="72" rx="8" fill="#0f172a" stroke="#38bdf8" stroke-opacity="0.6" stroke-width="1.2"/>
-    <text x="348" y="214" fill="#38bdf8" font-family="monospace" font-size="11" font-weight="bold">CALLOUT 02</text>
-    <text x="348" y="236" fill="#e2e8f0" font-family="monospace" font-size="12">${callouts[1] || ''}</text>
-    <text x="36" y="324" fill="#94a3b8" font-family="monospace" font-size="11">FILE_DATA TELEMETRY · REAL-TIME PART &amp; FASTENER EXTRACTION</text>
+    <rect width="640" height="360" fill="url(#vellum)"/>
+    <rect width="640" height="360" fill="url(#codexGrid)"/>
+    <rect x="16" y="16" width="608" height="328" rx="12" fill="none" stroke="${accent}" stroke-opacity="0.55" stroke-width="1.5"/>
+    <rect x="22" y="22" width="596" height="316" rx="8" fill="none" stroke="#d4af37" stroke-opacity="0.22" stroke-dasharray="4 4" stroke-width="1"/>
+    <circle cx="192" cy="194" r="82" fill="#140f0a" stroke="${accent}" stroke-opacity="0.7" stroke-width="1.8"/>
+    <circle cx="192" cy="194" r="58" fill="none" stroke="#e6d3b3" stroke-opacity="0.55" stroke-dasharray="6 4" stroke-width="1.4"/>
+    <circle cx="192" cy="194" r="32" fill="none" stroke="#d4af37" stroke-opacity="0.4" stroke-width="1"/>
+    <line x1="100" y1="194" x2="284" y2="194" stroke="#d4af37" stroke-opacity="0.28" stroke-dasharray="3 3" stroke-width="1"/>
+    <line x1="192" y1="102" x2="192" y2="286" stroke="#d4af37" stroke-opacity="0.28" stroke-dasharray="3 3" stroke-width="1"/>
+    <rect x="156" y="162" width="72" height="64" rx="6" fill="#231910" stroke="#f3d478" stroke-width="1.8"/>
+    <line x1="228" y1="176" x2="324" y2="136" stroke="${accent}" stroke-width="1.8"/>
+    <circle cx="228" cy="176" r="4" fill="${accent}"/>
+    <line x1="228" y1="210" x2="324" y2="224" stroke="#52b788" stroke-width="1.8"/>
+    <circle cx="228" cy="210" r="4" fill="#52b788"/>
+    <text x="36" y="50" fill="#f3d478" font-family="Georgia, serif" font-size="12" font-weight="bold" letter-spacing="1.5">CODEX ANATOMICA · FOLIO DISASSEMBLY @ ${safeTime}</text>
+    <text x="36" y="76" fill="#f5ebd6" font-family="Georgia, serif" font-size="16" font-weight="bold">${safeTitle}</text>
+    <rect x="324" y="106" width="276" height="74" rx="8" fill="#15100b" stroke="${accent}" stroke-opacity="0.65" stroke-width="1.2"/>
+    <text x="338" y="128" fill="#f3d478" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA I · PRINTED / PRIMARY VESSEL</text>
+    <text x="338" y="152" fill="#f5ebd6" font-family="monospace" font-size="11.5">${safeCallout1}</text>
+    <rect x="324" y="194" width="276" height="74" rx="8" fill="#15100b" stroke="#52b788" stroke-opacity="0.65" stroke-width="1.2"/>
+    <text x="338" y="216" fill="#6ee7b7" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA II · COUPLED MECHANISM</text>
+    <text x="338" y="240" fill="#f5ebd6" font-family="monospace" font-size="11.5">${safeCallout2}</text>
+    <text x="36" y="322" fill="#bda782" font-family="Georgia, serif" font-size="11" font-style="italic">De Mechanica · Gemini 4 Argon Multimodal Internal Part Callout</text>
   </svg>`;
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
 }
@@ -1238,29 +1260,29 @@ function makeBlueprintFrameSvg(
 export const SAMPLE_TEARDOWN: TeardownData = {
   videos: [
     {
-      url: 'https://www.youtube.com/results?search_query=smart+plant+watering+system+teardown+diy',
-      title: 'Teardown: Inside a $149 Smart Autonomous Plant Watering Station',
+      url: 'https://www.youtube.com/watch?v=uRrnA6kK3FU',
+      title: 'Building a 200€ Product for 30€: ESP32 Autonomous Plant Waterer Teardown & Build',
+      videoId: 'uRrnA6kK3FU',
+      thumbnailUrl: '/media/teardown/plant-waterer/frame-68s.webp',
     },
     {
-      url: 'https://www.youtube.com/results?search_query=esp32+capacitive+soil+moisture+pump+build',
-      title: 'DIY ESP32-C3 Capacitive Irrigation & Anti-Siphon Manifold Build',
+      url: 'https://www.youtube.com/watch?v=Ix3a3ThsHfA',
+      title: 'ESP32 Submersible Pump, Reservoir & Capacitive Soil Sensor Assembly',
+      videoId: 'Ix3a3ThsHfA',
+      thumbnailUrl: '/media/teardown/plant-waterer/frame-24s.webp',
     },
   ],
   note: 'Analyzed 4 key disassembly timestamps via Gemini 4 Argon multimodal video inspection.',
   generatedAt: '2026-10-25T19:45:00.000Z',
   frames: [
     {
-      video: 'https://www.youtube.com/results?search_query=smart+plant+watering+system+teardown+diy',
+      video: 'https://www.youtube.com/watch?v=Ix3a3ThsHfA',
       t: 24,
-      image: makeBlueprintFrameSvg(
-        '0:24 (t=24s)',
-        'Reservoir Vessel & Submersible Pump Isolation Cradle',
-        ['PRT-01: 750mL PETG Tank (110x95mm)', 'OTS-01: 5V Brushless Pump ($4.80)'],
-        '#00f5a0'
-      ),
+      image: '/media/teardown/plant-waterer/frame-24s.webp',
+      thumbnailUrl: '/media/teardown/plant-waterer/frame-24s.webp',
       description:
         'Lower housing separated to expose the 750mL cylindrical water reservoir, bottom acoustic isolation cradle, and 5V brushless centrifugal micro-pump.',
-      captureMode: 'argon-thumbnail-fallback',
+      captureMode: 'yt-dlp-ffmpeg',
       parts: [
         {
           name: '750mL Watertight Reservoir Tank',
@@ -1289,17 +1311,13 @@ export const SAMPLE_TEARDOWN: TeardownData = {
       ],
     },
     {
-      video: 'https://www.youtube.com/results?search_query=smart+plant+watering+system+teardown+diy',
+      video: 'https://www.youtube.com/watch?v=uRrnA6kK3FU',
       t: 68,
-      image: makeBlueprintFrameSvg(
-        '1:08 (t=68s)',
-        'Bayonet Funnel Lid & Anti-Siphon Barbed Y-Manifold',
-        ['PRT-02: Twist-Lock Funnel Lid', 'PRT-06: Anti-Siphon Dual Manifold'],
-        '#38bdf8'
-      ),
+      image: '/media/teardown/plant-waterer/frame-68s.webp',
+      thumbnailUrl: '/media/teardown/plant-waterer/frame-68s.webp',
       description:
         'Top deck removal revealing the twist-lock refill funnel lid, silicone riser grommet, and rim-mounted dual barbed Y-manifold seated above the high-water line.',
-      captureMode: 'argon-thumbnail-fallback',
+      captureMode: 'yt-dlp-ffmpeg',
       parts: [
         {
           name: 'Twist-Lock Reservoir Funnel Lid',
@@ -1328,17 +1346,13 @@ export const SAMPLE_TEARDOWN: TeardownData = {
       ],
     },
     {
-      video: 'https://www.youtube.com/results?search_query=esp32+capacitive+soil+moisture+pump+build',
+      video: 'https://www.youtube.com/watch?v=Ix3a3ThsHfA',
       t: 118,
-      image: makeBlueprintFrameSvg(
-        '1:58 (t=118s)',
-        'ESP32-C3 + MOSFET Controller PCB & Enclosure Bosses',
-        ['PRT-04: Controller Housing (M2.5)', 'OTS-03: XIAO ESP32-C3 + MOSFET'],
-        '#a855f7'
-      ),
+      image: '/media/teardown/plant-waterer/frame-118s.webp',
+      thumbnailUrl: '/media/teardown/plant-waterer/frame-118s.webp',
       description:
-        'Close-up of the top electronics enclosure showing 4 self-tapping 2.15mm M2.5 standoffs, Seeed XIAO ESP32-C3 MCU, and low-side MOSFET pump switch.',
-      captureMode: 'argon-thumbnail-fallback',
+        'Close-up of the top electronics bench showing 4 self-tapping 2.15mm M2.5 standoffs, Seeed XIAO ESP32-C3 MCU, and low-side MOSFET pump switch.',
+      captureMode: 'yt-dlp-ffmpeg',
       parts: [
         {
           name: 'ESP32 Controller & MOSFET Housing',
@@ -1367,17 +1381,13 @@ export const SAMPLE_TEARDOWN: TeardownData = {
       ],
     },
     {
-      video: 'https://www.youtube.com/results?search_query=esp32+capacitive+soil+moisture+pump+build',
+      video: 'https://www.youtube.com/watch?v=K11lxI0kJVM',
       t: 164,
-      image: makeBlueprintFrameSvg(
-        '2:44 (t=164s)',
-        'Capacitive Moisture Probe & Labyrinth Drip Emitter Spikes',
-        ['OTS-02: Capacitive Probe v1.2', 'PRT-07: Root-Zone Emitter Spike x2'],
-        '#f59e0b'
-      ),
+      image: '/media/teardown/plant-waterer/frame-164s.webp',
+      thumbnailUrl: '/media/teardown/plant-waterer/frame-164s.webp',
       description:
         'Root-zone delivery assembly pairing two 3D-printed conical labyrinth emitter spikes with a corrosion-free capacitive soil moisture sensor probe.',
-      captureMode: 'argon-thumbnail-fallback',
+      captureMode: 'yt-dlp-ffmpeg',
       parts: [
         {
           name: 'Root-Zone Labyrinth Drip Emitter Spike (×2)',
