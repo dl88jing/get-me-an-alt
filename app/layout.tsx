@@ -1,42 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import {
-  Cormorant_Garamond,
-  Cinzel,
-  Inter,
-  JetBrains_Mono,
-} from 'next/font/google';
 import SmoothScrollProvider from '@/components/ui/SmoothScrollProvider';
 import './globals.css';
-
-const cormorantGaramond = Cormorant_Garamond({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  style: ['normal', 'italic'],
-  variable: '--font-display',
-  display: 'swap',
-});
-
-const cinzel = Cinzel({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  variable: '--font-codex',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-sans',
-  display: 'swap',
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-  variable: '--font-mono',
-  display: 'swap',
-});
 
 export const metadata: Metadata = {
   title:
@@ -51,10 +16,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`dark ${cormorantGaramond.variable} ${cinzel.variable} ${inter.variable} ${jetbrainsMono.variable}`}
-    >
+    <html lang="en" className="dark">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+        />
+      </head>
       <body className="relative bg-[#0c0a08] text-[#faf4e8] antialiased selection:bg-[#e5bd47]/30 selection:text-[#faf4e8] bg-grid-pattern">
         <div
           aria-hidden="true"
