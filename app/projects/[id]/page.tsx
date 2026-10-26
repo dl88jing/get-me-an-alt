@@ -480,16 +480,243 @@ export default function ProjectPage() {
   }
 
   if (loading && !manifest) {
+    const skeletonTitle = formatSlugTitle(projectId);
+    const skeletonTabs: {
+      id: TabId;
+      label: string;
+      icon: React.ComponentType<{ className?: string }>;
+    }[] = [
+      { id: 'overview', label: 'Overview', icon: Sparkles },
+      { id: 'sources', label: 'Sources', icon: Search },
+      { id: 'bom', label: 'BOM', icon: ShoppingCart },
+      { id: 'print', label: 'Print Files', icon: Printer },
+      { id: 'instructions', label: 'Instructions', icon: Wrench },
+      { id: 'exploded', label: 'Exploded View', icon: Layers },
+    ];
+
     return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center gap-4 text-center">
-        <Loader2 className="h-8 w-8 animate-spin text-[#f3d478]" />
-        <div>
-          <h2 className="font-display text-2xl font-bold text-[#f5ebd6]">
-            Initializing Gemini 4 Argon Agent Workspace...
-          </h2>
-          <p className="text-xs text-[#bda782]">
-            Streaming artifacts from data/objects/{projectId}
-          </p>
+      <div
+        className="space-y-2.5 sm:space-y-4 pb-24 sm:pb-16"
+        aria-busy="true"
+        aria-live="polite"
+        aria-label="Loading DIY alternative build workspace"
+      >
+        {/* Layout-Preserving Sticky Project Header Skeleton */}
+        <div className="sticky top-14 sm:top-16 z-40 -mx-1.5 sm:-mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-2.5 py-2 sm:px-6 sm:py-3 shadow-glass space-y-1.5 sm:space-y-2.5">
+          <div className="flex flex-col gap-1.5 lg:flex-row lg:items-center lg:justify-between">
+            <div className="min-w-0 space-y-1">
+              <div className="flex items-center justify-between gap-2 text-xs text-[#b5a48b]">
+                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                  <Link
+                    href="/"
+                    className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/20 bg-[#0c0a08] px-2.5 py-1.5 font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors shrink-0"
+                  >
+                    <ArrowLeft className="h-3.5 w-3.5" /> All Builds
+                  </Link>
+                  <span className="hidden sm:inline text-[#b5a48b]/50">/</span>
+                  <span className="hidden sm:inline-block h-4 w-28 rounded-md skeleton-shimmer" />
+                </div>
+
+                {/* Mobile Price & Savings Pill Skeleton */}
+                <div className="flex sm:hidden items-center gap-1.5 rounded-xl border border-[#e5bd47]/35 bg-[#0c0a08] px-2.5 py-1.5 shrink-0">
+                  <span className="h-3.5 w-8 rounded skeleton-shimmer" />
+                  <span className="text-[11px] text-[#b5a48b]">→</span>
+                  <span className="h-5 w-14 rounded skeleton-shimmer" />
+                  <span className="h-4 w-10 rounded-md bg-[#e5bd47]/25 animate-pulse" />
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2.5 min-w-0">
+                <h1 className="font-display text-lg sm:text-3xl font-bold tracking-tight text-[#faf4e8] truncate">
+                  {skeletonTitle}
+                </h1>
+                <span className="inline-flex items-center gap-1.5 rounded-full border border-[#e5bd47]/35 bg-[#e5bd47]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#f3d478] shrink-0">
+                  <Loader2 className="h-3 w-3 animate-spin" />
+                  Loading Build
+                </span>
+              </div>
+              <div className="hidden sm:block h-4 w-96 max-w-full rounded-md skeleton-shimmer" />
+            </div>
+
+            {/* Desktop Price Comparison & Savings Skeleton */}
+            <div className="hidden sm:flex items-center justify-between sm:justify-start gap-2 sm:gap-3 rounded-xl border border-[#e5bd47]/35 bg-[#0c0a08] px-3 py-1.5 sm:px-4 sm:py-2.5 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="h-4 w-14 rounded skeleton-shimmer" />
+                <span className="text-xs sm:text-sm text-[#b5a48b]">→</span>
+                <span className="h-7 w-20 rounded-md skeleton-shimmer" />
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#dfd3be]">
+                  DIY
+                </span>
+              </div>
+              <div className="h-7 w-28 rounded-lg bg-[#e5bd47]/25 border border-[#e5bd47]/35 animate-pulse" />
+            </div>
+          </div>
+
+          {/* Interactive Layout-Preserving Segmented Tab Bar */}
+          <div
+            role="tablist"
+            aria-label="Project Sections"
+            className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-1 sm:p-1.5"
+          >
+            {skeletonTabs.map((t) => {
+              const Icon = t.icon;
+              const active = activeTab === t.id;
+              return (
+                <button
+                  key={t.id}
+                  role="tab"
+                  aria-selected={active}
+                  data-tab-id={t.id}
+                  type="button"
+                  onClick={() => setActiveTab(t.id)}
+                  className={`relative inline-flex min-h-[44px] snap-start shrink-0 lg:flex-1 whitespace-nowrap items-center justify-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition-all ${
+                    active
+                      ? 'bg-[#e5bd47] text-[#140e07] font-bold shadow-md'
+                      : 'bg-transparent text-[#dfd3be] hover:bg-[#231d15] hover:text-[#faf4e8]'
+                  }`}
+                >
+                  <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+                  <span>{t.label}</span>
+                  {t.id !== 'overview' && (
+                    <span
+                      className={`h-4 w-10 rounded-md ${
+                        active ? 'bg-[#140e07]/20' : 'skeleton-shimmer'
+                      }`}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Layout-Preserving Compact Agent Bars (Ask Argon + Pipeline Telemetry) */}
+        <div className="space-y-2.5">
+          <div className="rounded-2xl border border-[#dfd3be]/20 bg-[#17130e]/95 px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <span className="inline-flex h-8 w-8 items-center justify-center rounded-lg border border-[#e5bd47]/35 bg-[#e5bd47]/15 text-[#f3d478] shrink-0">
+                <Sparkles className="h-4 w-4" />
+              </span>
+              <div className="min-w-0 space-y-1">
+                <div className="text-xs font-bold text-[#faf4e8] truncate">
+                  Ask Argon to Modify Build
+                </div>
+                <div className="h-3 w-48 sm:w-72 max-w-full rounded skeleton-shimmer" />
+              </div>
+            </div>
+            <div className="h-8 w-20 rounded-lg skeleton-shimmer shrink-0" />
+          </div>
+
+          <div className="rounded-2xl border border-[#dfd3be]/20 bg-[#17130e]/95 px-3 py-2.5 sm:px-4 sm:py-3 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <Loader2 className="h-4 w-4 animate-spin text-[#f3d478] shrink-0" />
+              <span className="text-xs font-semibold text-[#dfd3be] truncate">
+                Hydrating 9-Agent Pipeline Telemetry &amp; Build Artifacts...
+              </span>
+            </div>
+            <div className="hidden sm:flex items-center gap-2 shrink-0">
+              <span className="h-5 w-24 rounded-md skeleton-shimmer" />
+              <span className="h-5 w-16 rounded-md skeleton-shimmer" />
+            </div>
+          </div>
+        </div>
+
+        {/* Layout-Preserving 3-Column Overview & Card Grid Skeleton */}
+        <div className="grid gap-6 lg:grid-cols-3">
+          <div className="lg:col-span-2 space-y-6">
+            <div className="rounded-2xl surface-card p-6 space-y-4">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="h-6 w-28 rounded-md skeleton-shimmer" />
+                <span className="h-4 w-56 rounded skeleton-shimmer" />
+              </div>
+              <div className="space-y-2">
+                <div className="h-7 w-11/12 rounded-md skeleton-shimmer" />
+                <div className="h-7 w-3/5 rounded-md skeleton-shimmer" />
+              </div>
+              <div className="space-y-2 pt-1">
+                <div className="h-4 w-full rounded skeleton-shimmer" />
+                <div className="h-4 w-5/6 rounded skeleton-shimmer" />
+              </div>
+              <div className="rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-4 space-y-2">
+                <div className="text-xs font-bold uppercase tracking-wider text-[#f3d478]/80">
+                  Core Engineering Function
+                </div>
+                <div className="h-4 w-full rounded skeleton-shimmer" />
+                <div className="h-4 w-4/5 rounded skeleton-shimmer" />
+              </div>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              {[
+                { label: '3D-Printed Parts', Icon: Printer },
+                { label: 'Off-the-Shelf Hardware', Icon: ShoppingCart },
+              ].map(({ label, Icon }) => (
+                <div
+                  key={label}
+                  className="rounded-2xl surface-card p-5 space-y-3"
+                >
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                    <Icon className="h-4 w-4 text-[#e5bd47]" />
+                    <span>{label}</span>
+                  </div>
+                  <div className="space-y-2.5 pt-1">
+                    <div className="h-4 w-11/12 rounded skeleton-shimmer" />
+                    <div className="h-4 w-4/5 rounded skeleton-shimmer" />
+                    <div className="h-4 w-5/6 rounded skeleton-shimmer" />
+                    <div className="h-4 w-3/4 rounded skeleton-shimmer" />
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-2xl surface-card p-5 space-y-3.5">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                Key Mechanisms
+              </h3>
+              <div className="space-y-2.5">
+                {[0, 1, 2].map((i) => (
+                  <div
+                    key={i}
+                    className="rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-3 space-y-2"
+                  >
+                    <div className="h-3.5 w-full rounded skeleton-shimmer" />
+                    <div className="h-3.5 w-3/4 rounded skeleton-shimmer" />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl surface-card p-5 space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                DFM &amp; Slicer Notes
+              </h3>
+              <div className="space-y-2.5">
+                <div className="h-4 w-full rounded skeleton-shimmer" />
+                <div className="h-4 w-5/6 rounded skeleton-shimmer" />
+                <div className="h-4 w-4/5 rounded skeleton-shimmer" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom-Safe Mobile Sticky Action Bar Skeleton */}
+        <div
+          role="region"
+          aria-label="Quick Mobile Project Actions"
+          className="sm:hidden fixed bottom-0 inset-x-0 z-40 border-t border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-3 pt-2 pb-[max(0.625rem,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_32px_rgba(0,0,0,0.85)]"
+        >
+          <div className="mx-auto flex max-w-lg items-center gap-2">
+            <div className="btn-secondary-surface min-h-[44px] px-3 py-2 text-xs font-semibold shrink-0 opacity-75">
+              <Layers className="h-3.5 w-3.5 text-[#f3d478]" />
+              <span>3D Exploded</span>
+            </div>
+            <div className="btn-primary-gold min-h-[44px] flex-1 px-3.5 py-2 text-xs font-bold opacity-85">
+              <Printer className="h-3.5 w-3.5" />
+              <span>Get Print Files (STL/3MF)</span>
+            </div>
+          </div>
         </div>
       </div>
     );
