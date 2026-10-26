@@ -31,7 +31,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       name: "Outer Water Reservoir Basin",
       shape: "custom_csg",
       params: { r: 54, w: 108, d: 108, h: 64, wall: 5 },
-      color: "#0EA5E9",
+      color: "#E6D3B3",
       quantity: 1,
     },
     {
@@ -46,7 +46,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
         holes: 4,
         centerHoleRadius: 8,
       },
-      color: "#6366F1",
+      color: "#C5A059",
       quantity: 1,
     },
     {
@@ -54,7 +54,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       name: "Perforated Inner Planter Cup",
       shape: "tube",
       params: { outerRadius: 45, innerRadius: 40, h: 54, closedBottom: 1 },
-      color: "#10B981",
+      color: "#C86D51",
       quantity: 1,
     },
     {
@@ -62,7 +62,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       name: "Water-Level Sight Float Tube",
       shape: "tube",
       params: { outerRadius: 9, innerRadius: 6.5, h: 62 },
-      color: "#38BDF8",
+      color: "#D4BC94",
       quantity: 1,
     },
     {
@@ -76,7 +76,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
         spoutHeight: 14,
         wall: 2.2,
       },
-      color: "#F59E0B",
+      color: "#B89B4A",
       quantity: 1,
     },
     {
@@ -84,7 +84,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       name: "Soil Sensor L-Bracket Mount",
       shape: "bracketL",
       params: { leg1: 36, leg2: 28, w: 18, thickness: 4.5 },
-      color: "#A855F7",
+      color: "#A65E44",
       quantity: 1,
     },
     {
@@ -92,7 +92,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       name: "Drip Flow Indexing Gear",
       shape: "gear_simple",
       params: { r: 16, teeth: 12, h: 7, bore: 4 },
-      color: "#F43F5E",
+      color: "#DFC9A3",
       quantity: 1,
     },
     {
@@ -100,7 +100,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       name: "Rim Tubing Snap Clip",
       shape: "clip",
       params: { r: 10, t: 3.5, h: 14, openAngle: 75 },
-      color: "#2DD4BF",
+      color: "#9C7A4C",
       quantity: 2,
     },
   ],
@@ -109,7 +109,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       id: "submersible_pump",
       name: "5V Mini Submersible DC Pump",
       bomLine: "5V Low-Noise Micro Submersible Water Pump (120L/h)",
-      color: "#94A3B8",
+      color: "#D4AF37",
       quantity: 1,
       proxyShape: {
         shape: "box",
@@ -120,7 +120,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       id: "soil_sensor_probe",
       name: "Capacitive Soil Moisture Sensor",
       bomLine: "Corrosion-Resistant Capacitive Soil Sensor v1.2",
-      color: "#64748B",
+      color: "#8C857B",
       quantity: 1,
       proxyShape: {
         shape: "box",
@@ -131,7 +131,7 @@ export const FALLBACK_PLANT_WATERER_DESIGN: DesignData = {
       id: "silicone_drip_riser",
       name: "Silicone Feed Tube & M3 Hardware",
       bomLine: "6mm ID Food-Grade Silicone Tubing + M3x12 Stainless Screws",
-      color: "#E2E8F0",
+      color: "#4A443D",
       quantity: 1,
       proxyShape: {
         shape: "cylinder",
@@ -341,7 +341,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 112,
           h: 112,
           rotated: false,
-          color: "#0EA5E9",
+          color: "#E6D3B3",
         },
         {
           partId: "inner_planter_cup",
@@ -351,7 +351,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 94,
           h: 94,
           rotated: false,
-          color: "#10B981",
+          color: "#C86D51",
         },
         {
           partId: "pump_mount_plate",
@@ -361,7 +361,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 72,
           h: 48,
           rotated: false,
-          color: "#6366F1",
+          color: "#C5A059",
         },
         {
           partId: "refill_funnel",
@@ -371,7 +371,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 46,
           h: 46,
           rotated: false,
-          color: "#F59E0B",
+          color: "#B89B4A",
         },
         {
           partId: "sensor_bracket",
@@ -381,7 +381,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 42,
           h: 34,
           rotated: true,
-          color: "#A855F7",
+          color: "#A65E44",
         },
       ],
     },
@@ -397,7 +397,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 32,
           h: 68,
           rotated: true,
-          color: "#38BDF8",
+          color: "#D4BC94",
         },
         {
           partId: "flow_dosing_gear",
@@ -407,7 +407,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 38,
           h: 38,
           rotated: false,
-          color: "#F43F5E",
+          color: "#DFC9A3",
         },
         {
           partId: "drip_rim_clip",
@@ -417,7 +417,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 30,
           h: 30,
           rotated: false,
-          color: "#2DD4BF",
+          color: "#9C7A4C",
         },
         {
           partId: "drip_rim_clip",
@@ -427,7 +427,7 @@ export const FALLBACK_PLANT_WATERER_PLATES: PlatesData = {
           w: 30,
           h: 30,
           rotated: true,
-          color: "#2DD4BF",
+          color: "#9C7A4C",
         },
       ],
     },
@@ -498,30 +498,30 @@ export const DemoViewer: React.FC<DemoViewerProps> = ({
 
   return (
     <div
-      className={`w-full space-y-4 text-slate-100 ${className}`}
+      className={`w-full space-y-4 text-[#f5ebd6] ${className}`}
       data-testid="demo-viewer-root"
     >
       {/* Top Product Summary & View Switcher Header */}
-      <div className="rounded-2xl bg-slate-950/90 border border-slate-800/90 p-4 flex flex-wrap items-center justify-between gap-4 shadow-xl">
+      <div className="rounded-2xl bg-[#14100b]/95 border border-[#d4af37]/30 p-4 flex flex-wrap items-center justify-between gap-4 shadow-2xl">
         <div>
           <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-codex font-bold uppercase tracking-wider bg-[#d4af37]/15 text-[#f3d478] border border-[#d4af37]/40">
               DIY Alt Ready · You Save ${savings.toFixed(2)}
             </span>
-            <span className="text-xs font-mono text-slate-400">
+            <span className="text-xs font-mono text-[#bda782]">
               {safeDesign.printed.length} Printed ·{" "}
               {safeDesign.purchased.length} Purchased ·{" "}
               {safeInstructions.steps.length} Steps
             </span>
           </div>
-          <h2 className="text-lg font-bold text-white tracking-tight mt-1">
+          <h2 className="font-display text-xl font-bold text-[#f5ebd6] tracking-tight mt-1">
             {safeDesign.name || "HydroPulse Self-Watering Plant System"}
           </h2>
         </div>
 
         {/* View Mode Tabs */}
         <div
-          className="inline-flex rounded-xl bg-slate-900 p-1 border border-slate-800 flex-wrap"
+          className="inline-flex rounded-xl bg-[#0c0906] p-1 border border-[#d4af37]/25 flex-wrap"
           role="tablist"
           aria-label="3D viewer mode tabs"
         >
@@ -542,10 +542,10 @@ export const DemoViewer: React.FC<DemoViewerProps> = ({
                 aria-selected={active}
                 onClick={() => setActiveTab(tab.id)}
                 data-testid={`demo-tab-${tab.id}`}
-                className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                className={`px-3.5 py-1.5 rounded-lg font-codex text-xs font-bold uppercase tracking-wider transition-all ${
                   active
-                    ? "bg-sky-500 text-slate-950 shadow-md shadow-sky-500/20"
-                    : "text-slate-400 hover:text-white"
+                    ? "bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] text-[#140e07] shadow-md shadow-[#d4af37]/20"
+                    : "text-[#bda782] hover:text-[#f5ebd6]"
                 }`}
               >
                 {tab.label}

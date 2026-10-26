@@ -25,22 +25,24 @@ import {
   StepMotion,
 } from "./types";
 
-const DEFAULT_PRINTED_PALETTE = [
-  "#38BDF8", // Sky cyan
-  "#34D399", // Emerald mint
-  "#818CF8", // Indigo
-  "#FBBF24", // Amber
-  "#F472B6", // Pink
-  "#A78BFA", // Violet
-  "#2DD4BF", // Teal
-  "#FB923C", // Orange
+export const DEFAULT_PRINTED_PALETTE = [
+  "#E6D3B3", // Warm Parchment
+  "#C5A059", // Burnished Olive-Bronze
+  "#C86D51", // Florentine Terracotta
+  "#D4BC94", // Aged Ivory Vellum
+  "#B89B4A", // Antique Gilded Bronze
+  "#A65E44", // Warm Sienna Clay
+  "#DFC9A3", // Pale Vellum Ivory
+  "#9C7A4C", // Sepia Bronze
 ];
 
-const DEFAULT_PURCHASED_PALETTE = [
-  "#94A3B8", // Brushed steel
-  "#64748B", // Gunmetal
-  "#E2E8F0", // Chrome/Silver
-  "#475569", // Dark anodized
+export const DEFAULT_PURCHASED_PALETTE = [
+  "#D4AF37", // Brushed Florentine Brass
+  "#8C857B", // Warm Pewter
+  "#4A443D", // Warm Forged Graphite
+  "#B8860B", // Burnished Dark Brass
+  "#6E665E", // Aged Pewter Alloy
+  "#A07848", // Brushed Hardware Bronze
 ];
 
 const PRESET_KNOWN_PART_IDS = new Set<string>([
@@ -227,6 +229,41 @@ function classifyLivePartRole(
     return "long_bar";
   }
   return "bracket";
+}
+
+const RENAISSANCE_APPROVED_HEX = new Set([
+  "#e6d3b3",
+  "#c5a059",
+  "#c86d51",
+  "#d4bc94",
+  "#b89b4a",
+  "#a65e44",
+  "#dfc9a3",
+  "#9c7a4c",
+  "#f5ebd6",
+  "#f3d478",
+  "#d4af37",
+  "#c84b31",
+  "#8c857b",
+  "#4a443d",
+  "#b8860b",
+  "#6e665e",
+  "#a07848",
+]);
+
+export function toRenaissancePartColor(
+  rawColor: string | undefined,
+  category: "printed" | "purchased",
+  index: number
+): string {
+  const palette =
+    category === "purchased"
+      ? DEFAULT_PURCHASED_PALETTE
+      : DEFAULT_PRINTED_PALETTE;
+  if (rawColor && RENAISSANCE_APPROVED_HEX.has(rawColor.trim().toLowerCase())) {
+    return rawColor.trim();
+  }
+  return palette[index % palette.length];
 }
 
 function toVec3(
@@ -472,9 +509,7 @@ export function adaptDesign(
           shape,
           params: enrichPartParams(shape, p.params, p.dims_mm, false),
           dims_mm: p.dims_mm,
-          color:
-            p.color ||
-            DEFAULT_PRINTED_PALETTE[idx % DEFAULT_PRINTED_PALETTE.length],
+          color: toRenaissancePartColor(p.color, "printed", idx),
           material: p.material || "PETG",
           quantity: Number(p.quantity) || 1,
           description: p.description,
@@ -503,9 +538,7 @@ export function adaptDesign(
         name: String(p.name || `Purchased Part ${idx + 1}`),
         bomLine: p.bomLine ?? p.bomRef,
         bomRef: p.bomRef ?? p.bomLine,
-        color:
-          p.color ||
-          DEFAULT_PURCHASED_PALETTE[idx % DEFAULT_PURCHASED_PALETTE.length],
+        color: toRenaissancePartColor(p.color, "purchased", idx),
         material: p.material || "Off-the-Shelf Hardware",
         quantity: Number(p.quantity) || 1,
         dims_mm: p.dims_mm,
@@ -851,6 +884,12 @@ export function adaptDesign(
       }
     }
 
+    const resolvedColor = toRenaissancePartColor(
+      p.color,
+      p.kind === "purchased" ? "purchased" : "printed",
+      idx
+    );
+
     if (p.kind === "printed") {
       printed.push({
         id: p.id,
@@ -859,7 +898,7 @@ export function adaptDesign(
         shape,
         params,
         dims_mm,
-        color: p.color,
+        color: resolvedColor,
         material: p.material,
         quantity: p.quantity ?? 1,
         description: p.description,
@@ -874,7 +913,7 @@ export function adaptDesign(
         name: p.name,
         bomLine: p.bomRef ?? p.id,
         bomRef: p.bomRef,
-        color: p.color,
+        color: resolvedColor,
         material: p.material,
         quantity: p.quantity ?? 1,
         dims_mm,
@@ -899,6 +938,7 @@ export function adaptDesign(
     adaptedParts.push({
       ...p,
       dims_mm,
+      color: resolvedColor,
       shape,
       params,
       position,
@@ -1182,7 +1222,7 @@ export function adaptPlates(rawInput: unknown): PlatesData {
           depth: h,
           height: partHeight,
           rotated: Boolean(item?.rotated),
-          color: item?.color,
+          color: toRenaissancePartColor(item?.color, "printed", iIdx),
           stlFile: item?.stlFile,
         };
       }
@@ -1310,9 +1350,7 @@ export function resolveAssemblyParts(
       stepByNumber.get(stepNum) ?? stepByPartId.get(node.partId);
 
     if (printed) {
-      const color =
-        printed.color ||
-        DEFAULT_PRINTED_PALETTE[idx % DEFAULT_PRINTED_PALETTE.length];
+      const color = toRenaissancePartColor(printed.color, "printed", idx);
       const matchedBom =
         (printed.bomRef && bomById.get(printed.bomRef)) ||
         bomById.get(printed.id);
@@ -1340,9 +1378,7 @@ export function resolveAssemblyParts(
         stepInfo,
       });
     } else if (purchased) {
-      const color =
-        purchased.color ||
-        DEFAULT_PURCHASED_PALETTE[idx % DEFAULT_PURCHASED_PALETTE.length];
+      const color = toRenaissancePartColor(purchased.color, "purchased", idx);
       const matchedBom =
         (purchased.bomRef && bomById.get(purchased.bomRef)) ||
         (purchased.bomLine &&
@@ -1407,9 +1443,7 @@ export function resolveAssemblyParts(
         shape: p.shape || "box",
         params: p.params || {},
         dims_mm: p.dims_mm,
-        color:
-          p.color ||
-          DEFAULT_PRINTED_PALETTE[idx % DEFAULT_PRINTED_PALETTE.length],
+        color: toRenaissancePartColor(p.color, "printed", idx),
         material: p.material,
         description: p.description,
         roleInAssembly: p.roleInAssembly,
@@ -1437,9 +1471,7 @@ export function resolveAssemblyParts(
         shape: (p.proxyShape?.shape as PartShape) || "cylinder",
         params: p.proxyShape?.params || {},
         dims_mm: p.dims_mm,
-        color:
-          p.color ||
-          DEFAULT_PURCHASED_PALETTE[idx % DEFAULT_PURCHASED_PALETTE.length],
+        color: toRenaissancePartColor(p.color, "purchased", idx),
         material: p.material,
         description: p.description,
         roleInAssembly: p.roleInAssembly,
