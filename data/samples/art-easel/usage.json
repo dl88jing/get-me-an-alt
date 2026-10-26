@@ -1,0 +1,373 @@
+{
+  "objectName": "Articulated Tabletop Studio Art Easel",
+  "summary": "Five-step studio setup: plant the weighted H-frame base, slide the lower tray to working height, clamp the top canvas jaw, pivot the 15°-step ratchet hinge, and lock the M5 rosette knobs.",
+  "totalDurationSeconds": 20.8,
+  "scenes": [
+    {
+      "id": "scene-1",
+      "index": 1,
+      "title": "Plant Weighted H-Frame Base",
+      "durationSeconds": 3.8,
+      "camera": {
+        "fromPosition": [
+          335,
+          220,
+          410
+        ],
+        "toPosition": [
+          250,
+          145,
+          310
+        ],
+        "fromTarget": [
+          0,
+          80,
+          0
+        ],
+        "toTarget": [
+          0,
+          -18,
+          10
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Set the weighted H-frame base flat on your tabletop.",
+        "subtext": "EPDM grip pads prevent studio slip",
+        "anchor": "part",
+        "partId": "easel-base-hub",
+        "offset": [
+          0,
+          36,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "easel-base-hub",
+          "type": "press",
+          "fromOffset": [
+            0,
+            12,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.45
+        },
+        {
+          "partId": "silicone-grip-pads",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.5
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "easel-base-hub",
+          "color": "#f3d478",
+          "label": "Seat Base"
+        }
+      ]
+    },
+    {
+      "id": "scene-2",
+      "index": 2,
+      "title": "Slide Lower Canvas Ledge to Height",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          250,
+          145,
+          310
+        ],
+        "toPosition": [
+          265,
+          175,
+          325
+        ],
+        "fromTarget": [
+          0,
+          -18,
+          10
+        ],
+        "toTarget": [
+          0,
+          48,
+          22
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Slide the lower canvas tray along the aluminum spine.",
+        "subtext": "Integrated brush groove holds studio tools",
+        "anchor": "part",
+        "partId": "lower-canvas-tray",
+        "offset": [
+          0,
+          32,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "lower-canvas-tray",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            -28,
+            0
+          ],
+          "toOffset": [
+            0,
+            10,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.55
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "lower-canvas-tray",
+          "color": "#f3d478",
+          "label": "Set Ledge Height"
+        }
+      ]
+    },
+    {
+      "id": "scene-3",
+      "index": 3,
+      "title": "Seat & Clamp Canvas Panel",
+      "durationSeconds": 4.4,
+      "camera": {
+        "fromPosition": [
+          265,
+          175,
+          325
+        ],
+        "toPosition": [
+          240,
+          255,
+          315
+        ],
+        "fromTarget": [
+          0,
+          48,
+          22
+        ],
+        "toTarget": [
+          0,
+          165,
+          18
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Lower the top clamp jaw to lock your canvas.",
+        "subtext": "Holds canvases up to 620mm tall",
+        "anchor": "part",
+        "partId": "upper-canvas-clamp",
+        "offset": [
+          0,
+          32,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "upper-canvas-clamp",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            32,
+            0
+          ],
+          "toOffset": [
+            0,
+            -6,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6
+        }
+      ],
+      "effects": [
+        {
+          "type": "target_prop",
+          "partId": "lower-canvas-tray",
+          "targetPartId": "upper-canvas-clamp",
+          "color": "#e6d3b3",
+          "label": "Stretched Canvas"
+        },
+        {
+          "type": "hand_proxy",
+          "partId": "upper-canvas-clamp",
+          "color": "#f3d478",
+          "label": "Clamp Top Jaw"
+        }
+      ]
+    },
+    {
+      "id": "scene-4",
+      "index": 4,
+      "title": "Dial In Ratcheting Rake Angle",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          240,
+          255,
+          315
+        ],
+        "toPosition": [
+          -285,
+          160,
+          275
+        ],
+        "fromTarget": [
+          0,
+          165,
+          18
+        ],
+        "toTarget": [
+          0,
+          35,
+          -8
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Pivot the spring detent hinge to set painting tilt.",
+        "subtext": "15°-step positive ratchet from 0° to 75°",
+        "anchor": "part",
+        "partId": "ratchet-tilt-hinge",
+        "offset": [
+          0,
+          34,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "ratchet-tilt-hinge",
+          "type": "tilt",
+          "fromRotationDelta": [
+            0,
+            0,
+            0
+          ],
+          "toRotationDelta": [
+            -15,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.55
+        },
+        {
+          "partId": "rear-strut-collar",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            18,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.45
+        }
+      ],
+      "effects": [
+        {
+          "type": "motion_arc",
+          "partId": "ratchet-tilt-hinge",
+          "color": "#f3d478",
+          "label": "15° Detent Tilt"
+        }
+      ]
+    },
+    {
+      "id": "scene-5",
+      "index": 5,
+      "title": "Lock Rosette Knobs & Paint",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          -285,
+          160,
+          275
+        ],
+        "toPosition": [
+          330,
+          235,
+          395
+        ],
+        "fromTarget": [
+          0,
+          35,
+          -8
+        ],
+        "toTarget": [
+          0,
+          95,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Tighten the brass rosette knobs for zero-wobble brushwork.",
+        "subtext": "M5 T-nut compression locks rigid frame",
+        "anchor": "part",
+        "partId": "knurled-lock-knobs",
+        "offset": [
+          0,
+          30,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "knurled-lock-knobs",
+          "type": "spin",
+          "spinAxis": "z",
+          "spinSpeed": 1.5,
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.65
+        },
+        {
+          "partId": "brass-knurled-nuts",
+          "type": "spin",
+          "spinAxis": "z",
+          "spinSpeed": -1.5,
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.5
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "knurled-lock-knobs",
+          "color": "#f3d478",
+          "label": "Lock Rosette Knob"
+        },
+        {
+          "type": "target_prop",
+          "partId": "lower-canvas-tray",
+          "targetPartId": "upper-canvas-clamp",
+          "color": "#e6d3b3",
+          "label": "Locked Studio Canvas"
+        }
+      ]
+    }
+  ]
+}

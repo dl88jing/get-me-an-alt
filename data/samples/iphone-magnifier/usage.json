@@ -1,0 +1,372 @@
+{
+  "objectName": "iPhone Macro Microscope & Slide Stage",
+  "summary": "Five-step microscopy workflow: clip the glass slide onto the XY stage, snap the iPhone into the optical saddle, turn on the 5V coaxial LED diffuser ring, dial the fine M3 focus screw, and capture 100× micrographs.",
+  "totalDurationSeconds": 20.8,
+  "scenes": [
+    {
+      "id": "scene-1",
+      "index": 1,
+      "title": "Clip Specimen Slide onto Stage",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          185,
+          130,
+          225
+        ],
+        "toPosition": [
+          145,
+          92,
+          185
+        ],
+        "fromTarget": [
+          0,
+          22,
+          4
+        ],
+        "toTarget": [
+          0,
+          -10,
+          6
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Slide your glass specimen under the spring stage clips.",
+        "subtext": "Standard 25×75mm borosilicate microscope slide",
+        "anchor": "part",
+        "partId": "glass-slides-clips",
+        "offset": [
+          0,
+          28,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "glass-slides-clips",
+          "type": "slide",
+          "fromOffset": [
+            -34,
+            0,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.55
+        },
+        {
+          "partId": "xyz-focus-sled",
+          "type": "glow",
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.35
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "glass-slides-clips",
+          "color": "#f3d478",
+          "label": "Load Slide"
+        }
+      ]
+    },
+    {
+      "id": "scene-2",
+      "index": 2,
+      "title": "Snap iPhone into Alignment Saddle",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          145,
+          92,
+          185
+        ],
+        "toPosition": [
+          165,
+          165,
+          205
+        ],
+        "fromTarget": [
+          0,
+          -10,
+          6
+        ],
+        "toTarget": [
+          0,
+          62,
+          4
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Seat your iPhone into the top camera alignment saddle.",
+        "subtext": "Centers main camera over 100× optical axis",
+        "anchor": "part",
+        "partId": "phone-clamp-chassis",
+        "offset": [
+          0,
+          30,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "phone-clamp-chassis",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            20,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.55
+        }
+      ],
+      "effects": [
+        {
+          "type": "target_prop",
+          "partId": "phone-clamp-chassis",
+          "color": "#e6d3b3",
+          "label": "iPhone Camera"
+        },
+        {
+          "type": "hand_proxy",
+          "partId": "phone-clamp-chassis",
+          "color": "#f3d478",
+          "label": "Mount Phone"
+        }
+      ]
+    },
+    {
+      "id": "scene-3",
+      "index": 3,
+      "title": "Switch On Coaxial Ring Illumination",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          165,
+          165,
+          205
+        ],
+        "toPosition": [
+          -160,
+          108,
+          190
+        ],
+        "fromTarget": [
+          0,
+          62,
+          4
+        ],
+        "toTarget": [
+          0,
+          10,
+          4
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Power on the 5V LED ring for uniform specimen lighting.",
+        "subtext": "Snap-fit diffuser eliminates glare hotspots",
+        "anchor": "part",
+        "partId": "led-ring-diffuser",
+        "offset": [
+          0,
+          28,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "usb-led-ring-5v",
+          "type": "pulse",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.85,
+          "oscillate": true
+        },
+        {
+          "partId": "led-ring-diffuser",
+          "type": "glow",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.7
+        }
+      ],
+      "effects": [
+        {
+          "type": "light_beam",
+          "partId": "led-ring-diffuser",
+          "targetPartId": "glass-slides-clips",
+          "color": "#f3d478",
+          "label": "Coaxial Illumination"
+        },
+        {
+          "type": "led_indicator",
+          "partId": "usb-led-ring-5v",
+          "color": "#f3d478",
+          "label": "5V LED Ring On"
+        }
+      ]
+    },
+    {
+      "id": "scene-4",
+      "index": 4,
+      "title": "Dial Fine-Pitch Z-Focus Thumbscrew",
+      "durationSeconds": 4.4,
+      "camera": {
+        "fromPosition": [
+          -160,
+          108,
+          190
+        ],
+        "toPosition": [
+          175,
+          105,
+          -165
+        ],
+        "fromTarget": [
+          0,
+          10,
+          4
+        ],
+        "toTarget": [
+          32,
+          -4,
+          -22
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Turn the brass M3 thumbscrew for micrometer Z-axis focus.",
+        "subtext": "0.5mm thread pitch with anti-backlash spring",
+        "anchor": "part",
+        "partId": "m3-focus-screw",
+        "offset": [
+          0,
+          30,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "m3-focus-screw",
+          "type": "spin",
+          "spinAxis": "y",
+          "spinSpeed": 2,
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.65
+        },
+        {
+          "partId": "doublet-lens-barrel",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            -6,
+            0
+          ],
+          "toOffset": [
+            0,
+            4,
+            0
+          ],
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.45,
+          "oscillate": true
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "m3-focus-screw",
+          "color": "#f3d478",
+          "label": "Fine Focus Dial"
+        },
+        {
+          "type": "motion_arc",
+          "partId": "m3-focus-screw",
+          "color": "#e5bd47",
+          "label": "0.5mm/rev Z-Focus"
+        }
+      ]
+    },
+    {
+      "id": "scene-5",
+      "index": 5,
+      "title": "Capture 100× Cellular Micrograph",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          175,
+          105,
+          -165
+        ],
+        "toPosition": [
+          185,
+          138,
+          220
+        ],
+        "fromTarget": [
+          32,
+          -4,
+          -22
+        ],
+        "toTarget": [
+          0,
+          32,
+          4
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Tap shutter on iPhone to capture crisp 100× macro detail.",
+        "subtext": "Achromatic glass doublet resolves cellular walls",
+        "anchor": "part",
+        "partId": "achromatic-lens-100x",
+        "offset": [
+          0,
+          32,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "achromatic-lens-100x",
+          "type": "pulse",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.75,
+          "oscillate": true
+        },
+        {
+          "partId": "phone-clamp-chassis",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.5
+        }
+      ],
+      "effects": [
+        {
+          "type": "light_beam",
+          "partId": "achromatic-lens-100x",
+          "targetPartId": "glass-slides-clips",
+          "color": "#f3d478",
+          "label": "100× Optical Path"
+        },
+        {
+          "type": "target_prop",
+          "partId": "phone-clamp-chassis",
+          "color": "#f3d478",
+          "label": "100× Image Captured"
+        }
+      ]
+    }
+  ]
+}
