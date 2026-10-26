@@ -22,8 +22,21 @@ export async function GET(
   const ipHash = getClientIpHash(req);
   await ensurePersistedProjectRestored(params.id, ipHash);
 
-  const manifest =
-    getProjectManifest(params.id) || ensurePipelineRunning(params.id);
+  const queryUrl = req.nextUrl.searchParams.get('url')?.trim() || undefined;
+  const queryPrompt =
+    req.nextUrl.searchParams.get('prompt')?.trim() || undefined;
+  const queryPrinterId =
+    req.nextUrl.searchParams.get('printerId')?.trim() || undefined;
+
+  let manifest = getProjectManifest(params.id);
+  if (!manifest || (queryUrl && !manifest.input?.url)) {
+    manifest =
+      ensurePipelineRunning(params.id, {
+        url: queryUrl,
+        prompt: queryPrompt,
+        printerId: queryPrinterId,
+      }) || manifest;
+  }
   if (!manifest) {
     return NextResponse.json({ error: 'Project not found' }, { status: 404 });
   }

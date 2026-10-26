@@ -161,8 +161,30 @@ export default function ProjectPage() {
         }).catch(() => {});
       }
 
+      const searchParams =
+        typeof window !== 'undefined'
+          ? new URLSearchParams(window.location.search)
+          : new URLSearchParams();
+      const fallbackUrl =
+        searchParams.get('url')?.trim() ||
+        cachedManifest?.input?.url ||
+        (localEntry && /^https?:\/\//i.test(localEntry.input)
+          ? localEntry.input
+          : undefined);
+      const fallbackPrompt =
+        searchParams.get('prompt')?.trim() || cachedManifest?.input?.prompt;
+      const fallbackPrinterId =
+        searchParams.get('printerId')?.trim() ||
+        cachedManifest?.input?.printerId;
+
+      const apiQuery = new URLSearchParams();
+      if (fallbackUrl) apiQuery.set('url', fallbackUrl);
+      if (fallbackPrompt) apiQuery.set('prompt', fallbackPrompt);
+      if (fallbackPrinterId) apiQuery.set('printerId', fallbackPrinterId);
+      const qsSuffix = apiQuery.toString() ? `?${apiQuery.toString()}` : '';
+
       try {
-        const res = await fetch(`/api/objects/${projectId}`);
+        const res = await fetch(`/api/objects/${projectId}${qsSuffix}`);
         if (res.ok) {
           const data = await res.json();
           if (!cancelled && data.manifest) {
@@ -204,7 +226,7 @@ export default function ProjectPage() {
         // continue to SSE
       }
 
-      es = new EventSource(`/api/objects/${projectId}/stream`);
+      es = new EventSource(`/api/objects/${projectId}/stream${qsSuffix}`);
       es.onmessage = (evt) => {
         if (cancelled) return;
         try {

@@ -3,6 +3,7 @@ import fs from 'fs';
 import path from 'path';
 import {
   buildSampleManifest,
+  CreateProjectOptions,
   getProjectManifest,
   listRecentProjects,
   pipelineEmitter,
@@ -24,6 +25,7 @@ interface GlobalRecentStore {
   removedByIp: Map<string, Set<string>>;
   projectToIp: Map<string, string>;
   manifestsBySlug: Map<string, ProjectManifest>;
+  optionsBySlug: Map<string, CreateProjectOptions>;
   hookedProjects: Set<string>;
 }
 
@@ -39,6 +41,7 @@ const store: GlobalRecentStore =
     removedByIp: new Map<string, Set<string>>(),
     projectToIp: new Map<string, string>(),
     manifestsBySlug: new Map<string, ProjectManifest>(),
+    optionsBySlug: new Map<string, CreateProjectOptions>(),
     hookedProjects: new Set<string>(),
   });
 
@@ -77,6 +80,17 @@ function getRemovedByIpFilePath(ipHash: string): string {
 function getSavedManifestFilePath(slug: string): string {
   const safeSlug = slug.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 96);
   const dir = path.join(getRecentBuildsRootDir(), 'manifests');
+  try {
+    fs.mkdirSync(dir, { recursive: true });
+  } catch {
+    // ignore
+  }
+  return path.join(dir, `${safeSlug}.json`);
+}
+
+function getSavedOptionsFilePath(slug: string): string {
+  const safeSlug = slug.replace(/[^a-zA-Z0-9_-]/g, '_').slice(0, 96);
+  const dir = path.join(getRecentBuildsRootDir(), 'options');
   try {
     fs.mkdirSync(dir, { recursive: true });
   } catch {
@@ -286,12 +300,51 @@ export function persistFullManifestSnapshot(manifest: ProjectManifest): void {
     const objFolder = path.join(getObjectsDir(), manifest.id);
     fs.mkdirSync(objFolder, { recursive: true });
     const mp = path.join(objFolder, 'manifest.json');
-    if (!fs.existsSync(mp) || manifest.status === 'completed') {
+    if (!fs.existsSync(mp) || manifest.status === 'completed' || manifest.input?.url) {
       fs.writeFileSync(mp, JSON.stringify(manifest, null, 2));
     }
   } catch {
     // ignore
   }
+}
+
+export function persistProjectOptionsSnapshot(
+  id: string,
+  options: CreateProjectOptions
+): void {
+  if (!id || isPresetProjectSlug(id)) return;
+  store.optionsBySlug.set(id, options);
+
+  try {
+    const optPath = getSavedOptionsFilePath(id);
+    fs.writeFileSync(optPath, JSON.stringify(options, null, 2));
+  } catch {
+    // ignore
+  }
+
+  try {
+    const objFolder = path.join(getObjectsDir(), id);
+    fs.mkdirSync(objFolder, { recursive: true });
+    fs.writeFileSync(
+      path.join(objFolder, 'options.json'),
+      JSON.stringify(options, null, 2)
+    );
+  } catch {
+    // ignore
+  }
+}
+
+export async function persistProjectStartState(
+  manifest: ProjectManifest,
+  options: CreateProjectOptions
+): Promise<void> {
+  if (!manifest || !manifest.id || isPresetManifest(manifest)) return;
+  persistFullManifestSnapshot(manifest);
+  persistProjectOptionsSnapshot(manifest.id, options);
+  await Promise.all([
+    kvSetJson(`gma:manifest:${manifest.id}`, manifest),
+    kvSetJson(`gma:options:${manifest.id}`, options),
+  ]);
 }
 
 export async function recordCompletedBuildForIp(
@@ -587,12 +640,53 @@ export async function ensurePersistedProjectRestored(
 ): Promise<ProjectManifest | null> {
   if (!id || isPresetProjectSlug(id)) return null;
 
+  // Always try to restore options (url, inlineImage, prompt) onto disk if missing
+  let restoredOptions: CreateProjectOptions | null =
+    store.optionsBySlug.get(id) || null;
+  if (!restoredOptions) {
+    try {
+      const optSnapshotPath = getSavedOptionsFilePath(id);
+      if (fs.existsSync(optSnapshotPath)) {
+        restoredOptions = JSON.parse(
+          fs.readFileSync(optSnapshotPath, 'utf-8')
+        ) as CreateProjectOptions;
+      }
+    } catch {
+      // ignore
+    }
+  }
+  if (!restoredOptions) {
+    restoredOptions = await kvGetJson<CreateProjectOptions>(`gma:options:${id}`);
+  }
+  if (restoredOptions) {
+    persistProjectOptionsSnapshot(id, restoredOptions);
+  }
+
+  const applyRestoredOptionsToManifest = (m: ProjectManifest): ProjectManifest => {
+    if (!restoredOptions) return m;
+    m.input = {
+      ...m.input,
+      prompt: m.input?.prompt || restoredOptions.prompt,
+      url: m.input?.url || restoredOptions.url,
+      imageName: m.input?.imageName || restoredOptions.imageName,
+      hasImage: m.input?.hasImage || Boolean(restoredOptions.inlineImage),
+      printerId: m.input?.printerId || restoredOptions.printerId || 'bambu-a1',
+    };
+    return m;
+  };
+
   const existing = getProjectManifest(id);
-  if (existing) return existing;
+  if (existing) {
+    if (restoredOptions && (!existing.input?.url && restoredOptions.url)) {
+      applyRestoredOptionsToManifest(existing);
+      persistFullManifestSnapshot(existing);
+    }
+    return existing;
+  }
 
   // 1. Check in-memory recent manifests
   if (store.manifestsBySlug.has(id)) {
-    const m = store.manifestsBySlug.get(id)!;
+    const m = applyRestoredOptionsToManifest(store.manifestsBySlug.get(id)!);
     persistFullManifestSnapshot(m);
     return m;
   }
@@ -605,6 +699,7 @@ export async function ensurePersistedProjectRestored(
         fs.readFileSync(snapshotPath, 'utf-8')
       ) as ProjectManifest;
       if (m && m.id) {
+        applyRestoredOptionsToManifest(m);
         persistFullManifestSnapshot(m);
         return m;
       }
@@ -616,6 +711,7 @@ export async function ensurePersistedProjectRestored(
   // 3. Check KV manifest snapshot if configured
   const kvManifest = await kvGetJson<ProjectManifest>(`gma:manifest:${id}`);
   if (kvManifest && kvManifest.id) {
+    applyRestoredOptionsToManifest(kvManifest);
     persistFullManifestSnapshot(kvManifest);
     return kvManifest;
   }

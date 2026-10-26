@@ -1072,11 +1072,36 @@ export function startProjectPipeline(
   return manifest;
 }
 
-export function ensurePipelineRunning(id: string): ProjectManifest | null {
+export function ensurePipelineRunning(
+  id: string,
+  fallbackOptions?: Partial<CreateProjectOptions>
+): ProjectManifest | null {
   const sampleSlug = resolveSampleSlug(id);
   if (sampleSlug) {
     return buildSampleManifest(sampleSlug);
   }
+
+  const cwd = getProjectFolder(id) || path.join(getObjectsDir(), id);
+  let diskOptions: CreateProjectOptions | null = null;
+  try {
+    const optPath = path.join(cwd, 'options.json');
+    if (fs.existsSync(optPath)) {
+      diskOptions = JSON.parse(
+        fs.readFileSync(optPath, 'utf-8')
+      ) as CreateProjectOptions;
+    }
+  } catch {
+    // ignore
+  }
+
+  const recoveredUrl = diskOptions?.url || fallbackOptions?.url;
+  const recoveredPrompt = diskOptions?.prompt || fallbackOptions?.prompt;
+  const recoveredImageName =
+    diskOptions?.imageName || fallbackOptions?.imageName;
+  const recoveredInlineImage =
+    diskOptions?.inlineImage || fallbackOptions?.inlineImage;
+  const recoveredPrinterId =
+    diskOptions?.printerId || fallbackOptions?.printerId;
 
   let manifest = getProjectManifest(id);
 
@@ -1084,21 +1109,37 @@ export function ensurePipelineRunning(id: string): ProjectManifest | null {
   if (!manifest) {
     const cleanSlug = id.replace(/-[a-z0-9]{4,6}$/i, '') || id;
     const readablePrompt = cleanSlug.replace(/-/g, ' ');
-    const cwd = path.join(getObjectsDir(), id);
+    const urlTitle = recoveredUrl ? parseUrlProductInfo(recoveredUrl).title : '';
     fs.mkdirSync(cwd, { recursive: true });
     const now = new Date().toISOString();
     manifest = {
       id,
       slug: cleanSlug,
-      title: readablePrompt,
+      title: recoveredPrompt || urlTitle || readablePrompt,
       createdAt: now,
       updatedAt: now,
       status: 'running',
       input: {
-        prompt: readablePrompt,
-        printerId: 'bambu-a1',
+        prompt: recoveredPrompt || (recoveredUrl ? undefined : readablePrompt),
+        url: recoveredUrl,
+        imageName: recoveredImageName,
+        hasImage: Boolean(recoveredInlineImage),
+        printerId: recoveredPrinterId || 'bambu-a1',
       },
       stages: createInitialStages(),
+    };
+    saveManifest(cwd, manifest);
+  } else if (
+    (!manifest.input.url && recoveredUrl) ||
+    (!manifest.input.hasImage && recoveredInlineImage)
+  ) {
+    manifest.input = {
+      ...manifest.input,
+      url: manifest.input.url || recoveredUrl,
+      prompt: manifest.input.prompt || recoveredPrompt,
+      imageName: manifest.input.imageName || recoveredImageName,
+      hasImage: manifest.input.hasImage || Boolean(recoveredInlineImage),
+      printerId: manifest.input.printerId || recoveredPrinterId || 'bambu-a1',
     };
     saveManifest(cwd, manifest);
   }
@@ -1108,20 +1149,33 @@ export function ensurePipelineRunning(id: string): ProjectManifest | null {
     !activePipelines.has(manifest.id)
   ) {
     activePipelines.add(manifest.id);
-    const cwd = getProjectFolder(manifest.id) || path.join(getObjectsDir(), manifest.id);
-    let options: CreateProjectOptions = {
-      prompt: manifest.input.prompt || manifest.title,
-      url: manifest.input.url,
-      imageName: manifest.input.imageName,
-      printerId: manifest.input.printerId || 'bambu-a1',
+    const options: CreateProjectOptions = {
+      prompt:
+        diskOptions?.prompt ??
+        fallbackOptions?.prompt ??
+        (manifest.input.url
+          ? manifest.input.prompt
+          : manifest.input.prompt || manifest.title),
+      url: diskOptions?.url || fallbackOptions?.url || manifest.input.url,
+      imageName:
+        diskOptions?.imageName ||
+        fallbackOptions?.imageName ||
+        manifest.input.imageName,
+      inlineImage: diskOptions?.inlineImage || fallbackOptions?.inlineImage,
+      printerId:
+        diskOptions?.printerId ||
+        fallbackOptions?.printerId ||
+        manifest.input.printerId ||
+        'bambu-a1',
     };
     try {
       const optPath = path.join(cwd, 'options.json');
-      if (fs.existsSync(optPath)) {
-        options = JSON.parse(fs.readFileSync(optPath, 'utf-8'));
+      if (!fs.existsSync(optPath) && (options.url || options.prompt || options.inlineImage)) {
+        fs.mkdirSync(cwd, { recursive: true });
+        fs.writeFileSync(optPath, JSON.stringify(options, null, 2));
       }
     } catch {
-      // use manifest.input
+      // ignore
     }
 
     void executePipelineStages(manifest, cwd, options).finally(() => {

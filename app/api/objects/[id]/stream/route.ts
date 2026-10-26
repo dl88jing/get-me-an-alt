@@ -24,6 +24,11 @@ export async function GET(
 ) {
   const projectId = params.id;
   const ipHash = getClientIpHash(req);
+  const queryUrl = req.nextUrl.searchParams.get('url')?.trim() || undefined;
+  const queryPrompt =
+    req.nextUrl.searchParams.get('prompt')?.trim() || undefined;
+  const queryPrinterId =
+    req.nextUrl.searchParams.get('printerId')?.trim() || undefined;
   await ensurePersistedProjectRestored(projectId, ipHash);
   trackProjectForIp(projectId, ipHash);
   const encoder = new TextEncoder();
@@ -51,7 +56,11 @@ export async function GET(
         }
       };
 
-      const initialManifest = ensurePipelineRunning(projectId);
+      const initialManifest = ensurePipelineRunning(projectId, {
+        url: queryUrl,
+        prompt: queryPrompt,
+        printerId: queryPrinterId,
+      });
       const initialEvents = getProjectEvents(projectId);
 
       if (initialEvents.length > 0) {

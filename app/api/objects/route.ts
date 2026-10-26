@@ -6,6 +6,7 @@ import {
 import { isPresetManifest } from '@/lib/recent-builds';
 import {
   getClientIpHash,
+  persistProjectStartState,
   recordCompletedBuildForIp,
   trackProjectForIp,
 } from '@/lib/recent-builds-server';
@@ -31,16 +32,18 @@ export async function POST(req: NextRequest) {
     }
 
     const ipHash = getClientIpHash(req);
-    const manifest = startProjectPipeline({
+    const options = {
       prompt,
       url,
       imageName,
       inlineImage,
       printerId: printerId || 'bambu-a1',
-    });
+    };
+    const manifest = startProjectPipeline(options);
 
     if (!isPresetManifest(manifest)) {
       trackProjectForIp(manifest.id, ipHash);
+      await persistProjectStartState(manifest, options);
       if (manifest.status === 'completed') {
         await recordCompletedBuildForIp(ipHash, manifest, manifest);
       }

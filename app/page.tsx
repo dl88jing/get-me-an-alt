@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { RecentBuildsShelf } from '../components/ui/RecentBuildsShelf';
+import { saveLocalCachedManifest } from '@/lib/recent-builds';
 import {
   ArrowRight,
   Box,
@@ -344,7 +345,14 @@ export default function LandingPage() {
         throw new Error(data.error || 'Failed to launch pipeline');
       }
 
-      router.push(`/projects/${data.id}`);
+      if (data.manifest) {
+        saveLocalCachedManifest(data.id, data.manifest);
+      }
+
+      const qs = isUrl
+        ? `?url=${encodeURIComponent(inputValue.trim())}`
+        : '';
+      router.push(`/projects/${data.id}${qs}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
       setSubmitting(false);
