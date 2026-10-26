@@ -69,7 +69,8 @@ export type MissionNodeId =
   | 'bom'
   | 'price-hunter'
   | 'cad'
-  | 'instructions';
+  | 'instructions'
+  | 'usage';
 
 interface MissionNodeSpec {
   id: MissionNodeId;
@@ -227,6 +228,21 @@ const MISSION_NODES: MissionNodeSpec[] = [
     x: 1052,
     y: 122,
   },
+  {
+    id: 'usage',
+    order: '10',
+    label: 'Usage Director',
+    role: '3D How-To-Use Storyboard',
+    stageRef: 'usage',
+    defaultDurationMs: 2600,
+    defaultTokens: 2940,
+    defaultArtifacts: ['usage.json'],
+    defaultThought:
+      'Directed 5-scene interactive 3D usage storyboard with camera keyframes & narration bubbles.',
+    icon: Play,
+    x: 1184,
+    y: 122,
+  },
 ];
 
 interface MissionEdge {
@@ -300,6 +316,12 @@ const MISSION_EDGES: MissionEdge[] = [
     from: 'cad',
     to: 'instructions',
     path: 'M 916 178 C 975 178, 995 134, 1008 132',
+  },
+  {
+    id: 'e-instructions-usage',
+    from: 'instructions',
+    to: 'usage',
+    path: 'M 1096 122 L 1140 122',
   },
 ];
 
@@ -412,6 +434,14 @@ function normalizeAgentId(
   }
   if (clean === 'cad' || clean === 'packer' || clean === 'print') return 'cad';
   if (clean === 'instructions' || clean === 'ikea') return 'instructions';
+  if (
+    clean === 'usage' ||
+    clean === 'usage-director' ||
+    clean === 'usage_director' ||
+    clean === 'howto'
+  ) {
+    return 'usage';
+  }
   return null;
 }
 
@@ -1372,10 +1402,10 @@ export function MissionControl({
         <div className="space-y-4 pt-2 border-t border-[#dfd3be]/15">
           <div className="relative overflow-x-auto rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-3">
         <svg
-          viewBox="0 0 1120 228"
-          className="h-[185px] min-w-[860px] w-full select-none"
+          viewBox="0 0 1245 228"
+          className="h-[185px] min-w-[940px] w-full select-none"
           role="img"
-          aria-label="9-Agent Directed Execution Graph including Critic to Designer Revision Loop"
+          aria-label="10-Agent Directed Execution Graph including Critic to Designer Revision Loop and Usage Director"
         >
           <defs>
             <marker

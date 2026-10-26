@@ -5,7 +5,8 @@ export type AgentStageId =
   | 'critic'
   | 'bom'
   | 'cad'
-  | 'instructions';
+  | 'instructions'
+  | 'usage';
 
 export type SsePhase = 'start' | 'thought' | 'artifact' | 'done' | 'error';
 
@@ -439,6 +440,83 @@ export interface TeardownData {
   generatedAt?: string;
 }
 
+export type UsageAnimationType =
+  | 'translate'
+  | 'rotate'
+  | 'pulse'
+  | 'press'
+  | 'spin'
+  | 'glow'
+  | 'tilt'
+  | 'slide';
+
+export interface UsagePartAnimation {
+  partId: string;
+  type: UsageAnimationType;
+  fromOffset?: [number, number, number];
+  toOffset?: [number, number, number];
+  fromRotationDelta?: [number, number, number];
+  toRotationDelta?: [number, number, number];
+  spinAxis?: 'x' | 'y' | 'z';
+  spinSpeed?: number;
+  glowColor?: string;
+  glowIntensity?: number;
+  oscillate?: boolean;
+}
+
+export type UsageEffectType =
+  | 'water_flow'
+  | 'air_stream'
+  | 'light_beam'
+  | 'led_indicator'
+  | 'hand_proxy'
+  | 'target_prop'
+  | 'motion_arc';
+
+export interface UsageEffect {
+  type: UsageEffectType;
+  partId?: string;
+  targetPartId?: string;
+  from?: [number, number, number];
+  to?: [number, number, number];
+  color?: string;
+  label?: string;
+}
+
+export interface UsageCameraKeyframe {
+  fromPosition: [number, number, number];
+  toPosition: [number, number, number];
+  fromTarget: [number, number, number];
+  toTarget: [number, number, number];
+  fov?: number;
+}
+
+export interface UsageNarration {
+  text: string;
+  subtext?: string;
+  anchor: 'part' | 'screen';
+  partId?: string;
+  offset?: [number, number, number];
+}
+
+export interface UsageScene {
+  id: string;
+  index: number;
+  title: string;
+  durationSeconds: number;
+  camera: UsageCameraKeyframe;
+  narration: UsageNarration;
+  partAnimations: UsagePartAnimation[];
+  effects?: UsageEffect[];
+}
+
+export interface UsageStoryboard {
+  objectName: string;
+  summary?: string;
+  totalDurationSeconds: number;
+  scenes: UsageScene[];
+}
+
 export interface ProjectManifest {
   id: string;
   slug: string;
@@ -464,4 +542,5 @@ export interface ProjectManifest {
   bom?: BomData;
   plates?: PlatesData;
   instructions?: InstructionsData;
+  usage?: UsageStoryboard;
 }

@@ -1,0 +1,399 @@
+{
+  "objectName": "Self-watering plant system (alt to a $149 smart auto-waterer)",
+  "summary": "Five-step operational walkthrough: top-fill the 1.4L reservoir, insert the capacitive probe and emitter stake into soil, connect 5V USB-C power, dial the pinch restrictor wheel, and watch automated root-zone irrigation.",
+  "totalDurationSeconds": 21.4,
+  "scenes": [
+    {
+      "id": "scene-1",
+      "index": 1,
+      "title": "Top-Fill Water Reservoir",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          215,
+          175,
+          245
+        ],
+        "toPosition": [
+          148,
+          168,
+          178
+        ],
+        "fromTarget": [
+          8,
+          42,
+          0
+        ],
+        "toTarget": [
+          -14,
+          76,
+          -12
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Lift the lid and pour clean water into the funnel.",
+        "subtext": "1.4L watertight PETG tank (~14 days supply)",
+        "anchor": "part",
+        "partId": "refill-funnel",
+        "offset": [
+          0,
+          34,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "reservoir-lid",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            0,
+            0
+          ],
+          "toOffset": [
+            0,
+            22,
+            0
+          ],
+          "fromRotationDelta": [
+            0,
+            0,
+            0
+          ],
+          "toRotationDelta": [
+            -8,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.45
+        },
+        {
+          "partId": "refill-funnel",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.55
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "refill-funnel",
+          "color": "#f3d478",
+          "label": "Refill Pitcher"
+        },
+        {
+          "type": "water_flow",
+          "partId": "refill-funnel",
+          "targetPartId": "reservoir-tank",
+          "color": "#e5bd47",
+          "label": "Water Fill Stream"
+        }
+      ]
+    },
+    {
+      "id": "scene-2",
+      "index": 2,
+      "title": "Insert Soil Probe & Drip Stake",
+      "durationSeconds": 4.4,
+      "camera": {
+        "fromPosition": [
+          148,
+          168,
+          178
+        ],
+        "toPosition": [
+          -195,
+          118,
+          210
+        ],
+        "fromTarget": [
+          -14,
+          76,
+          -12
+        ],
+        "toTarget": [
+          -76,
+          22,
+          12
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Push capacitive moisture probe and emitter stake into soil.",
+        "subtext": "Corrosion-free dielectric root-zone sensing",
+        "anchor": "part",
+        "partId": "moisture-sensor",
+        "offset": [
+          0,
+          38,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "moisture-sensor",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            36,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.5
+        },
+        {
+          "partId": "drip-stake",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            28,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.4
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "moisture-sensor",
+          "color": "#f3d478",
+          "label": "Insert Probe"
+        },
+        {
+          "type": "target_prop",
+          "partId": "drip-stake",
+          "color": "#c86d51",
+          "label": "Plant Root Zone"
+        }
+      ]
+    },
+    {
+      "id": "scene-3",
+      "index": 3,
+      "title": "Connect 5V USB-C & Arm ESP32",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          -195,
+          118,
+          210
+        ],
+        "toPosition": [
+          225,
+          112,
+          165
+        ],
+        "fromTarget": [
+          -76,
+          22,
+          12
+        ],
+        "toTarget": [
+          82,
+          24,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Plug in 5V USB-C power to arm the ESP32 controller.",
+        "subtext": "Samples soil dielectric reading every 60s",
+        "anchor": "part",
+        "partId": "controller-box",
+        "offset": [
+          0,
+          32,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "usbc-power",
+          "type": "slide",
+          "fromOffset": [
+            32,
+            0,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.5
+        },
+        {
+          "partId": "controller-box",
+          "type": "pulse",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.65,
+          "oscillate": true
+        }
+      ],
+      "effects": [
+        {
+          "type": "led_indicator",
+          "partId": "controller-box",
+          "color": "#f3d478",
+          "label": "ESP32 Armed"
+        }
+      ]
+    },
+    {
+      "id": "scene-4",
+      "index": 4,
+      "title": "Calibrate Drip Flow Restrictor",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          225,
+          112,
+          165
+        ],
+        "toPosition": [
+          125,
+          152,
+          205
+        ],
+        "fromTarget": [
+          82,
+          24,
+          0
+        ],
+        "toTarget": [
+          16,
+          74,
+          34
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Turn the rotary pinch wheel to balance branch drip rate.",
+        "subtext": "Anti-siphon rim mount prevents gravity backflow",
+        "anchor": "part",
+        "partId": "flow-wheel",
+        "offset": [
+          0,
+          28,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "flow-wheel",
+          "type": "spin",
+          "spinAxis": "y",
+          "spinSpeed": 1.2,
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "flow-wheel",
+          "color": "#f3d478",
+          "label": "Dial Flow Rate"
+        },
+        {
+          "type": "motion_arc",
+          "partId": "flow-wheel",
+          "color": "#e5bd47",
+          "label": "Pinch Trim"
+        }
+      ]
+    },
+    {
+      "id": "scene-5",
+      "index": 5,
+      "title": "Autonomous Root-Zone Watering Pulse",
+      "durationSeconds": 4.8,
+      "camera": {
+        "fromPosition": [
+          125,
+          152,
+          205
+        ],
+        "toPosition": [
+          215,
+          155,
+          255
+        ],
+        "fromTarget": [
+          16,
+          74,
+          34
+        ],
+        "toTarget": [
+          -12,
+          34,
+          8
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Submersible pump pulses metered water directly to plant roots.",
+        "subtext": "4-second silent burst at 120 L/h flow",
+        "anchor": "part",
+        "partId": "drip-stake",
+        "offset": [
+          0,
+          36,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "pump-5v",
+          "type": "spin",
+          "spinAxis": "y",
+          "spinSpeed": 3,
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.7
+        },
+        {
+          "partId": "silicone-tubing",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.55
+        },
+        {
+          "partId": "drip-stake",
+          "type": "pulse",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6,
+          "oscillate": true
+        }
+      ],
+      "effects": [
+        {
+          "type": "water_flow",
+          "partId": "pump-5v",
+          "targetPartId": "drip-stake",
+          "color": "#f3d478",
+          "label": "120 L/h Root Drip"
+        },
+        {
+          "type": "target_prop",
+          "partId": "drip-stake",
+          "color": "#c86d51",
+          "label": "Hydrated Soil"
+        }
+      ]
+    }
+  ]
+}

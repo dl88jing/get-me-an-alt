@@ -9,6 +9,7 @@ import {
   pipelineEmitter,
 } from './agents/orchestrator';
 import { getDataRootDir, getObjectsDir } from './agents/runner';
+import { buildDeterministicUsageStoryboard } from './agents/usage';
 import {
   isPresetManifest,
   isPresetProjectSlug,
@@ -625,6 +626,15 @@ export function synthesizeCompletedManifestFromEntry(
         }
       : undefined,
   };
+
+  if (manifest.analysis && manifest.design) {
+    manifest.usage = buildDeterministicUsageStoryboard({
+      analysis: manifest.analysis,
+      design: manifest.design,
+      bom: manifest.bom,
+      instructions: manifest.instructions,
+    });
+  }
 
   return manifest;
 }

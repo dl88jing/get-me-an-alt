@@ -47,6 +47,7 @@ import CritiquePanel from './CritiquePanel';
 import MissionControl from '@/components/ui/MissionControl';
 import ModifyChat from '@/components/ui/ModifyChat';
 import WhatWeSawStrip from '@/components/ui/WhatWeSawStrip';
+import HowToUseScene from '@/components/three/HowToUseScene';
 
 type TabId =
   | 'overview'
@@ -54,7 +55,8 @@ type TabId =
   | 'bom'
   | 'print'
   | 'instructions'
-  | 'exploded';
+  | 'exploded'
+  | 'howto';
 
 function formatSlugTitle(slug: string): string {
   const cleaned = decodeURIComponent(slug || 'diy-build')
@@ -166,6 +168,20 @@ const TAB_STAGE_META: Record<TabId, TabStageMeta> = {
       'IKEA-style animated 3D player',
       'Ordered step-by-step tool list',
       '3D part insertion trajectories',
+    ],
+  },
+  howto: {
+    stageId: 'usage',
+    stageShort: 'Stage 08',
+    stageLabel: 'Stage 08 · Usage Director Agent',
+    headline: 'Choreographing 3D Operational Storyboard & Narration Bubbles',
+    artifact: 'usage.json',
+    estRange: '~3.5–4 min',
+    estSeconds: 215,
+    deliverables: [
+      '5-scene interactive 3D usage video',
+      'Camera keyframes & part motions',
+      'Synchronized narration bubbles',
     ],
   },
 };
@@ -286,7 +302,11 @@ export default function ProjectPage() {
     if (typeof window === 'undefined') return;
     const syncFromLocation = () => {
       const sp = new URLSearchParams(window.location.search);
-      const tabParam = sp.get('tab')?.toLowerCase() as TabId | null;
+      const rawTab = sp.get('tab')?.toLowerCase() || null;
+      const tabParam: TabId | null =
+        rawTab === 'usage' || rawTab === 'how-to-use'
+          ? 'howto'
+          : (rawTab as TabId | null);
       const validTabs: TabId[] = [
         'overview',
         'sources',
@@ -294,6 +314,7 @@ export default function ProjectPage() {
         'print',
         'instructions',
         'exploded',
+        'howto',
       ];
       if (tabParam && validTabs.includes(tabParam)) {
         setActiveTab(tabParam);
@@ -649,6 +670,7 @@ export default function ProjectPage() {
       { id: 'print', label: 'Print Files', icon: Printer },
       { id: 'instructions', label: 'Instructions', icon: Wrench },
       { id: 'exploded', label: 'Exploded View', icon: Layers },
+      { id: 'howto', label: 'How to Use', icon: Play },
     ];
 
     return (
@@ -933,6 +955,7 @@ export default function ProjectPage() {
     bom,
     plates,
     instructions,
+    usage,
   } = manifest;
   const activeStage =
     manifest.stages.find((s) => s.id === selectedStageId) ||
@@ -1025,10 +1048,26 @@ export default function ProjectPage() {
         ),
       icon: Layers,
     },
+    {
+      id: 'howto',
+      label: 'How to Use',
+      badge: usage?.scenes?.length
+        ? `${usage.scenes.length} scenes`
+        : design
+          ? '5 scenes'
+          : TAB_STAGE_META.howto.stageShort,
+      isPending: !design && !usage,
+      isStageRunning:
+        !usage &&
+        manifest.stages.find((s) => s.id === 'usage')?.status === 'running',
+      icon: Play,
+    },
   ];
 
   const isCanvasTab =
-    activeTab === 'exploded' || activeTab === 'instructions';
+    activeTab === 'exploded' ||
+    activeTab === 'instructions' ||
+    activeTab === 'howto';
 
   const agentBars = (
     <div className="space-y-2.5">
@@ -1346,7 +1385,8 @@ export default function ProjectPage() {
         (activeTab === 'bom' && !bom) ||
         (activeTab === 'print' && !plates) ||
         (activeTab === 'instructions' && !instructions) ||
-        (activeTab === 'exploded' && !design)) &&
+        (activeTab === 'exploded' && !design) ||
+        (activeTab === 'howto' && !design && !usage)) &&
         (() => {
           const meta = TAB_STAGE_META[activeTab];
           const targetStage = manifest.stages.find(
@@ -1700,7 +1740,9 @@ export default function ProjectPage() {
                 </div>
               )}
 
-              {(activeTab === 'instructions' || activeTab === 'exploded') && (
+              {(activeTab === 'instructions' ||
+                activeTab === 'exploded' ||
+                activeTab === 'howto') && (
                 <div className="grid gap-6 lg:grid-cols-3">
                   <div className="lg:col-span-2 rounded-2xl surface-card p-5 space-y-4">
                     <div className="flex items-center justify-between">
@@ -2690,7 +2732,27 @@ export default function ProjectPage() {
         </div>
       )}
 
-      {/* Render Ask Argon + Pipeline bars below the 3D canvas on Exploded View & Instructions tabs */}
+      {/* TAB 7: HOW TO USE */}
+      {activeTab === 'howto' && (design || usage) && (
+        <div className="space-y-6" data-testid="howto-tab-panel">
+          {design ? (
+            <HowToUseScene
+              design={design}
+              bom={bom}
+              instructions={instructions}
+              usage={usage}
+              analysis={analysis}
+              projectId={manifest.id}
+            />
+          ) : (
+            <div className="rounded-xl border border-[#d4af37]/35 bg-[#14100b] p-4 text-xs text-[#e6d3b3]">
+              Preparing 3D How to Use storyboard...
+            </div>
+          )}
+        </div>
+      )}
+
+      {/* Render Ask Argon + Pipeline bars below the 3D canvas on Exploded View, Instructions & How to Use tabs */}
       {isCanvasTab && agentBars}
 
       {/* Bottom-Safe Mobile Sticky Action Bar (390x844 ergonomics: >= 44px targets, safe-area inset) */}

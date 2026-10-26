@@ -25,6 +25,7 @@ import {
   SAMPLE_SLUG,
   SAMPLE_SOURCES,
   SAMPLE_TEARDOWN,
+  SAMPLE_USAGE,
 } from '../sample-data';
 import { getPrinterById } from '../printers';
 import { generateCadBundle } from '../cad';
@@ -44,6 +45,7 @@ import { runBomAgent } from './bom';
 import { runPriceHunterAgent } from './price-hunter';
 import { runCadAgent } from './cad';
 import { runInstructionsAgent } from './instructions';
+import { buildDeterministicUsageStoryboard, runUsageAgent } from './usage';
 import { getObjectsDir, registerPipelineStart } from './runner';
 
 const globalForOrchestrator = globalThis as unknown as {
@@ -727,6 +729,8 @@ export function buildSampleManifest(slug: string = SAMPLE_SLUG): ProjectManifest
   let bom = SAMPLE_BOM;
   let plates = SAMPLE_PLATES;
   let instructions = SAMPLE_INSTRUCTIONS;
+  let usage = SAMPLE_USAGE;
+  let loadedCustomUsage = false;
 
   for (const dir of demoCandidates) {
     try {
@@ -792,9 +796,24 @@ export function buildSampleManifest(slug: string = SAMPLE_SLUG): ProjectManifest
           ),
         };
       }
+      if (fs.existsSync(path.join(dir, 'usage.json'))) {
+        usage = JSON.parse(
+          fs.readFileSync(path.join(dir, 'usage.json'), 'utf-8')
+        );
+        loadedCustomUsage = true;
+      }
     } catch {
       // use defaults
     }
+  }
+
+  if (!loadedCustomUsage) {
+    usage = buildDeterministicUsageStoryboard({
+      analysis,
+      design,
+      bom,
+      instructions,
+    });
   }
 
   const now = new Date().toISOString();
@@ -874,6 +893,7 @@ export function buildSampleManifest(slug: string = SAMPLE_SLUG): ProjectManifest
     bom,
     plates,
     instructions,
+    usage,
   };
 }
 
@@ -931,6 +951,18 @@ export function getProjectManifest(id: string): ProjectManifest | null {
         bom: cached.bom,
       });
     }
+    if (
+      cached.analysis &&
+      cached.design &&
+      (!cached.usage || !Array.isArray(cached.usage.scenes) || cached.usage.scenes.length === 0)
+    ) {
+      cached.usage = buildDeterministicUsageStoryboard({
+        analysis: cached.analysis,
+        design: cached.design,
+        bom: cached.bom,
+        instructions: cached.instructions,
+      });
+    }
     return cached;
   }
 
@@ -969,6 +1001,28 @@ export function getProjectManifest(id: string): ProjectManifest | null {
           design: m.design,
           bom: m.bom,
         });
+      }
+      if (!m.usage || !Array.isArray(m.usage.scenes) || m.usage.scenes.length === 0) {
+        const usagePath = path.join(folder, 'usage.json');
+        if (fs.existsSync(usagePath)) {
+          try {
+            m.usage = JSON.parse(fs.readFileSync(usagePath, 'utf-8'));
+          } catch {
+            // ignore
+          }
+        }
+        if (
+          (!m.usage || !Array.isArray(m.usage.scenes) || m.usage.scenes.length === 0) &&
+          m.analysis &&
+          m.design
+        ) {
+          m.usage = buildDeterministicUsageStoryboard({
+            analysis: m.analysis,
+            design: m.design,
+            bom: m.bom,
+            instructions: m.instructions,
+          });
+        }
       }
       memoryManifests.set(id, m);
       return m;
@@ -1799,6 +1853,26 @@ async function executePipelineStages(
       ...instructionsRes,
       artifact: instructionsRes.data,
       summary: `Created ${instructionsRes.data.steps.length} animated IKEA-style assembly steps`,
+    });
+
+    // 8. Usage Director Agent ("How to Use" 3D Storyboard)
+    beginStage(
+      'usage',
+      'Directing interactive 3D "How to Use" storyboard, camera keyframes & narration bubbles...'
+    );
+    const usageRes = await runUsageAgent({
+      analysis: manifest.analysis,
+      design: manifest.design,
+      bom: manifest.bom,
+      instructions: manifest.instructions,
+      cwd,
+      onLog: makeLogger('usage'),
+    });
+    manifest.usage = usageRes.data;
+    finishStage('usage', {
+      ...usageRes,
+      artifact: usageRes.data,
+      summary: `Directed ${usageRes.data.scenes.length} interactive 3D usage scenes (${usageRes.data.totalDurationSeconds}s total)`,
     });
 
     manifest.status = 'completed';

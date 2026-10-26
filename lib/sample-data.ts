@@ -8,6 +8,7 @@ import {
   PlatesData,
   ResearchData,
   TeardownData,
+  UsageStoryboard,
 } from './types';
 
 export const SAMPLE_SLUG = 'plant-auto-waterer';
@@ -1498,5 +1499,275 @@ export function createInitialStages(): AgentStageState[] {
       artifactFile: 'instructions.json',
       logs: [],
     },
+    {
+      id: 'usage',
+      name: 'Usage Director Agent',
+      role: '3D Operational Storyboard & Camera Choreographer',
+      description:
+        'Directs a 5-scene interactive 3D usage storyboard with camera keyframes, part animations, and narration bubbles.',
+      status: 'pending',
+      model,
+      artifactFile: 'usage.json',
+      logs: [],
+    },
   ];
 }
+
+export const SAMPLE_USAGE: UsageStoryboard = {
+  objectName: 'HydroPulse Smart Plant Auto-Waterer',
+  summary:
+    'Five-step operational walkthrough: twist-open the funnel lid to fill the 750mL PETG reservoir, insert the capacitive probe and emitter spikes into soil, connect 5V USB-C power to arm the ESP32-C3, calibrate the anti-siphon drip manifold, and watch automated root-zone watering.',
+  totalDurationSeconds: 21.4,
+  scenes: [
+    {
+      id: 'scene-1',
+      index: 1,
+      title: 'Top-Fill 750mL Reservoir',
+      durationSeconds: 4.2,
+      camera: {
+        fromPosition: [215, 175, 245],
+        toPosition: [148, 168, 178],
+        fromTarget: [8, 42, 0],
+        toTarget: [0, 72, 0],
+        fov: 40,
+      },
+      narration: {
+        text: 'Twist open the bayonet lid and pour water into the funnel.',
+        subtext: '750mL watertight PETG tank (~14 days supply)',
+        anchor: 'part',
+        partId: 'reservoir-lid',
+        offset: [0, 34, 0],
+      },
+      partAnimations: [
+        {
+          partId: 'reservoir-lid',
+          type: 'translate',
+          fromOffset: [0, 0, 0],
+          toOffset: [0, 22, 0],
+          fromRotationDelta: [0, 0, 0],
+          toRotationDelta: [0, 25, 0],
+          glowColor: '#f3d478',
+          glowIntensity: 0.55,
+        },
+        {
+          partId: 'reservoir-tank',
+          type: 'glow',
+          glowColor: '#e5bd47',
+          glowIntensity: 0.45,
+        },
+      ],
+      effects: [
+        {
+          type: 'hand_proxy',
+          partId: 'reservoir-lid',
+          label: 'Refill Pitcher',
+          color: '#f3d478',
+        },
+        {
+          type: 'water_flow',
+          partId: 'reservoir-lid',
+          targetPartId: 'reservoir-tank',
+          color: '#e5bd47',
+          label: 'Water Fill Stream',
+        },
+      ],
+    },
+    {
+      id: 'scene-2',
+      index: 2,
+      title: 'Insert Soil Probe & Drip Spikes',
+      durationSeconds: 4.4,
+      camera: {
+        fromPosition: [148, 168, 178],
+        toPosition: [-195, 118, 210],
+        fromTarget: [0, 72, 0],
+        toTarget: [65, 22, 12],
+        fov: 40,
+      },
+      narration: {
+        text: 'Push capacitive moisture probe and emitter spikes into soil.',
+        subtext: 'Corrosion-free dielectric root-zone sensing',
+        anchor: 'part',
+        partId: 'soil-sensor',
+        offset: [0, 38, 0],
+      },
+      partAnimations: [
+        {
+          partId: 'soil-sensor',
+          type: 'translate',
+          fromOffset: [0, 34, 0],
+          toOffset: [0, 0, 0],
+          glowColor: '#f3d478',
+          glowIntensity: 0.55,
+        },
+        {
+          partId: 'emitter-spike',
+          type: 'translate',
+          fromOffset: [0, 28, 0],
+          toOffset: [0, 0, 0],
+          glowColor: '#d4af37',
+          glowIntensity: 0.45,
+        },
+      ],
+      effects: [
+        {
+          type: 'hand_proxy',
+          partId: 'soil-sensor',
+          label: 'Insert Probe',
+          color: '#f3d478',
+        },
+        {
+          type: 'target_prop',
+          partId: 'emitter-spike',
+          label: 'Plant Root Zone',
+          color: '#c86d51',
+        },
+      ],
+    },
+    {
+      id: 'scene-3',
+      index: 3,
+      title: 'Connect 5V USB-C & Arm ESP32-C3',
+      durationSeconds: 4.0,
+      camera: {
+        fromPosition: [-195, 118, 210],
+        toPosition: [185, 145, 195],
+        fromTarget: [65, 22, 12],
+        toTarget: [0, 88, 0],
+        fov: 40,
+      },
+      narration: {
+        text: 'Plug in 5V USB-C power to arm the ESP32-C3 controller.',
+        subtext: 'Samples soil dielectric reading every 60s',
+        anchor: 'part',
+        partId: 'controller-enclosure',
+        offset: [0, 34, 0],
+      },
+      partAnimations: [
+        {
+          partId: 'mcu-board',
+          type: 'pulse',
+          glowColor: '#f3d478',
+          glowIntensity: 0.7,
+          oscillate: true,
+        },
+        {
+          partId: 'controller-enclosure',
+          type: 'glow',
+          glowColor: '#e5bd47',
+          glowIntensity: 0.5,
+        },
+      ],
+      effects: [
+        {
+          type: 'led_indicator',
+          partId: 'controller-enclosure',
+          color: '#f3d478',
+          label: 'ESP32-C3 Armed',
+        },
+      ],
+    },
+    {
+      id: 'scene-4',
+      index: 4,
+      title: 'Balance Dual Barbed Y-Manifold',
+      durationSeconds: 4.0,
+      camera: {
+        fromPosition: [185, 145, 195],
+        toPosition: [135, 152, 205],
+        fromTarget: [0, 88, 0],
+        toTarget: [36, 68, 24],
+        fov: 40,
+      },
+      narration: {
+        text: 'Seat the rim-mounted Y-manifold above the waterline.',
+        subtext: 'Anti-siphon height prevents passive gravity drainage',
+        anchor: 'part',
+        partId: 'drip-manifold',
+        offset: [0, 30, 0],
+      },
+      partAnimations: [
+        {
+          partId: 'drip-manifold',
+          type: 'press',
+          fromOffset: [0, 14, 0],
+          toOffset: [0, 0, 0],
+          glowColor: '#f3d478',
+          glowIntensity: 0.6,
+        },
+      ],
+      effects: [
+        {
+          type: 'hand_proxy',
+          partId: 'drip-manifold',
+          label: 'Clip Rim Manifold',
+          color: '#f3d478',
+        },
+        {
+          type: 'motion_arc',
+          partId: 'drip-manifold',
+          color: '#e5bd47',
+          label: 'Anti-Siphon Break',
+        },
+      ],
+    },
+    {
+      id: 'scene-5',
+      index: 5,
+      title: 'Autonomous Root-Zone Watering Pulse',
+      durationSeconds: 4.8,
+      camera: {
+        fromPosition: [135, 152, 205],
+        toPosition: [215, 155, 255],
+        fromTarget: [36, 68, 24],
+        toTarget: [12, 34, 8],
+        fov: 40,
+      },
+      narration: {
+        text: 'Submersible pump pulses metered water directly to plant roots.',
+        subtext: '4-second silent burst at 120 L/h flow',
+        anchor: 'part',
+        partId: 'emitter-spike',
+        offset: [0, 36, 0],
+      },
+      partAnimations: [
+        {
+          partId: 'pump-5v',
+          type: 'spin',
+          spinAxis: 'y',
+          spinSpeed: 3.0,
+          glowColor: '#f3d478',
+          glowIntensity: 0.7,
+        },
+        {
+          partId: 'silicone-tubing',
+          type: 'glow',
+          glowColor: '#e5bd47',
+          glowIntensity: 0.55,
+        },
+        {
+          partId: 'emitter-spike',
+          type: 'pulse',
+          glowColor: '#f3d478',
+          glowIntensity: 0.65,
+          oscillate: true,
+        },
+      ],
+      effects: [
+        {
+          type: 'water_flow',
+          partId: 'pump-5v',
+          targetPartId: 'emitter-spike',
+          color: '#f3d478',
+          label: '120 L/h Root Drip',
+        },
+        {
+          type: 'target_prop',
+          partId: 'emitter-spike',
+          color: '#c86d51',
+          label: 'Hydrated Soil',
+        },
+      ],
+    },
+  ],
+};
