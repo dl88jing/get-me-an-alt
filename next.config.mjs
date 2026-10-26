@@ -9,10 +9,18 @@ const nextConfig = {
       'playwright',
     ],
     outputFileTracingIncludes: {
-      '/api/objects': ['./node_modules/@sparticuz/chromium/**/*'],
-      '/api/objects/[id]': ['./node_modules/@sparticuz/chromium/**/*'],
-      '/api/objects/[id]/stream': ['./node_modules/@sparticuz/chromium/**/*'],
-      '/api/projects/[id]/modify': ['./node_modules/@sparticuz/chromium/**/*'],
+      '/api/objects': [
+        './node_modules/.pnpm/@sparticuz+chromium*/node_modules/@sparticuz/chromium/bin/**/*',
+      ],
+      '/api/objects/[id]': [
+        './node_modules/.pnpm/@sparticuz+chromium*/node_modules/@sparticuz/chromium/bin/**/*',
+      ],
+      '/api/objects/[id]/stream': [
+        './node_modules/.pnpm/@sparticuz+chromium*/node_modules/@sparticuz/chromium/bin/**/*',
+      ],
+      '/api/projects/[id]/modify': [
+        './node_modules/.pnpm/@sparticuz+chromium*/node_modules/@sparticuz/chromium/bin/**/*',
+      ],
     },
   },
   webpack: (config, { isServer }) => {
