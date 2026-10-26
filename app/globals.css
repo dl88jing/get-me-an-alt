@@ -104,10 +104,16 @@ body {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
 }
 
-/* Global accessible focus-visible ring (WCAG 2.2 AA >= 3:1 control contrast) */
+/* Global accessible focus-visible ring (WCAG 2.2 AA >= 3:1 control contrast on both dark & gold surfaces) */
 :focus-visible {
   outline: 2px solid var(--gilded-bright) !important;
   outline-offset: 2px !important;
+  box-shadow: 0 0 0 4px rgba(243, 212, 120, 0.22) !important;
+}
+
+main:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
 }
 
 /* Interactive target sizing & affordance */

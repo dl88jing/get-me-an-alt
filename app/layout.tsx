@@ -64,21 +64,33 @@ export default function RootLayout({
         <SmoothScrollProvider>
           <a
             href="#main-content"
-            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[100] focus:inline-flex focus:min-h-[44px] focus:items-center focus:rounded-xl focus:bg-[#e5bd47] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#140e07] focus:shadow-lg"
+            data-testid="skip-to-main-link"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[100] focus:inline-flex focus:min-h-[44px] focus:items-center focus:gap-2 focus:rounded-xl focus:border-2 focus:border-[#faf4e8] focus:bg-[#e5bd47] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#140e07] focus:shadow-[0_12px_32px_rgba(0,0,0,0.85)]"
           >
-            Skip to main content
+            <span>Skip to main content</span>
+            <kbd className="rounded bg-[#140e07]/15 px-1.5 py-0.5 font-mono text-xs text-[#140e07]">
+              Enter
+            </kbd>
           </a>
 
           {/* Sticky Top Bar (56px mobile, 64px sm+) */}
-          <header className="sticky top-0 z-50 h-14 sm:h-16 border-b border-[#dfd3be]/20 bg-[#0c0a08]/95 backdrop-blur-md">
+          <header
+            role="banner"
+            className="sticky top-0 z-50 h-14 sm:h-16 border-b border-[#dfd3be]/20 bg-[#0c0a08]/95 backdrop-blur-md"
+          >
             <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-3.5 sm:px-6">
               <Link
                 href="/"
+                aria-label="Get Me An Alt — Home"
                 className="inline-flex min-h-[44px] items-center gap-2.5 sm:gap-3 group shrink-0 rounded-lg py-1"
               >
-                <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e5bd47]/70 bg-gradient-to-br from-[#f3d478] via-[#d4af37] to-[#9c721c] text-[#140e07] font-codex font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
+                <div
+                  aria-hidden="true"
+                  className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e5bd47]/70 bg-gradient-to-br from-[#f3d478] via-[#d4af37] to-[#9c721c] text-[#140e07] font-codex font-bold shadow-sm transition-transform duration-200 group-hover:scale-105"
+                >
                   <svg
                     viewBox="0 0 36 36"
+                    aria-hidden="true"
                     className="h-5 w-5 text-[#140e07]"
                     fill="none"
                     stroke="currentColor"
@@ -94,7 +106,10 @@ export default function RootLayout({
                     Get Me An Alt
                   </span>
                   <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#dfd3be]/25 bg-[#17130e] px-2.5 py-0.5 font-sans text-xs font-medium text-[#dfd3be]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#e5bd47]" />
+                    <span
+                      aria-hidden="true"
+                      className="h-1.5 w-1.5 rounded-full bg-[#e5bd47]"
+                    />
                     Gemini 4 Argon
                   </span>
                 </div>
@@ -118,6 +133,7 @@ export default function RootLayout({
                 </Link>
                 <Link
                   href="/projects/desktop-robot-arm"
+                  aria-label="Featured Build: 6-Axis Desktop Robot Arm ($899 retail to $74.50 DIY)"
                   className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-[#e5bd47]/60 bg-[#231d15] px-3.5 py-2 text-xs sm:text-sm font-semibold text-[#f3d478] hover:bg-[#e5bd47] hover:text-[#140e07] transition-colors"
                 >
                   <span>Featured Build</span>
@@ -131,7 +147,8 @@ export default function RootLayout({
 
           <main
             id="main-content"
-            className="relative z-20 mx-auto max-w-7xl px-3.5 py-2.5 sm:px-6 sm:py-6 safe-bottom"
+            tabIndex={-1}
+            className="relative z-20 mx-auto max-w-7xl px-3.5 py-2.5 sm:px-6 sm:py-6 safe-bottom focus:outline-none"
           >
             {children}
           </main>

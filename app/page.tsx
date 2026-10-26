@@ -663,19 +663,23 @@ export default function LandingPage() {
             <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#dfd3be]/15 text-sm text-[#dfd3be]">
               <div className="flex items-center gap-1.5 shrink-0 min-w-0">
                 <label
+                  htmlFor="hero-photo-upload-input"
                   onDragOver={(e) => {
                     e.preventDefault();
                     setIsDraggingPhoto(true);
                   }}
                   onDragLeave={() => setIsDraggingPhoto(false)}
                   onDrop={handlePhotoDrop}
-                  className={`inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  className={`inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 rounded-lg border px-2.5 sm:px-3 py-1.5 text-xs font-semibold transition-colors focus-within:ring-2 focus-within:ring-[#f3d478] focus-within:border-[#f3d478] ${
                     isDraggingPhoto
                       ? 'border-[#f3d478] bg-[#e5bd47]/25 text-[#faf4e8]'
                       : 'border-[#dfd3be]/25 bg-[#17130e] text-[#faf4e8] hover:border-[#f3d478]'
                   }`}
                 >
-                  <Upload className="h-3.5 w-3.5 shrink-0 text-[#f3d478]" />
+                  <Upload
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 shrink-0 text-[#f3d478]"
+                  />
                   <span className="truncate max-w-[115px] sm:max-w-[200px]">
                     {isDraggingPhoto
                       ? 'Drop photo'
@@ -684,17 +688,19 @@ export default function LandingPage() {
                       : 'Upload Photo'}
                   </span>
                   <input
+                    id="hero-photo-upload-input"
                     type="file"
                     accept="image/*"
+                    aria-label="Upload product photo (PNG, JPG, WebP)"
                     onChange={handleImageUpload}
-                    className="hidden"
+                    className="sr-only"
                   />
                 </label>
                 {imageFile && (
                   <button
                     type="button"
                     onClick={() => setImageFile(null)}
-                    aria-label="Remove uploaded photo"
+                    aria-label={`Remove uploaded photo ${imageFile.name}`}
                     className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#e06348]/40 bg-[#2a0f0a]/60 px-2.5 text-xs font-semibold text-[#e06348] hover:bg-[#e06348]/20 shrink-0"
                   >
                     Remove
@@ -788,6 +794,7 @@ export default function LandingPage() {
               key={item.id}
               type="button"
               onClick={() => launchPreset(item)}
+              aria-label={`${item.title} (${item.category}) — ${item.diy} DIY vs ${item.retail} retail, save ${item.savingsPct}. Open build`}
               className="group flex flex-col justify-between rounded-2xl surface-card p-4 sm:p-5 text-left hover:border-[#f3d478] hover:bg-[#1d1812] hover:-translate-y-0.5 transition-all"
             >
               <div className="space-y-2">
@@ -820,7 +827,7 @@ export default function LandingPage() {
                     </span>
                   </div>
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-[#f3d478] group-hover:translate-x-0.5 transition-transform">
-                    Open Build <ArrowRight className="h-3.5 w-3.5" />
+                    Open Build <ArrowRight aria-hidden="true" className="h-3.5 w-3.5" />
                   </span>
                 </div>
                 <div className="text-xs text-[#b5a48b]">{item.partsSpec}</div>
@@ -840,6 +847,7 @@ export default function LandingPage() {
       ===================================================================== */}
       <section
         id="how-it-works"
+        aria-label="How Get Me An Alt Works"
         className="rounded-2xl surface-card p-6 sm:p-8 space-y-6"
       >
         <div id="pipeline-story" className="-mt-4" />
@@ -862,6 +870,7 @@ export default function LandingPage() {
             type="button"
             onClick={() => setHowItWorksOpen((o) => !o)}
             aria-expanded={howItWorksOpen}
+            aria-controls="how-it-works-details"
             className="btn-secondary-surface text-sm shrink-0 self-start md:self-auto"
           >
             <span>
@@ -870,6 +879,7 @@ export default function LandingPage() {
                 : 'Inspect 7-Agent Pipeline & 3D Preview'}
             </span>
             <ChevronDown
+              aria-hidden="true"
               className={`h-4 w-4 text-[#f3d478] transition-transform ${
                 howItWorksOpen ? 'rotate-180' : ''
               }`}
@@ -910,7 +920,10 @@ export default function LandingPage() {
 
         {/* Collapsible Detailed Pipeline + 3D Sketch-to-Reality Preview */}
         {howItWorksOpen && (
-          <div className="space-y-8 pt-4 border-t border-[#dfd3be]/15 animate-slide-in">
+          <div
+            id="how-it-works-details"
+            className="space-y-8 pt-4 border-t border-[#dfd3be]/15 animate-slide-in"
+          >
             <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-7">
               {AGENT_STAGES.map((stage) => {
                 const Icon = stage.icon;
