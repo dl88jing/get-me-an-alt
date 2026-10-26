@@ -866,11 +866,17 @@ export function PrintPanel({
             <div className="flex flex-wrap items-center gap-2">
               {/* Plate Switcher Pills when multiple plates exist */}
               {platesJson.plates.length > 1 && (
-                <div className="flex flex-wrap items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1">
+                <div
+                  role="tablist"
+                  aria-label="Build plate selector"
+                  className="flex flex-wrap items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1"
+                >
                   {platesJson.plates.map((pl, idx) => (
                     <button
                       key={pl.plateNumber}
                       type="button"
+                      role="tab"
+                      aria-selected={idx === safePlateIdx}
                       onClick={() => setSelectedPlateIdx(idx)}
                       className={`inline-flex min-h-[44px] items-center rounded-lg px-2.5 py-1.5 font-codex text-xs font-bold transition-all ${
                         idx === safePlateIdx
@@ -885,9 +891,14 @@ export function PrintPanel({
               )}
 
               {OptionalThreePlatePreview && (
-                <div className="flex items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1">
+                <div
+                  role="group"
+                  aria-label="Build plate preview mode"
+                  className="flex items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1"
+                >
                   <button
                     type="button"
+                    aria-pressed={previewMode === 'svg'}
                     onClick={() => setPreviewMode('svg')}
                     className={`inline-flex min-h-[44px] items-center rounded-lg px-2.5 py-1.5 font-codex text-[11px] font-bold ${
                       previewMode === 'svg'
@@ -899,6 +910,7 @@ export function PrintPanel({
                   </button>
                   <button
                     type="button"
+                    aria-pressed={previewMode === '3d'}
                     onClick={() => setPreviewMode('3d')}
                     className={`inline-flex min-h-[44px] items-center rounded-lg px-2.5 py-1.5 font-codex text-[11px] font-bold ${
                       previewMode === '3d'
@@ -1134,12 +1146,23 @@ export function PrintPanel({
                     return (
                       <g
                         key={`${item.partId}-${item.copy}-${idx}`}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`${fullTooltip}. Press Enter to download STL.`}
                         onMouseEnter={() => setHoveredPlacementIdx(idx)}
                         onMouseLeave={() => setHoveredPlacementIdx(null)}
+                        onFocus={() => setHoveredPlacementIdx(idx)}
+                        onBlur={() => setHoveredPlacementIdx(null)}
                         onClick={() =>
                           handleDownloadPartStl(item.partId, item.stlFile)
                         }
-                        className="cursor-pointer transition-opacity"
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            handleDownloadPartStl(item.partId, item.stlFile);
+                          }
+                        }}
+                        className="cursor-pointer transition-opacity focus:outline-none"
                       >
                         <title>{fullTooltip}</title>
                         <clipPath id={clipId}>
@@ -1293,7 +1316,17 @@ export function PrintPanel({
               return (
                 <div
                   key={plate.plateNumber}
+                  role="button"
+                  tabIndex={0}
+                  aria-pressed={isSelected}
+                  aria-label={`Select Plate ${plate.plateNumber}: ${plate.placements.length} items, ${plate.utilizationPercent}% bed utilization`}
                   onClick={() => setSelectedPlateIdx(idx)}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault();
+                      setSelectedPlateIdx(idx);
+                    }
+                  }}
                   className={`cursor-pointer rounded-2xl border p-4 transition-all space-y-3 ${
                     isSelected
                       ? 'border-[#f3d478] bg-[#d4af37]/15 shadow-electric'
@@ -1560,7 +1593,11 @@ export function PrintPanel({
           <label className="block font-codex text-xs font-bold uppercase tracking-wider text-[#e6d3b3]">
             1. Choose On-Demand Print Service Bureau
           </label>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div
+            role="radiogroup"
+            aria-label="Choose On-Demand Print Service Bureau"
+            className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          >
             {PRINT_SERVICES.map((srv) => {
               const q = computeServiceQuote(srv);
               const isSelected = srv.id === selectedServiceId;
@@ -1568,6 +1605,9 @@ export function PrintPanel({
                 <button
                   key={srv.id}
                   type="button"
+                  role="radio"
+                  aria-checked={isSelected}
+                  aria-label={`${srv.name}: ${srv.leadTime}, estimated $${q.total.toFixed(2)}`}
                   data-testid={`service-option-${srv.id}`}
                   onClick={() => setSelectedServiceId(srv.id)}
                   className={`flex flex-col justify-between rounded-xl border p-4 text-left transition-all ${
@@ -1645,13 +1685,19 @@ export function PrintPanel({
               <label className="block text-xs font-semibold text-[#e6d3b3]">
                 Part Color ({activeColor.name})
               </label>
-              <div className="flex flex-wrap gap-2">
+              <div
+                role="radiogroup"
+                aria-label="Part finish color"
+                className="flex flex-wrap gap-2"
+              >
                 {SERVICE_COLORS.map((col) => {
                   const active = col.id === selectedColorId;
                   return (
                     <button
                       key={col.id}
                       type="button"
+                      role="radio"
+                      aria-checked={active}
                       onClick={() => setSelectedColorId(col.id)}
                       className={`inline-flex min-h-[44px] items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all ${
                         active
@@ -1660,6 +1706,7 @@ export function PrintPanel({
                       }`}
                     >
                       <span
+                        aria-hidden="true"
                         className="h-3 w-3 rounded-full border border-[#d4af37]/40"
                         style={{ backgroundColor: col.hex }}
                       />
@@ -1734,10 +1781,14 @@ export function PrintPanel({
 
               <div className="grid gap-2.5 sm:grid-cols-2">
                 <div>
-                  <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
+                  <label
+                    htmlFor="print-bureau-recipient-name"
+                    className="block font-codex text-[10px] uppercase text-[#bda782] mb-1"
+                  >
                     Recipient Name
                   </label>
                   <input
+                    id="print-bureau-recipient-name"
                     type="text"
                     value={recipientName}
                     onChange={(e) => setRecipientName(e.target.value)}
@@ -1746,10 +1797,14 @@ export function PrintPanel({
                   />
                 </div>
                 <div>
-                  <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
+                  <label
+                    htmlFor="print-bureau-street-address"
+                    className="block font-codex text-[10px] uppercase text-[#bda782] mb-1"
+                  >
                     Street Address
                   </label>
                   <input
+                    id="print-bureau-street-address"
                     type="text"
                     value={streetAddress}
                     onChange={(e) => setStreetAddress(e.target.value)}
@@ -1758,10 +1813,14 @@ export function PrintPanel({
                   />
                 </div>
                 <div>
-                  <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
+                  <label
+                    htmlFor="print-bureau-city"
+                    className="block font-codex text-[10px] uppercase text-[#bda782] mb-1"
+                  >
                     City
                   </label>
                   <input
+                    id="print-bureau-city"
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
@@ -1771,10 +1830,14 @@ export function PrintPanel({
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
+                    <label
+                      htmlFor="print-bureau-state"
+                      className="block font-codex text-[10px] uppercase text-[#bda782] mb-1"
+                    >
                       State
                     </label>
                     <input
+                      id="print-bureau-state"
                       type="text"
                       value={stateCode}
                       onChange={(e) => setStateCode(e.target.value)}
@@ -1783,10 +1846,14 @@ export function PrintPanel({
                     />
                   </div>
                   <div>
-                    <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
+                    <label
+                      htmlFor="print-bureau-postal-code"
+                      className="block font-codex text-[10px] uppercase text-[#bda782] mb-1"
+                    >
                       ZIP / Postal
                     </label>
                     <input
+                      id="print-bureau-postal-code"
                       type="text"
                       value={postalCode}
                       onChange={(e) => setPostalCode(e.target.value)}
@@ -1835,8 +1902,12 @@ export function PrintPanel({
               </div>
 
               {handoffStatus && (
-                <div className="flex items-center gap-2 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-2 text-[11px] text-[#f5ebd6]">
-                  <Check className="h-4 w-4 text-[#f3d478] shrink-0" />
+                <div
+                  role="status"
+                  aria-live="polite"
+                  className="flex items-center gap-2 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-2 text-[11px] text-[#f5ebd6]"
+                >
+                  <Check aria-hidden="true" className="h-4 w-4 text-[#f3d478] shrink-0" />
                   <span>{handoffStatus}</span>
                 </div>
               )}
