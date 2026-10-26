@@ -401,7 +401,7 @@ const CameraRig: React.FC<CameraRigProps> = ({
       autoRotate={autoRotate && !animatingCam.current}
       autoRotateSpeed={0.9}
       minDistance={45}
-      maxDistance={650}
+      maxDistance={1100}
       onStart={() => {
         isUserInteracting.current = true;
         animatingCam.current = false;
@@ -466,7 +466,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
     }
     const spanY = Math.max(120, maxY - minY);
     const centerY = (minY + maxY) / 2 - 32;
-    const scale = Math.max(0.95, Math.min(1.85, Math.max(spanY / 210, maxHoriz / 135)));
+    const scale = Math.max(0.95, Math.min(2.55, Math.max(spanY / 185, maxHoriz / 130)));
     return {
       defaultTarget: [6, Math.round(centerY), 0] as [number, number, number],
       defaultCamPos: [

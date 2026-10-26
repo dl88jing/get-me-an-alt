@@ -290,15 +290,21 @@ function toVec3(
  */
 export function isCadZUpDesign(
   parts: Array<{
+    id?: string;
     position?: [number, number, number];
     explode?: [number, number, number];
+    cadGrounded?: boolean;
   }>
 ): boolean {
   if (!parts || parts.length === 0) return false;
+  if (parts.some((p) => p?.cadGrounded)) return false;
+
   let yZeroZNonZero = 0;
   let zZeroYNonZero = 0;
   let sumAbsExplodeY = 0;
   let sumAbsExplodeZ = 0;
+  let maxAbsPosY = 0;
+  let maxAbsPosZ = 0;
 
   for (const p of parts) {
     const pos = p.position ?? [0, 0, 0];
@@ -307,8 +313,16 @@ export function isCadZUpDesign(
     if (Math.abs(pos[2]) < 0.01 && Math.abs(pos[1]) > 0.5) zZeroYNonZero++;
     sumAbsExplodeY += Math.abs(exp[1]);
     sumAbsExplodeZ += Math.abs(exp[2]);
+    maxAbsPosY = Math.max(maxAbsPosY, Math.abs(pos[1]));
+    maxAbsPosZ = Math.max(maxAbsPosZ, Math.abs(pos[2]));
   }
 
+  if (zZeroYNonZero > yZeroZNonZero && maxAbsPosY > maxAbsPosZ) {
+    return false;
+  }
+  if (maxAbsPosZ > maxAbsPosY * 1.35 && zZeroYNonZero === 0) {
+    return true;
+  }
   return yZeroZNonZero > zZeroYNonZero && sumAbsExplodeZ > sumAbsExplodeY;
 }
 
