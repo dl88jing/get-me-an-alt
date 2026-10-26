@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { ShowcaseBuild } from '../components/ui/ShowcaseBuild';
+import { RecentBuildsShelf } from '../components/ui/RecentBuildsShelf';
 import {
   ArrowRight,
   ArrowUpRight,
@@ -929,6 +930,11 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+
+      {/* =====================================================================
+          RECENT BUILDS SHELF (USER IP & LOCALSTORAGE SYNCED)
+      ===================================================================== */}
+      <RecentBuildsShelf />
 
       {/* =====================================================================
           2. AGENT PIPELINE: 7 MANAGED GEMINI 4 ARGON AGENTS & SCROLL GEARS

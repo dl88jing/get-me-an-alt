@@ -1,8 +1,16 @@
 'use client';
 
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import {
+  isPresetManifest,
+  isPresetProjectSlug,
+  manifestToRecentBuild,
+  readLocalCachedManifest,
+  readLocalRecentBuilds,
+  saveLocalRecentBuild,
+} from '@/lib/recent-builds';
 import {
   AlertCircle,
   ArrowLeft,
@@ -95,22 +103,99 @@ export default function ProjectPage() {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedService, setSelectedService] = useState('craftcloud');
   const [shippingZip, setShippingZip] = useState('94107');
+  const syncedBuildRef = useRef<string>('');
+
+  // Persist non-preset project to localStorage when page loads and on live run completion
+  useEffect(() => {
+    if (!manifest || isPresetManifest(manifest)) return;
+
+    const entry = manifestToRecentBuild(manifest);
+    saveLocalRecentBuild(
+      entry,
+      manifest.status === 'completed' ? manifest : undefined
+    );
+
+    if (
+      manifest.status === 'completed' ||
+      Boolean(manifest.analysis && manifest.bom)
+    ) {
+      const syncKey = `${entry.slug}:${manifest.status}:${entry.altPrice}:${entry.originalPrice}`;
+      if (syncedBuildRef.current !== syncKey) {
+        syncedBuildRef.current = syncKey;
+        void fetch('/api/my-builds', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            build: entry,
+            manifest: manifest.status === 'completed' ? manifest : undefined,
+          }),
+        }).catch(() => {});
+      }
+    }
+  }, [manifest]);
 
   useEffect(() => {
     let es: EventSource | null = null;
     let cancelled = false;
 
     async function loadInitial() {
+      const cachedManifest = !isPresetProjectSlug(projectId)
+        ? readLocalCachedManifest(projectId)
+        : null;
+      const localEntry = !isPresetProjectSlug(projectId)
+        ? readLocalRecentBuilds().find((b) => b.slug === projectId)
+        : null;
+
+      if (cachedManifest && cachedManifest.status === 'completed') {
+        setManifest(cachedManifest);
+        setLoading(false);
+      }
+
+      if (localEntry && !cachedManifest) {
+        await fetch('/api/my-builds', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ build: localEntry }),
+        }).catch(() => {});
+      }
+
       try {
         const res = await fetch(`/api/objects/${projectId}`);
         if (res.ok) {
           const data = await res.json();
           if (!cancelled && data.manifest) {
-            setManifest(data.manifest);
+            const serverManifest = data.manifest as ProjectManifest;
+            if (
+              cachedManifest &&
+              cachedManifest.status === 'completed' &&
+              serverManifest.status === 'running' &&
+              serverManifest.stages.every((s) => s.status === 'pending' || s.status === 'running') &&
+              !serverManifest.analysis
+            ) {
+              // Cold container reconstructed a stub; restore our completed manifest
+              setManifest(cachedManifest);
+              void fetch('/api/my-builds', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  build: manifestToRecentBuild(cachedManifest),
+                  manifest: cachedManifest,
+                }),
+              }).catch(() => {});
+              setLoading(false);
+              return;
+            }
+            setManifest(serverManifest);
             if (Array.isArray(data.events)) {
               setStreamEvents(data.events);
             }
             setLoading(false);
+            if (
+              serverManifest.status === 'completed' ||
+              serverManifest.status === 'error'
+            ) {
+              return;
+            }
           }
         }
       } catch {

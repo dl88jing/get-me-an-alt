@@ -5,6 +5,13 @@ import {
   getProjectManifest,
   pipelineEmitter,
 } from '@/lib/agents/orchestrator';
+import { isPresetManifest } from '@/lib/recent-builds';
+import {
+  ensurePersistedProjectRestored,
+  getClientIpHash,
+  recordCompletedBuildForIp,
+  trackProjectForIp,
+} from '@/lib/recent-builds-server';
 import { SsePipelineEvent } from '@/lib/types';
 
 export const dynamic = 'force-dynamic';
@@ -16,6 +23,9 @@ export async function GET(
   { params }: { params: { id: string } }
 ) {
   const projectId = params.id;
+  const ipHash = getClientIpHash(req);
+  await ensurePersistedProjectRestored(projectId, ipHash);
+  trackProjectForIp(projectId, ipHash);
   const encoder = new TextEncoder();
 
   const stream = new ReadableStream({
@@ -64,6 +74,16 @@ export async function GET(
         (initialManifest.status === 'completed' ||
           initialManifest.status === 'error')
       ) {
+        if (
+          initialManifest.status === 'completed' &&
+          !isPresetManifest(initialManifest)
+        ) {
+          void recordCompletedBuildForIp(
+            ipHash,
+            initialManifest,
+            initialManifest
+          );
+        }
         closed = true;
         try {
           controller.close();
@@ -80,6 +100,18 @@ export async function GET(
           ev.agent === 'orchestrator' &&
           (ev.phase === 'done' || ev.phase === 'error')
         ) {
+          const finalManifest = getProjectManifest(projectId);
+          if (
+            finalManifest &&
+            finalManifest.status === 'completed' &&
+            !isPresetManifest(finalManifest)
+          ) {
+            void recordCompletedBuildForIp(
+              ipHash,
+              finalManifest,
+              finalManifest
+            );
+          }
           cleanup();
         }
       };
@@ -99,6 +131,9 @@ export async function GET(
           latest &&
           (latest.status === 'completed' || latest.status === 'error')
         ) {
+          if (latest.status === 'completed' && !isPresetManifest(latest)) {
+            void recordCompletedBuildForIp(ipHash, latest, latest);
+          }
           cleanup();
         }
       }, 1000);

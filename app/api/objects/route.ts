@@ -3,6 +3,12 @@ import {
   listRecentProjects,
   startProjectPipeline,
 } from '@/lib/agents/orchestrator';
+import { isPresetManifest } from '@/lib/recent-builds';
+import {
+  getClientIpHash,
+  recordCompletedBuildForIp,
+  trackProjectForIp,
+} from '@/lib/recent-builds-server';
 
 export const dynamic = 'force-dynamic';
 export const maxDuration = 300;
@@ -24,6 +30,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const ipHash = getClientIpHash(req);
     const manifest = startProjectPipeline({
       prompt,
       url,
@@ -31,6 +38,13 @@ export async function POST(req: NextRequest) {
       inlineImage,
       printerId: printerId || 'bambu-a1',
     });
+
+    if (!isPresetManifest(manifest)) {
+      trackProjectForIp(manifest.id, ipHash);
+      if (manifest.status === 'completed') {
+        await recordCompletedBuildForIp(ipHash, manifest, manifest);
+      }
+    }
 
     return NextResponse.json({
       id: manifest.id,
