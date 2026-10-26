@@ -630,7 +630,7 @@ export default function LandingPage() {
 
         {/* Central Hero Copy + Command Bar */}
         <div className="relative z-10 mx-auto max-w-4xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/45 bg-[#d4af37]/12 px-4 py-1.5 font-mono text-xs font-medium text-[#f3d478] shadow-[0_0_28px_-4px_rgba(212,175,55,0.4)]">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/45 bg-[#d4af37]/12 px-4 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] shadow-[0_0_28px_-4px_rgba(212,175,55,0.4)]">
             <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
             <span>
               Get Me An Alt · Managed Gemini 4 Argon Agents
@@ -781,7 +781,7 @@ export default function LandingPage() {
           <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
             <Link
               href="/projects/plant-auto-waterer"
-              className="inline-flex items-center gap-2.5 rounded-xl border border-[#d4af37]/55 bg-[#d4af37]/15 px-5 py-2.5 text-xs font-semibold text-[#f3d478] hover:bg-[#d4af37]/25 transition-all shadow-[0_0_30px_-8px_rgba(212,175,55,0.45)]"
+              className="inline-flex items-center gap-2.5 rounded-xl border border-[#d4af37]/55 bg-[#d4af37]/15 px-5 py-2.5 font-codex text-xs font-bold tracking-wide text-[#f3d478] hover:bg-[#d4af37]/25 transition-all shadow-[0_0_30px_-8px_rgba(212,175,55,0.45)]"
             >
               <Zap className="h-4 w-4 text-[#f3d478]" />
               <span>
@@ -850,7 +850,7 @@ export default function LandingPage() {
             </div>
 
             <div className="relative z-10 space-y-1 max-w-lg">
-              <div className="font-mono text-[10px] uppercase tracking-widest text-[#f3d478]">
+              <div className="font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
                 PLATE-PACKED OPENSCAD GEOMETRY
               </div>
               <h3 className="font-display italic text-xl sm:text-2xl font-bold text-[#f5ebd6]">
@@ -1280,7 +1280,7 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs">
+          <div className="flex flex-wrap items-center gap-2.5 font-codex text-xs font-semibold">
             <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/40 bg-[#e6d3b3]/15 px-3 py-1.5 text-[#f3d478]">
               <span className="h-2 w-2 rounded-full bg-[#e6d3b3]" />
               Sepia Ink Sketch

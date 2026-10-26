@@ -394,7 +394,7 @@ export default function ProjectPage() {
                 className={`relative inline-flex items-center gap-2 rounded-xl px-4 py-2.5 font-codex text-xs font-bold tracking-wide transition-all duration-200 ${
                   active
                     ? 'bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 shadow-[0_0_24px_-6px_rgba(212,175,55,0.45)]'
-                    : 'border border-transparent bg-white/[0.03] text-[#e6d3b3] hover:border-[#d4af37]/25 hover:text-[#f5ebd6]'
+                    : 'border border-transparent bg-[#14100b]/70 text-[#e6d3b3] hover:border-[#d4af37]/25 hover:text-[#f5ebd6]'
                 }`}
               >
                 <Icon className="h-4 w-4" />
@@ -1092,7 +1092,7 @@ export default function ProjectPage() {
 
       {/* Print Service Quote Modal */}
       {showOrderModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/75 p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0c0906]/85 backdrop-blur-sm p-4">
           <div className="w-full max-w-lg rounded-2xl codex-folio p-6 space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="font-display text-xl font-bold text-[#f5ebd6]">
