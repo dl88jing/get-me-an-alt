@@ -735,6 +735,34 @@ export default function ProjectPage() {
           <div
             role="tablist"
             aria-label="Project Sections"
+            onKeyDown={(e) => {
+              if (
+                e.key !== 'ArrowRight' &&
+                e.key !== 'ArrowLeft' &&
+                e.key !== 'Home' &&
+                e.key !== 'End'
+              ) {
+                return;
+              }
+              e.preventDefault();
+              const curIdx = skeletonTabs.findIndex((t) => t.id === activeTab);
+              const nextIdx =
+                e.key === 'Home'
+                  ? 0
+                  : e.key === 'End'
+                  ? skeletonTabs.length - 1
+                  : e.key === 'ArrowRight'
+                  ? (curIdx + 1) % skeletonTabs.length
+                  : (curIdx - 1 + skeletonTabs.length) % skeletonTabs.length;
+              const nextTab = skeletonTabs[nextIdx];
+              if (nextTab) {
+                setActiveTab(nextTab.id);
+                const btn = e.currentTarget.querySelector<HTMLElement>(
+                  `[data-tab-id="${nextTab.id}"]`
+                );
+                btn?.focus();
+              }
+            }}
             className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-1 sm:p-1.5"
           >
             {skeletonTabs.map((t) => {
@@ -743,8 +771,11 @@ export default function ProjectPage() {
               return (
                 <button
                   key={t.id}
+                  id={`project-tab-${t.id}`}
                   role="tab"
                   aria-selected={active}
+                  aria-controls={`project-tabpanel-${t.id}`}
+                  tabIndex={active ? 0 : -1}
                   data-tab-id={t.id}
                   type="button"
                   onClick={() => setActiveTab(t.id)}
@@ -754,10 +785,14 @@ export default function ProjectPage() {
                       : 'bg-transparent text-[#dfd3be] hover:bg-[#231d15] hover:text-[#faf4e8]'
                   }`}
                 >
-                  <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+                  <Icon
+                    aria-hidden="true"
+                    className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0"
+                  />
                   <span>{t.label}</span>
                   {t.id !== 'overview' && (
                     <span
+                      aria-hidden="true"
                       className={`h-4 w-10 rounded-md ${
                         active ? 'bg-[#140e07]/20' : 'skeleton-shimmer'
                       }`}
@@ -1108,6 +1143,11 @@ export default function ProjectPage() {
                 <button
                   type="button"
                   onClick={handleCopyShareLink}
+                  aria-label={
+                    copiedLink
+                      ? 'Shareable link copied to clipboard'
+                      : 'Copy shareable link to this build and tab'
+                  }
                   title="Copy shareable link to this build & tab"
                   data-testid="share-project-link-btn"
                   className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/20 bg-[#0c0a08] px-2.5 py-1.5 font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors shrink-0"
@@ -1261,11 +1301,22 @@ export default function ProjectPage() {
           role="tablist"
           aria-label="Project Sections"
           onKeyDown={(e) => {
-            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            if (
+              e.key !== 'ArrowRight' &&
+              e.key !== 'ArrowLeft' &&
+              e.key !== 'Home' &&
+              e.key !== 'End'
+            ) {
+              return;
+            }
             e.preventDefault();
             const curIdx = TABS.findIndex((t) => t.id === activeTab);
             const nextIdx =
-              e.key === 'ArrowRight'
+              e.key === 'Home'
+                ? 0
+                : e.key === 'End'
+                ? TABS.length - 1
+                : e.key === 'ArrowRight'
                 ? (curIdx + 1) % TABS.length
                 : (curIdx - 1 + TABS.length) % TABS.length;
             const nextTab = TABS[nextIdx];
@@ -1290,8 +1341,11 @@ export default function ProjectPage() {
             return (
               <button
                 key={t.id}
+                id={`project-tab-${t.id}`}
                 role="tab"
                 aria-selected={active}
+                aria-controls={`project-tabpanel-${t.id}`}
+                tabIndex={active ? 0 : -1}
                 data-tab-id={t.id}
                 type="button"
                 onClick={(e) => {
@@ -1308,7 +1362,10 @@ export default function ProjectPage() {
                     : 'bg-transparent text-[#dfd3be] hover:bg-[#231d15] hover:text-[#faf4e8]'
                 }`}
               >
-                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
+                <Icon
+                  aria-hidden="true"
+                  className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0"
+                />
                 <span>{t.label}</span>
                 {t.badge && (
                   <span
@@ -1321,7 +1378,10 @@ export default function ProjectPage() {
                     }`}
                   >
                     {t.isStageRunning && (
-                      <Loader2 className="h-2.5 w-2.5 animate-spin shrink-0" />
+                      <Loader2
+                        aria-hidden="true"
+                        className="h-2.5 w-2.5 animate-spin shrink-0"
+                      />
                     )}
                     <span>{t.badge}</span>
                   </span>
@@ -1330,6 +1390,15 @@ export default function ProjectPage() {
             );
           })}
         </div>
+      </div>
+
+      {/* Screen-reader polite status announcement for tab switches & clipboard actions */}
+      <div role="status" aria-live="polite" className="sr-only">
+        {copiedLink
+          ? 'Shareable project link copied to clipboard.'
+          : `${
+              TABS.find((t) => t.id === activeTab)?.label || 'Overview'
+            } tab active for ${manifest.title}.`}
       </div>
 
       {/* Render Ask Argon + Pipeline bars above tab content on non-canvas tabs; below canvas on Exploded View & Instructions */}
@@ -1780,7 +1849,12 @@ export default function ProjectPage() {
 
       {/* TAB 1: OVERVIEW */}
       {activeTab === 'overview' && analysis && (
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div
+          id="project-tabpanel-overview"
+          role="tabpanel"
+          aria-labelledby="project-tab-overview"
+          className="grid gap-6 lg:grid-cols-3"
+        >
           <div className="lg:col-span-2 space-y-6">
             <div className="rounded-2xl surface-card p-6 space-y-4">
               <div className="flex flex-wrap items-center justify-between gap-2">
@@ -2154,7 +2228,12 @@ export default function ProjectPage() {
 
       {/* TAB 2: SOURCES */}
       {activeTab === 'sources' && sources && (
-        <div className="space-y-6">
+        <div
+          id="project-tabpanel-sources"
+          role="tabpanel"
+          aria-labelledby="project-tab-sources"
+          className="space-y-6"
+        >
           {PeerSourcesComp ? (
             <PeerSourcesComp
               sources={sources}
@@ -2223,7 +2302,12 @@ export default function ProjectPage() {
 
       {/* TAB 3: BOM */}
       {activeTab === 'bom' && bom && (
-        <div className="space-y-6">
+        <div
+          id="project-tabpanel-bom"
+          role="tabpanel"
+          aria-labelledby="project-tab-bom"
+          className="space-y-6"
+        >
           {PeerBomComp ? (
             <PeerBomComp
               bom={bom}
@@ -2334,7 +2418,12 @@ export default function ProjectPage() {
 
       {/* TAB 4: PRINT FILES */}
       {activeTab === 'print' && plates && (
-        <div className="space-y-6">
+        <div
+          id="project-tabpanel-print"
+          role="tabpanel"
+          aria-labelledby="project-tab-print"
+          className="space-y-6"
+        >
           <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#dfd3be]/20 bg-[#17130e]/90 px-4 py-2.5 text-xs text-[#dfd3be]">
             <span className="flex items-center gap-2">
               <Truck className="h-4 w-4 text-[#e5bd47] shrink-0" />
@@ -2483,7 +2572,12 @@ export default function ProjectPage() {
 
       {/* TAB 5: INSTRUCTIONS */}
       {activeTab === 'instructions' && instructions && (
-        <div className="space-y-6">
+        <div
+          id="project-tabpanel-instructions"
+          role="tabpanel"
+          aria-labelledby="project-tab-instructions"
+          className="space-y-6"
+        >
           {PeerInstructionsComp ? (
             <PeerInstructionsComp
               instructions={instructions}
@@ -2634,7 +2728,12 @@ export default function ProjectPage() {
 
       {/* TAB 6: EXPLODED VIEW */}
       {activeTab === 'exploded' && design && (
-        <div className="space-y-6">
+        <div
+          id="project-tabpanel-exploded"
+          role="tabpanel"
+          aria-labelledby="project-tab-exploded"
+          className="space-y-6"
+        >
           {PeerExplodedComp ? (
             <PeerExplodedComp
               design={design}
@@ -2861,7 +2960,11 @@ export default function ProjectPage() {
               {plates?.totalWeightGrams || 185}g total) and hand off to a print bureau:
             </p>
 
-            <div className="space-y-2">
+            <div
+              role="radiogroup"
+              aria-label="Choose On-Demand Print Service Bureau"
+              className="space-y-2"
+            >
               {[
                 {
                   id: 'craftcloud',
@@ -2884,7 +2987,7 @@ export default function ProjectPage() {
               ].map((srv) => (
                 <label
                   key={srv.id}
-                  className={`flex min-h-[48px] cursor-pointer items-center justify-between rounded-xl border p-3 ${
+                  className={`flex min-h-[48px] cursor-pointer items-center justify-between rounded-xl border p-3 focus-within:ring-2 focus-within:ring-[#f3d478] ${
                     selectedService === srv.id
                       ? 'border-[#f3d478] bg-[#d4af37]/15'
                       : 'border-[#d4af37]/25 bg-[#0c0906]'
@@ -2894,6 +2997,7 @@ export default function ProjectPage() {
                     <input
                       type="radio"
                       name="service"
+                      aria-label={`${srv.name}, estimated ${srv.est}`}
                       checked={selectedService === srv.id}
                       onChange={() => setSelectedService(srv.id)}
                     />
@@ -2909,8 +3013,13 @@ export default function ProjectPage() {
             </div>
 
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+              <label htmlFor="order-modal-zip-input" className="sr-only">
+                Shipping ZIP or Postal Code
+              </label>
               <input
+                id="order-modal-zip-input"
                 type="text"
+                aria-label="Shipping ZIP or Postal Code"
                 value={shippingZip}
                 onChange={(e) => setShippingZip(e.target.value)}
                 placeholder="Shipping ZIP / Postal Code"
@@ -2928,7 +3037,8 @@ export default function ProjectPage() {
                 rel="noopener noreferrer"
                 className="btn-primary-gold min-h-[44px] px-4 py-2 text-xs font-bold"
               >
-                Continue to Service <ExternalLink className="h-3.5 w-3.5" />
+                Continue to Service{' '}
+                <ExternalLink aria-hidden="true" className="h-3.5 w-3.5" />
               </a>
             </div>
           </div>
