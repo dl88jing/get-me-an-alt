@@ -223,6 +223,78 @@ export default function ProjectPage() {
   const [stepNoteExpanded, setStepNoteExpanded] = useState(false);
   const [nowMs, setNowMs] = useState<number>(() => Date.now());
   const syncedBuildRef = useRef<string>('');
+  const orderModalRef = useRef<HTMLDivElement | null>(null);
+  const orderModalCloseBtnRef = useRef<HTMLButtonElement | null>(null);
+  const orderModalTriggerRef = useRef<HTMLElement | null>(null);
+
+  const openOrderModal = (triggerEl?: HTMLElement | null) => {
+    if (typeof document !== 'undefined') {
+      orderModalTriggerRef.current =
+        triggerEl || (document.activeElement as HTMLElement | null);
+    }
+    setShowOrderModal(true);
+  };
+
+  const closeOrderModal = () => {
+    setShowOrderModal(false);
+    const trigger = orderModalTriggerRef.current;
+    if (trigger && typeof trigger.focus === 'function') {
+      window.requestAnimationFrame(() => {
+        trigger.focus();
+      });
+    }
+  };
+
+  // Focus trap & Escape-to-close for Print Bureau Quote Modal (P5)
+  useEffect(() => {
+    if (!showOrderModal) return;
+
+    const raf = window.requestAnimationFrame(() => {
+      orderModalCloseBtnRef.current?.focus();
+    });
+
+    const handleModalKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        e.stopPropagation();
+        closeOrderModal();
+        return;
+      }
+
+      if (e.key === 'Tab' && orderModalRef.current) {
+        const focusables = Array.from(
+          orderModalRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter(
+          (el) => !el.hasAttribute('disabled') && el.offsetParent !== null
+        );
+
+        if (focusables.length === 0) return;
+        const first = focusables[0];
+        const last = focusables[focusables.length - 1];
+        const active = document.activeElement as HTMLElement | null;
+
+        if (e.shiftKey) {
+          if (active === first || !orderModalRef.current.contains(active)) {
+            e.preventDefault();
+            last.focus();
+          }
+        } else {
+          if (active === last || !orderModalRef.current.contains(active)) {
+            e.preventDefault();
+            first.focus();
+          }
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleModalKeyDown);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('keydown', handleModalKeyDown);
+    };
+  }, [showOrderModal]);
 
   // Live 1s elapsed timer during active pipeline builds
   useEffect(() => {
@@ -1764,6 +1836,18 @@ export default function ProjectPage() {
                     {design ? `${design.parts.length} parts →` : 'Open →'}
                   </span>
                 </button>
+                <button
+                  type="button"
+                  data-testid="open-order-modal-btn"
+                  onClick={(e) => openOrderModal(e.currentTarget)}
+                  className="flex min-h-[44px] items-center justify-between rounded-xl border border-[#e5bd47]/35 bg-[#e5bd47]/10 px-3.5 py-2.5 text-left text-xs font-semibold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#e5bd47]/20 transition-colors"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Truck className="h-4 w-4 text-[#e5bd47]" />
+                    <span>No Printer? Print Bureau Quote</span>
+                  </span>
+                  <span className="font-mono text-[#f3d478]">From $9.40 →</span>
+                </button>
               </div>
             </div>
           </div>
@@ -1951,6 +2035,27 @@ export default function ProjectPage() {
       {/* TAB 4: PRINT FILES */}
       {activeTab === 'print' && plates && (
         <div className="space-y-6">
+          <div className="flex flex-wrap items-center justify-between gap-2 rounded-2xl border border-[#dfd3be]/20 bg-[#17130e]/90 px-4 py-2.5 text-xs text-[#dfd3be]">
+            <span className="flex items-center gap-2">
+              <Truck className="h-4 w-4 text-[#e5bd47] shrink-0" />
+              <span>
+                Don&apos;t own a 3D printer? Compare instant quotes for all{' '}
+                <strong className="text-[#faf4e8]">
+                  {plates.parts.length} STL parts ({plates.totalWeightGrams}g)
+                </strong>
+                .
+              </span>
+            </span>
+            <button
+              type="button"
+              data-testid="print-tab-order-modal-btn"
+              onClick={(e) => openOrderModal(e.currentTarget)}
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#e5bd47]/45 bg-[#e5bd47]/15 px-3.5 py-1.5 font-semibold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#e5bd47]/25 transition-colors"
+            >
+              <Truck className="h-3.5 w-3.5" />
+              <span>Quick Bureau Quote Modal</span>
+            </button>
+          </div>
           {PeerPrintComp ? (
             <PeerPrintComp
               plates={plates}
@@ -1967,8 +2072,8 @@ export default function ProjectPage() {
                 </span>
                 <button
                   type="button"
-                  onClick={() => setShowOrderModal(true)}
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-[#d4af37] px-3.5 py-2 font-codex text-xs font-bold text-[#140e07]"
+                  onClick={(e) => openOrderModal(e.currentTarget)}
+                  className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[#d4af37] px-3.5 py-2 font-codex text-xs font-bold text-[#140e07]"
                 >
                   <Truck className="h-3.5 w-3.5" /> No Printer? Order Prints
                 </button>
@@ -2026,8 +2131,8 @@ export default function ProjectPage() {
                   </h3>
                   <button
                     type="button"
-                    onClick={() => setShowOrderModal(true)}
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1.5 font-codex text-xs font-semibold text-[#f3d478] hover:bg-[#d4af37]/25"
+                    onClick={(e) => openOrderModal(e.currentTarget)}
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1.5 font-codex text-xs font-semibold text-[#f3d478] hover:bg-[#d4af37]/25"
                   >
                     <Truck className="h-3.5 w-3.5" /> Request Print Bureau Quote
                     (Craftcloud / JLC3DP / Xometry)
@@ -2398,24 +2503,34 @@ export default function ProjectPage() {
         <div
           role="dialog"
           aria-modal="true"
+          aria-labelledby="order-modal-title"
           aria-label="Order 3D Prints from On-Demand Print Service"
-          onClick={() => setShowOrderModal(false)}
+          onClick={closeOrderModal}
           className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#0c0906]/85 backdrop-blur-sm p-3 sm:p-4 safe-bottom"
         >
           <div
+            ref={orderModalRef}
             onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-lg rounded-2xl codex-folio p-5 sm:p-6 space-y-4"
+            className="w-full max-w-lg rounded-2xl codex-folio p-5 sm:p-6 space-y-4 shadow-2xl"
           >
             <div className="flex items-center justify-between gap-2">
-              <h3 className="font-display text-xl font-bold text-[#f5ebd6]">
+              <h3
+                id="order-modal-title"
+                className="font-display text-xl font-bold text-[#f5ebd6]"
+              >
                 No 3D Printer? Send STLs to an On-Demand Print Service
               </h3>
               <button
+                ref={orderModalCloseBtnRef}
                 type="button"
-                onClick={() => setShowOrderModal(false)}
-                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8] shrink-0"
+                aria-label="Close Print Service Quote Modal (Escape)"
+                onClick={closeOrderModal}
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] shrink-0"
               >
-                Close ✕
+                <span>Close</span>
+                <kbd className="rounded border border-[#d4af37]/35 bg-[#0c0906] px-1.5 py-0.5 font-mono text-[10px] text-[#f3d478]">
+                  Esc
+                </kbd>
               </button>
             </div>
 

@@ -266,6 +266,27 @@ export function TeardownGallery({
     Record<string, boolean>
   >({});
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
+  const lightboxDialogRef = useRef<HTMLDivElement | null>(null);
+  const lightboxCloseBtnRef = useRef<HTMLButtonElement | null>(null);
+  const lightboxTriggerRef = useRef<HTMLElement | null>(null);
+
+  const openLightbox = useCallback((triggerEl?: HTMLElement | null) => {
+    if (typeof document !== 'undefined') {
+      lightboxTriggerRef.current =
+        triggerEl || (document.activeElement as HTMLElement | null);
+    }
+    setLightboxOpen(true);
+  }, []);
+
+  const closeLightbox = useCallback(() => {
+    setLightboxOpen(false);
+    const trigger = lightboxTriggerRef.current;
+    if (trigger && typeof trigger.focus === 'function') {
+      window.requestAnimationFrame(() => {
+        trigger.focus();
+      });
+    }
+  }, []);
 
   const activeIndex =
     frames.length > 0 ? Math.min(selectedIdx, frames.length - 1) : 0;
@@ -321,10 +342,55 @@ export function TeardownGallery({
 
   useEffect(() => {
     if (!lightboxOpen) return;
+
+    const raf = window.requestAnimationFrame(() => {
+      lightboxCloseBtnRef.current?.focus();
+    });
+
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
-        setLightboxOpen(false);
-      } else if (e.key === 'ArrowRight') {
+        e.preventDefault();
+        e.stopPropagation();
+        closeLightbox();
+        return;
+      }
+
+      if (e.key === 'Tab' && lightboxDialogRef.current) {
+        const focusables = Array.from(
+          lightboxDialogRef.current.querySelectorAll<HTMLElement>(
+            'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+          )
+        ).filter(
+          (el) => !el.hasAttribute('disabled') && el.offsetParent !== null
+        );
+
+        if (focusables.length > 0) {
+          const first = focusables[0];
+          const last = focusables[focusables.length - 1];
+          const active = document.activeElement as HTMLElement | null;
+
+          if (e.shiftKey) {
+            if (
+              active === first ||
+              !lightboxDialogRef.current.contains(active)
+            ) {
+              e.preventDefault();
+              last.focus();
+            }
+          } else {
+            if (
+              active === last ||
+              !lightboxDialogRef.current.contains(active)
+            ) {
+              e.preventDefault();
+              first.focus();
+            }
+          }
+        }
+        return;
+      }
+
+      if (e.key === 'ArrowRight') {
         e.preventDefault();
         stepFrame(1);
       } else if (e.key === 'ArrowLeft') {
@@ -333,8 +399,11 @@ export function TeardownGallery({
       }
     };
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxOpen, stepFrame]);
+    return () => {
+      window.cancelAnimationFrame(raf);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [lightboxOpen, stepFrame, closeLightbox]);
 
   const handleSectionKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
     const tag = (e.target as HTMLElement)?.tagName;
@@ -679,7 +748,7 @@ export function TeardownGallery({
                   ) : (
                     <button
                       type="button"
-                      onClick={() => setLightboxOpen(true)}
+                      onClick={(e) => openLightbox(e.currentTarget)}
                       aria-label={`Open full-screen lightbox for frame at ${activeTsLabel}`}
                       className="group relative block aspect-video w-full overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] text-left shadow-inner focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
                     >
@@ -742,8 +811,9 @@ export function TeardownGallery({
                     (activeArtifactImgSrc || activeImgSrc) && (
                       <button
                         type="button"
-                        onClick={() => setLightboxOpen(true)}
-                        className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2 text-left transition-all hover:border-[#f3d478]/60 hover:bg-[#17120c]"
+                        data-testid="open-teardown-lightbox-btn"
+                        onClick={(e) => openLightbox(e.currentTarget)}
+                        className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2 text-left transition-all hover:border-[#f3d478]/60 hover:bg-[#17120c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
                       >
                         <div className="flex min-w-0 items-center gap-3">
                           <img
@@ -1057,21 +1127,26 @@ export function TeardownGallery({
         <div
           role="dialog"
           aria-modal="true"
+          aria-labelledby="teardown-lightbox-title"
           aria-label={`Enlarged teardown frame at ${activeTsLabel}`}
-          onClick={() => setLightboxOpen(false)}
+          onClick={closeLightbox}
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/85 p-4 backdrop-blur-md"
         >
           <div
+            ref={lightboxDialogRef}
             onClick={(e) => e.stopPropagation()}
             className="w-full max-w-4xl overflow-hidden rounded-2xl gilded-frame bg-[#120e0a] p-5 shadow-2xl"
           >
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[#d4af37]/25 pb-3">
               <div className="flex items-center gap-2.5">
-                <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906] px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478]">
+                <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906] px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] tabular-nums">
                   Frame {activeIndex + 1}/{frames.length} · {activeTsLabel} (t=
                   {activeFrame.t}s)
                 </span>
-                <span className="font-display text-base font-bold text-[#f5ebd6]">
+                <span
+                  id="teardown-lightbox-title"
+                  className="font-display text-base font-bold text-[#f5ebd6]"
+                >
                   {activeFrame.parts.map((p) => p.name).join(' · ')}
                 </span>
               </div>
@@ -1079,24 +1154,30 @@ export function TeardownGallery({
                 <button
                   type="button"
                   onClick={() => stepFrame(-1)}
-                  className="rounded-lg border border-[#d4af37]/35 bg-[#17120c] px-2.5 py-1 text-xs text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6]"
+                  aria-label="Previous teardown frame"
+                  className="inline-flex min-h-[44px] items-center rounded-lg border border-[#d4af37]/35 bg-[#17120c] px-3 py-1.5 text-xs font-medium text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
                 >
                   ← Prev
                 </button>
                 <button
                   type="button"
                   onClick={() => stepFrame(1)}
-                  className="rounded-lg border border-[#d4af37]/35 bg-[#17120c] px-2.5 py-1 text-xs text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6]"
+                  aria-label="Next teardown frame"
+                  className="inline-flex min-h-[44px] items-center rounded-lg border border-[#d4af37]/35 bg-[#17120c] px-3 py-1.5 text-xs font-medium text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
                 >
                   Next →
                 </button>
                 <button
+                  ref={lightboxCloseBtnRef}
                   type="button"
-                  onClick={() => setLightboxOpen(false)}
-                  aria-label="Close lightbox"
-                  className="rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1 font-codex text-xs font-bold uppercase text-[#f3d478] hover:bg-[#d4af37]/30"
+                  onClick={closeLightbox}
+                  aria-label="Close lightbox (Escape)"
+                  className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1.5 font-codex text-xs font-bold uppercase text-[#f3d478] hover:bg-[#d4af37]/30 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
                 >
-                  ✕ Close
+                  <span>✕ Close</span>
+                  <kbd className="rounded border border-[#d4af37]/35 bg-[#0c0906] px-1.5 py-0.5 font-mono text-[10px] text-[#f3d478]">
+                    Esc
+                  </kbd>
                 </button>
               </div>
             </div>
@@ -1120,7 +1201,7 @@ export function TeardownGallery({
                 )}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/55 bg-[#d4af37]/20 px-4 py-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] hover:bg-[#d4af37]/35"
+                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#d4af37]/55 bg-[#d4af37]/20 px-4 py-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] hover:bg-[#d4af37]/35 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
               >
                 <span>Watch at {activeTsLabel}</span>
                 <span aria-hidden="true">↗</span>
