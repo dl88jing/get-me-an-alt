@@ -667,6 +667,31 @@ export function TeardownGallery({
           <div
             role="tablist"
             aria-label="Teardown video frames"
+            onKeyDown={(e) => {
+              if (
+                e.key !== 'ArrowRight' &&
+                e.key !== 'ArrowLeft' &&
+                e.key !== 'Home' &&
+                e.key !== 'End'
+              ) {
+                return;
+              }
+              e.preventDefault();
+              e.stopPropagation();
+              const nextIdx =
+                e.key === 'Home'
+                  ? 0
+                  : e.key === 'End'
+                  ? frames.length - 1
+                  : e.key === 'ArrowRight'
+                  ? (activeIndex + 1) % frames.length
+                  : (activeIndex - 1 + frames.length) % frames.length;
+              handleSelectAndSeek(nextIdx, true);
+              const btn = e.currentTarget.querySelector<HTMLElement>(
+                `[data-frame-idx="${nextIdx}"]`
+              );
+              btn?.focus();
+            }}
             className="grid grid-cols-2 gap-3 sm:grid-cols-4"
           >
             {frames.map((frame: TeardownFrame, idx: number) => {
@@ -682,9 +707,13 @@ export function TeardownGallery({
               return (
                 <button
                   key={`${frame.video}-${frame.t}-${idx}`}
+                  id={`teardown-tab-${idx}`}
                   type="button"
                   role="tab"
                   aria-selected={isSelected}
+                  aria-controls="teardown-active-frame-panel"
+                  tabIndex={isSelected ? 0 : -1}
+                  data-frame-idx={idx}
                   onClick={() => handleSelectAndSeek(idx, true)}
                   className={`group flex flex-col overflow-hidden rounded-xl border text-left transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] ${
                     isSelected
@@ -752,7 +781,12 @@ export function TeardownGallery({
 
           {/* Active Frame Detail + Part Callouts */}
           {activeFrame && (
-            <div className="grid grid-cols-1 gap-5 lg:grid-cols-12">
+            <div
+              id="teardown-active-frame-panel"
+              role="tabpanel"
+              aria-labelledby={`teardown-tab-${activeIndex}`}
+              className="grid grid-cols-1 gap-5 lg:grid-cols-12"
+            >
               {/* Left: Embedded Video Player (or Frame Image) + Tasteful Metadata & Part Chips Bar */}
               <div className="flex flex-col justify-between rounded-2xl border border-[#d4af37]/30 bg-[#120e0a]/90 p-4 shadow-xl lg:col-span-5">
                 <div>
@@ -862,6 +896,7 @@ export function TeardownGallery({
                       <button
                         type="button"
                         data-testid="open-teardown-lightbox-btn"
+                        aria-label={`Open full-screen lightbox for teardown frame at ${activeTsLabel}`}
                         onClick={(e) => openLightbox(e.currentTarget)}
                         className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2 text-left transition-all hover:border-[#f3d478]/60 hover:bg-[#17120c] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
                       >
@@ -1188,7 +1223,11 @@ export function TeardownGallery({
             className="w-full max-w-4xl overflow-hidden rounded-2xl gilded-frame bg-[#120e0a] p-5 shadow-2xl"
           >
             <div className="mb-3 flex flex-wrap items-center justify-between gap-2 border-b border-[#d4af37]/25 pb-3">
-              <div className="flex items-center gap-2.5">
+              <div
+                aria-live="polite"
+                aria-atomic="true"
+                className="flex items-center gap-2.5"
+              >
                 <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906] px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] tabular-nums">
                   Frame {activeIndex + 1}/{frames.length} · {activeTsLabel} (t=
                   {activeFrame.t}s)
