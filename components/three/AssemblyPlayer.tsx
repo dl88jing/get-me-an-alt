@@ -732,6 +732,19 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     [totalSteps, isPlaying]
   );
 
+  // Move focus to the player container on mount when opened via the Instructions tab
+  // so Space / ← / → immediately control playback and steps without switching tabs.
+  useEffect(() => {
+    const active = document.activeElement as HTMLElement | null;
+    if (
+      !active ||
+      active === document.body ||
+      active.getAttribute("data-tab-id") === "instructions"
+    ) {
+      rootRef.current?.focus({ preventScroll: true });
+    }
+  }, []);
+
   // Keyboard shortcuts: Space (play/pause), ArrowLeft (prev step), ArrowRight (next step)
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
