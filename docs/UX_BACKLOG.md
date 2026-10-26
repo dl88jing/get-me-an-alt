@@ -1,0 +1,40 @@
+# Get Me An Alt — Prioritized UX Audit & Backlog
+
+Audited live against `https://get-me-an-alt.vercel.app` at **Desktop (`1440×900`)** and **Mobile (`390×844`)** using Playwright MCP across the full user journey (`Landing → Instant Demo / URL Submit → Overview → Sources → BOM → Print Files → Instructions → Exploded View`).
+
+---
+
+## P0 — High-Impact Visual, Layout & Workflow Issues (Observed in Screenshots)
+
+- [ ] **1. Mobile & Desktop Command Bar Overflow + Project Header Chrome Polish (`app/page.tsx`, `app/projects/[id]/page.tsx`, `components/ui/ModifyChat.tsx`, `components/ui/CritiquePanel.tsx`)**
+  - **Observed on Mobile (`390×844`) Landing (`landing-mobile.png`):** The `Printer:` `<select>` dropdown in the hero command bar overflows horizontally outside the gold card border and clips off the right edge of the viewport (`Bambu Lab A1 (256×256×256 mm) — D...`).
+  - **Observed on Desktop (`1440×900`) Landing (`landing-desktop.png`):** Hero input placeholder (`Paste a product link, YouTube URL, or describe any gadget..`) truncates awkwardly mid-ellipsis (`..`).
+  - **Observed on Desktop & Mobile Project Page (`project-overview-desktop.png`, `project-print-desktop.png`, `project-overview-mobile.png`):**
+    1. **Print Files tab buries primary content 1,300px below the fold:** Clicking `Print Files` renders the entire expanded 1,300px `CritiquePanel` (which the user *already* saw on the `Overview` tab) above `PrintPanel`, forcing users to scroll a full screen down just to see the build plate, printer selector, and STL/3MF download buttons.
+    2. **Overview tab right-column dead space & expanded wall of text:** On `Overview`, `CritiquePanel` defaults to `All Rounds (2)` fully expanded (1,300px tall) in the left column while the right column has 1,200px of empty black void below `DFM & Slicer Notes`, and `CritiquePanel` prints duplicate printer dimensions (`Bambu Lab A1 (256×256×256 mm) (256×256×256 mm)`) and raw `` (`critique.json`) `` backticks.
+    3. **Grammar & truncation bugs in Project Header & Modify Bar:** Tab badge says `1 plate(s)` instead of `1 plate` / `2 plates`; mobile project title truncates on a single line (`Self-watering plant system (alt to a $...`) instead of wrapping cleanly (`line-clamp-2`); `ModifyChat` input is squeezed onto the same row as the description & buttons so its placeholder cuts off (`Modify build (e.g., "make reservoir 2x bigger", "use` on desktop, `Modify build (e.g., "n` on mobile).
+
+- [ ] **2. Exploded View 3D Callout Z-Index Collision & Mobile Viewport Overlap (`components/three/ExplodedView.tsx`)**
+  - **Observed on Mobile (`390×844`) (`project-exploded-mobile.png`):** Three.js `<Html>` numbered callout pins (`1`, `3`, `8`, `10`, `12`, `15`) render with a high z-index directly on top of the bottom `EXPLODE FACTOR` HUD card (`EXPLODE FACTO(10)(1) ... (15)45%`), and the floating HUD card obscures the lower half of the 3D assembly on mobile screens.
+
+- [ ] **3. Interactive Cross-Linking Across Overview, BOM, Print Files & 3D Views (`app/projects/[id]/page.tsx`, `components/bom/BomCards.tsx`)**
+  - **Observed on `Overview` & `BOM` (`project-overview-desktop.png`, `project-bom-desktop.png`):** The `3D-Printed Parts (9)` and `Off-the-Shelf Hardware (7)` lists on Overview are static text bullets with no click action to jump to `Print Files`, `Exploded View`, or `BOM`. Similarly, `Linked 3D parts` pills on `BomCards.tsx` are non-interactive spans, and tab state is not synced to the URL query (`?tab=...`) for deep-linking/sharing.
+
+- [ ] **4. Assembly Instructions Autoplay-on-Mount & Clipped Step Strip (`components/three/AssemblyPlayer.tsx`)**
+  - **Observed on `Instructions` (`project-instructions-desktop.png`):** `AssemblyPlayer` starts with `playing = true` and auto-advances immediately, so by the time the user clicks the `Instructions` tab or inspects it, it has already jumped to `STEP 04 / STAGE 4 OF 10` instead of starting cleanly at `STEP 01`. The horizontal step pill bar at the bottom clips steps on both left and right edges without scroll affordances or a scannable step checklist below.
+
+---
+
+## P1 — Feature Completeness, Data Consistency & Affordances
+
+- [ ] **5. BOM Interactive "Have It" Checklist, Cost Recalculation, CSV Copy & Filament Math Sync (`components/bom/BomCards.tsx`)**
+  - **Observed on `BOM` (`project-bom-desktop.png`):** Summary card displays `FILAMENT $3.55` while the `FIL-01` line item card says `$4.40` (`245 × $0.02 / g`). Users also lack a way to check off parts they already own in their workshop ("Have in workshop" toggle that updates remaining out-of-pocket cost) or export/copy the BOM as CSV/Markdown.
+
+- [ ] **6. Sources Tab Video Teardown Player Poster & Zero-Count Filter Cleanup (`components/sources/TeardownGallery.tsx`, `components/sources/SourcesTab.tsx`)**
+  - **Observed on `Sources` (`project-sources-desktop.png`):** The embedded YouTube teardown box on the left renders as a blank black rectangle until clicked (`t = 24s (0:24)`) while the actual extracted frame image sits as a tiny 56px thumbnail below it. Additionally, the source filter bar renders four `0`-count filter buttons (`PDFs & Manuals 0`, `Teardowns 0`, `Instructions & Guides 0`, `Products & Parts 0`) where `Teardowns 0` contradicts the `4 frames` Video Teardown gallery right above.
+
+- [ ] **7. Print Files Card Readability & Slicer Metadata Polish (`components/print/PrintPanel.tsx`)**
+  - **Observed on `Print Files` (`project-print-desktop.png`):** Section heading displays raw glob syntax `Individual Printable Part Meshes (parts/*.stl)` and part cards expose internal generator strings (`shape: custom_csg · PETG`, `44 tris`) instead of clean maker-facing dimensions, material badges, and print orientation notes.
+
+- [ ] **8. Landing Page Instant Demo Grid Balance & Missing Favicon (`app/page.tsx`, `app/icon.svg` / `app/layout.tsx`)**
+  - **Observed on `Landing` (`landing-desktop-full.png` & console logs):** Browser console logs a `404` on `/favicon.ico` on every page load. The Instant Demos section renders 7 cards in a 4-column grid (leaving an empty 8th cell at the bottom right) and flashes `"Checking saved builds for your network..."` before collapsing when 0 custom builds exist.
