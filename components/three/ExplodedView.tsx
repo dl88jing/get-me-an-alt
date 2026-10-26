@@ -312,6 +312,8 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
 interface CameraRigProps {
   focusTarget: [number, number, number] | null;
   focusRadius: number;
+  defaultTarget: [number, number, number];
+  defaultCamPos: [number, number, number];
   resetTrigger: number;
   autoRotate: boolean;
   isUserInteracting: React.MutableRefObject<boolean>;
@@ -320,6 +322,8 @@ interface CameraRigProps {
 const CameraRig: React.FC<CameraRigProps> = ({
   focusTarget,
   focusRadius,
+  defaultTarget,
+  defaultCamPos,
   resetTrigger,
   autoRotate,
   isUserInteracting,
@@ -327,9 +331,22 @@ const CameraRig: React.FC<CameraRigProps> = ({
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const controlsRef = useRef<any>(null);
   const { camera } = useThree();
-  const desiredTarget = useRef(new THREE.Vector3(10, 32, 0));
+  const desiredTarget = useRef(
+    new THREE.Vector3(defaultTarget[0], defaultTarget[1], defaultTarget[2])
+  );
   const desiredCamPos = useRef<THREE.Vector3 | null>(null);
   const animatingCam = useRef(false);
+
+  useEffect(() => {
+    if (!focusTarget) {
+      desiredTarget.current.set(
+        defaultTarget[0],
+        defaultTarget[1],
+        defaultTarget[2]
+      );
+      camera.position.set(defaultCamPos[0], defaultCamPos[1], defaultCamPos[2]);
+    }
+  }, [defaultTarget, defaultCamPos, focusTarget, camera]);
 
   useEffect(() => {
     if (focusTarget) {
@@ -346,11 +363,19 @@ const CameraRig: React.FC<CameraRigProps> = ({
 
   useEffect(() => {
     if (resetTrigger > 0) {
-      desiredTarget.current.set(10, 32, 0);
-      desiredCamPos.current = new THREE.Vector3(240, 180, 265);
+      desiredTarget.current.set(
+        defaultTarget[0],
+        defaultTarget[1],
+        defaultTarget[2]
+      );
+      desiredCamPos.current = new THREE.Vector3(
+        defaultCamPos[0],
+        defaultCamPos[1],
+        defaultCamPos[2]
+      );
       animatingCam.current = true;
     }
-  }, [resetTrigger]);
+  }, [resetTrigger, defaultTarget, defaultCamPos]);
 
   useFrame((_, delta) => {
     if (!controlsRef.current) return;
@@ -418,6 +443,39 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
     () => resolveAssemblyParts(design, bom, instructions),
     [design, bom, instructions]
   );
+
+  const sceneFraming = useMemo(() => {
+    if (allParts.length === 0) {
+      return {
+        defaultTarget: [10, 32, 0] as [number, number, number],
+        defaultCamPos: [240, 180, 265] as [number, number, number],
+      };
+    }
+    let minY = Infinity;
+    let maxY = -Infinity;
+    let maxHoriz = 80;
+    for (const p of allParts) {
+      const py0 = p.position[1];
+      const py1 = p.position[1] + p.explode[1] * 0.55;
+      const halfH = Math.max(15, (p.dims_mm?.[2] ?? p.dims_mm?.[1] ?? 30) * 0.45);
+      minY = Math.min(minY, py0 - halfH, py1 - halfH);
+      maxY = Math.max(maxY, py0 + halfH, py1 + halfH);
+      const hx = Math.abs(p.position[0] + p.explode[0] * 0.5) + (p.dims_mm?.[0] ?? 40) * 0.4;
+      const hz = Math.abs(p.position[2] + p.explode[2] * 0.5) + (p.dims_mm?.[1] ?? 40) * 0.4;
+      maxHoriz = Math.max(maxHoriz, hx, hz);
+    }
+    const spanY = Math.max(120, maxY - minY);
+    const centerY = (minY + maxY) / 2 - 32;
+    const scale = Math.max(0.95, Math.min(1.85, Math.max(spanY / 210, maxHoriz / 135)));
+    return {
+      defaultTarget: [6, Math.round(centerY), 0] as [number, number, number],
+      defaultCamPos: [
+        Math.round(235 * scale),
+        Math.round(centerY + 135 * scale),
+        Math.round(265 * scale),
+      ] as [number, number, number],
+    };
+  }, [allParts]);
 
   // Select the first part initially if requested or keep responsive
   useEffect(() => {
@@ -605,11 +663,16 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           shadows
           dpr={[1, 2]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
-          camera={{ position: [240, 180, 265], fov: 40, near: 1, far: 2500 }}
+          camera={{
+            position: sceneFraming.defaultCamPos,
+            fov: 40,
+            near: 1,
+            far: 3000,
+          }}
           onPointerMissed={() => setSelectedId(null)}
         >
           <color attach="background" args={["#0C0906"]} />
-          <fog attach="fog" args={["#0C0906", 420, 1100]} />
+          <fog attach="fog" args={["#0C0906", 680, 1650]} />
 
           <DampedExplodeDriver
             targetExplode={explode}
@@ -682,6 +745,8 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           <CameraRig
             focusTarget={focusTarget}
             focusRadius={focusRadius}
+            defaultTarget={sceneFraming.defaultTarget}
+            defaultCamPos={sceneFraming.defaultCamPos}
             resetTrigger={resetTrigger}
             autoRotate={autoRotate}
             isUserInteracting={isUserInteracting}

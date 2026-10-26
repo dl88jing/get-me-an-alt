@@ -525,6 +525,38 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     [design, instructions]
   );
 
+  const playerFraming = useMemo(() => {
+    if (allParts.length === 0) {
+      return {
+        target: [12, 24, 0] as [number, number, number],
+        camPos: [235, 175, 255] as [number, number, number],
+      };
+    }
+    let minY = Infinity;
+    let maxY = -Infinity;
+    let maxHoriz = 80;
+    for (const p of allParts) {
+      const py = p.position[1];
+      const halfH = Math.max(15, (p.dims_mm?.[2] ?? p.dims_mm?.[1] ?? 30) * 0.45);
+      minY = Math.min(minY, py - halfH);
+      maxY = Math.max(maxY, py + halfH);
+      const hx = Math.abs(p.position[0]) + (p.dims_mm?.[0] ?? 40) * 0.4;
+      const hz = Math.abs(p.position[2]) + (p.dims_mm?.[1] ?? 40) * 0.4;
+      maxHoriz = Math.max(maxHoriz, hx, hz);
+    }
+    const spanY = Math.max(120, maxY - minY);
+    const centerY = (minY + maxY) / 2 - 32;
+    const scale = Math.max(0.95, Math.min(1.65, Math.max(spanY / 195, maxHoriz / 135)));
+    return {
+      target: [12, Math.round(centerY), 0] as [number, number, number],
+      camPos: [
+        Math.round(230 * scale),
+        Math.round(centerY + 135 * scale),
+        Math.round(250 * scale),
+      ] as [number, number, number],
+    };
+  }, [allParts]);
+
   const adaptedInstructions = useMemo(
     () => adaptInstructions(instructions, design),
     [instructions, design]
@@ -794,7 +826,12 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           shadows
           dpr={[1, 2]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
-          camera={{ position: [235, 175, 255], fov: 38, near: 1, far: 2500 }}
+          camera={{
+            position: playerFraming.camPos,
+            fov: 38,
+            near: 1,
+            far: 3000,
+          }}
         >
           <color attach="background" args={["#0C0906"]} />
 
@@ -878,8 +915,8 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             enableDamping
             dampingFactor={0.08}
             minDistance={55}
-            maxDistance={600}
-            target={[12, 24, 0]}
+            maxDistance={900}
+            target={playerFraming.target}
           />
         </Canvas>
 

@@ -649,6 +649,982 @@ function buildShelfLedgeGeometry(params: PartParams): THREE.BufferGeometry {
   return merged;
 }
 
+function buildArmBasePedestalGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(110, pickNum(params, ["w", "width"], 150));
+  const h = Math.max(32, pickNum(params, ["h", "height"], 42));
+  const r = w / 2;
+  const flangeH = Math.max(7, h * 0.22);
+  const drumH = h * 0.56;
+  const collarH = h * 0.26;
+
+  const baseFlange = new THREE.CylinderGeometry(r * 0.96, r, flangeH, 36);
+  baseFlange.translate(0, -h / 2 + flangeH / 2, 0);
+
+  const boltBosses: THREE.BufferGeometry[] = [];
+  const bossOffset = r * 0.72;
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      const boss = new THREE.CylinderGeometry(8.5, 9.5, flangeH * 1.15, 18);
+      boss.translate(sx * bossOffset, -h / 2 + (flangeH * 1.15) / 2, sz * bossOffset);
+      boltBosses.push(boss);
+    }
+  }
+
+  const waistDrum = new THREE.CylinderGeometry(r * 0.72, r * 0.84, drumH, 36);
+  waistDrum.translate(0, -h / 2 + flangeH + drumH / 2 - 1, 0);
+
+  const bearingCollar = buildTubeGeometry({
+    outerRadius: r * 0.68,
+    innerRadius: r * 0.44,
+    height: collarH,
+  });
+  bearingCollar.translate(0, h / 2 - collarH / 2, 0);
+
+  const merged = mergeBufferGeometries([
+    baseFlange,
+    ...boltBosses,
+    waistDrum,
+    bearingCollar,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildTurntableRingDeckGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(90, pickNum(params, ["w", "width"], 128));
+  const h = Math.max(10, pickNum(params, ["h", "height", "thickness"], 14));
+  const r = w / 2;
+
+  const gearRing = buildGearSimpleGeometry({
+    outerRadius: r,
+    thickness: h * 0.55,
+    teeth: 28,
+    boreRadius: r * 0.22,
+  });
+  gearRing.translate(0, -h * 0.18, 0);
+
+  const upperDeck = new THREE.CylinderGeometry(r * 0.88, r * 0.92, h * 0.5, 36);
+  upperDeck.translate(0, h * 0.12, 0);
+
+  const centerBoss = buildTubeGeometry({
+    outerRadius: r * 0.52,
+    innerRadius: r * 0.16,
+    height: h * 0.42,
+  });
+  centerBoss.translate(0, h * 0.32, 0);
+
+  const merged = mergeBufferGeometries([gearRing, upperDeck, centerBoss]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildUYokeClevisGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(38, pickNum(params, ["w", "width", "legA"], 84));
+  const h = Math.max(36, pickNum(params, ["h", "height", "legB"], 72));
+  const d = Math.max(28, pickNum(params, ["d", "depth"], 52));
+  const t = Math.max(5.5, Math.min(11, pickNum(params, ["thickness", "t", "wallThickness"], 8)));
+  const earH = h - t;
+  const earX = w / 2 - t / 2;
+
+  const baseBridge = new THREE.BoxGeometry(w, t * 1.25, d * 0.88);
+  baseBridge.translate(0, -h / 2 + (t * 1.25) / 2, 0);
+
+  const baseFlange = new THREE.CylinderGeometry(d * 0.44, d * 0.48, t * 0.9, 28);
+  baseFlange.translate(0, -h / 2 + (t * 0.9) / 2, 0);
+
+  const leftEar = new THREE.BoxGeometry(t, earH * 0.82, d * 0.76);
+  leftEar.translate(-earX, -h / 2 + t + (earH * 0.82) / 2, 0);
+
+  const rightEar = new THREE.BoxGeometry(t, earH * 0.82, d * 0.76);
+  rightEar.translate(earX, -h / 2 + t + (earH * 0.82) / 2, 0);
+
+  const leftBoss = new THREE.CylinderGeometry(d * 0.38, d * 0.38, t * 1.35, 24);
+  leftBoss.rotateZ(Math.PI / 2);
+  leftBoss.translate(-earX, h / 2 - d * 0.38, 0);
+
+  const rightBoss = new THREE.CylinderGeometry(d * 0.38, d * 0.38, t * 1.35, 24);
+  rightBoss.rotateZ(Math.PI / 2);
+  rightBoss.translate(earX, h / 2 - d * 0.38, 0);
+
+  const pivotPin = new THREE.CylinderGeometry(d * 0.13, d * 0.13, w * 1.08, 20);
+  pivotPin.rotateZ(Math.PI / 2);
+  pivotPin.translate(0, h / 2 - d * 0.38, 0);
+
+  const merged = mergeBufferGeometries([
+    baseBridge,
+    baseFlange,
+    leftEar,
+    rightEar,
+    leftBoss,
+    rightBoss,
+    pivotPin,
+  ]);
+  if (params?.invertY) {
+    merged.rotateX(Math.PI);
+  }
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildServoMotorGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(20, pickNum(params, ["w", "width"], 40));
+  const h = Math.max(22, pickNum(params, ["h", "height"], 38));
+  const d = Math.max(12, pickNum(params, ["d", "depth"], 20));
+
+  const body = new THREE.BoxGeometry(w, h * 0.76, d);
+  body.translate(0, -h * 0.08, 0);
+
+  const ears = new THREE.BoxGeometry(w * 1.36, Math.max(3, h * 0.09), d * 0.92);
+  ears.translate(0, h * 0.14, 0);
+
+  const gearDome = new THREE.CylinderGeometry(d * 0.46, d * 0.48, h * 0.16, 24);
+  gearDome.translate(w * 0.2, h * 0.36, 0);
+
+  const splineShaft = new THREE.CylinderGeometry(d * 0.2, d * 0.2, h * 0.18, 20);
+  splineShaft.translate(w * 0.2, h * 0.48, 0);
+
+  const merged = mergeBufferGeometries([body, ears, gearDome, splineShaft]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildArmTrussLinkGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(34, pickNum(params, ["w", "width"], 52));
+  const h = Math.max(95, pickNum(params, ["h", "height", "length"], 145));
+  const d = Math.max(28, pickNum(params, ["d", "depth"], 40));
+  const railT = Math.max(6.5, w * 0.16);
+  const railX = w / 2 - railT / 2;
+  const endR = d * 0.46;
+  const spanY = h - endR * 2;
+
+  const leftBeam = new THREE.BoxGeometry(railT, spanY, d * 0.66);
+  leftBeam.translate(-railX, 0, 0);
+
+  const rightBeam = new THREE.BoxGeometry(railT, spanY, d * 0.66);
+  rightBeam.translate(railX, 0, 0);
+
+  const lowerKnuckle = new THREE.CylinderGeometry(endR, endR, w, 28);
+  lowerKnuckle.rotateZ(Math.PI / 2);
+  lowerKnuckle.translate(0, -h / 2 + endR, 0);
+
+  const lowerBorePin = new THREE.CylinderGeometry(endR * 0.42, endR * 0.42, w * 1.12, 20);
+  lowerBorePin.rotateZ(Math.PI / 2);
+  lowerBorePin.translate(0, -h / 2 + endR, 0);
+
+  const upperKnuckle = new THREE.CylinderGeometry(endR * 0.9, endR * 0.9, w, 28);
+  upperKnuckle.rotateZ(Math.PI / 2);
+  upperKnuckle.translate(0, h / 2 - endR * 0.9, 0);
+
+  const upperBorePin = new THREE.CylinderGeometry(endR * 0.38, endR * 0.38, w * 1.12, 20);
+  upperBorePin.rotateZ(Math.PI / 2);
+  upperBorePin.translate(0, h / 2 - endR * 0.9, 0);
+
+  const strut1 = new THREE.BoxGeometry(w - railT, 7, d * 0.48);
+  strut1.translate(0, -spanY * 0.26, 0);
+
+  const strut2 = new THREE.BoxGeometry(w - railT, 7, d * 0.48);
+  strut2.translate(0, spanY * 0.26, 0);
+
+  const diag1 = new THREE.BoxGeometry(w - railT * 0.8, 6, d * 0.42);
+  diag1.rotateZ(THREE.MathUtils.degToRad(34));
+
+  const merged = mergeBufferGeometries([
+    leftBeam,
+    rightBeam,
+    lowerKnuckle,
+    lowerBorePin,
+    upperKnuckle,
+    upperBorePin,
+    strut1,
+    strut2,
+    diag1,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildElbowKnuckleGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(46, pickNum(params, ["w", "width"], 66));
+  const h = Math.max(42, pickNum(params, ["h", "height"], 56));
+  const d = Math.max(38, pickNum(params, ["d", "depth"], 52));
+
+  const lowerPivotDrum = new THREE.CylinderGeometry(d * 0.38, d * 0.38, w, 28);
+  lowerPivotDrum.rotateZ(Math.PI / 2);
+  lowerPivotDrum.translate(0, -h * 0.24, 0);
+
+  const midHousing = new THREE.BoxGeometry(w * 0.82, h * 0.52, d * 0.78);
+  midHousing.translate(0, 0, 0);
+
+  const upperRollCollar = buildTubeGeometry({
+    outerRadius: Math.min(w, d) * 0.44,
+    innerRadius: Math.min(w, d) * 0.28,
+    height: h * 0.44,
+  });
+  upperRollCollar.translate(0, h * 0.28, 0);
+
+  const merged = mergeBufferGeometries([
+    lowerPivotDrum,
+    midHousing,
+    upperRollCollar,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildForearmBarrelGeometry(params: PartParams): THREE.BufferGeometry {
+  const h = Math.max(80, pickNum(params, ["h", "height", "length"], 120));
+  const rBottom = Math.max(16, pickNum(params, ["outerRadius", "r"], 23));
+  const rTop = rBottom * 0.82;
+
+  const baseFlange = new THREE.CylinderGeometry(rBottom * 1.14, rBottom * 1.14, 8, 32);
+  baseFlange.translate(0, -h / 2 + 4, 0);
+
+  const taperedTube = new THREE.CylinderGeometry(rTop, rBottom, h - 16, 32);
+
+  const ribX = new THREE.BoxGeometry(rBottom * 2.1, h * 0.74, 4.5);
+  const ribZ = new THREE.BoxGeometry(4.5, h * 0.74, rBottom * 2.1);
+
+  const topCollar = buildTubeGeometry({
+    outerRadius: rTop * 1.14,
+    innerRadius: rTop * 0.68,
+    height: 10,
+  });
+  topCollar.translate(0, h / 2 - 5, 0);
+
+  const merged = mergeBufferGeometries([
+    baseFlange,
+    taperedTube,
+    ribX,
+    ribZ,
+    topCollar,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildParallelGripperBodyGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(58, pickNum(params, ["w", "width"], 74));
+  const h = Math.max(26, pickNum(params, ["h", "height"], 34));
+  const d = Math.max(26, pickNum(params, ["d", "depth"], 38));
+
+  const wristCollar = new THREE.CylinderGeometry(16, 18, h * 0.38, 24);
+  wristCollar.translate(0, -h * 0.32, 0);
+
+  const guideBridge = new THREE.BoxGeometry(w, h * 0.48, d * 0.72);
+  guideBridge.translate(0, h * 0.08, 0);
+
+  const leftRailEnd = new THREE.BoxGeometry(8, h * 0.58, d * 0.88);
+  leftRailEnd.translate(-w / 2 + 4, h * 0.1, 0);
+
+  const rightRailEnd = new THREE.BoxGeometry(8, h * 0.58, d * 0.88);
+  rightRailEnd.translate(w / 2 - 4, h * 0.1, 0);
+
+  const leftGear = buildGearSimpleGeometry({
+    outerRadius: 12,
+    thickness: 6,
+    teeth: 12,
+    boreRadius: 3,
+  });
+  leftGear.rotateX(Math.PI / 2);
+  leftGear.translate(-13, h * 0.08, d * 0.42);
+
+  const rightGear = buildGearSimpleGeometry({
+    outerRadius: 12,
+    thickness: 6,
+    teeth: 12,
+    boreRadius: 3,
+  });
+  rightGear.rotateX(Math.PI / 2);
+  rightGear.translate(13, h * 0.08, d * 0.42);
+
+  const merged = mergeBufferGeometries([
+    wristCollar,
+    guideBridge,
+    leftRailEnd,
+    rightRailEnd,
+    leftGear,
+    rightGear,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildParallelGripperJawsGeometry(params: PartParams): THREE.BufferGeometry {
+  const span = Math.max(40, pickNum(params, ["span", "w", "width"], 52));
+  const h = Math.max(38, pickNum(params, ["h", "height"], 48));
+  const d = Math.max(14, pickNum(params, ["d", "depth"], 18));
+  const jawX = span * 0.34;
+
+  const makeJaw = (side: -1 | 1): THREE.BufferGeometry[] => {
+    const carriageBase = new THREE.BoxGeometry(14, 10, d);
+    carriageBase.translate(side * (jawX + 3), -h / 2 + 5, 0);
+
+    const fingerBlade = new THREE.BoxGeometry(7, h - 8, d * 0.78);
+    fingerBlade.translate(side * jawX, 4, 0);
+
+    const tipPad = new THREE.BoxGeometry(10, 14, d * 0.84);
+    tipPad.translate(side * (jawX - 3.5), h / 2 - 7, 0);
+
+    return [carriageBase, fingerBlade, tipPad];
+  };
+
+  const merged = mergeBufferGeometries([...makeJaw(-1), ...makeJaw(1)]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildPurifierBasePanGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(130, pickNum(params, ["w", "width"], 168));
+  const h = Math.max(24, pickNum(params, ["h", "height"], 32));
+  const r = w / 2;
+
+  const bottomSkirt = new THREE.CylinderGeometry(r * 0.94, r, h * 0.38, 40);
+  bottomSkirt.translate(0, -h / 2 + (h * 0.38) / 2, 0);
+
+  const upperPan = buildTubeGeometry({
+    outerRadius: r * 0.94,
+    innerRadius: r * 0.72,
+    height: h * 0.68,
+    closedBottom: 5,
+  });
+  upperPan.translate(0, h * 0.16, 0);
+
+  const merged = mergeBufferGeometries([bottomSkirt, upperPan]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildHepaPleatedFilterGeometry(params: PartParams): THREE.BufferGeometry {
+  const rOuter = Math.max(55, pickNum(params, ["outerRadius", "r"], 74));
+  const rInner = Math.max(36, pickNum(params, ["innerRadius"], 50));
+  const h = Math.max(80, pickNum(params, ["h", "height"], 115));
+  const capH = 7;
+
+  const bottomCap = buildTubeGeometry({
+    outerRadius: rOuter + 1.5,
+    innerRadius: rInner - 1,
+    height: capH,
+  });
+  bottomCap.translate(0, -h / 2 + capH / 2, 0);
+
+  const topCap = buildTubeGeometry({
+    outerRadius: rOuter + 1.5,
+    innerRadius: rInner - 1,
+    height: capH,
+  });
+  topCap.translate(0, h / 2 - capH / 2, 0);
+
+  const pleatedCore = buildGearSimpleGeometry({
+    outerRadius: rOuter,
+    toothDepth: 4.5,
+    teeth: 32,
+    thickness: h - capH * 2,
+    boreRadius: rInner,
+  });
+
+  const merged = mergeBufferGeometries([bottomCap, topCap, pleatedCore]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildPerforatedIntakeDrumGeometry(params: PartParams): THREE.BufferGeometry {
+  const rOuter = Math.max(65, pickNum(params, ["outerRadius", "r"], 82));
+  const rInner = Math.max(58, pickNum(params, ["innerRadius"], 76));
+  const h = Math.max(90, pickNum(params, ["h", "height"], 125));
+  const ringH = 12;
+
+  const bottomRing = buildTubeGeometry({
+    outerRadius: rOuter,
+    innerRadius: rInner,
+    height: ringH,
+  });
+  bottomRing.translate(0, -h / 2 + ringH / 2, 0);
+
+  const midRing = buildTubeGeometry({
+    outerRadius: rOuter,
+    innerRadius: rInner,
+    height: 8,
+  });
+
+  const topRing = buildTubeGeometry({
+    outerRadius: rOuter,
+    innerRadius: rInner,
+    height: ringH,
+  });
+  topRing.translate(0, h / 2 - ringH / 2, 0);
+
+  const struts: THREE.BufferGeometry[] = [];
+  const strutCount = 16;
+  const rMid = (rOuter + rInner) / 2;
+  const wallT = Math.max(4, rOuter - rInner);
+  for (let i = 0; i < strutCount; i++) {
+    const ang = (i * Math.PI * 2) / strutCount;
+    const strut = new THREE.BoxGeometry(wallT, h - ringH, 5.5);
+    strut.rotateY(-ang);
+    strut.translate(Math.cos(ang) * rMid, 0, Math.sin(ang) * rMid);
+    struts.push(strut);
+  }
+
+  const merged = mergeBufferGeometries([bottomRing, midRing, topRing, ...struts]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildAnnularRetainerRingGeometry(params: PartParams): THREE.BufferGeometry {
+  const rOuter = Math.max(55, pickNum(params, ["outerRadius", "r"], 80));
+  const rInner = Math.max(35, pickNum(params, ["innerRadius", "boreRadius"], 50));
+  const h = Math.max(10, pickNum(params, ["h", "height", "thickness"], 16));
+
+  const mainRing = buildTubeGeometry({
+    outerRadius: rOuter,
+    innerRadius: rInner,
+    height: h,
+  });
+
+  const tabs: THREE.BufferGeometry[] = [];
+  for (let i = 0; i < 4; i++) {
+    const ang = (i * Math.PI) / 2;
+    const tab = new THREE.BoxGeometry(10, h * 0.75, 14);
+    tab.rotateY(-ang);
+    tab.translate(Math.cos(ang) * (rOuter + 3), 0, Math.sin(ang) * (rOuter + 3));
+    tabs.push(tab);
+  }
+
+  const merged = mergeBufferGeometries([mainRing, ...tabs]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildCoandaPlenumNeckGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(84, pickNum(params, ["w", "width"], 108));
+  const h = Math.max(36, pickNum(params, ["h", "height"], 46));
+  const d = Math.max(44, pickNum(params, ["d", "depth"], 54));
+
+  const lowerCollar = buildTubeGeometry({
+    outerRadius: d * 0.68,
+    innerRadius: d * 0.48,
+    height: h * 0.48,
+  });
+  lowerCollar.translate(0, -h * 0.24, 0);
+
+  const upperSplitSaddle = new THREE.BoxGeometry(w * 0.92, h * 0.56, d * 0.88);
+  upperSplitSaddle.translate(0, h * 0.18, 0);
+
+  const leftBranch = new THREE.CylinderGeometry(d * 0.36, d * 0.32, h * 0.55, 24);
+  leftBranch.rotateZ(THREE.MathUtils.degToRad(26));
+  leftBranch.translate(-w * 0.28, h * 0.16, 0);
+
+  const rightBranch = new THREE.CylinderGeometry(d * 0.36, d * 0.32, h * 0.55, 24);
+  rightBranch.rotateZ(THREE.MathUtils.degToRad(-26));
+  rightBranch.translate(w * 0.28, h * 0.16, 0);
+
+  const merged = mergeBufferGeometries([
+    lowerCollar,
+    upperSplitSaddle,
+    leftBranch,
+    rightBranch,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildCoandaAirfoilLoopHalfGeometry(
+  params: PartParams,
+  half: "lower" | "upper"
+): THREE.BufferGeometry {
+  const w = Math.max(150, pickNum(params, ["w", "width"], 186));
+  const h = Math.max(105, pickNum(params, ["h", "height"], 130));
+  const chordDepth = Math.max(38, pickNum(params, ["d", "depth"], 46));
+  const profileT = Math.max(18, Math.min(26, w * 0.12));
+
+  const rxOuter = w / 2;
+  const rxInner = rxOuter - profileT;
+  const ryOuter = h;
+  const ryInner = Math.max(30, ryOuter - profileT);
+
+  const shape = new THREE.Shape();
+  const steps = 40;
+
+  if (half === "upper") {
+    // Inverted U-arch from angle 0..PI in X-Y plane (standing vertically, open along Z)
+    for (let i = 0; i <= steps; i++) {
+      const t = (i / steps) * Math.PI;
+      const x = Math.cos(t) * rxOuter;
+      const y = Math.sin(t) * ryOuter;
+      if (i === 0) shape.moveTo(x, y);
+      else shape.lineTo(x, y);
+    }
+    for (let i = steps; i >= 0; i--) {
+      const t = (i / steps) * Math.PI;
+      const x = Math.cos(t) * rxInner;
+      const y = Math.sin(t) * ryInner;
+      shape.lineTo(x, y);
+    }
+    shape.closePath();
+  } else {
+    // Lower U-cradle from angle PI..2*PI in X-Y plane
+    for (let i = 0; i <= steps; i++) {
+      const t = Math.PI + (i / steps) * Math.PI;
+      const x = Math.cos(t) * rxOuter;
+      const y = Math.sin(t) * ryOuter;
+      if (i === 0) shape.moveTo(x, y);
+      else shape.lineTo(x, y);
+    }
+    for (let i = steps; i >= 0; i--) {
+      const t = Math.PI + (i / steps) * Math.PI;
+      const x = Math.cos(t) * rxInner;
+      const y = Math.sin(t) * ryInner;
+      shape.lineTo(x, y);
+    }
+    shape.closePath();
+  }
+
+  const loopArc = new THREE.ExtrudeGeometry(shape, {
+    depth: chordDepth,
+    bevelEnabled: true,
+    bevelThickness: 2.5,
+    bevelSize: 2.0,
+    bevelSegments: 3,
+    curveSegments: 36,
+  });
+  loopArc.center();
+
+  if (half === "lower") {
+    const throatPedestal = new THREE.CylinderGeometry(28, 34, 18, 28);
+    throatPedestal.translate(0, -h / 2 - 4, 0);
+    const merged = mergeBufferGeometries([loopArc, throatPedestal]);
+    merged.center();
+    merged.computeBoundingBox();
+    merged.computeBoundingSphere();
+    return merged;
+  }
+
+  loopArc.computeBoundingBox();
+  loopArc.computeBoundingSphere();
+  return loopArc;
+}
+
+function buildDual2020RailsGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(180, pickNum(params, ["w", "width"], 250));
+  const d = Math.max(48, pickNum(params, ["d", "depth"], 68));
+  const railSize = Math.max(16, Math.min(22, pickNum(params, ["h", "height"], 20)));
+  const railZ = d / 2 - railSize / 2;
+
+  const frontRail = new THREE.BoxGeometry(w, railSize, railSize);
+  frontRail.translate(0, 0, railZ);
+
+  const rearRail = new THREE.BoxGeometry(w, railSize, railSize);
+  rearRail.translate(0, 0, -railZ);
+
+  const leftTie = new THREE.BoxGeometry(14, railSize * 0.7, d - railSize);
+  leftTie.translate(-w * 0.42, 0, 0);
+
+  const rightTie = new THREE.BoxGeometry(14, railSize * 0.7, d - railSize);
+  rightTie.translate(w * 0.42, 0, 0);
+
+  const merged = mergeBufferGeometries([frontRail, rearRail, leftTie, rightTie]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildSliderEndBlockGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(36, pickNum(params, ["w", "width"], 46));
+  const h = Math.max(38, pickNum(params, ["h", "height"], 48));
+  const d = Math.max(68, pickNum(params, ["d", "depth"], 86));
+
+  const mainBridge = new THREE.BoxGeometry(w, h * 0.68, d);
+  mainBridge.translate(0, -h * 0.12, 0);
+
+  const topPillar = new THREE.BoxGeometry(w * 0.78, h * 0.42, d * 0.56);
+  topPillar.translate(0, h * 0.26, 0);
+
+  const pulleyBoss = new THREE.CylinderGeometry(13, 13, 12, 24);
+  pulleyBoss.translate(0, h * 0.36, 0);
+
+  const merged = mergeBufferGeometries([mainBridge, topPillar, pulleyBoss]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildOutriggerLegsQuadGeometry(params: PartParams): THREE.BufferGeometry {
+  const spanX = pickNum(params, ["spanX"], 108);
+  const spanZ = pickNum(params, ["spanZ"], 52);
+  const legLen = pickNum(params, ["legLen"], 54);
+
+  const parts: THREE.BufferGeometry[] = [];
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      const arm = new THREE.BoxGeometry(legLen, 10, 14);
+      arm.rotateY(sx * sz * THREE.MathUtils.degToRad(-32));
+      arm.translate(sx * spanX, 4, sz * spanZ);
+
+      const foot = new THREE.CylinderGeometry(12, 14, 12, 20);
+      foot.translate(sx * (spanX + 16), -4, sz * (spanZ + 14));
+      parts.push(arm, foot);
+    }
+  }
+
+  const merged = mergeBufferGeometries(parts);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildVSlotWheelSetGeometry(params: PartParams): THREE.BufferGeometry {
+  const spanX = pickNum(params, ["spanX"], 42);
+  const spanZ = pickNum(params, ["spanZ"], 30);
+  const wheelR = pickNum(params, ["wheelR", "outerRadius"], 13);
+
+  const wheels: THREE.BufferGeometry[] = [];
+  for (const sx of [-1, 1]) {
+    for (const sz of [-1, 1]) {
+      const wGeo = new THREE.CylinderGeometry(wheelR, wheelR, 10, 24);
+      wGeo.rotateX(Math.PI / 2);
+      wGeo.translate(sx * spanX, 0, sz * spanZ);
+
+      const spacer = new THREE.CylinderGeometry(5, 5, 14, 16);
+      spacer.translate(sx * spanX, 8, sz * spanZ);
+      wheels.push(wGeo, spacer);
+    }
+  }
+
+  const merged = mergeBufferGeometries(wheels);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildGt2BeltLoopGeometry(params: PartParams): THREE.BufferGeometry {
+  const spanX = Math.max(140, pickNum(params, ["spanX", "w", "width"], 210));
+  const beltZ = 11;
+
+  const frontStrand = new THREE.BoxGeometry(spanX, 7, 2.5);
+  frontStrand.translate(0, 0, beltZ);
+
+  const rearStrand = new THREE.BoxGeometry(spanX, 7, 2.5);
+  rearStrand.translate(0, 0, -beltZ);
+
+  const leftPulley = new THREE.CylinderGeometry(12, 12, 12, 24);
+  leftPulley.translate(-spanX / 2, 0, 0);
+
+  const rightPulley = new THREE.CylinderGeometry(12, 12, 12, 24);
+  rightPulley.translate(spanX / 2, 0, 0);
+
+  const merged = mergeBufferGeometries([
+    frontStrand,
+    rearStrand,
+    leftPulley,
+    rightPulley,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildArcaCameraCradleGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(58, pickNum(params, ["w", "width"], 74));
+  const h = Math.max(26, pickNum(params, ["h", "height"], 38));
+  const d = Math.max(48, pickNum(params, ["d", "depth"], 58));
+
+  const clampBase = new THREE.BoxGeometry(w, 12, d);
+  clampBase.translate(0, -h * 0.32, 0);
+
+  const leftJaw = new THREE.BoxGeometry(10, 10, d);
+  leftJaw.translate(-w / 2 + 5, -h * 0.1, 0);
+
+  const rightJaw = new THREE.BoxGeometry(10, 10, d);
+  rightJaw.translate(w / 2 - 5, -h * 0.1, 0);
+
+  const lockKnob = new THREE.CylinderGeometry(9, 9, 14, 20);
+  lockKnob.rotateZ(Math.PI / 2);
+  lockKnob.translate(w / 2 + 7, -h * 0.18, 0);
+
+  // Camera body & lens proxy on the Arca plate so the gimbal reads unmistakably
+  const camBody = new THREE.BoxGeometry(w * 0.78, h * 0.62, d * 0.56);
+  camBody.translate(0, h * 0.22, -4);
+
+  const lensBarrel = new THREE.CylinderGeometry(16, 18, d * 0.52, 28);
+  lensBarrel.rotateX(Math.PI / 2);
+  lensBarrel.translate(0, h * 0.2, d * 0.36);
+
+  const merged = mergeBufferGeometries([
+    clampBase,
+    leftJaw,
+    rightJaw,
+    lockKnob,
+    camBody,
+    lensBarrel,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildEaselHBaseGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(120, pickNum(params, ["w", "width"], 155));
+  const h = Math.max(20, pickNum(params, ["h", "height"], 26));
+  const d = Math.max(100, pickNum(params, ["d", "depth"], 130));
+  const barW = 22;
+
+  const leftRunner = new THREE.BoxGeometry(barW, h * 0.78, d);
+  leftRunner.translate(-w / 2 + barW / 2, -h * 0.1, 0);
+
+  const rightRunner = new THREE.BoxGeometry(barW, h * 0.78, d);
+  rightRunner.translate(w / 2 - barW / 2, -h * 0.1, 0);
+
+  const frontCrossbar = new THREE.BoxGeometry(w - barW, h * 0.72, barW);
+  frontCrossbar.translate(0, -h * 0.12, d * 0.34);
+
+  const centerBridge = new THREE.BoxGeometry(w - barW, h * 0.85, barW * 1.35);
+  centerBridge.translate(0, -h * 0.05, -d * 0.08);
+
+  const leftClevisEar = new THREE.BoxGeometry(8, h * 0.9, 28);
+  leftClevisEar.translate(-16, h * 0.35, -d * 0.08);
+
+  const rightClevisEar = new THREE.BoxGeometry(8, h * 0.9, 28);
+  rightClevisEar.translate(16, h * 0.35, -d * 0.08);
+
+  const merged = mergeBufferGeometries([
+    leftRunner,
+    rightRunner,
+    frontCrossbar,
+    centerBridge,
+    leftClevisEar,
+    rightClevisEar,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildCanvasTopClampGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(52, pickNum(params, ["w", "width"], 68));
+  const h = Math.max(28, pickNum(params, ["h", "height"], 34));
+  const d = Math.max(38, pickNum(params, ["d", "depth"], 46));
+
+  const topDeck = new THREE.BoxGeometry(w, 9, d);
+  topDeck.translate(0, h / 2 - 4.5, 0);
+
+  const frontDownLip = new THREE.BoxGeometry(w, h * 0.68, 8);
+  frontDownLip.translate(0, -h * 0.05, d / 2 - 4);
+
+  const rearMastCollar = new THREE.BoxGeometry(36, h, 26);
+  rearMastCollar.translate(0, 0, -d / 2 + 13);
+
+  const merged = mergeBufferGeometries([topDeck, frontDownLip, rearMastCollar]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildMicroscopeStageBaseGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(80, pickNum(params, ["w", "width"], 94));
+  const h = Math.max(24, pickNum(params, ["h", "height"], 32));
+  const d = Math.max(70, pickNum(params, ["d", "depth"], 82));
+
+  const bottomFoot = new THREE.BoxGeometry(w, 8, d);
+  bottomFoot.translate(0, -h / 2 + 4, 0);
+
+  const rearPillar = new THREE.BoxGeometry(w * 0.44, h, 24);
+  rearPillar.translate(0, 0, -d / 2 + 12);
+
+  const stageDeck = buildPlateWithHolesGeometry({
+    width: w * 0.96,
+    depth: d * 0.78,
+    thickness: 9,
+    centerHoleRadius: 12,
+    holes: 4,
+  });
+  stageDeck.translate(0, h / 2 - 4.5, 4);
+
+  const merged = mergeBufferGeometries([bottomFoot, rearPillar, stageDeck]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildPhoneCameraSaddleGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(76, pickNum(params, ["w", "width"], 92));
+  const h = Math.max(18, pickNum(params, ["h", "height"], 24));
+  const d = Math.max(54, pickNum(params, ["d", "depth"], 66));
+
+  const plate = buildPlateWithHolesGeometry({
+    width: w,
+    depth: d,
+    thickness: 7,
+    centerHoleRadius: 11,
+    holes: 0,
+  });
+  plate.translate(0, 2, 0);
+
+  const leftClipRail = new THREE.BoxGeometry(7, h * 0.85, d);
+  leftClipRail.translate(-w / 2 + 3.5, h * 0.2, 0);
+
+  const rightClipRail = new THREE.BoxGeometry(7, h * 0.85, d);
+  rightClipRail.translate(w / 2 - 3.5, h * 0.2, 0);
+
+  const lensTurret = buildTubeGeometry({
+    outerRadius: 18,
+    innerRadius: 11,
+    height: h * 0.75,
+  });
+  lensTurret.translate(0, -h * 0.25, 0);
+
+  const merged = mergeBufferGeometries([
+    plate,
+    leftClipRail,
+    rightClipRail,
+    lensTurret,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildMicroplateDeck96WellGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(180, pickNum(params, ["w", "width"], 214));
+  const h = Math.max(16, pickNum(params, ["h", "height"], 22));
+  const d = Math.max(125, pickNum(params, ["d", "depth"], 148));
+
+  const baseSlab = new THREE.BoxGeometry(w, h * 0.65, d);
+  baseSlab.translate(0, -h * 0.16, 0);
+
+  const leftPad = new THREE.BoxGeometry(26, h, d * 0.82);
+  leftPad.translate(-w / 2 + 13, 0, 0);
+
+  const rightPad = new THREE.BoxGeometry(26, h, d * 0.82);
+  rightPad.translate(w / 2 - 13, 0, 0);
+
+  const dividerRib = new THREE.BoxGeometry(8, h * 0.95, d * 0.76);
+
+  const frontRim = new THREE.BoxGeometry(w - 40, h * 0.9, 8);
+  frontRim.translate(0, 0, d * 0.38);
+
+  const rearRim = new THREE.BoxGeometry(w - 40, h * 0.9, 8);
+  rearRim.translate(0, 0, -d * 0.38);
+
+  const merged = mergeBufferGeometries([
+    baseSlab,
+    leftPad,
+    rightPad,
+    dividerRib,
+    frontRim,
+    rearRim,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildGantryPortalUprightGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(24, pickNum(params, ["w", "width"], 32));
+  const h = Math.max(120, pickNum(params, ["h", "height"], 162));
+  const d = Math.max(70, pickNum(params, ["d", "depth"], 108));
+
+  const baseFoot = new THREE.BoxGeometry(w * 1.15, 14, d);
+  baseFoot.translate(0, -h / 2 + 7, 0);
+
+  const mainColumn = new THREE.BoxGeometry(w * 0.85, h - 14, 34);
+  mainColumn.translate(0, 7, 0);
+
+  const frontGusset = new THREE.BoxGeometry(w * 0.55, h * 0.52, 16);
+  frontGusset.rotateX(THREE.MathUtils.degToRad(-24));
+  frontGusset.translate(0, -h * 0.18, 22);
+
+  const rearGusset = new THREE.BoxGeometry(w * 0.55, h * 0.52, 16);
+  rearGusset.rotateX(THREE.MathUtils.degToRad(24));
+  rearGusset.translate(0, -h * 0.18, -22);
+
+  const topSaddle = new THREE.BoxGeometry(w * 1.25, 26, 46);
+  topSaddle.translate(0, h / 2 - 22, 0);
+
+  const merged = mergeBufferGeometries([
+    baseFoot,
+    mainColumn,
+    frontGusset,
+    rearGusset,
+    topSaddle,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
+function buildPipetteZHeadGeometry(params: PartParams): THREE.BufferGeometry {
+  const w = Math.max(36, pickNum(params, ["w", "width"], 46));
+  const h = Math.max(72, pickNum(params, ["h", "height"], 92));
+  const d = Math.max(36, pickNum(params, ["d", "depth"], 44));
+
+  const rearBackplate = new THREE.BoxGeometry(w, h * 0.72, 10);
+  rearBackplate.translate(0, h * 0.08, -d * 0.32);
+
+  const upperCollar = new THREE.BoxGeometry(w * 0.84, 14, d * 0.82);
+  upperCollar.translate(0, h * 0.34, 2);
+
+  const lowerCollar = new THREE.BoxGeometry(w * 0.84, 14, d * 0.82);
+  lowerCollar.translate(0, -h * 0.06, 2);
+
+  const pipetteBarrel = new THREE.CylinderGeometry(11, 10, h * 0.62, 24);
+  pipetteBarrel.translate(0, h * 0.14, 6);
+
+  const pipetteTipCone = new THREE.CylinderGeometry(9, 2.2, h * 0.36, 24);
+  pipetteTipCone.translate(0, -h * 0.32, 6);
+
+  const merged = mergeBufferGeometries([
+    rearBackplate,
+    upperCollar,
+    lowerCollar,
+    pipetteBarrel,
+    pipetteTipCone,
+  ]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
 function buildCustomCsgGeometry(params: PartParams): THREE.BufferGeometry {
   if (params?.preset === "enclosure") {
     return buildBoxGeometry({
@@ -722,6 +1698,64 @@ export function buildPartGeometry(
     geometry = buildCasterWheelGeometry(params);
   } else if (rolePreset === "shelf_ledge") {
     geometry = buildShelfLedgeGeometry(params);
+  } else if (rolePreset === "arm_base_pedestal") {
+    geometry = buildArmBasePedestalGeometry(params);
+  } else if (rolePreset === "turntable_ring_deck") {
+    geometry = buildTurntableRingDeckGeometry(params);
+  } else if (rolePreset === "u_yoke_clevis") {
+    geometry = buildUYokeClevisGeometry(params);
+  } else if (rolePreset === "servo_motor") {
+    geometry = buildServoMotorGeometry(params);
+  } else if (rolePreset === "arm_truss_link") {
+    geometry = buildArmTrussLinkGeometry(params);
+  } else if (rolePreset === "elbow_knuckle") {
+    geometry = buildElbowKnuckleGeometry(params);
+  } else if (rolePreset === "forearm_barrel") {
+    geometry = buildForearmBarrelGeometry(params);
+  } else if (rolePreset === "parallel_gripper_body") {
+    geometry = buildParallelGripperBodyGeometry(params);
+  } else if (rolePreset === "parallel_gripper_jaws") {
+    geometry = buildParallelGripperJawsGeometry(params);
+  } else if (rolePreset === "purifier_base_pan") {
+    geometry = buildPurifierBasePanGeometry(params);
+  } else if (rolePreset === "hepa_pleated_filter") {
+    geometry = buildHepaPleatedFilterGeometry(params);
+  } else if (rolePreset === "perforated_intake_drum") {
+    geometry = buildPerforatedIntakeDrumGeometry(params);
+  } else if (rolePreset === "annular_retainer_ring") {
+    geometry = buildAnnularRetainerRingGeometry(params);
+  } else if (rolePreset === "coanda_plenum_neck") {
+    geometry = buildCoandaPlenumNeckGeometry(params);
+  } else if (rolePreset === "coanda_airfoil_lower") {
+    geometry = buildCoandaAirfoilLoopHalfGeometry(params, "lower");
+  } else if (rolePreset === "coanda_airfoil_upper") {
+    geometry = buildCoandaAirfoilLoopHalfGeometry(params, "upper");
+  } else if (rolePreset === "dual_2020_rails") {
+    geometry = buildDual2020RailsGeometry(params);
+  } else if (rolePreset === "slider_end_block") {
+    geometry = buildSliderEndBlockGeometry(params);
+  } else if (rolePreset === "outrigger_legs_quad") {
+    geometry = buildOutriggerLegsQuadGeometry(params);
+  } else if (rolePreset === "vslot_wheel_set") {
+    geometry = buildVSlotWheelSetGeometry(params);
+  } else if (rolePreset === "gt2_belt_loop") {
+    geometry = buildGt2BeltLoopGeometry(params);
+  } else if (rolePreset === "arca_camera_cradle") {
+    geometry = buildArcaCameraCradleGeometry(params);
+  } else if (rolePreset === "easel_h_base") {
+    geometry = buildEaselHBaseGeometry(params);
+  } else if (rolePreset === "canvas_top_clamp") {
+    geometry = buildCanvasTopClampGeometry(params);
+  } else if (rolePreset === "microscope_stage_base") {
+    geometry = buildMicroscopeStageBaseGeometry(params);
+  } else if (rolePreset === "phone_camera_saddle") {
+    geometry = buildPhoneCameraSaddleGeometry(params);
+  } else if (rolePreset === "microplate_deck_96well") {
+    geometry = buildMicroplateDeck96WellGeometry(params);
+  } else if (rolePreset === "gantry_portal_upright") {
+    geometry = buildGantryPortalUprightGeometry(params);
+  } else if (rolePreset === "pipette_z_head") {
+    geometry = buildPipetteZHeadGeometry(params);
   } else {
     switch (shape) {
       case "box":
@@ -959,9 +1993,9 @@ export function getCandidateStlUrls(
     projectId === "demo" ||
     projectId === "sample";
 
-  // Never reuse plant-waterer demo STLs for non-plant-waterer objects;
-  // when a projectId is present (preset or live), fetch from /api/objects/<projectId>/stl/<explicitBase>.
-  if (!isPlantWatererDemo && !projectId) {
+  // Presets other than plant-waterer use their own fixed procedural/rolePreset geometry;
+  // live projects (non-preset projectId) fetch from /api/objects/<projectId>/stl/<explicitBase>.
+  if (!isPlantWatererDemo && (!projectId || isPresetProjectId(projectId))) {
     return [];
   }
 
@@ -1013,10 +2047,6 @@ export function orientAndCenterStlGeometry(
     // OpenSCAD modules compiled by runCadAgent are built on the Z-up print bed;
     // rotate -90° around X so OpenSCAD +Z aligns with Three.js +Y.
     geo.rotateX(-Math.PI / 2);
-  } else if (shape === "funnel") {
-    // Support-free funnels are printed upside-down on the bed (wide rim at Z=0, spout at Z=max).
-    // Rotate +90° around X so wide mouth faces +Y (up) and spout points -Y (down).
-    geo.rotateX(Math.PI / 2);
   } else if (
     shape === "hook" ||
     shape === "bracketL" ||
@@ -1026,7 +2056,7 @@ export function orientAndCenterStlGeometry(
     // Elongated stakes/hooks laid along Y on the print bed (e.g. drip-stake.stl)
     // already have their tall vertical axis along Y.
   } else {
-    // Standard Z-up print bed STL (reservoir, lid, gear, pump mount, enclosure) ->
+    // Standard Z-up print bed STL (reservoir, lid, funnel, gear, pump mount, enclosure) ->
     // rotate -90° around X so print bed X-Y becomes horizontal X-Z and print Z becomes +Y.
     geo.rotateX(-Math.PI / 2);
   }
@@ -1181,8 +2211,17 @@ export function usePartGeometryAndEdges(
     [part.shape, part.params, edgeThresholdAngle]
   );
 
+  const hasRolePreset = Boolean(
+    part.params &&
+      typeof part.params.rolePreset === "string" &&
+      part.params.rolePreset.length > 0 &&
+      (!part.cadGrounded || isPresetProjectId(projectId))
+  );
+
   const inlineStlGeometry = useMemo(() => {
-    if (part.category !== "printed" || !part.stlBase64) return null;
+    if (part.category !== "printed" || hasRolePreset || !part.stlBase64) {
+      return null;
+    }
     return parseStlBase64Geometry(
       part.stlBase64,
       part.shape,
@@ -1191,6 +2230,7 @@ export function usePartGeometryAndEdges(
     );
   }, [
     part.category,
+    hasRolePreset,
     part.stlBase64,
     part.shape,
     part.partId,
@@ -1199,7 +2239,7 @@ export function usePartGeometryAndEdges(
   ]);
 
   const [stlGeo, setStlGeo] = useState<THREE.BufferGeometry | null>(() => {
-    if (part.category !== "printed") return null;
+    if (part.category !== "printed" || hasRolePreset) return null;
     if (inlineStlGeometry) return inlineStlGeometry;
     const urls = getCandidateStlUrls(part.partId, projectId, part.stlFile);
     const cacheKey = `${projectId || "demo"}:${part.partId}:${part.shape}:${
@@ -1209,7 +2249,7 @@ export function usePartGeometryAndEdges(
   });
 
   useEffect(() => {
-    if (part.category !== "printed") {
+    if (part.category !== "printed" || hasRolePreset) {
       setStlGeo(null);
       return;
     }
@@ -1240,6 +2280,7 @@ export function usePartGeometryAndEdges(
     part.cadGrounded,
     inlineStlGeometry,
     projectId,
+    hasRolePreset,
   ]);
 
   const resolvedStl = inlineStlGeometry || stlGeo;

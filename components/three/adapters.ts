@@ -651,9 +651,19 @@ export function adaptDesign(
     let position = toThreeVec3(p.position, zUp);
     let explode = toThreeVec3(p.explode, zUp);
 
-    // Normalize rotation: if Z-up CAD coordinates had 90/180 X flips for Z-extruded shapes,
+    // Normalize rotation: if explicit Three.js eulerDeg is provided in params, use it directly;
+    // otherwise if Z-up CAD coordinates had 90/180 X flips for Z-extruded shapes,
     // our Three.js geometry builders already orient heights along +Y.
-    let rotation: [number, number, number] = zUp
+    const explicitEuler = Array.isArray(p.params?.eulerDeg) && p.params.eulerDeg.length >= 3
+      ? ([
+          Number(p.params.eulerDeg[0]) || 0,
+          Number(p.params.eulerDeg[1]) || 0,
+          Number(p.params.eulerDeg[2]) || 0,
+        ] as [number, number, number])
+      : null;
+    let rotation: [number, number, number] = explicitEuler
+      ? explicitEuler
+      : zUp
       ? [0, p.rotation[2] || 0, 0]
       : [...p.rotation];
 
@@ -1064,11 +1074,8 @@ export function adaptInstructions(
   }
 
   const adaptedDesign = rawDesign ? adaptDesign(rawDesign, rawInput) : null;
-  const isPreset = adaptedDesign
-    ? isPresetDesignSpec(adaptedDesign.parts)
-    : false;
   const adaptedNodeByPartId = new Map<string, AssemblyNode>();
-  if (adaptedDesign && !isPreset) {
+  if (adaptedDesign) {
     for (const node of adaptedDesign.assembly) {
       if (!adaptedNodeByPartId.has(node.partId)) {
         adaptedNodeByPartId.set(node.partId, node);
