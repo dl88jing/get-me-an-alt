@@ -381,19 +381,25 @@ async function runWithGeminiRest<T>(
     ? options.retryPrompt || buildCompactRetryPrompt(options.prompt)
     : options.prompt;
 
+  const activeImages = isRetry
+    ? resolvedImages.slice(0, 2)
+    : resolvedImages.slice(0, 6);
+
   emitLog(
     'cmd',
-    `POST ${endpoint} ${useSearchTool ? '[tools: google_search]' : '[responseMimeType: application/json]'}${resolvedImages.length > 0 ? ` [+inlineData ${resolvedImages.length} image(s)]` : ''}${isRetry ? ' [retry: compact+LOW]' : ''}`
+    `POST ${endpoint} ${useSearchTool ? '[tools: google_search]' : '[responseMimeType: application/json]'}${activeImages.length > 0 ? ` [+inlineData ${activeImages.length} image(s)]` : ''}${isRetry ? ' [retry: compact+LOW]' : ''}`
   );
 
   const parts: Array<Record<string, unknown>> = [];
-  for (const img of resolvedImages.slice(0, 3)) {
-    parts.push({
-      inlineData: {
-        mimeType: img.mimeType,
-        data: img.base64Data,
-      },
-    });
+  for (const img of activeImages) {
+    if (img?.base64Data && img?.mimeType) {
+      parts.push({
+        inlineData: {
+          mimeType: img.mimeType,
+          data: img.base64Data,
+        },
+      });
+    }
   }
   parts.push({
     text: `${promptText}\n\nRespond with ONLY valid JSON matching the schema.`,
@@ -548,8 +554,8 @@ export async function runGeminiAgent<T>(
     rawImageInputs.length > 0
       ? await resolveInlineImages(
           rawImageInputs,
-          3,
-          Math.floor(1.5 * 1024 * 1024)
+          6,
+          Math.floor(2.5 * 1024 * 1024)
         )
       : [];
 

@@ -145,7 +145,8 @@ export function buildHonestSearchSources(
   analysis: Pick<
     ObjectAnalysis,
     'objectName' | 'category' | 'keyMechanisms' | 'inputUrl' | 'overallDimensionsMm'
-  >,
+  > &
+    Partial<Pick<ObjectAnalysis, 'ingestedPage'>>,
   extraInput?: ResearchInput
 ): EnrichedResearchSource[] {
   const objectName = analysis.objectName?.trim() || 'DIY Hardware Alternative';
@@ -163,7 +164,10 @@ export function buildHonestSearchSources(
 
   const list: EnrichedResearchSource[] = [];
 
-  const candidateInputUrl = extraInput?.url?.trim() || analysis.inputUrl?.trim();
+  const candidateInputUrl =
+    analysis.ingestedPage?.finalUrl?.trim() ||
+    extraInput?.url?.trim() ||
+    analysis.inputUrl?.trim();
   if (candidateInputUrl && /^https?:\/\//i.test(candidateInputUrl)) {
     const parsed = parseInput({ url: candidateInputUrl });
     if (parsed.kind === 'video-url' || parsed.kind === 'product-url') {
@@ -171,22 +175,37 @@ export function buildHonestSearchSources(
       const kind: SourceKind = isVideo ? 'video' : 'product';
       const domain = parsed.domain || extractDomainLabel(candidateInputUrl);
       const embedUrl = getEmbedUrl({ url: candidateInputUrl }) || undefined;
-      const thumbnailUrl = getThumbnail({ url: candidateInputUrl });
+      const thumbnailUrl =
+        analysis.ingestedPage?.images?.[0]?.url ||
+        analysis.ingestedPage?.aboveFoldScreenshot ||
+        getThumbnail({ url: candidateInputUrl });
+
+      const ingestedSpecEntries = analysis.ingestedPage?.specs
+        ? Object.entries(analysis.ingestedPage.specs)
+            .slice(0, 3)
+            .map(([k, v]) => `${k}: ${v}`)
+        : [];
 
       list.push({
         id: 'src-input-ref',
         title: isVideo
           ? `${objectName} — Reference Input Video (${parsed.platform || domain})`
-          : `${objectName} — Reference Product (${parsed.platform || domain})`,
+          : `${analysis.ingestedPage?.title || objectName} — Live Ingested Product Page (${domain})`,
         url: candidateInputUrl,
         domain,
         source: domain,
         type: isVideo ? 'video' : 'article',
         kind,
-        summary: `User-supplied reference ${isVideo ? 'video' : 'product link'} for ${objectName}. Used as the baseline specification for dimensional and BOM reverse-engineering.`,
+        summary:
+          analysis.ingestedPage?.description ||
+          `User-supplied reference ${isVideo ? 'video' : 'product link'} for ${objectName}. Used as the baseline specification for dimensional and BOM reverse-engineering.`,
         keyTakeaways: [
-          `Baseline reference from ${parsed.platform || domain} (${analysis.overallDimensionsMm?.join('×') || 'standard'} mm envelope).`,
-          'Decomposed into 3D-printable structural housing and off-the-shelf functional modules.',
+          `Baseline reference from ${parsed.platform || domain} (${analysis.overallDimensionsMm?.join('×') || 'standard'} mm envelope${analysis.ingestedPage?.price ? `, $${analysis.ingestedPage.price} retail` : ''}).`,
+          ...(ingestedSpecEntries.length > 0
+            ? [`Extracted specs: ${ingestedSpecEntries.join(' · ')}`]
+            : [
+                'Decomposed into 3D-printable structural housing and off-the-shelf functional modules.',
+              ]),
         ],
         relevanceScore: 0.99,
         ...(thumbnailUrl ? { thumbnailUrl, thumbnail: thumbnailUrl } : {}),
@@ -494,11 +513,26 @@ export async function runResearcherAgent(
       ? input.inlineImages
       : loadProductImagesFromCwd(input.cwd, analysis.productImages);
 
+  const ingestedSpecsBlock =
+    analysis.ingestedPage?.specs &&
+    Object.keys(analysis.ingestedPage.specs).length > 0
+      ? `\nIngested Page Specifications:\n${Object.entries(
+          analysis.ingestedPage.specs
+        )
+          .slice(0, 10)
+          .map(([k, v]) => `- ${k}: ${v}`)
+          .join('\n')}`
+      : '';
+
+  const ingestedTextBlock = analysis.ingestedPage?.visibleText
+    ? `\nIngested Page Text Excerpt:\n${analysis.ingestedPage.visibleText.slice(0, 1600)}`
+    : '';
+
   const prompt = `You are the Researcher Agent (Stage 2 of 6) in "Get Me An Alt", powered by Gemini 4 Argon with Google Search grounding.
 Target DIY project: "${analysis.objectName}" (${analysis.category})
 Input classification: ${parsedInput.kind}${parsedInput.platform ? ` (${parsedInput.platform})` : ''}
 Function: ${analysis.functionSummary}
-Key mechanisms: ${analysis.keyMechanisms.join('; ')}
+Key mechanisms: ${analysis.keyMechanisms.join('; ')}${ingestedSpecsBlock}${ingestedTextBlock}
 ${effectiveImages.length > 0 ? 'Product reference image(s) are attached. Inspect the visual silhouette, proportions, hull/chassis profile, and visible sub-assemblies so referenceDimensions and technicalInsights match the real silhouette and give mm transforms (long axis along X for vehicles/boats).' : ''}
 
 Search for teardowns, schematics, PDF datasheets/manuals, open-source 3D models (Printables, Thingiverse, GitHub), YouTube build/teardown guides, Instructables assembly guides, and off-the-shelf part references for "${analysis.objectName}".
@@ -551,6 +585,9 @@ Include at least 7 diverse sources covering kinds: "video", "schematic", "pdf", 
     'Overall Envelope': `${analysis.overallDimensionsMm.join(' × ')} mm`,
     'Primary Fastener Standard': 'M3 × 12mm Socket Head Cap Screws',
     'Minimum Wall Thickness': '2.4 mm (6 perimeters at 0.4mm nozzle)',
+    ...Object.fromEntries(
+      Object.entries(analysis.ingestedPage?.specs || {}).slice(0, 6)
+    ),
   };
 
   const retryPrompt = `Provide open-source 3D printing & teardown research for "${analysis.objectName}" (${analysis.category}). Use honest search URLs (printables.com/search, youtube.com/results, github.com/search, ifixit.com/Search). Return ONLY valid JSON with keys: querySummary, groundingUsed (false), searchQueries (4 strings), sources (7 items with id, title, url, domain, type, kind, summary, keyTakeaways, relevanceScore), technicalInsights (3 strings), referenceDimensions (object).`;

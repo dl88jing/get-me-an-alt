@@ -77,6 +77,7 @@ export interface CadAgentInput {
   analysis?: ObjectAnalysis;
   teardown?: TeardownData;
   sources?: ResearchData;
+  ingestedImageParts?: Array<{ mimeType: string; base64Data: string }>;
   cwd: string;
   objectId?: string;
   printerId?: string;
@@ -510,6 +511,9 @@ Product & Teardown Grounding:
     analysis?.overallDimensionsMm || [160, 180, 140]
   )}
 - Key Mechanisms: ${JSON.stringify(analysis?.keyMechanisms || [])}
+- Ingested Product Specs: ${JSON.stringify(
+    analysis?.ingestedPage?.specs || {}
+  )}
 - Teardown Callouts: ${JSON.stringify(teardownPartsSummary)}
 - Technical Insights: ${JSON.stringify(
     (sources?.technicalInsights || []).slice(0, 4)
@@ -702,11 +706,18 @@ export async function runCadAgent(
         idx === 0
       );
 
+      const cadRefImages =
+        Array.isArray(input.ingestedImageParts) &&
+        input.ingestedImageParts.length > 0
+          ? input.ingestedImageParts.slice(0, 2)
+          : effectiveImages;
+
       const agentRes = await runGeminiAgent<ArgonOpenScadResponse>({
         stageName: `CAD-${part.id}`,
         prompt,
         cwd: input.cwd,
-        inlineImages: effectiveImages,
+        inlineImages:
+          cadRefImages && cadRefImages.length > 0 ? cadRefImages : undefined,
         preferRestForSpeed: true,
         timeoutMs: perPartTimeoutMs,
         onLog: (entry) => {

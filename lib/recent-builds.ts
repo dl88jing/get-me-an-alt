@@ -80,6 +80,19 @@ function parsePriceNumber(val: unknown): number {
 export function extractThumbnailFromManifest(
   manifest: ProjectManifest
 ): string | null {
+  const ingested = manifest.ingestedPage || manifest.analysis?.ingestedPage;
+  if (ingested) {
+    const firstProdImg = ingested.images?.find(
+      (img) => typeof img.url === 'string' && img.url.trim()
+    );
+    if (firstProdImg?.url) {
+      return firstProdImg.url.trim();
+    }
+    if (ingested.aboveFoldScreenshot) {
+      return ingested.aboveFoldScreenshot;
+    }
+  }
+
   const firstFrame = manifest.teardown?.frames?.find(
     (f) =>
       (typeof f.thumbnailUrl === 'string' && f.thumbnailUrl.trim()) ||

@@ -943,6 +943,22 @@ export function getProjectManifest(id: string): ProjectManifest | null {
       const m = JSON.parse(
         fs.readFileSync(manifestPath, 'utf-8')
       ) as ProjectManifest;
+      if (!m.ingestedPage) {
+        if (m.analysis?.ingestedPage) {
+          m.ingestedPage = m.analysis.ingestedPage;
+        } else {
+          const ingestionPath = path.join(folder, 'ingestion.json');
+          if (fs.existsSync(ingestionPath)) {
+            try {
+              m.ingestedPage = JSON.parse(
+                fs.readFileSync(ingestionPath, 'utf-8')
+              );
+            } catch {
+              // ignore
+            }
+          }
+        }
+      }
       if (
         m.analysis &&
         (!m.teardown || !Array.isArray(m.teardown.frames) || m.teardown.frames.length === 0)
@@ -1304,6 +1320,21 @@ async function executePipelineStages(
     });
     const productInlineImages = analystRes.inlineImages || [];
     manifest.analysis = analystRes.data;
+    if (analystRes.ingestedPage || analystRes.data.ingestedPage) {
+      manifest.ingestedPage =
+        analystRes.ingestedPage || analystRes.data.ingestedPage;
+      emitSseEvent(cwd, manifest, {
+        agent: 'analyst',
+        phase: 'artifact',
+        message: `Wrote ingestion.json (${manifest.ingestedPage?.mode}: ${manifest.ingestedPage?.images.length || 0} product images + live screenshots)`,
+        data: {
+          stageId: 'analyst',
+          artifactFile: 'ingestion.json',
+          mode: manifest.ingestedPage?.mode,
+          imagesCount: manifest.ingestedPage?.images.length || 0,
+        },
+      });
+    }
     manifest.title = analystRes.data.objectName;
     finishStage('analyst', {
       ...analystRes,
@@ -1661,6 +1692,7 @@ async function executePipelineStages(
           analysis: manifest.analysis,
           teardown: manifest.teardown,
           sources: manifest.sources,
+          ingestedImageParts: analystRes.ingestedImageParts,
           cwd,
           objectId: manifest.id,
           printerId: targetPrinterId,

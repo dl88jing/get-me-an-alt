@@ -1,10 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import { AgentLogEntry, ObjectAnalysis } from '../types';
+import { AgentLogEntry, IngestedProductPage, ObjectAnalysis } from '../types';
+import {
+  GeminiInlineImagePart,
+  ingestProductUrl,
+} from '../ingest/browser';
 import { SAMPLE_ANALYSIS } from '../sample-data';
 import {
   fetchProductPage,
   InlineImageData,
+  isErrorOrBlockTitle,
   ProductPageFetchResult,
 } from './page-fetch';
 import { runGeminiAgent, RunAgentResult } from './runner';
@@ -18,8 +23,16 @@ export interface AnalystInput {
     base64Data: string;
   };
   inlineImages?: InlineImageData[];
+  ingestedPage?: IngestedProductPage;
+  ingestedImageParts?: GeminiInlineImagePart[];
   cwd: string;
   onLog?: (entry: AgentLogEntry) => void;
+}
+
+export interface AnalystAgentResult extends RunAgentResult<ObjectAnalysis> {
+  ingestedPage?: IngestedProductPage;
+  ingestedImageParts?: GeminiInlineImagePart[];
+  inlineImages?: InlineImageData[];
 }
 
 function slugify(text: string): string {
@@ -311,27 +324,73 @@ function buildGenericObjectAnalysis(params: {
 
 export async function runAnalystAgent(
   input: AnalystInput
-): Promise<RunAgentResult<ObjectAnalysis> & { inlineImages?: InlineImageData[] }> {
+): Promise<AnalystAgentResult> {
   const urlInfo = input.url ? parseUrlProductInfo(input.url) : null;
+  let ingestedPage: IngestedProductPage | undefined = input.ingestedPage;
+  let ingestedImageParts: GeminiInlineImagePart[] =
+    input.ingestedImageParts || [];
+
   let scrapedMeta: ProductPageFetchResult = {
     images: [],
     inlineImages: [],
   };
 
   if (input.url && /^https?:\/\//i.test(input.url)) {
-    scrapedMeta = await fetchProductPage(input.url.trim());
-    if (
-      scrapedMeta.title ||
-      urlInfo?.title ||
-      scrapedMeta.inlineImages.length > 0
-    ) {
-      input.onLog?.({
-        timestamp: new Date().toISOString(),
-        level: 'info',
-        message: scrapedMeta.title
-          ? `Fetched product page (${scrapedMeta.source || 'html'}): "${scrapedMeta.title}"${scrapedMeta.price ? ` ($${scrapedMeta.price})` : ''}${scrapedMeta.inlineImages.length > 0 ? ` + ${scrapedMeta.inlineImages.length} verified product image(s)` : ''}`
-          : `Resolved product name from URL slug: "${urlInfo?.title}"${scrapedMeta.inlineImages.length > 0 ? ` + ${scrapedMeta.inlineImages.length} verified product image(s)` : ''}`,
+    if (!ingestedPage) {
+      const ingestRes = await ingestProductUrl(input.url.trim(), {
+        cwd: input.cwd,
+        onLog: input.onLog,
       });
+      ingestedPage = ingestRes.page;
+      ingestedImageParts = ingestRes.geminiImageParts;
+    }
+
+    if (ingestedPage) {
+      const isGenericUrlTitle =
+        !ingestedPage.title ||
+        ingestedPage.title === input.url.trim() ||
+        isErrorOrBlockTitle(ingestedPage.title);
+      scrapedMeta = {
+        title: !isGenericUrlTitle ? ingestedPage.title : undefined,
+        description: ingestedPage.description,
+        siteName: ingestedPage.brand || ingestedPage.siteName,
+        brand: ingestedPage.brand,
+        price: ingestedPage.price,
+        currency: ingestedPage.currency,
+        specs: ingestedPage.specs
+          ? Object.entries(ingestedPage.specs).map(([k, v]) => `${k}: ${v}`)
+          : undefined,
+        images: (ingestedPage.images || []).map((img) => img.url),
+        inlineImages: ingestedImageParts.map((p) => ({
+          mimeType: p.mimeType,
+          base64Data: p.base64Data,
+          sourceUrl: p.sourceUrl,
+        })),
+      };
+    }
+
+    if (!scrapedMeta.title || scrapedMeta.inlineImages.length === 0) {
+      const fallbackMeta = await fetchProductPage(input.url.trim());
+      scrapedMeta = {
+        title: scrapedMeta.title || fallbackMeta.title,
+        description: scrapedMeta.description || fallbackMeta.description,
+        siteName: scrapedMeta.siteName || fallbackMeta.siteName,
+        brand: scrapedMeta.brand || fallbackMeta.brand,
+        price: scrapedMeta.price ?? fallbackMeta.price,
+        currency: scrapedMeta.currency || fallbackMeta.currency,
+        specs:
+          scrapedMeta.specs && scrapedMeta.specs.length > 0
+            ? scrapedMeta.specs
+            : fallbackMeta.specs,
+        images:
+          scrapedMeta.images.length > 0
+            ? scrapedMeta.images
+            : fallbackMeta.images,
+        inlineImages:
+          scrapedMeta.inlineImages.length > 0
+            ? scrapedMeta.inlineImages
+            : fallbackMeta.inlineImages,
+      };
     }
   }
 
@@ -344,13 +403,28 @@ export async function runAnalystAgent(
   }
   if (Array.isArray(input.inlineImages)) {
     for (const img of input.inlineImages) {
-      if (combinedInlineImages.length >= 3) break;
+      if (combinedInlineImages.length >= 6) break;
       if (img?.base64Data) combinedInlineImages.push(img);
     }
   }
+  for (const img of ingestedImageParts) {
+    if (combinedInlineImages.length >= 6) break;
+    if (img?.base64Data) {
+      combinedInlineImages.push({
+        mimeType: img.mimeType,
+        base64Data: img.base64Data,
+        sourceUrl: img.sourceUrl,
+      });
+    }
+  }
   for (const img of scrapedMeta.inlineImages) {
-    if (combinedInlineImages.length >= 3) break;
-    combinedInlineImages.push(img);
+    if (combinedInlineImages.length >= 6) break;
+    if (
+      img?.base64Data &&
+      !combinedInlineImages.some((c) => c.base64Data === img.base64Data)
+    ) {
+      combinedInlineImages.push(img);
+    }
   }
 
   if (combinedInlineImages.length > 0) {
@@ -398,12 +472,43 @@ export async function runAnalystAgent(
     ] ||
     'Commercial OEM';
 
+  const specsLines = ingestedPage?.specs
+    ? Object.entries(ingestedPage.specs)
+        .slice(0, 14)
+        .map(([k, v]) => `  - ${k}: ${v}`)
+        .join('\n')
+    : '';
+
+  const variantsLine =
+    ingestedPage?.variants && ingestedPage.variants.length > 0
+      ? ingestedPage.variants
+          .slice(0, 8)
+          .map((v) => `${v.name}${v.price ? ` ($${v.price})` : ''}`)
+          .join(', ')
+      : '';
+
+  const visibleTextExcerpt = ingestedPage?.visibleText
+    ? ingestedPage.visibleText.slice(0, 4200)
+    : '';
+
   const scrapedContext = [
+    ingestedPage
+      ? `Ingestion Mode: ${ingestedPage.mode} (${ingestedPage.browserEngine || 'fetch'}${ingestedPage.shopifyEnriched ? ', Shopify JSON enriched' : ''})`
+      : '',
+    ingestedPage?.finalUrl && ingestedPage.finalUrl !== input.url
+      ? `Resolved Final URL: ${ingestedPage.finalUrl}`
+      : '',
     scrapedMeta.title ? `Page Title: ${scrapedMeta.title}` : '',
     scrapedMeta.description ? `Page Description: ${scrapedMeta.description}` : '',
     scrapedMeta.price ? `Listed Retail Price: $${scrapedMeta.price}` : '',
-    scrapedMeta.specs && scrapedMeta.specs.length > 0
-      ? `Extracted Product Specs:\n- ${scrapedMeta.specs.join('\n- ')}`
+    variantsLine ? `Product Variants: ${variantsLine}` : '',
+    specsLines
+      ? `Extracted Product Specifications:\n${specsLines}`
+      : scrapedMeta.specs && scrapedMeta.specs.length > 0
+        ? `Extracted Product Specs:\n- ${scrapedMeta.specs.join('\n- ')}`
+        : '',
+    visibleTextExcerpt
+      ? `Rendered Page Visible Text (innerText excerpt):\n"""\n${visibleTextExcerpt}\n"""`
       : '',
   ]
     .filter(Boolean)
@@ -421,21 +526,31 @@ export async function runAnalystAgent(
 
   const isPlant = isPlantWatererInput(resolvedTitle, input.url);
   const genericFallback = isPlant
-    ? SAMPLE_ANALYSIS
-    : buildGenericObjectAnalysis({
-        cleanTitle: resolvedTitle,
-        brand: resolvedBrand,
-        input,
-        inputType,
-        scrapedDesc: scrapedMeta.description,
-        scrapedPrice: scrapedMeta.price,
-      });
+    ? {
+        ...SAMPLE_ANALYSIS,
+        ...(ingestedPage ? { ingestedPage } : {}),
+      }
+    : {
+        ...buildGenericObjectAnalysis({
+          cleanTitle: resolvedTitle,
+          brand: resolvedBrand,
+          input,
+          inputType,
+          scrapedDesc: scrapedMeta.description,
+          scrapedPrice: scrapedMeta.price,
+        }),
+        ...(ingestedPage ? { ingestedPage } : {}),
+      };
 
   const prompt = `You are the Analyst Agent (Stage 1 of 6) in "Get Me An Alt", an AI hardware reverse-engineering pipeline powered by Gemini 4 Argon.
 The user wants a DIY 3D-printed + off-the-shelf alternative to the following pricey commercial product:
 Target Product: "${resolvedTitle}" (Brand: ${resolvedBrand})
 ${input.url ? `Source URL: ${input.url}` : ''}
-${scrapedContext ? `${scrapedContext}\n` : ''}${combinedInlineImages.length > 0 ? `${combinedInlineImages.length} product image(s) are attached. Inspect the visual silhouette, proportions, hull/chassis profile, superstructure, and mechanisms carefully. Give overallDimensionsMm: [X, Y, Z] in mm (for vehicles, boats, ships, aircraft, or horizontal assemblies, orient the long axis along X, height along Y, and beam/width along Z).` : ''}
+${scrapedContext ? `${scrapedContext}\n` : ''}${
+    combinedInlineImages.length > 0
+      ? `${combinedInlineImages.length} visual reference image(s) from the live rendered page (above-the-fold screenshot, full-page screenshot, and high-res product gallery photos) are attached. Ground your dimensional, mechanical, silhouette, and BOM analysis directly in what is visible on the page and in the product photos. Give overallDimensionsMm: [X, Y, Z] in mm (for vehicles, boats, ships, aircraft, or horizontal assemblies, orient the long axis along X, height along Y, and beam/width along Z).`
+      : ''
+  }
 
 Analyze "${resolvedTitle}" specifically (never substitute a different gadget) and return ONLY a JSON object matching this exact TypeScript interface:
 {
@@ -475,7 +590,8 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
     retryPrompt,
     cwd: input.cwd,
     artifactFilename: 'analysis.json',
-    inlineImages: combinedInlineImages,
+    inlineImages:
+      combinedInlineImages.length > 0 ? combinedInlineImages : undefined,
     preferRestForSpeed: true,
     timeoutMs: 30000,
     onLog: input.onLog,
@@ -484,6 +600,7 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
 
   const d = result.data;
   const retail =
+    scrapedMeta.price ||
     Number(d?.originalProduct?.retailPrice) ||
     genericFallback.originalProduct.retailPrice;
   const diy = Number(d?.targetDiyCost) || genericFallback.targetDiyCost;
@@ -501,8 +618,9 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
       name: d?.originalProduct?.name || genericFallback.originalProduct.name,
       brand: d?.originalProduct?.brand || genericFallback.originalProduct.brand,
       retailPrice: retail,
-      currency: 'USD',
+      currency: ingestedPage?.currency || 'USD',
       url:
+        ingestedPage?.finalUrl ||
         input.url ||
         d?.originalProduct?.url ||
         `https://www.amazon.com/s?k=${encodeURIComponent(
@@ -562,6 +680,7 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
       scrapedMeta.images.length > 0
         ? scrapedMeta.images
         : d?.productImages,
+    ...(ingestedPage ? { ingestedPage } : {}),
   };
 
   try {
@@ -577,6 +696,8 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
   return {
     ...result,
     data: normalized,
+    ingestedPage,
+    ingestedImageParts,
     inlineImages: combinedInlineImages,
   };
 }
