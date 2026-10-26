@@ -29,15 +29,15 @@ import {
   PRINTERS,
   Printer,
 } from '@/lib/printers';
+import { createStoreZip } from '@/lib/cad/stl';
 import {
-  createStoreZip,
   estimateFromVolumeAndSurfaceArea,
   estimatePlatePrint,
   formatPrintDuration,
-  generateCadBundle,
-  packParts,
   SPEED_CLASS_PROFILES,
-} from '@/lib/cad';
+} from '@/lib/cad/estimate';
+import { generateCadBundle } from '@/lib/cad/adapters';
+import { packParts } from '@/lib/cad/packer';
 import type { DesignSpec, PlatesData } from '@/lib/types';
 
 export interface PrintPanelProps {
