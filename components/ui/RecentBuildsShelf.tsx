@@ -322,36 +322,29 @@ export function RecentBuildsShelf() {
     );
   };
 
+  if (!loadingServer && builds.length === 0 && communityBuilds.length === 0) {
+    return null;
+  }
+
   return (
     <section
       id="recent-builds"
       data-testid="recent-builds-shelf"
       aria-label="Recent Builds"
-      className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
+      className="rounded-2xl surface-card p-6 space-y-5"
     >
-      <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#d4af37]/20 pb-5">
-        <div className="space-y-1.5">
-          <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-            <History className="h-4 w-4" />
-            YOUR LIVE RUNS · NETWORK &amp; DEVICE SYNCED
-          </div>
-          <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
-            Recent{' '}
-            <span className="italic font-normal text-[#f3d478]">Builds</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-[#dfd3be]/15 pb-4">
+        <div>
+          <p className="eyebrow">Your Live Runs</p>
+          <h2 className="mt-0.5 font-display text-2xl font-bold text-[#faf4e8]">
+            Recent Builds
           </h2>
-          <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl">
-            Every custom product link, video teardown, photo, or prompt you run
-            is saved automatically for your network so you can reopen your STLs,
-            BOM, and assembly steps from any browser.
-          </p>
         </div>
 
-        <div className="flex items-center gap-2 font-mono text-[11px] text-[#bda782]">
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/30 bg-[#0c0906]/85 px-3 py-1 text-[#f3d478]">
-            <span className="h-2 w-2 rounded-full bg-[#d4af37]" />
-            {builds.length} Saved {builds.length === 1 ? 'Build' : 'Builds'}
-          </span>
-        </div>
+        <span className="inline-flex items-center gap-1.5 rounded-full border border-[#dfd3be]/25 bg-[#0c0a08] px-3 py-1 font-mono text-xs text-[#f3d478]">
+          <span className="h-2 w-2 rounded-full bg-[#e5bd47]" />
+          {builds.length} Saved {builds.length === 1 ? 'Build' : 'Builds'}
+        </span>
       </div>
 
       {builds.length > 0 ? (

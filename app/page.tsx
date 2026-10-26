@@ -1,31 +1,24 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
-import { ShowcaseBuild } from '../components/ui/ShowcaseBuild';
 import { RecentBuildsShelf } from '../components/ui/RecentBuildsShelf';
 import {
   ArrowRight,
-  ArrowUpRight,
   Box,
-  CheckCircle2,
-  Compass,
+  ChevronDown,
   Cpu,
-  Feather,
   Layers,
   Link2,
   Printer,
-  ScrollText,
   Search,
   ShieldCheck,
   ShoppingCart,
   Sparkles,
-  TrendingDown,
   Upload,
   Wrench,
-  Zap,
 } from 'lucide-react';
 
 const ScrollExplodeScene = dynamic(
@@ -33,8 +26,8 @@ const ScrollExplodeScene = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className="min-h-[460px] rounded-2xl border border-[#d4af37]/30 bg-[#14100b] p-8 flex items-center justify-center font-mono text-xs text-[#e6d3b3] skeleton-shimmer">
-        PREPARING 3D EXPLODED VIEWPORT // 256×256×256MM...
+      <div className="min-h-[420px] rounded-2xl border border-[#dfd3be]/20 bg-[#17130e] p-8 flex items-center justify-center font-mono text-sm text-[#dfd3be] skeleton-shimmer">
+        Loading interactive 3D exploded preview...
       </div>
     ),
   }
@@ -59,34 +52,90 @@ const POPULAR_PRINTERS = [
 
 const PRESET_GADGETS = [
   {
+    id: 'desktop-robot-arm',
+    title: '6-Axis Desktop Robot Arm',
+    category: 'Robotics',
+    retail: '$899',
+    diy: '$74.50',
+    savings: 'Save $824',
+    savingsPct: '92%',
+    partsSpec: '9 STLs · 7 BOM parts · 2 plates',
+    desc: '6808 slew-bearing turntable, MG996R/MG90S servos & parallel gripper.',
+    prompt:
+      '6-Axis Programmable Desktop Robot Arm with parallel servo gripper and slew bearing waist',
+    url: 'https://www.amazon.com/s?k=6+axis+desktop+robot+arm+programmable+servo+kit',
+    isInstantDemo: true,
+  },
+  {
     id: 'plant-auto-waterer',
-    badge: 'BUILD 01',
     title: 'Smart Plant Auto-Waterer',
-    latinTitle: 'Autonomous Soil-Sensing Hydro-Station',
-    category: 'HOME & GARDEN // FLUIDICS',
+    category: 'Home & Garden',
     retail: '$149',
     diy: '$24.85',
     savings: 'Save $124',
     savingsPct: '83%',
-    partsSpec: '7 Printed STLs · 4 BOM Parts · 1 Plate',
-    desc: '750mL fluted PETG vessel + 5V brushless impeller pump + capacitive probe + anti-siphon drip manifold.',
+    partsSpec: '7 STLs · 4 BOM parts · 1 plate',
+    desc: '750mL PETG reservoir, 5V pump, capacitive soil sensor & drip manifold.',
     prompt:
       'Smart Autonomous Plant Watering Station with 750mL reservoir and soil sensor',
     url: 'https://www.amazon.com/s?k=smart+automatic+plant+watering+system+reservoir',
     isInstantDemo: true,
   },
   {
+    id: 'camera-slider-3axis',
+    title: '3-Axis Motorized Camera Slider',
+    category: 'Cinematography',
+    retail: '$899',
+    diy: '$84.90',
+    savings: 'Save $814',
+    savingsPct: '91%',
+    partsSpec: '9 STLs · 8 BOM parts · 2 plates',
+    desc: '800mm 2040 V-slot rail, 3× NEMA 17 steppers & silent pan/tilt gimbal.',
+    prompt:
+      '3-Axis Motorized Camera Slider with pan-tilt head and silent stepper motion control',
+    url: 'https://www.amazon.com/s?k=motorized+3+axis+camera+slider+pan+tilt',
+    isInstantDemo: true,
+  },
+  {
+    id: 'bladeless-air-purifier',
+    title: 'Bladeless HEPA Air Purifier',
+    category: 'Aerodynamics',
+    retail: '$549',
+    diy: '$58.40',
+    savings: 'Save $490',
+    savingsPct: '89%',
+    partsSpec: '9 STLs · 6 BOM parts · 7 plates',
+    desc: '360° HEPA H13 drum, 24V brushless impeller & Coanda airfoil loop.',
+    prompt:
+      'Bladeless Tower Fan and HEPA H13 Air Purifier with Coanda airfoil loop',
+    url: 'https://www.amazon.com/s?k=bladeless+tower+fan+hepa+air+purifier',
+    isInstantDemo: true,
+  },
+  {
+    id: 'liquid-handler',
+    title: 'Benchtop Lab Pipette Robot',
+    category: 'Lab Automation',
+    retail: '$590',
+    diy: '$68.50',
+    savings: 'Save $521',
+    savingsPct: '88%',
+    partsSpec: '8 STLs · 9 BOM parts · 2 plates',
+    desc: '96-well plate indexer, linear rail carriage & compliant pipette gantry.',
+    prompt:
+      'Desktop 96-well plate liquid handling robot / multi-channel pipette workstation',
+    url: 'https://www.youtube.com/results?search_query=diy+liquid+handling+robot+3d+printed',
+    isInstantDemo: true,
+  },
+  {
     id: 'art-easel',
-    badge: 'BUILD 02',
-    title: 'Articulated Tabletop Studio Art Easel',
-    latinTitle: 'Multi-Angle Studio Tabletop Easel',
-    category: 'ART & STUDIO // MECHANICS',
+    title: 'Articulated Studio Art Easel',
+    category: 'Art & Studio',
     retail: '$189',
     diy: '$27.40',
     savings: 'Save $161',
     savingsPct: '85%',
-    partsSpec: '6 Printed STLs · 5 BOM Parts · 1 Plate',
-    desc: 'Ratcheting tilt mast + canvas clamp jaws + 2020 aluminum extrusion spine + knurled M5 brass knobs.',
+    partsSpec: '6 STLs · 5 BOM parts · 1 plate',
+    desc: 'Ratcheting tilt mast, canvas clamp jaws & 2020 aluminum spine.',
     prompt:
       'Bespoke Articulated Tabletop Studio Painting Easel with adjustable tilt and canvas clamp',
     url: 'https://www.amazon.com/s?k=adjustable+tabletop+studio+art+easel',
@@ -94,87 +143,17 @@ const PRESET_GADGETS = [
   },
   {
     id: 'iphone-magnifier',
-    badge: 'BUILD 03',
-    title: 'iPhone Macro Microscope & Slide Stage',
-    latinTitle: '100x Compound Lens & XYZ Focus Stage',
-    category: 'OPTICS // PRECISION STAGE',
+    title: 'iPhone Macro Microscope Stage',
+    category: 'Optics',
     retail: '$119',
     diy: '$16.20',
     savings: 'Save $102',
     savingsPct: '86%',
-    partsSpec: '4 Printed STLs · 4 BOM Parts · 1 Plate',
-    desc: 'Precision XYZ focus sled + clip-on 100x glass doublet mount + 5V warm LED ring diffuser.',
+    partsSpec: '4 STLs · 4 BOM parts · 1 plate',
+    desc: 'XYZ flexure focus stage, 100x achromatic doublet & 5V LED ring.',
     prompt:
       'iPhone Smartphone Microscope Magnifier Adapter with LED illumination and focus stage',
     url: 'https://www.amazon.com/s?k=smartphone+microscope+adapter+stage',
-    isInstantDemo: true,
-  },
-  {
-    id: 'liquid-handler',
-    badge: 'BUILD 04',
-    title: 'Benchtop Lab Pipette Liquid Automaton',
-    latinTitle: '96-Well Multi-Channel Pipette Gantry',
-    category: 'LAB AUTOMATION // GANTRY',
-    retail: '$590',
-    diy: '$68.50',
-    savings: 'Save $521',
-    savingsPct: '88%',
-    partsSpec: '8 Printed STLs · 9 BOM Parts · 2 Plates',
-    desc: '96-well plate indexer + linear rail carriage + compliant pipette plunger escapement.',
-    prompt:
-      'Desktop 96-well plate liquid handling robot / multi-channel pipette workstation',
-    url: 'https://www.youtube.com/results?search_query=diy+liquid+handling+robot+3d+printed',
-    isInstantDemo: true,
-  },
-  {
-    id: 'desktop-robot-arm',
-    badge: 'BUILD 05',
-    title: '6-Axis Desktop Robot Arm',
-    latinTitle: '6-DOF Servo Articulated Manipulator',
-    category: 'ROBOTICS // KINEMATICS',
-    retail: '$899',
-    diy: '$74.50',
-    savings: 'Save $824',
-    savingsPct: '92%',
-    partsSpec: '9 Printed STLs · 7 BOM Parts · 2 Plates',
-    desc: '6808 slew-bearing waist turntable + 3× MG996R & 3× MG90S metal-gear servos + PCA9685 I2C driver + parallel geared gripper.',
-    prompt:
-      '6-Axis Programmable Desktop Robot Arm with parallel servo gripper and slew bearing waist',
-    url: 'https://www.amazon.com/s?k=6+axis+desktop+robot+arm+programmable+servo+kit',
-    isInstantDemo: true,
-  },
-  {
-    id: 'bladeless-air-purifier',
-    badge: 'BUILD 06',
-    title: 'Bladeless HEPA Air Purifier Tower',
-    latinTitle: 'Coanda Airfoil Loop & H13 HEPA Tower',
-    category: 'AERODYNAMICS // FLUIDICS',
-    retail: '$549',
-    diy: '$58.40',
-    savings: 'Save $490',
-    savingsPct: '89%',
-    partsSpec: '9 Printed STLs · 6 BOM Parts · 7 Plates',
-    desc: '360° HEPA H13 intake drum + 24V mixed-flow brushless impeller + Coanda boundary-layer airfoil loop amplifier.',
-    prompt:
-      'Bladeless Tower Fan and HEPA H13 Air Purifier with Coanda airfoil loop',
-    url: 'https://www.amazon.com/s?k=bladeless+tower+fan+hepa+air+purifier',
-    isInstantDemo: true,
-  },
-  {
-    id: 'camera-slider-3axis',
-    badge: 'BUILD 07',
-    title: '3-Axis Motorized Camera Slider',
-    latinTitle: '800mm Linear Rail & Pan-Tilt Motion Rig',
-    category: 'CINEMATOGRAPHY // MOTION',
-    retail: '$899',
-    diy: '$84.90',
-    savings: 'Save $814',
-    savingsPct: '91%',
-    partsSpec: '9 Printed STLs · 8 BOM Parts · 2 Plates',
-    desc: '800mm 2040 V-slot linear rail + 3× NEMA 17 steppers + TMC2209 silent drivers + GT2 belt drive & pan/tilt gimbal.',
-    prompt:
-      '3-Axis Motorized Camera Slider with pan-tilt head and silent stepper motion control',
-    url: 'https://www.amazon.com/s?k=motorized+3+axis+camera+slider+pan+tilt',
     isInstantDemo: true,
   },
 ];
@@ -182,82 +161,53 @@ const PRESET_GADGETS = [
 const AGENT_STAGES = [
   {
     step: '01',
-    roman: 'I',
     name: 'Analyst',
-    latinRole: 'Product & Dimension Analyst',
     artifact: 'analysis.json',
-    desc: 'Gemini 4 Argon multimodal analysis of URLs, videos & photos into dimensions, mechanisms, and retail markup.',
+    desc: 'Extracts product dimensions, core mechanisms, and retail price markup.',
     icon: Cpu,
   },
   {
     step: '02',
-    roman: 'II',
-    name: 'Researcher',
-    latinRole: 'Web & Video Teardown Search',
+    name: 'Researcher & Teardown',
     artifact: 'sources.json + teardown.json',
-    desc: 'Google Search grounding + video teardown frame extraction for schematics, Printables & open-source designs.',
+    desc: 'Finds open-source CAD priors, schematics, and timestamped video teardown frames.',
     icon: Search,
   },
   {
     step: '03',
-    roman: 'III',
     name: 'Designer',
-    latinRole: 'Parametric CAD Architect',
     artifact: 'design.json',
-    desc: 'Separates 3D-printed parts from off-the-shelf hardware, computing CSG dimensions and 3D explosion vectors.',
+    desc: 'Splits printed vs. purchased parts with parametric dimensions and explode vectors.',
     icon: Layers,
   },
   {
     step: '04',
-    roman: 'IV',
-    name: 'Critic',
-    latinRole: 'DFM Printability Critic',
+    name: 'DFM Critic',
     artifact: 'critique.json',
-    desc: 'DFM printability review verifying overhangs <=45°, wall thickness, tolerances & bed fit in a revision loop.',
+    desc: 'Audits overhangs, wall thickness, tolerances, and bed fit in a revision loop.',
     icon: ShieldCheck,
   },
   {
     step: '05',
-    roman: 'V',
     name: 'BOM & Price Hunter',
-    latinRole: 'Retail Sourcing & Price Hunter',
     artifact: 'bom.json',
-    desc: 'Live grounded sourcing across Amazon, Home Depot, Walmart & McMaster-Carr to find the lowest price.',
+    desc: 'Sources the lowest live prices across Amazon, McMaster-Carr, Walmart & Home Depot.',
     icon: ShoppingCart,
   },
   {
     step: '06',
-    roman: 'VI',
-    name: 'CAD & Packer',
-    latinRole: 'OpenSCAD & Plate Packer',
+    name: 'CAD & Plate Packer',
     artifact: 'plates.json + *.3mf',
-    desc: 'OpenSCAD-WASM parametric STL compilation with 3x self-healing retry + 2D bin-packing onto fewest plates.',
+    desc: 'Compiles watertight OpenSCAD STLs and packs them onto the fewest build plates.',
     icon: Box,
   },
   {
     step: '07',
-    roman: 'VII',
     name: 'Instructions',
-    latinRole: '3D Assembly Choreographer',
     artifact: 'instructions.json',
-    desc: 'IKEA-style step-by-step animated 3D assembly guide with insertion vectors & tool callouts.',
+    desc: 'Generates step-by-step IKEA-style 3D assembly choreography and tool callouts.',
     icon: Wrench,
   },
-];
-
-const RETAILER_MARQUEE = [
-  { name: 'AMAZON', tag: 'PRIME FASTENERS & PUMPS' },
-  { name: 'McMASTER-CARR', tag: 'PRECISION METRIC BRASS & STEEL' },
-  { name: 'BAMBU LAB', tag: '256×256MM 3MF PLATES' },
-  { name: 'HOME DEPOT', tag: 'EXTRUSIONS & TUBING' },
-  { name: 'DIGIKEY', tag: 'SENSORS & CONTROLLERS' },
-  { name: 'PRINTABLES', tag: 'OPEN-SOURCE CAD PRIORS' },
-  { name: 'ALIEXPRESS', tag: 'DIRECT MOTION PARTS' },
-  { name: 'WALMART', tag: 'COMMODITY HARDWARE' },
-  { name: 'PRUSA RESEARCH', tag: 'MK4S / CORE ONE PROFILES' },
-  { name: 'CRAFTCLOUD', tag: 'ON-DEMAND PRINT SERVICE' },
-  { name: 'JLC3DP', tag: 'FACTORY SLA / MJF / FDM' },
-  { name: 'VORON DESIGN', tag: '350MM GANTRY SUPPORT' },
 ];
 
 export default function LandingPage() {
@@ -271,9 +221,10 @@ export default function LandingPage() {
     previewUrl: string;
   } | null>(null);
   const [isDragging, setIsDragging] = useState(false);
+  const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [activeAgentPulse, setActiveAgentPulse] = useState(0);
+  const [howItWorksOpen, setHowItWorksOpen] = useState(false);
   const [knownSampleIds, setKnownSampleIds] = useState<Set<string>>(
     new Set([
       'plant-auto-waterer',
@@ -286,27 +237,6 @@ export default function LandingPage() {
     ])
   );
 
-  // Scroll-driven gear drawing & 3D explode progress
-  const studySectionRef = useRef<HTMLElement | null>(null);
-  const explodeSectionRef = useRef<HTMLElement | null>(null);
-  const [gearScrollProgress, setGearScrollProgress] = useState(0.45);
-  const [scrollExplodeFactor, setScrollExplodeFactor] = useState(0.35);
-
-  // Savings count-up animation
-  const savingsSectionRef = useRef<HTMLElement | null>(null);
-  const [savingsCount, setSavingsCount] = useState(83);
-  const [diyCostCount, setDiyCostCount] = useState(24.85);
-  const [dollarSavedCount, setDollarSavedCount] = useState(124);
-
-  // Cycle active agent scholar highlight on Folio II
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveAgentPulse((prev) => (prev + 1) % AGENT_STAGES.length);
-    }, 1800);
-    return () => clearInterval(timer);
-  }, []);
-
-  // Discover pre-generated samples from /api/objects if available
   useEffect(() => {
     fetch('/api/objects')
       .then((r) => (r.ok ? r.json() : null))
@@ -321,58 +251,6 @@ export default function LandingPage() {
         }
       })
       .catch(() => {});
-  }, []);
-
-  // Scroll listener for SVG stroke-dashoffset gear drawing & 3D sketch->reality explode section
-  useEffect(() => {
-    const handleScroll = () => {
-      const vh = window.innerHeight || 800;
-
-      if (studySectionRef.current) {
-        const sRect = studySectionRef.current.getBoundingClientRect();
-        const sRaw = (vh * 0.85 - sRect.top) / (sRect.height * 0.85);
-        setGearScrollProgress(Math.max(0.15, Math.min(1, sRaw)));
-      }
-
-      if (explodeSectionRef.current) {
-        const rect = explodeSectionRef.current.getBoundingClientRect();
-        const raw = (vh * 0.72 - rect.top) / (rect.height * 0.78);
-        const clamped = Math.max(0.08, Math.min(1, raw));
-        setScrollExplodeFactor(clamped);
-      }
-    };
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Savings count-up on intersection
-  useEffect(() => {
-    const el = savingsSectionRef.current;
-    if (!el || typeof IntersectionObserver === 'undefined') return;
-    let animated = false;
-
-    const obs = new IntersectionObserver(
-      (entries) => {
-        if (entries[0]?.isIntersecting && !animated) {
-          animated = true;
-          const duration = 1100;
-          const start = performance.now();
-          const tick = (now: number) => {
-            const p = Math.min(1, (now - start) / duration);
-            const eased = 1 - Math.pow(1 - p, 3);
-            setSavingsCount(Math.round(eased * 83));
-            setDiyCostCount(Number((eased * 24.85).toFixed(2)));
-            setDollarSavedCount(Math.round(eased * 124));
-            if (p < 1) requestAnimationFrame(tick);
-          };
-          requestAnimationFrame(tick);
-        }
-      },
-      { threshold: 0.25 }
-    );
-    obs.observe(el);
-    return () => obs.disconnect();
   }, []);
 
   const handleImageFile = (file: File | undefined | null) => {
@@ -397,8 +275,6 @@ export default function LandingPage() {
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     handleImageFile(e.target.files?.[0]);
   };
-
-  const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
 
   const handlePhotoDrop = (e: React.DragEvent) => {
     e.preventDefault();
@@ -501,169 +377,40 @@ export default function LandingPage() {
     }
   };
 
-  const handleCardSpotlight = (e: React.MouseEvent<HTMLElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    e.currentTarget.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-    e.currentTarget.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-  };
-
-  const gearDashOffset = Math.round((1 - gearScrollProgress) * 420);
-
   return (
-    <div className="space-y-16 sm:space-y-24 pb-20">
+    <div className="space-y-14 pb-20">
       {/* =====================================================================
-          FOLIO I — THE VISION: DA VINCI'S WORKSHOP HERO & ORNATE GILDED FRAME
+          1. FOCUSED HERO — ONE HEADLINE, ONE SUBHEAD, ONE PRIMARY ACTION
       ===================================================================== */}
       <section
         id="hero-command"
-        className="relative overflow-hidden rounded-[28px] gilded-frame bg-[#0e0a07] p-6 sm:p-10 lg:p-14"
+        className="relative overflow-hidden rounded-3xl gilded-frame bg-[#17130e] px-6 py-10 sm:px-12 sm:py-14"
       >
-        {/* Background Layer 1: Generated Florentine Vellum & Chiaroscuro Workshop Painting */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-cover bg-center opacity-25 mix-blend-luminosity"
-          style={{
-            backgroundImage: "url('/media/renaissance/parchment-codex-bg.webp')",
-          }}
+          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(229,189,71,0.14),transparent_65%)]"
         />
 
-        {/* Background Layer 2: Graded Sepia Hardware Video Ambient Underlay */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="metadata"
-          poster="/media/hero-poster.jpg"
-          className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-25 sepia-video-grade"
-        >
-          <source src="/media/hero.mp4" type="video/mp4" />
-        </video>
-
-        {/* Multi-Stop Caravaggio Chiaroscuro Vignette & Candlelight Glow */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-gradient-to-b from-[#0c0906]/60 via-[#0c0906]/82 to-[#0c0906]"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_15%,rgba(212,175,55,0.22),transparent_62%)]"
-        />
-
-        {/* Vitruvian Circle + Square Compass Geometry Background SVG */}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 800 800"
-          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[760px] w-[760px] opacity-[0.14]"
-        >
-          <circle
-            cx="400"
-            cy="400"
-            r="350"
-            fill="none"
-            stroke="#d4af37"
-            strokeWidth="1.2"
-            strokeDasharray="8 6"
-          />
-          <circle
-            cx="400"
-            cy="400"
-            r="280"
-            fill="none"
-            stroke="#e6d3b3"
-            strokeWidth="0.8"
-          />
-          <rect
-            x="120"
-            y="120"
-            width="560"
-            height="560"
-            fill="none"
-            stroke="#d4af37"
-            strokeWidth="1"
-          />
-          <line
-            x1="400"
-            y1="20"
-            x2="400"
-            y2="780"
-            stroke="#d4af37"
-            strokeWidth="0.6"
-            strokeDasharray="4 6"
-          />
-          <line
-            x1="20"
-            y1="400"
-            x2="780"
-            y2="400"
-            stroke="#d4af37"
-            strokeWidth="0.6"
-            strokeDasharray="4 6"
-          />
-        </svg>
-
-        {/* Top Section Header & Spec Bar */}
-        <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 border-b border-[#d4af37]/25 pb-4 mb-8 font-mono text-[11px] text-[#bda782]">
-          <span className="inline-flex items-center gap-2 text-[#f3d478]">
-            <Compass className="h-3.5 w-3.5 text-[#d4af37] animate-spin-slow" />
-            <span className="font-codex tracking-widest">
-              1. PASTE A LINK, VIDEO, OR PHOTO
-            </span>
-          </span>
-
-          <span
-            className="group inline-flex items-center gap-2 rounded-full border border-[#d4af37]/25 bg-[#14100b]/80 px-3 py-0.5 text-[10px] text-[#e6d3b3]"
-            title="Hover to read hardware specification note"
-          >
-            <Feather className="h-3 w-3 text-[#d4af37]" />
-            <span className="mirror-script font-mono tracking-wider">
-              3D-PRINTED PARTS + OFF-THE-SHELF HARDWARE · GEMINI 4 ARGON
-            </span>
-            <span className="text-[#d4af37]/75 hidden sm:inline">
-              (hover mirror script)
-            </span>
-          </span>
-
-          <span className="hidden md:inline text-[#e6d3b3]">
-            BED PROPORTION: 256×256×256MM · TOLERANCE ±0.15MM
-          </span>
-        </div>
-
-        {/* Central Hero Copy + Command Bar */}
-        <div className="relative z-10 mx-auto max-w-4xl text-center space-y-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/45 bg-[#d4af37]/12 px-4 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] shadow-[0_0_28px_-4px_rgba(212,175,55,0.4)]">
-            <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
-            <span>
-              Get Me An Alt · Managed Gemini 4 Argon Agents
-            </span>
+        <div className="relative z-10 mx-auto max-w-3xl text-center space-y-5">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#e5bd47]/40 bg-[#231d15] px-3.5 py-1 text-xs font-semibold text-[#f3d478]">
+            <Sparkles className="h-3.5 w-3.5 text-[#e5bd47]" />
+            <span>DIY 3D-Printed Parts + Off-the-Shelf Hardware</span>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-[-0.02em] text-[#f5ebd6] leading-[0.98]">
+          <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-[#faf4e8] leading-[1.05]">
             Every invention begins as a sketch.{' '}
-            <span className="block mt-1 italic font-normal bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#e6c365] bg-clip-text text-transparent">
-              Get a DIY alternative to anything you can&apos;t afford.
+            <span className="text-[#f3d478] italic font-normal">
+              Build a DIY alternative for 80–92% less.
             </span>
           </h1>
 
-          <p className="text-sm sm:text-lg text-[#e6d3b3] max-w-2xl mx-auto leading-relaxed font-sans">
-            Paste any pricey commercial gadget link, YouTube video, or upload a
-            photo. Seven autonomous Gemini 4 Argon agents decompose it
-            into{' '}
-            <strong className="text-[#f5ebd6] font-semibold">
-              plate-packed 3D-printable STLs &amp; 3MFs
-            </strong>
-            , a{' '}
-            <strong className="text-[#f5ebd6] font-semibold">
-              grounded retail BOM
-            </strong>
-            , and{' '}
-            <strong className="text-[#f5ebd6] font-semibold">
-              animated 3D assembly instructions
-            </strong>
-            .
+          <p className="text-base sm:text-lg text-[#dfd3be] max-w-2xl mx-auto leading-relaxed">
+            Paste a product URL, YouTube video, or photo to get plate-packed STL
+            &amp; 3MF print files, a sourced retail BOM, and animated 3D assembly
+            steps.
           </p>
 
-          {/* Prominent Command Bar (Paste Link / Upload Photo / Video) */}
+          {/* Single Primary Input & High-Contrast Solid CTA */}
           <form
             onSubmit={handleStartPipeline}
             onDragOver={(e) => {
@@ -672,26 +419,26 @@ export default function LandingPage() {
             }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            className={`mt-8 space-y-4 rounded-2xl p-4 sm:p-5 text-left transition-all glass-command-bar ${
+            className={`mt-6 space-y-3 rounded-2xl p-4 text-left transition-all glass-command-bar ${
               isDragging ? 'ring-2 ring-[#f3d478] border-[#f3d478]' : ''
             }`}
           >
             <div className="flex flex-col gap-3 sm:flex-row">
               <div className="relative flex-1">
-                <Link2 className="pointer-events-none absolute left-4 top-3.5 h-5 w-5 text-[#d4af37]" />
+                <Link2 className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#e5bd47]" />
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
-                  placeholder="Paste product link (Amazon, Kickstarter, YouTube) or describe a gadget (e.g., 'Articulated studio art easel')..."
-                  className="w-full rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 pl-12 pr-4 py-3.5 text-sm text-[#f5ebd6] placeholder-[#bda782]/75 focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
+                  placeholder="Paste a product link, YouTube URL, or describe any gadget..."
+                  className="w-full min-h-[48px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-12 pr-4 py-3 text-base text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-7 py-3.5 font-codex text-xs sm:text-sm font-bold tracking-wider uppercase text-[#140e07] shadow-electric hover:brightness-110 disabled:opacity-50 transition-all shrink-0"
+                className="btn-primary-gold min-h-[48px] px-7 text-sm sm:text-base tracking-wide shrink-0 disabled:opacity-50"
               >
                 {submitting ? (
                   <>
@@ -707,8 +454,7 @@ export default function LandingPage() {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2.5 border-t border-[#d4af37]/20 text-xs text-[#e6d3b3]">
-              {/* Drag-drop or click image upload */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#dfd3be]/15 text-sm text-[#dfd3be]">
               <div className="flex flex-wrap items-center gap-3">
                 <label
                   onDragOver={(e) => {
@@ -717,18 +463,18 @@ export default function LandingPage() {
                   }}
                   onDragLeave={() => setIsDraggingPhoto(false)}
                   onDrop={handlePhotoDrop}
-                  className={`inline-flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 font-mono text-xs font-medium transition-colors ${
+                  className={`inline-flex min-h-[38px] cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
                     isDraggingPhoto
-                      ? 'border-[#f3d478] bg-[#d4af37]/25 text-[#f3d478]'
-                      : 'border-[#d4af37]/30 bg-[#d4af37]/[0.08] text-[#f5ebd6] hover:border-[#f3d478] hover:text-[#f3d478]'
+                      ? 'border-[#f3d478] bg-[#e5bd47]/25 text-[#faf4e8]'
+                      : 'border-[#dfd3be]/25 bg-[#17130e] text-[#faf4e8] hover:border-[#f3d478]'
                   }`}
                 >
                   <Upload className="h-3.5 w-3.5 text-[#f3d478]" />
                   {isDraggingPhoto
                     ? 'Drop photo to upload'
                     : imageFile
-                      ? `Photo: ${imageFile.name}`
-                      : 'Upload or Drop Photo'}
+                    ? `Photo: ${imageFile.name}`
+                    : 'Upload or Drop Photo'}
                   <input
                     type="file"
                     accept="image/*"
@@ -740,27 +486,26 @@ export default function LandingPage() {
                   <button
                     type="button"
                     onClick={() => setImageFile(null)}
-                    className="font-mono text-xs text-[#e06348] hover:underline"
+                    className="text-xs font-medium text-[#e06348] hover:underline"
                   >
-                    Remove image
+                    Remove photo
                   </button>
                 )}
-                <span className="hidden md:inline font-mono text-[11px] text-[#bda782]">
-                  Accepts Amazon/Kickstarter URLs, YouTube teardowns, or
-                  JPEG/PNG/WebP
-                </span>
               </div>
 
-              {/* Target Printer Selector */}
               <div className="flex items-center gap-2">
-                <Printer className="h-3.5 w-3.5 text-[#f3d478]" />
-                <span className="font-mono text-[11px] text-[#bda782]">
-                  Target Printer:
-                </span>
+                <Printer className="h-4 w-4 text-[#e5bd47]" />
+                <label
+                  htmlFor="hero-printer-select"
+                  className="text-xs font-medium text-[#b5a48b]"
+                >
+                  Printer:
+                </label>
                 <select
+                  id="hero-printer-select"
                   value={printerId}
                   onChange={(e) => setPrinterId(e.target.value)}
-                  className="rounded-lg border border-[#d4af37]/30 bg-[#0c0906] px-2.5 py-1.5 font-mono text-xs text-[#f5ebd6] focus:border-[#f3d478] focus:outline-none"
+                  className="min-h-[38px] rounded-lg border border-[#dfd3be]/25 bg-[#0c0a08] px-3 py-1.5 text-xs font-medium text-[#faf4e8] focus:border-[#f3d478]"
                 >
                   {POPULAR_PRINTERS.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -772,667 +517,208 @@ export default function LandingPage() {
             </div>
 
             {error && (
-              <p className="font-mono text-xs font-medium text-[#e06348]">
-                {error}
-              </p>
+              <p className="text-sm font-medium text-[#e06348]">{error}</p>
             )}
           </form>
-
-          {/* Instant Demo CTA */}
-          <div className="flex flex-wrap items-center justify-center gap-3 pt-1">
-            <Link
-              href="/projects/plant-auto-waterer"
-              className="inline-flex items-center gap-2.5 rounded-xl border border-[#d4af37]/55 bg-[#d4af37]/15 px-5 py-2.5 font-codex text-xs font-bold tracking-wide text-[#f3d478] hover:bg-[#d4af37]/25 transition-all shadow-[0_0_30px_-8px_rgba(212,175,55,0.45)]"
-            >
-              <Zap className="h-4 w-4 text-[#f3d478]" />
-              <span>
-                Explore Featured Build: Smart Plant Auto-Waterer ($149
-                Retail → $24.85 DIY · Save 83%)
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Ornate Gilded Gallery Diptych: Graded Hero Video + Still-Life Art */}
-        <div className="relative z-10 mt-10 grid gap-6 lg:grid-cols-12 items-stretch">
-          {/* Left Frame: Graded Sepia/Chiaroscuro Hardware Video in Ornate Gilded Frame */}
-          <div className="lg:col-span-7 relative overflow-hidden rounded-2xl gilded-frame bg-[#0c0906] min-h-[260px] sm:min-h-[320px] flex flex-col justify-between p-5">
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              preload="metadata"
-              poster="/media/hero-poster.jpg"
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-80 sepia-video-grade"
-            >
-              <source src="/media/hero.mp4" type="video/mp4" />
-            </video>
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906] via-[#0c0906]/25 to-[#0c0906]/65"
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 film-grain opacity-80"
-            />
-
-            {/* Hand-Drawn Ink Callout Leader Overlay */}
-            <svg
-              aria-hidden="true"
-              viewBox="0 0 600 300"
-              className="pointer-events-none absolute inset-0 h-full w-full"
-            >
-              <path
-                d="M 110 85 Q 190 55 265 110"
-                fill="none"
-                stroke="#f3d478"
-                strokeWidth="1.3"
-                strokeDasharray="4 3"
-              />
-              <circle cx="265" cy="110" r="4" fill="#f3d478" />
-              <path
-                d="M 465 215 Q 395 180 340 155"
-                fill="none"
-                stroke="#f3d478"
-                strokeWidth="1.3"
-                strokeDasharray="4 3"
-              />
-              <circle cx="340" cy="155" r="4" fill="#f3d478" />
-            </svg>
-
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="rounded-md border border-[#d4af37]/50 bg-[#0c0906]/85 px-2.5 py-1 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                LIVE PREVIEW · MULTI-PLATE 3D PRINTING
-              </span>
-              <span className="font-mono text-[10px] text-[#e6d3b3] bg-[#0c0906]/75 px-2.5 py-1 rounded border border-[#d4af37]/25">
-                FIG. 01 // SEPIA CHIAROSCURO GRADE
-              </span>
-            </div>
-
-            <div className="relative z-10 space-y-1 max-w-lg">
-              <div className="font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                PLATE-PACKED OPENSCAD GEOMETRY
-              </div>
-              <h3 className="font-display italic text-xl sm:text-2xl font-bold text-[#f5ebd6]">
-                “Parametric OpenSCAD parts packed onto a single build plate.”
-              </h3>
-              <p className="text-xs text-[#e6d3b3]">
-                Hover the frame to lift the sepia patina and reveal full-color
-                laser toolpath telemetry.
-              </p>
-            </div>
-          </div>
-
-          {/* Right Frame: Generated Illustration + Parchment Callout */}
-          <div className="lg:col-span-5 relative overflow-hidden rounded-2xl gilded-frame bg-[#14100b] min-h-[260px] sm:min-h-[320px] flex flex-col justify-between p-5">
-            <img
-              src="/media/renaissance/davinci-workshop-hero.webp"
-              alt="Renaissance still-life illustration of mechanical gear sketches and a 3D-printed plant auto-waterer"
-              className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-85 transition-transform duration-700 hover:scale-105"
-            />
-            <div
-              aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0c0906] via-[#0c0906]/30 to-transparent"
-            />
-
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="rounded-md border border-[#d4af37]/50 bg-[#0c0906]/85 px-2.5 py-1 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                GET ME AN ALT · FEATURED BUILD
-              </span>
-              <span className="rounded-full bg-[#c84b31]/90 px-2.5 py-0.5 font-codex text-[10px] font-bold text-[#f5ebd6] shadow">
-                83% SAVED
-              </span>
-            </div>
-
-            <div className="relative z-10 rounded-xl parchment-sheet p-3.5 space-y-1">
-              <div className="flex items-center justify-between font-mono text-[10px] font-bold text-[#5c3a1d]">
-                <span>SMART PLANT AUTO-WATERER · BOM SUMMARY</span>
-                <span className="mirror-script">SAVE 83%</span>
-              </div>
-              <p className="font-display italic text-sm font-semibold text-[#2b1d0e] leading-snug">
-                “Print the custom housing at home; source standard pumps and
-                sensors for pennies.”
-              </p>
-              <div className="font-mono text-[10px] text-[#5c3a1d]">
-                7 Printed PETG Parts ($4.25) + 4 Off-the-Shelf Parts ($20.60) ={' '}
-                <strong>$24.85 Total</strong>
-              </div>
-            </div>
-          </div>
         </div>
       </section>
 
       {/* =====================================================================
-          SUPPORTED RETAILERS & 3D PRINTERS MARQUEE
+          2. INSTANT DEMOS — CLEAN CARD GRID WITH CLEAR HIERARCHY
       ===================================================================== */}
       <section
-        aria-label="Supported Retailers and Printers"
-        className="relative overflow-hidden rounded-2xl border border-[#d4af37]/25 bg-[#14100b]/90 py-3.5"
+        id="sample-builds"
+        aria-label="Instant Demo Builds"
+        className="space-y-5 pt-2"
       >
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-16 bg-gradient-to-r from-[#0c0906] to-transparent" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-16 bg-gradient-to-l from-[#0c0906] to-transparent" />
+        <div id="showcase-gallery" className="-mt-4" />
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#dfd3be]/15 pb-4">
+          <div>
+            <p className="eyebrow">Instant Demos</p>
+            <h2 className="mt-1 font-display text-3xl sm:text-4xl font-bold text-[#faf4e8]">
+              Explore Ready-to-Print DIY Builds
+            </h2>
+          </div>
+          <p className="text-sm text-[#dfd3be]">
+            Click any build to inspect its BOM, printable STLs/3MFs, and 3D
+            assembly guide.
+          </p>
+        </div>
 
-        <div className="flex w-max animate-marquee items-center gap-8 px-4">
-          {[...RETAILER_MARQUEE, ...RETAILER_MARQUEE].map((item, idx) => (
-            <div
-              key={`${item.name}-${idx}`}
-              className="flex items-center gap-3 font-mono text-xs whitespace-nowrap"
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {PRESET_GADGETS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => launchPreset(item)}
+              className="group flex flex-col justify-between rounded-2xl surface-card p-5 text-left hover:border-[#f3d478] hover:bg-[#1d1812] hover:-translate-y-0.5 transition-all"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#d4af37]" />
-              <span className="font-codex font-bold tracking-wider text-[#f5ebd6]">
-                {item.name}
-              </span>
-              <span className="rounded border border-[#d4af37]/25 bg-[#d4af37]/[0.06] px-2 py-0.5 text-[10px] text-[#bda782]">
-                {item.tag}
-              </span>
-            </div>
+              <div className="space-y-2.5">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="text-xs font-medium text-[#b5a48b]">
+                    {item.category}
+                  </span>
+                  <span className="rounded-full bg-[#e5bd47]/20 border border-[#e5bd47]/50 px-2.5 py-0.5 text-xs font-bold text-[#f3d478] tabular-nums">
+                    Save {item.savingsPct}
+                  </span>
+                </div>
+
+                <h3 className="font-display text-xl font-bold text-[#faf4e8] group-hover:text-[#f3d478] transition-colors leading-snug">
+                  {item.title}
+                </h3>
+
+                <p className="text-sm text-[#dfd3be] leading-relaxed line-clamp-2">
+                  {item.desc}
+                </p>
+              </div>
+
+              <div className="mt-5 pt-3.5 border-t border-[#dfd3be]/15 space-y-2">
+                <div className="flex items-baseline justify-between gap-2 tabular-nums">
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-display text-2xl font-bold text-[#faf4e8]">
+                      {item.diy}
+                    </span>
+                    <span className="text-xs text-[#b5a48b] line-through">
+                      {item.retail}
+                    </span>
+                  </div>
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-[#f3d478] group-hover:translate-x-0.5 transition-transform">
+                    Open Build <ArrowRight className="h-3.5 w-3.5" />
+                  </span>
+                </div>
+                <div className="text-xs text-[#b5a48b]">{item.partsSpec}</div>
+              </div>
+            </button>
           ))}
         </div>
       </section>
 
       {/* =====================================================================
-          RECENT BUILDS SHELF (USER IP & LOCALSTORAGE SYNCED)
+          3. RECENT BUILDS SHELF (COMPACT WHEN EMPTY)
       ===================================================================== */}
       <RecentBuildsShelf />
 
       {/* =====================================================================
-          2. AGENT PIPELINE: 7 MANAGED GEMINI 4 ARGON AGENTS & SCROLL GEARS
+          4. PROGRESSIVE DISCLOSURE: HOW IT WORKS (PIPELINE + 3D PREVIEW)
       ===================================================================== */}
       <section
-        id="agent-pipeline"
-        ref={studySectionRef}
-        className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
+        id="how-it-works"
+        className="rounded-2xl surface-card p-6 sm:p-8 space-y-6"
       >
-        {/* Anchor alias for existing #pipeline-story links */}
         <div id="pipeline-story" className="-mt-4" />
-
-        <div className="grid gap-6 lg:grid-cols-12 items-center border-b border-[#d4af37]/20 pb-6">
-          <div className="lg:col-span-8 space-y-2">
-            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-              <ScrollText className="h-4 w-4" />
-              2. MANAGED AGENT PIPELINE
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6]">
-              Seven Managed Gemini 4 Argon Agents.{' '}
-              <span className="italic font-normal text-[#f3d478]">
-                Zero Manual CAD.
-              </span>
-            </h2>
-            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl leading-relaxed">
-              Each stage runs a specialized Gemini 4 Argon agent via the
-              Antigravity CLI or grounded REST API, writing structured build
-              artifacts into{' '}
-              <code className="font-mono text-[#f3d478]">
-                data/objects/&lt;slug&gt;-&lt;id&gt;/
-              </code>{' '}
-              while streaming thoughts, tokens, and self-healing OpenSCAD meshes.
-            </p>
-          </div>
-
-          {/* Scroll-Driven SVG Stroke-Dashoffset Gear & Compass Sketch */}
-          <div className="lg:col-span-4 flex items-center justify-between gap-4 rounded-2xl border border-[#d4af37]/30 bg-[#0c0906]/85 p-4">
-            <div className="space-y-1">
-              <div className="font-codex text-[10px] uppercase tracking-widest text-[#f3d478]">
-                LIVE TELEMETRY · SSE STREAM
-              </div>
-              <p className="font-display italic text-sm text-[#e6d3b3]">
-                Scroll-driven gear kinematics ({Math.round(gearScrollProgress * 100)}
-                % complete)
-              </p>
-              <div className="font-mono text-[10px] text-[#bda782]">
-                agy -p &quot;...&quot; --model gemini-4-argon
-              </div>
-            </div>
-
-            <svg
-              viewBox="0 0 120 120"
-              className="h-20 w-20 shrink-0 text-[#d4af37]"
-              aria-label="Mechanical gear illustration animated on scroll"
-            >
-              <g
-                style={{
-                  transform: `rotate(${gearScrollProgress * 140}deg)`,
-                  transformOrigin: '60px 60px',
-                  transition: 'transform 120ms linear',
-                }}
-              >
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="34"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeDasharray="420"
-                  strokeDashoffset={gearDashOffset}
-                />
-                <circle
-                  cx="60"
-                  cy="60"
-                  r="18"
-                  fill="none"
-                  stroke="#e6d3b3"
-                  strokeWidth="1.4"
-                  strokeDasharray="220"
-                  strokeDashoffset={Math.round(gearDashOffset * 0.5)}
-                />
-                {[0, 30, 60, 90, 120, 150, 180, 210, 240, 270, 300, 330].map(
-                  (deg) => (
-                    <line
-                      key={deg}
-                      x1="60"
-                      y1="16"
-                      x2="60"
-                      y2="26"
-                      stroke="currentColor"
-                      strokeWidth="2.4"
-                      transform={`rotate(${deg} 60 60)`}
-                    />
-                  )
-                )}
-                <line
-                  x1="26"
-                  y1="60"
-                  x2="94"
-                  y2="60"
-                  stroke="#e6d3b3"
-                  strokeWidth="1"
-                />
-                <line
-                  x1="60"
-                  y1="26"
-                  x2="60"
-                  y2="94"
-                  stroke="#e6d3b3"
-                  strokeWidth="1"
-                />
-              </g>
-            </svg>
-          </div>
-        </div>
-
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-7">
-          {AGENT_STAGES.map((stage, idx) => {
-            const Icon = stage.icon;
-            const isPulsing = idx === activeAgentPulse;
-            return (
-              <div
-                key={stage.step}
-                onMouseEnter={() => setActiveAgentPulse(idx)}
-                onMouseMove={handleCardSpotlight}
-                className={`spotlight-card relative flex flex-col justify-between rounded-2xl border p-4 transition-all duration-300 ${
-                  isPulsing
-                    ? 'border-[#f3d478]/80 bg-[#d4af37]/[0.12] shadow-[0_0_32px_-8px_rgba(212,175,55,0.4)] -translate-y-0.5'
-                    : 'border-[#d4af37]/20 bg-[#0c0906]/85 hover:border-[#d4af37]/45'
-                }`}
-              >
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between">
-                    <span className="font-codex text-[11px] font-bold text-[#f3d478]">
-                      STAGE {stage.step}
-                    </span>
-                    <Icon
-                      className={`h-4 w-4 transition-colors ${
-                        isPulsing ? 'text-[#f3d478]' : 'text-[#bda782]'
-                      }`}
-                    />
-                  </div>
-                  <div>
-                    <div className="font-display text-base font-bold text-[#f5ebd6]">
-                      {stage.name}
-                    </div>
-                    <div className="font-display italic text-xs text-[#d4af37]">
-                      {stage.latinRole}
-                    </div>
-                  </div>
-                  <p className="text-[11px] text-[#e6d3b3]/90 leading-relaxed">
-                    {stage.desc}
-                  </p>
-                </div>
-
-                <div className="mt-4 pt-2.5 border-t border-[#d4af37]/15 flex items-center justify-between font-mono text-[10px]">
-                  <span className="text-[#bda782] truncate">
-                    {stage.artifact}
-                  </span>
-                  <CheckCircle2
-                    className={`h-3.5 w-3.5 shrink-0 ${
-                      isPulsing ? 'text-[#f3d478]' : 'text-[#5c4930]'
-                    }`}
-                  />
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* =====================================================================
-          3. BILL OF MATERIALS & RETAIL SAVINGS
-      ===================================================================== */}
-      <section
-        id="bom-section"
-        ref={savingsSectionRef}
-        className="rounded-3xl codex-folio p-6 sm:p-10"
-      >
         <div id="savings-story" className="-mt-4" />
-        <div className="grid gap-8 lg:grid-cols-12 items-center">
-          {/* Left Column: Narrative + Generated Sketch-to-Machine Oil Painting */}
-          <div className="lg:col-span-5 space-y-5">
-            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-              <TrendingDown className="h-4 w-4" />
-              3. BILL OF MATERIALS &amp; RETAIL PRICE COMPARISON
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6] leading-tight">
-              Skip the Brand Markup.{' '}
-              <span className="italic font-normal text-[#f3d478]">
-                Save 83% on Hardware.
-              </span>
-            </h2>
-            <p className="text-xs sm:text-sm text-[#e6d3b3] leading-relaxed">
-              Bespoke consumer hardware is 80% injection-molded plastic housing
-              around $20 of standard pumps, sensors, and metric fasteners. Our
-              BOM &amp; Price Hunter agents ground live prices across Amazon,
-              McMaster-Carr, Home Depot, and Walmart while your printer builds
-              the custom housing overnight.
-            </p>
-
-            {/* Framed Illustration: Technical Drawing to 3D Machine */}
-            <div className="relative overflow-hidden rounded-2xl gilded-frame bg-[#0c0906] p-3">
-              <div className="grid sm:grid-cols-12 gap-3 items-center">
-                <img
-                  src="/media/renaissance/sketch-to-machine.webp"
-                  alt="Illustrated brass dividers over a technical drawing as a 3D-printed assembly materializes"
-                  className="sm:col-span-5 h-36 w-full rounded-xl object-cover border border-[#d4af37]/30"
-                />
-                <div className="sm:col-span-7 space-y-1.5 px-1">
-                  <div className="font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                    PRICE HUNTER · VERIFIED RETAIL LINKS
-                  </div>
-                  <p className="font-display italic text-base text-[#f5ebd6] leading-snug">
-                    “Why pay $149 for injection-molded plastic when you can
-                    print the body for $4.25 and buy the pump for $5.90?”
-                  </p>
-                  <Link
-                    href="/projects/plant-auto-waterer"
-                    className="inline-flex items-center gap-1.5 font-mono text-xs font-bold text-[#f3d478] hover:underline pt-1"
-                  >
-                    Inspect Full BOM &amp; Sourced Links{' '}
-                    <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Right Column: Monumental Gilded Ledger Numerals */}
-          <div className="lg:col-span-7 grid gap-4 sm:grid-cols-3">
-            <div className="rounded-2xl border border-[#d4af37]/55 bg-gradient-to-br from-[#d4af37]/20 via-[#d4af37]/[0.08] to-transparent p-5 space-y-2">
-              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
-                YOUR SAVINGS
-              </div>
-              <div className="font-display text-5xl sm:text-6xl font-bold text-[#f3d478] tabular-nums tracking-tight">
-                {savingsCount}%
-              </div>
-              <p className="font-mono text-xs text-[#e6d3b3]">
-                Save ${dollarSavedCount} on the flagship Plant Auto-Waterer
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
-              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#bda782]">
-                DIY BUILD TOTAL
-              </div>
-              <div className="font-display text-4xl sm:text-5xl font-bold text-[#f5ebd6] tabular-nums tracking-tight">
-                ${diyCostCount.toFixed(2)}
-              </div>
-              <p className="font-mono text-xs text-[#bda782]">
-                vs.{' '}
-                <span className="line-through text-[#c84b31]">$149.00</span>{' '}
-                retail price
-              </p>
-            </div>
-
-            <div className="rounded-2xl border border-[#d4af37]/25 bg-[#0c0906]/90 p-5 space-y-2">
-              <div className="font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
-                SINGLE-PLATE PRINT
-              </div>
-              <div className="font-display text-4xl sm:text-5xl font-bold text-[#f3d478] tabular-nums tracking-tight">
-                1 Plate
-              </div>
-              <p className="font-mono text-xs text-[#bda782]">
-                185g PETG · $4.25 filament + $20.60 hardware
-              </p>
-            </div>
-
-            {/* Parchment Cost Breakdown Bar */}
-            <div className="sm:col-span-3 rounded-2xl parchment-sheet p-5 space-y-3">
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs">
-                <span className="font-codex font-bold text-[#2b1d0e]">
-                  COST BREAKDOWN // SMART PLANT AUTO-WATERER
-                </span>
-                <span className="rounded-full bg-[#c84b31] px-3 py-0.5 font-codex text-[11px] font-bold text-[#f5ebd6]">
-                  YOU SAVE $124.15 (83.3%)
-                </span>
-              </div>
-              <div className="h-3.5 w-full rounded-full bg-[#2b1d0e]/20 overflow-hidden flex border border-[#5c3a1d]/40">
-                <div
-                  style={{ width: '4%' }}
-                  className="bg-[#6e5a26] h-full"
-                  title="3D Filament ($4.25)"
-                />
-                <div
-                  style={{ width: '13%' }}
-                  className="bg-[#b45309] h-full"
-                  title="Off-The-Shelf BOM ($20.60)"
-                />
-                <div
-                  style={{ width: '83%' }}
-                  className="bg-[#c84b31]/35 h-full"
-                  title="Brand Markup Saved ($124.15)"
-                />
-              </div>
-              <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-[11px] text-[#3b2410]">
-                <span className="inline-flex items-center gap-1.5 font-semibold">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#6e5a26]" />
-                  $4.25 Printed PETG (3%)
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-semibold">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#b45309]" />
-                  $20.60 Off-the-Shelf Hardware (14%)
-                </span>
-                <span className="inline-flex items-center gap-1.5 font-semibold">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#c84b31]" />
-                  $124.15 Retail Markup Saved (83%)
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =====================================================================
-          4. SKETCH -> REALITY 3D EXPLODED VIEW
-      ===================================================================== */}
-      <section
-        id="exploded-view"
-        ref={explodeSectionRef}
-        className="rounded-3xl codex-folio p-6 sm:p-8 space-y-6"
-      >
         <div id="exploded-story" className="-mt-4" />
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-4">
-          <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-              <Layers className="h-4 w-4" />
-              4. INTERACTIVE SKETCH-TO-REALITY 3D EXPLODED VIEW
-            </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-[#f5ebd6]">
-              From Concept Sketch{' '}
-              <span className="italic font-normal text-[#f3d478]">
-                to 3D-Printed Reality.
-              </span>
+
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="space-y-1">
+            <p className="eyebrow">How It Works</p>
+            <h2 className="font-display text-2xl sm:text-3xl font-bold text-[#faf4e8]">
+              Seven Managed Gemini 4 Argon Agents. Zero Manual CAD.
             </h2>
-            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl leading-relaxed">
-              As you scroll through this section, watch the assembly transition
-              from a{' '}
-              <strong className="text-[#f5ebd6]">
-                sepia pen-and-ink technical sketch on parchment
-              </strong>{' '}
-              into{' '}
-              <strong className="text-[#f5ebd6]">
-                watertight bronze-gilded PETG and burnished brass hardware
-              </strong>
-              —exploding along its `[x, y, z]` assembly axis.
+            <p className="text-sm text-[#dfd3be]">
+              From a single link or photo to printable STLs, verified retail
+              links, and interactive 3D instructions.
             </p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2.5 font-codex text-xs font-semibold">
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/40 bg-[#e6d3b3]/15 px-3 py-1.5 text-[#f3d478]">
-              <span className="h-2 w-2 rounded-full bg-[#e6d3b3]" />
-              Sepia Ink Sketch
+          <button
+            type="button"
+            onClick={() => setHowItWorksOpen((o) => !o)}
+            aria-expanded={howItWorksOpen}
+            className="btn-secondary-surface text-sm shrink-0 self-start md:self-auto"
+          >
+            <span>
+              {howItWorksOpen
+                ? 'Hide Pipeline & 3D Preview'
+                : 'Inspect 7-Agent Pipeline & 3D Preview'}
             </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-3 py-1.5 text-[#f3d478]">
-              <span className="h-2 w-2 rounded-full bg-[#b89b4a]" />
-              3D-Printed PETG
-            </span>
-            <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/35 bg-[#d4af37]/10 px-3 py-1.5 text-[#f3d478]">
-              <span className="h-2 w-2 rounded-full bg-[#d4af37]" />
-              Off-the-Shelf BOM
-            </span>
-          </div>
+            <ChevronDown
+              className={`h-4 w-4 text-[#f3d478] transition-transform ${
+                howItWorksOpen ? 'rotate-180' : ''
+              }`}
+            />
+          </button>
         </div>
 
-        <ScrollExplodeScene scrollFactor={scrollExplodeFactor} />
-      </section>
-
-      {/* =====================================================================
-          5. SAMPLE DIY BUILDS & PRESETS GALLERY
-      ===================================================================== */}
-      <section id="sample-builds" className="space-y-6">
-        <div id="showcase-gallery" className="-mt-4" />
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
-          <div className="space-y-1.5">
-            <div className="font-codex text-xs font-bold uppercase tracking-[0.18em] text-[#d4af37]">
-              5. SAMPLE DIY BUILDS &amp; PRESETS
+        {/* Always-visible 3-pillar summary (1 concise line each) */}
+        <div className="grid gap-4 sm:grid-cols-3 pt-2 border-t border-[#dfd3be]/15">
+          <div className="rounded-xl surface-raised p-4 space-y-1">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+              1. Deconstruct &amp; Teardown
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
-              Explore Ready-to-Print{' '}
-              <span className="italic font-normal text-[#f3d478]">
-                Sample Builds
-              </span>
-            </h2>
-            <p className="text-xs sm:text-sm text-[#e6d3b3]">
-              Select any build below to inspect its bill of materials,
-              plate-packed STLs &amp; 3MFs, exploded 3D view, and IKEA-style
-              animated assembly guide.
+            <p className="text-sm text-[#dfd3be]">
+              Analyst, Researcher &amp; Video Teardown agents extract dimensions
+              and open-source CAD priors.
+            </p>
+          </div>
+          <div className="rounded-xl surface-raised p-4 space-y-1">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+              2. Self-Healing CAD &amp; DFM
+            </div>
+            <p className="text-sm text-[#dfd3be]">
+              Designer, Critic &amp; OpenSCAD agents compile watertight STLs and
+              pack build plates.
+            </p>
+          </div>
+          <div className="rounded-xl surface-raised p-4 space-y-1">
+            <div className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+              3. Grounded BOM &amp; 3D Guide
+            </div>
+            <p className="text-sm text-[#dfd3be]">
+              Price Hunter compares Amazon/McMaster/Walmart while Instructions
+              choreographs 3D assembly.
             </p>
           </div>
         </div>
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {PRESET_GADGETS.map((item) => {
-            const isReadySample =
-              item.isInstantDemo || knownSampleIds.has(item.id);
-            return (
-              <button
-                key={item.title}
-                type="button"
-                onClick={() => launchPreset(item)}
-                onMouseMove={handleCardSpotlight}
-                className="spotlight-card group flex flex-col justify-between rounded-2xl codex-folio p-5 text-left hover:border-[#f3d478]/70 hover:-translate-y-1 transition-all duration-300"
-              >
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between gap-2">
-                    <span className="rounded-md bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[10px] font-bold text-[#f3d478] border border-[#d4af37]/40">
-                      {item.badge} · {item.savings} ({item.savingsPct})
-                    </span>
-                    {isReadySample && (
-                      <span className="rounded-md bg-[#b89b4a]/20 px-2 py-0.5 font-codex text-[10px] font-semibold text-[#f3d478] border border-[#b89b4a]/40">
-                        Instant Demo
-                      </span>
-                    )}
-                  </div>
-
-                  <div className="font-mono text-[10px] tracking-wider text-[#bda782]">
-                    {item.category}
-                  </div>
-
-                  <div>
-                    <h3 className="font-display text-xl font-bold text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors">
-                      {item.title}
-                    </h3>
-                    <div className="font-display italic text-xs text-[#d4af37]">
-                      “{item.latinTitle}”
+        {/* Collapsible Detailed Pipeline + 3D Sketch-to-Reality Preview */}
+        {howItWorksOpen && (
+          <div className="space-y-8 pt-4 border-t border-[#dfd3be]/15 animate-slide-in">
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-7">
+              {AGENT_STAGES.map((stage) => {
+                const Icon = stage.icon;
+                return (
+                  <div
+                    key={stage.step}
+                    className="flex flex-col justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-3.5 space-y-2"
+                  >
+                    <div className="space-y-1.5">
+                      <div className="flex items-center justify-between text-xs font-bold text-[#f3d478]">
+                        <span>STAGE {stage.step}</span>
+                        <Icon className="h-4 w-4 text-[#e5bd47]" />
+                      </div>
+                      <div className="font-display text-base font-bold text-[#faf4e8]">
+                        {stage.name}
+                      </div>
+                      <p className="text-xs text-[#dfd3be] leading-snug">
+                        {stage.desc}
+                      </p>
+                    </div>
+                    <div className="pt-2 border-t border-[#dfd3be]/15 font-mono text-[11px] text-[#b5a48b] truncate">
+                      {stage.artifact}
                     </div>
                   </div>
-
-                  <p className="text-xs text-[#e6d3b3]/90 leading-relaxed">
-                    {item.desc}
-                  </p>
-                </div>
-
-                <div className="mt-5 space-y-3 border-t border-[#d4af37]/20 pt-3">
-                  <div className="font-mono text-[10px] text-[#bda782]">
-                    {item.partsSpec}
-                  </div>
-                  <div className="flex items-center justify-between text-xs">
-                    <div className="font-mono tabular-nums">
-                      <span className="text-[#bda782] line-through mr-1.5">
-                        {item.retail}
-                      </span>
-                      <span className="font-bold text-[#f3d478]">
-                        {item.diy} DIY
-                      </span>
-                    </div>
-                    <span className="inline-flex items-center gap-1 font-codex text-[11px] font-bold text-[#f5ebd6] group-hover:text-[#f3d478]">
-                      Open Build <ArrowRight className="h-3.5 w-3.5" />
-                    </span>
-                  </div>
-                </div>
-              </button>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* Showcase: finished build */}
-      <ShowcaseBuild />
-
-      {/* =====================================================================
-          FOOTER CTA
-      ===================================================================== */}
-      <footer className="relative overflow-hidden rounded-3xl gilded-frame bg-gradient-to-r from-[#14100b] via-[#1f170e] to-[#14100b] p-8 sm:p-10">
-        <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-          <div className="space-y-2 max-w-xl">
-            <div className="font-codex text-xs font-bold uppercase tracking-[0.2em] text-[#f3d478]">
-              GET ME AN ALT // POWERED BY GEMINI 4 ARGON
+                );
+              })}
             </div>
-            <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#f5ebd6]">
-              Ready to turn any gadget into a 3D-printable DIY build?
-            </h2>
-            <p className="text-xs sm:text-sm text-[#e6d3b3]">
-              Paste any product link above or explore our flagship Smart Plant
-              Auto-Waterer build with self-healing OpenSCAD STLs, Bambu 3MF
-              plates, and animated 3D assembly instructions.
-            </p>
-          </div>
 
-          <div className="flex flex-wrap items-center gap-3">
-            <a
-              href="#hero-command"
-              className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/40 bg-[#d4af37]/10 px-5 py-3 font-codex text-xs font-bold text-[#f5ebd6] hover:border-[#f3d478] transition-colors"
-            >
-              Paste a Product Link
-            </a>
-            <Link
-              href="/projects/plant-auto-waterer"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-6 py-3 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
-            >
-              Open Live Demo Project <ArrowRight className="h-4 w-4" />
-            </Link>
+            <div className="space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <h3 className="font-display text-xl font-bold text-[#faf4e8]">
+                  Interactive Sketch-to-Reality 3D Exploded Preview
+                </h3>
+                <Link
+                  href="/projects/plant-auto-waterer"
+                  className="text-sm font-semibold text-[#f3d478] hover:underline"
+                >
+                  Open full Smart Plant Auto-Waterer build ($149 → $24.85) →
+                </Link>
+              </div>
+              <ScrollExplodeScene scrollFactor={0.55} />
+            </div>
           </div>
-        </div>
-      </footer>
+        )}
+      </section>
     </div>
   );
 }
