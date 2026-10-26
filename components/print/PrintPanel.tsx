@@ -60,13 +60,58 @@ interface PrintServiceOption {
   uploadUrl: string;
 }
 
+const RENAISSANCE_PART_PALETTE = [
+  '#d4af37', // Gilded Gold
+  '#b89b4a', // Antique Bronze
+  '#c87d4b', // Burnished Terracotta
+  '#9c7a4c', // Sepia Brass
+  '#e6c365', // Florentine Ochre
+  '#c84b31', // Venetian Oxblood
+  '#a67c52', // Warm Umber
+  '#d4bc94', // Deep Vellum
+];
+
+const WARM_RENAISSANCE_HEX = new Set([
+  '#d4af37',
+  '#f3d478',
+  '#b89b4a',
+  '#c87d4b',
+  '#9c7a4c',
+  '#e6c365',
+  '#c84b31',
+  '#a67c52',
+  '#d4bc94',
+  '#e6d3b3',
+  '#f5ebd6',
+  '#bda782',
+  '#8c6218',
+  '#b87333',
+  '#b8860b',
+  '#6e5a26',
+  '#b45309',
+  '#5c3a1d',
+  '#3a2c1d',
+  '#282016',
+  '#1d1710',
+  '#14100b',
+  '#0c0906',
+]);
+
+function toRenaissancePartColor(rawColor?: string, idx = 0): string {
+  const clean = (rawColor || '').trim().toLowerCase();
+  if (!clean || !WARM_RENAISSANCE_HEX.has(clean)) {
+    return RENAISSANCE_PART_PALETTE[idx % RENAISSANCE_PART_PALETTE.length];
+  }
+  return rawColor!;
+}
+
 const PRINT_SERVICES: PrintServiceOption[] = [
   {
     id: 'craftcloud',
     name: 'Craftcloud',
     badgeText: 'CRAFTCLOUD',
-    badgeBg: 'bg-sky-500/15 text-sky-300',
-    badgeBorder: 'border-sky-500/40',
+    badgeBg: 'bg-[#d4af37]/15 text-[#f3d478]',
+    badgeBorder: 'border-[#d4af37]/45',
     tagline: 'All3DP marketplace · Compares 150+ local & global print bureaus',
     leadTime: '4–6 business days',
     baseFeeUsd: 4.5,
@@ -78,8 +123,8 @@ const PRINT_SERVICES: PrintServiceOption[] = [
     id: 'jlc3dp',
     name: 'JLC3DP',
     badgeText: 'JLC3DP',
-    badgeBg: 'bg-emerald-500/15 text-emerald-300',
-    badgeBorder: 'border-emerald-500/40',
+    badgeBg: 'bg-[#b89b4a]/15 text-[#f3d478]',
+    badgeBorder: 'border-[#b89b4a]/45',
     tagline: 'Factory-direct industrial FDM / SLA / MJF · Lowest per-gram cost',
     leadTime: '5–8 business days',
     baseFeeUsd: 2.0,
@@ -91,8 +136,8 @@ const PRINT_SERVICES: PrintServiceOption[] = [
     id: 'xometry',
     name: 'Xometry',
     badgeText: 'XOMETRY',
-    badgeBg: 'bg-indigo-500/15 text-indigo-300',
-    badgeBorder: 'border-indigo-500/40',
+    badgeBg: 'bg-[#9c7a4c]/20 text-[#e6d3b3]',
+    badgeBorder: 'border-[#9c7a4c]/45',
     tagline: 'ISO-9001 domestic manufacturing · Dimensional inspection available',
     leadTime: '2–4 business days',
     baseFeeUsd: 11.0,
@@ -104,8 +149,8 @@ const PRINT_SERVICES: PrintServiceOption[] = [
     id: 'shapeways',
     name: 'Shapeways',
     badgeText: 'SHAPEWAYS',
-    badgeBg: 'bg-amber-500/15 text-amber-300',
-    badgeBorder: 'border-amber-500/40',
+    badgeBg: 'bg-[#c84b31]/15 text-[#f3d478]',
+    badgeBorder: 'border-[#c84b31]/40',
     tagline: 'Precision additive manufacturing · Multi-Jet Fusion & SLS Nylon',
     leadTime: '4–7 business days',
     baseFeeUsd: 7.5,
@@ -149,12 +194,12 @@ const SERVICE_MATERIALS = [
 ];
 
 const SERVICE_COLORS = [
-  { id: 'charcoal', name: 'Matte Charcoal', hex: '#1e293b' },
-  { id: 'white', name: 'Signal White', hex: '#f8fafc' },
-  { id: 'emerald', name: 'Bambu Emerald', hex: '#10b981' },
-  { id: 'cobalt', name: 'Engineering Blue', hex: '#0ea5e9' },
-  { id: 'amber', name: 'Safety Amber', hex: '#f59e0b' },
-  { id: 'natural', name: 'Translucent Clear', hex: '#94a3b8' },
+  { id: 'charcoal', name: 'Florentine Iron Ink', hex: '#282016' },
+  { id: 'vellum', name: 'Warm Vellum Ivory', hex: '#f5ebd6' },
+  { id: 'bronze', name: 'Antique Bronze', hex: '#b89b4a' },
+  { id: 'cobalt', name: 'Burnished Gold', hex: '#d4af37' },
+  { id: 'ochre', name: 'Gilded Ochre', hex: '#e6c365' },
+  { id: 'natural', name: 'Aged Parchment', hex: '#d4bc94' },
 ];
 
 function resolveOptionalPlatePreview(): React.ComponentType<any> | null {
@@ -275,7 +320,7 @@ export function PrintPanel({
               depth: p.dims_mm?.[1] ?? 50,
               height: p.dims_mm?.[2] ?? 25,
             },
-            color: p.color || '#10b981',
+            color: toRenaissancePartColor(p.color, idx),
             material: p.material || 'PLA',
             quantity: p.quantity || 1,
           })),
@@ -345,7 +390,7 @@ export function PrintPanel({
         { printer: selectedPrinter }
       );
 
-      const placements = itemEstimates.map(({ item, rawP, est }) => ({
+      const placements = itemEstimates.map(({ item, rawP, est }, idx) => ({
         partId: item.partId,
         name: rawP.name || item.partId,
         copyIndex: item.copy,
@@ -358,7 +403,7 @@ export function PrintPanel({
         depth: item.depth,
         height: item.height,
         rotated: item.rotated,
-        color: rawP.color || '#10b981',
+        color: toRenaissancePartColor(rawP.color, idx),
         stlFile: rawP.stlFile || `parts/${item.partId}.stl`,
         weightGrams: est.filamentGrams,
         estimatedMinutes: est.printTimeMinutes,
@@ -589,7 +634,7 @@ export function PrintPanel({
       plates: platesJson.plates.map((p) => ({
         index: p.plateNumber,
         utilization: p.utilization,
-        items: p.placements.map((item) => ({
+        items: p.placements.map((item, idx) => ({
           partId: item.partId,
           copy: item.copy,
           x: item.x,
@@ -597,7 +642,7 @@ export function PrintPanel({
           w: item.width,
           h: item.depth,
           rotated: item.rotated,
-          color: item.color,
+          color: toRenaissancePartColor(item.color, idx),
         })),
       })),
     };
@@ -609,22 +654,22 @@ export function PrintPanel({
       data-testid="print-panel"
     >
       {/* Top Printer Selector & Live Re-Pack Header */}
-      <div className="rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900/95 via-slate-900/80 to-slate-950 p-5 sm:p-6 shadow-xl">
+      <div className="rounded-2xl codex-folio p-5 sm:p-6">
         <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-1 text-[11px] font-semibold text-emerald-300">
-              <Sparkles className="h-3.5 w-3.5" />
-              Parametric Watertight CAD · Multi-Heuristic MaxRects & Skyline Plate Packer
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478]">
+              <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
+              Parametric Watertight CAD · Multi-Heuristic MaxRects &amp; Skyline Plate Packer
             </div>
-            <h2 className="text-xl font-extrabold text-white sm:text-2xl">
-              3D Print Build Plates & Slicer-Ready CAD Package
+            <h2 className="font-display text-2xl font-bold text-[#f5ebd6] sm:text-3xl">
+              3D Print Build Plates &amp; Slicer-Ready CAD Package
             </h2>
-            <p className="text-xs sm:text-sm text-slate-300 max-w-2xl">
+            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl">
               Select your 3D printer below to re-pack all{' '}
-              <strong className="text-white">
+              <strong className="text-[#f5ebd6]">
                 {platesJson.totalPrintedItems} printed items ({platesJson.totalUniqueParts} unique STLs)
               </strong>{' '}
-              client-side onto the minimum number of build plates and recalculate print time & PLA filament mass.
+              client-side onto the minimum number of build plates and recalculate print time &amp; PLA filament mass.
             </p>
           </div>
 
@@ -633,7 +678,7 @@ export function PrintPanel({
             <div className="space-y-1.5">
               <label
                 htmlFor="printer-select"
-                className="block text-[11px] font-bold uppercase tracking-wider text-slate-400"
+                className="block font-codex text-[11px] font-bold uppercase tracking-wider text-[#bda782]"
               >
                 Target 3D Printer ({PRINTERS.length} Models)
               </label>
@@ -643,7 +688,7 @@ export function PrintPanel({
                   data-testid="printer-select"
                   value={selectedPrinterId}
                   onChange={(e) => handlePrinterChange(e.target.value)}
-                  className="w-full sm:w-80 rounded-xl border border-slate-700 bg-slate-950 px-3.5 py-2.5 text-xs font-bold text-white shadow-inner focus:border-emerald-400 focus:outline-none focus:ring-1 focus:ring-emerald-400"
+                  className="w-full sm:w-80 rounded-xl border border-[#d4af37]/35 bg-[#0c0906] px-3.5 py-2.5 font-mono text-xs font-bold text-[#f5ebd6] shadow-inner focus:border-[#f3d478] focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
                 >
                   {printersByBrand.map((group) => (
                     <optgroup key={group.brand} label={group.brand}>
@@ -664,10 +709,10 @@ export function PrintPanel({
                 type="button"
                 data-testid="download-bambu-3mf"
                 onClick={handleDownloadMultiPlate3mf}
-                className="inline-flex items-center gap-2 rounded-xl border border-emerald-500/40 bg-emerald-500/15 px-3.5 py-2.5 text-xs font-bold text-emerald-300 hover:bg-emerald-500/25 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-2.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37]/25 transition-all"
                 title="Single Bambu Studio / OrcaSlicer .3mf file containing all packed plates with plate metadata"
               >
-                <FileBox className="h-4 w-4" />
+                <FileBox className="h-4 w-4 text-[#f3d478]" />
                 Bambu All-Plates (.3mf)
               </button>
 
@@ -675,7 +720,7 @@ export function PrintPanel({
                 type="button"
                 data-testid="download-all-zip"
                 onClick={handleDownloadAllZip}
-                className="inline-flex items-center gap-2 rounded-xl bg-emerald-400 px-4 py-2.5 text-xs font-black text-slate-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition-all"
+                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
               >
                 <Archive className="h-4 w-4" />
                 Download All (.zip)
@@ -686,87 +731,87 @@ export function PrintPanel({
 
         {/* 4 Key Print Metrics Bar */}
         <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-xl border border-slate-800/90 bg-slate-950/70 p-3.5">
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
+          <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5">
+            <div className="flex items-center justify-between font-codex text-[11px] uppercase tracking-wider text-[#bda782]">
               <span>Packed Build Plates</span>
-              <Layers className="h-4 w-4 text-emerald-400" />
+              <Layers className="h-4 w-4 text-[#f3d478]" />
             </div>
             <div
               className="mt-1 flex items-baseline gap-2"
               data-testid="packed-plate-count"
             >
-              <span className="text-2xl font-black text-white">
+              <span className="font-display text-2xl font-bold text-[#f5ebd6]">
                 {platesJson.totalPlates}{' '}
                 {platesJson.totalPlates === 1 ? 'Plate' : 'Plates'}
               </span>
-              <span className="text-xs font-mono text-emerald-400">
+              <span className="text-xs font-mono text-[#d4af37]">
                 min-plate optimal
               </span>
             </div>
-            <div className="mt-1 text-[11px] text-slate-400">
+            <div className="mt-1 text-[11px] text-[#bda782]">
               Bed: {selectedPrinter.bed.x}×{selectedPrinter.bed.y}×
               {selectedPrinter.bed.z} mm ({platesJson.margin}mm margin)
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-800/90 bg-slate-950/70 p-3.5">
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
+          <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5">
+            <div className="flex items-center justify-between font-codex text-[11px] uppercase tracking-wider text-[#bda782]">
               <span>Est. Total Print Time</span>
-              <Clock className="h-4 w-4 text-sky-400" />
+              <Clock className="h-4 w-4 text-[#d4af37]" />
             </div>
             <div
               className="mt-1 flex items-baseline gap-2"
               data-testid="total-print-time"
             >
-              <span className="text-2xl font-black text-white">
+              <span className="font-display text-2xl font-bold text-[#f5ebd6]">
                 {platesJson.formattedTotalPrintTime ||
                   formatPrintDuration(platesJson.totalPrintTimeMinutes)}
               </span>
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs font-mono text-[#bda782]">
                 ({platesJson.totalPrintTimeMinutes} min)
               </span>
             </div>
-            <div className="mt-1 text-[11px] text-slate-400">
+            <div className="mt-1 text-[11px] text-[#bda782]">
               {speedProfile.label} · 0.20mm layer
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-800/90 bg-slate-950/70 p-3.5">
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
+          <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5">
+            <div className="flex items-center justify-between font-codex text-[11px] uppercase tracking-wider text-[#bda782]">
               <span>Total Filament Estimate</span>
-              <Scale className="h-4 w-4 text-amber-400" />
+              <Scale className="h-4 w-4 text-[#b89b4a]" />
             </div>
             <div
               className="mt-1 flex items-baseline gap-2"
               data-testid="total-filament-grams"
             >
-              <span className="text-2xl font-black text-emerald-400">
+              <span className="font-display text-2xl font-bold text-[#f3d478]">
                 {platesJson.totalWeightGrams}g
               </span>
-              <span className="text-xs font-mono text-slate-400">
+              <span className="text-xs font-mono text-[#bda782]">
                 (~{platesJson.totalFilamentMeters}m · $
                 {((platesJson.totalWeightGrams / 1000) * 19.5).toFixed(2)} spool)
               </span>
             </div>
-            <div className="mt-1 text-[11px] text-slate-400">
+            <div className="mt-1 text-[11px] text-[#bda782]">
               PLA 1.24 g/cm³ · 15% infill · 2 walls (0.4mm)
             </div>
           </div>
 
-          <div className="rounded-xl border border-slate-800/90 bg-slate-950/70 p-3.5">
-            <div className="flex items-center justify-between text-[11px] text-slate-400">
-              <span>Mesh & Slicer Readiness</span>
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+          <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5">
+            <div className="flex items-center justify-between font-codex text-[11px] uppercase tracking-wider text-[#bda782]">
+              <span>Mesh &amp; Slicer Readiness</span>
+              <ShieldCheck className="h-4 w-4 text-[#b89b4a]" />
             </div>
             <div className="mt-1 flex items-baseline gap-2">
-              <span className="text-2xl font-black text-white">
+              <span className="font-display text-2xl font-bold text-[#f5ebd6]">
                 100% Manifold
               </span>
-              <span className="rounded bg-emerald-500/15 px-1.5 py-0.5 font-mono text-[10px] font-bold text-emerald-300">
+              <span className="rounded border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-1.5 py-0.5 font-codex text-[10px] font-bold text-[#f3d478]">
                 ZERO SUPPORTS
               </span>
             </div>
-            <div className="mt-1 text-[11px] text-slate-400 truncate">
+            <div className="mt-1 text-[11px] text-[#bda782] truncate">
               Packer: {platesJson.heuristicUsed}
             </div>
           </div>
@@ -774,21 +819,21 @@ export function PrintPanel({
 
         {/* Oversized / Rejected Parts Warning (if user selects a tiny bed for a large part) */}
         {platesJson.rejected && platesJson.rejected.length > 0 && (
-          <div className="mt-4 rounded-xl border border-amber-500/40 bg-amber-950/25 p-4 text-xs text-amber-200 space-y-2">
-            <div className="flex items-center gap-2 font-bold text-amber-300">
-              <AlertTriangle className="h-4 w-4 shrink-0" />
+          <div className="mt-4 rounded-xl border border-[#c84b31]/50 bg-[#2a0f0a]/60 p-4 text-xs text-[#f5ebd6] space-y-2">
+            <div className="flex items-center gap-2 font-codex font-bold text-[#f3d478]">
+              <AlertTriangle className="h-4 w-4 shrink-0 text-[#c84b31]" />
               <span>
                 {platesJson.rejected.length} part(s) exceed {selectedPrinter.name}{' '}
                 build volume ({selectedPrinter.bed.x}×{selectedPrinter.bed.y}×
                 {selectedPrinter.bed.z} mm)
               </span>
             </div>
-            <ul className="space-y-1 pl-6 list-disc text-amber-200/90">
+            <ul className="space-y-1 pl-6 list-disc text-[#e6d3b3]">
               {platesJson.rejected.map((rej) => (
                 <li key={rej.partId}>
-                  <strong>{rej.name || rej.partId}</strong> ({rej.width}×
+                  <strong className="text-[#f5ebd6]">{rej.name || rej.partId}</strong> ({rej.width}×
                   {rej.depth}×{rej.height} mm): {rej.reasons.join(' ')}{' '}
-                  <span className="text-emerald-300">{rej.suggestion}</span>
+                  <span className="text-[#f3d478]">{rej.suggestion}</span>
                 </li>
               ))}
             </ul>
@@ -799,19 +844,19 @@ export function PrintPanel({
       {/* Interactive Build Plate Preview + Packed Plates Cards */}
       <div className="grid gap-6 lg:grid-cols-12">
         {/* Left 7 Cols: Interactive Top-Down SVG Slicer Bed (or 3D PlatePreview) */}
-        <div className="lg:col-span-7 rounded-2xl border border-slate-800 bg-slate-900/70 p-5 flex flex-col justify-between space-y-4">
+        <div className="lg:col-span-7 rounded-2xl codex-folio p-5 flex flex-col justify-between space-y-4">
           <div className="flex flex-wrap items-center justify-between gap-2">
             <div>
               <div className="flex items-center gap-2">
-                <span className="rounded-md bg-emerald-500/15 border border-emerald-500/30 px-2 py-0.5 font-mono text-xs font-bold text-emerald-300">
+                <span className="rounded-md bg-[#d4af37]/15 border border-[#d4af37]/40 px-2 py-0.5 font-codex text-xs font-bold text-[#f3d478]">
                   PLATE {activePlate?.plateNumber || 1} OF{' '}
                   {platesJson.totalPlates}
                 </span>
-                <h3 className="text-base font-bold text-white">
+                <h3 className="font-display text-lg font-bold text-[#f5ebd6]">
                   {selectedPrinter.name} Build Plate Layout
                 </h3>
               </div>
-              <p className="mt-0.5 text-xs text-slate-400">
+              <p className="mt-0.5 text-xs text-[#bda782]">
                 Bed {selectedPrinter.bed.x} × {selectedPrinter.bed.y} mm ·{' '}
                 {activePlate?.placements.length || 0} placed parts ·{' '}
                 {activePlate?.utilizationPercent || 0}% footprint utilization
@@ -821,16 +866,16 @@ export function PrintPanel({
             <div className="flex items-center gap-2">
               {/* Plate Switcher Pills when multiple plates exist */}
               {platesJson.plates.length > 1 && (
-                <div className="flex items-center gap-1 rounded-xl border border-slate-800 bg-slate-950 p-1">
+                <div className="flex items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1">
                   {platesJson.plates.map((pl, idx) => (
                     <button
                       key={pl.plateNumber}
                       type="button"
                       onClick={() => setSelectedPlateIdx(idx)}
-                      className={`rounded-lg px-2.5 py-1 text-xs font-bold transition-all ${
+                      className={`rounded-lg px-2.5 py-1 font-codex text-xs font-bold transition-all ${
                         idx === safePlateIdx
-                          ? 'bg-emerald-400 text-slate-950'
-                          : 'text-slate-400 hover:text-white'
+                          ? 'bg-[#d4af37] text-[#140e07]'
+                          : 'text-[#bda782] hover:text-[#f5ebd6]'
                       }`}
                     >
                       Plate {pl.plateNumber}
@@ -840,14 +885,14 @@ export function PrintPanel({
               )}
 
               {OptionalThreePlatePreview && (
-                <div className="flex items-center gap-1 rounded-xl border border-slate-800 bg-slate-950 p-1">
+                <div className="flex items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1">
                   <button
                     type="button"
                     onClick={() => setPreviewMode('svg')}
-                    className={`rounded-lg px-2.5 py-1 text-[11px] font-bold ${
+                    className={`rounded-lg px-2.5 py-1 font-codex text-[11px] font-bold ${
                       previewMode === 'svg'
-                        ? 'bg-emerald-400 text-slate-950'
-                        : 'text-slate-400 hover:text-white'
+                        ? 'bg-[#d4af37] text-[#140e07]'
+                        : 'text-[#bda782] hover:text-[#f5ebd6]'
                     }`}
                   >
                     2D Slicer Map
@@ -855,10 +900,10 @@ export function PrintPanel({
                   <button
                     type="button"
                     onClick={() => setPreviewMode('3d')}
-                    className={`rounded-lg px-2.5 py-1 text-[11px] font-bold ${
+                    className={`rounded-lg px-2.5 py-1 font-codex text-[11px] font-bold ${
                       previewMode === '3d'
-                        ? 'bg-emerald-400 text-slate-950'
-                        : 'text-slate-400 hover:text-white'
+                        ? 'bg-[#d4af37] text-[#140e07]'
+                        : 'text-[#bda782] hover:text-[#f5ebd6]'
                     }`}
                   >
                     3D Bed View
@@ -870,7 +915,7 @@ export function PrintPanel({
 
           {/* Plate Viewer Canvas */}
           {previewMode === '3d' && OptionalThreePlatePreview ? (
-            <div className="min-h-[380px] rounded-xl border border-slate-800 bg-slate-950 overflow-hidden">
+            <div className="min-h-[380px] rounded-xl border border-[#d4af37]/30 bg-[#0c0906] overflow-hidden">
               <OptionalThreePlatePreview
                 plates={threePlatePreviewData}
                 design={design}
@@ -879,7 +924,7 @@ export function PrintPanel({
               />
             </div>
           ) : (
-            <div className="relative flex flex-col items-center justify-center rounded-xl border border-slate-800 bg-[#070b12] p-4">
+            <div className="relative flex flex-col items-center justify-center rounded-xl border border-[#d4af37]/30 bg-[#0c0906] p-4">
               {activePlate && (
                 <svg
                   viewBox={`-14 -14 ${selectedPrinter.bed.x + 28} ${
@@ -898,7 +943,7 @@ export function PrintPanel({
                       <path
                         d="M 10 0 L 0 0 0 10"
                         fill="none"
-                        stroke="#1e293b"
+                        stroke="#282016"
                         strokeWidth="0.35"
                       />
                     </pattern>
@@ -916,7 +961,7 @@ export function PrintPanel({
                       <path
                         d="M 50 0 L 0 0 0 50"
                         fill="none"
-                        stroke="#334155"
+                        stroke="#3a2c1d"
                         strokeWidth="0.7"
                       />
                     </pattern>
@@ -930,8 +975,8 @@ export function PrintPanel({
                     height={selectedPrinter.bed.y}
                     rx={8}
                     ry={8}
-                    fill="#0f172a"
-                    stroke="#475569"
+                    fill="#14100b"
+                    stroke="#9c7a4c"
                     strokeWidth={1.5}
                   />
 
@@ -953,8 +998,8 @@ export function PrintPanel({
                     width={selectedPrinter.bed.x - platesJson.margin * 2}
                     height={selectedPrinter.bed.y - platesJson.margin * 2}
                     fill="none"
-                    stroke="#10b981"
-                    strokeOpacity={0.35}
+                    stroke="#d4af37"
+                    strokeOpacity={0.4}
                     strokeWidth={0.8}
                     strokeDasharray="4 3"
                   />
@@ -970,15 +1015,15 @@ export function PrintPanel({
                     } L ${selectedPrinter.bed.x * 0.37} ${
                       selectedPrinter.bed.y + 11
                     } Z`}
-                    fill="#1e293b"
-                    stroke="#475569"
+                    fill="#1d1710"
+                    stroke="#9c7a4c"
                     strokeWidth={1}
                   />
                   <text
                     x={selectedPrinter.bed.x * 0.5}
                     y={selectedPrinter.bed.y + 8}
                     textAnchor="middle"
-                    fill="#94a3b8"
+                    fill="#bda782"
                     fontSize={5.5}
                     fontFamily="monospace"
                     fontWeight="bold"
@@ -993,7 +1038,7 @@ export function PrintPanel({
                     y1={selectedPrinter.bed.y}
                     x2={22}
                     y2={selectedPrinter.bed.y}
-                    stroke="#ef4444"
+                    stroke="#c84b31"
                     strokeWidth={1.8}
                   />
                   <line
@@ -1001,19 +1046,23 @@ export function PrintPanel({
                     y1={selectedPrinter.bed.y}
                     x2={0}
                     y2={selectedPrinter.bed.y - 22}
-                    stroke="#22c55e"
+                    stroke="#d4af37"
                     strokeWidth={1.8}
                   />
                   <circle
                     cx={0}
                     cy={selectedPrinter.bed.y}
                     r={2.5}
-                    fill="#f8fafc"
+                    fill="#f5ebd6"
                   />
 
                   {/* Packed Part Footprints */}
                   {activePlate.placements.map((item, idx) => {
                     const isHovered = hoveredPlacementIdx === idx;
+                    const partFillColor = toRenaissancePartColor(
+                      item.color,
+                      idx
+                    );
                     const svgY =
                       selectedPrinter.bed.y - item.y - item.depth;
                     const minDim = Math.min(item.width, item.depth);
@@ -1111,8 +1160,8 @@ export function PrintPanel({
                           height={item.depth + 3}
                           rx={3.5}
                           fill="none"
-                          stroke={item.color || '#10b981'}
-                          strokeOpacity={isHovered ? 0.85 : 0.3}
+                          stroke={partFillColor}
+                          strokeOpacity={isHovered ? 0.85 : 0.35}
                           strokeWidth={isHovered ? 1.2 : 0.6}
                           strokeDasharray="2 1.5"
                         />
@@ -1124,9 +1173,9 @@ export function PrintPanel({
                           width={item.width}
                           height={item.depth}
                           rx={2.5}
-                          fill={item.color || '#10b981'}
+                          fill={partFillColor}
                           fillOpacity={isHovered ? 0.48 : 0.28}
-                          stroke={isHovered ? '#ffffff' : item.color || '#10b981'}
+                          stroke={isHovered ? '#f5ebd6' : partFillColor}
                           strokeWidth={isHovered ? 1.8 : 1.1}
                         />
 
@@ -1142,7 +1191,7 @@ export function PrintPanel({
                               }
                               textAnchor="middle"
                               dominantBaseline="middle"
-                              fill="#f8fafc"
+                              fill="#f5ebd6"
                               fontSize={fontSize}
                               fontFamily="monospace"
                               fontWeight="bold"
@@ -1155,7 +1204,7 @@ export function PrintPanel({
                                 y={svgY + item.depth / 2 + fontSize * 0.72}
                                 textAnchor="middle"
                                 dominantBaseline="middle"
-                                fill="#cbd5e1"
+                                fill="#e6d3b3"
                                 fontSize={dimFontSize}
                                 fontFamily="monospace"
                               >
@@ -1171,29 +1220,35 @@ export function PrintPanel({
               )}
 
               {/* Bottom Hover Inspector Bar */}
-              <div className="mt-2 flex w-full items-center justify-between rounded-lg border border-slate-800/90 bg-slate-950/90 px-3 py-2 text-xs">
+              <div className="mt-2 flex w-full items-center justify-between rounded-lg border border-[#d4af37]/25 bg-[#14100b]/95 px-3 py-2 text-xs">
                 {hoveredPlacementIdx !== null &&
                 activePlate?.placements[hoveredPlacementIdx] ? (
                   (() => {
                     const h = activePlate.placements[hoveredPlacementIdx];
+                    const hColor = toRenaissancePartColor(
+                      h.color,
+                      hoveredPlacementIdx
+                    );
                     return (
                       <div className="flex flex-wrap items-center justify-between w-full gap-2">
                         <div className="flex items-center gap-2">
                           <span
                             className="h-3 w-3 rounded-full shrink-0"
-                            style={{ backgroundColor: h.color }}
+                            style={{ backgroundColor: hColor }}
                           />
-                          <span className="font-bold text-white">{h.name}</span>
-                          <span className="font-mono text-slate-400">
+                          <span className="font-display font-bold text-[#f5ebd6]">
+                            {h.name}
+                          </span>
+                          <span className="font-mono text-[#bda782]">
                             (copy #{h.copy})
                           </span>
                           {h.rotated && (
-                            <span className="inline-flex items-center gap-0.5 rounded bg-amber-500/20 px-1.5 py-0.5 text-[10px] font-mono text-amber-300">
+                            <span className="inline-flex items-center gap-0.5 rounded border border-[#d4af37]/35 bg-[#d4af37]/15 px-1.5 py-0.5 text-[10px] font-mono text-[#f3d478]">
                               <RotateCw className="h-2.5 w-2.5" /> Rotated 90°
                             </span>
                           )}
                         </div>
-                        <div className="font-mono text-[11px] text-emerald-300">
+                        <div className="font-mono text-[11px] text-[#f3d478]">
                           pos=({h.x}, {h.y})mm · {h.width}×{h.depth}×{h.height}
                           mm · {(h as any).weightGrams ?? ''}g · Click to download STL
                         </div>
@@ -1201,11 +1256,11 @@ export function PrintPanel({
                     );
                   })()
                 ) : (
-                  <div className="flex items-center justify-between w-full text-[11px] text-slate-400">
+                  <div className="flex items-center justify-between w-full text-[11px] text-[#bda782]">
                     <span>
-                      Hover any part on the bed to inspect coordinates & mass; click a footprint to download its binary STL.
+                      Hover any part on the bed to inspect coordinates &amp; mass; click a footprint to download its binary STL.
                     </span>
-                    <span className="font-mono text-slate-300">
+                    <span className="font-mono text-[#e6d3b3]">
                       Max Z: {activePlate?.maxHeight || 0}mm (
                       {(activePlate as any)?.layers ||
                         Math.ceil((activePlate?.maxHeight || 0) / 0.2)}{' '}
@@ -1222,10 +1277,10 @@ export function PrintPanel({
         <div className="lg:col-span-5 flex flex-col justify-between space-y-4">
           <div className="space-y-3">
             <div className="flex items-center justify-between">
-              <h3 className="text-sm font-bold uppercase tracking-wider text-slate-200">
+              <h3 className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                 Packed Build Plates ({platesJson.totalPlates})
               </h3>
-              <span className="text-[11px] font-mono text-emerald-400">
+              <span className="text-[11px] font-mono text-[#d4af37]">
                 5mm bed margin · 5mm part spacing
               </span>
             </div>
@@ -1241,24 +1296,24 @@ export function PrintPanel({
                   onClick={() => setSelectedPlateIdx(idx)}
                   className={`cursor-pointer rounded-2xl border p-4 transition-all space-y-3 ${
                     isSelected
-                      ? 'border-emerald-400 bg-emerald-500/10 shadow-lg shadow-emerald-500/5'
-                      : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
+                      ? 'border-[#f3d478] bg-[#d4af37]/15 shadow-electric'
+                      : 'border-[#d4af37]/25 bg-[#14100b]/85 hover:border-[#d4af37]/50'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="rounded-md bg-emerald-400 px-2 py-0.5 font-mono text-[11px] font-black text-slate-950">
+                        <span className="rounded-md bg-[#d4af37] px-2 py-0.5 font-codex text-[11px] font-bold text-[#140e07]">
                           PLATE {plate.plateNumber}
                         </span>
-                        <h4 className="text-sm font-bold text-white">
+                        <h4 className="font-display text-base font-bold text-[#f5ebd6]">
                           {selectedPrinter.name} ({plate.placements.length}{' '}
                           items)
                         </h4>
                       </div>
-                      <p className="mt-1 text-xs text-slate-400">
+                      <p className="mt-1 text-xs text-[#bda782]">
                         Bed {plate.bedDimensionsMm.join('×')} mm · Utilization{' '}
-                        <strong className="text-slate-200">
+                        <strong className="text-[#f5ebd6]">
                           {plate.utilizationPercent}%
                         </strong>{' '}
                         · Max height {plate.maxHeight} mm
@@ -1271,7 +1326,7 @@ export function PrintPanel({
                         e.stopPropagation();
                         handleDownloadPlate3mf(plate.plateNumber);
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-emerald-500/40 bg-slate-950 px-3 py-1.5 text-xs font-bold text-emerald-300 hover:bg-emerald-400 hover:text-slate-950 transition-colors shrink-0"
+                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/45 bg-[#0c0906] px-3 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37] hover:text-[#140e07] transition-colors shrink-0"
                     >
                       <Download className="h-3.5 w-3.5" />
                       plate-{plate.plateNumber}.3mf
@@ -1279,28 +1334,28 @@ export function PrintPanel({
                   </div>
 
                   {/* Per-Plate Time & Grams Pill Row */}
-                  <div className="grid grid-cols-3 gap-2 rounded-xl border border-slate-800/90 bg-slate-950/80 p-2.5 text-center">
+                  <div className="grid grid-cols-3 gap-2 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2.5 text-center">
                     <div>
-                      <div className="text-[10px] uppercase text-slate-400">
+                      <div className="font-codex text-[10px] uppercase text-[#bda782]">
                         Print Time
                       </div>
-                      <div className="text-xs font-extrabold text-white">
+                      <div className="text-xs font-extrabold text-[#f5ebd6]">
                         ~{formattedTime}
                       </div>
                     </div>
-                    <div className="border-x border-slate-800">
-                      <div className="text-[10px] uppercase text-slate-400">
+                    <div className="border-x border-[#d4af37]/20">
+                      <div className="font-codex text-[10px] uppercase text-[#bda782]">
                         Filament Mass
                       </div>
-                      <div className="text-xs font-extrabold text-emerald-400">
+                      <div className="text-xs font-extrabold text-[#f3d478]">
                         {plate.weightGrams}g PLA
                       </div>
                     </div>
                     <div>
-                      <div className="text-[10px] uppercase text-slate-400">
+                      <div className="font-codex text-[10px] uppercase text-[#bda782]">
                         Slicer Layers
                       </div>
-                      <div className="text-xs font-extrabold text-sky-300">
+                      <div className="text-xs font-extrabold text-[#e6d3b3]">
                         {(plate as any).layers ||
                           Math.ceil(plate.maxHeight / 0.2)}{' '}
                         @ 0.2mm
@@ -1313,22 +1368,27 @@ export function PrintPanel({
                     {plate.placements.map((pl, pIdx) => (
                       <span
                         key={`${pl.partId}-${pl.copy}-${pIdx}`}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-slate-800 bg-slate-950 px-2 py-1 text-[11px] text-slate-300"
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/25 bg-[#0c0906] px-2 py-1 text-[11px] text-[#e6d3b3]"
                       >
                         <span
                           className="h-2 w-2 rounded-full"
-                          style={{ backgroundColor: pl.color }}
+                          style={{
+                            backgroundColor: toRenaissancePartColor(
+                              pl.color,
+                              pIdx
+                            ),
+                          }}
                         />
-                        <span className="font-medium text-white">
+                        <span className="font-medium text-[#f5ebd6]">
                           {pl.name}
                         </span>
                         {(pl.copy ?? 1) > 1 && (
-                          <span className="font-mono text-[10px] text-slate-400">
+                          <span className="font-mono text-[10px] text-[#bda782]">
                             #{pl.copy}
                           </span>
                         )}
                         {pl.rotated && (
-                          <span className="font-mono text-[10px] text-amber-300">
+                          <span className="font-mono text-[10px] text-[#f3d478]">
                             ↻90°
                           </span>
                         )}
@@ -1341,14 +1401,14 @@ export function PrintPanel({
           </div>
 
           {/* Slicer Profile Summary Box */}
-          <div className="rounded-2xl border border-slate-800 bg-slate-950/80 p-4 space-y-2 text-xs">
-            <div className="flex items-center justify-between font-bold text-slate-200">
+          <div className="rounded-2xl border border-[#d4af37]/25 bg-[#14100b]/90 p-4 space-y-2 text-xs">
+            <div className="flex items-center justify-between font-codex font-bold text-[#f5ebd6]">
               <span>Recommended Slicer Profile (Bambu Studio / Orca / Prusa)</span>
-              <span className="rounded bg-emerald-500/15 px-2 py-0.5 font-mono text-[10px] text-emerald-300">
+              <span className="rounded border border-[#b89b4a]/45 bg-[#b89b4a]/15 px-2 py-0.5 font-codex text-[10px] text-[#f3d478]">
                 0.20mm STRENGTH
               </span>
             </div>
-            <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-400 pt-1">
+            <div className="grid grid-cols-2 gap-2 text-[11px] text-[#bda782] pt-1">
               <div>• Nozzle / Line: 0.40 mm (2 walls = 0.8mm)</div>
               <div>• Layer Height: 0.20 mm (4 top/bottom)</div>
               <div>• Sparse Infill: 15% Gyroid / Grid</div>
@@ -1359,13 +1419,13 @@ export function PrintPanel({
       </div>
 
       {/* Individual Printable STL Parts Grid */}
-      <div className="rounded-2xl border border-slate-800 bg-slate-900/65 p-5 sm:p-6 space-y-4">
+      <div className="rounded-2xl codex-folio p-5 sm:p-6 space-y-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h3 className="text-base font-bold text-white">
+            <h3 className="font-display text-xl font-bold text-[#f5ebd6]">
               Individual Printable Part Meshes (parts/*.stl)
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#bda782]">
               Watertight 2-manifold binary STL files with volume + surface-area filament and time estimates
             </p>
           </div>
@@ -1373,7 +1433,7 @@ export function PrintPanel({
             <button
               type="button"
               onClick={handleDownloadAllZip}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-950 px-3 py-1.5 text-xs font-bold text-slate-200 hover:border-emerald-400 hover:text-emerald-300 transition-colors"
+              className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/35 bg-[#0c0906] px-3 py-1.5 font-codex text-xs font-bold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
             >
               <Archive className="h-3.5 w-3.5" />
               Download All {platesJson.parts.length} STLs + 3MFs (.zip)
@@ -1382,32 +1442,33 @@ export function PrintPanel({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {platesJson.parts.map((part: any) => {
+          {platesJson.parts.map((part: any, idx: number) => {
             const qty = part.quantity ?? 1;
             const partTimeStr =
               part.formattedTime || formatPrintDuration(part.estimatedMinutes);
+            const partDotColor = toRenaissancePartColor(part.color, idx);
             return (
               <div
                 key={part.partId}
-                className="flex flex-col justify-between rounded-xl border border-slate-800 bg-slate-950/80 p-4 hover:border-slate-700 transition-all space-y-3"
+                className="flex flex-col justify-between rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-4 hover:border-[#d4af37]/55 transition-all space-y-3"
               >
                 <div className="space-y-1.5">
                   <div className="flex items-center justify-between gap-2">
                     <div className="flex items-center gap-2 min-w-0">
                       <span
                         className="h-3 w-3 rounded-full shrink-0"
-                        style={{ backgroundColor: part.color }}
+                        style={{ backgroundColor: partDotColor }}
                       />
-                      <span className="truncate text-xs font-bold text-white">
+                      <span className="truncate font-display text-sm font-bold text-[#f5ebd6]">
                         {part.name}
                       </span>
                     </div>
-                    <span className="rounded bg-slate-800 px-2 py-0.5 font-mono text-[10px] font-bold text-emerald-300 shrink-0">
+                    <span className="rounded border border-[#d4af37]/30 bg-[#1d1710] px-2 py-0.5 font-codex text-[10px] font-bold text-[#f3d478] shrink-0">
                       ×{qty}
                     </span>
                   </div>
 
-                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-slate-400">
+                  <div className="flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-[#bda782]">
                     <span>
                       {part.dims_mm
                         .map((d: number) => Math.round(d * 10) / 10)
@@ -1415,14 +1476,14 @@ export function PrintPanel({
                       mm
                     </span>
                     <span>·</span>
-                    <span className="text-emerald-400 font-semibold">
+                    <span className="text-[#f3d478] font-semibold">
                       {part.weightGrams}g
                     </span>
                     <span>·</span>
-                    <span className="text-sky-300">~{partTimeStr}</span>
+                    <span className="text-[#e6d3b3]">~{partTimeStr}</span>
                   </div>
 
-                  <div className="flex items-center justify-between text-[10px] text-slate-500 font-mono pt-0.5">
+                  <div className="flex items-center justify-between text-[10px] text-[#9c7a4c] font-mono pt-0.5">
                     <span>
                       shape: {part.shape || 'parametric'} · {part.material}
                     </span>
@@ -1430,8 +1491,8 @@ export function PrintPanel({
                   </div>
                 </div>
 
-                <div className="flex items-center justify-between border-t border-slate-800/80 pt-2.5">
-                  <span className="font-mono text-[10px] text-slate-400">
+                <div className="flex items-center justify-between border-t border-[#d4af37]/20 pt-2.5">
+                  <span className="font-mono text-[10px] text-[#bda782]">
                     {part.stlFile}
                   </span>
                   <button
@@ -1439,7 +1500,7 @@ export function PrintPanel({
                     onClick={() =>
                       handleDownloadPartStl(part.partId, part.stlFile)
                     }
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-2.5 py-1 text-xs font-bold text-emerald-300 hover:bg-emerald-400 hover:text-slate-950 transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/12 px-2.5 py-1 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37] hover:text-[#140e07] transition-colors"
                   >
                     <Download className="h-3.5 w-3.5" />
                     Download .STL
@@ -1453,41 +1514,41 @@ export function PrintPanel({
 
       {/* "No printer? Get it printed & delivered" Card */}
       <div
-        className="rounded-2xl border border-emerald-500/35 bg-gradient-to-br from-slate-900 via-slate-950 to-emerald-950/20 p-6 shadow-xl space-y-6"
+        className="rounded-2xl gilded-frame codex-folio p-6 space-y-6"
         data-testid="no-printer-card"
       >
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-slate-800/90 pb-4">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between border-b border-[#d4af37]/25 pb-4">
           <div className="space-y-1">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-emerald-400">
-              <Truck className="h-4 w-4" />
+            <div className="inline-flex items-center gap-2 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+              <Truck className="h-4 w-4 text-[#d4af37]" />
               On-Demand 3D Print Bureau Handoff
             </div>
-            <h3 className="text-xl font-extrabold text-white">
-              No printer? Get it printed & delivered
+            <h3 className="font-display text-2xl font-bold text-[#f5ebd6]">
+              No printer? Get it printed &amp; delivered
             </h3>
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-[#e6d3b3]">
               Instant quote estimate calculated from your{' '}
-              <strong className="text-white">
+              <strong className="text-[#f5ebd6]">
                 {platesJson.totalWeightGrams}g total filament mass
               </strong>{' '}
               across {platesJson.totalPrintedItems} parts. Select a manufacturing bureau, material, color, and shipping destination:
             </p>
           </div>
 
-          <div className="rounded-2xl border border-emerald-500/40 bg-emerald-500/10 px-4 py-3 text-right">
-            <div className="text-[10px] font-bold uppercase tracking-wider text-emerald-300">
+          <div className="rounded-2xl border border-[#d4af37]/45 bg-[#d4af37]/15 px-4 py-3 text-right">
+            <div className="font-codex text-[10px] font-bold uppercase tracking-wider text-[#f3d478]">
               Estimated Delivered Total ({activeService.name})
             </div>
             <div
-              className="text-2xl font-black text-white"
+              className="font-display text-2xl font-bold text-[#f5ebd6]"
               data-testid="quote-total-price"
             >
               ${activeQuote.total.toFixed(2)}{' '}
-              <span className="text-xs font-normal text-slate-400">
+              <span className="font-sans text-xs font-normal text-[#bda782]">
                 USD incl. shipping
               </span>
             </div>
-            <div className="text-[11px] text-emerald-300">
+            <div className="text-[11px] text-[#f3d478]">
               Parts: ${activeQuote.subtotalParts.toFixed(2)} + Shipping: $
               {activeQuote.shipping.toFixed(2)} · {activeService.leadTime}
             </div>
@@ -1496,7 +1557,7 @@ export function PrintPanel({
 
         {/* 1. Choose Print Service (4 Bureau Cards with Text Logo Badges) */}
         <div className="space-y-2">
-          <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+          <label className="block font-codex text-xs font-bold uppercase tracking-wider text-[#e6d3b3]">
             1. Choose On-Demand Print Service Bureau
           </label>
           <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -1511,34 +1572,34 @@ export function PrintPanel({
                   onClick={() => setSelectedServiceId(srv.id)}
                   className={`flex flex-col justify-between rounded-xl border p-4 text-left transition-all ${
                     isSelected
-                      ? 'border-emerald-400 bg-emerald-500/10 shadow-md shadow-emerald-500/10'
-                      : 'border-slate-800 bg-slate-950/80 hover:border-slate-700'
+                      ? 'border-[#f3d478] bg-[#d4af37]/15 shadow-electric'
+                      : 'border-[#d4af37]/25 bg-[#0c0906]/85 hover:border-[#d4af37]/50'
                   }`}
                 >
                   <div className="space-y-2">
                     <div className="flex items-center justify-between gap-2">
                       <span
-                        className={`rounded-md border px-2 py-0.5 font-mono text-[11px] font-black tracking-wider ${srv.badgeBg} ${srv.badgeBorder}`}
+                        className={`rounded-md border px-2 py-0.5 font-codex text-[11px] font-bold tracking-wider ${srv.badgeBg} ${srv.badgeBorder}`}
                       >
                         {srv.badgeText}
                       </span>
                       {isSelected && (
-                        <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
+                        <CheckCircle2 className="h-4 w-4 text-[#f3d478] shrink-0" />
                       )}
                     </div>
-                    <div className="text-sm font-bold text-white">
+                    <div className="font-display text-base font-bold text-[#f5ebd6]">
                       {srv.name}
                     </div>
-                    <p className="text-[11px] text-slate-400 leading-relaxed">
+                    <p className="text-[11px] text-[#bda782] leading-relaxed">
                       {srv.tagline}
                     </p>
                   </div>
 
-                  <div className="mt-3 flex items-baseline justify-between border-t border-slate-800/80 pt-2.5">
-                    <span className="text-[11px] text-slate-400">
+                  <div className="mt-3 flex items-baseline justify-between border-t border-[#d4af37]/20 pt-2.5">
+                    <span className="text-[11px] text-[#bda782]">
                       {srv.leadTime}
                     </span>
-                    <span className="text-sm font-black text-emerald-400">
+                    <span className="font-display text-base font-bold text-[#f3d478]">
                       ${q.total.toFixed(2)}
                     </span>
                   </div>
@@ -1551,24 +1612,24 @@ export function PrintPanel({
         {/* 2. Material, Color & Quantity Selectors + 3. Shipping Address Form */}
         <div className="grid gap-6 lg:grid-cols-12">
           {/* Left 6 Cols: Material, Color, Quantity */}
-          <div className="lg:col-span-6 space-y-4 rounded-xl border border-slate-800 bg-slate-950/75 p-4">
-            <div className="text-xs font-bold uppercase tracking-wider text-slate-300">
-              2. Material, Finish Color & Quantity
+          <div className="lg:col-span-6 space-y-4 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-4">
+            <div className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+              2. Material, Finish Color &amp; Quantity
             </div>
 
             <div className="space-y-1.5">
               <label
                 htmlFor="service-material-select"
-                className="block text-xs font-semibold text-slate-300"
+                className="block text-xs font-semibold text-[#e6d3b3]"
               >
-                Process & Material
+                Process &amp; Material
               </label>
               <select
                 id="service-material-select"
                 data-testid="service-material-select"
                 value={selectedMaterialId}
                 onChange={(e) => setSelectedMaterialId(e.target.value)}
-                className="w-full rounded-xl border border-slate-700 bg-slate-900 px-3 py-2 text-xs font-bold text-white focus:border-emerald-400 focus:outline-none"
+                className="w-full rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3 py-2 text-xs font-bold text-[#f5ebd6] focus:border-[#f3d478] focus:outline-none"
               >
                 {SERVICE_MATERIALS.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -1576,12 +1637,12 @@ export function PrintPanel({
                   </option>
                 ))}
               </select>
-              <p className="text-[11px] text-slate-400">{activeMaterial.note}</p>
+              <p className="text-[11px] text-[#bda782]">{activeMaterial.note}</p>
             </div>
 
             {/* Color Selector Pills */}
             <div className="space-y-1.5">
-              <label className="block text-xs font-semibold text-slate-300">
+              <label className="block text-xs font-semibold text-[#e6d3b3]">
                 Part Color ({activeColor.name})
               </label>
               <div className="flex flex-wrap gap-2">
@@ -1594,12 +1655,12 @@ export function PrintPanel({
                       onClick={() => setSelectedColorId(col.id)}
                       className={`inline-flex items-center gap-2 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition-all ${
                         active
-                          ? 'border-emerald-400 bg-emerald-500/15 text-white'
-                          : 'border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-700'
+                          ? 'border-[#f3d478] bg-[#d4af37]/20 text-[#f5ebd6]'
+                          : 'border-[#d4af37]/25 bg-[#14100b] text-[#e6d3b3] hover:border-[#d4af37]/50'
                       }`}
                     >
                       <span
-                        className="h-3 w-3 rounded-full border border-white/20"
+                        className="h-3 w-3 rounded-full border border-[#d4af37]/40"
                         style={{ backgroundColor: col.hex }}
                       />
                       {col.name}
@@ -1612,10 +1673,10 @@ export function PrintPanel({
             {/* Quantity Stepper */}
             <div className="flex items-center justify-between pt-1">
               <div>
-                <div className="text-xs font-semibold text-slate-300">
+                <div className="text-xs font-semibold text-[#e6d3b3]">
                   Complete Part Sets (Quantity)
                 </div>
-                <div className="text-[11px] text-slate-400">
+                <div className="text-[11px] text-[#bda782]">
                   Each set includes all {platesJson.totalPrintedItems} printed parts (
                   {platesJson.totalWeightGrams}g/set)
                 </div>
@@ -1626,7 +1687,7 @@ export function PrintPanel({
                   onClick={() =>
                     setOrderQuantity((q) => Math.max(1, q - 1))
                   }
-                  className="h-8 w-8 rounded-lg border border-slate-700 bg-slate-900 text-sm font-bold text-white hover:border-emerald-400"
+                  className="h-8 w-8 rounded-lg border border-[#d4af37]/35 bg-[#14100b] text-sm font-bold text-[#f5ebd6] hover:border-[#f3d478]"
                 >
                   −
                 </button>
@@ -1641,14 +1702,14 @@ export function PrintPanel({
                       Math.max(1, Math.min(50, Number(e.target.value) || 1))
                     )
                   }
-                  className="w-14 rounded-lg border border-slate-700 bg-slate-900 py-1 text-center font-mono text-xs font-bold text-white"
+                  className="w-14 rounded-lg border border-[#d4af37]/35 bg-[#14100b] py-1 text-center font-mono text-xs font-bold text-[#f5ebd6]"
                 />
                 <button
                   type="button"
                   onClick={() =>
                     setOrderQuantity((q) => Math.min(50, q + 1))
                   }
-                  className="h-8 w-8 rounded-lg border border-slate-700 bg-slate-900 text-sm font-bold text-white hover:border-emerald-400"
+                  className="h-8 w-8 rounded-lg border border-[#d4af37]/35 bg-[#14100b] text-sm font-bold text-[#f5ebd6] hover:border-[#f3d478]"
                 >
                   +
                 </button>
@@ -1657,20 +1718,20 @@ export function PrintPanel({
           </div>
 
           {/* Right 6 Cols: Shipping Address & Instant Quote Handoff */}
-          <div className="lg:col-span-6 space-y-4 rounded-xl border border-slate-800 bg-slate-950/75 p-4 flex flex-col justify-between">
+          <div className="lg:col-span-6 space-y-4 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-4 flex flex-col justify-between">
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-300">
-                  3. Shipping Destination & Bureau Handoff
+                <span className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                  3. Shipping Destination &amp; Bureau Handoff
                 </span>
-                <span className="inline-flex items-center gap-1 text-[11px] text-emerald-400">
+                <span className="inline-flex items-center gap-1 font-codex text-[11px] text-[#d4af37]">
                   <MapPin className="h-3.5 w-3.5" /> Instant Quote Ready
                 </span>
               </div>
 
               <div className="grid gap-2.5 sm:grid-cols-2">
                 <div>
-                  <label className="block text-[10px] uppercase text-slate-400 mb-1">
+                  <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
                     Recipient Name
                   </label>
                   <input
@@ -1678,11 +1739,11 @@ export function PrintPanel({
                     value={recipientName}
                     onChange={(e) => setRecipientName(e.target.value)}
                     placeholder="Full Name"
-                    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-white"
+                    className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase text-slate-400 mb-1">
+                  <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
                     Street Address
                   </label>
                   <input
@@ -1690,11 +1751,11 @@ export function PrintPanel({
                     value={streetAddress}
                     onChange={(e) => setStreetAddress(e.target.value)}
                     placeholder="Street Address"
-                    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-white"
+                    className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                   />
                 </div>
                 <div>
-                  <label className="block text-[10px] uppercase text-slate-400 mb-1">
+                  <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
                     City
                   </label>
                   <input
@@ -1702,12 +1763,12 @@ export function PrintPanel({
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     placeholder="City"
-                    className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-white"
+                    className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div>
-                    <label className="block text-[10px] uppercase text-slate-400 mb-1">
+                    <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
                       State
                     </label>
                     <input
@@ -1715,11 +1776,11 @@ export function PrintPanel({
                       value={stateCode}
                       onChange={(e) => setStateCode(e.target.value)}
                       placeholder="CA"
-                      className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-white"
+                      className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                     />
                   </div>
                   <div>
-                    <label className="block text-[10px] uppercase text-slate-400 mb-1">
+                    <label className="block font-codex text-[10px] uppercase text-[#bda782] mb-1">
                       ZIP / Postal
                     </label>
                     <input
@@ -1727,7 +1788,7 @@ export function PrintPanel({
                       value={postalCode}
                       onChange={(e) => setPostalCode(e.target.value)}
                       placeholder="94104"
-                      className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-white"
+                      className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                     />
                   </div>
                 </div>
@@ -1735,14 +1796,14 @@ export function PrintPanel({
             </div>
 
             {/* Quote Breakdown + Send Files Button */}
-            <div className="space-y-3 border-t border-slate-800 pt-3">
-              <div className="flex flex-wrap items-center justify-between text-xs text-slate-300">
+            <div className="space-y-3 border-t border-[#d4af37]/20 pt-3">
+              <div className="flex flex-wrap items-center justify-between text-xs text-[#e6d3b3]">
                 <span>
                   {orderQuantity}× set ({platesJson.totalWeightGrams * orderQuantity}g{' '}
                   {activeMaterial.name.split(' ')[0]} · {activeColor.name}) to{' '}
                   {city || 'SF'}, {postalCode || '94104'}
                 </span>
-                <span className="font-mono font-bold text-emerald-400">
+                <span className="font-mono font-bold text-[#f3d478]">
                   Est. ${activeQuote.total.toFixed(2)}
                 </span>
               </div>
@@ -1752,7 +1813,7 @@ export function PrintPanel({
                   type="button"
                   data-testid="send-files-to-service-btn"
                   onClick={handleSendToPrintService}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-emerald-400 px-4 py-2.5 text-xs font-black text-slate-950 shadow-lg shadow-emerald-500/20 hover:bg-emerald-300 transition-all"
+                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
                 >
                   <Truck className="h-4 w-4" />
                   Send files to {activeService.name} ($
@@ -1764,15 +1825,15 @@ export function PrintPanel({
                   href={activeService.uploadUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-slate-700 bg-slate-900 px-3.5 py-2.5 text-xs font-bold text-slate-200 hover:border-emerald-400 hover:text-emerald-300"
+                  className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3.5 py-2.5 font-codex text-xs font-bold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f3d478]"
                 >
                   Direct Portal <ExternalLink className="h-3.5 w-3.5" />
                 </a>
               </div>
 
               {handoffStatus && (
-                <div className="flex items-center gap-2 rounded-lg border border-emerald-500/40 bg-emerald-500/10 px-3 py-2 text-[11px] text-emerald-200">
-                  <Check className="h-4 w-4 text-emerald-400 shrink-0" />
+                <div className="flex items-center gap-2 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-2 text-[11px] text-[#f5ebd6]">
+                  <Check className="h-4 w-4 text-[#f3d478] shrink-0" />
                   <span>{handoffStatus}</span>
                 </div>
               )}
