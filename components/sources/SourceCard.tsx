@@ -34,8 +34,8 @@ const KIND_META: Record<
   },
   'open-design': {
     label: 'Open 3D Design',
-    badgeClass: 'bg-emerald-950/50 text-emerald-300 border-emerald-500/35',
-    dotClass: 'bg-emerald-400',
+    badgeClass: 'bg-[#1d1710] text-[#e6d3b3] border-[#b89b4a]/45',
+    dotClass: 'bg-[#b89b4a]',
   },
   schematic: {
     label: 'Schematic',
@@ -44,8 +44,8 @@ const KIND_META: Record<
   },
   pdf: {
     label: 'PDF / Datasheet',
-    badgeClass: 'bg-amber-950/50 text-amber-300 border-amber-500/35',
-    dotClass: 'bg-amber-400',
+    badgeClass: 'bg-[#d4af37]/15 text-[#f3d478] border-[#d4af37]/40',
+    dotClass: 'bg-[#d4af37]',
   },
   teardown: {
     label: 'Teardown',
@@ -184,7 +184,7 @@ export function SourceCard(props: SourceCardProps) {
           </div>
 
           <span
-            className="inline-flex items-center rounded-md border border-emerald-500/30 bg-emerald-950/35 px-2 py-0.5 font-mono text-[11px] font-semibold text-emerald-300 tabular-nums"
+            className="inline-flex items-center rounded-md border border-[#b89b4a]/45 bg-[#1d1710] px-2 py-0.5 font-mono text-[11px] font-semibold text-[#e6d3b3] tabular-nums"
             title={`Relevance score: ${relevancePct}%`}
           >
             {relevancePct}% match
@@ -246,7 +246,7 @@ export function SourceCard(props: SourceCardProps) {
             className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/25 bg-[#17120c] px-2.5 py-1.5 text-xs font-medium text-[#e6d3b3] transition-colors hover:border-[#d4af37]/50 hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
           >
             {copied ? (
-              <span className="text-emerald-300">Copied</span>
+              <span className="text-[#f3d478]">Copied</span>
             ) : (
               <span>Copy link</span>
             )}

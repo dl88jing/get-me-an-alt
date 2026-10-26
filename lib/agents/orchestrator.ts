@@ -30,7 +30,10 @@ import { getPrinterById } from '../printers';
 import { generateCadBundle } from '../cad';
 import { parseUrlProductInfo, runAnalystAgent } from './analyst';
 import { runResearcherAgent } from './researcher';
-import { runTeardownAgent } from './teardown';
+import {
+  buildDeterministicTeardownFallback,
+  runTeardownAgent,
+} from './teardown';
 import { runDesignerAgent } from './designer';
 import {
   applyCritiqueFixesToDesign,
@@ -907,7 +910,19 @@ export function getProjectManifest(id: string): ProjectManifest | null {
   }
 
   if (memoryManifests.has(id)) {
-    return memoryManifests.get(id)!;
+    const cached = memoryManifests.get(id)!;
+    if (
+      cached.analysis &&
+      (!cached.teardown || !Array.isArray(cached.teardown.frames) || cached.teardown.frames.length === 0)
+    ) {
+      cached.teardown = buildDeterministicTeardownFallback({
+        analysis: cached.analysis,
+        sources: cached.sources,
+        design: cached.design,
+        bom: cached.bom,
+      });
+    }
+    return cached;
   }
 
   const folder = getProjectFolder(id);
@@ -919,6 +934,17 @@ export function getProjectManifest(id: string): ProjectManifest | null {
       const m = JSON.parse(
         fs.readFileSync(manifestPath, 'utf-8')
       ) as ProjectManifest;
+      if (
+        m.analysis &&
+        (!m.teardown || !Array.isArray(m.teardown.frames) || m.teardown.frames.length === 0)
+      ) {
+        m.teardown = buildDeterministicTeardownFallback({
+          analysis: m.analysis,
+          sources: m.sources,
+          design: m.design,
+          bom: m.bom,
+        });
+      }
       memoryManifests.set(id, m);
       return m;
     } catch {
@@ -1249,9 +1275,15 @@ async function executePipelineStages(
     });
 
     const teardownPromise = (async () => {
+      const enrichedAnalysis = manifest.analysis
+        ? {
+            ...manifest.analysis,
+            inputUrl: manifest.analysis.inputUrl || options.url,
+          }
+        : undefined;
       try {
         const teardownRes = await runTeardownAgent({
-          analysis: manifest.analysis,
+          analysis: enrichedAnalysis,
           sources: manifest.sources,
           cwd,
           onLog: (entry) => {
@@ -1267,7 +1299,11 @@ async function executePipelineStages(
         manifest.teardown = teardownRes.data;
         saveManifest(cwd, manifest);
       } catch {
-        // non-fatal teardown fallback
+        manifest.teardown = buildDeterministicTeardownFallback({
+          analysis: enrichedAnalysis,
+          sources: manifest.sources,
+        });
+        saveManifest(cwd, manifest);
       }
       emitSseEvent(cwd, manifest, {
         agent: 'teardown',

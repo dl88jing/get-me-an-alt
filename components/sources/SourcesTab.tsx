@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react';
 import type {
   BomItem,
   DesignPart,
+  ObjectAnalysis,
   ResearchData,
   ResearchSource,
 } from '../../lib/types';
@@ -11,6 +12,8 @@ import type { TeardownData } from '../../lib/agents/teardown';
 import {
   ALL_SOURCE_KINDS,
   extractDomainLabel,
+  extractYouTubeId,
+  getThumbnail,
   inferSourceKind,
   type EnrichedResearchSource,
   type SourceItem,
@@ -33,6 +36,8 @@ export interface SourcesTabProps {
   bomItems?: BomItem[];
   /** Optional 3D design parts for teardown cross-linking */
   designParts?: DesignPart[];
+  /** Optional object analysis for fallback teardown synthesis */
+  analysis?: ObjectAnalysis;
   objectSlug?: string;
   objectName?: string;
   generatedAt?: string;
@@ -203,7 +208,7 @@ export function SourcesTab(props: SourcesTabProps) {
             <span
               className={`rounded-full border px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider ${
                 normalized.groundingUsed
-                  ? 'border-emerald-500/35 bg-emerald-950/40 text-emerald-300'
+                  ? 'border-[#b89b4a]/45 bg-[#1d1710] text-[#e6d3b3]'
                   : 'border-[#d4af37]/35 bg-[#d4af37]/15 text-[#f3d478]'
               }`}
             >

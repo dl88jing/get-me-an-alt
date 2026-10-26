@@ -34,10 +34,10 @@ function escapeXml(str: string): string {
 }
 
 /**
- * Generates a clean Renaissance Codex Ink Sketch SVG data URI fallback
+ * Generates a clean Renaissance Ink Sketch SVG data URI fallback
  * (always XML-escaped so it never fails to render in <img>).
  */
-function buildCodexFallbackSvg(frame: TeardownFrame, idx: number): string {
+function buildFallbackSvg(frame: TeardownFrame, idx: number): string {
   const ts = `${formatTimestamp(frame.t)} (t=${frame.t}s)`;
   const title =
     frame.parts.map((p) => p.name).join(' + ') ||
@@ -56,12 +56,12 @@ function buildCodexFallbackSvg(frame: TeardownFrame, idx: number): string {
         <stop offset="65%" stop-color="#19130c"/>
         <stop offset="100%" stop-color="#0f0b07"/>
       </radialGradient>
-      <pattern id="codexGrid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <pattern id="plateGrid" width="24" height="24" patternUnits="userSpaceOnUse">
         <path d="M 24 0 L 0 0 0 24" fill="none" stroke="#d4af37" stroke-opacity="0.12" stroke-width="1"/>
       </pattern>
     </defs>
     <rect width="640" height="360" fill="url(#vellum)"/>
-    <rect width="640" height="360" fill="url(#codexGrid)"/>
+    <rect width="640" height="360" fill="url(#plateGrid)"/>
     <rect x="16" y="16" width="608" height="328" rx="12" fill="none" stroke="#d4af37" stroke-opacity="0.55" stroke-width="1.5"/>
     <rect x="22" y="22" width="596" height="316" rx="8" fill="none" stroke="#d4af37" stroke-opacity="0.22" stroke-dasharray="4 4" stroke-width="1"/>
     <circle cx="192" cy="194" r="82" fill="#140f0a" stroke="#d4af37" stroke-opacity="0.7" stroke-width="1.8"/>
@@ -72,15 +72,15 @@ function buildCodexFallbackSvg(frame: TeardownFrame, idx: number): string {
     <rect x="156" y="162" width="72" height="64" rx="6" fill="#231910" stroke="#f3d478" stroke-width="1.8"/>
     <line x1="228" y1="176" x2="324" y2="136" stroke="#d4af37" stroke-width="1.8"/>
     <circle cx="228" cy="176" r="4" fill="#d4af37"/>
-    <line x1="228" y1="210" x2="324" y2="224" stroke="#52b788" stroke-width="1.8"/>
-    <circle cx="228" cy="210" r="4" fill="#52b788"/>
-    <text x="36" y="50" fill="#f3d478" font-family="Georgia, serif" font-size="12" font-weight="bold" letter-spacing="1.5">CODEX ANATOMICA · FOLIO DISASSEMBLY @ ${escapeXml(ts)}</text>
+    <line x1="228" y1="210" x2="324" y2="224" stroke="#b89b4a" stroke-width="1.8"/>
+    <circle cx="228" cy="210" r="4" fill="#b89b4a"/>
+    <text x="36" y="50" fill="#f3d478" font-family="Georgia, serif" font-size="12" font-weight="bold" letter-spacing="1.5">INTERNAL PART TELEMETRY · DISASSEMBLY @ ${escapeXml(ts)}</text>
     <text x="36" y="76" fill="#f5ebd6" font-family="Georgia, serif" font-size="15" font-weight="bold">${escapeXml(title.slice(0, 62))}</text>
     <rect x="324" y="106" width="276" height="74" rx="8" fill="#15100b" stroke="#d4af37" stroke-opacity="0.65" stroke-width="1.2"/>
     <text x="338" y="128" fill="#f3d478" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA I · PRIMARY VESSEL</text>
     <text x="338" y="152" fill="#f5ebd6" font-family="monospace" font-size="11.5">${escapeXml(c1.slice(0, 36))}</text>
-    <rect x="324" y="194" width="276" height="74" rx="8" fill="#15100b" stroke="#52b788" stroke-opacity="0.65" stroke-width="1.2"/>
-    <text x="338" y="216" fill="#6ee7b7" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA II · COUPLED MECHANISM</text>
+    <rect x="324" y="194" width="276" height="74" rx="8" fill="#15100b" stroke="#b89b4a" stroke-opacity="0.65" stroke-width="1.2"/>
+    <text x="338" y="216" fill="#e6d3b3" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA II · COUPLED MECHANISM</text>
     <text x="338" y="240" fill="#f5ebd6" font-family="monospace" font-size="11.5">${escapeXml(c2.slice(0, 36))}</text>
     <text x="36" y="322" fill="#bda782" font-family="Georgia, serif" font-size="11" font-style="italic">De Mechanica · Gemini 4 Argon Multimodal Internal Part Callout</text>
   </svg>`;
@@ -107,6 +107,11 @@ function resolveFrameVideoUrl(
   }
 
   return candidates[0]?.trim();
+}
+
+function isDirectVideoFile(videoUrl: string | undefined): boolean {
+  if (!videoUrl) return false;
+  return /\.(mp4|webm)(\?.*)?$/i.test(videoUrl.trim());
 }
 
 function buildEmbedVideoSrc(
@@ -142,10 +147,51 @@ function buildEmbedVideoSrc(
   return null;
 }
 
+function sanitizeImageCandidate(
+  raw: string | undefined,
+  frame: TeardownFrame,
+  idx: number
+): string | null {
+  if (!raw || typeof raw !== 'string') return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  if (trimmed.startsWith('data:image/svg+xml')) {
+    const commaIdx = trimmed.indexOf(',');
+    if (commaIdx !== -1) {
+      const prefix = trimmed.slice(0, commaIdx + 1);
+      const payload = trimmed.slice(commaIdx + 1);
+      try {
+        const decoded = decodeURIComponent(payload);
+        const fixedXml = decoded
+          .replace(/&amp;;/g, '&amp;')
+          .replace(
+            /&(?:amp?(?![a-zA-Z0-9#]+;)|(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);))/g,
+            '&amp;'
+          );
+        return `${prefix}${encodeURIComponent(fixedXml)}`;
+      } catch {
+        return buildFallbackSvg(frame, idx);
+      }
+    }
+  }
+
+  if (
+    trimmed.startsWith('/') ||
+    trimmed.startsWith('http://') ||
+    trimmed.startsWith('https://') ||
+    trimmed.startsWith('data:image/')
+  ) {
+    return trimmed;
+  }
+
+  return null;
+}
+
 /**
- * Resolves a browser-renderable image URL for a teardown frame, repairing any
- * unescaped `&` inside legacy `data:image/svg+xml` strings and falling back to
- * a Renaissance codex illustration so `<img src>` always succeeds.
+ * Resolves a browser-renderable thumbnail URL for a teardown frame card (preferring
+ * the real YouTube thumbnail `i.ytimg.com/vi/<id>/hqdefault.jpg` or extracted WebP frame,
+ * then any `data:image/...` artifact image).
  */
 function resolveFrameImageSrc(
   frame: TeardownFrame,
@@ -161,39 +207,37 @@ function resolveFrameImageSrc(
   ];
 
   for (const raw of candidates) {
-    if (!raw || typeof raw !== 'string') continue;
-    const trimmed = raw.trim();
-    if (!trimmed) continue;
-
-    if (trimmed.startsWith('data:image/svg+xml')) {
-      const commaIdx = trimmed.indexOf(',');
-      if (commaIdx !== -1) {
-        const prefix = trimmed.slice(0, commaIdx + 1);
-        const payload = trimmed.slice(commaIdx + 1);
-        try {
-          const decoded = decodeURIComponent(payload);
-          const fixedXml = decoded.replace(
-            /&(?:amp?(?![a-zA-Z0-9#]+;)|(?!(?:amp|lt|gt|quot|apos|#\d+|#x[0-9a-fA-F]+);))/g,
-            '&amp;'
-          );
-          return `${prefix}${encodeURIComponent(fixedXml)}`;
-        } catch {
-          return buildCodexFallbackSvg(frame, idx);
-        }
-      }
-    }
-
-    if (
-      trimmed.startsWith('/') ||
-      trimmed.startsWith('http://') ||
-      trimmed.startsWith('https://') ||
-      trimmed.startsWith('data:image/')
-    ) {
-      return trimmed;
-    }
+    const clean = sanitizeImageCandidate(raw, frame, idx);
+    if (clean) return clean;
   }
 
-  return buildCodexFallbackSvg(frame, idx);
+  return buildFallbackSvg(frame, idx);
+}
+
+/**
+ * Resolves the frame's artifact image (`frame.image`, including any `data:image/...`
+ * schematic or `/media/teardown/...` image) so `data:image/...` artifacts always render
+ * inside an `<img>` tag, never as raw text.
+ */
+function resolveFrameArtifactImageSrc(
+  frame: TeardownFrame,
+  idx = 0,
+  videos: TeardownVideo[] = []
+): string {
+  const resolvedVideo = resolveFrameVideoUrl(frame, videos);
+  const candidates = [
+    frame.image,
+    frame.thumbnailUrl,
+    resolvedVideo ? getThumbnail(resolvedVideo) : undefined,
+    getThumbnail(frame.video),
+  ];
+
+  for (const raw of candidates) {
+    const clean = sanitizeImageCandidate(raw, frame, idx);
+    if (clean) return clean;
+  }
+
+  return buildFallbackSvg(frame, idx);
 }
 
 export function TeardownGallery({
@@ -346,12 +390,21 @@ export function TeardownGallery({
     : videos[0]?.url;
   const activeEmbedUrl = activeFrame
     ? buildEmbedVideoSrc(activeVideoUrl, activeFrame.t, autoplay)
+    : videos[0]?.url
+    ? buildEmbedVideoSrc(videos[0].url, 0, false)
     : null;
+  const activeIsDirectVideo = isDirectVideoFile(activeVideoUrl);
 
   const activeImgSrc = activeFrame
     ? failedImages[activeIndex]
-      ? buildCodexFallbackSvg(activeFrame, activeIndex)
+      ? buildFallbackSvg(activeFrame, activeIndex)
       : resolveFrameImageSrc(activeFrame, activeIndex, videos)
+    : '';
+
+  const activeArtifactImgSrc = activeFrame
+    ? failedImages[activeIndex]
+      ? buildFallbackSvg(activeFrame, activeIndex)
+      : resolveFrameArtifactImageSrc(activeFrame, activeIndex, videos)
     : '';
 
   const activeTsLabel = activeFrame ? formatTimestamp(activeFrame.t) : '0:00';
@@ -394,7 +447,7 @@ export function TeardownGallery({
           <p className="mt-1.5 text-xs leading-relaxed text-[#c7ae87]">
             Gemini 4 Argon inspects disassembly timestamps and maps visible
             internal mechanisms directly to{' '}
-            <span className="font-semibold text-emerald-300">
+            <span className="font-semibold text-[#e6d3b3]">
               3D-printed vessels
             </span>{' '}
             and{' '}
@@ -428,7 +481,18 @@ export function TeardownGallery({
 
       {/* Empty State */}
       {frames.length === 0 ? (
-        <div className="mt-4 rounded-xl border border-[#d4af37]/20 bg-[#120e0a]/80 p-4 text-xs text-[#c7ae87]">
+        <div className="mt-4 space-y-3 rounded-xl border border-[#d4af37]/20 bg-[#120e0a]/80 p-4 text-xs text-[#c7ae87]">
+          {activeEmbedUrl && (
+            <div className="relative aspect-video w-full max-w-2xl overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] shadow-inner">
+              <iframe
+                src={activeEmbedUrl}
+                title={videos[0]?.title || 'Reference Teardown Video'}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+                className="h-full w-full border-0"
+              />
+            </div>
+          )}
           <p className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
             Static Visual Input · No Disassembly Video Timestamps Required
           </p>
@@ -486,7 +550,7 @@ export function TeardownGallery({
             {frames.map((frame: TeardownFrame, idx: number) => {
               const isSelected = idx === activeIndex;
               const thumbSrc = failedImages[idx]
-                ? buildCodexFallbackSvg(frame, idx)
+                ? buildFallbackSvg(frame, idx)
                 : resolveFrameImageSrc(frame, idx, videos);
               const tsLabel = formatTimestamp(frame.t);
               const partSummary =
@@ -585,7 +649,26 @@ export function TeardownGallery({
                         <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906]/90 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] backdrop-blur-sm tabular-nums">
                           t = {activeFrame.t}s ({activeTsLabel})
                         </span>
-                        <span className="rounded-md border border-emerald-500/35 bg-emerald-950/85 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-300 backdrop-blur-sm tabular-nums">
+                        <span className="rounded-md border border-[#b89b4a]/45 bg-[#14100b]/90 px-2 py-0.5 font-mono text-[11px] font-medium text-[#e6d3b3] backdrop-blur-sm tabular-nums">
+                          {activeMeanConfidence}% conf
+                        </span>
+                      </div>
+                    </div>
+                  ) : activeIsDirectVideo && activeVideoUrl ? (
+                    <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] shadow-inner">
+                      <video
+                        key={`${activeVideoUrl}-${activeFrame.t}-${seekNonce}`}
+                        src={`${activeVideoUrl}#t=${activeFrame.t}`}
+                        controls
+                        autoPlay={autoplay}
+                        playsInline
+                        className="h-full w-full object-contain"
+                      />
+                      <div className="pointer-events-none absolute left-2.5 top-2.5 flex items-center gap-1.5">
+                        <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906]/90 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] backdrop-blur-sm tabular-nums">
+                          t = {activeFrame.t}s ({activeTsLabel})
+                        </span>
+                        <span className="rounded-md border border-[#b89b4a]/45 bg-[#14100b]/90 px-2 py-0.5 font-mono text-[11px] font-medium text-[#e6d3b3] backdrop-blur-sm tabular-nums">
                           {activeMeanConfidence}% conf
                         </span>
                       </div>
@@ -604,7 +687,7 @@ export function TeardownGallery({
                         />
                       )}
                       <img
-                        src={activeImgSrc}
+                        src={activeArtifactImgSrc || activeImgSrc}
                         alt={`Teardown frame at ${activeTsLabel}: ${activeFrame.parts
                           .map((p) => p.name)
                           .join(', ')}`}
@@ -633,7 +716,7 @@ export function TeardownGallery({
                         <span className="rounded-md border border-[#d4af37]/45 bg-[#0c0906]/90 px-2.5 py-0.5 font-mono text-xs font-semibold text-[#f3d478] backdrop-blur-sm tabular-nums">
                           t = {activeFrame.t}s ({activeTsLabel})
                         </span>
-                        <span className="rounded-md border border-emerald-500/35 bg-emerald-950/85 px-2 py-0.5 font-mono text-[11px] font-medium text-emerald-300 backdrop-blur-sm tabular-nums">
+                        <span className="rounded-md border border-[#b89b4a]/45 bg-[#14100b]/90 px-2 py-0.5 font-mono text-[11px] font-medium text-[#e6d3b3] backdrop-blur-sm tabular-nums">
                           {activeMeanConfidence}% conf
                         </span>
                       </div>
@@ -652,38 +735,39 @@ export function TeardownGallery({
                   )}
 
                   {/* Captured Disassembly Frame Image Preview alongside Embedded Video Player */}
-                  {activeEmbedUrl && activeImgSrc && (
-                    <button
-                      type="button"
-                      onClick={() => setLightboxOpen(true)}
-                      className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2 text-left transition-all hover:border-[#f3d478]/60 hover:bg-[#17120c]"
-                    >
-                      <div className="flex min-w-0 items-center gap-3">
-                        <img
-                          src={activeImgSrc}
-                          alt={`Captured frame plate at ${activeTsLabel}`}
-                          onError={() =>
-                            setFailedImages((prev) => ({
-                              ...prev,
-                              [activeIndex]: true,
-                            }))
-                          }
-                          className="h-12 w-20 shrink-0 rounded-lg border border-[#d4af37]/30 bg-[#0c0906] object-cover"
-                        />
-                        <div className="min-w-0">
-                          <p className="font-codex text-[10px] font-bold uppercase tracking-wider text-[#f3d478]">
-                            Disassembly Frame Plate · {activeTsLabel}
-                          </p>
-                          <p className="truncate text-[11px] text-[#e6d3b3]">
-                            {activeFrame.parts.map((p) => p.name).join(' + ')}
-                          </p>
+                  {(activeEmbedUrl || activeIsDirectVideo) &&
+                    (activeArtifactImgSrc || activeImgSrc) && (
+                      <button
+                        type="button"
+                        onClick={() => setLightboxOpen(true)}
+                        className="mt-3 flex w-full items-center justify-between gap-3 rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-2 text-left transition-all hover:border-[#f3d478]/60 hover:bg-[#17120c]"
+                      >
+                        <div className="flex min-w-0 items-center gap-3">
+                          <img
+                            src={activeArtifactImgSrc || activeImgSrc}
+                            alt={`Captured frame plate at ${activeTsLabel}`}
+                            onError={() =>
+                              setFailedImages((prev) => ({
+                                ...prev,
+                                [activeIndex]: true,
+                              }))
+                            }
+                            className="h-12 w-20 shrink-0 rounded-lg border border-[#d4af37]/30 bg-[#0c0906] object-cover"
+                          />
+                          <div className="min-w-0">
+                            <p className="font-codex text-[10px] font-bold uppercase tracking-wider text-[#f3d478]">
+                              Disassembly Frame Plate · {activeTsLabel}
+                            </p>
+                            <p className="truncate text-[11px] text-[#e6d3b3]">
+                              {activeFrame.parts.map((p) => p.name).join(' + ')}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <span className="shrink-0 rounded-md border border-[#d4af37]/35 bg-[#14100b] px-2 py-1 font-codex text-[10px] uppercase tracking-wider text-[#f3d478]">
-                        ⤢ Enlarge
-                      </span>
-                    </button>
-                  )}
+                        <span className="shrink-0 rounded-md border border-[#d4af37]/35 bg-[#14100b] px-2 py-1 font-codex text-[10px] uppercase tracking-wider text-[#f3d478]">
+                          ⤢ Enlarge
+                        </span>
+                      </button>
+                    )}
                 </div>
 
                 {/* Tasteful Caption & Metadata Row (Part Chips + Timestamp + Confidence + Watch Button) */}
@@ -726,13 +810,13 @@ export function TeardownGallery({
                           }
                           className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition-all ${
                             isPrint
-                              ? 'border-emerald-500/35 bg-emerald-950/35 text-emerald-300 hover:border-emerald-400/60 hover:bg-emerald-900/40'
+                              ? 'border-[#b89b4a]/45 bg-[#1d1710]/90 text-[#e6d3b3] hover:border-[#f3d478]/65 hover:bg-[#282016]'
                               : 'border-[#d4af37]/40 bg-[#d4af37]/12 text-[#f3d478] hover:border-[#f3d478]/70 hover:bg-[#d4af37]/25'
                           }`}
                         >
                           <span
                             className={`h-1.5 w-1.5 rounded-full ${
-                              isPrint ? 'bg-emerald-400' : 'bg-[#f3d478]'
+                              isPrint ? 'bg-[#b89b4a]' : 'bg-[#f3d478]'
                             }`}
                           />
                           <span className="max-w-[165px] truncate">
@@ -825,7 +909,7 @@ export function TeardownGallery({
                             <span
                               className={`shrink-0 rounded-full border px-2.5 py-0.5 font-codex text-[10px] font-bold uppercase tracking-wider ${
                                 isPrint
-                                  ? 'border-emerald-500/40 bg-emerald-950/40 text-emerald-300'
+                                  ? 'border-[#b89b4a]/45 bg-[#1d1710] text-[#e6d3b3]'
                                   : 'border-[#d4af37]/45 bg-[#d4af37]/15 text-[#f3d478]'
                               }`}
                             >
@@ -880,7 +964,7 @@ export function TeardownGallery({
                                     );
                                   }
                                 }}
-                                className="inline-flex items-center gap-1 rounded-lg border border-emerald-500/35 bg-emerald-950/35 px-2.5 py-1 font-mono text-[11px] text-emerald-300 transition-colors hover:border-emerald-400/60 hover:bg-emerald-900/45"
+                                className="inline-flex items-center gap-1 rounded-lg border border-[#b89b4a]/45 bg-[#1d1710] px-2.5 py-1 font-mono text-[11px] text-[#e6d3b3] transition-colors hover:border-[#f3d478]/65 hover:bg-[#282016]"
                                 title="Inspect matching 3D part in Exploded View"
                               >
                                 <span>
@@ -998,7 +1082,7 @@ export function TeardownGallery({
 
             <div className="relative aspect-video w-full overflow-hidden rounded-xl border border-[#d4af37]/35 bg-[#0c0906]">
               <img
-                src={activeImgSrc}
+                src={activeArtifactImgSrc || activeImgSrc}
                 alt={`Enlarged teardown frame at ${activeTsLabel}`}
                 className="h-full w-full object-contain"
               />
