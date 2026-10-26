@@ -15,6 +15,7 @@ import {
   AlertCircle,
   ArrowLeft,
   Box,
+  Check,
   CheckCircle2,
   ChevronRight,
   Clock,
@@ -29,6 +30,7 @@ import {
   Printer,
   RotateCcw,
   Search,
+  Share2,
   ShoppingCart,
   Sparkles,
   Terminal,
@@ -216,6 +218,10 @@ export default function ProjectPage() {
   const [selectedStageId, setSelectedStageId] =
     useState<AgentStageId>('analyst');
   const [selectedPartId, setSelectedPartId] = useState<string | null>(null);
+  const [selectedBomItemId, setSelectedBomItemId] = useState<string | null>(
+    null
+  );
+  const [copiedLink, setCopiedLink] = useState(false);
   const [activeStepIdx, setActiveStepIdx] = useState(0);
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedService, setSelectedService] = useState('craftcloud');
@@ -227,6 +233,84 @@ export default function ProjectPage() {
   const orderModalRef = useRef<HTMLDivElement | null>(null);
   const orderModalCloseBtnRef = useRef<HTMLButtonElement | null>(null);
   const orderModalTriggerRef = useRef<HTMLElement | null>(null);
+
+  const selectTab = (
+    nextTab: TabId,
+    opts?: { partId?: string | null; bomId?: string | null }
+  ) => {
+    setActiveTab(nextTab);
+    if (opts?.partId !== undefined) {
+      setSelectedPartId(opts.partId);
+    }
+    if (opts?.bomId !== undefined) {
+      setSelectedBomItemId(opts.bomId);
+    }
+    if (typeof window !== 'undefined') {
+      try {
+        const url = new URL(window.location.href);
+        if (nextTab === 'overview') {
+          url.searchParams.delete('tab');
+        } else {
+          url.searchParams.set('tab', nextTab);
+        }
+        if (opts?.partId) {
+          url.searchParams.set('part', opts.partId);
+        } else if (nextTab !== 'exploded') {
+          url.searchParams.delete('part');
+        }
+        if (opts?.bomId) {
+          url.searchParams.set('bom', opts.bomId);
+        } else if (nextTab !== 'bom') {
+          url.searchParams.delete('bom');
+        }
+        window.history.replaceState({}, '', url.toString());
+      } catch {
+        // ignore URL errors
+      }
+    }
+  };
+
+  const handleCopyShareLink = async () => {
+    if (typeof window === 'undefined') return;
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      setCopiedLink(true);
+      window.setTimeout(() => setCopiedLink(false), 2000);
+    } catch {
+      // ignore clipboard errors
+    }
+  };
+
+  // Hydrate tab & part deep-links (?tab=bom|print|exploded|... & ?part=... & ?bom=...)
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const syncFromLocation = () => {
+      const sp = new URLSearchParams(window.location.search);
+      const tabParam = sp.get('tab')?.toLowerCase() as TabId | null;
+      const validTabs: TabId[] = [
+        'overview',
+        'sources',
+        'bom',
+        'print',
+        'instructions',
+        'exploded',
+      ];
+      if (tabParam && validTabs.includes(tabParam)) {
+        setActiveTab(tabParam);
+      }
+      const partParam = sp.get('part')?.trim();
+      if (partParam) {
+        setSelectedPartId(partParam);
+      }
+      const bomParam = sp.get('bom')?.trim();
+      if (bomParam) {
+        setSelectedBomItemId(bomParam);
+      }
+    };
+    syncFromLocation();
+    window.addEventListener('popstate', syncFromLocation);
+    return () => window.removeEventListener('popstate', syncFromLocation);
+  }, []);
 
   const openOrderModal = (triggerEl?: HTMLElement | null) => {
     if (typeof document !== 'undefined') {
@@ -982,6 +1066,25 @@ export default function ProjectPage() {
                 >
                   <ArrowLeft className="h-3.5 w-3.5" /> All Builds
                 </Link>
+                <button
+                  type="button"
+                  onClick={handleCopyShareLink}
+                  title="Copy shareable link to this build & tab"
+                  data-testid="share-project-link-btn"
+                  className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/20 bg-[#0c0a08] px-2.5 py-1.5 font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors shrink-0"
+                >
+                  {copiedLink ? (
+                    <>
+                      <Check className="h-3.5 w-3.5 text-[#e5bd47]" />
+                      <span className="text-[#f3d478]">Copied</span>
+                    </>
+                  ) : (
+                    <>
+                      <Share2 className="h-3.5 w-3.5 text-[#e5bd47]" />
+                      <span className="hidden xs:inline sm:inline">Share</span>
+                    </>
+                  )}
+                </button>
                 {analysis?.category ? (
                   <>
                     <span className="hidden sm:inline">/</span>
@@ -1128,7 +1231,7 @@ export default function ProjectPage() {
                 : (curIdx - 1 + TABS.length) % TABS.length;
             const nextTab = TABS[nextIdx];
             if (nextTab) {
-              setActiveTab(nextTab.id);
+              selectTab(nextTab.id);
               const btn = e.currentTarget.querySelector<HTMLElement>(
                 `[data-tab-id="${nextTab.id}"]`
               );
@@ -1153,7 +1256,7 @@ export default function ProjectPage() {
                 data-tab-id={t.id}
                 type="button"
                 onClick={(e) => {
-                  setActiveTab(t.id);
+                  selectTab(t.id);
                   e.currentTarget.scrollIntoView({
                     behavior: 'smooth',
                     inline: 'center',
@@ -1693,9 +1796,9 @@ export default function ProjectPage() {
               </div>
             </div>
 
-            {/* Printed vs Bought Split */}
+            {/* Printed vs Bought Split — Interactive Portals to 3D Exploded View, STLs & Sourced BOM */}
             <div className="grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl surface-card p-5 space-y-3">
+              <div className="rounded-2xl surface-card p-5 space-y-3 min-w-0">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                     <Printer className="h-4 w-4 text-[#e5bd47]" />
@@ -1703,7 +1806,7 @@ export default function ProjectPage() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setActiveTab('print')}
+                    onClick={() => selectTab('print')}
                     className="inline-flex items-center gap-1 text-xs font-semibold text-[#f3d478] hover:underline"
                   >
                     <span>STLs &amp; Plates</span>
@@ -1711,16 +1814,81 @@ export default function ProjectPage() {
                   </button>
                 </div>
                 <ul className="space-y-2 text-sm text-[#dfd3be]">
-                  {analysis.whatGetsPrinted.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#e5bd47] shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+                  {analysis.whatGetsPrinted.map((item, i) => {
+                    const codeMatch = item.match(/^([A-Z]+-\d+)\s*:\s*(.*)$/i);
+                    const code = codeMatch
+                      ? codeMatch[1].toUpperCase()
+                      : `PRT-${String(i + 1).padStart(2, '0')}`;
+                    const labelText = codeMatch ? codeMatch[2] : item;
+                    const printedDesignParts =
+                      design?.parts.filter((p) => p.kind === 'printed') || [];
+                    const matchedDesignPart =
+                      printedDesignParts.find(
+                        (p) =>
+                          p.partNumber?.toUpperCase() === code ||
+                          p.id.toUpperCase() === code
+                      ) || printedDesignParts[i];
+                    const matchedPlatePart =
+                      plates?.parts.find(
+                        (pp) => pp.partId === matchedDesignPart?.id
+                      ) || plates?.parts[i];
+
+                    return (
+                      <li key={i} className="min-w-0">
+                        <div className="group flex items-center justify-between gap-2 rounded-xl border border-[#dfd3be]/15 bg-[#0c0a08]/90 px-3 py-2 hover:border-[#f3d478]/60 hover:bg-[#17130e] transition-all">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              matchedDesignPart
+                                ? selectTab('exploded', {
+                                    partId: matchedDesignPart.id,
+                                  })
+                                : selectTab('print')
+                            }
+                            title={
+                              matchedDesignPart
+                                ? `Inspect ${matchedDesignPart.name} in Interactive 3D Exploded View`
+                                : 'Open in Print Files'
+                            }
+                            className="flex flex-1 items-start gap-2 text-left min-w-0"
+                          >
+                            <span className="mt-0.5 shrink-0 rounded border border-[#e5bd47]/35 bg-[#e5bd47]/15 px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#f3d478]">
+                              {code}
+                            </span>
+                            <span className="text-xs sm:text-sm text-[#dfd3be] group-hover:text-[#faf4e8] leading-snug break-words min-w-0">
+                              {labelText}
+                            </span>
+                          </button>
+
+                          <div className="flex items-center gap-1 shrink-0">
+                            {matchedPlatePart && (
+                              <span className="hidden xl:inline-block font-mono text-[10px] text-[#b5a48b] tabular-nums">
+                                {matchedPlatePart.weightGrams}g
+                              </span>
+                            )}
+                            <button
+                              type="button"
+                              onClick={() =>
+                                matchedDesignPart
+                                  ? selectTab('exploded', {
+                                      partId: matchedDesignPart.id,
+                                    })
+                                  : selectTab('print')
+                              }
+                              className="inline-flex min-h-[28px] items-center gap-1 rounded-md border border-[#d4af37]/30 bg-[#14100b] px-2 py-0.5 font-mono text-[10px] font-semibold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#231d15] transition-colors"
+                            >
+                              <span>3D</span>
+                              <ChevronRight className="h-3 w-3" />
+                            </button>
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
 
-              <div className="rounded-2xl surface-card p-5 space-y-3">
+              <div className="rounded-2xl surface-card p-5 space-y-3 min-w-0">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                     <ShoppingCart className="h-4 w-4 text-[#e5bd47]" />
@@ -1728,7 +1896,7 @@ export default function ProjectPage() {
                   </div>
                   <button
                     type="button"
-                    onClick={() => setActiveTab('bom')}
+                    onClick={() => selectTab('bom')}
                     className="inline-flex items-center gap-1 text-xs font-semibold text-[#f3d478] hover:underline"
                   >
                     <span>Retail BOM</span>
@@ -1736,12 +1904,94 @@ export default function ProjectPage() {
                   </button>
                 </div>
                 <ul className="space-y-2 text-sm text-[#dfd3be]">
-                  {analysis.whatGetsBought.map((item, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="mt-1.5 h-1.5 w-1.5 rounded-full bg-[#e5bd47] shrink-0" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
+                  {analysis.whatGetsBought.map((item, i) => {
+                    const codeMatch = item.match(/^([A-Z]+-\d+)\s*:\s*(.*)$/i);
+                    const code = codeMatch
+                      ? codeMatch[1].toUpperCase()
+                      : `OTS-${String(i + 1).padStart(2, '0')}`;
+                    const labelText = codeMatch ? codeMatch[2] : item;
+                    const otsBomItems =
+                      bom?.items.filter(
+                        (b) =>
+                          !(b.category || '')
+                            .toLowerCase()
+                            .includes('filament')
+                      ) || [];
+                    const matchedBomItem =
+                      otsBomItems.find(
+                        (b) => b.partNumber?.toUpperCase() === code
+                      ) || otsBomItems[i];
+                    const purchasedDesignParts =
+                      design?.parts.filter((p) => p.kind === 'purchased') || [];
+                    const matchedDesignPart =
+                      purchasedDesignParts.find(
+                        (p) =>
+                          p.partNumber?.toUpperCase() === code ||
+                          p.bomRef === matchedBomItem?.id ||
+                          matchedBomItem?.linkedPartIds.includes(p.id)
+                      ) || purchasedDesignParts[i];
+
+                    return (
+                      <li key={i} className="min-w-0">
+                        <div className="group flex items-center justify-between gap-2 rounded-xl border border-[#dfd3be]/15 bg-[#0c0a08]/90 px-3 py-2 hover:border-[#f3d478]/60 hover:bg-[#17130e] transition-all">
+                          <button
+                            type="button"
+                            onClick={() =>
+                              selectTab('bom', {
+                                bomId: matchedBomItem?.id || code,
+                              })
+                            }
+                            title={
+                              matchedBomItem
+                                ? `Jump to ${matchedBomItem.name} in Sourced Retail BOM`
+                                : 'Open in Retail BOM'
+                            }
+                            className="flex flex-1 items-start gap-2 text-left min-w-0"
+                          >
+                            <span className="mt-0.5 shrink-0 rounded border border-[#d4af37]/30 bg-[#1d1710] px-1.5 py-0.5 font-mono text-[10px] font-bold text-[#f3d478]">
+                              {code}
+                            </span>
+                            <span className="text-xs sm:text-sm text-[#dfd3be] group-hover:text-[#faf4e8] leading-snug break-words min-w-0">
+                              {labelText}
+                            </span>
+                          </button>
+
+                          <div className="flex items-center gap-1 shrink-0">
+                            {matchedBomItem && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  selectTab('bom', {
+                                    bomId: matchedBomItem.id,
+                                  })
+                                }
+                                className="inline-flex min-h-[28px] items-center gap-0.5 rounded-md border border-[#e5bd47]/35 bg-[#e5bd47]/15 px-2 py-0.5 font-mono text-[10px] font-bold text-[#f3d478] tabular-nums hover:bg-[#e5bd47]/25 transition-colors"
+                              >
+                                <span>
+                                  ${matchedBomItem.totalPrice.toFixed(2)}
+                                </span>
+                                <ChevronRight className="h-3 w-3" />
+                              </button>
+                            )}
+                            {matchedDesignPart && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  selectTab('exploded', {
+                                    partId: matchedDesignPart.id,
+                                  })
+                                }
+                                title={`Inspect ${matchedDesignPart.name} in 3D Exploded View`}
+                                className="inline-flex min-h-[28px] items-center rounded-md border border-[#dfd3be]/20 bg-[#14100b] px-1.5 py-0.5 font-mono text-[10px] font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
+                              >
+                                3D
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </li>
+                    );
+                  })}
                 </ul>
               </div>
             </div>
@@ -1788,7 +2038,7 @@ export default function ProjectPage() {
               <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
                 <button
                   type="button"
-                  onClick={() => setActiveTab('print')}
+                  onClick={() => selectTab('print')}
                   className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
                 >
                   <span className="inline-flex items-center gap-2">
@@ -1803,7 +2053,7 @@ export default function ProjectPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setActiveTab('bom')}
+                  onClick={() => selectTab('bom')}
                   className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
                 >
                   <span className="inline-flex items-center gap-2">
@@ -1816,7 +2066,7 @@ export default function ProjectPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setActiveTab('instructions')}
+                  onClick={() => selectTab('instructions')}
                   className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
                 >
                   <span className="inline-flex items-center gap-2">
@@ -1831,7 +2081,7 @@ export default function ProjectPage() {
                 </button>
                 <button
                   type="button"
-                  onClick={() => setActiveTab('exploded')}
+                  onClick={() => selectTab('exploded')}
                   className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
                 >
                   <span className="inline-flex items-center gap-2">
@@ -1871,11 +2121,12 @@ export default function ProjectPage() {
               designParts={design?.parts}
               analysis={analysis}
               projectId={manifest.id}
-              onSelectBomRef={() => setActiveTab('bom')}
-              onSelectDesignPart={(partId: string) => {
-                setSelectedPartId(partId);
-                setActiveTab('exploded');
-              }}
+              onSelectBomRef={(bomRefOrQuery?: string) =>
+                selectTab('bom', { bomId: bomRefOrQuery || null })
+              }
+              onSelectDesignPart={(partId: string) =>
+                selectTab('exploded', { partId })
+              }
             />
           ) : (
             <>
@@ -1936,10 +2187,11 @@ export default function ProjectPage() {
               bom={bom}
               analysis={analysis}
               design={design}
-              onSelectPartId={(partId: string) => {
-                setSelectedPartId(partId);
-                setActiveTab('exploded');
-              }}
+              projectId={manifest.id}
+              selectedBomId={selectedBomItemId}
+              onSelectPartId={(partId: string) =>
+                selectTab('exploded', { partId })
+              }
             />
           ) : (
             <>
@@ -2453,7 +2705,7 @@ export default function ProjectPage() {
             onClick={() => {
               const nextTab: TabId =
                 activeTab === 'exploded' ? 'instructions' : 'exploded';
-              setActiveTab(nextTab);
+              selectTab(nextTab);
               const tabBtn = document.querySelector<HTMLElement>(
                 `[data-tab-id="${nextTab}"]`
               );
@@ -2473,7 +2725,7 @@ export default function ProjectPage() {
             type="button"
             onClick={() => {
               const nextTab: TabId = activeTab === 'print' ? 'bom' : 'print';
-              setActiveTab(nextTab);
+              selectTab(nextTab);
               const tabBtn = document.querySelector<HTMLElement>(
                 `[data-tab-id="${nextTab}"]`
               );

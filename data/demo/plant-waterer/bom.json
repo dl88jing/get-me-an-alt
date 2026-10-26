@@ -20,15 +20,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "pc",
-      "unitPrice": 4.5,
-      "totalPrice": 4.5,
+      "unitPrice": 3.95,
+      "totalPrice": 3.95,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=5V+mini+submersible+water+pump+USB",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=5V+mini+submersible+water+pump+USB",
-          "estPrice": 4.5,
+          "estPrice": 3.95,
           "inStock": true
         },
         {
@@ -58,15 +58,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "roll (2m)",
-      "unitPrice": 3.99,
-      "totalPrice": 3.99,
+      "unitPrice": 2.95,
+      "totalPrice": 2.95,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=4mm+ID+6mm+OD+silicone+tubing",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=4mm+ID+6mm+OD+silicone+tubing",
-          "estPrice": 3.99,
+          "estPrice": 2.95,
           "inStock": true
         },
         {
@@ -96,15 +96,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "pc",
-      "unitPrice": 3.25,
-      "totalPrice": 3.25,
+      "unitPrice": 2.5,
+      "totalPrice": 2.5,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=capacitive+soil+moisture+sensor+v1.2",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=capacitive+soil+moisture+sensor+v1.2",
-          "estPrice": 3.25,
+          "estPrice": 2.5,
           "inStock": true
         },
         {
@@ -134,15 +134,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "pc",
-      "unitPrice": 5.99,
-      "totalPrice": 5.99,
+      "unitPrice": 4.5,
+      "totalPrice": 4.5,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=ESP32+USB-C+development+board",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=ESP32+USB-C+development+board",
-          "estPrice": 5.99,
+          "estPrice": 4.5,
           "inStock": true
         },
         {
@@ -172,15 +172,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "pc",
-      "unitPrice": 2.49,
-      "totalPrice": 2.49,
+      "unitPrice": 1.95,
+      "totalPrice": 1.95,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=5V+MOSFET+switch+driver+module+arduino",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=5V+MOSFET+switch+driver+module+arduino",
-          "estPrice": 2.49,
+          "estPrice": 1.95,
           "inStock": true
         },
         {
@@ -210,15 +210,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "set",
-      "unitPrice": 5.99,
-      "totalPrice": 5.99,
+      "unitPrice": 3.45,
+      "totalPrice": 3.45,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=5V+2A+USB-C+power+adapter+with+cable",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=5V+2A+USB-C+power+adapter+with+cable",
-          "estPrice": 5.99,
+          "estPrice": 3.45,
           "inStock": true
         },
         {
@@ -248,15 +248,15 @@
       "qty": 1,
       "quantity": 1,
       "unit": "pack",
-      "unitPrice": 2.79,
-      "totalPrice": 2.79,
+      "unitPrice": 2.0,
+      "totalPrice": 2.0,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=dupont+jumper+wires+female+to+female+M3+screws",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=dupont+jumper+wires+female+to+female+M3+screws",
-          "estPrice": 2.79,
+          "estPrice": 2.0,
           "inStock": true
         },
         {
@@ -282,25 +282,25 @@
       "name": "3D Print Filament — PETG & PLA (~245g Total Printed Weight)",
       "category": "printed-filament",
       "specification": "1.75mm PETG (Reservoir, Cradle, Clips) + PLA (Lid, Funnel, Enclosure, Bracket, Stakes, Wheel)",
-      "specs": "1.75mm PETG + PLA filament (~245g from $18/kg spool)",
+      "specs": "1.75mm PETG + PLA filament (~245g from $14.50/kg spool)",
       "qty": 245,
       "quantity": 245,
       "unit": "g",
-      "unitPrice": 0.018,
-      "totalPrice": 4.4,
+      "unitPrice": 0.0145,
+      "totalPrice": 3.55,
       "primaryRetailer": "Amazon",
       "primaryUrl": "https://www.amazon.com/s?k=PETG+1.75mm+filament+1kg+spool",
       "retailerLinks": [
         {
           "retailer": "Amazon",
           "url": "https://www.amazon.com/s?k=PETG+1.75mm+filament+1kg+spool",
-          "estPrice": 4.4,
+          "estPrice": 3.55,
           "inStock": true
         },
         {
           "retailer": "Walmart",
           "url": "https://www.walmart.com/search?q=PETG+3D+printer+filament+1.75mm",
-          "estPrice": 4.65,
+          "estPrice": 4.25,
           "inStock": true
         }
       ],
