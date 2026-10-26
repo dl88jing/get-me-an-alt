@@ -4,7 +4,7 @@
   "overallBoundingBoxMm": [
     215,
     175,
-    495
+    515
   ],
   "printedPartsCount": 9,
   "purchasedPartsCount": 6,
@@ -22,14 +22,14 @@
       "dims_mm": [
         168,
         168,
-        32
+        28
       ],
-      "shape": "custom_csg",
+      "shape": "cylinder",
       "params": {
-        "preset": "reservoir",
+        "rolePreset": "purifier_base_pan",
         "width": 168,
         "depth": 168,
-        "height": 32,
+        "height": 28,
         "wallThickness": 3.6,
         "floorThickness": 4.5,
         "cornerRadius": 28,
@@ -48,7 +48,7 @@
       "explode": [
         0,
         0,
-        -95
+        -75
       ],
       "color": "#d4af37",
       "bomRef": "bom-filament-fan",
@@ -67,20 +67,21 @@
       "name": "Cylindrical True HEPA H13 + Activated Carbon Filter Cartridge",
       "kind": "purchased",
       "dims_mm": [
-        152,
-        152,
-        115
+        144,
+        144,
+        108
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 76,
-        "innerRadius": 52,
-        "height": 115
+        "rolePreset": "hepa_pleated_filter",
+        "outerRadius": 72,
+        "innerRadius": 48,
+        "height": 108
       },
       "position": [
         0,
         0,
-        28
+        68
       ],
       "rotation": [
         0,
@@ -88,9 +89,9 @@
         0
       ],
       "explode": [
-        -110,
+        -92,
         0,
-        -20
+        -25
       ],
       "color": "#f5ebd6",
       "bomRef": "bom-hepa-filter",
@@ -111,22 +112,21 @@
       "dims_mm": [
         164,
         164,
-        125
+        116
       ],
       "shape": "tube",
       "params": {
+        "rolePreset": "perforated_intake_drum",
         "outerRadius": 82,
-        "innerRadius": 78,
-        "height": 125,
-        "flangeRadius": 82,
-        "flangeHeight": 6,
+        "innerRadius": 76,
+        "height": 116,
         "wallThickness": 3.6,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        24
+        68
       ],
       "rotation": [
         0,
@@ -142,7 +142,7 @@
       "bomRef": "bom-filament-fan",
       "material": "PETG",
       "quantity": 1,
-      "description": "Structural cylindrical cage with voronoi/slotted air intake grille surrounding the HEPA filter.",
+      "description": "Structural cylindrical cage with slotted 360° air intake grille surrounding the HEPA filter.",
       "roleInAssembly": "Protects HEPA cartridge and carries upper tower loads.",
       "infillPercent": 30,
       "layerHeightMm": 0.2,
@@ -159,26 +159,19 @@
         160,
         16
       ],
-      "shape": "plate_with_holes",
+      "shape": "tube",
       "params": {
-        "width": 160,
-        "depth": 160,
+        "rolePreset": "annular_retainer_ring",
+        "outerRadius": 80,
+        "innerRadius": 48,
+        "height": 16,
         "thickness": 16,
-        "cornerRadius": 24,
-        "wallThickness": 3.2,
-        "holes": [
-          {
-            "x": 0,
-            "y": 0,
-            "radius": 48
-          }
-        ],
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        148
+        134
       ],
       "rotation": [
         0,
@@ -188,7 +181,7 @@
       "explode": [
         0,
         0,
-        45
+        12
       ],
       "color": "#b89b4a",
       "bomRef": "bom-filament-fan",
@@ -207,20 +200,20 @@
       "name": "EPDM Acoustic Foam Seal Strip & M3 Brass Insert Kit",
       "kind": "purchased",
       "dims_mm": [
-        40,
-        40,
-        10
+        148,
+        148,
+        6
       ],
-      "shape": "cylinder",
+      "shape": "tube",
       "params": {
-        "radius": 20,
-        "height": 10,
-        "segments": 32
+        "outerRadius": 74,
+        "innerRadius": 62,
+        "height": 6
       },
       "position": [
-        65,
         0,
-        156
+        0,
+        145
       ],
       "rotation": [
         0,
@@ -228,9 +221,9 @@
         0
       ],
       "explode": [
-        135,
+        88,
         0,
-        55
+        24
       ],
       "color": "#fbbf24",
       "bomRef": "bom-gasket-inserts",
@@ -249,24 +242,22 @@
       "name": "Centrifugal Blower Acoustic Volute & Motor Mount",
       "kind": "printed",
       "dims_mm": [
-        142,
-        142,
-        74
+        148,
+        148,
+        64
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 71,
-        "innerRadius": 64,
-        "height": 74,
-        "flangeRadius": 71,
-        "flangeHeight": 5,
+        "outerRadius": 74,
+        "innerRadius": 63,
+        "height": 64,
         "wallThickness": 3.5,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        164
+        178
       ],
       "rotation": [
         0,
@@ -276,7 +267,7 @@
       "explode": [
         0,
         0,
-        95
+        52
       ],
       "color": "#c87d4b",
       "bomRef": "bom-filament-fan",
@@ -295,20 +286,21 @@
       "name": "120×32mm 24V Brushless High-Static Centrifugal Blower",
       "kind": "purchased",
       "dims_mm": [
-        120,
-        120,
+        118,
+        118,
         32
       ],
-      "shape": "cylinder",
+      "shape": "gear_simple",
       "params": {
-        "radius": 60,
-        "height": 32,
-        "segments": 36
+        "outerRadius": 59,
+        "teeth": 18,
+        "boreRadius": 15,
+        "thickness": 32
       },
       "position": [
         0,
         0,
-        182
+        178
       ],
       "rotation": [
         0,
@@ -316,9 +308,9 @@
         0
       ],
       "explode": [
-        -125,
+        -96,
         0,
-        115
+        56
       ],
       "color": "#5c4930",
       "bomRef": "bom-blower-24v",
@@ -337,24 +329,25 @@
       "name": "Swirl-Recovery Acoustic Diffuser Transition Cone",
       "kind": "printed",
       "dims_mm": [
-        146,
-        146,
-        52
+        144,
+        144,
+        44
       ],
       "shape": "funnel",
       "params": {
-        "topRadius": 52,
-        "spoutRadius": 34,
-        "coneHeight": 36,
-        "spoutHeight": 16,
+        "topRadius": 72,
+        "bottomRadius": 44,
+        "coneHeight": 30,
+        "spoutHeight": 14,
+        "height": 44,
         "wallThickness": 3,
-        "flangeWidth": 5,
+        "eulerDeg": [180, 0, 0],
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        238
+        232
       ],
       "rotation": [
         0,
@@ -364,7 +357,7 @@
       "explode": [
         0,
         0,
-        155
+        92
       ],
       "color": "#9c7a4c",
       "bomRef": "bom-filament-fan",
@@ -384,24 +377,22 @@
       "kind": "printed",
       "dims_mm": [
         108,
-        76,
-        46
+        56,
+        42
       ],
-      "shape": "custom_csg",
+      "shape": "box",
       "params": {
-        "preset": "enclosure",
+        "rolePreset": "coanda_plenum_neck",
         "width": 108,
-        "depth": 76,
-        "height": 46,
+        "depth": 56,
+        "height": 42,
         "wallThickness": 3.4,
-        "floorThickness": 3.4,
-        "cornerRadius": 14,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        286
+        272
       ],
       "rotation": [
         0,
@@ -411,7 +402,7 @@
       "explode": [
         0,
         0,
-        205
+        132
       ],
       "color": "#b87333",
       "bomRef": "bom-filament-fan",
@@ -430,22 +421,23 @@
       "name": "Coanda Airfoil Loop — Lower Plenum Split Ring",
       "kind": "printed",
       "dims_mm": [
-        190,
-        190,
-        115
+        184,
+        46,
+        118
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 95,
-        "innerRadius": 72,
-        "height": 115,
+        "rolePreset": "coanda_airfoil_lower",
+        "width": 184,
+        "depth": 46,
+        "height": 118,
         "wallThickness": 3,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        328
+        344
       ],
       "rotation": [
         0,
@@ -454,8 +446,8 @@
       ],
       "explode": [
         0,
-        -25,
-        265
+        0,
+        178
       ],
       "color": "#d4af37",
       "bomRef": "bom-filament-fan",
@@ -474,22 +466,23 @@
       "name": "Coanda Airfoil Loop — Upper Jet-Slot Crown",
       "kind": "printed",
       "dims_mm": [
-        190,
-        190,
-        115
+        184,
+        46,
+        118
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 95,
-        "innerRadius": 72,
-        "height": 115,
+        "rolePreset": "coanda_airfoil_upper",
+        "width": 184,
+        "depth": 46,
+        "height": 118,
         "wallThickness": 3,
         "dfmVerified": true
       },
       "position": [
         0,
         0,
-        412
+        456
       ],
       "rotation": [
         0,
@@ -498,8 +491,8 @@
       ],
       "explode": [
         0,
-        25,
-        345
+        0,
+        238
       ],
       "color": "#c84b31",
       "bomRef": "bom-filament-fan",
@@ -518,24 +511,24 @@
       "name": "Front PWM Dial Bezel & Harness Retention Clips (×2)",
       "kind": "printed",
       "dims_mm": [
-        68,
-        44,
-        24
+        56,
+        12,
+        36
       ],
-      "shape": "bracketL",
+      "shape": "plate_with_holes",
       "params": {
-        "legA": 68,
-        "legB": 44,
-        "width": 24,
-        "thickness": 3.5,
-        "filletRadius": 4,
-        "wallThickness": 3,
+        "width": 56,
+        "depth": 36,
+        "thickness": 10,
+        "centerHoleRadius": 8,
+        "holes": 2,
+        "eulerDeg": [90, 0, 0],
         "dfmVerified": true
       },
       "position": [
         0,
-        -82,
-        265
+        42,
+        268
       ],
       "rotation": [
         0,
@@ -544,8 +537,8 @@
       ],
       "explode": [
         0,
-        -145,
-        200
+        78,
+        128
       ],
       "color": "#b45309",
       "bomRef": "bom-filament-fan",
@@ -564,20 +557,20 @@
       "name": "25kHz 4-Wire PWM Fan Speed Controller with Rotary Encoder",
       "kind": "purchased",
       "dims_mm": [
-        52,
-        36,
-        18
+        44,
+        28,
+        14
       ],
       "shape": "box",
       "params": {
-        "width": 52,
-        "depth": 36,
-        "height": 18
+        "width": 44,
+        "depth": 28,
+        "height": 14
       },
       "position": [
-        -28,
-        -76,
-        265
+        -26,
+        36,
+        268
       ],
       "rotation": [
         0,
@@ -585,9 +578,9 @@
         0
       ],
       "explode": [
-        -95,
-        -140,
-        195
+        -68,
+        68,
+        128
       ],
       "color": "#b89b4a",
       "bomRef": "bom-pwm-controller",
@@ -606,20 +599,20 @@
       "name": "Laser PM2.5 Air Quality Sensor + ESP32-C3 Auto-Mode Module",
       "kind": "purchased",
       "dims_mm": [
-        50,
-        38,
-        21
+        42,
+        28,
+        16
       ],
       "shape": "box",
       "params": {
-        "width": 50,
-        "depth": 38,
-        "height": 21
+        "width": 42,
+        "depth": 28,
+        "height": 16
       },
       "position": [
-        28,
-        -76,
-        265
+        26,
+        36,
+        268
       ],
       "rotation": [
         0,
@@ -627,9 +620,9 @@
         0
       ],
       "explode": [
-        95,
-        -140,
-        195
+        68,
+        68,
+        128
       ],
       "color": "#8c6218",
       "bomRef": "bom-pm25-sensor",
@@ -648,20 +641,20 @@
       "name": "24V 3A (72W) UL-Listed Low-Noise DC Power Supply Brick",
       "kind": "purchased",
       "dims_mm": [
-        95,
-        48,
-        30
+        88,
+        44,
+        28
       ],
       "shape": "box",
       "params": {
-        "width": 95,
-        "depth": 48,
-        "height": 30
+        "width": 88,
+        "depth": 44,
+        "height": 28
       },
       "position": [
-        125,
+        118,
         0,
-        15
+        0
       ],
       "rotation": [
         0,
@@ -669,9 +662,9 @@
         0
       ],
       "explode": [
-        185,
+        85,
         0,
-        -45
+        -65
       ],
       "color": "#7a5c38",
       "bomRef": "bom-psu-24v",
