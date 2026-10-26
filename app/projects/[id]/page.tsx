@@ -2339,7 +2339,9 @@ export default function ProjectPage() {
             <PeerExplodedComp
               design={design}
               bom={bom}
+              instructions={instructions}
               projectId={manifest.id}
+              initialSelectedPartId={selectedPartId}
             />
           ) : (
             <>
