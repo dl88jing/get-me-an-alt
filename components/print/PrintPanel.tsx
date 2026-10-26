@@ -661,12 +661,12 @@ export function PrintPanel({
               <Sparkles className="h-3.5 w-3.5 text-[#f3d478]" />
               Parametric Watertight CAD · Multi-Heuristic MaxRects &amp; Skyline Plate Packer
             </div>
-            <h2 className="font-display text-2xl font-bold text-[#f5ebd6] sm:text-3xl">
+            <h2 className="font-display text-2xl font-bold text-[#faf4e8] sm:text-3xl">
               3D Print Build Plates &amp; Slicer-Ready CAD Package
             </h2>
-            <p className="text-xs sm:text-sm text-[#e6d3b3] max-w-2xl">
+            <p className="text-xs sm:text-sm text-[#dfd3be] max-w-2xl line-clamp-2">
               Select your 3D printer below to re-pack all{' '}
-              <strong className="text-[#f5ebd6]">
+              <strong className="text-[#faf4e8]">
                 {platesJson.totalPrintedItems} printed items ({platesJson.totalUniqueParts} unique STLs)
               </strong>{' '}
               client-side onto the minimum number of build plates and recalculate print time &amp; PLA filament mass.
@@ -678,7 +678,7 @@ export function PrintPanel({
             <div className="space-y-1.5">
               <label
                 htmlFor="printer-select"
-                className="block font-codex text-[11px] font-bold uppercase tracking-wider text-[#bda782]"
+                className="block font-codex text-[11px] font-bold uppercase tracking-wider text-[#dfd3be]"
               >
                 Target 3D Printer ({PRINTERS.length} Models)
               </label>
@@ -688,7 +688,7 @@ export function PrintPanel({
                   data-testid="printer-select"
                   value={selectedPrinterId}
                   onChange={(e) => handlePrinterChange(e.target.value)}
-                  className="w-full sm:w-80 rounded-xl border border-[#d4af37]/35 bg-[#0c0906] px-3.5 py-2.5 font-mono text-xs font-bold text-[#f5ebd6] shadow-inner focus:border-[#f3d478] focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
+                  className="w-full sm:w-80 min-h-[44px] rounded-xl border border-[#d4af37]/35 bg-[#0c0906] px-3.5 py-2.5 font-mono text-xs font-bold text-[#faf4e8] shadow-inner focus:border-[#f3d478] focus:outline-none focus:ring-1 focus:ring-[#d4af37]"
                 >
                   {printersByBrand.map((group) => (
                     <optgroup key={group.brand} label={group.brand}>
@@ -709,7 +709,7 @@ export function PrintPanel({
                 type="button"
                 data-testid="download-bambu-3mf"
                 onClick={handleDownloadMultiPlate3mf}
-                className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-2.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37]/25 transition-all"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-2.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37]/25 transition-all"
                 title="Single Bambu Studio / OrcaSlicer .3mf file containing all packed plates with plate metadata"
               >
                 <FileBox className="h-4 w-4 text-[#f3d478]" />
@@ -720,7 +720,7 @@ export function PrintPanel({
                 type="button"
                 data-testid="download-all-zip"
                 onClick={handleDownloadAllZip}
-                className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
+                className="inline-flex min-h-[44px] items-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
               >
                 <Archive className="h-4 w-4" />
                 Download All (.zip)
@@ -1326,7 +1326,7 @@ export function PrintPanel({
                         e.stopPropagation();
                         handleDownloadPlate3mf(plate.plateNumber);
                       }}
-                      className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/45 bg-[#0c0906] px-3 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37] hover:text-[#140e07] transition-colors shrink-0"
+                      className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#d4af37]/45 bg-[#0c0906] px-3 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37] hover:text-[#140e07] transition-colors shrink-0"
                     >
                       <Download className="h-3.5 w-3.5" />
                       plate-{plate.plateNumber}.3mf
@@ -1483,16 +1483,16 @@ export function PrintPanel({
                     <span className="text-[#e6d3b3]">~{partTimeStr}</span>
                   </div>
 
-                  <div className="flex items-center justify-between text-[10px] text-[#9c7a4c] font-mono pt-0.5">
+                  <div className="flex items-center justify-between text-[10px] text-[#b5a48b]/75 font-mono pt-0.5">
                     <span>
-                      shape: {part.shape || 'parametric'} · {part.material}
+                      {part.shape || 'parametric'} · {part.material}
                     </span>
                     {part.triangleCount && <span>{part.triangleCount} tris</span>}
                   </div>
                 </div>
 
                 <div className="flex items-center justify-between border-t border-[#d4af37]/20 pt-2.5">
-                  <span className="font-mono text-[10px] text-[#bda782]">
+                  <span className="font-mono text-[10px] text-[#b5a48b]/75 truncate max-w-[140px]">
                     {part.stlFile}
                   </span>
                   <button
@@ -1500,7 +1500,7 @@ export function PrintPanel({
                     onClick={() =>
                       handleDownloadPartStl(part.partId, part.stlFile)
                     }
-                    className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/12 px-2.5 py-1 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37] hover:text-[#140e07] transition-colors"
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/12 px-3 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:bg-[#d4af37] hover:text-[#140e07] transition-colors"
                   >
                     <Download className="h-3.5 w-3.5" />
                     Download .STL
@@ -1813,7 +1813,7 @@ export function PrintPanel({
                   type="button"
                   data-testid="send-files-to-service-btn"
                   onClick={handleSendToPrintService}
-                  className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
+                  className="flex-1 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] px-4 py-2.5 font-codex text-xs font-bold text-[#140e07] shadow-electric hover:brightness-110 transition-all"
                 >
                   <Truck className="h-4 w-4" />
                   Send files to {activeService.name} ($
@@ -1825,7 +1825,7 @@ export function PrintPanel({
                   href={activeService.uploadUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3.5 py-2.5 font-codex text-xs font-bold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f3d478]"
+                  className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3.5 py-2.5 font-codex text-xs font-bold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478]"
                 >
                   Direct Portal <ExternalLink className="h-3.5 w-3.5" />
                 </a>

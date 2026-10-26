@@ -262,6 +262,9 @@ export function TeardownGallery({
   const [failedImages, setFailedImages] = useState<Record<number, boolean>>({});
   const [loadedImages, setLoadedImages] = useState<Record<number, boolean>>({});
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [expandedPartKeys, setExpandedPartKeys] = useState<
+    Record<string, boolean>
+  >({});
   const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const activeIndex =
@@ -523,7 +526,7 @@ export function TeardownGallery({
                 type="button"
                 onClick={() => stepFrame(-1)}
                 aria-label="Previous teardown frame"
-                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-2.5 py-1 text-xs font-medium text-[#e6d3b3] transition-colors hover:border-[#f3d478]/60 hover:bg-[#d4af37]/15 hover:text-[#f5ebd6]"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs font-medium text-[#dfd3be] transition-colors hover:border-[#f3d478]/60 hover:bg-[#d4af37]/15 hover:text-[#faf4e8]"
               >
                 ← Prev
               </button>
@@ -534,7 +537,7 @@ export function TeardownGallery({
                 type="button"
                 onClick={() => stepFrame(1)}
                 aria-label="Next teardown frame"
-                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-2.5 py-1 text-xs font-medium text-[#e6d3b3] transition-colors hover:border-[#f3d478]/60 hover:bg-[#d4af37]/15 hover:text-[#f5ebd6]"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs font-medium text-[#dfd3be] transition-colors hover:border-[#f3d478]/60 hover:bg-[#d4af37]/15 hover:text-[#faf4e8]"
               >
                 Next →
               </button>
@@ -841,7 +844,7 @@ export function TeardownGallery({
                       <button
                         type="button"
                         onClick={() => handleSelectAndSeek(activeIndex, true)}
-                        className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/50 bg-[#d4af37]/20 px-3.5 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] transition-all hover:border-[#f3d478] hover:bg-[#d4af37]/30 hover:text-[#f5ebd6]"
+                        className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#d4af37]/50 bg-[#d4af37]/20 px-3.5 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] transition-all hover:border-[#f3d478] hover:bg-[#d4af37]/30 hover:text-[#faf4e8]"
                       >
                         <span aria-hidden="true">▶</span>
                         <span>
@@ -856,7 +859,7 @@ export function TeardownGallery({
                           )}
                           target="_blank"
                           rel="noreferrer"
-                          className="inline-flex items-center gap-1 rounded-xl border border-[#d4af37]/30 bg-[#14100b] px-2.5 py-1.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#e6d3b3] transition-all hover:border-[#f3d478] hover:text-[#f3d478]"
+                          className="inline-flex min-h-[44px] items-center gap-1 rounded-xl border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#dfd3be] transition-all hover:border-[#f3d478] hover:text-[#f3d478]"
                           title="Open video at this timestamp on YouTube"
                         >
                           <span>YouTube</span>
@@ -876,7 +879,7 @@ export function TeardownGallery({
                     {activeFrame.parts.length})
                   </h4>
                   {teardown?.note && (
-                    <span className="max-w-sm truncate text-[11px] italic text-[#bda782]">
+                    <span className="max-w-sm truncate text-[11px] italic text-[#b5a48b]">
                       {teardown.note}
                     </span>
                   )}
@@ -895,15 +898,18 @@ export function TeardownGallery({
                     const amazonSearchUrl = `https://www.amazon.com/s?k=${encodeURIComponent(
                       searchQuery
                     )}`;
+                    const partKey = `${activeIndex}-${part.name}-${pIdx}`;
+                    const isPartExpanded = Boolean(expandedPartKeys[partKey]);
+                    const isLongFunc = (part.function || '').length > 105;
 
                     return (
                       <div
-                        key={`${part.name}-${pIdx}`}
+                        key={partKey}
                         className="flex flex-col justify-between rounded-2xl border border-[#d4af37]/25 bg-[#120e0a]/85 p-4 transition-all hover:border-[#d4af37]/50 hover:bg-[#17120c]"
                       >
                         <div>
                           <div className="flex items-start justify-between gap-2">
-                            <h5 className="font-display text-base font-bold leading-snug text-[#f5ebd6]">
+                            <h5 className="font-display text-base font-bold leading-snug text-[#faf4e8]">
                               {part.name}
                             </h5>
                             <span
@@ -917,40 +923,55 @@ export function TeardownGallery({
                             </span>
                           </div>
 
-                          <p className="mt-1.5 text-xs leading-relaxed text-[#e6d3b3]">
+                          <p
+                            className={`mt-1.5 text-xs leading-relaxed text-[#dfd3be] ${
+                              !isPartExpanded && isLongFunc
+                                ? 'line-clamp-2'
+                                : ''
+                            }`}
+                          >
                             {part.function}
                           </p>
+                          {isLongFunc && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setExpandedPartKeys((prev) => ({
+                                  ...prev,
+                                  [partKey]: !prev[partKey],
+                                }))
+                              }
+                              className="mt-1 text-[11px] font-semibold text-[#f3d478] hover:underline"
+                            >
+                              {isPartExpanded ? 'Less' : 'More'}
+                            </button>
+                          )}
 
-                          <dl className="mt-3 grid grid-cols-2 gap-x-2.5 gap-y-1.5 rounded-xl border border-[#d4af37]/15 bg-[#0c0906]/80 p-2.5 font-mono text-[11px]">
-                            <div>
-                              <dt className="text-[#bda782]">Material</dt>
-                              <dd className="truncate text-[#f5ebd6]">
-                                {part.material}
-                              </dd>
-                            </div>
-                            <div>
-                              <dt className="text-[#bda782]">Est. Dims</dt>
-                              <dd className="text-[#f5ebd6] tabular-nums">
-                                {Array.isArray(part.dims_mm)
-                                  ? `${part.dims_mm[0]}×${part.dims_mm[1]}×${part.dims_mm[2]}mm`
-                                  : '—'}
-                              </dd>
-                            </div>
-                            <div className="col-span-2 mt-0.5 border-t border-[#d4af37]/10 pt-1">
-                              <dt className="text-[#bda782]">
-                                Fasteners &amp; Coupling
-                              </dt>
-                              <dd className="truncate text-[#e6d3b3]">
-                                {Array.isArray(part.fasteners)
-                                  ? part.fasteners.join(', ')
-                                  : part.fasteners}
-                              </dd>
-                            </div>
-                          </dl>
+                          <div className="mt-2.5 flex flex-wrap items-center gap-x-2 gap-y-1 font-mono text-[11px] text-[#b5a48b]/85">
+                            <span>{part.material}</span>
+                            {Array.isArray(part.dims_mm) && (
+                              <>
+                                <span>·</span>
+                                <span className="tabular-nums">
+                                  {part.dims_mm[0]}×{part.dims_mm[1]}×{part.dims_mm[2]}mm
+                                </span>
+                              </>
+                            )}
+                            {part.fasteners && (
+                              <>
+                                <span>·</span>
+                                <span className="truncate max-w-[180px]">
+                                  {Array.isArray(part.fasteners)
+                                    ? part.fasteners.join(', ')
+                                    : part.fasteners}
+                                </span>
+                              </>
+                            )}
+                          </div>
                         </div>
 
                         {/* Cross-links into BOM and Design parts */}
-                        <div className="mt-3.5 flex flex-wrap items-center justify-between gap-1.5 border-t border-[#d4af37]/15 pt-2.5">
+                        <div className="mt-3 flex flex-wrap items-center justify-between gap-1.5 border-t border-[#d4af37]/15 pt-2.5">
                           <div className="flex flex-wrap items-center gap-1.5">
                             {(matchedDesign || part.partId || isPrint) && (
                               <button
@@ -964,7 +985,7 @@ export function TeardownGallery({
                                     );
                                   }
                                 }}
-                                className="inline-flex items-center gap-1 rounded-lg border border-[#b89b4a]/45 bg-[#1d1710] px-2.5 py-1 font-mono text-[11px] text-[#e6d3b3] transition-colors hover:border-[#f3d478]/65 hover:bg-[#282016]"
+                                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#b89b4a]/45 bg-[#1d1710] px-2.5 py-1 font-mono text-[11px] text-[#dfd3be] transition-colors hover:border-[#f3d478]/65 hover:bg-[#282016]"
                                 title="Inspect matching 3D part in Exploded View"
                               >
                                 <span>
@@ -989,7 +1010,7 @@ export function TeardownGallery({
                                     );
                                   }
                                 }}
-                                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/40 bg-[#d4af37]/15 px-2.5 py-1 font-mono text-[11px] text-[#f3d478] transition-colors hover:border-[#f3d478]/70 hover:bg-[#d4af37]/25"
+                                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#d4af37]/40 bg-[#d4af37]/15 px-2.5 py-1 font-mono text-[11px] text-[#f3d478] transition-colors hover:border-[#f3d478]/70 hover:bg-[#d4af37]/25"
                                 title="View matching line item in Bill of Materials"
                               >
                                 <span>
@@ -1004,7 +1025,7 @@ export function TeardownGallery({
                               href={matchedBom?.primaryUrl || amazonSearchUrl}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/25 bg-[#17120c] px-2.5 py-1 text-[11px] text-[#e6d3b3] transition-colors hover:border-[#f3d478]/50 hover:text-[#f5ebd6]"
+                              className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#d4af37]/25 bg-[#17120c] px-2.5 py-1 text-[11px] text-[#dfd3be] transition-colors hover:border-[#f3d478]/50 hover:text-[#faf4e8]"
                               title={`Source off-the-shelf part: ${searchQuery}`}
                             >
                               <span className="max-w-[130px] truncate">
@@ -1015,7 +1036,7 @@ export function TeardownGallery({
                           </div>
 
                           <span
-                            className="font-mono text-[11px] text-[#bda782] tabular-nums"
+                            className="font-mono text-[11px] text-[#b5a48b]/80 tabular-nums"
                             title="Gemini 4 Argon part identification confidence"
                           >
                             {confidencePct}% conf

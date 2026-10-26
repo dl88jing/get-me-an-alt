@@ -142,6 +142,7 @@ export function SourcesTab(props: SourcesTabProps) {
 
   const [selectedKind, setSelectedKind] = useState<'all' | SourceKind>('all');
   const [query, setQuery] = useState('');
+  const [summaryExpanded, setSummaryExpanded] = useState(false);
 
   const kindCounts: Record<'all' | SourceKind, number> = useMemo(() => {
     const counts: Record<'all' | SourceKind, number> = {
@@ -217,18 +218,31 @@ export function SourcesTab(props: SourcesTabProps) {
                 : 'Verified Platform References'}
             </span>
           </div>
-          <p className="mt-1.5 text-sm text-[#c7ae87]">
+          <p
+            className={`mt-1.5 text-sm text-[#dfd3be] ${
+              !summaryExpanded ? 'line-clamp-2' : ''
+            }`}
+          >
             {normalized.querySummary || (
               <>
                 Grounded videos, printable CAD repositories, schematics, PDF
                 datasheets, and teardown guides for{' '}
-                <span className="font-semibold text-[#f5ebd6]">
+                <span className="font-semibold text-[#faf4e8]">
                   {normalized.objectLabel}
                 </span>
                 .
               </>
             )}
           </p>
+          {normalized.querySummary && normalized.querySummary.length > 140 && (
+            <button
+              type="button"
+              onClick={() => setSummaryExpanded((prev) => !prev)}
+              className="mt-1 text-xs font-semibold text-[#f3d478] hover:underline"
+            >
+              {summaryExpanded ? 'Less' : 'More'}
+            </button>
+          )}
         </div>
 
         {/* Text Search Input */}
@@ -243,7 +257,7 @@ export function SourcesTab(props: SourcesTabProps) {
             onChange={(e: { target: { value: string } }) => setQuery(e.target.value)}
             placeholder="Filter by title, domain, takeaway..."
             aria-label="Filter sources by keyword or domain"
-            className="w-full rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 py-2 pl-9 pr-8 text-sm text-[#f5ebd6] placeholder-[#bda782]/60 transition-colors focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
+            className="w-full min-h-[44px] rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 py-2 pl-9 pr-8 text-sm text-[#faf4e8] placeholder-[#b5a48b] transition-colors focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
           />
           <svg
             viewBox="0 0 20 20"
@@ -345,10 +359,10 @@ export function SourcesTab(props: SourcesTabProps) {
               onClick={() => setSelectedKind(kind)}
               aria-pressed={active}
               aria-label={`Filter by ${FILTER_LABELS[kind]} (${count})`}
-              className={`inline-flex items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] ${
+              className={`inline-flex min-h-[44px] items-center gap-2 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478] ${
                 active
                   ? 'border-[#f3d478]/70 bg-[#d4af37]/20 text-[#f3d478] shadow-sm'
-                  : 'border-[#d4af37]/20 bg-[#14100b]/85 text-[#c7ae87] hover:border-[#d4af37]/45 hover:text-[#f5ebd6]'
+                  : 'border-[#d4af37]/20 bg-[#14100b]/85 text-[#dfd3be] hover:border-[#d4af37]/45 hover:text-[#faf4e8]'
               }`}
             >
               <span>{FILTER_LABELS[kind]}</span>

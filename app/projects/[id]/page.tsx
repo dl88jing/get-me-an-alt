@@ -103,6 +103,8 @@ export default function ProjectPage() {
   const [showOrderModal, setShowOrderModal] = useState(false);
   const [selectedService, setSelectedService] = useState('craftcloud');
   const [shippingZip, setShippingZip] = useState('94107');
+  const [overviewExpanded, setOverviewExpanded] = useState(false);
+  const [stepNoteExpanded, setStepNoteExpanded] = useState(false);
   const syncedBuildRef = useRef<string>('');
 
   // Persist non-preset project to localStorage when page loads and on live run completion
@@ -391,10 +393,34 @@ export default function ProjectPage() {
     },
   ];
 
+  const isCanvasTab =
+    activeTab === 'exploded' || activeTab === 'instructions';
+
+  const agentBars = (
+    <div className="space-y-2.5">
+      {/* Compact Collapsible Ask Argon to Modify Panel */}
+      <ModifyChat
+        projectId={manifest.id}
+        manifest={manifest}
+        onEvent={(ev) => setStreamEvents((prev) => [...prev.slice(-150), ev])}
+        onManifestUpdate={(updated) => setManifest(updated)}
+      />
+
+      {/* Compact Collapsible Mission Control Telemetry Bar */}
+      <MissionControl
+        projectId={manifest.id}
+        manifest={manifest}
+        stages={manifest.stages}
+        events={streamEvents}
+        onSelectStage={(id) => setSelectedStageId(id)}
+      />
+    </div>
+  );
+
   return (
-    <div className="space-y-6 pb-16">
+    <div className="space-y-4 pb-16">
       {/* Sticky Project Header: Object Name, Dominant Price -> Alt Price + Savings, and Segmented Tabs */}
-      <div className="sticky top-16 z-40 -mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-4 py-3.5 sm:px-6 shadow-glass space-y-3">
+      <div className="sticky top-16 z-40 -mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-4 py-3 sm:px-6 shadow-glass space-y-2.5">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
           <div className="min-w-0 space-y-1">
             <div className="flex flex-wrap items-center gap-2 text-xs text-[#b5a48b]">
@@ -492,22 +518,8 @@ export default function ProjectPage() {
         </div>
       </div>
 
-      {/* Compact Collapsible Ask Argon to Modify Panel */}
-      <ModifyChat
-        projectId={manifest.id}
-        manifest={manifest}
-        onEvent={(ev) => setStreamEvents((prev) => [...prev.slice(-150), ev])}
-        onManifestUpdate={(updated) => setManifest(updated)}
-      />
-
-      {/* Compact Collapsible Mission Control Telemetry Bar */}
-      <MissionControl
-        projectId={manifest.id}
-        manifest={manifest}
-        stages={manifest.stages}
-        events={streamEvents}
-        onSelectStage={(id) => setSelectedStageId(id)}
-      />
+      {/* Render Ask Argon + Pipeline bars above tab content on non-canvas tabs; below canvas on Exploded View & Instructions */}
+      {!isCanvasTab && agentBars}
 
       {/* Graceful in-progress / partial state banner so no tab is ever blank */}
       {((activeTab === 'overview' && !analysis) ||
@@ -554,15 +566,34 @@ export default function ProjectPage() {
                 Why the Commercial Version Costs $
                 {analysis.originalProduct.retailPrice} — and How This DIY Build Beats It
               </h3>
-              <p className="text-sm sm:text-base text-[#dfd3be] leading-relaxed">
-                {analysis.description}
-              </p>
+              <div>
+                <p
+                  className={`text-sm sm:text-base text-[#dfd3be] leading-relaxed ${
+                    !overviewExpanded ? 'line-clamp-2' : ''
+                  }`}
+                >
+                  {analysis.description}
+                </p>
+                {analysis.description && analysis.description.length > 140 && (
+                  <button
+                    type="button"
+                    onClick={() => setOverviewExpanded((prev) => !prev)}
+                    className="mt-1 inline-flex items-center text-xs font-semibold text-[#f3d478] hover:underline"
+                  >
+                    {overviewExpanded ? 'Less' : 'More'}
+                  </button>
+                )}
+              </div>
 
               <div className="rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-4 space-y-1.5">
                 <div className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
                   Core Engineering Function
                 </div>
-                <p className="text-sm text-[#dfd3be] leading-relaxed">
+                <p
+                  className={`text-sm text-[#dfd3be] leading-relaxed ${
+                    !overviewExpanded ? 'line-clamp-2' : ''
+                  }`}
+                >
                   {analysis.functionSummary}
                 </p>
               </div>
@@ -982,7 +1013,7 @@ export default function ProjectPage() {
                               onClick={() =>
                                 setActiveStepIdx((i) => Math.max(0, i - 1))
                               }
-                              className="rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-3 py-1.5 font-codex text-xs font-semibold text-[#e6d3b3] disabled:opacity-40"
+                              className="inline-flex min-h-[44px] items-center rounded-lg border border-[#d4af37]/35 bg-[#14100b] px-3.5 py-1.5 font-codex text-xs font-semibold text-[#dfd3be] disabled:opacity-40"
                             >
                               Prev
                             </button>
@@ -996,19 +1027,36 @@ export default function ProjectPage() {
                                   Math.min(instructions.steps.length - 1, i + 1)
                                 )
                               }
-                              className="inline-flex items-center gap-1 rounded-lg bg-[#d4af37] px-3.5 py-1.5 font-codex text-xs font-bold text-[#140e07] disabled:opacity-40"
+                              className="inline-flex min-h-[44px] items-center gap-1 rounded-lg bg-[#d4af37] px-3.5 py-1.5 font-codex text-xs font-bold text-[#140e07] disabled:opacity-40"
                             >
                               <Play className="h-3 w-3" /> Next Step
                             </button>
                           </div>
                         </div>
 
-                        <h3 className="font-display text-2xl font-bold text-[#f5ebd6]">
+                        <h3 className="font-display text-2xl font-bold text-[#faf4e8]">
                           {step.title}
                         </h3>
-                        <p className="text-sm text-[#e6d3b3] leading-relaxed">
-                          {step.note}
-                        </p>
+                        <div>
+                          <p
+                            className={`text-sm text-[#dfd3be] leading-relaxed ${
+                              !stepNoteExpanded ? 'line-clamp-2' : ''
+                            }`}
+                          >
+                            {step.note}
+                          </p>
+                          {step.note && step.note.length > 120 && (
+                            <button
+                              type="button"
+                              onClick={() =>
+                                setStepNoteExpanded((prev) => !prev)
+                              }
+                              className="mt-1 text-xs font-semibold text-[#f3d478] hover:underline"
+                            >
+                              {stepNoteExpanded ? 'Less' : 'More'}
+                            </button>
+                          )}
+                        </div>
 
                         <div className="grid gap-3 sm:grid-cols-2">
                           <div className="rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/85 p-3.5 space-y-1.5">
@@ -1176,6 +1224,9 @@ export default function ProjectPage() {
           )}
         </div>
       )}
+
+      {/* Render Ask Argon + Pipeline bars below the 3D canvas on Exploded View & Instructions tabs */}
+      {isCanvasTab && agentBars}
 
       {/* Print Service Quote Modal */}
       {showOrderModal && (

@@ -72,6 +72,7 @@ export function SourceCard(props: SourceCardProps) {
   const [imgFailed, setImgFailed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [showPlayer, setShowPlayer] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   if (!raw || !raw.url) {
     return null;
@@ -167,7 +168,7 @@ export function SourceCard(props: SourceCardProps) {
         ) : null}
 
         {/* Top Badges: Kind + Domain + Relevance */}
-        <div className="mb-2.5 flex flex-wrap items-center justify-between gap-2">
+        <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
           <div className="flex flex-wrap items-center gap-1.5">
             <span
               className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-codex text-[10px] font-bold uppercase tracking-wider ${meta.badgeClass}`}
@@ -178,13 +179,13 @@ export function SourceCard(props: SourceCardProps) {
               />
               {meta.label}
             </span>
-            <span className="rounded-md border border-[#d4af37]/20 bg-[#0c0906]/85 px-2 py-0.5 font-mono text-[11px] text-[#e6d3b3]">
+            <span className="font-mono text-[11px] text-[#b5a48b]/80">
               {domainLabel}
             </span>
           </div>
 
           <span
-            className="inline-flex items-center rounded-md border border-[#b89b4a]/45 bg-[#1d1710] px-2 py-0.5 font-mono text-[11px] font-semibold text-[#e6d3b3] tabular-nums"
+            className="font-mono text-[11px] text-[#b5a48b]/80 tabular-nums"
             title={`Relevance score: ${relevancePct}%`}
           >
             {relevancePct}% match
@@ -192,7 +193,7 @@ export function SourceCard(props: SourceCardProps) {
         </div>
 
         {/* Title */}
-        <h3 className="mb-1.5 font-display text-base font-bold leading-snug text-[#f5ebd6] group-hover:text-[#f3d478]">
+        <h3 className="mb-1.5 font-display text-base font-bold leading-snug text-[#faf4e8] group-hover:text-[#f3d478]">
           <a
             href={raw.url}
             target="_blank"
@@ -203,39 +204,47 @@ export function SourceCard(props: SourceCardProps) {
           </a>
         </h3>
 
-        {/* Summary */}
-        <p className="mb-3 text-xs leading-relaxed text-[#c7ae87]">
+        {/* Summary (clamped to 2 lines with More toggle) */}
+        <p
+          className={`mb-2 text-xs leading-relaxed text-[#dfd3be] ${
+            !expanded ? 'line-clamp-2' : ''
+          }`}
+        >
           {raw.summary}
         </p>
 
         {/* Key Takeaways */}
         {takeaways.length > 0 && (
-          <ul className="mb-3 space-y-1.5 rounded-xl border border-[#d4af37]/15 bg-[#0c0906]/75 p-2.5 text-xs text-[#e6d3b3]">
-            {takeaways.map((tk, idx) => (
+          <ul className="mb-2 space-y-1 rounded-xl border border-[#dfd3be]/15 bg-[#0c0906]/75 p-2.5 text-xs text-[#dfd3be]">
+            {(expanded ? takeaways : takeaways.slice(0, 2)).map((tk, idx) => (
               <li key={idx} className="flex items-start gap-2">
                 <span
                   className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d4af37]"
                   aria-hidden="true"
                 />
-                <span className="leading-relaxed">{tk}</span>
+                <span className={!expanded ? 'line-clamp-1' : 'leading-relaxed'}>
+                  {tk}
+                </span>
               </li>
             ))}
           </ul>
         )}
+
+        {((raw.summary && raw.summary.length > 110) || takeaways.length > 2) && (
+          <button
+            type="button"
+            onClick={() => setExpanded((prev) => !prev)}
+            className="mb-2 inline-flex items-center text-xs font-semibold text-[#f3d478] hover:underline"
+          >
+            {expanded ? 'Less' : 'More'}
+          </button>
+        )}
       </div>
 
       {/* Footer: License / Source Badge + Action Buttons */}
-      <div className="mt-2 flex items-center justify-between gap-2 border-t border-[#d4af37]/15 pt-3">
-        <div className="truncate text-xs text-[#bda782]">
-          {raw.license ? (
-            <span className="rounded border border-[#d4af37]/20 bg-[#0c0906]/80 px-2 py-0.5 text-[11px] text-[#e6d3b3]">
-              {raw.license}
-            </span>
-          ) : (
-            <span className="font-codex text-[10px] uppercase tracking-wider text-[#bda782]">
-              {meta.label} · {domainLabel}
-            </span>
-          )}
+      <div className="mt-2 flex items-center justify-between gap-2 border-t border-[#dfd3be]/15 pt-2.5">
+        <div className="truncate font-mono text-[11px] text-[#b5a48b]/80">
+          {raw.license || `${meta.label} · ${domainLabel}`}
         </div>
 
         <div className="flex items-center gap-2">
@@ -243,7 +252,7 @@ export function SourceCard(props: SourceCardProps) {
             type="button"
             onClick={handleCopyLink}
             aria-label={`Copy link for ${raw.title || domainLabel}`}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/25 bg-[#17120c] px-2.5 py-1.5 text-xs font-medium text-[#e6d3b3] transition-colors hover:border-[#d4af37]/50 hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#17120c] px-3 py-1.5 text-xs font-medium text-[#dfd3be] transition-colors hover:border-[#f3d478] hover:text-[#faf4e8] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
           >
             {copied ? (
               <span className="text-[#f3d478]">Copied</span>
@@ -257,7 +266,7 @@ export function SourceCard(props: SourceCardProps) {
             target="_blank"
             rel="noreferrer"
             aria-label={`Open ${raw.title || domainLabel} in a new tab`}
-            className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] transition-colors hover:border-[#f3d478] hover:bg-[#d4af37]/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-1.5 font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478] transition-colors hover:border-[#f3d478] hover:bg-[#d4af37]/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
           >
             <span>Open</span>
             <span aria-hidden="true">↗</span>
