@@ -27,6 +27,7 @@ import {
   Package,
   Play,
   Printer,
+  RotateCcw,
   Search,
   ShoppingCart,
   Sparkles,
@@ -95,6 +96,8 @@ export default function ProjectPage() {
   const [manifest, setManifest] = useState<ProjectManifest | null>(null);
   const [streamEvents, setStreamEvents] = useState<SsePipelineEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [streamError, setStreamError] = useState<string | null>(null);
+  const [retryCount, setRetryCount] = useState(0);
   const [activeTab, setActiveTab] = useState<TabId>('overview');
   const [selectedStageId, setSelectedStageId] =
     useState<AgentStageId>('analyst');
@@ -141,6 +144,7 @@ export default function ProjectPage() {
     let cancelled = false;
 
     async function loadInitial() {
+      setStreamError(null);
       const cachedManifest = !isPresetProjectSlug(projectId)
         ? readLocalCachedManifest(projectId)
         : null;
@@ -238,11 +242,17 @@ export default function ProjectPage() {
           ) {
             const sseEvt = parsed as SsePipelineEvent;
             setStreamEvents((prev) => [...prev.slice(-120), sseEvt]);
+            if (sseEvt.phase === 'error' && sseEvt.message) {
+              setStreamError(sseEvt.message);
+            }
             const evtData = (sseEvt.data || {}) as Record<string, unknown>;
             const updated = evtData.manifest as ProjectManifest | undefined;
             if (updated && Array.isArray(updated.stages)) {
               setManifest(updated);
               setLoading(false);
+              if (updated.status === 'completed') {
+                setStreamError(null);
+              }
               const running = updated.stages.find(
                 (s) => s.status === 'running'
               );
@@ -265,6 +275,9 @@ export default function ProjectPage() {
             const updated = parsed as ProjectManifest;
             setManifest(updated);
             setLoading(false);
+            if (updated.status === 'completed') {
+              setStreamError(null);
+            }
             const running = updated.stages.find((s) => s.status === 'running');
             if (running) {
               setSelectedStageId(running.id);
@@ -279,6 +292,14 @@ export default function ProjectPage() {
       };
       es.onerror = () => {
         setLoading(false);
+        setManifest((cur) => {
+          if (!cur) {
+            setStreamError(
+              'Connection to the live build stream was interrupted before artifacts arrived.'
+            );
+          }
+          return cur;
+        });
         es?.close();
       };
     }
@@ -289,7 +310,13 @@ export default function ProjectPage() {
       cancelled = true;
       es?.close();
     };
-  }, [projectId]);
+  }, [projectId, retryCount]);
+
+  const handleRetryProject = () => {
+    setStreamError(null);
+    setLoading(true);
+    setRetryCount((c) => c + 1);
+  };
 
   const PeerSourcesComp = useMemo(
     () => resolveOptionalPeerComponent(['sources/Sources', 'sources/index']),
@@ -346,15 +373,45 @@ export default function ProjectPage() {
 
   if (!manifest) {
     return (
-      <div className="rounded-2xl border border-[#c84b31]/45 bg-[#2a0f0a]/60 p-8 text-center space-y-4">
-        <AlertCircle className="mx-auto h-8 w-8 text-[#e06348]" />
-        <h2 className="font-display text-2xl font-bold text-[#f5ebd6]">Project Not Found</h2>
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 rounded-lg bg-[#d4af37] px-4 py-2 font-codex text-xs font-bold text-[#140e07]"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back to Home
-        </Link>
+      <div
+        role="alert"
+        aria-live="assertive"
+        className="rounded-2xl border border-[#e06348]/50 bg-[#2a0f0a]/85 p-6 sm:p-8 text-center space-y-4 max-w-xl mx-auto my-6"
+      >
+        <AlertCircle className="mx-auto h-9 w-9 text-[#e06348]" />
+        <div className="space-y-1.5">
+          <h2 className="font-display text-2xl font-bold text-[#faf4e8]">
+            Project Not Found
+          </h2>
+          <p className="text-xs sm:text-sm text-[#dfd3be] max-w-md mx-auto leading-relaxed">
+            {streamError ||
+              `We couldn't load or stream build artifacts for "${projectId}". Retry loading this build or open an instant verified demo.`}
+          </p>
+        </div>
+        <div className="flex flex-wrap items-center justify-center gap-2.5 pt-1">
+          <button
+            type="button"
+            onClick={handleRetryProject}
+            className="inline-flex min-h-[44px] items-center gap-2 rounded-xl border border-[#f3d478]/50 bg-[#231d15] px-4 py-2 text-xs sm:text-sm font-bold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#2e261c] transition-colors"
+          >
+            <RotateCcw className="h-4 w-4" />
+            Retry
+          </button>
+          <Link
+            href="/projects/plant-auto-waterer"
+            className="btn-primary-gold min-h-[44px] px-4 py-2 text-xs sm:text-sm font-bold"
+          >
+            <Sparkles className="h-4 w-4" />
+            Open Instant Demo
+          </Link>
+          <Link
+            href="/"
+            className="btn-secondary-surface min-h-[44px] px-4 py-2 text-xs sm:text-sm font-semibold"
+          >
+            <ArrowLeft className="h-4 w-4" />
+            Back to Home
+          </Link>
+        </div>
       </div>
     );
   }
@@ -596,6 +653,45 @@ export default function ProjectPage() {
 
       {/* Render Ask Argon + Pipeline bars above tab content on non-canvas tabs; below canvas on Exploded View & Instructions */}
       {!isCanvasTab && agentBars}
+
+      {/* Actionable SSE / Pipeline Error Banner with 1-click Retry & Instant Demo fallback */}
+      {(streamError ||
+        manifest.status === 'error' ||
+        manifest.stages.some((s) => s.status === 'error')) && (
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-2xl border border-[#e06348]/50 bg-[#2a0f0a]/85 px-4 py-3 text-xs sm:text-sm text-[#faf4e8]"
+        >
+          <div className="flex items-start sm:items-center gap-2.5 min-w-0">
+            <AlertCircle className="h-4 w-4 shrink-0 text-[#e06348] mt-0.5 sm:mt-0" />
+            <span className="font-medium text-[#faf4e8]">
+              {streamError ||
+                manifest.stages
+                  .find((s) => s.status === 'error')
+                  ?.logs?.slice(-1)[0]?.message ||
+                'An agent stage encountered an error while streaming artifacts.'}
+            </span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <button
+              type="button"
+              onClick={handleRetryProject}
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#f3d478]/50 bg-[#231d15] px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#2e261c] transition-colors"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Retry
+            </button>
+            <Link
+              href="/projects/plant-auto-waterer"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[#e5bd47] px-3 py-1.5 text-xs font-bold text-[#140e07] hover:bg-[#f3d478] transition-colors"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Open Instant Demo
+            </Link>
+          </div>
+        </div>
+      )}
 
       {/* Graceful in-progress / partial state banner so no tab is ever blank */}
       {((activeTab === 'overview' && !analysis) ||

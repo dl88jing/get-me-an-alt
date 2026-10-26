@@ -1,7 +1,9 @@
 'use client';
 
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import {
+  AlertCircle,
   ArrowRight,
   Box,
   CheckCircle2,
@@ -194,6 +196,7 @@ export function ModifyChat({
   >([]);
   const [history, setHistory] = useState<ModifyDiffSummary[]>([]);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const lastAttemptedPromptRef = useRef<string>('');
 
   const [isExpanded, setIsExpanded] = useState(false);
 
@@ -218,6 +221,7 @@ export function ModifyChat({
     setIsRunning(true);
     setErrorMessage(null);
     setPromptText(cleanPrompt);
+    lastAttemptedPromptRef.current = cleanPrompt;
 
     const initialPredicted = predictAffectedAgentsClient(cleanPrompt);
     setActiveAffectedAgents(initialPredicted);
@@ -661,8 +665,39 @@ export function ModifyChat({
 
       {/* Error Banner */}
       {errorMessage && (
-        <div className="rounded-xl border border-[#c84b31]/50 bg-[#2a0f0a]/80 px-4 py-2.5 text-xs text-[#f5ebd6]">
-          {errorMessage}
+        <div
+          role="alert"
+          aria-live="assertive"
+          className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-xl border border-[#e06348]/50 bg-[#2a0f0a]/85 px-3.5 py-2.5 text-xs text-[#faf4e8]"
+        >
+          <div className="flex items-start sm:items-center gap-2 min-w-0">
+            <AlertCircle className="h-4 w-4 shrink-0 text-[#e06348] mt-0.5 sm:mt-0" />
+            <span className="font-medium text-[#faf4e8]">{errorMessage}</span>
+          </div>
+          <div className="flex flex-wrap items-center gap-2 shrink-0">
+            <button
+              type="button"
+              disabled={isRunning}
+              onClick={() =>
+                handleRunModify(
+                  lastAttemptedPromptRef.current ||
+                    promptText.trim() ||
+                    PRESET_SUGGESTIONS[0].prompt
+                )
+              }
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#f3d478]/50 bg-[#231d15] px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#2e261c] transition-colors disabled:opacity-50"
+            >
+              <RotateCcw className="h-3.5 w-3.5" />
+              Retry
+            </button>
+            <Link
+              href="/projects/plant-auto-waterer"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[#e5bd47] px-3 py-1.5 text-xs font-bold text-[#140e07] hover:bg-[#f3d478] transition-colors"
+            >
+              <Sparkles className="h-3.5 w-3.5" />
+              Open Instant Demo
+            </Link>
+          </div>
         </div>
       )}
 

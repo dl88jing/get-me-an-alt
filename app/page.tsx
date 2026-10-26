@@ -7,6 +7,7 @@ import dynamic from 'next/dynamic';
 import { RecentBuildsShelf } from '../components/ui/RecentBuildsShelf';
 import { saveLocalCachedManifest } from '@/lib/recent-builds';
 import {
+  AlertCircle,
   ArrowRight,
   Box,
   ChevronDown,
@@ -14,6 +15,7 @@ import {
   Layers,
   Link2,
   Printer,
+  RotateCcw,
   Search,
   ShieldCheck,
   ShoppingCart,
@@ -225,6 +227,9 @@ export default function LandingPage() {
   const [isDraggingPhoto, setIsDraggingPhoto] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastFailedPreset, setLastFailedPreset] = useState<
+    (typeof PRESET_GADGETS)[number] | null
+  >(null);
   const [howItWorksOpen, setHowItWorksOpen] = useState(false);
   const [knownSampleIds, setKnownSampleIds] = useState<Set<string>>(
     new Set([
@@ -308,8 +313,7 @@ export default function LandingPage() {
     }
   };
 
-  const handleStartPipeline = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const runPipelineRequest = async () => {
     if (!inputValue.trim() && !imageFile) {
       setError(
         'Paste a product link, video link, description, or upload a photo first.'
@@ -319,16 +323,21 @@ export default function LandingPage() {
 
     setSubmitting(true);
     setError(null);
+    setLastFailedPreset(null);
 
-    const isUrl = /^https?:\/\//i.test(inputValue.trim());
+    const trimmed = inputValue.trim();
+    const normalizedInput = /^www\./i.test(trimmed)
+      ? `https://${trimmed}`
+      : trimmed;
+    const isUrl = /^https?:\/\//i.test(normalizedInput);
 
     try {
       const res = await fetch('/api/objects', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          prompt: isUrl ? undefined : inputValue.trim(),
-          url: isUrl ? inputValue.trim() : undefined,
+          prompt: isUrl ? undefined : normalizedInput,
+          url: isUrl ? normalizedInput : undefined,
           imageName: imageFile?.name,
           inlineImage: imageFile
             ? {
@@ -349,14 +358,17 @@ export default function LandingPage() {
         saveLocalCachedManifest(data.id, data.manifest);
       }
 
-      const qs = isUrl
-        ? `?url=${encodeURIComponent(inputValue.trim())}`
-        : '';
+      const qs = isUrl ? `?url=${encodeURIComponent(normalizedInput)}` : '';
       router.push(`/projects/${data.id}${qs}`);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Something went wrong');
       setSubmitting(false);
     }
+  };
+
+  const handleStartPipeline = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await runPipelineRequest();
   };
 
   const launchPreset = async (preset: (typeof PRESET_GADGETS)[number]) => {
@@ -366,6 +378,7 @@ export default function LandingPage() {
     }
     setSubmitting(true);
     setError(null);
+    setLastFailedPreset(preset);
     try {
       const res = await fetch('/api/objects', {
         method: 'POST',
@@ -377,12 +390,32 @@ export default function LandingPage() {
         }),
       });
       const data = await res.json();
-      if (data.id) {
-        router.push(`/projects/${data.id}`);
+      if (!res.ok || !data.id) {
+        throw new Error(data.error || 'Failed to launch preset build');
       }
-    } catch {
+      router.push(`/projects/${data.id}`);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : 'Failed to launch preset build'
+      );
       setSubmitting(false);
     }
+  };
+
+  const handleRetryError = () => {
+    if (lastFailedPreset) {
+      void launchPreset(lastFailedPreset);
+      return;
+    }
+    if (inputValue.trim() || imageFile) {
+      void runPipelineRequest();
+      return;
+    }
+    setError(null);
+    const inputEl = document.querySelector<HTMLInputElement>(
+      '#hero-command input[type="text"]'
+    );
+    inputEl?.focus();
   };
 
   return (
@@ -528,7 +561,34 @@ export default function LandingPage() {
             </div>
 
             {error && (
-              <p className="text-sm font-medium text-[#e06348]">{error}</p>
+              <div
+                role="alert"
+                aria-live="assertive"
+                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-xl border border-[#e06348]/50 bg-[#2a0f0a]/85 px-3.5 py-2.5 text-xs sm:text-sm text-[#faf4e8]"
+              >
+                <div className="flex items-start sm:items-center gap-2 min-w-0">
+                  <AlertCircle className="h-4 w-4 shrink-0 text-[#e06348] mt-0.5 sm:mt-0" />
+                  <span className="font-medium text-[#faf4e8]">{error}</span>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 shrink-0">
+                  <button
+                    type="button"
+                    disabled={submitting}
+                    onClick={handleRetryError}
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#f3d478]/50 bg-[#231d15] px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#2e261c] transition-colors disabled:opacity-50"
+                  >
+                    <RotateCcw className="h-3.5 w-3.5" />
+                    Retry
+                  </button>
+                  <Link
+                    href="/projects/plant-auto-waterer"
+                    className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg bg-[#e5bd47] px-3 py-1.5 text-xs font-bold text-[#140e07] hover:bg-[#f3d478] transition-colors"
+                  >
+                    <Sparkles className="h-3.5 w-3.5" />
+                    Open Instant Demo
+                  </Link>
+                </div>
+              </div>
             )}
           </form>
         </div>
