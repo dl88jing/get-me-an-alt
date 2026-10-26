@@ -6,7 +6,7 @@ Audited live against `https://get-me-an-alt.vercel.app` at **Desktop (`1440×900
 
 ## P0 — High-Impact Visual, Layout & Workflow Issues (Observed in Screenshots)
 
-- [ ] **1. Mobile & Desktop Command Bar Overflow + Project Header Chrome Polish (`app/page.tsx`, `app/projects/[id]/page.tsx`, `components/ui/ModifyChat.tsx`, `components/ui/CritiquePanel.tsx`)**
+- [x] **1. Mobile & Desktop Command Bar Overflow + Project Header Chrome Polish (`app/page.tsx`, `app/projects/[id]/page.tsx`, `components/ui/ModifyChat.tsx`, `app/projects/[id]/CritiquePanel.tsx`)** *(shipped in `81b505c` + `13fbd91`)*
   - **Observed on Mobile (`390×844`) Landing (`landing-mobile.png`):** The `Printer:` `<select>` dropdown in the hero command bar overflows horizontally outside the gold card border and clips off the right edge of the viewport (`Bambu Lab A1 (256×256×256 mm) — D...`).
   - **Observed on Desktop (`1440×900`) Landing (`landing-desktop.png`):** Hero input placeholder (`Paste a product link, YouTube URL, or describe any gadget..`) truncates awkwardly mid-ellipsis (`..`).
   - **Observed on Desktop & Mobile Project Page (`project-overview-desktop.png`, `project-print-desktop.png`, `project-overview-mobile.png`):**
