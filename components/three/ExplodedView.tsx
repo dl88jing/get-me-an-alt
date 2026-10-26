@@ -14,6 +14,7 @@ import {
 } from "./types";
 import { toRenaissancePartColor } from "./adapters";
 import {
+  computeAssemblyFraming,
   getPartBoundingRadius,
   formatPartDimensions,
   usePartGeometryAndEdges,
@@ -314,6 +315,7 @@ interface CameraRigProps {
   focusRadius: number;
   defaultTarget: [number, number, number];
   defaultCamPos: [number, number, number];
+  fitDistance: number;
   resetTrigger: number;
   autoRotate: boolean;
   isUserInteracting: React.MutableRefObject<boolean>;
@@ -324,6 +326,7 @@ const CameraRig: React.FC<CameraRigProps> = ({
   focusRadius,
   defaultTarget,
   defaultCamPos,
+  fitDistance,
   resetTrigger,
   autoRotate,
   isUserInteracting,
@@ -345,6 +348,16 @@ const CameraRig: React.FC<CameraRigProps> = ({
         defaultTarget[2]
       );
       camera.position.set(defaultCamPos[0], defaultCamPos[1], defaultCamPos[2]);
+      if (controlsRef.current) {
+        controlsRef.current.target.set(
+          defaultTarget[0],
+          defaultTarget[1],
+          defaultTarget[2]
+        );
+        controlsRef.current.update();
+      } else {
+        camera.lookAt(defaultTarget[0], defaultTarget[1], defaultTarget[2]);
+      }
     }
   }, [defaultTarget, defaultCamPos, focusTarget, camera]);
 
@@ -401,7 +414,7 @@ const CameraRig: React.FC<CameraRigProps> = ({
       autoRotate={autoRotate && !animatingCam.current}
       autoRotateSpeed={0.9}
       minDistance={45}
-      maxDistance={1100}
+      maxDistance={Math.max(1200, Math.round(fitDistance * 2.5))}
       onStart={() => {
         isUserInteracting.current = true;
         animatingCam.current = false;
@@ -444,38 +457,17 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
     [design, bom, instructions]
   );
 
-  const sceneFraming = useMemo(() => {
-    if (allParts.length === 0) {
-      return {
-        defaultTarget: [10, 32, 0] as [number, number, number],
-        defaultCamPos: [240, 180, 265] as [number, number, number],
-      };
-    }
-    let minY = Infinity;
-    let maxY = -Infinity;
-    let maxHoriz = 80;
-    for (const p of allParts) {
-      const py0 = p.position[1];
-      const py1 = p.position[1] + p.explode[1] * 0.55;
-      const halfH = Math.max(15, (p.dims_mm?.[2] ?? p.dims_mm?.[1] ?? 30) * 0.45);
-      minY = Math.min(minY, py0 - halfH, py1 - halfH);
-      maxY = Math.max(maxY, py0 + halfH, py1 + halfH);
-      const hx = Math.abs(p.position[0] + p.explode[0] * 0.5) + (p.dims_mm?.[0] ?? 40) * 0.4;
-      const hz = Math.abs(p.position[2] + p.explode[2] * 0.5) + (p.dims_mm?.[1] ?? 40) * 0.4;
-      maxHoriz = Math.max(maxHoriz, hx, hz);
-    }
-    const spanY = Math.max(120, maxY - minY);
-    const centerY = (minY + maxY) / 2 - 32;
-    const scale = Math.max(0.95, Math.min(2.55, Math.max(spanY / 185, maxHoriz / 130)));
-    return {
-      defaultTarget: [6, Math.round(centerY), 0] as [number, number, number],
-      defaultCamPos: [
-        Math.round(235 * scale),
-        Math.round(centerY + 135 * scale),
-        Math.round(265 * scale),
-      ] as [number, number, number],
-    };
-  }, [allParts]);
+  const sceneFraming = useMemo(
+    () =>
+      computeAssemblyFraming(allParts, {
+        explodeFactor: initialExplode,
+        minExplodeFactor: 0.65,
+        fovDeg: 40,
+        groupOffset: [0, -32, 0],
+        leftLegendBias: 0.035,
+      }),
+    [allParts, initialExplode]
+  );
 
   // Select the first part initially if requested or keep responsive
   useEffect(() => {
@@ -672,7 +664,14 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           onPointerMissed={() => setSelectedId(null)}
         >
           <color attach="background" args={["#0C0906"]} />
-          <fog attach="fog" args={["#0C0906", 680, 1650]} />
+          <fog
+            attach="fog"
+            args={[
+              "#0C0906",
+              Math.max(720, Math.round(sceneFraming.fitDistance * 1.45)),
+              Math.max(1850, Math.round(sceneFraming.fitDistance * 3.2)),
+            ]}
+          />
 
           <DampedExplodeDriver
             targetExplode={explode}
@@ -727,17 +726,17 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           </group>
 
           {/* Sepia Ground Grid & Soft Contact Shadows */}
-          <group position={[0, -58, 0]}>
+          <group position={[0, sceneFraming.groundY, 0]}>
             <ContactShadows
               position={[0, 0.2, 0]}
               opacity={0.55}
-              scale={340}
+              scale={Math.max(340, sceneFraming.gridSpan)}
               blur={2.4}
-              far={180}
+              far={220}
               color="#050302"
             />
             <gridHelper
-              args={[360, 18, "#5C4930", "#282016"]}
+              args={[sceneFraming.gridSpan, 18, "#5C4930", "#282016"]}
               position={[0, 0, 0]}
             />
           </group>
@@ -747,6 +746,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             focusRadius={focusRadius}
             defaultTarget={sceneFraming.defaultTarget}
             defaultCamPos={sceneFraming.defaultCamPos}
+            fitDistance={sceneFraming.fitDistance}
             resetTrigger={resetTrigger}
             autoRotate={autoRotate}
             isUserInteracting={isUserInteracting}

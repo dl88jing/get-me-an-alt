@@ -113,6 +113,15 @@ export function isPresetDesignSpec(
 }
 
 type LivePartRole =
+  | "coanda_loop_full"
+  | "coanda_loop_lower"
+  | "coanda_loop_upper"
+  | "coanda_plenum"
+  | "perforated_shroud"
+  | "hepa_filter"
+  | "purifier_base"
+  | "stator_ring"
+  | "blower_fan"
   | "h_frame"
   | "long_bar"
   | "caster"
@@ -131,10 +140,69 @@ function classifyLivePartRole(
   name: string,
   roleInAssembly?: string,
   description?: string,
-  isTallFrameObject = false
+  isTallFrameObject = false,
+  isBladelessFanObject = false
 ): LivePartRole {
   const nameLower = (name || "").toLowerCase();
   const fullText = `${name || ""} ${roleInAssembly || ""} ${description || ""}`.toLowerCase();
+
+  // Bladeless fan / air multiplier / HEPA purifier specialized roles
+  if (
+    /\b(coanda|air\s+multiplier|bladeless|airfoil)\b.*\b(loop|ring|oval|nozzle|halo|torus|arch)\b|\b(outer\s+loop|outer\s+ring|multiplier\s+loop|multiplier\s+ring|discharge\s+loop|jet\s+loop)\b/.test(
+      nameLower
+    ) ||
+    (isBladelessFanObject && /\b(loop|outer\s+ring|airfoil\s+ring|nozzle\s+ring)\b/.test(nameLower))
+  ) {
+    if (/\b(upper|top\s+half|arch\s+top)\b/.test(nameLower)) {
+      return "coanda_loop_upper";
+    }
+    if (/\b(lower\s+half|bottom\s+half)\b/.test(nameLower)) {
+      return "coanda_loop_lower";
+    }
+    return "coanda_loop_full";
+  }
+  if (
+    /\b(plenum|transition\s+collar|airfoil\s+.*transition|airfoil\s+.*collar|throat\s+collar|diffuser\s+neck|y-duct)\b/.test(
+      nameLower
+    )
+  ) {
+    return "coanda_plenum";
+  }
+  if (
+    /\b(perforated\s+.*shroud|filter\s+shroud|intake\s+shroud|intake\s+drum|intake\s+shell|360.*shroud|perforated\s+.*shell|intake\s+grille)\b/.test(
+      nameLower
+    )
+  ) {
+    return "perforated_shroud";
+  }
+  if (
+    /\b(hepa|true-hepa|filter\s+cartridge|pleated\s+filter|activated\s+carbon\s+filter|cylindrical\s+.*filter)\b/.test(
+      nameLower
+    )
+  ) {
+    return "hepa_filter";
+  }
+  if (
+    /\b(stator|diffuser\s+cone|fan\s+mount|impeller\s+mount|seal\s+ring|acoustic\s+ring)\b/.test(
+      nameLower
+    )
+  ) {
+    return "stator_ring";
+  }
+  if (
+    /\b(weighted\s+.*base|intake\s+base|filter\s+seal\s+plate|base\s+pan|bottom\s+intake\s+base)\b/.test(
+      nameLower
+    )
+  ) {
+    return "purifier_base";
+  }
+  if (
+    /\b(pwm\s+fan|brushless.*fan|static-pressure.*fan|blower\s+fan|120mm.*fan|axial\s+fan|mixed-flow\s+impeller)\b/.test(
+      nameLower
+    )
+  ) {
+    return "blower_fan";
+  }
 
   if (/\b(caster|wheel|roller|pulley|tire)\b/.test(nameLower)) {
     return "caster";
@@ -147,7 +215,7 @@ function classifyLivePartRole(
     return "gusset";
   }
   if (
-    /\b(hinge|pivot|trunnion|clevis|knuckle|ratchet|quadrant|tilt|articulated\s+joint)\b/.test(
+    /\b(hinge|pivot|trunnion|clevis|knuckle|ratchet|quadrant|tilt|articulated\s+joint|ball\s+stud|ball\s+joint|spherical\s+ball)\b/.test(
       nameLower
     )
   ) {
@@ -161,14 +229,14 @@ function classifyLivePartRole(
     return "shelf";
   }
   if (
-    /\b(knob|thumbwheel|thumb\s*screw|rosette|dial|handwheel|star\s+knob)\b/.test(
+    /\b(knob|thumbwheel|thumb\s*screw|rosette|dial|handwheel|star\s+knob|tensioning\s+collar|collet\s+.*collar)\b/.test(
       nameLower
     )
   ) {
     return "knob";
   }
   if (
-    /\b(pad|foot|feet|bumper|gasket|cushion|epdm|rubber\s+pad|silicone\s+pad|isolation\s+pad|anti-slip)\b/.test(
+    /\b(pad|foot|feet|bumper|gasket|cushion|epdm|vhb|adhesive|rubber\s+pad|silicone\s+pad|isolation\s+pad|anti-slip|contact\s+face)\b/.test(
       nameLower
     )
   ) {
@@ -192,21 +260,21 @@ function classifyLivePartRole(
     return "long_bar";
   }
   if (
-    /\b(clamp|jaw|holder|cradle|retainer|carriage|slider|clip|collar|hook|latch|top\s+mount|upper\s+mount)\b/.test(
+    /\b(clamp|jaw|holder|cradle|retainer|carriage|slider|clip|collar|hook|latch|top\s+mount|upper\s+mount|head\s+housing|magsafe|slimlink)\b/.test(
       nameLower
     )
   ) {
     return "clamp";
   }
   if (
-    /\b(screw|bolt|nut|insert|heat-set|t-nut|washer|spring|pin|dowel|rod|shaft|bearing|bushing|standoff|magnet|rivet|fastener|hardware\s+kit)\b/.test(
+    /\b(screw|bolt|nut|insert|heat-set|t-nut|washer|spring|pin|dowel|rod|shaft|bearing|bushing|standoff|magnet|rivet|fastener|hardware\s+kit|speed\s+controller|potentiometer|pcb|board)\b/.test(
       nameLower
     )
   ) {
     return "fastener";
   }
   if (
-    /\b(cover|cap|lid|faceplate|bezel|shroud|guard|shell|backplate)\b/.test(
+    /\b(cover|cap|lid|faceplate|bezel|shroud|guard|shell|backplate|base\s+plate)\b/.test(
       nameLower
     )
   ) {
@@ -620,8 +688,14 @@ export function adaptDesign(
   });
 
   const objectContext = `${spec.objectName || ""} ${spec.designPhilosophy || ""} ${spec.summary || ""} ${spec.parts.map((p) => p.name).join(" ")}`.toLowerCase();
+  const isBladelessFanObject =
+    !isPreset &&
+    /\b(dyson|bladeless|coanda|air\s+multiplier|hepa\s+purifier|pure\s+cool|aeroloop|tower\s+fan)\b/.test(
+      objectContext
+    );
   const isTallFrameObject =
     !isPreset &&
+    !isBladelessFanObject &&
     /\b(easel|h-frame|a-frame|canvas|stand|tripod|mast|lumber|rack|gantry|column|tower)\b/.test(
       objectContext
     );
@@ -632,7 +706,8 @@ export function adaptDesign(
           p.name,
           p.roleInAssembly,
           p.description,
-          isTallFrameObject
+          isTallFrameObject,
+          isBladelessFanObject
         )
       )
     : [];
@@ -646,12 +721,79 @@ export function adaptDesign(
     }
   }
 
+  // Compute median part scale across raw live parts so unit mix-ups and outlier giant parts can be clamped
+  const rawMaxDims: number[] = [];
+  const rawFootprints: number[] = [];
+  const rawHeights: number[] = [];
+  const rawVolumes: number[] = [];
+  if (!isPreset) {
+    for (const p of spec.parts) {
+      let [dx, dy, dz] = p.dims_mm || [50, 35, 50];
+      const maxRaw = Math.max(dx, dy, dz);
+      // Unit mix-up: meters -> mm
+      if (maxRaw > 0 && maxRaw <= 3.5) {
+        dx *= 1000;
+        dy *= 1000;
+        dz *= 1000;
+      } else if (maxRaw > 380) {
+        // 10x mm / micrometers -> mm
+        dx *= 0.1;
+        dy *= 0.1;
+        dz *= 0.1;
+      }
+      rawMaxDims.push(Math.max(12, Math.min(220, Math.max(dx, dy, dz))));
+      rawFootprints.push(Math.max(12, Math.min(200, Math.max(dx, dz))));
+      rawHeights.push(Math.max(8, Math.min(180, dy)));
+      rawVolumes.push(Math.max(1000, dx * dy * dz));
+    }
+  }
+  const getMedian = (arr: number[], fallback: number): number => {
+    if (arr.length === 0) return fallback;
+    const sorted = [...arr].sort((a, b) => a - b);
+    const mid = Math.floor(sorted.length / 2);
+    return sorted.length % 2 === 0
+      ? (sorted[mid - 1] + sorted[mid]) * 0.5
+      : sorted[mid];
+  };
+  const cmUnitMixup = !isPreset && getMedian(rawMaxDims, 70) < 16;
+  const medianMaxDim = Math.max(
+    48,
+    Math.min(125, getMedian(rawMaxDims, 76) * (cmUnitMixup ? 10 : 1))
+  );
+  const medianFootprint = Math.max(
+    44,
+    Math.min(115, getMedian(rawFootprints, 68) * (cmUnitMixup ? 10 : 1))
+  );
+  const medianHeight = Math.max(
+    24,
+    Math.min(72, getMedian(rawHeights, 38) * (cmUnitMixup ? 10 : 1))
+  );
+  const medianVolume = Math.max(
+    24000,
+    getMedian(rawVolumes, 95000) * (cmUnitMixup ? 1000 : 1)
+  );
+
   const roleCounters: Record<string, number> = {};
   const nextRoleIdx = (r: string) => {
     const c = roleCounters[r] ?? 0;
     roleCounters[r] = c + 1;
     return c;
   };
+
+  const VISUAL_PRESET_ROLES = new Set<LivePartRole>([
+    "coanda_loop_full",
+    "coanda_loop_lower",
+    "coanda_loop_upper",
+    "coanda_plenum",
+    "perforated_shroud",
+    "hepa_filter",
+    "purifier_base",
+    "stator_ring",
+    "blower_fan",
+    "h_frame",
+    "caster",
+    "shelf",
+  ]);
 
   const printed: PrintedPartSpec[] = [];
   const purchased: PurchasedPartSpec[] = [];
@@ -661,6 +803,29 @@ export function adaptDesign(
   spec.parts.forEach((p, idx) => {
     let shape = normalizePartShape(p.shape) as PartShape;
     let dims_mm: [number, number, number] = [...p.dims_mm];
+
+    if (!isPreset) {
+      // 1. Unit mix-up normalization on dims_mm
+      const maxD = Math.max(dims_mm[0], dims_mm[1], dims_mm[2]);
+      if (maxD > 0 && maxD <= 3.5) {
+        dims_mm = [dims_mm[0] * 1000, dims_mm[1] * 1000, dims_mm[2] * 1000];
+      } else if (cmUnitMixup && maxD < 25) {
+        dims_mm = [dims_mm[0] * 10, dims_mm[1] * 10, dims_mm[2] * 10];
+      } else if (maxD > 360) {
+        const shrink = 180 / maxD;
+        dims_mm = [
+          Math.round(dims_mm[0] * shrink),
+          Math.round(dims_mm[1] * shrink),
+          Math.round(dims_mm[2] * shrink),
+        ];
+      }
+      dims_mm = [
+        Math.max(10, Math.min(210, Math.round(dims_mm[0]))),
+        Math.max(6, Math.min(210, Math.round(dims_mm[1]))),
+        Math.max(10, Math.min(210, Math.round(dims_mm[2]))),
+      ];
+    }
+
     let params = enrichPartParams(shape, p.params, dims_mm, zUp);
     let position = toThreeVec3(p.position, zUp);
     let explode = toThreeVec3(p.explode, zUp);
@@ -690,53 +855,147 @@ export function adaptDesign(
     const isPartCadGrounded = Boolean(
       p.cadGrounded || p.stlBase64 || p.scadCode
     );
+    const role = !isPreset ? liveRoles[idx] || "bracket" : "bracket";
 
-    if (!isPreset && isPartCadGrounded) {
-      // Preserve CAD-grounded dims_mm, position, rotation, and explode from runCadAgent;
-      // refine proxy shapes for purchased off-the-shelf hardware when defaulted to 'box'.
-      if (p.kind === "purchased" && shape === "box") {
-        const nameLower = `${p.name || ""} ${p.roleInAssembly || ""}`.toLowerCase();
-        const r = Math.max(5, Math.min(dims_mm[0], dims_mm[2]) / 2);
-        const h = Math.max(4, dims_mm[1]);
-        if (
-          /\b(hepa|filter|cartridge|sleeve|collar|tube|bushing|bearing|ring)\b/.test(
-            nameLower
-          )
-        ) {
-          shape = "tube";
-          params = {
-            ...params,
-            outerRadius: r,
-            innerRadius: Math.max(2, r * 0.65),
-            height: h,
-          };
-        } else if (/\b(caster|wheel|roller)\b/.test(nameLower)) {
-          shape = "cylinder";
-          params = {
-            ...params,
-            rolePreset: "caster_wheel",
-            radius: 18,
-            wheelWidth: 12,
-            isQuadSet: (p.quantity ?? 1) >= 4,
-          };
-        } else if (
-          /\b(fan|blower|motor|pump|magnet|magsafe|disc|screw|bolt|insert|heat-set|pin|rod|shaft|spring|standoff|sensor|lens)\b/.test(
-            nameLower
-          )
-        ) {
-          shape = "cylinder";
-          params = {
-            ...params,
-            radius: r,
-            height: h,
-          };
-        }
-      }
-    } else if (!isPreset) {
-      const role = liveRoles[idx] || "bracket";
+    if (!isPreset && (!isPartCadGrounded || VISUAL_PRESET_ROLES.has(role))) {
       const rIdx = nextRoleIdx(role);
 
       switch (role) {
+        case "coanda_loop_full": {
+          shape = "tube";
+          dims_mm = [186, 232, 48];
+          params = {
+            ...params,
+            rolePreset: "coanda_airfoil_loop",
+            width: 186,
+            height: 232,
+            depth: 48,
+          };
+          position = [0, 214, 0];
+          rotation = [0, 0, 0];
+          explode = [0, 105, 0];
+          break;
+        }
+        case "coanda_loop_lower": {
+          shape = "tube";
+          dims_mm = [186, 128, 46];
+          params = {
+            ...params,
+            rolePreset: "coanda_airfoil_lower",
+            width: 186,
+            height: 128,
+            depth: 46,
+          };
+          position = [0, 162, 0];
+          rotation = [0, 0, 0];
+          explode = [0, 58, 28];
+          break;
+        }
+        case "coanda_loop_upper": {
+          shape = "tube";
+          dims_mm = [186, 128, 46];
+          params = {
+            ...params,
+            rolePreset: "coanda_airfoil_upper",
+            width: 186,
+            height: 128,
+            depth: 46,
+          };
+          position = [0, 252, 0];
+          rotation = [0, 0, 0];
+          explode = [0, 120, 0];
+          break;
+        }
+        case "coanda_plenum": {
+          shape = "tube";
+          dims_mm = [108, 46, 54];
+          params = {
+            ...params,
+            rolePreset: "coanda_plenum_neck",
+            width: 108,
+            height: 46,
+            depth: 54,
+          };
+          position = [0, 88, 0];
+          rotation = [0, 0, 0];
+          explode = [0, 44, 38];
+          break;
+        }
+        case "stator_ring": {
+          shape = "tube";
+          dims_mm = [142, 20, 142];
+          params = {
+            ...params,
+            rolePreset: "annular_retainer_ring",
+            outerRadius: 71,
+            innerRadius: 46,
+            height: 20,
+          };
+          position = [0, 58, 0];
+          rotation = [0, 0, 0];
+          explode = [0, 26, -56];
+          break;
+        }
+        case "perforated_shroud": {
+          shape = "tube";
+          dims_mm = [148, 102, 148];
+          params = {
+            ...params,
+            rolePreset: "perforated_intake_drum",
+            outerRadius: 74,
+            innerRadius: 68,
+            height: 102,
+          };
+          position = [0, 10, 0];
+          rotation = [0, 0, 0];
+          explode = [-76, 0, 52];
+          break;
+        }
+        case "hepa_filter": {
+          shape = "tube";
+          dims_mm = [128, 92, 128];
+          params = {
+            ...params,
+            rolePreset: "hepa_pleated_filter",
+            outerRadius: 64,
+            innerRadius: 44,
+            height: 92,
+          };
+          position = [0, 10, 0];
+          rotation = [0, 0, 0];
+          explode = [78, 0, 52];
+          break;
+        }
+        case "purifier_base": {
+          shape = "cylinder";
+          dims_mm = [158, 28, 158];
+          params = {
+            ...params,
+            rolePreset: "purifier_base_pan",
+            width: 158,
+            height: 28,
+            depth: 158,
+          };
+          position = [0, -42, 0];
+          rotation = [0, 0, 0];
+          explode = [0, -76, 0];
+          break;
+        }
+        case "blower_fan": {
+          shape = "gear_simple";
+          dims_mm = [108, 24, 108];
+          params = {
+            ...params,
+            outerRadius: 52,
+            thickness: 22,
+            teeth: 9,
+            boreRadius: 15,
+          };
+          position = [0, 42, 0];
+          rotation = [0, 0, 0];
+          explode = [74, 22, -44];
+          break;
+        }
         case "h_frame": {
           shape = "box";
           dims_mm = [136, 204, 96];
@@ -958,6 +1217,128 @@ export function adaptDesign(
           explode = [Math.sign(bx) * 78, 35, 65];
           break;
         }
+      }
+    } else if (!isPreset && isPartCadGrounded) {
+      // CAD-grounded live part without a specialized rolePreset:
+      // 1. Clamp any giant/enclosing part down to median part scale
+      const vol = dims_mm[0] * dims_mm[1] * dims_mm[2];
+      const maxPartDim = Math.max(dims_mm[0], dims_mm[1], dims_mm[2]);
+      const isEnclosingOutlier =
+        vol > medianVolume * 2.4 ||
+        maxPartDim > medianMaxDim * 1.55 ||
+        (Math.max(dims_mm[0], dims_mm[2]) > 125 && dims_mm[1] > 90);
+      if (isEnclosingOutlier) {
+        const capW = Math.round(Math.min(128, medianFootprint * 1.15));
+        const capH = Math.round(Math.min(74, medianHeight * 1.15));
+        dims_mm = [
+          Math.min(dims_mm[0], capW),
+          Math.min(dims_mm[1], capH),
+          Math.min(dims_mm[2], capW),
+        ];
+      }
+
+      // 2. Refine proxy shapes for purchased off-the-shelf hardware
+      if (p.kind === "purchased" && shape === "box") {
+        const nameLower = `${p.name || ""} ${p.roleInAssembly || ""}`.toLowerCase();
+        const r = Math.max(5, Math.min(dims_mm[0], dims_mm[2]) / 2);
+        const h = Math.max(4, dims_mm[1]);
+        if (
+          /\b(hepa|filter|cartridge|sleeve|collar|tube|bushing|bearing|ring)\b/.test(
+            nameLower
+          )
+        ) {
+          shape = "tube";
+          params = {
+            ...params,
+            outerRadius: r,
+            innerRadius: Math.max(2, r * 0.68),
+            height: h,
+          };
+        } else if (
+          /\b(fan|blower|motor|pump|magnet|magsafe|disc|screw|bolt|insert|heat-set|pin|rod|shaft|spring|standoff|sensor|lens)\b/.test(
+            nameLower
+          )
+        ) {
+          shape = "cylinder";
+          params = {
+            ...params,
+            radius: r,
+            height: h,
+          };
+        }
+      }
+
+      // 3. Synchronize params with clamped dims_mm so radius never equals diameter (2x bug)
+      const clampedR = Math.max(4, Math.round(Math.min(dims_mm[0], dims_mm[2]) * 0.5));
+      const clampedH = Math.max(4, Math.round(dims_mm[1]));
+      params = {
+        ...params,
+        width: dims_mm[0],
+        w: dims_mm[0],
+        height: clampedH,
+        h: clampedH,
+        depth: dims_mm[2],
+        d: dims_mm[2],
+      };
+      if (
+        shape === "cylinder" ||
+        shape === "tube" ||
+        shape === "cone" ||
+        shape === "funnel" ||
+        shape === "gear_simple" ||
+        shape === "sphere"
+      ) {
+        const curOuterR = Number(
+          params.outerRadius ?? params.rOuter ?? params.radius ?? params.r ?? clampedR
+        );
+        const safeOuterR =
+          curOuterR > clampedR * 1.05 || curOuterR < 3 ? clampedR : curOuterR;
+        params.radius = safeOuterR;
+        params.r = safeOuterR;
+        params.outerRadius = safeOuterR;
+        params.rOuter = safeOuterR;
+        if (typeof params.diameter === "number") {
+          params.diameter = safeOuterR * 2;
+        }
+        if (typeof params.od === "number") {
+          params.od = safeOuterR * 2;
+        }
+        if (shape === "tube") {
+          const curInner = Number(params.innerRadius ?? params.rInner ?? safeOuterR * 0.72);
+          const safeInner = Math.max(
+            2,
+            Math.min(safeOuterR - 2.4, curInner > safeOuterR - 2 ? safeOuterR * 0.74 : curInner)
+          );
+          params.innerRadius = safeInner;
+          params.rInner = safeInner;
+        }
+      }
+
+      // 4. Sanity-clamp live positions & explode vectors (handle meter unit mix-ups and wild coordinates)
+      const posMag = Math.hypot(position[0], position[1], position[2]);
+      if (posMag > 0 && posMag < 2.5) {
+        position = [position[0] * 1000, position[1] * 1000, position[2] * 1000];
+      }
+      position = [
+        Math.max(-160, Math.min(160, Math.round(position[0]))),
+        Math.max(-65, Math.min(280, Math.round(position[1]))),
+        Math.max(-160, Math.min(160, Math.round(position[2]))),
+      ];
+      const expMag = Math.hypot(explode[0], explode[1], explode[2]);
+      if (expMag > 190 && expMag > 0) {
+        const s = 140 / expMag;
+        explode = [
+          Math.round(explode[0] * s),
+          Math.round(explode[1] * s),
+          Math.round(explode[2] * s),
+        ];
+      } else if (expMag < 18) {
+        const ang = (idx / Math.max(1, spec.parts.length)) * Math.PI * 2;
+        explode = [
+          Math.round(Math.cos(ang) * 55),
+          idx === 0 ? -55 : Math.round(30 + idx * 14),
+          Math.round(Math.sin(ang) * 55),
+        ];
       }
     }
 

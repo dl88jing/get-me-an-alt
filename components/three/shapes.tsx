@@ -1232,6 +1232,70 @@ function buildCoandaAirfoilLoopHalfGeometry(
   return loopArc;
 }
 
+function buildCoandaAirfoilLoopFullGeometry(
+  params: PartParams
+): THREE.BufferGeometry {
+  const w = Math.max(156, pickNum(params, ["w", "width"], 186));
+  const h = Math.max(190, pickNum(params, ["h", "height"], 238));
+  const chordDepth = Math.max(38, pickNum(params, ["d", "depth"], 48));
+  const profileT = Math.max(18, Math.min(25, w * 0.115));
+
+  const rxOuter = w / 2;
+  const ryOuter = h / 2;
+  const rxInner = Math.max(42, rxOuter - profileT);
+  const ryInner = Math.max(60, ryOuter - profileT);
+
+  const shape = new THREE.Shape();
+  const steps = 64;
+  for (let i = 0; i <= steps; i++) {
+    const t = (i / steps) * Math.PI * 2;
+    // Superellipse (n=2.25) stadium-oval contour for authentic Dyson Pure Cool loop silhouette
+    const cosT = Math.cos(t);
+    const sinT = Math.sin(t);
+    const x = Math.sign(cosT) * Math.pow(Math.abs(cosT), 0.88) * rxOuter;
+    const y = Math.sign(sinT) * Math.pow(Math.abs(sinT), 0.84) * ryOuter;
+    if (i === 0) shape.moveTo(x, y);
+    else shape.lineTo(x, y);
+  }
+  shape.closePath();
+
+  const hole = new THREE.Path();
+  for (let i = steps; i >= 0; i--) {
+    const t = (i / steps) * Math.PI * 2;
+    const cosT = Math.cos(t);
+    const sinT = Math.sin(t);
+    const x = Math.sign(cosT) * Math.pow(Math.abs(cosT), 0.88) * rxInner;
+    const y = Math.sign(sinT) * Math.pow(Math.abs(sinT), 0.84) * ryInner;
+    if (i === steps) hole.moveTo(x, y);
+    else hole.lineTo(x, y);
+  }
+  hole.closePath();
+  shape.holes.push(hole);
+
+  const loopRing = new THREE.ExtrudeGeometry(shape, {
+    depth: chordDepth,
+    bevelEnabled: true,
+    bevelThickness: 2.6,
+    bevelSize: 2.0,
+    bevelSegments: 3,
+    curveSegments: 48,
+  });
+  loopRing.center();
+
+  const throatPedestal = buildTubeGeometry({
+    outerRadius: 34,
+    innerRadius: 24,
+    height: 24,
+  });
+  throatPedestal.translate(0, -ryOuter - 8, 0);
+
+  const merged = mergeBufferGeometries([loopRing, throatPedestal]);
+  merged.center();
+  merged.computeBoundingBox();
+  merged.computeBoundingSphere();
+  return merged;
+}
+
 function buildDual2020RailsGeometry(params: PartParams): THREE.BufferGeometry {
   const w = Math.max(180, pickNum(params, ["w", "width"], 250));
   const d = Math.max(48, pickNum(params, ["d", "depth"], 68));
@@ -1730,6 +1794,8 @@ export function buildPartGeometry(
     geometry = buildCoandaAirfoilLoopHalfGeometry(params, "lower");
   } else if (rolePreset === "coanda_airfoil_upper") {
     geometry = buildCoandaAirfoilLoopHalfGeometry(params, "upper");
+  } else if (rolePreset === "coanda_airfoil_loop") {
+    geometry = buildCoandaAirfoilLoopFullGeometry(params);
   } else if (rolePreset === "dual_2020_rails") {
     geometry = buildDual2020RailsGeometry(params);
   } else if (rolePreset === "slider_end_block") {
@@ -2027,14 +2093,199 @@ export function getCandidateStlUrls(
   return urls;
 }
 
+export interface AssemblyFramingResult {
+  defaultTarget: [number, number, number];
+  defaultCamPos: [number, number, number];
+  fitDistance: number;
+  groundY: number;
+  gridSpan: number;
+  minY: number;
+  maxY: number;
+  spanY: number;
+}
+
+/**
+ * Computes an auto-fitted camera target and camera position that frames the entire
+ * 3D assembly bounding box (union of assembled state and active explode state)
+ * with generous breathing room for HUD panels and callouts across all projects.
+ */
+export function computeAssemblyFraming(
+  parts: ResolvedAssemblyPart[],
+  options: {
+    explodeFactor?: number;
+    minExplodeFactor?: number;
+    fovDeg?: number;
+    aspect?: number;
+    groupOffset?: [number, number, number];
+    leftLegendBias?: number;
+  } = {}
+): AssemblyFramingResult {
+  const [gx, gy, gz] = options.groupOffset ?? [0, -32, 0];
+  if (!Array.isArray(parts) || parts.length === 0) {
+    return {
+      defaultTarget: [10, 32, 0],
+      defaultCamPos: [240, 180, 265],
+      fitDistance: 375,
+      groundY: -58,
+      gridSpan: 360,
+      minY: -58,
+      maxY: 120,
+      spanY: 178,
+    };
+  }
+
+  const currentExplode = Math.max(0, Math.min(1.2, options.explodeFactor ?? 0.45));
+  const minExplode = Math.max(0, Math.min(1.0, options.minExplodeFactor ?? 0));
+  const sampleFactors = Array.from(
+    new Set([0, Math.max(currentExplode, minExplode)])
+  );
+
+  let minX = Infinity;
+  let maxX = -Infinity;
+  let minY = Infinity;
+  let maxY = -Infinity;
+  let minZ = Infinity;
+  let maxZ = -Infinity;
+  let assembledMinY = Infinity;
+
+  const rotMatrix = new THREE.Matrix4();
+  const euler = new THREE.Euler();
+
+  for (const p of parts) {
+    const geo = buildPartGeometry(p.shape, p.params);
+    if (!geo.boundingBox) geo.computeBoundingBox();
+    const box = geo.boundingBox;
+
+    const rawW = Number(p.dims_mm?.[0]) || 40;
+    const rawH = Number(p.dims_mm?.[1]) || 30;
+    const rawD = Number(p.dims_mm?.[2]) || 40;
+
+    const localHx = Math.max(
+      10,
+      box ? (box.max.x - box.min.x) * 0.5 : rawW * 0.5
+    );
+    const localHy = Math.max(
+      8,
+      box ? (box.max.y - box.min.y) * 0.5 : rawH * 0.5
+    );
+    const localHz = Math.max(
+      10,
+      box ? (box.max.z - box.min.z) * 0.5 : rawD * 0.5
+    );
+
+    euler.set(
+      toRadians(p.rotation?.[0] ?? 0),
+      toRadians(p.rotation?.[1] ?? 0),
+      toRadians(p.rotation?.[2] ?? 0)
+    );
+    rotMatrix.makeRotationFromEuler(euler);
+    const me = rotMatrix.elements;
+
+    const wx =
+      Math.abs(me[0]) * localHx +
+      Math.abs(me[4]) * localHy +
+      Math.abs(me[8]) * localHz;
+    const wy =
+      Math.abs(me[1]) * localHx +
+      Math.abs(me[5]) * localHy +
+      Math.abs(me[9]) * localHz;
+    const wz =
+      Math.abs(me[2]) * localHx +
+      Math.abs(me[6]) * localHy +
+      Math.abs(me[10]) * localHz;
+
+    const pos0Y = (p.position?.[1] ?? 0) + gy;
+    assembledMinY = Math.min(assembledMinY, pos0Y - wy);
+
+    for (const ef of sampleFactors) {
+      const cx = (p.position?.[0] ?? 0) + (p.explode?.[0] ?? 0) * ef + gx;
+      const cy = (p.position?.[1] ?? 0) + (p.explode?.[1] ?? 0) * ef + gy;
+      const cz = (p.position?.[2] ?? 0) + (p.explode?.[2] ?? 0) * ef + gz;
+
+      minX = Math.min(minX, cx - wx);
+      maxX = Math.max(maxX, cx + wx);
+      minY = Math.min(minY, cy - wy);
+      maxY = Math.max(maxY, cy + wy + 12); // +12mm top callout clearance
+      minZ = Math.min(minZ, cz - wz);
+      maxZ = Math.max(maxZ, cz + wz);
+    }
+  }
+
+  const spanX = Math.max(90, maxX - minX);
+  const spanY = Math.max(110, maxY - minY);
+  const spanZ = Math.max(90, maxZ - minZ);
+
+  const centerX = (minX + maxX) * 0.5;
+  const centerY = (minY + maxY) * 0.5;
+  const centerZ = (minZ + maxZ) * 0.5;
+
+  const fovRad = THREE.MathUtils.degToRad(options.fovDeg ?? 40);
+  const tanHalfVFov = Math.tan(fovRad * 0.5);
+  const effAspect = options.aspect ?? 1.38;
+
+  // Projected spans from 3/4 perspective camera angle
+  const maxHorizSpan = Math.max(spanX, spanZ, Math.hypot(spanX, spanZ) * 0.82);
+  const projH = spanY * 0.96 + maxHorizSpan * 0.24;
+  const projW = maxHorizSpan * 1.06;
+
+  // Include generous padding for top/bottom HUD overlays and left legend box
+  const distForHeight = (projH * 0.5 * 1.28) / tanHalfVFov;
+  const distForWidth = (projW * 0.5 * 1.34) / (tanHalfVFov * effAspect);
+  const boundingRadius = 0.5 * Math.hypot(spanX, spanY, spanZ);
+
+  const fitDistance = Math.max(
+    240,
+    Math.min(1850, Math.max(distForHeight, distForWidth, boundingRadius * 2.28))
+  );
+
+  // Use a sleeker elevation angle on tall vertical assemblies so Coanda loops & towers face the camera cleanly
+  const isTallAssembly = spanY > maxHorizSpan * 1.35;
+  const rawDirX = 0.58;
+  const rawDirY = isTallAssembly ? 0.26 : 0.34;
+  const rawDirZ = 0.72;
+  const dirLen = Math.hypot(rawDirX, rawDirY, rawDirZ);
+  const dirX = rawDirX / dirLen;
+  const dirY = rawDirY / dirLen;
+  const dirZ = rawDirZ / dirLen;
+
+  // Bias target slightly left so the 3D model sits in the open viewport right of the 256px legend
+  const leftBias = options.leftLegendBias ?? 0.035;
+  const targetX = Math.round(centerX - fitDistance * leftBias);
+  const targetY = Math.round(centerY);
+  const targetZ = Math.round(centerZ);
+
+  const camX = Math.round(targetX + dirX * fitDistance);
+  const camY = Math.round(targetY + dirY * fitDistance);
+  const camZ = Math.round(targetZ + dirZ * fitDistance);
+
+  const groundY = Math.min(
+    -52,
+    Math.floor((Number.isFinite(assembledMinY) ? assembledMinY : minY) - 10)
+  );
+  const gridSpan = Math.max(360, Math.round(Math.max(maxHorizSpan * 1.8, fitDistance * 0.72)));
+
+  return {
+    defaultTarget: [targetX, targetY, targetZ],
+    defaultCamPos: [camX, camY, camZ],
+    fitDistance,
+    groundY,
+    gridSpan,
+    minY,
+    maxY,
+    spanY,
+  };
+}
+
 /**
  * Centers and orients a raw STL BufferGeometry (generated on a Z-up print bed)
- * to Three.js Y-up local coordinates so it aligns with `design.json` position/rotation.
+ * to Three.js Y-up local coordinates so it aligns with `design.json` position/rotation,
+ * and sanity-scales the mesh if its bounding box deviates significantly from `targetDimsMm`.
  */
 export function orientAndCenterStlGeometry(
   rawGeo: THREE.BufferGeometry,
   shape: PartShape | string,
-  cadGrounded?: boolean
+  cadGrounded?: boolean,
+  targetDimsMm?: [number, number, number]
 ): THREE.BufferGeometry {
   const geo = rawGeo.clone();
   geo.computeBoundingBox();
@@ -2062,10 +2313,48 @@ export function orientAndCenterStlGeometry(
   }
 
   geo.center();
+  geo.computeBoundingBox();
+
+  if (
+    Array.isArray(targetDimsMm) &&
+    targetDimsMm.length === 3 &&
+    geo.boundingBox
+  ) {
+    const curX = Math.max(1, geo.boundingBox.max.x - geo.boundingBox.min.x);
+    const curY = Math.max(1, geo.boundingBox.max.y - geo.boundingBox.min.y);
+    const curZ = Math.max(1, geo.boundingBox.max.z - geo.boundingBox.min.z);
+    const [tx, ty, tz] = targetDimsMm;
+    if (tx > 4 && ty > 4 && tz > 4) {
+      const errX = Math.abs(curX - tx) / tx;
+      const errY = Math.abs(curY - ty) / ty;
+      const errZ = Math.abs(curZ - tz) / tz;
+      if (errX > 0.35 || errY > 0.35 || errZ > 0.35) {
+        geo.scale(tx / curX, ty / curY, tz / curZ);
+        geo.center();
+      }
+    }
+  }
+
   geo.computeVertexNormals();
   geo.computeBoundingBox();
   geo.computeBoundingSphere();
   return geo;
+}
+
+function isLowDetailProceduralStlHeader(ab: ArrayBuffer, vertexCount: number): boolean {
+  if (ab.byteLength < 84) return true;
+  try {
+    const header = new TextDecoder()
+      .decode(new Uint8Array(ab, 0, 80))
+      .trim();
+    // Reject procedural-fallback STLs ("GetMeAnAlt Binary STL") when OpenSCAD WASM didn't compile them
+    if (header.startsWith("GetMeAnAlt Binary STL") && vertexCount <= 1200) {
+      return true;
+    }
+  } catch {
+    // ignore
+  }
+  return false;
 }
 
 /**
@@ -2076,14 +2365,16 @@ export function parseStlBase64Geometry(
   stlBase64: string | undefined,
   shape: PartShape | string,
   cacheKeyPrefix: string,
-  cadGrounded?: boolean
+  cadGrounded?: boolean,
+  targetDimsMm?: [number, number, number]
 ): THREE.BufferGeometry | null {
   if (!stlBase64 || typeof stlBase64 !== "string" || stlBase64.length < 64) {
     return null;
   }
+  const dimsKey = Array.isArray(targetDimsMm) ? targetDimsMm.join("x") : "";
   const cacheKey = `b64:${cacheKeyPrefix}:${shape}:${
     cadGrounded ? "1" : "0"
-  }:${stlBase64.length}:${stlBase64.slice(0, 32)}`;
+  }:${dimsKey}:${stlBase64.length}:${stlBase64.slice(0, 32)}`;
   if (STL_GEOMETRY_CACHE.has(cacheKey)) {
     return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
   }
@@ -2104,12 +2395,21 @@ export function parseStlBase64Geometry(
     }
     const parsed = getStlLoader().parse(ab);
     const posAttr = parsed.getAttribute("position");
-    // Require >36 vertices (>12 triangles) so 2-facet missing stubs and 12-facet box stubs fall back to primitive geometry
-    if (!posAttr || posAttr.count <= 36) {
+    // Require >36 vertices (>12 triangles) and reject non-OpenSCAD procedural fallback stubs
+    if (
+      !posAttr ||
+      posAttr.count <= 36 ||
+      isLowDetailProceduralStlHeader(ab, posAttr.count)
+    ) {
       STL_GEOMETRY_CACHE.set(cacheKey, null);
       return null;
     }
-    const oriented = orientAndCenterStlGeometry(parsed, shape, cadGrounded);
+    const oriented = orientAndCenterStlGeometry(
+      parsed,
+      shape,
+      cadGrounded,
+      targetDimsMm
+    );
     STL_GEOMETRY_CACHE.set(cacheKey, oriented);
     return oriented;
   } catch {
@@ -2128,16 +2428,18 @@ export async function loadPartStlGeometry(
   shape: PartShape | string,
   projectId?: string,
   stlFile?: string,
-  cadGrounded?: boolean
+  cadGrounded?: boolean,
+  targetDimsMm?: [number, number, number]
 ): Promise<THREE.BufferGeometry | null> {
   if (typeof window === "undefined") return null;
 
   const urls = getCandidateStlUrls(partId, projectId, stlFile);
   if (urls.length === 0) return null;
 
+  const dimsKey = Array.isArray(targetDimsMm) ? targetDimsMm.join("x") : "";
   const cacheKey = `${projectId || "demo"}:${partId}:${shape}:${
     cadGrounded ? "1" : "0"
-  }:${urls.join("|")}`;
+  }:${dimsKey}:${urls.join("|")}`;
   if (STL_GEOMETRY_CACHE.has(cacheKey)) {
     return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
   }
@@ -2154,14 +2456,19 @@ export async function loadPartStlGeometry(
         if (!buf || buf.byteLength < 84) continue;
         const parsed = loader.parse(buf);
         const posAttr = parsed.getAttribute("position");
-        // Reject the 2-facet (6-vertex) missing-file stub and 12-facet (36-vertex) plain box fallback stub
-        if (!posAttr || posAttr.count <= 36) {
+        // Reject the 2-facet (6-vertex) missing-file stub, 12-facet box stub, or procedural fallback header
+        if (
+          !posAttr ||
+          posAttr.count <= 36 ||
+          isLowDetailProceduralStlHeader(buf, posAttr.count)
+        ) {
           continue;
         }
         const oriented = orientAndCenterStlGeometry(
           parsed,
           shape,
-          cadGrounded
+          cadGrounded,
+          targetDimsMm
         );
         STL_GEOMETRY_CACHE.set(cacheKey, oriented);
         return oriented;
@@ -2214,8 +2521,7 @@ export function usePartGeometryAndEdges(
   const hasRolePreset = Boolean(
     part.params &&
       typeof part.params.rolePreset === "string" &&
-      part.params.rolePreset.length > 0 &&
-      (!part.cadGrounded || isPresetProjectId(projectId))
+      part.params.rolePreset.length > 0
   );
 
   const inlineStlGeometry = useMemo(() => {
@@ -2226,7 +2532,8 @@ export function usePartGeometryAndEdges(
       part.stlBase64,
       part.shape,
       `${projectId || "live"}:${part.partId}`,
-      part.cadGrounded
+      part.cadGrounded,
+      part.dims_mm
     );
   }, [
     part.category,
@@ -2235,6 +2542,7 @@ export function usePartGeometryAndEdges(
     part.shape,
     part.partId,
     part.cadGrounded,
+    part.dims_mm,
     projectId,
   ]);
 
@@ -2242,9 +2550,10 @@ export function usePartGeometryAndEdges(
     if (part.category !== "printed" || hasRolePreset) return null;
     if (inlineStlGeometry) return inlineStlGeometry;
     const urls = getCandidateStlUrls(part.partId, projectId, part.stlFile);
+    const dimsKey = Array.isArray(part.dims_mm) ? part.dims_mm.join("x") : "";
     const cacheKey = `${projectId || "demo"}:${part.partId}:${part.shape}:${
       part.cadGrounded ? "1" : "0"
-    }:${urls.join("|")}`;
+    }:${dimsKey}:${urls.join("|")}`;
     return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
   });
 
@@ -2263,7 +2572,8 @@ export function usePartGeometryAndEdges(
       part.shape,
       projectId,
       part.stlFile,
-      part.cadGrounded
+      part.cadGrounded,
+      part.dims_mm
     ).then((loaded) => {
       if (!cancelled && loaded) {
         setStlGeo(loaded);
@@ -2278,6 +2588,7 @@ export function usePartGeometryAndEdges(
     part.shape,
     part.stlFile,
     part.cadGrounded,
+    part.dims_mm,
     inlineStlGeometry,
     projectId,
     hasRolePreset,

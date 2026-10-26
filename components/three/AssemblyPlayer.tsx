@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useCallback,
 } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls, Line, Html, ContactShadows } from "@react-three/drei";
 import * as THREE from "three";
 import {
@@ -19,7 +19,11 @@ import {
   resolveAssemblyParts,
 } from "./types";
 import { adaptInstructions } from "./adapters";
-import { usePartGeometryAndEdges, toRadians } from "./shapes";
+import {
+  computeAssemblyFraming,
+  usePartGeometryAndEdges,
+  toRadians,
+} from "./shapes";
 
 export interface AssemblyPlayerProps {
   design?: AnyDesignInput;
@@ -510,6 +514,48 @@ const ToolSvgIcon: React.FC<{ tool: ToolKey; className?: string }> = ({
   }
 };
 
+interface PlayerCameraRigProps {
+  defaultTarget: [number, number, number];
+  defaultCamPos: [number, number, number];
+  fitDistance: number;
+}
+
+const PlayerCameraRig: React.FC<PlayerCameraRigProps> = ({
+  defaultTarget,
+  defaultCamPos,
+  fitDistance,
+}) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const controlsRef = useRef<any>(null);
+  const { camera } = useThree();
+
+  useEffect(() => {
+    camera.position.set(defaultCamPos[0], defaultCamPos[1], defaultCamPos[2]);
+    if (controlsRef.current) {
+      controlsRef.current.target.set(
+        defaultTarget[0],
+        defaultTarget[1],
+        defaultTarget[2]
+      );
+      controlsRef.current.update();
+    } else {
+      camera.lookAt(defaultTarget[0], defaultTarget[1], defaultTarget[2]);
+    }
+  }, [defaultTarget, defaultCamPos, camera]);
+
+  return (
+    <OrbitControls
+      ref={controlsRef}
+      makeDefault
+      enableDamping
+      dampingFactor={0.08}
+      minDistance={55}
+      maxDistance={Math.max(1200, Math.round(fitDistance * 2.5))}
+      target={defaultTarget}
+    />
+  );
+};
+
 export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
   design,
   instructions,
@@ -525,37 +571,17 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
     [design, instructions]
   );
 
-  const playerFraming = useMemo(() => {
-    if (allParts.length === 0) {
-      return {
-        target: [12, 24, 0] as [number, number, number],
-        camPos: [235, 175, 255] as [number, number, number],
-      };
-    }
-    let minY = Infinity;
-    let maxY = -Infinity;
-    let maxHoriz = 80;
-    for (const p of allParts) {
-      const py = p.position[1];
-      const halfH = Math.max(15, (p.dims_mm?.[2] ?? p.dims_mm?.[1] ?? 30) * 0.45);
-      minY = Math.min(minY, py - halfH);
-      maxY = Math.max(maxY, py + halfH);
-      const hx = Math.abs(p.position[0]) + (p.dims_mm?.[0] ?? 40) * 0.4;
-      const hz = Math.abs(p.position[2]) + (p.dims_mm?.[1] ?? 40) * 0.4;
-      maxHoriz = Math.max(maxHoriz, hx, hz);
-    }
-    const spanY = Math.max(120, maxY - minY);
-    const centerY = (minY + maxY) / 2 - 32;
-    const scale = Math.max(0.95, Math.min(1.65, Math.max(spanY / 195, maxHoriz / 135)));
-    return {
-      target: [12, Math.round(centerY), 0] as [number, number, number],
-      camPos: [
-        Math.round(230 * scale),
-        Math.round(centerY + 135 * scale),
-        Math.round(250 * scale),
-      ] as [number, number, number],
-    };
-  }, [allParts]);
+  const playerFraming = useMemo(
+    () =>
+      computeAssemblyFraming(allParts, {
+        explodeFactor: 0.45,
+        minExplodeFactor: 0.45,
+        fovDeg: 38,
+        groupOffset: [18, -32, 0],
+        leftLegendBias: 0.04,
+      }),
+    [allParts]
+  );
 
   const adaptedInstructions = useMemo(
     () => adaptInstructions(instructions, design),
@@ -827,7 +853,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           dpr={[1, 2]}
           gl={{ preserveDrawingBuffer: true, antialias: true }}
           camera={{
-            position: playerFraming.camPos,
+            position: playerFraming.defaultCamPos,
             fov: 38,
             near: 1,
             far: 3000,
@@ -886,17 +912,17 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
           </group>
 
           {/* Subtle Sepia Ground Shadow & Reference Grid */}
-          <group position={[18, -56, 0]}>
+          <group position={[18, playerFraming.groundY, 0]}>
             <ContactShadows
               position={[0, 0.1, 0]}
               opacity={0.45}
-              scale={320}
+              scale={Math.max(320, playerFraming.gridSpan)}
               blur={2.5}
-              far={160}
+              far={200}
               color="#050302"
             />
             <gridHelper
-              args={[300, 12, "#5C4930", "#282016"]}
+              args={[playerFraming.gridSpan, 14, "#5C4930", "#282016"]}
               position={[0, 0, 0]}
             />
           </group>
@@ -910,13 +936,10 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
             onAdvanceStep={handleAdvanceStep}
           />
 
-          <OrbitControls
-            makeDefault
-            enableDamping
-            dampingFactor={0.08}
-            minDistance={55}
-            maxDistance={900}
-            target={playerFraming.target}
+          <PlayerCameraRig
+            defaultTarget={playerFraming.defaultTarget}
+            defaultCamPos={playerFraming.defaultCamPos}
+            fitDistance={playerFraming.fitDistance}
           />
         </Canvas>
 
