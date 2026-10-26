@@ -538,6 +538,7 @@ export function ModifyChat({
               type="button"
               onClick={() => setIsExpanded((prev) => !prev)}
               aria-expanded={showBody}
+              aria-controls="modify-chat-presets-panel"
               className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
             >
               <span>{showBody ? 'Hide Presets' : 'Presets & Options'}</span>
@@ -589,18 +590,25 @@ export function ModifyChat({
 
       {/* Collapsible Preset Chips & Routing Preview */}
       {showBody && (
-        <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#dfd3be]/15">
+        <div
+          id="modify-chat-presets-panel"
+          className="flex flex-wrap items-center gap-2 pt-2 border-t border-[#dfd3be]/15"
+        >
           <span className="text-xs font-medium text-[#b5a48b]">Presets:</span>
           {PRESET_SUGGESTIONS.map((preset) => (
             <button
               key={preset.label}
               type="button"
               disabled={isRunning}
+              aria-label={`${preset.label} (${preset.agentsPreview.length} affected agents)`}
               onClick={() => handleRunModify(preset.prompt)}
               className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-[#dfd3be]/20 bg-[#231d15] px-3 py-2 text-xs font-medium text-[#faf4e8] hover:border-[#f3d478] hover:bg-[#2e261c] disabled:opacity-40"
             >
               <span>{preset.label}</span>
-              <span className="rounded bg-[#0c0a08] px-1.5 py-0.5 font-mono text-[10px] text-[#b5a48b]">
+              <span
+                aria-hidden="true"
+                className="rounded bg-[#0c0a08] px-1.5 py-0.5 font-mono text-[10px] text-[#b5a48b]"
+              >
                 {preset.agentsPreview.length}a
               </span>
             </button>
@@ -610,7 +618,11 @@ export function ModifyChat({
 
       {/* Live Execution Progress Strip */}
       {isRunning && (
-        <div className="rounded-xl border border-[#f3d478]/45 bg-[#14100b]/95 p-3.5 space-y-2.5 animate-slide-in">
+        <div
+          role="status"
+          aria-live="polite"
+          className="rounded-xl border border-[#f3d478]/45 bg-[#14100b]/95 p-3.5 space-y-2.5 animate-slide-in"
+        >
           <div className="flex flex-wrap items-center justify-between gap-2 text-xs">
             <div className="flex items-center gap-2 font-codex text-[#f3d478]">
               <Loader2 className="h-3.5 w-3.5 animate-spin text-[#f3d478]" />

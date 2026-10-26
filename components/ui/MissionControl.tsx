@@ -1342,21 +1342,23 @@ export function MissionControl({
             <>
               <button
                 type="button"
+                aria-label={isPaused ? 'Resume pipeline replay' : 'Pause pipeline replay'}
                 onClick={() => setIsPaused((p) => !p)}
                 className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478]"
               >
                 {isPaused ? (
                   <>
-                    <Play className="h-3.5 w-3.5 text-[#f3d478]" /> Resume
+                    <Play aria-hidden="true" className="h-3.5 w-3.5 text-[#f3d478]" /> Resume
                   </>
                 ) : (
                   <>
-                    <Pause className="h-3.5 w-3.5 text-[#e5bd47]" /> Pause
+                    <Pause aria-hidden="true" className="h-3.5 w-3.5 text-[#e5bd47]" /> Pause
                   </>
                 )}
               </button>
               <button
                 type="button"
+                aria-label={`Toggle replay speed (currently ${speedMultiplier}x)`}
                 onClick={() => setSpeedMultiplier((s) => (s === 1 ? 2 : 1))}
                 className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
               >
@@ -1364,22 +1366,24 @@ export function MissionControl({
               </button>
               <button
                 type="button"
+                aria-label="Skip replay to completion"
                 onClick={finishImmediately}
                 className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478]"
               >
-                <FastForward className="h-3.5 w-3.5" /> Skip
+                <FastForward aria-hidden="true" className="h-3.5 w-3.5" /> Skip
               </button>
             </>
           ) : (
             <button
               type="button"
+              aria-label="Replay 9-agent pipeline execution graph"
               onClick={() => {
                 setDetailsOpen(true);
                 handleReplayClick();
               }}
               className="inline-flex min-h-[44px] items-center gap-1 sm:gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
             >
-              <RotateCcw className="h-3.5 w-3.5" />
+              <RotateCcw aria-hidden="true" className="h-3.5 w-3.5" />
               <span className="sm:hidden">Replay</span>
               <span className="hidden sm:inline">Replay Graph</span>
             </button>
@@ -1389,6 +1393,7 @@ export function MissionControl({
             type="button"
             onClick={() => setDetailsOpen((o) => !o)}
             aria-expanded={showFullGraph}
+            aria-controls="mission-control-graph-panel"
             className="inline-flex min-h-[44px] items-center gap-1 sm:gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
           >
             <span className="sm:hidden">{showFullGraph ? 'Hide' : 'Logs'}</span>
@@ -1399,7 +1404,10 @@ export function MissionControl({
 
       {/* Directed Agent Graph Topology SVG (always available when expanded or replaying) */}
       {showFullGraph && (
-        <div className="space-y-4 pt-2 border-t border-[#dfd3be]/15">
+        <div
+          id="mission-control-graph-panel"
+          className="space-y-4 pt-2 border-t border-[#dfd3be]/15"
+        >
           <div className="relative overflow-x-auto rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-3">
         <svg
           viewBox="0 0 1245 228"

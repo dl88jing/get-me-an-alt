@@ -172,17 +172,22 @@ export function BomSummary({
               <button
                 type="button"
                 onClick={onCopyCsv}
+                aria-label={
+                  copiedCsv
+                    ? 'BOM CSV copied to clipboard'
+                    : 'Copy BOM as CSV to clipboard'
+                }
                 data-testid="bom-copy-csv-btn"
                 className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/20 bg-[#0c0a08] px-2.5 py-1 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
               >
                 {copiedCsv ? (
                   <>
-                    <Check className="h-3.5 w-3.5 text-[#e5bd47]" />
+                    <Check aria-hidden="true" className="h-3.5 w-3.5 text-[#e5bd47]" />
                     <span className="text-[#f3d478]">Copied CSV</span>
                   </>
                 ) : (
                   <>
-                    <Copy className="h-3.5 w-3.5 text-[#e5bd47]" />
+                    <Copy aria-hidden="true" className="h-3.5 w-3.5 text-[#e5bd47]" />
                     <span>Copy CSV</span>
                   </>
                 )}
@@ -192,10 +197,11 @@ export function BomSummary({
               <button
                 type="button"
                 onClick={onDownloadCsv}
+                aria-label="Export BOM as CSV file"
                 data-testid="bom-download-csv-btn"
                 className="inline-flex min-h-[36px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/20 bg-[#0c0a08] px-2.5 py-1 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
               >
-                <Download className="h-3.5 w-3.5 text-[#e5bd47]" />
+                <Download aria-hidden="true" className="h-3.5 w-3.5 text-[#e5bd47]" />
                 <span>Export .CSV</span>
               </button>
             )}
