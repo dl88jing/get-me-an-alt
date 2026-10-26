@@ -126,7 +126,16 @@ function buildBaselinePlatesAndStls(
     const bundle = generateCadBundle(design, { printerId, objectId });
     for (const art of bundle.stlArtifacts) {
       fs.writeFileSync(path.join(cwd, art.stlFile), art.bytes);
+      const targetPart = design.parts.find((p) => p.id === art.partId);
+      if (targetPart) {
+        targetPart.stlBase64 = Buffer.from(art.bytes).toString('base64');
+        targetPart.stlFile = art.stlFile;
+      }
     }
+    fs.writeFileSync(
+      path.join(cwd, 'design.json'),
+      JSON.stringify(design, null, 2)
+    );
     for (const plate3mf of bundle.plate3mfArtifacts) {
       fs.writeFileSync(path.join(cwd, plate3mf.relativePath), plate3mf.bytes);
     }
@@ -1333,6 +1342,7 @@ async function executePipelineStages(
     const designRes = await runDesignerAgent({
       analysis: manifest.analysis,
       sources: manifest.sources!,
+      teardown: manifest.teardown,
       printerId: targetPrinterId,
       cwd,
       onLog: makeLogger('designer'),
@@ -1591,10 +1601,12 @@ async function executePipelineStages(
         const cadRes = await runCadAgent({
           design: manifest.design,
           analysis: manifest.analysis,
+          teardown: manifest.teardown,
+          sources: manifest.sources,
           cwd,
           objectId: manifest.id,
           printerId: targetPrinterId,
-          maxRetries: 3,
+          maxRetries: 2,
           preferRestForSpeed: Boolean(process.env.VERCEL),
           onLog: (entry) => {
             const st = getStage('cad');
@@ -1617,7 +1629,26 @@ async function executePipelineStages(
             });
           },
         });
-        const { bundle: _bundle, ...platesArtifact } = cadRes.data;
+        const {
+          bundle: _bundle,
+          updatedDesign,
+          ...platesArtifact
+        } = cadRes.data;
+        if (updatedDesign) {
+          manifest.design = updatedDesign;
+          saveManifest(cwd, manifest);
+          emitSseEvent(cwd, manifest, {
+            agent: 'designer',
+            phase: 'artifact',
+            message:
+              'Updated design.json with per-part OpenSCAD STLs & grounded 3D assembly transforms',
+            data: {
+              stageId: 'designer',
+              artifactFile: 'design.json',
+              artifact: manifest.design,
+            },
+          });
+        }
         const platesData = platesArtifact as unknown as PlatesData;
         manifest.plates = platesData;
         finishStage('cad', {

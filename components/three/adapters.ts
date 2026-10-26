@@ -516,6 +516,10 @@ export function adaptDesign(
           roleInAssembly: p.roleInAssembly,
           bomRef: p.bomRef,
           step: p.step ?? firstStepByPartId.get(p.id),
+          stlFile: p.stlFile,
+          stlBase64: p.stlBase64,
+          scadCode: p.scadCode,
+          cadGrounded: p.cadGrounded,
         };
       }
     );
@@ -545,6 +549,10 @@ export function adaptDesign(
         description: p.description,
         roleInAssembly: p.roleInAssembly,
         step: p.step ?? firstStepByPartId.get(p.id),
+        stlFile: p.stlFile,
+        stlBase64: p.stlBase64,
+        scadCode: p.scadCode,
+        cadGrounded: p.cadGrounded,
         proxyShape: {
           shape,
           params,
@@ -655,7 +663,52 @@ export function adaptDesign(
       p.step ??
       idx + 1;
 
-    if (!isPreset) {
+    const isPartCadGrounded = Boolean(
+      p.cadGrounded || p.stlBase64 || p.scadCode
+    );
+
+    if (!isPreset && isPartCadGrounded) {
+      // Preserve CAD-grounded dims_mm, position, rotation, and explode from runCadAgent;
+      // refine proxy shapes for purchased off-the-shelf hardware when defaulted to 'box'.
+      if (p.kind === "purchased" && shape === "box") {
+        const nameLower = `${p.name || ""} ${p.roleInAssembly || ""}`.toLowerCase();
+        const r = Math.max(5, Math.min(dims_mm[0], dims_mm[2]) / 2);
+        const h = Math.max(4, dims_mm[1]);
+        if (
+          /\b(hepa|filter|cartridge|sleeve|collar|tube|bushing|bearing|ring)\b/.test(
+            nameLower
+          )
+        ) {
+          shape = "tube";
+          params = {
+            ...params,
+            outerRadius: r,
+            innerRadius: Math.max(2, r * 0.65),
+            height: h,
+          };
+        } else if (/\b(caster|wheel|roller)\b/.test(nameLower)) {
+          shape = "cylinder";
+          params = {
+            ...params,
+            rolePreset: "caster_wheel",
+            radius: 18,
+            wheelWidth: 12,
+            isQuadSet: (p.quantity ?? 1) >= 4,
+          };
+        } else if (
+          /\b(fan|blower|motor|pump|magnet|magsafe|disc|screw|bolt|insert|heat-set|pin|rod|shaft|spring|standoff|sensor|lens)\b/.test(
+            nameLower
+          )
+        ) {
+          shape = "cylinder";
+          params = {
+            ...params,
+            radius: r,
+            height: h,
+          };
+        }
+      }
+    } else if (!isPreset) {
       const role = liveRoles[idx] || "bracket";
       const rIdx = nextRoleIdx(role);
 
@@ -905,6 +958,10 @@ export function adaptDesign(
         roleInAssembly: p.roleInAssembly,
         bomRef: p.bomRef,
         step,
+        stlFile: p.stlFile,
+        stlBase64: p.stlBase64,
+        scadCode: p.scadCode,
+        cadGrounded: p.cadGrounded,
       });
     } else {
       purchased.push({
@@ -920,6 +977,10 @@ export function adaptDesign(
         description: p.description,
         roleInAssembly: p.roleInAssembly,
         step,
+        stlFile: p.stlFile,
+        stlBase64: p.stlBase64,
+        scadCode: p.scadCode,
+        cadGrounded: p.cadGrounded,
         proxyShape: {
           shape,
           params,
@@ -1373,6 +1434,10 @@ export function resolveAssemblyParts(
         rotation: node.rotation || [0, 0, 0],
         explode: node.explode || [0, 40, 0],
         step: stepNum,
+        stlFile: printed.stlFile,
+        stlBase64: printed.stlBase64,
+        scadCode: printed.scadCode,
+        cadGrounded: printed.cadGrounded,
         bomRef: printed.bomRef,
         bomItem: matchedBom,
         stepInfo,
@@ -1406,6 +1471,10 @@ export function resolveAssemblyParts(
         rotation: node.rotation || [0, 0, 0],
         explode: node.explode || [0, 50, 0],
         step: stepNum,
+        stlFile: purchased.stlFile,
+        stlBase64: purchased.stlBase64,
+        scadCode: purchased.scadCode,
+        cadGrounded: purchased.cadGrounded,
         bomRef: purchased.bomRef,
         bomLine: purchased.bomLine || matchedBom?.name,
         bomItem: matchedBom,

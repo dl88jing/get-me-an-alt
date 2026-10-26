@@ -240,6 +240,11 @@ export function normalizeDesignPart(
         : typeof assemblyNode?.step === "number"
           ? assemblyNode.step
           : undefined,
+    scadCode: typeof p.scadCode === "string" ? p.scadCode : undefined,
+    stlBase64: typeof p.stlBase64 === "string" ? p.stlBase64 : undefined,
+    stlFile: typeof p.stlFile === "string" ? p.stlFile : undefined,
+    cadGrounded:
+      typeof p.cadGrounded === "boolean" ? p.cadGrounded : undefined,
   };
 }
 

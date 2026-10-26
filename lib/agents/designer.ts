@@ -7,6 +7,7 @@ import {
   DesignSpec,
   ObjectAnalysis,
   ResearchData,
+  TeardownData,
 } from '../types';
 import { SAMPLE_DESIGN } from '../sample-data';
 import { getPrinterById } from '../printers';
@@ -16,6 +17,7 @@ import { runGeminiAgent, RunAgentResult } from './runner';
 export interface DesignerInput {
   analysis: ObjectAnalysis;
   sources: ResearchData;
+  teardown?: TeardownData;
   cwd: string;
   onLog?: (entry: AgentLogEntry) => void;
   previousDesign?: DesignSpec;

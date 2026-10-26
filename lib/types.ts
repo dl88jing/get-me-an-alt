@@ -126,6 +126,11 @@ export interface DesignPart {
   infillPercent?: number;
   layerHeightMm?: number;
   supportsRequired?: boolean;
+  step?: number;
+  scadCode?: string;
+  stlBase64?: string;
+  stlFile?: string;
+  cadGrounded?: boolean;
 }
 
 export interface DesignSpec {

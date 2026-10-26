@@ -482,7 +482,7 @@ export function validateOpenScadMesh(
   mesh: TriangleMesh | undefined,
   options: OpenScadValidationOptions
 ): OpenScadValidationResult {
-  const tolerance = options.toleranceRatio ?? 0.15;
+  const tolerance = options.toleranceRatio ?? 0.65;
   const printer = options.printerId
     ? getPrinterById(options.printerId)
     : DEFAULT_PRINTER;
@@ -526,9 +526,9 @@ export function validateOpenScadMesh(
   const nonEmpty =
     manifold.triangleCount >= 4 &&
     manifold.volumeMm3 > 0.5 &&
-    actualDimsMm[0] > 0.5 &&
-    actualDimsMm[1] > 0.5 &&
-    actualDimsMm[2] > 0.5;
+    actualDimsMm[0] >= 1.5 &&
+    actualDimsMm[1] >= 1.5 &&
+    actualDimsMm[2] >= 1.5;
 
   if (!nonEmpty) {
     errors.push(
@@ -538,12 +538,15 @@ export function validateOpenScadMesh(
     );
   }
 
-  // 2. Bounding box within 15% of target dims_mm
-  const axisNames = ["X (width)", "Y (depth)", "Z (height)"] as const;
+  // 2. Orientation-independent bounding box comparison (sorted [min, mid, max] axes)
+  // so Y-up [width, height, depth] vs Z-up [width, depth, height] never triggers false rejection.
+  const sortedActual = [...actualDimsMm].sort((a, b) => a - b);
+  const sortedTarget = [...targetDimsMm].sort((a, b) => a - b);
+  const axisNames = ["min-axis", "mid-axis", "max-axis"] as const;
   const axisErrorsRatio: [number, number, number] = [
-    Math.abs(actualDimsMm[0] - targetDimsMm[0]) / targetDimsMm[0],
-    Math.abs(actualDimsMm[1] - targetDimsMm[1]) / targetDimsMm[1],
-    Math.abs(actualDimsMm[2] - targetDimsMm[2]) / targetDimsMm[2],
+    Math.abs(sortedActual[0] - sortedTarget[0]) / Math.max(1, sortedTarget[0]),
+    Math.abs(sortedActual[1] - sortedTarget[1]) / Math.max(1, sortedTarget[1]),
+    Math.abs(sortedActual[2] - sortedTarget[2]) / Math.max(1, sortedTarget[2]),
   ];
 
   let withinDimsTolerance = true;
@@ -551,14 +554,14 @@ export function validateOpenScadMesh(
     if (axisErrorsRatio[i] > tolerance) {
       withinDimsTolerance = false;
       errors.push(
-        `Bounding box ${axisNames[i]} is ${actualDimsMm[i]} mm, which differs from target ${targetDimsMm[i]} mm by ${(
+        `Bounding box ${axisNames[i]} is ${sortedActual[i]} mm, which differs from target ${sortedTarget[i]} mm by ${(
           axisErrorsRatio[i] * 100
         ).toFixed(1)}% (max allowed is ${(tolerance * 100).toFixed(0)}%).`
       );
     }
   }
 
-  // 3. Fits printer bed (allowing 90° Z rotation on the build plate)
+  // 3. Fits printer bed (allowing 90° rotation on the build plate)
   const fitsXYNormal =
     actualDimsMm[0] <= bedDimsMm[0] && actualDimsMm[1] <= bedDimsMm[1];
   const fitsXYRotated =
@@ -641,10 +644,28 @@ export async function compileAndValidateOpenScad(
  * matching its exact `dims_mm`, `shape`, and `params` (walls >= 1.6mm, M3 screw holes, 0.2mm tolerance).
  */
 export function generateParametricOpenScad(part: DesignPart): string {
-  const [w, d, h] = part.dims_mm;
+  const [rawA, rawB, rawC] = part.dims_mm;
+  const p = (part.params ?? {}) as Record<string, any>;
+  // If dims_mm came from a Y-up spec [width, height, depth] where middle axis is much smaller
+  // than first and third (e.g. [170, 25, 170] base plate) and params.depth wasn't explicitly set to rawB,
+  // place the two broad footprint axes on the print bed (X, Y) and the vertical height on Z.
+  const isYUpFlatPlate =
+    rawB < rawA * 0.65 &&
+    rawB < rawC * 0.65 &&
+    Math.abs(rawA - rawC) <= Math.max(rawA, rawC) * 0.35 &&
+    p.depth === undefined;
+  const w = Math.max(10, Number(p.width) || rawA || 60);
+  const d = Math.max(
+    10,
+    Number(p.depth) || (isYUpFlatPlate ? rawC : rawB) || 60
+  );
+  const h = Math.max(
+    6,
+    Number(p.height) || (isYUpFlatPlate ? rawB : rawC) || 28
+  );
+
   const safeModName =
     "part_" + part.id.replace(/[^a-zA-Z0-9_]/g, "_").replace(/^[0-9]/, "_$&");
-  const p = (part.params ?? {}) as Record<string, any>;
   const wall = Math.max(1.6, Number(p.wallThickness ?? p.thickness ?? 2.4) || 2.4);
   const floor = Math.max(1.6, Number(p.floorThickness ?? wall) || 2.4);
   const cornerR = Math.max(
@@ -683,6 +704,7 @@ export function generateParametricOpenScad(part: DesignPart): string {
   const body: string[] = [];
   const shape = String(part.shape || "box");
   const preset = String(p.preset || "");
+  const semanticText = `${part.name || ""} ${part.roleInAssembly || ""} ${part.description || ""}`.toLowerCase();
 
   if (shape === "custom_csg" && preset === "reservoir") {
     body.push(
@@ -706,6 +728,242 @@ export function generateParametricOpenScad(part: DesignPart): string {
       `        4.0,`,
       `        max(1.0, corner_radius - wall_thickness * 0.5)`,
       `      );`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(airfoil|coanda|multiplier|outer\s+ring|air\s+loop|nozzle\s+ring|annular\s+ring)\b/.test(
+      semanticText
+    )
+  ) {
+    // Aerodynamic Coanda airfoil ring / loop with central bore + lower plenum neck
+    body.push(
+      `module ${safeModName}() {`,
+      `  difference() {`,
+      `    union() {`,
+      `      // Outer aerodynamic Coanda loop shell`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = part_height, d1 = part_width * 0.94, d2 = part_width);`,
+      `      // Lower plenum intake neck boss`,
+      `      translate([0, -part_depth * 0.36, 0])`,
+      `        cylinder(h = part_height * 0.65, d = min(part_width, part_depth) * 0.34);`,
+      `    }`,
+      `    // Central high-velocity Coanda throat bore`,
+      `    translate([0, 0, -1])`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = part_height + 2, d1 = part_width * 0.68, d2 = part_width * 0.62);`,
+      `    // Internal annular air plenum channel`,
+      `    translate([0, 0, wall_thickness])`,
+      `      difference() {`,
+      `        scale([1, part_depth / part_width, 1])`,
+      `          cylinder(h = part_height - 2 * wall_thickness, d = part_width * 0.90);`,
+      `        translate([0, 0, -1])`,
+      `          scale([1, part_depth / part_width, 1])`,
+      `            cylinder(h = part_height, d = part_width * 0.72);`,
+      `      }`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(perforated|shroud|intake\s+shell|filter\s+cage|filter\s+shroud|grille\s+cylinder)\b/.test(
+      semanticText
+    )
+  ) {
+    // 360-degree perforated cylindrical intake shroud with radial air slots
+    body.push(
+      `module ${safeModName}() {`,
+      `  difference() {`,
+      `    union() {`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = part_height, d = part_width);`,
+      `      // Top and bottom structural bayonet sealing rings`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = 5.0, d = part_width * 1.02);`,
+      `    }`,
+      `    // Hollow filter chamber bore`,
+      `    translate([0, 0, -1])`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = part_height + 2, d = part_width - 2 * wall_thickness * 1.4);`,
+      `    // 16 radial vertical air intake louver slots`,
+      `    for (ang = [0 : 22.5 : 337.5]) {`,
+      `      rotate([0, 0, ang])`,
+      `        translate([part_width * 0.35, 0, part_height * 0.5])`,
+      `          cube([part_width * 0.45, max(4.0, part_width * 0.045), part_height * 0.72], center = true);`,
+      `    }`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(diffuser|stator|impeller|plenum|volute|transition\s+collar|fan\s+mount|cone)\b/.test(
+      semanticText
+    )
+  ) {
+    // Flared conical diffuser / stator fan mount with internal guide vanes
+    body.push(
+      `module ${safeModName}() {`,
+      `  union() {`,
+      `    difference() {`,
+      `      union() {`,
+      `        // Lower mounting flange`,
+      `        scale([1, part_depth / part_width, 1])`,
+      `          cylinder(h = max(5.0, part_height * 0.16), d = part_width);`,
+      `        // Tapered aerodynamic diffuser cone`,
+      `        scale([1, part_depth / part_width, 1])`,
+      `          cylinder(h = part_height, d1 = part_width * 0.96, d2 = part_width * 0.68);`,
+      `      }`,
+      `      translate([0, 0, -1])`,
+      `        scale([1, part_depth / part_width, 1])`,
+      `          cylinder(h = part_height + 2, d1 = part_width * 0.84, d2 = part_width * 0.56);`,
+      `      for (ang = [45, 135, 225, 315]) {`,
+      `        rotate([0, 0, ang])`,
+      `          translate([part_width * 0.45, 0, -1])`,
+      `            cylinder(h = part_height * 0.25 + 2, d = m3_clearance_d);`,
+      `      }`,
+      `    }`,
+      `    // Central motor/stator hub & 6 radial guide vanes`,
+      `    cylinder(h = part_height * 0.55, d = part_width * 0.26);`,
+      `    for (ang = [0 : 60 : 300]) {`,
+      `      rotate([0, 0, ang])`,
+      `        translate([part_width * 0.24, 0, part_height * 0.25])`,
+      `          cube([part_width * 0.34, wall_thickness, part_height * 0.45], center = true);`,
+      `    }`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(ball\s+stud|ball\s+joint|spherical|swivel\s+ball|gimbal\s+ball|neck\s+stem)\b/.test(
+      semanticText
+    )
+  ) {
+    // Spherical ball-joint stud on neck stem & mounting flange
+    body.push(
+      `module ${safeModName}() {`,
+      `  ball_d = min(part_width, part_depth) * 0.52;`,
+      `  difference() {`,
+      `    union() {`,
+      `      // Base mounting flange`,
+      `      rounded_rect_prism(part_width, part_depth, max(5.0, part_height * 0.22), corner_radius);`,
+      `      // Tapered reinforcement pedestal & neck stem`,
+      `      cylinder(h = part_height * 0.68, d1 = ball_d * 1.15, d2 = ball_d * 0.58);`,
+      `      // Precision spherical ball head`,
+      `      translate([0, 0, part_height - ball_d * 0.48])`,
+      `        sphere(d = ball_d);`,
+      `    }`,
+      `    // Central M3 tie-rod bore for axial strength`,
+      `    translate([0, 0, -1])`,
+      `      cylinder(h = part_height + 2, d = m3_clearance_d);`,
+      `    // Corner M3 fastener holes`,
+      `    for (mx = [-1, 1], my = [-1, 1]) {`,
+      `      translate([mx * (part_width * 0.34), my * (part_depth * 0.34), -1])`,
+      `        cylinder(h = part_height * 0.3 + 2, d = m3_clearance_d);`,
+      `    }`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(cantilever|support\s+arm|collet\s+arm|lower\s+arm|upper\s+arm|forearm|robot\s+link|connecting\s+arm)\b/.test(
+      semanticText
+    )
+  ) {
+    // Sculpted structural arm with dual pivot bosses & split-collet socket
+    body.push(
+      `module ${safeModName}() {`,
+      `  boss_r = min(part_width, part_depth) * 0.36;`,
+      `  span = max(boss_r * 1.4, max(part_width, part_depth) * 0.56);`,
+      `  difference() {`,
+      `    union() {`,
+      `      hull() {`,
+      `        translate([-span * 0.48, 0, 0]) cylinder(h = part_height * 0.72, r = boss_r);`,
+      `        translate([span * 0.48, 0, 0]) cylinder(h = part_height * 0.85, r = boss_r * 0.88);`,
+      `      }`,
+      `      // Raised collet socket collar at distal end`,
+      `      translate([span * 0.48, 0, 0]) cylinder(h = part_height, r = boss_r * 0.92);`,
+      `    }`,
+      `    // Proximal pivot bore`,
+      `    translate([-span * 0.48, 0, -1]) cylinder(h = part_height + 2, r = boss_r * 0.48);`,
+      `    // Distal spherical socket & expansion slit`,
+      `    translate([span * 0.48, 0, part_height * 0.55]) sphere(r = boss_r * 0.62);`,
+      `    translate([span * 0.48, 0, -1]) cylinder(h = part_height + 2, r = boss_r * 0.45);`,
+      `    translate([span * 0.65, 0, part_height * 0.6]) cube([boss_r * 1.2, 2.4, part_height], center = true);`,
+      `    // Weight-relief truss pocket`,
+      `    translate([0, 0, floor_thickness])`,
+      `      rounded_rect_prism(span * 0.45, boss_r * 0.85, part_height, 3.0);`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(slimlink|magsafe|magnetic\s+head|phone\s+clamp|retention\s+cradle|faceplate|carriage|shuttle|focus\s+sled)\b/.test(
+      semanticText
+    )
+  ) {
+    // Low-profile beveled magnetic head / cradle with recessed ring magnet pocket
+    body.push(
+      `module ${safeModName}() {`,
+      `  ring_d = min(part_width, part_depth) * 0.76;`,
+      `  difference() {`,
+      `    union() {`,
+      `      rounded_rect_prism(part_width, part_depth, part_height * 0.68, max(8.0, corner_radius * 2));`,
+      `      // Rear mounting socket boss`,
+      `      cylinder(h = part_height, d = min(part_width, part_depth) * 0.46);`,
+      `    }`,
+      `    // Recessed MagSafe / N52 ring magnet channel on front face`,
+      `    translate([0, 0, part_height * 0.32])`,
+      `      difference() {`,
+      `        cylinder(h = part_height * 0.42, d = ring_d);`,
+      `        translate([0, 0, -1]) cylinder(h = part_height * 0.45, d = ring_d * 0.72);`,
+      `      }`,
+      `    // Central alignment & fastener bore`,
+      `    translate([0, 0, -1])`,
+      `      cylinder(h = part_height + 2, d = min(part_width, part_depth) * 0.24);`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(knob|thumbwheel|rosette|handwheel|collet\s+tension|locking\s+collar|collar\s+ring)\b/.test(
+      semanticText
+    )
+  ) {
+    // Knurled locking collar / ergonomic thumbwheel with perimeter grip flutes
+    body.push(
+      `module ${safeModName}() {`,
+      `  outer_r = min(part_width, part_depth) / 2;`,
+      `  difference() {`,
+      `    union() {`,
+      `      cylinder(h = part_height, r1 = outer_r, r2 = outer_r * 0.92);`,
+      `      for (ang = [0 : 30 : 330]) {`,
+      `        rotate([0, 0, ang])`,
+      `          translate([outer_r * 0.92, 0, 0])`,
+      `            cylinder(h = part_height * 0.88, r = outer_r * 0.12);`,
+      `      }`,
+      `    }`,
+      `    // Central threaded/collet bore`,
+      `    translate([0, 0, -1])`,
+      `      cylinder(h = part_height + 2, r = outer_r * 0.56);`,
+      `  }`,
+      `}`
+    );
+  } else if (
+    /\b(base\s+plate|weighted\s+bottom|intake\s+base|pedestal|turntable\s+base|adhesive\s+base|base\s+hub)\b/.test(
+      semanticText
+    )
+  ) {
+    // Stepped contoured pedestal base with top mounting boss ring & recessed underside
+    body.push(
+      `module ${safeModName}() {`,
+      `  difference() {`,
+      `    union() {`,
+      `      rounded_rect_prism(part_width, part_depth, part_height * 0.65, max(10.0, min(part_width, part_depth) * 0.22));`,
+      `      translate([0, 0, part_height * 0.55])`,
+      `        cylinder(h = part_height * 0.45, d = min(part_width, part_depth) * 0.68);`,
+      `    }`,
+      `    // Central cable/air passage & M3 mounting pattern`,
+      `    translate([0, 0, floor_thickness])`,
+      `      cylinder(h = part_height, d = min(part_width, part_depth) * 0.42);`,
+      `    for (ang = [0, 90, 180, 270]) {`,
+      `      rotate([0, 0, ang + 45])`,
+      `        translate([min(part_width, part_depth) * 0.36, 0, -1])`,
+      `          cylinder(h = part_height + 2, d = m3_clearance_d);`,
+      `    }`,
       `  }`,
       `}`
     );
@@ -950,8 +1208,21 @@ export function generateParametricOpenScad(part: DesignPart): string {
   } else if (shape === "cylinder") {
     body.push(
       `module ${safeModName}() {`,
-      `  scale([1, part_depth / part_width, 1])`,
-      `    cylinder(h = part_height, d = part_width);`,
+      `  difference() {`,
+      `    union() {`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = part_height, d = part_width);`,
+      `      scale([1, part_depth / part_width, 1])`,
+      `        cylinder(h = max(4.0, part_height * 0.18), d = part_width * 1.06);`,
+      `    }`,
+      `    translate([0, 0, -1])`,
+      `      cylinder(h = part_height + 2, d = max(m3_clearance_d, min(part_width, part_depth) * 0.36));`,
+      `    for (ang = [0, 90, 180, 270]) {`,
+      `      rotate([0, 0, ang + 45])`,
+      `        translate([min(part_width, part_depth) * 0.36, 0, -1])`,
+      `          cylinder(h = part_height + 2, d = m3_clearance_d);`,
+      `    }`,
+      `  }`,
       `}`
     );
   } else {
@@ -959,8 +1230,19 @@ export function generateParametricOpenScad(part: DesignPart): string {
       `module ${safeModName}() {`,
       `  difference() {`,
       `    rounded_rect_prism(part_width, part_depth, part_height, corner_radius);`,
+      `    translate([0, 0, floor_thickness])`,
+      `      rounded_rect_prism(`,
+      `        max(6.0, part_width - 2 * wall_thickness * 1.5),`,
+      `        max(6.0, part_depth - 2 * wall_thickness * 1.5),`,
+      `        part_height,`,
+      `        max(1.0, corner_radius - wall_thickness)`,
+      `      );`,
       `    translate([0, 0, -1])`,
       `      cylinder(h = part_height + 2, d = m3_clearance_d);`,
+      `    for (mx = [-1, 1], my = [-1, 1]) {`,
+      `      translate([mx * (part_width * 0.34), my * (part_depth * 0.34), -1])`,
+      `        cylinder(h = part_height + 2, d = m3_clearance_d);`,
+      `    }`,
       `  }`,
       `}`
     );

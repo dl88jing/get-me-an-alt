@@ -959,8 +959,9 @@ export function getCandidateStlUrls(
     projectId === "demo" ||
     projectId === "sample";
 
-  // Live (non-preset) projects build each part's mesh directly from its dimensions & role
-  if (!isPlantWatererDemo && !isPresetProjectId(projectId)) {
+  // Never reuse plant-waterer demo STLs for non-plant-waterer objects;
+  // when a projectId is present (preset or live), fetch from /api/objects/<projectId>/stl/<explicitBase>.
+  if (!isPlantWatererDemo && !projectId) {
     return [];
   }
 
@@ -998,7 +999,8 @@ export function getCandidateStlUrls(
  */
 export function orientAndCenterStlGeometry(
   rawGeo: THREE.BufferGeometry,
-  shape: PartShape | string
+  shape: PartShape | string,
+  cadGrounded?: boolean
 ): THREE.BufferGeometry {
   const geo = rawGeo.clone();
   geo.computeBoundingBox();
@@ -1007,7 +1009,11 @@ export function orientAndCenterStlGeometry(
   const sizeY = box ? box.max.y - box.min.y : 30;
   const sizeZ = box ? box.max.z - box.min.z : 30;
 
-  if (shape === "funnel") {
+  if (cadGrounded) {
+    // OpenSCAD modules compiled by runCadAgent are built on the Z-up print bed;
+    // rotate -90° around X so OpenSCAD +Z aligns with Three.js +Y.
+    geo.rotateX(-Math.PI / 2);
+  } else if (shape === "funnel") {
     // Support-free funnels are printed upside-down on the bed (wide rim at Z=0, spout at Z=max).
     // Rotate +90° around X so wide mouth faces +Y (up) and spout points -Y (down).
     geo.rotateX(Math.PI / 2);
@@ -1033,6 +1039,56 @@ export function orientAndCenterStlGeometry(
 }
 
 /**
+ * Synchronously decodes and parses an inline base64 binary STL (`part.stlBase64`)
+ * compiled by `openscad-wasm`, falling back to `null` if invalid or a box/stub (<14 triangles).
+ */
+export function parseStlBase64Geometry(
+  stlBase64: string | undefined,
+  shape: PartShape | string,
+  cacheKeyPrefix: string,
+  cadGrounded?: boolean
+): THREE.BufferGeometry | null {
+  if (!stlBase64 || typeof stlBase64 !== "string" || stlBase64.length < 64) {
+    return null;
+  }
+  const cacheKey = `b64:${cacheKeyPrefix}:${shape}:${
+    cadGrounded ? "1" : "0"
+  }:${stlBase64.length}:${stlBase64.slice(0, 32)}`;
+  if (STL_GEOMETRY_CACHE.has(cacheKey)) {
+    return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
+  }
+  try {
+    let ab: ArrayBuffer | null = null;
+    if (typeof globalThis.atob === "function") {
+      const binary = globalThis.atob(stlBase64);
+      const len = binary.length;
+      const bytes = new Uint8Array(len);
+      for (let i = 0; i < len; i++) {
+        bytes[i] = binary.charCodeAt(i);
+      }
+      ab = bytes.buffer;
+    }
+    if (!ab || ab.byteLength < 84) {
+      STL_GEOMETRY_CACHE.set(cacheKey, null);
+      return null;
+    }
+    const parsed = getStlLoader().parse(ab);
+    const posAttr = parsed.getAttribute("position");
+    // Require >36 vertices (>12 triangles) so 2-facet missing stubs and 12-facet box stubs fall back to primitive geometry
+    if (!posAttr || posAttr.count <= 36) {
+      STL_GEOMETRY_CACHE.set(cacheKey, null);
+      return null;
+    }
+    const oriented = orientAndCenterStlGeometry(parsed, shape, cadGrounded);
+    STL_GEOMETRY_CACHE.set(cacheKey, oriented);
+    return oriented;
+  } catch {
+    STL_GEOMETRY_CACHE.set(cacheKey, null);
+    return null;
+  }
+}
+
+/**
  * Asynchronously fetches and parses a part's STL via Three's STLLoader,
  * validating that it is a real closed mesh (rejecting the 2-facet fallback stub)
  * and orienting/centering it to match `design.json`.
@@ -1041,14 +1097,17 @@ export async function loadPartStlGeometry(
   partId: string,
   shape: PartShape | string,
   projectId?: string,
-  stlFile?: string
+  stlFile?: string,
+  cadGrounded?: boolean
 ): Promise<THREE.BufferGeometry | null> {
   if (typeof window === "undefined") return null;
 
   const urls = getCandidateStlUrls(partId, projectId, stlFile);
   if (urls.length === 0) return null;
 
-  const cacheKey = `${projectId || "demo"}:${partId}:${shape}:${urls.join("|")}`;
+  const cacheKey = `${projectId || "demo"}:${partId}:${shape}:${
+    cadGrounded ? "1" : "0"
+  }:${urls.join("|")}`;
   if (STL_GEOMETRY_CACHE.has(cacheKey)) {
     return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
   }
@@ -1065,11 +1124,15 @@ export async function loadPartStlGeometry(
         if (!buf || buf.byteLength < 84) continue;
         const parsed = loader.parse(buf);
         const posAttr = parsed.getAttribute("position");
-        // Reject the 2-facet (6-vertex) missing-file stub from /api/objects/[id]/stl/[filename]
-        if (!posAttr || posAttr.count < 36) {
+        // Reject the 2-facet (6-vertex) missing-file stub and 12-facet (36-vertex) plain box fallback stub
+        if (!posAttr || posAttr.count <= 36) {
           continue;
         }
-        const oriented = orientAndCenterStlGeometry(parsed, shape);
+        const oriented = orientAndCenterStlGeometry(
+          parsed,
+          shape,
+          cadGrounded
+        );
         STL_GEOMETRY_CACHE.set(cacheKey, oriented);
         return oriented;
       } catch {
@@ -1086,12 +1149,19 @@ export async function loadPartStlGeometry(
 
 /**
  * React hook that loads the real STL geometry + EdgesGeometry for printed parts
- * via `STLLoader`, falling back seamlessly to procedural shapes when unavailable.
+ * via inline `stlBase64` or `STLLoader`, falling back seamlessly to procedural shapes when unavailable.
  */
 export function usePartGeometryAndEdges(
   part: Pick<
     ResolvedAssemblyPart,
-    "partId" | "category" | "shape" | "params" | "dims_mm" | "stlFile"
+    | "partId"
+    | "category"
+    | "shape"
+    | "params"
+    | "dims_mm"
+    | "stlFile"
+    | "stlBase64"
+    | "cadGrounded"
   >,
   projectId?: string,
   edgeThresholdAngle = 22
@@ -1111,10 +1181,30 @@ export function usePartGeometryAndEdges(
     [part.shape, part.params, edgeThresholdAngle]
   );
 
+  const inlineStlGeometry = useMemo(() => {
+    if (part.category !== "printed" || !part.stlBase64) return null;
+    return parseStlBase64Geometry(
+      part.stlBase64,
+      part.shape,
+      `${projectId || "live"}:${part.partId}`,
+      part.cadGrounded
+    );
+  }, [
+    part.category,
+    part.stlBase64,
+    part.shape,
+    part.partId,
+    part.cadGrounded,
+    projectId,
+  ]);
+
   const [stlGeo, setStlGeo] = useState<THREE.BufferGeometry | null>(() => {
     if (part.category !== "printed") return null;
+    if (inlineStlGeometry) return inlineStlGeometry;
     const urls = getCandidateStlUrls(part.partId, projectId, part.stlFile);
-    const cacheKey = `${projectId || "demo"}:${part.partId}:${part.shape}:${urls.join("|")}`;
+    const cacheKey = `${projectId || "demo"}:${part.partId}:${part.shape}:${
+      part.cadGrounded ? "1" : "0"
+    }:${urls.join("|")}`;
     return STL_GEOMETRY_CACHE.get(cacheKey) ?? null;
   });
 
@@ -1123,30 +1213,47 @@ export function usePartGeometryAndEdges(
       setStlGeo(null);
       return;
     }
+    if (inlineStlGeometry) {
+      setStlGeo(inlineStlGeometry);
+      return;
+    }
     let cancelled = false;
-    loadPartStlGeometry(part.partId, part.shape, projectId, part.stlFile).then(
-      (loaded) => {
-        if (!cancelled && loaded) {
-          setStlGeo(loaded);
-        }
+    loadPartStlGeometry(
+      part.partId,
+      part.shape,
+      projectId,
+      part.stlFile,
+      part.cadGrounded
+    ).then((loaded) => {
+      if (!cancelled && loaded) {
+        setStlGeo(loaded);
       }
-    );
+    });
     return () => {
       cancelled = true;
     };
-  }, [part.partId, part.category, part.shape, part.stlFile, projectId]);
+  }, [
+    part.partId,
+    part.category,
+    part.shape,
+    part.stlFile,
+    part.cadGrounded,
+    inlineStlGeometry,
+    projectId,
+  ]);
 
-  const activeGeometry = stlGeo || fallbackGeometry;
+  const resolvedStl = inlineStlGeometry || stlGeo;
+  const activeGeometry = resolvedStl || fallbackGeometry;
 
   const activeEdges = useMemo(() => {
-    if (!stlGeo) return fallbackEdges;
+    if (!resolvedStl) return fallbackEdges;
     const edgeKey = `stl:${projectId || "demo"}:${part.partId}:${edgeThresholdAngle}`;
     const cached = STL_EDGES_CACHE.get(edgeKey);
     if (cached) return cached;
-    const computed = new THREE.EdgesGeometry(stlGeo, edgeThresholdAngle);
+    const computed = new THREE.EdgesGeometry(resolvedStl, edgeThresholdAngle);
     STL_EDGES_CACHE.set(edgeKey, computed);
     return computed;
-  }, [stlGeo, fallbackEdges, projectId, part.partId, edgeThresholdAngle]);
+  }, [resolvedStl, fallbackEdges, projectId, part.partId, edgeThresholdAngle]);
 
   const boundRadius = useMemo(() => {
     if (!activeGeometry.boundingSphere) {
@@ -1159,7 +1266,7 @@ export function usePartGeometryAndEdges(
     geometry: activeGeometry,
     edgesGeometry: activeEdges,
     boundRadius,
-    isStlLoaded: Boolean(stlGeo),
+    isStlLoaded: Boolean(resolvedStl),
   };
 }
 

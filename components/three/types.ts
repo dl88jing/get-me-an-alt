@@ -32,6 +32,10 @@ export interface PrintedPartSpec {
   roleInAssembly?: string;
   bomRef?: string;
   step?: number;
+  stlFile?: string;
+  stlBase64?: string;
+  scadCode?: string;
+  cadGrounded?: boolean;
 }
 
 export interface PurchasedPartSpec {
@@ -47,6 +51,10 @@ export interface PurchasedPartSpec {
   description?: string;
   roleInAssembly?: string;
   step?: number;
+  stlFile?: string;
+  stlBase64?: string;
+  scadCode?: string;
+  cadGrounded?: boolean;
   proxyShape: {
     shape: ProxyShapeType;
     params: PartParams;
@@ -90,6 +98,10 @@ export interface SharedDesignPart {
   layerHeightMm?: number;
   supportsRequired?: boolean;
   step?: number;
+  stlFile?: string;
+  stlBase64?: string;
+  scadCode?: string;
+  cadGrounded?: boolean;
 }
 
 export interface DesignData {
@@ -333,6 +345,9 @@ export interface ResolvedAssemblyPart {
   explode: [number, number, number];
   step: number;
   stlFile?: string;
+  stlBase64?: string;
+  scadCode?: string;
+  cadGrounded?: boolean;
   bomRef?: string;
   bomLine?: string;
   bomItem?: BomItem;
