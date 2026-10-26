@@ -46,7 +46,7 @@
         0,
         95
       ],
-      "color": "#0ea5e9",
+      "color": "#d4af37",
       "bomRef": "bom-filament-magnifier",
       "material": "PETG",
       "quantity": 1,
@@ -88,7 +88,7 @@
         -55,
         45
       ],
-      "color": "#6366f1",
+      "color": "#c87d4b",
       "bomRef": "bom-filament-magnifier",
       "material": "PLA+",
       "quantity": 1,
@@ -131,7 +131,7 @@
         0,
         -55
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-filament-magnifier",
       "material": "PLA+",
       "quantity": 1,
@@ -173,7 +173,7 @@
         0,
         20
       ],
-      "color": "#f59e0b",
+      "color": "#d4af37",
       "bomRef": "bom-filament-magnifier",
       "material": "PETG",
       "quantity": 1,
@@ -214,7 +214,7 @@
         -45,
         50
       ],
-      "color": "#38bdf8",
+      "color": "#e6c365",
       "bomRef": "bom-achromatic-lens",
       "material": "AR-Coated Crown/Flint Optical Glass (Purchased)",
       "quantity": 1,
@@ -291,7 +291,7 @@
         -35,
         -25
       ],
-      "color": "#eab308",
+      "color": "#e6c365",
       "bomRef": "bom-m3-focus-screw",
       "material": "Solid Brass & 302 Stainless Spring Steel (Purchased)",
       "quantity": 1,
@@ -330,7 +330,7 @@
         45,
         -15
       ],
-      "color": "#94a3b8",
+      "color": "#bda782",
       "bomRef": "bom-glass-slides",
       "material": "Optical Borosilicate Glass & Spring Steel (Purchased)",
       "quantity": 1,

@@ -27,16 +27,16 @@ export interface DesignerInput {
 }
 
 const PALETTE = [
-  '#0ea5e9',
-  '#10b981',
-  '#6366f1',
-  '#f59e0b',
-  '#14b8a6',
-  '#a855f7',
-  '#38bdf8',
-  '#f97316',
-  '#ec4899',
-  '#eab308',
+  '#d4af37',
+  '#b89b4a',
+  '#c87d4b',
+  '#d4af37',
+  '#9c7a4c',
+  '#b87333',
+  '#e6c365',
+  '#b45309',
+  '#c84b31',
+  '#e6c365',
 ];
 
 export async function runDesignerAgent(
@@ -100,7 +100,7 @@ Each part in "parts" MUST have:
   "position": [x, y, z],
   "rotation": [rx, ry, rz],
   "explode": [ex, ey, ez],
-  "color": "#0ea5e9",
+  "color": "#d4af37",
   "bomRef": "bom-item-id",
   "material": "PETG or PLA+ or Purchased Hardware",
   "quantity": 1,
@@ -206,7 +206,7 @@ Return ONLY valid JSON matching:
               number,
               number,
             ],
-            color: '#64748b',
+            color: '#9c7a4c',
             bomRef: `bom-${i + 1}`,
             material: 'Off-the-Shelf Hardware',
             quantity: 1,

@@ -45,7 +45,7 @@
         0,
         -55
       ],
-      "color": "#334155",
+      "color": "#5c4930",
       "bomRef": "bom-2020-extrusion",
       "material": "6063-T5 Black Anodized Aluminum (Purchased)",
       "quantity": 2,
@@ -92,7 +92,7 @@
         0,
         -20
       ],
-      "color": "#0ea5e9",
+      "color": "#d4af37",
       "bomRef": "bom-filament-slider",
       "material": "PETG",
       "quantity": 1,
@@ -139,7 +139,7 @@
         0,
         -20
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-filament-slider",
       "material": "PETG",
       "quantity": 1,
@@ -185,7 +185,7 @@
         110,
         -75
       ],
-      "color": "#f59e0b",
+      "color": "#d4af37",
       "bomRef": "bom-filament-slider",
       "material": "PETG",
       "quantity": 4,
@@ -227,7 +227,7 @@
         -55,
         25
       ],
-      "color": "#eab308",
+      "color": "#e6c365",
       "bomRef": "bom-gt2-kit",
       "material": "CNC Aluminum Pulleys & Fiberglass Neoprene Belt (Purchased)",
       "quantity": 1,
@@ -269,7 +269,7 @@
         -75,
         15
       ],
-      "color": "#94a3b8",
+      "color": "#bda782",
       "bomRef": "bom-wheels-bearings",
       "material": "Delrin POM & 52100 Chrome Steel (Purchased)",
       "quantity": 1,
@@ -336,7 +336,7 @@
         0,
         40
       ],
-      "color": "#6366f1",
+      "color": "#c87d4b",
       "bomRef": "bom-filament-slider",
       "material": "PETG",
       "quantity": 1,
@@ -382,7 +382,7 @@
         0,
         95
       ],
-      "color": "#14b8a6",
+      "color": "#9c7a4c",
       "bomRef": "bom-filament-slider",
       "material": "PLA+",
       "quantity": 1,
@@ -427,7 +427,7 @@
         0,
         150
       ],
-      "color": "#38bdf8",
+      "color": "#e6c365",
       "bomRef": "bom-filament-slider",
       "material": "PLA+",
       "quantity": 1,
@@ -469,7 +469,7 @@
         0,
         125
       ],
-      "color": "#1e293b",
+      "color": "#3a2c1d",
       "bomRef": "bom-nema17-steppers",
       "material": "Bipolar 1.8° Stepper Motor (Purchased)",
       "quantity": 3,
@@ -515,7 +515,7 @@
         0,
         205
       ],
-      "color": "#a855f7",
+      "color": "#b87333",
       "bomRef": "bom-filament-slider",
       "material": "PETG",
       "quantity": 1,
@@ -577,7 +577,7 @@
         0,
         265
       ],
-      "color": "#ec4899",
+      "color": "#c84b31",
       "bomRef": "bom-filament-slider",
       "material": "PLA+",
       "quantity": 1,
@@ -619,7 +619,7 @@
         0,
         320
       ],
-      "color": "#f43f5e",
+      "color": "#c84b31",
       "bomRef": "bom-arca-clamp",
       "material": "CNC Anodized Aluminum (Purchased)",
       "quantity": 1,
@@ -666,7 +666,7 @@
         -110,
         45
       ],
-      "color": "#f97316",
+      "color": "#b45309",
       "bomRef": "bom-filament-slider",
       "material": "PLA+",
       "quantity": 1,
@@ -708,7 +708,7 @@
         -135,
         95
       ],
-      "color": "#2563eb",
+      "color": "#8c6218",
       "bomRef": "bom-tmc2209",
       "material": "FR4 PCB + Heatsinks (Purchased)",
       "quantity": 3,
@@ -750,7 +750,7 @@
         -135,
         135
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-esp32-oled",
       "material": "FR4 PCB + OLED Display (Purchased)",
       "quantity": 1,
@@ -792,7 +792,7 @@
         -110,
         45
       ],
-      "color": "#64748b",
+      "color": "#9c7a4c",
       "bomRef": "bom-pd-hardware",
       "material": "USB-C PD Decoy PCB & Stainless Fasteners (Purchased)",
       "quantity": 1,

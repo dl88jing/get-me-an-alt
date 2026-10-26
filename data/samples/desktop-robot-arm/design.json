@@ -50,7 +50,7 @@
         0,
         -90
       ],
-      "color": "#0ea5e9",
+      "color": "#d4af37",
       "bomRef": "bom-filament-arm",
       "material": "PETG",
       "quantity": 1,
@@ -92,7 +92,7 @@
         0,
         -35
       ],
-      "color": "#94a3b8",
+      "color": "#bda782",
       "bomRef": "bom-bearings",
       "material": "52100 Chrome Steel (Purchased)",
       "quantity": 2,
@@ -154,7 +154,7 @@
         0,
         10
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-filament-arm",
       "material": "PETG",
       "quantity": 1,
@@ -200,7 +200,7 @@
         0,
         55
       ],
-      "color": "#6366f1",
+      "color": "#c87d4b",
       "bomRef": "bom-filament-arm",
       "material": "PETG",
       "quantity": 1,
@@ -242,7 +242,7 @@
         0,
         65
       ],
-      "color": "#334155",
+      "color": "#5c4930",
       "bomRef": "bom-servo-mg996r",
       "material": "Metal Gear / Coreless Servo (Purchased)",
       "quantity": 3,
@@ -284,7 +284,7 @@
         0,
         75
       ],
-      "color": "#f43f5e",
+      "color": "#c84b31",
       "bomRef": "bom-fasteners-horns",
       "material": "CNC 6061 Aluminum & 304 Stainless (Purchased)",
       "quantity": 1,
@@ -329,7 +329,7 @@
         -35,
         115
       ],
-      "color": "#f59e0b",
+      "color": "#d4af37",
       "bomRef": "bom-filament-arm",
       "material": "PETG",
       "quantity": 1,
@@ -376,7 +376,7 @@
         0,
         175
       ],
-      "color": "#14b8a6",
+      "color": "#9c7a4c",
       "bomRef": "bom-filament-arm",
       "material": "PETG",
       "quantity": 1,
@@ -422,7 +422,7 @@
         30,
         235
       ],
-      "color": "#38bdf8",
+      "color": "#e6c365",
       "bomRef": "bom-filament-arm",
       "material": "PLA+",
       "quantity": 1,
@@ -468,7 +468,7 @@
         0,
         295
       ],
-      "color": "#a855f7",
+      "color": "#b87333",
       "bomRef": "bom-filament-arm",
       "material": "PLA+",
       "quantity": 1,
@@ -510,7 +510,7 @@
         0,
         310
       ],
-      "color": "#475569",
+      "color": "#7a5c38",
       "bomRef": "bom-servo-mg90s",
       "material": "Micro Metal-Gear Servo (Purchased)",
       "quantity": 3,
@@ -567,7 +567,7 @@
         0,
         355
       ],
-      "color": "#ec4899",
+      "color": "#c84b31",
       "bomRef": "bom-filament-arm",
       "material": "PLA+",
       "quantity": 1,
@@ -612,7 +612,7 @@
         45,
         410
       ],
-      "color": "#f97316",
+      "color": "#b45309",
       "bomRef": "bom-filament-arm",
       "material": "PLA+",
       "quantity": 2,
@@ -654,7 +654,7 @@
         -45,
         -25
       ],
-      "color": "#2563eb",
+      "color": "#8c6218",
       "bomRef": "bom-pca9685",
       "material": "FR4 PCB / I2C PWM IC (Purchased)",
       "quantity": 1,
@@ -696,7 +696,7 @@
         45,
         -25
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-esp32",
       "material": "FR4 PCB / Dual-Core MCU (Purchased)",
       "quantity": 1,
@@ -738,7 +738,7 @@
         0,
         -35
       ],
-      "color": "#64748b",
+      "color": "#9c7a4c",
       "bomRef": "bom-psu-6v",
       "material": "Aluminum Case SMPS (Purchased)",
       "quantity": 1,

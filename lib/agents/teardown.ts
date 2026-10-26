@@ -759,7 +759,7 @@ export function teardownPartsToDesignParts(
         position: [0, 0, 0],
         rotation: [0, 0, 0],
         explode: [0, 25, 0],
-        color: isPrinted ? '#10b981' : '#64748b',
+        color: isPrinted ? '#b89b4a' : '#9c7a4c',
         material: part.material,
         quantity: 1,
         description: `${part.function} (identified at ${formatTimestamp(frame.t)} in teardown video; fasteners: ${part.fasteners})`,

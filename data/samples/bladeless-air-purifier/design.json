@@ -50,7 +50,7 @@
         0,
         -95
       ],
-      "color": "#0ea5e9",
+      "color": "#d4af37",
       "bomRef": "bom-filament-fan",
       "material": "PETG",
       "quantity": 1,
@@ -92,7 +92,7 @@
         0,
         -20
       ],
-      "color": "#f8fafc",
+      "color": "#f5ebd6",
       "bomRef": "bom-hepa-filter",
       "material": "Pleated H13 Microfiber & Carbon (Purchased)",
       "quantity": 1,
@@ -138,7 +138,7 @@
         0,
         -25
       ],
-      "color": "#38bdf8",
+      "color": "#e6c365",
       "bomRef": "bom-filament-fan",
       "material": "PETG",
       "quantity": 1,
@@ -190,7 +190,7 @@
         0,
         45
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-filament-fan",
       "material": "PETG",
       "quantity": 1,
@@ -278,7 +278,7 @@
         0,
         95
       ],
-      "color": "#6366f1",
+      "color": "#c87d4b",
       "bomRef": "bom-filament-fan",
       "material": "PETG",
       "quantity": 1,
@@ -320,7 +320,7 @@
         0,
         115
       ],
-      "color": "#334155",
+      "color": "#5c4930",
       "bomRef": "bom-blower-24v",
       "material": "PBT Impeller / Dual Ball Bearing (Purchased)",
       "quantity": 1,
@@ -366,7 +366,7 @@
         0,
         155
       ],
-      "color": "#14b8a6",
+      "color": "#9c7a4c",
       "bomRef": "bom-filament-fan",
       "material": "PLA+",
       "quantity": 1,
@@ -413,7 +413,7 @@
         0,
         205
       ],
-      "color": "#a855f7",
+      "color": "#b87333",
       "bomRef": "bom-filament-fan",
       "material": "PETG",
       "quantity": 1,
@@ -457,7 +457,7 @@
         -25,
         265
       ],
-      "color": "#f59e0b",
+      "color": "#d4af37",
       "bomRef": "bom-filament-fan",
       "material": "Matte PLA+",
       "quantity": 1,
@@ -501,7 +501,7 @@
         25,
         345
       ],
-      "color": "#ec4899",
+      "color": "#c84b31",
       "bomRef": "bom-filament-fan",
       "material": "Matte PLA+",
       "quantity": 1,
@@ -547,7 +547,7 @@
         -145,
         200
       ],
-      "color": "#f97316",
+      "color": "#b45309",
       "bomRef": "bom-filament-fan",
       "material": "PLA+",
       "quantity": 2,
@@ -589,7 +589,7 @@
         -140,
         195
       ],
-      "color": "#10b981",
+      "color": "#b89b4a",
       "bomRef": "bom-pwm-controller",
       "material": "FR4 PCB + Aluminum Knob (Purchased)",
       "quantity": 1,
@@ -631,7 +631,7 @@
         -140,
         195
       ],
-      "color": "#2563eb",
+      "color": "#8c6218",
       "bomRef": "bom-pm25-sensor",
       "material": "Laser Scattering Sensor + MCU (Purchased)",
       "quantity": 1,
@@ -673,7 +673,7 @@
         0,
         -45
       ],
-      "color": "#475569",
+      "color": "#7a5c38",
       "bomRef": "bom-psu-24v",
       "material": "UL-Listed Power Adapter (Purchased)",
       "quantity": 1,

@@ -208,7 +208,7 @@ export interface PrintedPart {
   dims_mm?: [number, number, number];
   /** Filament material recommendation (e.g. "PLA", "PETG", "TPU", "ABS") */
   material?: string;
-  /** Hex color string for 3D viewer and plate preview (e.g. "#10b981") */
+  /** Hex color string for 3D viewer and plate preview (e.g. "#b89b4a") */
   color: string;
   /** Number of copies needed for the full assembly */
   quantity?: number;
