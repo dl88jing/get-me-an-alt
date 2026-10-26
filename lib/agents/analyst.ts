@@ -2,6 +2,11 @@ import fs from 'fs';
 import path from 'path';
 import { AgentLogEntry, ObjectAnalysis } from '../types';
 import { SAMPLE_ANALYSIS } from '../sample-data';
+import {
+  fetchProductPage,
+  InlineImageData,
+  ProductPageFetchResult,
+} from './page-fetch';
 import { runGeminiAgent, RunAgentResult } from './runner';
 
 export interface AnalystInput {
@@ -12,6 +17,7 @@ export interface AnalystInput {
     mimeType: string;
     base64Data: string;
   };
+  inlineImages?: InlineImageData[];
   cwd: string;
   onLog?: (entry: AgentLogEntry) => void;
 }
@@ -174,150 +180,6 @@ export function parseUrlProductInfo(rawUrl: string): {
   }
 }
 
-function decodeHtmlEntities(str: string): string {
-  return str
-    .replace(/&amp;/gi, '&')
-    .replace(/&quot;/gi, '"')
-    .replace(/&#39;|&apos;/gi, "'")
-    .replace(/&ndash;|&#8211;/gi, '-')
-    .replace(/&mdash;|&#8212;/gi, '—')
-    .replace(/&lt;/gi, '<')
-    .replace(/&gt;/gi, '>')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-
-function extractMetaContent(html: string, keys: string[]): string | undefined {
-  for (const key of keys) {
-    const escaped = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    const re1 = new RegExp(
-      `<meta[^>]+(?:property|name)=["']${escaped}["'][^>]+content=["']([^"']+)["']`,
-      'i'
-    );
-    const m1 = html.match(re1)?.[1];
-    if (m1 && m1.trim()) return decodeHtmlEntities(m1);
-
-    const re2 = new RegExp(
-      `<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${escaped}["']`,
-      'i'
-    );
-    const m2 = html.match(re2)?.[1];
-    if (m2 && m2.trim()) return decodeHtmlEntities(m2);
-  }
-  return undefined;
-}
-
-function isErrorOrBlockTitle(title: string): boolean {
-  const t = title.trim().toLowerCase();
-  if (!t || t.length < 3) return true;
-  return /^(404\b|page not found|not found|access denied|just a moment|attention required|robot check|security check|error\b|cloudflare|forbidden|verify you are human)/i.test(
-    t
-  );
-}
-
-function cleanPageTitle(rawTitle: string, siteName?: string): string {
-  let cleaned = decodeHtmlEntities(rawTitle);
-  // Strip common site suffix separators like " | Peak Design Official Site" or " - Amazon.com"
-  const parts = cleaned.split(/\s+(?:\||—|–|·|•|-)\s+/);
-  if (parts.length > 1) {
-    const first = parts[0].trim();
-    if (first.length >= 4 && !isErrorOrBlockTitle(first)) {
-      cleaned = first;
-    }
-  }
-  if (
-    siteName &&
-    cleaned.length > 3 &&
-    !cleaned.toLowerCase().includes(siteName.toLowerCase()) &&
-    cleaned.split(/\s+/).length <= 4
-  ) {
-    cleaned = `${siteName.trim()} ${cleaned}`.trim();
-  }
-  return cleaned.slice(0, 72);
-}
-
-async function fetchProductPageMetadata(url: string): Promise<{
-  title?: string;
-  description?: string;
-  siteName?: string;
-  price?: number;
-}> {
-  const ctrl = new AbortController();
-  const timer = setTimeout(() => ctrl.abort(), 5000);
-  try {
-    const isYoutube = /youtube\.com\/watch|youtu\.be\//i.test(url);
-    const targetFetchUrl = isYoutube
-      ? `https://www.youtube.com/oembed?url=${encodeURIComponent(url)}&format=json`
-      : url;
-    const res = await fetch(targetFetchUrl, {
-      headers: {
-        'User-Agent':
-          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
-        Accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-      },
-      redirect: 'follow',
-      signal: ctrl.signal,
-    });
-    clearTimeout(timer);
-    if (!res.ok) {
-      return {};
-    }
-    if (isYoutube) {
-      const oembed = await res.json().catch(() => null);
-      if (oembed?.title) {
-        return {
-          title: String(oembed.title).trim().slice(0, 72),
-          siteName: oembed.author_name ? String(oembed.author_name).trim() : 'YouTube',
-          description: `YouTube video by ${oembed.author_name || 'Creator'}`,
-        };
-      }
-      return {};
-    }
-    const html = (await res.text()).slice(0, 120000);
-    const ogTitle = extractMetaContent(html, ['og:title', 'twitter:title']);
-    const rawTitleTag = html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1];
-    const pageTitle = rawTitleTag ? decodeHtmlEntities(rawTitleTag) : undefined;
-    const siteName = extractMetaContent(html, [
-      'og:site_name',
-      'application-name',
-    ]);
-    const description = extractMetaContent(html, [
-      'og:description',
-      'description',
-      'twitter:description',
-    ]);
-    const rawPrice = extractMetaContent(html, [
-      'product:price:amount',
-      'og:price:amount',
-    ]);
-    const parsedPrice = rawPrice ? Number(rawPrice.replace(/[^0-9.]/g, '')) : NaN;
-
-    const candidateTitle =
-      ogTitle && !isErrorOrBlockTitle(ogTitle)
-        ? cleanPageTitle(ogTitle, siteName)
-        : pageTitle && !isErrorOrBlockTitle(pageTitle)
-        ? cleanPageTitle(pageTitle, siteName)
-        : undefined;
-
-    return {
-      title: candidateTitle,
-      description:
-        description && !isErrorOrBlockTitle(description)
-          ? description.slice(0, 320)
-          : undefined,
-      siteName: siteName?.slice(0, 40),
-      price:
-        Number.isFinite(parsedPrice) && parsedPrice > 1 && parsedPrice < 10000
-          ? parsedPrice
-          : undefined,
-    };
-  } catch {
-    clearTimeout(timer);
-    return {};
-  }
-}
-
 export function isPlantWatererInput(text?: string, url?: string): boolean {
   const combined = `${text || ''} ${url || ''}`.toLowerCase();
   return /\b(plant|waterer|auto-waterer|blumat|sustee|hydropulse|terracotta)\b/i.test(
@@ -449,25 +311,63 @@ function buildGenericObjectAnalysis(params: {
 
 export async function runAnalystAgent(
   input: AnalystInput
-): Promise<RunAgentResult<ObjectAnalysis>> {
+): Promise<RunAgentResult<ObjectAnalysis> & { inlineImages?: InlineImageData[] }> {
   const urlInfo = input.url ? parseUrlProductInfo(input.url) : null;
-  let scrapedMeta: {
-    title?: string;
-    description?: string;
-    siteName?: string;
-    price?: number;
-  } = {};
+  let scrapedMeta: ProductPageFetchResult = {
+    images: [],
+    inlineImages: [],
+  };
 
   if (input.url && /^https?:\/\//i.test(input.url)) {
-    scrapedMeta = await fetchProductPageMetadata(input.url.trim());
-    if (scrapedMeta.title || urlInfo?.title) {
+    scrapedMeta = await fetchProductPage(input.url.trim());
+    if (
+      scrapedMeta.title ||
+      urlInfo?.title ||
+      scrapedMeta.inlineImages.length > 0
+    ) {
       input.onLog?.({
         timestamp: new Date().toISOString(),
         level: 'info',
         message: scrapedMeta.title
-          ? `Fetched product page metadata: "${scrapedMeta.title}"${scrapedMeta.price ? ` ($${scrapedMeta.price})` : ''}`
-          : `Resolved product name from URL slug: "${urlInfo?.title}"`,
+          ? `Fetched product page (${scrapedMeta.source || 'html'}): "${scrapedMeta.title}"${scrapedMeta.price ? ` ($${scrapedMeta.price})` : ''}${scrapedMeta.inlineImages.length > 0 ? ` + ${scrapedMeta.inlineImages.length} verified product image(s)` : ''}`
+          : `Resolved product name from URL slug: "${urlInfo?.title}"${scrapedMeta.inlineImages.length > 0 ? ` + ${scrapedMeta.inlineImages.length} verified product image(s)` : ''}`,
       });
+    }
+  }
+
+  const combinedInlineImages: InlineImageData[] = [];
+  if (input.inlineImage?.base64Data) {
+    combinedInlineImages.push({
+      mimeType: input.inlineImage.mimeType || 'image/jpeg',
+      base64Data: input.inlineImage.base64Data,
+    });
+  }
+  if (Array.isArray(input.inlineImages)) {
+    for (const img of input.inlineImages) {
+      if (combinedInlineImages.length >= 3) break;
+      if (img?.base64Data) combinedInlineImages.push(img);
+    }
+  }
+  for (const img of scrapedMeta.inlineImages) {
+    if (combinedInlineImages.length >= 3) break;
+    combinedInlineImages.push(img);
+  }
+
+  if (combinedInlineImages.length > 0) {
+    try {
+      fs.mkdirSync(input.cwd, { recursive: true });
+      fs.writeFileSync(
+        path.join(input.cwd, 'product-images.json'),
+        JSON.stringify(
+          combinedInlineImages.map((img) => ({
+            mimeType: img.mimeType,
+            base64Data: img.base64Data,
+            sourceUrl: img.sourceUrl,
+          }))
+        )
+      );
+    } catch {
+      // ignore
     }
   }
 
@@ -490,6 +390,7 @@ export async function runAnalystAgent(
     'Custom Hardware Gadget';
 
   const resolvedBrand =
+    scrapedMeta.brand ||
     scrapedMeta.siteName ||
     urlInfo?.brand ||
     KNOWN_BRAND_MAP[
@@ -501,6 +402,9 @@ export async function runAnalystAgent(
     scrapedMeta.title ? `Page Title: ${scrapedMeta.title}` : '',
     scrapedMeta.description ? `Page Description: ${scrapedMeta.description}` : '',
     scrapedMeta.price ? `Listed Retail Price: $${scrapedMeta.price}` : '',
+    scrapedMeta.specs && scrapedMeta.specs.length > 0
+      ? `Extracted Product Specs:\n- ${scrapedMeta.specs.join('\n- ')}`
+      : '',
   ]
     .filter(Boolean)
     .join('\n');
@@ -654,6 +558,10 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
       Array.isArray(d?.whatGetsBought) && d.whatGetsBought.length > 0
         ? d.whatGetsBought
         : genericFallback.whatGetsBought,
+    productImages:
+      scrapedMeta.images.length > 0
+        ? scrapedMeta.images
+        : d?.productImages,
   };
 
   try {
@@ -669,5 +577,6 @@ Analyze "${resolvedTitle}" specifically (never substitute a different gadget) an
   return {
     ...result,
     data: normalized,
+    inlineImages: combinedInlineImages,
   };
 }

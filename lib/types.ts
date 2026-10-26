@@ -79,6 +79,7 @@ export interface ObjectAnalysis {
   materialsNeeded: string[];
   whatGetsPrinted: string[];
   whatGetsBought: string[];
+  productImages?: string[];
 }
 
 export interface ResearchSource {

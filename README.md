@@ -122,8 +122,11 @@ Mounted at the top of every project workspace (`/projects/[id]`), **Mission Cont
 
 ### Prerequisites
 - **Node.js 18+** and **pnpm** (or `npm`)
-- Optional for live agent runs:
-  - `GEMINI_API_KEY` in `.env.local` (for Gemini 4 Argon REST & grounded search)
+- Optional environment variables for live agent runs (`.env.local` or Vercel project env):
+  - `GEMINI_API_KEY`: Required for live Gemini 4 Argon REST & Google Search grounded calls
+  - `ASIDE_BRIDGE_URL`: Optional headless browser bridge endpoint (`POST { url }`, 25s timeout) returning `{ title, description, specs, images[], screenshot? }` before falling back to direct 600KB HTML / JSON-LD / Shopify `.json` scraping (`lib/agents/page-fetch.ts`)
+  - `ASIDE_BRIDGE_TOKEN`: Optional auth token sent as `x-bridge-token` header when calling `ASIDE_BRIDGE_URL`
+  - `KV_REST_API_URL` / `KV_REST_API_TOKEN` (or `UPSTASH_REDIS_REST_URL` / `UPSTASH_REDIS_REST_TOKEN`): Optional durable Redis/KV store for cross-lambda project options, manifests, and recent builds
   - `agy` CLI on `PATH` or `~/.local/bin/agy` (automatically detected by `lib/agents/runner.ts`)
   - *Note:* The app includes a complete pre-generated **Instant Demo Mode** (`/projects/plant-auto-waterer`) and deterministic fallbacks so it runs out of the box even without API keys.
 
