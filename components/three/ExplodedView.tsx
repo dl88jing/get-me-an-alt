@@ -12,6 +12,7 @@ import {
   ResolvedAssemblyPart,
   resolveAssemblyParts,
 } from "./types";
+import { toRenaissancePartColor } from "./adapters";
 import {
   getPartBoundingRadius,
   formatPartDimensions,
@@ -141,12 +142,22 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
     return [dx, dy, dz];
   }, [calloutNumber, boundRadius, part.position]);
 
-  const baseColor = useMemo(() => new THREE.Color(part.color), [part.color]);
+  const resolvedHex = useMemo(
+    () =>
+      toRenaissancePartColor(
+        part.color,
+        part.category,
+        Math.max(0, calloutNumber - 1)
+      ),
+    [part.color, part.category, calloutNumber]
+  );
+
+  const baseColor = useMemo(() => new THREE.Color(resolvedHex), [resolvedHex]);
   const emissiveColor = useMemo(() => {
-    if (isSelected) return new THREE.Color("#38BDF8");
-    if (isHovered) return baseColor.clone().multiplyScalar(0.65);
-    return new THREE.Color("#000000");
-  }, [isSelected, isHovered, baseColor]);
+    if (isSelected) return new THREE.Color("#D4AF37");
+    if (isHovered) return new THREE.Color("#B89B4A");
+    return new THREE.Color("#2B1D0E");
+  }, [isSelected, isHovered]);
 
   const isPurchased = part.category === "purchased";
 
@@ -155,7 +166,7 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
       {showLeaderLine && (
         <Line
           points={leaderPoints}
-          color={isSelected ? "#38BDF8" : isHovered ? "#93C5FD" : "#475569"}
+          color={isSelected ? "#F3D478" : isHovered ? "#D4AF37" : "#9C7A4C"}
           lineWidth={isSelected || isHovered ? 1.8 : 1}
           dashed
           dashScale={0.25}
@@ -186,10 +197,10 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
           >
             <meshStandardMaterial
               color={baseColor}
-              roughness={isPurchased ? 0.28 : 0.36}
-              metalness={isPurchased ? 0.55 : 0.12}
+              roughness={isPurchased ? 0.26 : 0.42}
+              metalness={isPurchased ? 0.68 : 0.16}
               emissive={emissiveColor}
-              emissiveIntensity={isSelected ? 0.38 : isHovered ? 0.28 : 0.04}
+              emissiveIntensity={isSelected ? 0.36 : isHovered ? 0.24 : 0.06}
             />
           </mesh>
 
@@ -198,15 +209,15 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
             <lineBasicMaterial
               color={
                 isSelected
-                  ? "#7DD3FC"
+                  ? "#F3D478"
                   : isHovered
-                  ? "#FFFFFF"
+                  ? "#F5EBD6"
                   : isPurchased
-                  ? "#1E293B"
-                  : "#0F172A"
+                  ? "#3B2410"
+                  : "#2B1D0E"
               }
               transparent
-              opacity={isSelected || isHovered ? 0.98 : dimmed ? 0.38 : 0.55}
+              opacity={isSelected || isHovered ? 0.98 : dimmed ? 0.38 : 0.58}
             />
           </lineSegments>
         </group>
@@ -218,12 +229,12 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
               points={[[0, 0, 0], calloutOffset]}
               color={
                 isSelected
-                  ? "#38BDF8"
+                  ? "#F3D478"
                   : isHovered
-                  ? "#BAE6FD"
+                  ? "#E6D3B3"
                   : isPurchased
-                  ? "#FBBF24"
-                  : "#34D399"
+                  ? "#D4AF37"
+                  : "#C5A059"
               }
               lineWidth={isSelected || isHovered ? 2 : 1.25}
               transparent
@@ -247,12 +258,12 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
                 title={`${calloutNumber}. ${part.name}`}
                 className={`w-6 h-6 rounded-full font-mono text-[11px] font-extrabold flex items-center justify-center border-2 transition-transform shadow-md ${
                   isSelected
-                    ? "bg-sky-400 text-slate-950 border-white scale-125 ring-2 ring-sky-400/50"
+                    ? "bg-[#f3d478] text-[#140e07] border-[#f5ebd6] scale-125 ring-2 ring-[#d4af37]/50"
                     : isHovered
-                    ? "bg-slate-900 text-white border-sky-400 scale-110"
+                    ? "bg-[#1d1710] text-[#f5ebd6] border-[#f3d478] scale-110"
                     : isPurchased
-                    ? "bg-slate-950/95 text-amber-300 border-amber-400/80"
-                    : "bg-slate-950/95 text-emerald-300 border-emerald-400/80"
+                    ? "bg-[#14100b]/95 text-[#f3d478] border-[#d4af37]/85"
+                    : "bg-[#14100b]/95 text-[#e6d3b3] border-[#b89b4a]/80"
                 }`}
               >
                 {calloutNumber}
@@ -270,22 +281,22 @@ const PartInstanceNode: React.FC<PartInstanceNodeProps> = ({
             zIndexRange={[25, 0]}
             style={{ pointerEvents: "none" }}
           >
-            <div className="px-2.5 py-1 rounded-md bg-slate-950/95 border border-sky-400/60 shadow-lg shadow-sky-950/60 backdrop-blur-md whitespace-nowrap flex items-center gap-2">
-              <span className="w-4 h-4 rounded-full bg-sky-500/25 border border-sky-400/60 text-[10px] font-mono font-bold text-sky-200 flex items-center justify-center">
+            <div className="px-2.5 py-1 rounded-md bg-[#14100b]/95 border border-[#d4af37]/60 shadow-lg shadow-black/80 backdrop-blur-md whitespace-nowrap flex items-center gap-2">
+              <span className="w-4 h-4 rounded-full bg-[#d4af37]/25 border border-[#d4af37]/60 text-[10px] font-mono font-bold text-[#f3d478] flex items-center justify-center">
                 {calloutNumber}
               </span>
               <span
                 className="w-2 h-2 rounded-full shrink-0"
-                style={{ backgroundColor: part.color }}
+                style={{ backgroundColor: resolvedHex }}
               />
-              <span className="text-xs font-semibold text-white tracking-tight">
+              <span className="text-xs font-display font-bold text-[#f5ebd6] tracking-tight">
                 {part.name}
               </span>
               <span
                 className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded ${
                   part.category === "printed"
-                    ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30"
-                    : "bg-amber-500/20 text-amber-300 border border-amber-500/30"
+                    ? "bg-[#b89b4a]/20 text-[#e6d3b3] border border-[#b89b4a]/40"
+                    : "bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40"
                 }`}
               >
                 {part.category}
@@ -463,7 +474,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
 
   return (
     <div
-      className={`relative w-full h-[640px] min-h-[540px] rounded-2xl overflow-hidden bg-[#080C14] border border-slate-800/80 shadow-2xl flex flex-col select-none ${className}`}
+      className={`relative w-full h-[640px] min-h-[540px] rounded-2xl overflow-hidden bg-[#0c0906] border border-[#d4af37]/30 shadow-2xl flex flex-col select-none ${className}`}
       data-testid="exploded-view-root"
     >
       {/* Subtle radial glow backdrop */}
@@ -471,24 +482,24 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle at 42% 45%, rgba(56, 189, 248, 0.09) 0%, rgba(15, 23, 42, 0.03) 48%, rgba(8, 12, 20, 0.95) 100%)",
+            "radial-gradient(circle at 42% 45%, rgba(212, 175, 55, 0.09) 0%, rgba(43, 29, 14, 0.05) 48%, rgba(12, 9, 6, 0.96) 100%)",
         }}
       />
 
       {/* Top HUD Bar: Title + Filter Toggles + Callouts + Auto-Rotate & Reset */}
-      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-slate-950/75 border-b border-slate-800/80 backdrop-blur-md">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-3 px-4 py-3 bg-[#14100b]/90 border-b border-[#d4af37]/25 backdrop-blur-md">
         <div className="flex items-center gap-3">
-          <div className="w-2.5 h-2.5 rounded-full bg-sky-400 shadow-[0_0_10px_#38BDF8]" />
+          <div className="w-2.5 h-2.5 rounded-full bg-[#d4af37] shadow-[0_0_10px_#d4af37]" />
           <div>
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-semibold text-slate-100 tracking-tight leading-none">
+              <h3 className="font-display text-base font-bold text-[#f5ebd6] tracking-tight leading-none">
                 Interactive 3D Exploded Assembly
               </h3>
-              <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 border border-emerald-500/30 text-[10px] font-mono text-emerald-300">
+              <span className="px-2 py-0.5 rounded bg-[#d4af37]/15 border border-[#d4af37]/40 text-[10px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
                 Real STL + CAD
               </span>
             </div>
-            <p className="text-[11px] text-slate-400 mt-1">
+            <p className="text-[11px] text-[#bda782] mt-1">
               Orbit, scrub explosion vectors, or click any numbered callout to
               inspect CAD &amp; BOM specs
             </p>
@@ -498,7 +509,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
         {/* Filter Mode Segmented Control & Toggles */}
         <div className="flex items-center gap-2 flex-wrap">
           <div
-            className="inline-flex rounded-lg bg-slate-900/95 p-1 border border-slate-800"
+            className="inline-flex rounded-lg bg-[#0c0906]/95 p-1 border border-[#d4af37]/25"
             role="group"
             aria-label="Part category filter"
           >
@@ -520,18 +531,18 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                   type="button"
                   onClick={() => setFilterMode(tab.id)}
                   data-testid={`filter-${tab.id}`}
-                  className={`px-2.5 py-1 rounded-md text-xs font-medium transition-all flex items-center gap-1.5 ${
+                  className={`px-2.5 py-1 rounded-md font-codex text-xs font-bold tracking-wide transition-all flex items-center gap-1.5 ${
                     active
-                      ? "bg-sky-500/20 text-sky-300 border border-sky-400/40 shadow-sm"
-                      : "text-slate-400 hover:text-slate-200 border border-transparent"
+                      ? "bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/50 shadow-sm"
+                      : "text-[#bda782] hover:text-[#f5ebd6] border border-transparent"
                   }`}
                 >
                   <span>{tab.label}</span>
                   <span
                     className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                       active
-                        ? "bg-sky-400/25 text-sky-200"
-                        : "bg-slate-800 text-slate-400"
+                        ? "bg-[#d4af37] text-[#140e07] font-bold"
+                        : "bg-[#1d1710] text-[#bda782]"
                     }`}
                   >
                     {tab.count}
@@ -545,14 +556,14 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             type="button"
             onClick={() => setShowCallouts((v) => !v)}
             data-testid="toggle-callouts"
-            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 py-1.5 rounded-lg font-codex text-xs font-bold tracking-wide border transition-all flex items-center gap-1.5 ${
               showCallouts
-                ? "bg-sky-500/15 border-sky-500/40 text-sky-300"
-                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200"
+                ? "bg-[#d4af37]/20 border-[#d4af37]/50 text-[#f3d478]"
+                : "bg-[#0c0906] border-[#d4af37]/25 text-[#bda782] hover:text-[#f5ebd6]"
             }`}
             title="Toggle numbered part callouts and legend"
           >
-            <span className="w-4 h-4 rounded-full bg-sky-500/25 border border-sky-400/60 font-mono text-[10px] font-bold flex items-center justify-center">
+            <span className="w-4 h-4 rounded-full bg-[#d4af37]/25 border border-[#d4af37]/60 font-mono text-[10px] font-bold text-[#f3d478] flex items-center justify-center">
               #
             </span>
             Callouts
@@ -562,16 +573,16 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             type="button"
             onClick={() => setAutoRotate((v) => !v)}
             data-testid="toggle-autorotate"
-            className={`px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-all flex items-center gap-1.5 ${
+            className={`px-2.5 py-1.5 rounded-lg font-codex text-xs font-bold tracking-wide border transition-all flex items-center gap-1.5 ${
               autoRotate
-                ? "bg-emerald-500/15 border-emerald-500/40 text-emerald-300"
-                : "bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200"
+                ? "bg-[#b89b4a]/20 border-[#b89b4a]/50 text-[#f3d478]"
+                : "bg-[#0c0906] border-[#d4af37]/25 text-[#bda782] hover:text-[#f5ebd6]"
             }`}
             title="Toggle idle turntable rotation"
           >
             <span
               className={`w-1.5 h-1.5 rounded-full ${
-                autoRotate ? "bg-emerald-400 animate-pulse" : "bg-slate-600"
+                autoRotate ? "bg-[#f3d478] animate-pulse" : "bg-[#5c4930]"
               }`}
             />
             Auto-Rotate
@@ -580,7 +591,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           <button
             type="button"
             onClick={handleResetCamera}
-            className="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-slate-900 hover:bg-slate-800 text-slate-300 border border-slate-800 transition-colors"
+            className="px-2.5 py-1.5 rounded-lg font-codex text-xs font-bold tracking-wide bg-[#0c0906] hover:bg-[#1d1710] text-[#e6d3b3] border border-[#d4af37]/25 transition-colors"
             title="Reset camera framing"
           >
             Reset View
@@ -597,8 +608,8 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           camera={{ position: [240, 180, 265], fov: 40, near: 1, far: 2500 }}
           onPointerMissed={() => setSelectedId(null)}
         >
-          <color attach="background" args={["#080C14"]} />
-          <fog attach="fog" args={["#080C14", 420, 1100]} />
+          <color attach="background" args={["#0C0906"]} />
+          <fog attach="fog" args={["#0C0906", 420, 1100]} />
 
           <DampedExplodeDriver
             targetExplode={explode}
@@ -606,15 +617,16 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             onUpdate={setSmoothedExplode}
           />
 
-          {/* Soft Studio Lighting */}
-          <ambientLight intensity={0.75} />
+          {/* Soft Chiaroscuro Workshop Lighting */}
+          <ambientLight intensity={0.78} />
           <hemisphereLight
-            args={["#E0F2FE", "#1E293B", 0.85]}
+            args={["#FFF4D6", "#2B1D0E", 0.88]}
             position={[0, 200, 0]}
           />
           <directionalLight
             position={[150, 240, 160]}
             intensity={1.55}
+            color="#FFF4D6"
             castShadow
             shadow-mapSize={[1024, 1024]}
             shadow-bias={-0.0005}
@@ -622,9 +634,9 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
           <directionalLight
             position={[-160, 120, -140]}
             intensity={0.65}
-            color="#38BDF8"
+            color="#D4AF37"
           />
-          <pointLight position={[0, 90, 140]} intensity={0.45} color="#F8FAFC" />
+          <pointLight position={[0, 90, 140]} intensity={0.45} color="#F5EBD6" />
 
           {/* Assembly Parts */}
           <group position={[0, -32, 0]}>
@@ -651,7 +663,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             ))}
           </group>
 
-          {/* Studio Ground Grid & Soft Contact Shadows */}
+          {/* Sepia Ground Grid & Soft Contact Shadows */}
           <group position={[0, -58, 0]}>
             <ContactShadows
               position={[0, 0.2, 0]}
@@ -659,10 +671,10 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
               scale={340}
               blur={2.4}
               far={180}
-              color="#020617"
+              color="#050302"
             />
             <gridHelper
-              args={[360, 18, "#1E293B", "#0F172A"]}
+              args={[360, 18, "#5C4930", "#282016"]}
               position={[0, 0, 0]}
             />
           </group>
@@ -679,14 +691,14 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
         {/* Top-Left Numbered Parts Legend when Callouts are enabled */}
         {showCallouts && (
           <div
-            className="hidden sm:flex absolute top-3 left-4 z-10 w-64 max-h-[260px] rounded-xl bg-slate-950/90 border border-slate-800/90 p-3 shadow-xl backdrop-blur-md flex-col"
+            className="hidden sm:flex absolute top-3 left-4 z-10 w-64 max-h-[260px] rounded-xl bg-[#14100b]/92 border border-[#d4af37]/30 p-3 shadow-xl backdrop-blur-md flex-col"
             data-testid="exploded-parts-legend"
           >
-            <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-slate-800">
-              <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-slate-300">
+            <div className="flex items-center justify-between pb-1.5 mb-1.5 border-b border-[#d4af37]/20">
+              <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
                 Parts Callout Legend
               </span>
-              <span className="text-[10px] font-mono text-sky-400">
+              <span className="text-[10px] font-mono text-[#d4af37]">
                 {visibleParts.length} items
               </span>
             </div>
@@ -704,25 +716,25 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                     onMouseLeave={() => setHoveredId(null)}
                     className={`w-full flex items-center justify-between gap-2 px-2 py-1 rounded text-left text-[11px] transition-colors ${
                       isSel
-                        ? "bg-sky-500/20 text-white border border-sky-400/50"
+                        ? "bg-[#d4af37]/20 text-[#f5ebd6] border border-[#d4af37]/55"
                         : isHov
-                        ? "bg-slate-800/90 text-slate-100"
-                        : "hover:bg-slate-900/80 text-slate-300"
+                        ? "bg-[#282016]/90 text-[#f5ebd6]"
+                        : "hover:bg-[#1d1710]/80 text-[#e6d3b3]"
                     }`}
                   >
                     <div className="flex items-center gap-2 min-w-0">
                       <span
                         className={`w-4 h-4 rounded-full font-mono text-[10px] font-bold flex items-center justify-center shrink-0 border ${
                           part.category === "printed"
-                            ? "bg-emerald-500/20 text-emerald-300 border-emerald-400/60"
-                            : "bg-amber-500/20 text-amber-300 border-amber-400/60"
+                            ? "bg-[#b89b4a]/20 text-[#e6d3b3] border-[#b89b4a]/60"
+                            : "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/65"
                         }`}
                       >
                         {cNum}
                       </span>
                       <span className="truncate font-medium">{part.name}</span>
                     </div>
-                    <span className="text-[10px] font-mono text-slate-400 shrink-0">
+                    <span className="text-[10px] font-mono text-[#bda782] shrink-0">
                       {part.partNumber || `×${part.quantity}`}
                     </span>
                   </button>
@@ -733,11 +745,11 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
         )}
 
         {/* Bottom-Left Explode Vector Slider Control Panel */}
-        <div className="absolute left-4 bottom-14 z-10 w-80 max-w-[calc(100%-2rem)] rounded-xl bg-slate-950/90 border border-slate-800/90 p-3.5 shadow-xl backdrop-blur-md">
+        <div className="absolute left-4 bottom-14 z-10 w-80 max-w-[calc(100%-2rem)] rounded-xl bg-[#14100b]/92 border border-[#d4af37]/30 p-3.5 shadow-xl backdrop-blur-md">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-semibold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+            <span className="font-codex text-xs font-bold uppercase tracking-wider text-[#f5ebd6] flex items-center gap-1.5">
               <svg
-                className="w-3.5 h-3.5 text-sky-400"
+                className="w-3.5 h-3.5 text-[#d4af37]"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -748,7 +760,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
               Explode Factor
             </span>
             <span
-              className="text-xs font-mono font-bold text-sky-400 bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20"
+              className="text-xs font-mono font-bold text-[#f3d478] bg-[#d4af37]/15 px-2 py-0.5 rounded border border-[#d4af37]/35"
               data-testid="explode-value"
             >
               {Math.round(explode * 100)}%
@@ -764,7 +776,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             onChange={(e) => setExplode(parseFloat(e.target.value))}
             aria-label="Explode slider"
             data-testid="explode-slider"
-            className="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-sky-400"
+            className="w-full h-2 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
           />
 
           <div className="flex items-center justify-between gap-1.5 mt-2.5">
@@ -779,8 +791,8 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                 onClick={() => setExplode(preset.val)}
                 className={`flex-1 py-1 px-2 rounded text-[11px] font-medium border transition-colors ${
                   Math.abs(explode - preset.val) < 0.03
-                    ? "bg-sky-500/20 border-sky-500/40 text-sky-300"
-                    : "bg-slate-900/90 border-slate-800 text-slate-400 hover:text-slate-200"
+                    ? "bg-[#d4af37]/25 border-[#d4af37]/55 text-[#f3d478] font-bold"
+                    : "bg-[#0c0906]/90 border-[#d4af37]/20 text-[#bda782] hover:text-[#f5ebd6]"
                 }`}
               >
                 {preset.label}
@@ -791,15 +803,15 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
 
         {/* Hovered Part Quick Status Pill (Top-Left inside canvas when legend is hidden) */}
         {hoveredPart && !selectedPart && !showCallouts && (
-          <div className="absolute top-3 left-4 z-10 px-3 py-1.5 rounded-lg bg-slate-950/90 border border-slate-700/80 backdrop-blur-md flex items-center gap-2 pointer-events-none">
+          <div className="absolute top-3 left-4 z-10 px-3 py-1.5 rounded-lg bg-[#14100b]/92 border border-[#d4af37]/40 backdrop-blur-md flex items-center gap-2 pointer-events-none">
             <span
               className="w-2.5 h-2.5 rounded-full"
               style={{ backgroundColor: hoveredPart.color }}
             />
-            <span className="text-xs font-medium text-slate-100">
+            <span className="text-xs font-medium text-[#f5ebd6]">
               {hoveredPart.name}
             </span>
-            <span className="text-[11px] text-slate-400 font-mono">
+            <span className="text-[11px] text-[#bda782] font-mono">
               · Click to inspect
             </span>
           </div>
@@ -808,39 +820,39 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
         {/* Right Side Inspector Card when a Part is Selected */}
         {selectedPart && (
           <div
-            className="absolute top-3 right-4 bottom-14 z-20 w-80 max-w-[calc(100%-2rem)] rounded-xl bg-slate-950/95 border border-slate-700/80 shadow-2xl backdrop-blur-xl flex flex-col overflow-hidden"
+            className="absolute top-3 right-4 bottom-14 z-20 w-80 max-w-[calc(100%-2rem)] rounded-xl bg-[#14100b]/95 border border-[#d4af37]/40 shadow-2xl backdrop-blur-xl flex flex-col overflow-hidden"
             data-testid="selected-part-card"
           >
             {/* Card Header */}
-            <div className="p-4 border-b border-slate-800/90 flex items-start justify-between gap-2 bg-gradient-to-b from-slate-900/90 to-slate-950/40">
+            <div className="p-4 border-b border-[#d4af37]/25 flex items-start justify-between gap-2 bg-gradient-to-b from-[#1d1710]/90 to-[#14100b]/60">
               <div>
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="w-5 h-5 rounded-full bg-sky-500/20 border border-sky-400/50 text-[11px] font-mono font-bold text-sky-300 flex items-center justify-center">
+                  <span className="w-5 h-5 rounded-full bg-[#d4af37]/20 border border-[#d4af37]/55 text-[11px] font-mono font-bold text-[#f3d478] flex items-center justify-center">
                     {selectedPart.calloutNumber ?? 1}
                   </span>
                   <span
-                    className={`text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
+                    className={`text-[10px] font-codex font-bold uppercase tracking-wider px-2 py-0.5 rounded-full border ${
                       selectedPart.category === "printed"
-                        ? "bg-emerald-500/15 text-emerald-300 border-emerald-500/40"
-                        : "bg-amber-500/15 text-amber-300 border-amber-500/40"
+                        ? "bg-[#b89b4a]/20 text-[#e6d3b3] border-[#b89b4a]/45"
+                        : "bg-[#d4af37]/20 text-[#f3d478] border-[#d4af37]/45"
                     }`}
                   >
                     {selectedPart.category === "printed"
                       ? "3D Printed STL"
                       : "Purchased Component"}
                   </span>
-                  <span className="text-[11px] font-mono text-slate-400 bg-slate-900 px-1.5 py-0.5 rounded border border-slate-800">
+                  <span className="text-[11px] font-mono text-[#bda782] bg-[#0c0906] px-1.5 py-0.5 rounded border border-[#d4af37]/20">
                     Qty ×{selectedPart.quantity}
                   </span>
                 </div>
-                <h4 className="text-base font-bold text-white leading-snug flex items-center gap-2">
+                <h4 className="font-display text-lg font-bold text-[#f5ebd6] leading-snug flex items-center gap-2">
                   <span
-                    className="w-3 h-3 rounded-full shrink-0 border border-white/20"
+                    className="w-3 h-3 rounded-full shrink-0 border border-[#f5ebd6]/30"
                     style={{ backgroundColor: selectedPart.color }}
                   />
                   {selectedPart.name}
                 </h4>
-                <p className="text-[11px] font-mono text-slate-400 mt-0.5">
+                <p className="text-[11px] font-mono text-[#bda782] mt-0.5">
                   ID: {selectedPart.partId} · Shape: {selectedPart.shape}
                 </p>
               </div>
@@ -849,7 +861,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                 type="button"
                 onClick={() => setSelectedId(null)}
                 aria-label="Close inspector card"
-                className="p-1 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800/80 transition-colors"
+                className="p-1 rounded-lg text-[#bda782] hover:text-[#f5ebd6] hover:bg-[#282016]/80 transition-colors"
               >
                 <svg
                   className="w-4 h-4"
@@ -867,11 +879,11 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             <div className="p-4 space-y-3.5 overflow-y-auto flex-1 text-xs">
               {/* Envelope & Coordinates */}
               <div className="grid grid-cols-2 gap-2">
-                <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800/90">
-                  <div className="text-[10px] uppercase tracking-wider text-slate-400">
+                <div className="p-2.5 rounded-lg bg-[#0c0906]/90 border border-[#d4af37]/20">
+                  <div className="text-[10px] font-codex uppercase tracking-wider text-[#bda782]">
                     Envelope (mm)
                   </div>
-                  <div className="text-xs font-mono font-semibold text-slate-100 mt-0.5">
+                  <div className="text-xs font-mono font-semibold text-[#f5ebd6] mt-0.5">
                     {formatPartDimensions(
                       selectedPart.shape,
                       selectedPart.params,
@@ -879,29 +891,29 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                     )}
                   </div>
                 </div>
-                <div className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800/90">
-                  <div className="text-[10px] uppercase tracking-wider text-slate-400">
+                <div className="p-2.5 rounded-lg bg-[#0c0906]/90 border border-[#d4af37]/20">
+                  <div className="text-[10px] font-codex uppercase tracking-wider text-[#bda782]">
                     Assembly Step
                   </div>
-                  <div className="text-xs font-mono font-semibold text-sky-300 mt-0.5">
+                  <div className="text-xs font-mono font-semibold text-[#f3d478] mt-0.5">
                     Step #{selectedPart.step}
                   </div>
                 </div>
               </div>
 
               {/* Assembly Step Details */}
-              <div className="p-3 rounded-lg bg-slate-900/75 border border-slate-800/90">
+              <div className="p-3 rounded-lg bg-[#0c0906]/80 border border-[#d4af37]/20">
                 <div className="flex items-center justify-between mb-1">
-                  <span className="text-[10px] uppercase tracking-wider font-semibold text-slate-400">
+                  <span className="text-[10px] font-codex uppercase tracking-wider font-bold text-[#bda782]">
                     Used In Assembly Step
                   </span>
                   {selectedPart.stepInfo?.action && (
-                    <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-sky-500/15 text-sky-300 border border-sky-500/30">
+                    <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-[#d4af37]/15 text-[#f3d478] border border-[#d4af37]/35">
                       {selectedPart.stepInfo.action}
                     </span>
                   )}
                 </div>
-                <div className="text-xs font-medium text-slate-200">
+                <div className="text-xs font-medium text-[#f5ebd6]">
                   {selectedPart.stepInfo
                     ? `Step ${selectedPart.stepInfo.n}: ${selectedPart.stepInfo.title}`
                     : `Step ${selectedPart.step}: Install ${selectedPart.name}`}
@@ -909,7 +921,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                 {(selectedPart.stepInfo?.note ||
                   selectedPart.roleInAssembly ||
                   selectedPart.description) && (
-                  <p className="text-[11px] text-slate-400 mt-1 leading-relaxed">
+                  <p className="text-[11px] text-[#bda782] mt-1 leading-relaxed">
                     {selectedPart.stepInfo?.note ||
                       selectedPart.roleInAssembly ||
                       selectedPart.description}
@@ -919,18 +931,18 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
 
               {/* BOM / Pricing Info */}
               {selectedPart.category === "purchased" ? (
-                <div className="p-3 rounded-lg bg-amber-500/10 border border-amber-500/25">
+                <div className="p-3 rounded-lg bg-[#d4af37]/10 border border-[#d4af37]/30">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-wider font-semibold text-amber-300">
+                    <span className="text-[10px] font-codex uppercase tracking-wider font-bold text-[#f3d478]">
                       BOM Line Item
                     </span>
                     {selectedPart.bomItem && (
-                      <span className="text-sm font-mono font-bold text-amber-200">
+                      <span className="text-sm font-mono font-bold text-[#f3d478]">
                         ${selectedPart.bomItem.priceUsd.toFixed(2)}
                       </span>
                     )}
                   </div>
-                  <div className="text-xs font-medium text-slate-100 mt-1">
+                  <div className="text-xs font-medium text-[#f5ebd6] mt-1">
                     {selectedPart.bomItem?.name ||
                       selectedPart.bomLine ||
                       selectedPart.name}
@@ -944,7 +956,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                             href={link.url}
                             target="_blank"
                             rel="noreferrer"
-                            className="inline-flex items-center gap-1 px-2 py-1 rounded bg-slate-900/90 hover:bg-slate-800 text-amber-300 border border-amber-500/30 text-[11px] font-medium transition-colors"
+                            className="inline-flex items-center gap-1 px-2 py-1 rounded bg-[#0c0906]/90 hover:bg-[#1d1710] text-[#f3d478] border border-[#d4af37]/35 text-[11px] font-medium transition-colors"
                           >
                             <span>{link.retailer}</span>
                             <svg
@@ -962,16 +974,16 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                     )}
                 </div>
               ) : (
-                <div className="p-3 rounded-lg bg-emerald-500/10 border border-emerald-500/25">
+                <div className="p-3 rounded-lg bg-[#b89b4a]/10 border border-[#b89b4a]/30">
                   <div className="flex items-center justify-between">
-                    <span className="text-[10px] uppercase tracking-wider font-semibold text-emerald-300">
+                    <span className="text-[10px] font-codex uppercase tracking-wider font-bold text-[#e6d3b3]">
                       Additive Manufacturing
                     </span>
-                    <span className="text-xs font-mono font-semibold text-emerald-200">
+                    <span className="text-xs font-mono font-semibold text-[#f3d478]">
                       ~$0.45 filament
                     </span>
                   </div>
-                  <div className="text-[11px] text-slate-300 mt-1">
+                  <div className="text-[11px] text-[#e6d3b3] mt-1">
                     Standard PLA / PETG · 0.20mm layer height · 15% gyroid infill
                   </div>
                 </div>
@@ -979,12 +991,12 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
             </div>
 
             {/* Card Footer Actions */}
-            <div className="p-3 border-t border-slate-800/90 bg-slate-900/70 flex items-center gap-2">
+            <div className="p-3 border-t border-[#d4af37]/25 bg-[#0c0906]/80 flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => handleFocusPart(selectedPart)}
                 data-testid="focus-part-btn"
-                className="flex-1 py-2 px-3 rounded-lg bg-sky-500 hover:bg-sky-400 text-slate-950 font-semibold text-xs transition-colors flex items-center justify-center gap-1.5 shadow-md shadow-sky-500/20"
+                className="flex-1 py-2 px-3 rounded-lg bg-gradient-to-r from-[#f3d478] via-[#d4af37] to-[#b8860b] hover:brightness-110 text-[#140e07] font-codex font-bold uppercase tracking-wider text-xs transition-all flex items-center justify-center gap-1.5 shadow-md shadow-[#d4af37]/20"
               >
                 <svg
                   className="w-3.5 h-3.5"
@@ -1001,7 +1013,7 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
               <button
                 type="button"
                 onClick={handleResetCamera}
-                className="py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-medium text-xs transition-colors"
+                className="py-2 px-3 rounded-lg bg-[#1d1710] hover:bg-[#282016] text-[#e6d3b3] border border-[#d4af37]/25 font-medium text-xs transition-colors"
               >
                 Unfocus
               </button>
@@ -1010,8 +1022,8 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
         )}
 
         {/* Bottom Part Quick-Select Strip */}
-        <div className="absolute bottom-0 inset-x-0 z-10 px-4 py-2 bg-slate-950/85 border-t border-slate-800/80 backdrop-blur-md flex items-center gap-1.5 overflow-x-auto">
-          <span className="text-[10px] font-mono uppercase tracking-wider text-slate-400 mr-1 shrink-0">
+        <div className="absolute bottom-0 inset-x-0 z-10 px-4 py-2 bg-[#14100b]/92 border-t border-[#d4af37]/25 backdrop-blur-md flex items-center gap-1.5 overflow-x-auto">
+          <span className="text-[10px] font-codex font-bold uppercase tracking-wider text-[#bda782] mr-1 shrink-0">
             Parts ({visibleParts.length}):
           </span>
           {visibleParts.map((part, idx) => {
@@ -1029,11 +1041,11 @@ export const ExplodedView: React.FC<ExplodedViewProps> = ({
                 data-testid={`part-chip-${part.partId}`}
                 className={`px-2.5 py-1 rounded-md text-xs font-medium shrink-0 transition-all flex items-center gap-1.5 border ${
                   isSel
-                    ? "bg-sky-500/20 border-sky-400 text-white shadow-sm"
-                    : "bg-slate-900/90 border-slate-800 text-slate-300 hover:border-slate-700 hover:text-white"
+                    ? "bg-[#d4af37]/20 border-[#d4af37] text-[#f5ebd6] shadow-sm"
+                    : "bg-[#0c0906]/90 border-[#d4af37]/20 text-[#e6d3b3] hover:border-[#d4af37]/50 hover:text-[#f5ebd6]"
                 }`}
               >
-                <span className="w-4 h-4 rounded-full bg-slate-800 border border-slate-600 font-mono text-[10px] font-bold text-slate-200 flex items-center justify-center shrink-0">
+                <span className="w-4 h-4 rounded-full bg-[#1d1710] border border-[#d4af37]/50 font-mono text-[10px] font-bold text-[#f3d478] flex items-center justify-center shrink-0">
                   {cNum}
                 </span>
                 <span
