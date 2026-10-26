@@ -44,6 +44,7 @@ import {
 import CritiquePanel from './CritiquePanel';
 import MissionControl from '@/components/ui/MissionControl';
 import ModifyChat from '@/components/ui/ModifyChat';
+import WhatWeSawStrip from '@/components/ui/WhatWeSawStrip';
 
 type TabId =
   | 'overview'
@@ -1230,6 +1231,11 @@ export default function ProjectPage() {
           </div>
         </div>
       )}
+
+      {/* Headless Browser "What We Saw" Strip (Screenshots + Product Gallery + Specs/Text) */}
+      <WhatWeSawStrip
+        ingestedPage={manifest.ingestedPage || analysis?.ingestedPage}
+      />
 
       {/* Per-Tab Progressive Stage ETA & Live Shimmer Skeleton Cards (P2) */}
       {((activeTab === 'overview' && !analysis) ||
