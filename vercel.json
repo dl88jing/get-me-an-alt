@@ -2,19 +2,19 @@
   "functions": {
     "app/api/objects/route.ts": {
       "maxDuration": 300,
-      "memory": 3008
+      "memory": 2048
     },
     "app/api/objects/[id]/route.ts": {
       "maxDuration": 300,
-      "memory": 3008
+      "memory": 2048
     },
     "app/api/objects/[id]/stream/route.ts": {
       "maxDuration": 300,
-      "memory": 3008
+      "memory": 2048
     },
     "app/api/projects/[id]/modify/route.ts": {
       "maxDuration": 300,
-      "memory": 3008
+      "memory": 2048
     }
   }
 }

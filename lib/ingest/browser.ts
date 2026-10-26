@@ -681,6 +681,18 @@ async function resolveBrowserExecutable(): Promise<{
     '--disable-dev-shm-usage',
     '--disable-blink-features=AutomationControlled',
     '--disable-infobars',
+    '--disable-extensions',
+    '--disable-component-extensions-with-background-pages',
+    '--disable-background-networking',
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-renderer-backgrounding',
+    '--disable-sync',
+    '--metrics-recording-only',
+    '--mute-audio',
+    '--no-first-run',
+    '--no-zygote',
+    '--js-flags=--max-old-space-size=512',
     '--window-size=1440,900',
   ];
 
@@ -1090,6 +1102,22 @@ export async function ingestProductUrl(
   const shopifyPromise = fetchShopifyProductEnrichment(url);
 
   let browser: import('playwright-core').Browser | null = null;
+  let context: import('playwright-core').BrowserContext | null = null;
+  let page: import('playwright-core').Page | null = null;
+  const closeBrowserPromptly = async () => {
+    if (page) {
+      await page.close().catch(() => {});
+      page = null;
+    }
+    if (context) {
+      await context.close().catch(() => {});
+      context = null;
+    }
+    if (browser) {
+      await browser.close().catch(() => {});
+      browser = null;
+    }
+  };
   try {
     const { chromium } = await import('playwright-core');
     const resolved = await resolveBrowserExecutable();
@@ -1105,7 +1133,7 @@ export async function ingestProductUrl(
       headless: true,
     });
 
-    const context = await browser.newContext({
+    context = await browser.newContext({
       userAgent: REALISTIC_USER_AGENT,
       viewport: { width: 1440, height: 900 },
       deviceScaleFactor: 1,
@@ -1126,7 +1154,22 @@ export async function ingestProductUrl(
       (window as unknown as Record<string, unknown>).chrome = { runtime: {} };
     });
 
-    const page = await context.newPage();
+    page = await context.newPage();
+    const primaryPage = page;
+    // Enforce a strict single-page session within the 2048 MB Hobby memory budget
+    context.on('page', (popup) => {
+      if (popup !== primaryPage) {
+        popup.close().catch(() => {});
+      }
+    });
+
+    // Block heavy streaming media (video/audio) to conserve memory while keeping all DOM/CSS/images intact
+    await page.route('**/*', (route) => {
+      if (route.request().resourceType() === 'media') {
+        return route.abort();
+      }
+      return route.continue();
+    });
 
     await page.goto(url, {
       waitUntil: 'domcontentloaded',
@@ -1640,8 +1683,7 @@ export async function ingestProductUrl(
       };
     });
 
-    await browser.close().catch(() => {});
-    browser = null;
+    await closeBrowserPromptly();
 
     let shopify = await shopifyPromise;
     if (!shopify && domExtracted.finalUrl && domExtracted.finalUrl !== url) {
@@ -1865,9 +1907,7 @@ export async function ingestProductUrl(
       geminiImageParts,
     };
   } catch (err) {
-    if (browser) {
-      await browser.close().catch(() => {});
-    }
+    await closeBrowserPromptly();
     const reason = err instanceof Error ? err.message : String(err);
     log(
       'warn',
