@@ -59,7 +59,7 @@ export function stripHtmlTags(html: string): string {
 export function isErrorOrBlockTitle(title: string): boolean {
   const t = title.trim().toLowerCase();
   if (!t || t.length < 3) return true;
-  return /^(404\b|page not found|not found|access denied|just a moment|attention required|robot check|security check|error\b|cloudflare|forbidden|verify you are human)/i.test(
+  return /^(404\b|page not found|not found|access denied|just a moment|attention required|robot check|security check|error\b|cloudflare|forbidden|verify you are human|oops\b|something went wrong)/i.test(
     t
   );
 }

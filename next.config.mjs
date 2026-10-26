@@ -2,7 +2,18 @@
 const nextConfig = {
   transpilePackages: ['three'],
   experimental: {
-    serverComponentsExternalPackages: ['openscad-wasm-prebuilt'],
+    serverComponentsExternalPackages: [
+      'openscad-wasm-prebuilt',
+      'playwright-core',
+      '@sparticuz/chromium',
+      'playwright',
+    ],
+    outputFileTracingIncludes: {
+      '/api/objects': ['./node_modules/@sparticuz/chromium/**/*'],
+      '/api/objects/[id]': ['./node_modules/@sparticuz/chromium/**/*'],
+      '/api/objects/[id]/stream': ['./node_modules/@sparticuz/chromium/**/*'],
+      '/api/projects/[id]/modify': ['./node_modules/@sparticuz/chromium/**/*'],
+    },
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {

@@ -51,6 +51,69 @@ export interface AgentStageState {
   error?: string;
 }
 
+export interface IngestedProductImage {
+  url: string;
+  alt?: string;
+  width?: number;
+  height?: number;
+  source:
+    | 'gallery'
+    | 'img'
+    | 'picture'
+    | 'css-bg'
+    | 'json-ld'
+    | 'og'
+    | 'shopify';
+  dataUrl?: string;
+  mimeType?: string;
+}
+
+export interface IngestedProductVariant {
+  name: string;
+  price?: number;
+  sku?: string;
+  available?: boolean;
+}
+
+export interface IngestedProductPage {
+  mode: 'headless-browser' | 'http-fallback';
+  browserEngine?: string;
+  shopifyEnriched?: boolean;
+  fallbackReason?: string;
+  inputUrl: string;
+  finalUrl: string;
+  title: string;
+  brand?: string;
+  siteName?: string;
+  description?: string;
+  visibleText: string;
+  price?: number;
+  currency?: string;
+  priceText?: string;
+  variants: IngestedProductVariant[];
+  specs: Record<string, string>;
+  openGraph: Record<string, string>;
+  meta: Record<string, string>;
+  jsonLdSummary?: {
+    name?: string;
+    brand?: string;
+    description?: string;
+    sku?: string;
+    category?: string;
+    price?: number;
+    currency?: string;
+    ratingValue?: number;
+    reviewCount?: number;
+  };
+  images: IngestedProductImage[];
+  aboveFoldScreenshot?: string;
+  fullPageScreenshot?: string;
+  aboveFoldScreenshotFile?: string;
+  fullPageScreenshotFile?: string;
+  durationMs: number;
+  capturedAt: string;
+}
+
 export interface ObjectAnalysis {
   objectName: string;
   slug: string;
@@ -80,6 +143,7 @@ export interface ObjectAnalysis {
   whatGetsPrinted: string[];
   whatGetsBought: string[];
   productImages?: string[];
+  ingestedPage?: IngestedProductPage;
 }
 
 export interface ResearchSource {
@@ -391,6 +455,7 @@ export interface ProjectManifest {
     printerId?: string;
   };
   stages: AgentStageState[];
+  ingestedPage?: IngestedProductPage;
   analysis?: ObjectAnalysis;
   sources?: ResearchData;
   teardown?: TeardownData;
