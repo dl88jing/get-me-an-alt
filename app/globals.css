@@ -2,157 +2,239 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Get Me An Alt — "The RenAIssance Edition" / Da Vinci's Workshop Global Visual System.
-   Blends classical Florentine chiaroscuro oil painting, aged vellum/parchment textures,
-   iron-gall sepia ink drawings, and gilded serif typography with modern CAD precision. */
+/* Get Me An Alt — "The RenAIssance Edition" Global Visual System
+   High-contrast WCAG 2.2 AA hierarchy with warm vellum/gold Renaissance accents.
+   Surface hierarchy: Canvas (#0c0a08) -> Card (#17130e) -> Raised (#231d15).
+   Text hierarchy: Primary (#faf4e8, 17.5:1) -> Secondary (#dfd3be, 10.4:1) -> Muted (#b5a48b, 5.9:1). */
 
 :root {
-  --background: #0c0906;
-  --surface-1: #14100b;
-  --surface-2: #1d1710;
-  --surface-3: #282016;
-  --foreground: #f5ebd6;
-  --foreground-muted: #bda782;
-  --parchment-light: #f5ebd6;
-  --parchment-warm: #e6d3b3;
-  --parchment-deep: #d4bc94;
-  --sepia-ink: #2b1d0e;
-  --sepia-line: #9c7a4c;
+  /* Surface levels */
+  --bg-canvas: #0c0a08;
+  --surface-card: #17130e;
+  --surface-raised: #231d15;
+  --surface-overlay: #2e261c;
+
+  --background: var(--bg-canvas);
+  --surface-1: var(--surface-card);
+  --surface-2: var(--surface-raised);
+  --surface-3: var(--surface-overlay);
+
+  /* Text levels (all WCAG 2.2 AA >= 4.5:1 on both canvas and card surfaces) */
+  --text-primary: #faf4e8;
+  --text-secondary: #dfd3be;
+  --text-muted: #b5a48b;
+
+  --foreground: var(--text-primary);
+  --foreground-muted: var(--text-muted);
+
+  /* Renaissance Parchment & Gold Accent Tokens (used selectively as accents) */
+  --parchment-light: #faf4e8;
+  --parchment-warm: #dfd3be;
+  --parchment-deep: #c8b698;
+  --sepia-ink: #1e150b;
+  --sepia-line: #a8895c;
+  --accent-primary: #e5bd47;
+  --accent-primary-hover: #f3d478;
+  --accent-ink: #140e07;
   --gilded-gold: #d4af37;
   --gilded-bright: #f3d478;
-  --accent-electric: #d4af37;
-  --accent-electric-glow: rgba(212, 175, 55, 0.3);
-  --accent-soft: rgba(212, 175, 55, 0.14);
-  --accent-bronze: #b89b4a;
+  --accent-electric: #e5bd47;
+  --accent-electric-glow: rgba(229, 189, 71, 0.28);
+  --accent-soft: rgba(229, 189, 71, 0.14);
+  --accent-bronze: #c2a353;
   --accent-gold: #d4af37;
-  --accent-signal: #c84b31;
-  --border: rgba(212, 175, 55, 0.18);
-  --border-hairline: rgba(212, 175, 55, 0.16);
-  --border-specular: rgba(243, 212, 120, 0.28);
-  --glass-bg: rgba(20, 15, 10, 0.82);
+  --accent-signal: #d95338;
+
+  /* Borders & Separation */
+  --border-subtle: rgba(223, 211, 190, 0.14);
+  --border-default: rgba(223, 211, 190, 0.22);
+  --border-strong: rgba(229, 189, 71, 0.48);
+  --border: var(--border-default);
+  --border-hairline: var(--border-subtle);
+  --border-specular: rgba(243, 212, 120, 0.32);
+
+  --glass-bg: rgba(23, 19, 14, 0.92);
   --radius-sm: 0.5rem;
-  --radius-md: 0.875rem;
-  --radius-lg: 1.25rem;
-  --radius-xl: 1.75rem;
-  --shadow-glass: 0 28px 72px -16px rgba(0, 0, 0, 0.88),
-    inset 0 1px 0 0 rgba(243, 212, 120, 0.18);
-  --shadow-electric: 0 0 42px -8px rgba(212, 175, 55, 0.42);
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --shadow-glass: 0 20px 48px -12px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 0 rgba(250, 244, 232, 0.08);
+  --shadow-electric: 0 4px 24px -4px rgba(229, 189, 71, 0.38);
   --cursor-x: 50vw;
   --cursor-y: 30vh;
 }
 
 html {
-  background-color: var(--background);
+  background-color: var(--bg-canvas);
   color-scheme: dark;
   scroll-behavior: smooth;
+  font-size: 16px;
 }
 
 body {
-  color: var(--foreground);
-  background-color: var(--background);
+  color: var(--text-primary);
+  background-color: var(--bg-canvas);
   font-family: var(--font-sans), Inter, system-ui, -apple-system, BlinkMacSystemFont,
     "Segoe UI", Roboto, sans-serif;
+  font-size: 0.9375rem; /* 15px base body copy >= 14px requirement */
+  line-height: 1.6;
   min-height: 100vh;
   overflow-x: hidden;
   text-rendering: optimizeLegibility;
 }
 
-/* Da Vinci Codex Drafting Grid & Compass Hairlines */
+/* Global accessible focus-visible ring (WCAG 2.2 AA >= 3:1 control contrast) */
+:focus-visible {
+  outline: 2px solid var(--gilded-bright) !important;
+  outline-offset: 2px !important;
+}
+
+/* Interactive target sizing & affordance */
+button,
+[role="tab"],
+input[type="text"],
+input[type="search"],
+select {
+  transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease,
+    box-shadow 150ms ease, transform 150ms ease;
+}
+
+/* Subtle Drafting Grid (toned down so content contrast dominates) */
 .bg-grid-pattern {
-  background-size: 44px 44px;
+  background-size: 56px 56px;
   background-image:
-    radial-gradient(circle at 50% 18%, rgba(212, 175, 55, 0.08), transparent 65%),
-    linear-gradient(
-      to right,
-      rgba(212, 175, 55, 0.045) 1px,
-      transparent 1px
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(212, 175, 55, 0.045) 1px,
-      transparent 1px
-    );
+    radial-gradient(circle at 50% 0%, rgba(212, 175, 55, 0.05), transparent 60%),
+    linear-gradient(to right, rgba(223, 211, 190, 0.025) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(223, 211, 190, 0.025) 1px, transparent 1px);
 }
 
-/* Tactile Vellum & Oil Canvas Grain Overlay */
+/* Subtle Vellum Grain */
 .film-grain {
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.025'/%3E%3C/svg%3E");
 }
 
-/* Candlelit Chiaroscuro Ambient Cursor Spotlight */
 .cursor-ambient-glow {
   background: radial-gradient(
-    700px circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
-    rgba(212, 175, 55, 0.075),
-    rgba(184, 115, 51, 0.035) 38%,
-    transparent 70%
+    650px circle at var(--cursor-x, 50vw) var(--cursor-y, 30vh),
+    rgba(212, 175, 55, 0.045),
+    transparent 65%
   );
 }
 
-/* Chiaroscuro Workshop Glass Surfaces */
+/* Distinct Surface Hierarchy */
+.surface-canvas {
+  background-color: var(--bg-canvas);
+}
+
+.surface-card {
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
+  box-shadow: 0 12px 32px -12px rgba(0, 0, 0, 0.7),
+    inset 0 1px 0 0 rgba(250, 244, 232, 0.06);
+}
+
+.surface-raised {
+  background-color: var(--surface-raised);
+  border: 1px solid rgba(223, 211, 190, 0.26);
+  box-shadow: inset 0 1px 0 0 rgba(250, 244, 232, 0.09);
+}
+
 .glass-panel {
-  background: linear-gradient(160deg, rgba(25, 19, 13, 0.88) 0%, rgba(14, 10, 7, 0.92) 100%);
-  backdrop-filter: blur(20px) saturate(150%);
-  -webkit-backdrop-filter: blur(20px) saturate(150%);
-  border: 1px solid var(--border-hairline);
+  background: var(--surface-card);
+  border: 1px solid var(--border-default);
   box-shadow: var(--shadow-glass);
 }
 
 .glass-command-bar {
-  background: linear-gradient(165deg, rgba(28, 20, 13, 0.92) 0%, rgba(15, 11, 7, 0.95) 100%);
-  backdrop-filter: blur(24px) saturate(170%);
-  -webkit-backdrop-filter: blur(24px) saturate(170%);
-  border: 1px solid rgba(212, 175, 55, 0.34);
-  box-shadow: 0 28px 80px -16px rgba(0, 0, 0, 0.92),
-    0 0 52px -12px rgba(212, 175, 55, 0.24),
-    inset 0 1px 0 0 rgba(243, 212, 120, 0.25);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-strong);
+  box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.85),
+    inset 0 1px 0 0 rgba(243, 212, 120, 0.22);
 }
 
-/* Ornate Gilded Museum Gallery Frame */
+/* Gilded Accent Frame (cleaner, crisp separation) */
 .gilded-frame {
   position: relative;
-  border: 2px solid rgba(212, 175, 55, 0.55);
+  background-color: var(--surface-card);
+  border: 1.5px solid var(--border-strong);
   box-shadow:
-    0 32px 90px -20px rgba(0, 0, 0, 0.95),
-    0 0 0 1px rgba(43, 29, 14, 0.9),
-    0 0 0 6px rgba(212, 175, 55, 0.16),
-    inset 0 0 48px rgba(0, 0, 0, 0.75),
-    inset 0 1px 0 0 rgba(243, 212, 120, 0.45);
+    0 24px 64px -16px rgba(0, 0, 0, 0.88),
+    inset 0 1px 0 0 rgba(243, 212, 120, 0.28);
 }
 
-/* Warm Illuminated Parchment / Vellum Folio Sheet */
+/* Warm Illuminated Parchment / Vellum Accent Sheet */
 .parchment-sheet {
-  background:
-    radial-gradient(circle at 50% 35%, rgba(251, 244, 226, 0.96), rgba(230, 209, 172, 0.94) 68%, rgba(206, 178, 132, 0.96) 100%);
-  color: #2b1d0e;
-  border: 1px solid rgba(139, 101, 56, 0.45);
-  box-shadow:
-    0 20px 50px -15px rgba(0, 0, 0, 0.7),
-    inset 0 0 42px rgba(139, 98, 48, 0.22);
+  background: linear-gradient(180deg, #faf3e3 0%, #eddcb9 100%);
+  color: #1e150b;
+  border: 1px solid rgba(139, 101, 56, 0.55);
+  box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.6);
 }
 
-/* Dark Codex Folio Panel with Vellum Underlay */
+/* Card Surface with Clear Common-Region Border */
 .codex-folio {
   position: relative;
-  background:
-    linear-gradient(170deg, rgba(24, 18, 12, 0.93) 0%, rgba(14, 10, 7, 0.96) 100%);
-  border: 1px solid rgba(212, 175, 55, 0.24);
+  background-color: var(--surface-card);
+  border: 1px solid var(--border-default);
   box-shadow:
-    0 26px 68px -18px rgba(0, 0, 0, 0.88),
-    inset 0 0 60px rgba(212, 175, 55, 0.04),
-    inset 0 1px 0 0 rgba(243, 212, 120, 0.18);
+    0 16px 40px -14px rgba(0, 0, 0, 0.78),
+    inset 0 1px 0 0 rgba(250, 244, 232, 0.07);
+}
+
+/* Primary High-Contrast Solid Action Button */
+.btn-primary-gold {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.625rem 1.375rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(180deg, #f3d478 0%, #e0b53b 100%);
+  color: #140e07;
+  font-weight: 700;
+  border: 1px solid #f7df94;
+  box-shadow: 0 4px 18px -2px rgba(229, 189, 71, 0.42),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.45);
+}
+.btn-primary-gold:hover:not(:disabled) {
+  filter: brightness(1.07);
+  transform: translateY(-1px);
+}
+.btn-primary-gold:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Secondary Pressable Control Button */
+.btn-secondary-surface {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.75rem;
+  background-color: var(--surface-raised);
+  color: var(--text-primary);
+  font-weight: 600;
+  border: 1px solid rgba(223, 211, 190, 0.28);
+  box-shadow: inset 0 1px 0 0 rgba(250, 244, 232, 0.08);
+}
+.btn-secondary-surface:hover:not(:disabled) {
+  border-color: var(--gilded-bright);
+  background-color: var(--surface-overlay);
 }
 
 /* Graded Sepia/Chiaroscuro Video Overlay */
 .sepia-video-grade {
-  filter: sepia(0.58) contrast(1.12) brightness(0.78) saturate(1.15);
+  filter: sepia(0.45) contrast(1.08) brightness(0.75) saturate(1.1);
   transition: filter 700ms ease;
 }
 .sepia-video-grade:hover {
-  filter: sepia(0.28) contrast(1.08) brightness(0.88) saturate(1.1);
+  filter: sepia(0.2) contrast(1.05) brightness(0.88) saturate(1.1);
 }
 
-/* Da Vinci Left-Handed Mirror Script (flips readable on hover) */
+/* Mirror Script (kept for backwards compatibility) */
 .mirror-script {
   display: inline-block;
   transform: scaleX(-1);
@@ -165,7 +247,7 @@ body {
   color: #f3d478;
 }
 
-/* Card-level interactive candlelit spotlight */
+/* Card-level interactive spotlight */
 .spotlight-card {
   position: relative;
   overflow: hidden;
@@ -177,7 +259,7 @@ body {
   pointer-events: none;
   background: radial-gradient(
     420px circle at var(--mouse-x, -999px) var(--mouse-y, -999px),
-    rgba(212, 175, 55, 0.14),
+    rgba(212, 175, 55, 0.1),
     transparent 65%
   );
   opacity: 0;
@@ -187,41 +269,37 @@ body {
   opacity: 1;
 }
 
-/* Tabular numerals for counters, prices, and dimensions */
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
 
-/* Skeleton Shimmer Loader */
 .skeleton-shimmer {
   background: linear-gradient(
     90deg,
-    rgba(24, 18, 12, 0.85) 0%,
-    rgba(58, 43, 26, 0.55) 50%,
-    rgba(24, 18, 12, 0.85) 100%
+    rgba(23, 19, 14, 0.9) 0%,
+    rgba(48, 39, 28, 0.65) 50%,
+    rgba(23, 19, 14, 0.9) 100%
   );
   background-size: 200% 100%;
   animation: shimmer 2s infinite linear;
 }
 
-/* Custom gilded scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0c0906;
+  background: var(--bg-canvas);
 }
 ::-webkit-scrollbar-thumb {
-  background: #3a2c1d;
+  background: #3a2f22;
   border-radius: 9999px;
-  border: 1px solid rgba(212, 175, 55, 0.2);
+  border: 1px solid rgba(223, 211, 190, 0.2);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #574129;
+  background: #574632;
 }
 
-/* Respect prefers-reduced-motion across all animations & smooth scroll */
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto !important;
@@ -238,17 +316,17 @@ body {
 
 @layer components {
   .card {
-    @apply rounded-2xl border bg-[#14100b] shadow-sm;
-    border-color: var(--border);
+    @apply rounded-2xl border bg-[#17130e] shadow-sm;
+    border-color: var(--border-default);
   }
   .card-hover {
-    @apply transition-colors hover:border-[#d4af37]/55;
+    @apply transition-colors hover:border-[#f3d478]/65;
   }
   .eyebrow {
-    @apply font-codex text-xs font-bold uppercase tracking-[0.16em] text-[#d4af37];
+    @apply font-sans text-xs font-semibold uppercase tracking-[0.12em] text-[#e5bd47];
   }
   .skeleton {
-    @apply animate-pulse rounded-md bg-[#282016];
+    @apply animate-pulse rounded-md bg-[#231d15];
   }
 }
 
@@ -266,10 +344,10 @@ body {
 @keyframes gma-timeline-dot {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.45);
+    box-shadow: 0 0 0 0 rgba(229, 189, 71, 0.45);
   }
   50% {
-    box-shadow: 0 0 0 6px rgba(212, 175, 55, 0);
+    box-shadow: 0 0 0 6px rgba(229, 189, 71, 0);
   }
 }
 
@@ -283,7 +361,7 @@ body {
 }
 
 .animate-slide-in {
-  animation: gma-slide-in 0.35s ease both;
+  animation: gma-slide-in 0.3s ease both;
 }
 
 .animate-timeline-dot {

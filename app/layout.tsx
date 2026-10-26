@@ -55,90 +55,67 @@ export default function RootLayout({
       lang="en"
       className={`dark ${cormorantGaramond.variable} ${cinzel.variable} ${inter.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="relative bg-[#0c0906] text-[#f5ebd6] antialiased selection:bg-[#d4af37]/30 selection:text-[#f3d478] bg-grid-pattern">
-        {/* Tactile vellum/canvas grain & candlelit ambient spotlight */}
+      <body className="relative bg-[#0c0a08] text-[#faf4e8] antialiased selection:bg-[#e5bd47]/30 selection:text-[#faf4e8] bg-grid-pattern">
         <div
           aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-30 film-grain opacity-75"
-        />
-        <div
-          aria-hidden="true"
-          className="pointer-events-none fixed inset-0 z-20 cursor-ambient-glow"
+          className="pointer-events-none fixed inset-0 z-30 film-grain opacity-50"
         />
 
         <SmoothScrollProvider>
-          {/* Sticky Florentine Codex Header */}
-          <header className="sticky top-0 z-50 border-b border-[#d4af37]/25 bg-[#0c0906]/85 backdrop-blur-xl shadow-[inset_0_-1px_0_0_rgba(243,212,120,0.08)]">
-            <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-              <Link href="/" className="flex items-center gap-3.5 group shrink-0">
-                <div className="relative flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[#d4af37]/60 bg-gradient-to-br from-[#f3d478] via-[#d4af37] to-[#8c6218] text-[#140e07] font-codex font-bold text-lg shadow-[0_0_26px_-4px_rgba(212,175,55,0.55)] transition-transform duration-300 group-hover:scale-105">
-                  {/* Vitruvian Circle + Square Emblem */}
+          {/* Sticky Top Bar (height 64px) */}
+          <header className="sticky top-0 z-50 h-16 border-b border-[#dfd3be]/20 bg-[#0c0a08]/95 backdrop-blur-md">
+            <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+              <Link
+                href="/"
+                className="flex items-center gap-3 group shrink-0 rounded-lg py-1"
+              >
+                <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e5bd47]/70 bg-gradient-to-br from-[#f3d478] via-[#d4af37] to-[#9c721c] text-[#140e07] font-codex font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
                   <svg
                     viewBox="0 0 36 36"
-                    className="h-6 w-6 text-[#140e07]"
+                    className="h-5 w-5 text-[#140e07]"
                     fill="none"
                     stroke="currentColor"
-                    strokeWidth="1.8"
+                    strokeWidth="2"
                   >
                     <circle cx="18" cy="18" r="13" />
                     <rect x="7.5" y="7.5" width="21" height="21" />
-                    <path d="M18 6v24M6 18h24" strokeOpacity="0.45" />
                     <circle cx="18" cy="18" r="3" fill="currentColor" />
                   </svg>
-                  <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-[#0c0906] p-0.5">
-                    <span className="block h-full w-full rounded-full bg-[#d4af37]" />
-                  </span>
                 </div>
-                <div>
-                  <div className="flex items-center gap-2.5 whitespace-nowrap">
-                    <span className="font-codex text-base sm:text-lg font-bold tracking-wider text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors">
-                      Get Me An Alt
-                    </span>
-                    <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/40 bg-[#d4af37]/10 px-2.5 py-0.5 font-codex text-[10px] font-bold uppercase tracking-widest text-[#f3d478]">
-                      <span className="h-1.5 w-1.5 rounded-full bg-[#d4af37] animate-pulse" />
-                      Gemini 4 Argon
-                    </span>
-                  </div>
-                  <p className="font-codex text-[10px] tracking-[0.12em] text-[#bda782] hidden xl:block whitespace-nowrap">
-                    DIY 3D-PRINTED PARTS + OFF-THE-SHELF RETAIL BOM
-                  </p>
+                <div className="flex items-center gap-2.5">
+                  <span className="font-display text-xl font-bold tracking-tight text-[#faf4e8] group-hover:text-[#f3d478] transition-colors">
+                    Get Me An Alt
+                  </span>
+                  <span className="hidden sm:inline-flex items-center gap-1.5 rounded-full border border-[#dfd3be]/25 bg-[#17130e] px-2.5 py-0.5 font-sans text-xs font-medium text-[#dfd3be]">
+                    <span className="h-1.5 w-1.5 rounded-full bg-[#e5bd47]" />
+                    Gemini 4 Argon
+                  </span>
                 </div>
               </Link>
 
-              <nav className="flex items-center gap-1 sm:gap-2 whitespace-nowrap shrink-0">
-                <Link
-                  href="/#pipeline-story"
-                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
-                >
-                  <span className="font-codex text-[#d4af37]">2.</span> Agent Pipeline
-                </Link>
-                <Link
-                  href="/#savings-story"
-                  className="hidden xl:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
-                >
-                  <span className="font-codex text-[#d4af37]">3.</span> BOM &amp; Savings
-                </Link>
-                <Link
-                  href="/#exploded-story"
-                  className="hidden lg:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
-                >
-                  <span className="font-codex text-[#d4af37]">4.</span> Exploded 3D View
-                </Link>
+              <nav
+                aria-label="Primary Navigation"
+                className="flex items-center gap-2 shrink-0"
+              >
                 <Link
                   href="/#showcase-gallery"
-                  className="hidden md:inline-flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 font-codex text-xs font-semibold tracking-wide text-[#e6d3b3] hover:bg-[#d4af37]/10 hover:text-[#f3d478] transition-colors whitespace-nowrap"
+                  className="hidden md:inline-flex min-h-[40px] items-center rounded-lg px-3.5 py-2 text-sm font-medium text-[#dfd3be] hover:bg-[#17130e] hover:text-[#faf4e8] transition-colors"
                 >
-                  <span className="font-codex text-[#d4af37]">5.</span> Sample Builds
+                  Instant Demos
                 </Link>
-
                 <Link
-                  href="/projects/plant-auto-waterer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#d4af37]/55 bg-gradient-to-r from-[#d4af37]/20 via-[#d4af37]/15 to-[#b87333]/20 px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] shadow-[0_0_24px_-6px_rgba(212,175,55,0.4)] hover:bg-[#d4af37] hover:text-[#140e07] transition-all duration-200 whitespace-nowrap"
+                  href="/#how-it-works"
+                  className="hidden sm:inline-flex min-h-[40px] items-center rounded-lg px-3.5 py-2 text-sm font-medium text-[#dfd3be] hover:bg-[#17130e] hover:text-[#faf4e8] transition-colors"
                 >
-                  <span className="h-2 w-2 rounded-full bg-current animate-pulse shrink-0" />
-                  <span className="font-codex tracking-wide">Live Demo</span>
-                  <span className="hidden sm:inline font-mono text-[11px] opacity-90">
-                    ($149 → $24.85)
+                  How It Works
+                </Link>
+                <Link
+                  href="/projects/desktop-robot-arm"
+                  className="inline-flex min-h-[40px] items-center gap-2 rounded-lg border border-[#e5bd47]/60 bg-[#231d15] px-3.5 py-2 text-sm font-semibold text-[#f3d478] hover:bg-[#e5bd47] hover:text-[#140e07] transition-colors"
+                >
+                  <span>Featured Build</span>
+                  <span className="hidden sm:inline font-mono text-xs opacity-90">
+                    $899 → $74.50
                   </span>
                 </Link>
               </nav>
