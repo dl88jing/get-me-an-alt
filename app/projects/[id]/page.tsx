@@ -398,7 +398,9 @@ export default function ProjectPage() {
     {
       id: 'print',
       label: 'Print Files',
-      badge: plates ? `${plates.totalPlates} plate(s)` : undefined,
+      badge: plates
+        ? `${plates.totalPlates} ${plates.totalPlates === 1 ? 'plate' : 'plates'}`
+        : undefined,
       icon: Printer,
     },
     {
@@ -676,9 +678,19 @@ export default function ProjectPage() {
             {/* Printed vs Bought Split */}
             <div className="grid gap-4 sm:grid-cols-2">
               <div className="rounded-2xl surface-card p-5 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
-                  <Printer className="h-4 w-4 text-[#e5bd47]" />
-                  3D-Printed Parts ({analysis.whatGetsPrinted.length})
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                    <Printer className="h-4 w-4 text-[#e5bd47]" />
+                    3D-Printed Parts ({analysis.whatGetsPrinted.length})
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('print')}
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#f3d478] hover:underline"
+                  >
+                    <span>STLs &amp; Plates</span>
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
                 </div>
                 <ul className="space-y-2 text-sm text-[#dfd3be]">
                   {analysis.whatGetsPrinted.map((item, i) => (
@@ -691,9 +703,19 @@ export default function ProjectPage() {
               </div>
 
               <div className="rounded-2xl surface-card p-5 space-y-3">
-                <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
-                  <ShoppingCart className="h-4 w-4 text-[#e5bd47]" />
-                  Off-the-Shelf Hardware ({analysis.whatGetsBought.length})
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                    <ShoppingCart className="h-4 w-4 text-[#e5bd47]" />
+                    Off-the-Shelf Hardware ({analysis.whatGetsBought.length})
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setActiveTab('bom')}
+                    className="inline-flex items-center gap-1 text-xs font-semibold text-[#f3d478] hover:underline"
+                  >
+                    <span>Retail BOM</span>
+                    <ChevronRight className="h-3.5 w-3.5" />
+                  </button>
                 </div>
                 <ul className="space-y-2 text-sm text-[#dfd3be]">
                   {analysis.whatGetsBought.map((item, i) => (
@@ -739,6 +761,70 @@ export default function ProjectPage() {
                   </li>
                 ))}
               </ul>
+            </div>
+
+            <div className="rounded-2xl surface-card p-5 space-y-3">
+              <h3 className="text-xs font-bold uppercase tracking-wider text-[#f3d478]">
+                Explore Build Package
+              </h3>
+              <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-1">
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('print')}
+                  className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Printer className="h-4 w-4 text-[#e5bd47]" />
+                    <span>3D Print Plates &amp; STLs</span>
+                  </span>
+                  <span className="font-mono text-[#f3d478]">
+                    {plates
+                      ? `${plates.totalPlates} ${plates.totalPlates === 1 ? 'plate' : 'plates'} →`
+                      : 'Open →'}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('bom')}
+                  className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <ShoppingCart className="h-4 w-4 text-[#e5bd47]" />
+                    <span>Sourced Retail BOM</span>
+                  </span>
+                  <span className="font-mono text-[#f3d478]">
+                    {bom ? `$${bom.summary.totalDiyCost.toFixed(2)} →` : 'Open →'}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('instructions')}
+                  className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Wrench className="h-4 w-4 text-[#e5bd47]" />
+                    <span>3D Assembly Player</span>
+                  </span>
+                  <span className="font-mono text-[#f3d478]">
+                    {instructions
+                      ? `${instructions.steps.length} steps →`
+                      : 'Open →'}
+                  </span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setActiveTab('exploded')}
+                  className="flex items-center justify-between rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] px-3.5 py-2.5 text-left text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478] transition-colors"
+                >
+                  <span className="inline-flex items-center gap-2">
+                    <Layers className="h-4 w-4 text-[#e5bd47]" />
+                    <span>Interactive Exploded View</span>
+                  </span>
+                  <span className="font-mono text-[#f3d478]">
+                    {design ? `${design.parts.length} parts →` : 'Open →'}
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -925,7 +1011,6 @@ export default function ProjectPage() {
       {/* TAB 4: PRINT FILES */}
       {activeTab === 'print' && plates && (
         <div className="space-y-6">
-          {critique && <CritiquePanel critique={critique} />}
           {PeerPrintComp ? (
             <PeerPrintComp
               plates={plates}
@@ -1047,6 +1132,7 @@ export default function ProjectPage() {
               </div>
             </>
           )}
+          {critique && <CritiquePanel critique={critique} />}
         </div>
       )}
 

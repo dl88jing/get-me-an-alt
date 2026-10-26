@@ -108,9 +108,11 @@ export default function CritiquePanel({ critique }: CritiquePanelProps) {
             <strong className="text-[#dfd3be]">
               {critique.printerName || critique.printerId}
             </strong>{' '}
-            <span className="font-mono text-[11px] text-[#b5a48b]/80">
-              ({critique.bedDimensionsMm.join('×')} mm)
-            </span>{' '}
+            {!(critique.printerName || '').includes('(') && (
+              <span className="font-mono text-[11px] text-[#b5a48b]/80">
+                ({critique.bedDimensionsMm.join('×')} mm){' '}
+              </span>
+            )}
             ·{' '}
             <span className="text-[#f3d478]">
               {rounds.length} Critique Round{rounds.length > 1 ? 's' : ''}
