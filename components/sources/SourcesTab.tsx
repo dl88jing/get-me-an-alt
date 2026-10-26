@@ -285,15 +285,13 @@ export function SourcesTab(props: SourcesTabProps) {
       </div>
 
       {/* Video Teardown Section (TeardownGallery) — Featured prominently at the top of Sources */}
-      {props.teardown && (
-        <TeardownGallery
-          teardown={props.teardown}
-          bomItems={props.bomItems}
-          designParts={props.designParts}
-          onSelectBomRef={props.onSelectBomRef}
-          onSelectDesignPart={props.onSelectDesignPart}
-        />
-      )}
+      <TeardownGallery
+        teardown={props.teardown}
+        bomItems={props.bomItems}
+        designParts={props.designParts}
+        onSelectBomRef={props.onSelectBomRef}
+        onSelectDesignPart={props.onSelectDesignPart}
+      />
 
       {/* Technical Insights & Reference Dimensions (from ResearchData) */}
       {(normalized.technicalInsights.length > 0 ||

@@ -453,10 +453,6 @@ export function TeardownGallery({
     });
   };
 
-  if (!teardown && frames.length === 0 && videos.length === 0) {
-    return null;
-  }
-
   const activeVideoUrl = activeFrame
     ? resolveFrameVideoUrl(activeFrame, videos)
     : videos[0]?.url;
@@ -466,6 +462,42 @@ export function TeardownGallery({
     ? buildEmbedVideoSrc(videos[0].url, 0, false)
     : null;
   const activeIsDirectVideo = isDirectVideoFile(activeVideoUrl);
+
+  // P6: Concise 1-line badge + 1-click jump to Exploded View when frames.length === 0 on photo/text runs
+  if (frames.length === 0 && !activeEmbedUrl) {
+    return (
+      <section
+        aria-label="Video Teardown Status"
+        data-testid="teardown-empty-badge"
+        className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 rounded-2xl border border-[#d4af37]/30 bg-[#14100b]/90 px-4 py-2.5 text-xs text-[#dfd3be]"
+      >
+        <div className="flex flex-wrap items-center gap-2 min-w-0">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#d4af37]/40 bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478] shrink-0">
+            <span
+              className="h-1.5 w-1.5 rounded-full bg-[#f3d478]"
+              aria-hidden="true"
+            />
+            Static Input · 0 Teardown Frames
+          </span>
+          <span className="text-xs text-[#dfd3be] truncate">
+            {teardown?.note ||
+              'Photo/text run — internal parts are mapped directly in the interactive 3D assembly.'}
+          </span>
+        </div>
+        <button
+          type="button"
+          data-testid="teardown-jump-exploded-btn"
+          onClick={() =>
+            onSelectDesignPart?.(designParts[0]?.id || 'PRT-01')
+          }
+          className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-[#f3d478]/50 bg-[#d4af37]/20 px-3.5 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#d4af37]/30 transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
+        >
+          <span>Open Exploded View</span>
+          <span aria-hidden="true">→</span>
+        </button>
+      </section>
+    );
+  }
 
   const activeImgSrc = activeFrame
     ? failedImages[activeIndex]
@@ -551,9 +583,12 @@ export function TeardownGallery({
         )}
       </div>
 
-      {/* Empty State */}
+      {/* Empty State when embedded video exists but 0 extracted frames */}
       {frames.length === 0 ? (
-        <div className="mt-4 space-y-3 rounded-xl border border-[#d4af37]/20 bg-[#120e0a]/80 p-4 text-xs text-[#c7ae87]">
+        <div
+          data-testid="teardown-empty-badge"
+          className="mt-4 space-y-3 rounded-xl border border-[#d4af37]/20 bg-[#120e0a]/80 p-3.5 text-xs text-[#c7ae87]"
+        >
           {activeEmbedUrl && (
             <div className="relative aspect-video w-full max-w-2xl overflow-hidden rounded-xl border border-[#d4af37]/40 bg-[#0c0906] shadow-inner">
               <iframe
@@ -565,13 +600,28 @@ export function TeardownGallery({
               />
             </div>
           )}
-          <p className="font-codex text-xs font-bold uppercase tracking-wider text-[#f3d478]">
-            Static Visual Input · No Disassembly Video Timestamps Required
-          </p>
-          <p className="mt-1 leading-relaxed text-[#e6d3b3]">
-            {teardown?.note ||
-              'No direct teardown video was needed for this run. Use the Sources cards below or switch to the Exploded 3D View tab to inspect every internal component.'}
-          </p>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+            <div className="flex flex-wrap items-center gap-2 min-w-0">
+              <span className="rounded-full border border-[#d4af37]/40 bg-[#d4af37]/15 px-2.5 py-0.5 font-codex text-[11px] font-bold uppercase tracking-wider text-[#f3d478] shrink-0">
+                Static Input · 0 Frames
+              </span>
+              <span className="text-[#e6d3b3] truncate">
+                {teardown?.note ||
+                  'Inspect every internal component directly in the 3D Exploded View.'}
+              </span>
+            </div>
+            <button
+              type="button"
+              data-testid="teardown-jump-exploded-btn"
+              onClick={() =>
+                onSelectDesignPart?.(designParts[0]?.id || 'PRT-01')
+              }
+              className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-xl border border-[#f3d478]/50 bg-[#d4af37]/20 px-3.5 py-1.5 font-codex text-xs font-bold text-[#f3d478] hover:border-[#f3d478] hover:bg-[#d4af37]/30 transition-colors shrink-0 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
+            >
+              <span>Open Exploded View</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          </div>
         </div>
       ) : (
         <div className="mt-5 space-y-5">
