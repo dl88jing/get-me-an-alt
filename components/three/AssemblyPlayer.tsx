@@ -926,7 +926,7 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
       </div>
 
       {/* Top Manual Header Bar */}
-      <div className="relative z-10 w-full max-w-full min-w-0 flex flex-wrap lg:flex-nowrap items-center justify-between gap-2.5 sm:gap-4 px-3.5 py-2.5 sm:px-5 sm:py-3.5 bg-[#14100b]/95 border-b border-[#d4af37]/25">
+      <div className="relative z-10 w-full max-w-full min-w-0 flex flex-col lg:flex-row lg:items-center justify-between gap-2.5 sm:gap-4 px-3.5 py-2.5 sm:px-5 sm:py-3.5 bg-[#14100b]/95 border-b border-[#d4af37]/25">
         {/* Big Numbered Step Badge + Title */}
         <div className="flex items-center gap-3 sm:gap-4 min-w-0 flex-1">
           <div
@@ -1043,9 +1043,10 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
       </div>
 
       {/* Main Middle Canvas + Step Parts Callout Overlay */}
-      <div className="relative w-full max-w-full min-w-0 h-[250px] sm:h-auto sm:flex-1 sm:min-h-0 overflow-hidden z-0 isolate">
-        {/* Inner Frame Lines */}
-        <div className="absolute inset-2.5 sm:inset-3 border border-[#d4af37]/20 rounded-lg pointer-events-none z-10" />
+      <div className="relative flex-1 flex flex-col w-full max-w-full min-w-0 min-h-0">
+        <div className="relative w-full max-w-full min-w-0 h-[240px] sm:h-auto sm:flex-1 sm:min-h-0 overflow-hidden z-0 isolate">
+          {/* Inner Frame Lines */}
+          <div className="absolute inset-2.5 sm:inset-3 border border-[#d4af37]/20 rounded-lg pointer-events-none z-10" />
 
         <Canvas
           className="w-full h-full block"
@@ -1174,81 +1175,82 @@ export const AssemblyPlayer: React.FC<AssemblyPlayerProps> = ({
         </div>
       </div>
 
-      {/* Step Parts Hardware Callout Box & Intra-Step Motion Scrubber (Floating Top-Left on Desktop, Docked Below Canvas on Mobile) */}
-      <div
-        className="relative sm:absolute sm:top-[88px] sm:left-5 z-10 w-full sm:w-64 sm:max-w-[calc(100%-2.5rem)] sm:rounded-xl bg-[#14100b]/95 border-t sm:border border-[#d4af37]/35 px-3.5 py-2 sm:p-3.5 shadow-2xl backdrop-blur-md"
-        data-testid="assembly-parts-legend"
-      >
-        <div className="flex items-center justify-between pb-1.5 sm:pb-2 mb-1.5 sm:mb-2 border-b border-[#d4af37]/20">
-          <span className="text-[10px] sm:text-[11px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
-            PARTS LEGEND (STEP {currentStep.n})
-          </span>
-          <span className="text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40 tabular-nums">
-            {currentStepParts.length}×
-          </span>
-        </div>
-
-        <div className="flex sm:block gap-1.5 sm:space-y-1.5 overflow-x-auto sm:max-h-36 sm:overflow-y-auto pr-0.5">
-          {currentStepParts.map((p) => {
-            const cNum = p.calloutNumber ?? 1;
-            return (
-              <div
-                key={p.instanceId}
-                onMouseEnter={() => setHighlightedInstanceId(p.instanceId)}
-                onMouseLeave={() => setHighlightedInstanceId(null)}
-                onClick={() =>
-                  setHighlightedInstanceId((prev) =>
-                    prev === p.instanceId ? null : p.instanceId
-                  )
-                }
-                className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#0c0906]/90 border border-[#d4af37]/25 hover:border-[#d4af37]/65 transition-colors cursor-pointer shrink-0 sm:shrink"
-              >
-                <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
-                  <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
-                    {cNum}
-                  </span>
-                  <span
-                    className={`w-2.5 h-2.5 rounded-sm border border-[#d4af37]/50 shrink-0 ${
-                      p.category === "purchased"
-                        ? "bg-[#d4af37]"
-                        : "bg-[#c86d51]"
-                    }`}
-                  />
-                  <span className="font-semibold text-[#f5ebd6] truncate max-w-[160px] sm:max-w-none">
-                    {p.name}
-                  </span>
-                </div>
-                <span className="font-mono font-extrabold text-[#f3d478] shrink-0 tabular-nums">
-                  {p.quantity}×
-                </span>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Intra-step motion scrubber */}
-        <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2.5 border-t border-[#d4af37]/20">
-          <div className="flex items-center justify-between text-[10px] font-codex font-bold text-[#bda782] mb-1">
-            <span>MOTION TIMELINE</span>
-            <span className="font-mono text-[#f3d478] tabular-nums">
-              {Math.round(stepProgress * 100)}%
+        {/* Step Parts Hardware Callout Box & Intra-Step Motion Scrubber (Floating Top-Left on Desktop, Docked Below Canvas on Mobile) */}
+        <div
+          className="relative sm:absolute sm:top-5 sm:left-5 z-10 w-full sm:w-64 sm:max-w-[calc(100%-2.5rem)] sm:rounded-xl bg-[#14100b]/95 border-t sm:border border-[#d4af37]/35 px-3.5 py-2 sm:p-3.5 shadow-2xl backdrop-blur-md"
+          data-testid="assembly-parts-legend"
+        >
+          <div className="flex items-center justify-between pb-1.5 sm:pb-2 mb-1.5 sm:mb-2 border-b border-[#d4af37]/20">
+            <span className="text-[10px] sm:text-[11px] font-codex font-bold uppercase tracking-wider text-[#f3d478]">
+              PARTS LEGEND (STEP {currentStep.n})
+            </span>
+            <span className="text-[10px] sm:text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/40 tabular-nums">
+              {currentStepParts.length}×
             </span>
           </div>
-          <input
-            type="range"
-            min={0}
-            max={1}
-            step={0.01}
-            value={stepProgress}
-            aria-label="Intra-step motion scrubber"
-            aria-valuetext={motionScrubberValueText}
-            onChange={(e) => {
-              setIsPlaying(false);
-              setStepProgress(parseFloat(e.target.value));
-            }}
-            data-testid="step-motion-scrubber"
-            className="w-full h-1.5 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
-          />
+
+          <div className="flex sm:block gap-1.5 sm:space-y-1.5 overflow-x-auto sm:max-h-36 sm:overflow-y-auto pr-0.5">
+            {currentStepParts.map((p) => {
+              const cNum = p.calloutNumber ?? 1;
+              return (
+                <div
+                  key={p.instanceId}
+                  onMouseEnter={() => setHighlightedInstanceId(p.instanceId)}
+                  onMouseLeave={() => setHighlightedInstanceId(null)}
+                  onClick={() =>
+                    setHighlightedInstanceId((prev) =>
+                      prev === p.instanceId ? null : p.instanceId
+                    )
+                  }
+                  className="flex items-center justify-between gap-2 text-xs py-1 px-2 rounded bg-[#0c0906]/90 border border-[#d4af37]/25 hover:border-[#d4af37]/65 transition-colors cursor-pointer shrink-0 sm:shrink"
+                >
+                  <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                    <span className="w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#d4af37]/20 text-[#f3d478] border border-[#d4af37]/55 font-mono text-[10px] font-extrabold flex items-center justify-center shrink-0">
+                      {cNum}
+                    </span>
+                    <span
+                      className={`w-2.5 h-2.5 rounded-sm border border-[#d4af37]/50 shrink-0 ${
+                        p.category === "purchased"
+                          ? "bg-[#d4af37]"
+                          : "bg-[#c86d51]"
+                      }`}
+                    />
+                    <span className="font-semibold text-[#f5ebd6] truncate max-w-[160px] sm:max-w-none">
+                      {p.name}
+                    </span>
+                  </div>
+                  <span className="font-mono font-extrabold text-[#f3d478] shrink-0 tabular-nums">
+                    {p.quantity}×
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+
+          {/* Intra-step motion scrubber */}
+          <div className="mt-2 sm:mt-3 pt-1.5 sm:pt-2.5 border-t border-[#d4af37]/20">
+            <div className="flex items-center justify-between text-[10px] font-codex font-bold text-[#bda782] mb-1">
+              <span>MOTION TIMELINE</span>
+              <span className="font-mono text-[#f3d478] tabular-nums">
+                {Math.round(stepProgress * 100)}%
+              </span>
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={1}
+              step={0.01}
+              value={stepProgress}
+              aria-label="Intra-step motion scrubber"
+              aria-valuetext={motionScrubberValueText}
+              onChange={(e) => {
+                setIsPlaying(false);
+                setStepProgress(parseFloat(e.target.value));
+              }}
+              data-testid="step-motion-scrubber"
+              className="w-full h-1.5 bg-[#282016] rounded-lg appearance-none cursor-pointer accent-[#d4af37]"
+            />
+          </div>
         </div>
       </div>
 
