@@ -230,9 +230,9 @@ export function RecentBuildsShelf() {
                 aria-label={`Remove ${entry.title}`}
                 title="Remove from Recent Builds"
                 data-testid={`remove-build-${entry.slug}`}
-                className="inline-flex items-center gap-1 rounded-lg border border-[#d4af37]/25 bg-[#14100b]/90 px-2 py-1 font-mono text-[10px] text-[#bda782] hover:border-[#c84b31]/70 hover:bg-[#c84b31]/15 hover:text-[#f5ebd6] transition-colors"
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1 rounded-lg border border-[#d4af37]/25 bg-[#14100b]/90 px-2.5 py-1.5 font-mono text-[11px] text-[#bda782] hover:border-[#c84b31]/70 hover:bg-[#c84b31]/15 hover:text-[#f5ebd6] transition-colors"
               >
-                <Trash2 className="h-3 w-3 text-[#e06348]" />
+                <Trash2 className="h-3.5 w-3.5 text-[#e06348]" />
                 <span>Remove</span>
               </button>
             </div>
@@ -273,7 +273,7 @@ export function RecentBuildsShelf() {
           <div>
             <Link
               href={`/projects/${encodeURIComponent(entry.slug)}`}
-              className="block font-display text-xl font-bold text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors leading-snug"
+              className="inline-flex min-h-[44px] items-center font-display text-xl font-bold text-[#f5ebd6] group-hover:text-[#f3d478] transition-colors leading-snug"
             >
               {entry.title}
             </Link>
@@ -311,7 +311,7 @@ export function RecentBuildsShelf() {
             <Link
               href={`/projects/${encodeURIComponent(entry.slug)}`}
               data-testid={`reopen-build-${entry.slug}`}
-              className="inline-flex items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3 py-1.5 font-codex text-[11px] font-bold text-[#f3d478] hover:bg-[#d4af37]/25 hover:border-[#f3d478] transition-all"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#d4af37]/45 bg-[#d4af37]/15 px-3.5 py-2 font-codex text-[11px] font-bold text-[#f3d478] hover:bg-[#d4af37]/25 hover:border-[#f3d478] transition-all"
             >
               <span>Reopen Build</span>
               <ArrowRight className="h-3.5 w-3.5" />

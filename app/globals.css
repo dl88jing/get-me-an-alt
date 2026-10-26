@@ -70,6 +70,8 @@ html {
   color-scheme: dark;
   scroll-behavior: smooth;
   font-size: 16px;
+  max-width: 100vw;
+  overflow-x: hidden;
 }
 
 body {
@@ -80,8 +82,26 @@ body {
   font-size: 0.9375rem; /* 15px base body copy >= 14px requirement */
   line-height: 1.6;
   min-height: 100vh;
+  max-width: 100vw;
   overflow-x: hidden;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
   text-rendering: optimizeLegibility;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.safe-bottom {
+  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
+}
+
+.safe-bottom-cta {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
 }
 
 /* Global accessible focus-visible ring (WCAG 2.2 AA >= 3:1 control contrast) */

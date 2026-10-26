@@ -863,16 +863,16 @@ export function PrintPanel({
               </p>
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-wrap items-center gap-2">
               {/* Plate Switcher Pills when multiple plates exist */}
               {platesJson.plates.length > 1 && (
-                <div className="flex items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1">
+                <div className="flex flex-wrap items-center gap-1 rounded-xl border border-[#d4af37]/25 bg-[#0c0906] p-1">
                   {platesJson.plates.map((pl, idx) => (
                     <button
                       key={pl.plateNumber}
                       type="button"
                       onClick={() => setSelectedPlateIdx(idx)}
-                      className={`rounded-lg px-2.5 py-1 font-codex text-xs font-bold transition-all ${
+                      className={`inline-flex min-h-[44px] items-center rounded-lg px-2.5 py-1.5 font-codex text-xs font-bold transition-all ${
                         idx === safePlateIdx
                           ? 'bg-[#d4af37] text-[#140e07]'
                           : 'text-[#bda782] hover:text-[#f5ebd6]'
@@ -889,7 +889,7 @@ export function PrintPanel({
                   <button
                     type="button"
                     onClick={() => setPreviewMode('svg')}
-                    className={`rounded-lg px-2.5 py-1 font-codex text-[11px] font-bold ${
+                    className={`inline-flex min-h-[44px] items-center rounded-lg px-2.5 py-1.5 font-codex text-[11px] font-bold ${
                       previewMode === 'svg'
                         ? 'bg-[#d4af37] text-[#140e07]'
                         : 'text-[#bda782] hover:text-[#f5ebd6]'
@@ -900,7 +900,7 @@ export function PrintPanel({
                   <button
                     type="button"
                     onClick={() => setPreviewMode('3d')}
-                    className={`rounded-lg px-2.5 py-1 font-codex text-[11px] font-bold ${
+                    className={`inline-flex min-h-[44px] items-center rounded-lg px-2.5 py-1.5 font-codex text-[11px] font-bold ${
                       previewMode === '3d'
                         ? 'bg-[#d4af37] text-[#140e07]'
                         : 'text-[#bda782] hover:text-[#f5ebd6]'
@@ -1433,7 +1433,7 @@ export function PrintPanel({
             <button
               type="button"
               onClick={handleDownloadAllZip}
-              className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/35 bg-[#0c0906] px-3 py-1.5 font-codex text-xs font-bold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#d4af37]/35 bg-[#0c0906] px-3 py-1.5 font-codex text-xs font-bold text-[#e6d3b3] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors"
             >
               <Archive className="h-3.5 w-3.5" />
               Download All {platesJson.parts.length} STLs + 3MFs (.zip)
@@ -1629,7 +1629,7 @@ export function PrintPanel({
                 data-testid="service-material-select"
                 value={selectedMaterialId}
                 onChange={(e) => setSelectedMaterialId(e.target.value)}
-                className="w-full rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3 py-2 text-xs font-bold text-[#f5ebd6] focus:border-[#f3d478] focus:outline-none"
+                className="w-full min-h-[44px] rounded-xl border border-[#d4af37]/35 bg-[#14100b] px-3 py-2 text-xs font-bold text-[#f5ebd6] focus:border-[#f3d478] focus:outline-none"
               >
                 {SERVICE_MATERIALS.map((m) => (
                   <option key={m.id} value={m.id}>
@@ -1653,7 +1653,7 @@ export function PrintPanel({
                       key={col.id}
                       type="button"
                       onClick={() => setSelectedColorId(col.id)}
-                      className={`inline-flex items-center gap-2 rounded-lg border px-2.5 py-1.5 text-xs font-semibold transition-all ${
+                      className={`inline-flex min-h-[44px] items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all ${
                         active
                           ? 'border-[#f3d478] bg-[#d4af37]/20 text-[#f5ebd6]'
                           : 'border-[#d4af37]/25 bg-[#14100b] text-[#e6d3b3] hover:border-[#d4af37]/50'
@@ -1684,10 +1684,11 @@ export function PrintPanel({
               <div className="flex items-center gap-2">
                 <button
                   type="button"
+                  aria-label="Decrease quantity"
                   onClick={() =>
                     setOrderQuantity((q) => Math.max(1, q - 1))
                   }
-                  className="h-8 w-8 rounded-lg border border-[#d4af37]/35 bg-[#14100b] text-sm font-bold text-[#f5ebd6] hover:border-[#f3d478]"
+                  className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#14100b] text-sm font-bold text-[#f5ebd6] hover:border-[#f3d478]"
                 >
                   −
                 </button>
@@ -1695,6 +1696,7 @@ export function PrintPanel({
                   type="number"
                   min={1}
                   max={50}
+                  aria-label="Order quantity"
                   data-testid="service-quantity-input"
                   value={orderQuantity}
                   onChange={(e) =>
@@ -1702,14 +1704,15 @@ export function PrintPanel({
                       Math.max(1, Math.min(50, Number(e.target.value) || 1))
                     )
                   }
-                  className="w-14 rounded-lg border border-[#d4af37]/35 bg-[#14100b] py-1 text-center font-mono text-xs font-bold text-[#f5ebd6]"
+                  className="min-h-[44px] w-14 rounded-lg border border-[#d4af37]/35 bg-[#14100b] py-1 text-center font-mono text-xs font-bold text-[#f5ebd6]"
                 />
                 <button
                   type="button"
+                  aria-label="Increase quantity"
                   onClick={() =>
                     setOrderQuantity((q) => Math.min(50, q + 1))
                   }
-                  className="h-8 w-8 rounded-lg border border-[#d4af37]/35 bg-[#14100b] text-sm font-bold text-[#f5ebd6] hover:border-[#f3d478]"
+                  className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#d4af37]/35 bg-[#14100b] text-sm font-bold text-[#f5ebd6] hover:border-[#f3d478]"
                 >
                   +
                 </button>
@@ -1739,7 +1742,7 @@ export function PrintPanel({
                     value={recipientName}
                     onChange={(e) => setRecipientName(e.target.value)}
                     placeholder="Full Name"
-                    className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
+                    className="w-full min-h-[44px] rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                   />
                 </div>
                 <div>
@@ -1751,7 +1754,7 @@ export function PrintPanel({
                     value={streetAddress}
                     onChange={(e) => setStreetAddress(e.target.value)}
                     placeholder="Street Address"
-                    className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
+                    className="w-full min-h-[44px] rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                   />
                 </div>
                 <div>
@@ -1763,7 +1766,7 @@ export function PrintPanel({
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
                     placeholder="City"
-                    className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
+                    className="w-full min-h-[44px] rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-2">
@@ -1776,7 +1779,7 @@ export function PrintPanel({
                       value={stateCode}
                       onChange={(e) => setStateCode(e.target.value)}
                       placeholder="CA"
-                      className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
+                      className="w-full min-h-[44px] rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                     />
                   </div>
                   <div>
@@ -1788,7 +1791,7 @@ export function PrintPanel({
                       value={postalCode}
                       onChange={(e) => setPostalCode(e.target.value)}
                       placeholder="94104"
-                      className="w-full rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
+                      className="w-full min-h-[44px] rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 py-1.5 text-xs text-[#f5ebd6]"
                     />
                   </div>
                 </div>

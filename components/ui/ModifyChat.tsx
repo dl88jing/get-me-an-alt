@@ -557,9 +557,9 @@ export function ModifyChat({
               disabled={isRunning}
               onFocus={() => setIsExpanded(true)}
               onChange={(e) => setPromptText(e.target.value)}
-              placeholder='e.g. "make reservoir 2x bigger", "cheaper parts"...'
+              placeholder='Ask Argon (e.g. "2x bigger")'
               aria-label="Ask Argon to modify this project"
-              className="w-full min-h-[44px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-9 pr-3 py-2 text-xs sm:text-sm text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478] disabled:opacity-60"
+              className="w-full min-h-[44px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-8 sm:pl-9 pr-2.5 sm:pr-3 py-2 text-xs sm:text-sm text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478] disabled:opacity-60"
             />
           </div>
 
@@ -593,7 +593,7 @@ export function ModifyChat({
               type="button"
               disabled={isRunning}
               onClick={() => handleRunModify(preset.prompt)}
-              className="inline-flex min-h-[36px] items-center gap-2 rounded-lg border border-[#dfd3be]/20 bg-[#231d15] px-3 py-1.5 text-xs font-medium text-[#faf4e8] hover:border-[#f3d478] hover:bg-[#2e261c] disabled:opacity-40"
+              className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-[#dfd3be]/20 bg-[#231d15] px-3 py-2 text-xs font-medium text-[#faf4e8] hover:border-[#f3d478] hover:bg-[#2e261c] disabled:opacity-40"
             >
               <span>{preset.label}</span>
               <span className="rounded bg-[#0c0a08] px-1.5 py-0.5 font-mono text-[10px] text-[#b5a48b]">

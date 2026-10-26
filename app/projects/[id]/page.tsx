@@ -440,25 +440,48 @@ export default function ProjectPage() {
   );
 
   return (
-    <div className="space-y-3 sm:space-y-4 pb-16">
+    <div className="space-y-2.5 sm:space-y-4 pb-24 sm:pb-16">
       {/* Sticky Project Header: Object Name, Dominant Price -> Alt Price + Savings, and Segmented Tabs */}
-      <div className="sticky top-16 z-40 -mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-3 py-2 sm:px-6 sm:py-3 shadow-glass space-y-2 sm:space-y-2.5">
-        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0 space-y-0.5 sm:space-y-1">
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-[#b5a48b]">
-              <Link
-                href="/"
-                className="inline-flex items-center gap-1 font-medium text-[#dfd3be] hover:text-[#f3d478] transition-colors"
-              >
-                <ArrowLeft className="h-3.5 w-3.5" /> All Builds
-              </Link>
-              <span>/</span>
-              {analysis?.category && (
-                <span className="truncate text-[#b5a48b]">{analysis.category}</span>
+      <div className="sticky top-14 sm:top-16 z-40 -mx-1.5 sm:-mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-2.5 py-2 sm:px-6 sm:py-3 shadow-glass space-y-1.5 sm:space-y-2.5">
+        <div className="flex flex-col gap-1.5 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0 space-y-1">
+            {/* Top row: Back button (44px target) + Category on desktop + Compact Price/Savings pill on mobile */}
+            <div className="flex items-center justify-between gap-2 text-xs text-[#b5a48b]">
+              <div className="flex items-center gap-1.5 sm:gap-2 min-w-0">
+                <Link
+                  href="/"
+                  className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/20 bg-[#0c0a08] px-2.5 py-1.5 font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#f3d478] transition-colors shrink-0"
+                >
+                  <ArrowLeft className="h-3.5 w-3.5" /> All Builds
+                </Link>
+                {analysis?.category && (
+                  <>
+                    <span className="hidden sm:inline">/</span>
+                    <span className="hidden sm:inline truncate text-[#b5a48b]">
+                      {analysis.category}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              {/* Compact Mobile Price & Savings Pill (fits on same row as Back button on <sm) */}
+              {bom && (
+                <div className="flex sm:hidden items-center gap-1.5 rounded-xl border border-[#e5bd47]/45 bg-[#0c0a08] px-2.5 py-1.5 shrink-0 tabular-nums">
+                  <span className="text-[11px] text-[#b5a48b] line-through">
+                    ${bom.summary.originalRetailPrice.toFixed(0)}
+                  </span>
+                  <span className="text-[11px] text-[#b5a48b]">→</span>
+                  <span className="font-display text-base font-bold text-[#faf4e8]">
+                    ${bom.summary.totalDiyCost.toFixed(2)}
+                  </span>
+                  <span className="rounded-md bg-[#e5bd47] px-1.5 py-0.5 text-[11px] font-bold text-[#140e07]">
+                    -{bom.summary.savingsPercent}%
+                  </span>
+                </div>
               )}
             </div>
 
-            <h1 className="font-display text-xl sm:text-3xl font-bold tracking-tight text-[#faf4e8] truncate">
+            <h1 className="font-display text-lg sm:text-3xl font-bold tracking-tight text-[#faf4e8] truncate">
               {manifest.title}
             </h1>
             {analysis?.tagline && (
@@ -468,9 +491,9 @@ export default function ProjectPage() {
             )}
           </div>
 
-          {/* Dominant Price Comparison & Savings */}
+          {/* Dominant Price Comparison & Savings (sm+ tablet/desktop) */}
           {bom && (
-            <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 rounded-xl border border-[#e5bd47]/45 bg-[#0c0a08] px-3 py-1.5 sm:px-4 sm:py-2.5 shrink-0">
+            <div className="hidden sm:flex items-center justify-between sm:justify-start gap-2 sm:gap-3 rounded-xl border border-[#e5bd47]/45 bg-[#0c0a08] px-3 py-1.5 sm:px-4 sm:py-2.5 shrink-0">
               <div className="flex items-baseline gap-1.5 sm:gap-2.5 tabular-nums min-w-0">
                 <span
                   className="text-xs sm:text-sm text-[#b5a48b] line-through"
@@ -498,11 +521,33 @@ export default function ProjectPage() {
           )}
         </div>
 
-        {/* High-Contrast Segmented Tab Navigation (Single-row horizontally scrollable on mobile, >= 44px targets) */}
+        {/* High-Contrast Scrollable Segmented Tab Control (Single-row horizontally scrollable on mobile, >= 44px targets) */}
         <div
           role="tablist"
           aria-label="Project Sections"
-          className="flex items-center gap-1.5 overflow-x-auto lg:flex-wrap rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-1 sm:p-1.5"
+          onKeyDown={(e) => {
+            if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+            e.preventDefault();
+            const curIdx = TABS.findIndex((t) => t.id === activeTab);
+            const nextIdx =
+              e.key === 'ArrowRight'
+                ? (curIdx + 1) % TABS.length
+                : (curIdx - 1 + TABS.length) % TABS.length;
+            const nextTab = TABS[nextIdx];
+            if (nextTab) {
+              setActiveTab(nextTab.id);
+              const btn = e.currentTarget.querySelector<HTMLElement>(
+                `[data-tab-id="${nextTab.id}"]`
+              );
+              btn?.focus();
+              btn?.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest',
+              });
+            }
+          }}
+          className="flex items-center gap-1 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-1 sm:p-1.5"
         >
           {TABS.map((t) => {
             const Icon = t.icon;
@@ -514,8 +559,15 @@ export default function ProjectPage() {
                 aria-selected={active}
                 data-tab-id={t.id}
                 type="button"
-                onClick={() => setActiveTab(t.id)}
-                className={`relative inline-flex min-h-[44px] shrink-0 whitespace-nowrap items-center justify-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition-all ${
+                onClick={(e) => {
+                  setActiveTab(t.id);
+                  e.currentTarget.scrollIntoView({
+                    behavior: 'smooth',
+                    inline: 'center',
+                    block: 'nearest',
+                  });
+                }}
+                className={`relative inline-flex min-h-[44px] snap-start shrink-0 lg:flex-1 whitespace-nowrap items-center justify-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-3.5 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition-all ${
                   active
                     ? 'bg-[#e5bd47] text-[#140e07] font-bold shadow-md'
                     : 'bg-transparent text-[#dfd3be] hover:bg-[#231d15] hover:text-[#faf4e8]'
@@ -600,9 +652,9 @@ export default function ProjectPage() {
                   <button
                     type="button"
                     onClick={() => setOverviewExpanded((prev) => !prev)}
-                    className="mt-1 inline-flex items-center text-xs font-semibold text-[#f3d478] hover:underline"
+                    className="mt-1 -ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-xs font-semibold text-[#f3d478] hover:underline"
                   >
-                    {overviewExpanded ? 'Less' : 'More'}
+                    {overviewExpanded ? 'Show Less' : 'Read More'}
                   </button>
                 )}
               </div>
@@ -1073,9 +1125,9 @@ export default function ProjectPage() {
                               onClick={() =>
                                 setStepNoteExpanded((prev) => !prev)
                               }
-                              className="mt-1 text-xs font-semibold text-[#f3d478] hover:underline"
+                              className="mt-1 -ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-xs font-semibold text-[#f3d478] hover:underline"
                             >
-                              {stepNoteExpanded ? 'Less' : 'More'}
+                              {stepNoteExpanded ? 'Show Less' : 'Read More'}
                             </button>
                           )}
                         </div>
@@ -1250,18 +1302,92 @@ export default function ProjectPage() {
       {/* Render Ask Argon + Pipeline bars below the 3D canvas on Exploded View & Instructions tabs */}
       {isCanvasTab && agentBars}
 
+      {/* Bottom-Safe Mobile Sticky Action Bar (390x844 ergonomics: >= 44px targets, safe-area inset) */}
+      <div
+        role="region"
+        aria-label="Quick Mobile Project Actions"
+        className="sm:hidden fixed bottom-0 inset-x-0 z-40 border-t border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-3 pt-2 pb-[max(0.625rem,env(safe-area-inset-bottom,0px))] shadow-[0_-12px_32px_rgba(0,0,0,0.85)]"
+      >
+        <div className="mx-auto flex max-w-lg items-center gap-2">
+          <button
+            type="button"
+            onClick={() => {
+              const nextTab: TabId =
+                activeTab === 'exploded' ? 'instructions' : 'exploded';
+              setActiveTab(nextTab);
+              const tabBtn = document.querySelector<HTMLElement>(
+                `[data-tab-id="${nextTab}"]`
+              );
+              tabBtn?.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest',
+              });
+            }}
+            className="btn-secondary-surface min-h-[44px] px-3 py-2 text-xs font-semibold shrink-0"
+          >
+            <Layers className="h-3.5 w-3.5 text-[#f3d478]" />
+            <span>{activeTab === 'exploded' ? '3D Steps' : '3D Exploded'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={() => {
+              const nextTab: TabId = activeTab === 'print' ? 'bom' : 'print';
+              setActiveTab(nextTab);
+              const tabBtn = document.querySelector<HTMLElement>(
+                `[data-tab-id="${nextTab}"]`
+              );
+              tabBtn?.scrollIntoView({
+                behavior: 'smooth',
+                inline: 'center',
+                block: 'nearest',
+              });
+            }}
+            className="btn-primary-gold min-h-[44px] flex-1 px-3.5 py-2 text-xs font-bold"
+          >
+            {activeTab === 'print' ? (
+              <>
+                <ShoppingCart className="h-3.5 w-3.5" />
+                <span>
+                  View Sourced BOM (
+                  {bom ? `$${bom.summary.totalDiyCost.toFixed(2)}` : 'Parts'})
+                </span>
+              </>
+            ) : (
+              <>
+                <Printer className="h-3.5 w-3.5" />
+                <span>
+                  Get Print Files (
+                  {plates ? `${plates.totalPlates} plate` : 'STL/3MF'})
+                </span>
+              </>
+            )}
+          </button>
+        </div>
+      </div>
+
       {/* Print Service Quote Modal */}
       {showOrderModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0c0906]/85 backdrop-blur-sm p-4">
-          <div className="w-full max-w-lg rounded-2xl codex-folio p-6 space-y-4">
-            <div className="flex items-center justify-between">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Order 3D Prints from On-Demand Print Service"
+          onClick={() => setShowOrderModal(false)}
+          className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-[#0c0906]/85 backdrop-blur-sm p-3 sm:p-4 safe-bottom"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-full max-w-lg rounded-2xl codex-folio p-5 sm:p-6 space-y-4"
+          >
+            <div className="flex items-center justify-between gap-2">
               <h3 className="font-display text-xl font-bold text-[#f5ebd6]">
                 No 3D Printer? Send STLs to an On-Demand Print Service
               </h3>
               <button
                 type="button"
                 onClick={() => setShowOrderModal(false)}
-                className="text-xs text-[#bda782] hover:text-[#f5ebd6]"
+                className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-[#d4af37]/30 bg-[#14100b] px-3 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8] shrink-0"
               >
                 Close ✕
               </button>
@@ -1295,7 +1421,7 @@ export default function ProjectPage() {
               ].map((srv) => (
                 <label
                   key={srv.id}
-                  className={`flex cursor-pointer items-center justify-between rounded-xl border p-3 ${
+                  className={`flex min-h-[48px] cursor-pointer items-center justify-between rounded-xl border p-3 ${
                     selectedService === srv.id
                       ? 'border-[#f3d478] bg-[#d4af37]/15'
                       : 'border-[#d4af37]/25 bg-[#0c0906]'
@@ -1319,13 +1445,13 @@ export default function ProjectPage() {
               ))}
             </div>
 
-            <div className="flex items-center gap-2">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
               <input
                 type="text"
                 value={shippingZip}
                 onChange={(e) => setShippingZip(e.target.value)}
                 placeholder="Shipping ZIP / Postal Code"
-                className="flex-1 rounded-lg border border-[#d4af37]/35 bg-[#0c0906] px-3 py-2 text-xs text-[#f5ebd6]"
+                className="flex-1 min-h-[44px] rounded-lg border border-[#d4af37]/35 bg-[#0c0906] px-3 py-2 text-xs text-[#f5ebd6]"
               />
               <a
                 href={
@@ -1337,7 +1463,7 @@ export default function ProjectPage() {
                 }
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-lg bg-[#d4af37] px-4 py-2 font-codex text-xs font-bold text-[#140e07]"
+                className="btn-primary-gold min-h-[44px] px-4 py-2 text-xs font-bold"
               >
                 Continue to Service <ExternalLink className="h-3.5 w-3.5" />
               </a>

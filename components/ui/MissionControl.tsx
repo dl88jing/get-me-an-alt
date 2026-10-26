@@ -1271,17 +1271,17 @@ export function MissionControl({
   return (
     <section
       aria-label="Mission Control — Gemini 4 Argon Managed Agent Pipeline"
-      className="surface-card relative overflow-hidden rounded-2xl px-3 py-2 sm:px-5 sm:py-3 space-y-3"
+      className="surface-card relative overflow-hidden rounded-2xl px-3 py-1.5 sm:px-5 sm:py-3 space-y-2.5"
     >
       {/* Compact Header, Telemetry & Toggle Controls */}
-      <div className="relative flex flex-wrap items-center justify-between gap-2">
-        <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
-          <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#e5bd47]/45 bg-[#231d15] px-2 sm:px-2.5 py-1 text-xs font-bold text-[#f3d478] shrink-0">
+      <div className="relative flex flex-wrap items-center justify-between gap-1.5 sm:gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-3 min-w-0">
+          <span className="inline-flex items-center gap-1 sm:gap-1.5 rounded-lg border border-[#e5bd47]/45 bg-[#231d15] px-2 sm:px-2.5 py-1 text-[11px] sm:text-xs font-bold text-[#f3d478] shrink-0">
             <Activity className="h-3.5 w-3.5 text-[#f3d478]" />
-            9-Agent Pipeline
+            <span>9-Agent Pipeline</span>
           </span>
 
-          <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#faf4e8]">
+          <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#faf4e8] shrink-0">
             <span
               className={`inline-block h-2 w-2 rounded-full shrink-0 ${
                 completedCount === MISSION_NODES.length && !isReplaying
@@ -1291,9 +1291,14 @@ export function MissionControl({
                   : 'bg-[#f3d478] animate-timeline-dot'
               }`}
             />
-            {completedCount === MISSION_NODES.length && !isReplaying
-              ? `${completedCount}/${MISSION_NODES.length} Verified`
-              : `${completedCount}/${MISSION_NODES.length} Running`}
+            <span className="sm:hidden">
+              {completedCount}/{MISSION_NODES.length}
+            </span>
+            <span className="hidden sm:inline">
+              {completedCount === MISSION_NODES.length && !isReplaying
+                ? `${completedCount}/${MISSION_NODES.length} Verified`
+                : `${completedCount}/${MISSION_NODES.length} Running`}
+            </span>
           </span>
 
           <span className="hidden md:inline text-xs font-mono text-[#b5a48b]/85 tabular-nums">
@@ -1302,7 +1307,7 @@ export function MissionControl({
         </div>
 
         {/* Replay & Expand Controls */}
-        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {isReplaying ? (
             <>
               <button
@@ -1323,7 +1328,7 @@ export function MissionControl({
               <button
                 type="button"
                 onClick={() => setSpeedMultiplier((s) => (s === 1 ? 2 : 1))}
-                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
+                className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
               >
                 {speedMultiplier}x
               </button>
@@ -1342,10 +1347,11 @@ export function MissionControl({
                 setDetailsOpen(true);
                 handleReplayClick();
               }}
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
+              className="inline-flex min-h-[44px] items-center gap-1 sm:gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
             >
               <RotateCcw className="h-3.5 w-3.5" />
-              <span>Replay Graph</span>
+              <span className="sm:hidden">Replay</span>
+              <span className="hidden sm:inline">Replay Graph</span>
             </button>
           )}
 
@@ -1353,9 +1359,9 @@ export function MissionControl({
             type="button"
             onClick={() => setDetailsOpen((o) => !o)}
             aria-expanded={showFullGraph}
-            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
+            className="inline-flex min-h-[44px] items-center gap-1 sm:gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
           >
-            <span className="sm:hidden">{showFullGraph ? 'Hide Logs' : 'Graph & Logs'}</span>
+            <span className="sm:hidden">{showFullGraph ? 'Hide' : 'Logs'}</span>
             <span className="hidden sm:inline">{showFullGraph ? 'Hide Agent Logs' : 'Inspect Agent Graph & Logs'}</span>
           </button>
         </div>

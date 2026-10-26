@@ -234,9 +234,9 @@ export function SourceCard(props: SourceCardProps) {
           <button
             type="button"
             onClick={() => setExpanded((prev) => !prev)}
-            className="mb-2 inline-flex items-center text-xs font-semibold text-[#f3d478] hover:underline"
+            className="mb-1 -ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-xs font-semibold text-[#f3d478] hover:underline"
           >
-            {expanded ? 'Less' : 'More'}
+            {expanded ? 'Show Less' : 'Read More'}
           </button>
         )}
       </div>

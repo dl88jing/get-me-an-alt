@@ -126,9 +126,9 @@ export function BomItemCard({
               <button
                 type="button"
                 onClick={() => setExpanded((prev) => !prev)}
-                className="mt-1 inline-flex items-center text-xs font-semibold text-[#f3d478] hover:underline"
+                className="mt-1 -ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-xs font-semibold text-[#f3d478] hover:underline"
               >
-                {expanded ? 'Less' : 'More'}
+                {expanded ? 'Show Less' : 'Read More'}
               </button>
             )}
           </div>
@@ -177,7 +177,7 @@ export function BomItemCard({
                   key={pid}
                   type="button"
                   onClick={() => onSelectPartId(pid)}
-                  className="inline-flex min-h-[36px] items-center rounded-md border border-[#d4af37]/35 bg-[#d4af37]/12 px-2 py-1 font-mono text-[11px] font-semibold text-[#f3d478] hover:bg-[#d4af37]/25"
+                  className="inline-flex min-h-[44px] min-w-[44px] justify-center items-center rounded-md border border-[#d4af37]/35 bg-[#d4af37]/12 px-2.5 py-1.5 font-mono text-[11px] font-semibold text-[#f3d478] hover:bg-[#d4af37]/25"
                 >
                   {pid}
                 </button>

@@ -238,9 +238,9 @@ export function SourcesTab(props: SourcesTabProps) {
             <button
               type="button"
               onClick={() => setSummaryExpanded((prev) => !prev)}
-              className="mt-1 text-xs font-semibold text-[#f3d478] hover:underline"
+              className="mt-1 -ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-xs font-semibold text-[#f3d478] hover:underline"
             >
-              {summaryExpanded ? 'Less' : 'More'}
+              {summaryExpanded ? 'Show Less' : 'Read More'}
             </button>
           )}
         </div>
@@ -257,7 +257,7 @@ export function SourcesTab(props: SourcesTabProps) {
             onChange={(e: { target: { value: string } }) => setQuery(e.target.value)}
             placeholder="Filter by title, domain, takeaway..."
             aria-label="Filter sources by keyword or domain"
-            className="w-full min-h-[44px] rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 py-2 pl-9 pr-8 text-sm text-[#faf4e8] placeholder-[#b5a48b] transition-colors focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
+            className="w-full min-h-[44px] rounded-xl border border-[#d4af37]/30 bg-[#0c0906]/90 py-2 pl-9 pr-11 text-sm text-[#faf4e8] placeholder-[#b5a48b] transition-colors focus:border-[#f3d478] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/30"
           />
           <svg
             viewBox="0 0 20 20"
@@ -276,7 +276,7 @@ export function SourcesTab(props: SourcesTabProps) {
               type="button"
               onClick={() => setQuery('')}
               aria-label="Clear search query"
-              className="absolute right-2.5 top-1/2 -translate-y-1/2 rounded p-0.5 text-[#bda782] hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
+              className="absolute right-0.5 top-1/2 -translate-y-1/2 inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded-lg text-[#bda782] hover:text-[#f5ebd6] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#f3d478]"
             >
               ×
             </button>

@@ -297,9 +297,9 @@ export default function CritiquePanel({ critique }: CritiquePanelProps) {
                               [issueKey]: !prev[issueKey],
                             }))
                           }
-                          className="text-[11px] font-semibold text-[#f3d478] hover:underline"
+                          className="-ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-[11px] font-semibold text-[#f3d478] hover:underline"
                         >
-                          {isExp ? 'Less' : 'More'}
+                          {isExp ? 'Show Less' : 'Read More'}
                         </button>
                       )}
                     </div>

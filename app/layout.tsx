@@ -62,12 +62,19 @@ export default function RootLayout({
         />
 
         <SmoothScrollProvider>
-          {/* Sticky Top Bar (height 64px) */}
-          <header className="sticky top-0 z-50 h-16 border-b border-[#dfd3be]/20 bg-[#0c0a08]/95 backdrop-blur-md">
-            <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-4 px-4 sm:px-6">
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-3 focus:z-[100] focus:inline-flex focus:min-h-[44px] focus:items-center focus:rounded-xl focus:bg-[#e5bd47] focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-[#140e07] focus:shadow-lg"
+          >
+            Skip to main content
+          </a>
+
+          {/* Sticky Top Bar (56px mobile, 64px sm+) */}
+          <header className="sticky top-0 z-50 h-14 sm:h-16 border-b border-[#dfd3be]/20 bg-[#0c0a08]/95 backdrop-blur-md">
+            <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3 px-3.5 sm:px-6">
               <Link
                 href="/"
-                className="flex items-center gap-3 group shrink-0 rounded-lg py-1"
+                className="inline-flex min-h-[44px] items-center gap-2.5 sm:gap-3 group shrink-0 rounded-lg py-1"
               >
                 <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#e5bd47]/70 bg-gradient-to-br from-[#f3d478] via-[#d4af37] to-[#9c721c] text-[#140e07] font-codex font-bold shadow-sm transition-transform duration-200 group-hover:scale-105">
                   <svg
@@ -99,19 +106,19 @@ export default function RootLayout({
               >
                 <Link
                   href="/#showcase-gallery"
-                  className="hidden md:inline-flex min-h-[40px] items-center rounded-lg px-3.5 py-2 text-sm font-medium text-[#dfd3be] hover:bg-[#17130e] hover:text-[#faf4e8] transition-colors"
+                  className="hidden md:inline-flex min-h-[44px] items-center rounded-lg px-3.5 py-2 text-sm font-medium text-[#dfd3be] hover:bg-[#17130e] hover:text-[#faf4e8] transition-colors"
                 >
                   Instant Demos
                 </Link>
                 <Link
                   href="/#how-it-works"
-                  className="hidden sm:inline-flex min-h-[40px] items-center rounded-lg px-3.5 py-2 text-sm font-medium text-[#dfd3be] hover:bg-[#17130e] hover:text-[#faf4e8] transition-colors"
+                  className="hidden sm:inline-flex min-h-[44px] items-center rounded-lg px-3.5 py-2 text-sm font-medium text-[#dfd3be] hover:bg-[#17130e] hover:text-[#faf4e8] transition-colors"
                 >
                   How It Works
                 </Link>
                 <Link
                   href="/projects/desktop-robot-arm"
-                  className="inline-flex min-h-[40px] items-center gap-2 rounded-lg border border-[#e5bd47]/60 bg-[#231d15] px-3.5 py-2 text-sm font-semibold text-[#f3d478] hover:bg-[#e5bd47] hover:text-[#140e07] transition-colors"
+                  className="inline-flex min-h-[44px] items-center gap-2 rounded-lg border border-[#e5bd47]/60 bg-[#231d15] px-3.5 py-2 text-xs sm:text-sm font-semibold text-[#f3d478] hover:bg-[#e5bd47] hover:text-[#140e07] transition-colors"
                 >
                   <span>Featured Build</span>
                   <span className="hidden sm:inline font-mono text-xs opacity-90">
@@ -122,7 +129,10 @@ export default function RootLayout({
             </div>
           </header>
 
-          <main className="relative z-20 mx-auto max-w-7xl px-3.5 py-3 sm:px-6 sm:py-6">
+          <main
+            id="main-content"
+            className="relative z-20 mx-auto max-w-7xl px-3.5 py-2.5 sm:px-6 sm:py-6 safe-bottom"
+          >
             {children}
           </main>
         </SmoothScrollProvider>

@@ -77,12 +77,12 @@ function buildFallbackSvg(frame: TeardownFrame, idx: number): string {
     <text x="36" y="50" fill="#f3d478" font-family="Georgia, serif" font-size="12" font-weight="bold" letter-spacing="1.5">INTERNAL PART TELEMETRY · DISASSEMBLY @ ${escapeXml(ts)}</text>
     <text x="36" y="76" fill="#f5ebd6" font-family="Georgia, serif" font-size="15" font-weight="bold">${escapeXml(title.slice(0, 62))}</text>
     <rect x="324" y="106" width="276" height="74" rx="8" fill="#15100b" stroke="#d4af37" stroke-opacity="0.65" stroke-width="1.2"/>
-    <text x="338" y="128" fill="#f3d478" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA I · PRIMARY VESSEL</text>
+    <text x="338" y="128" fill="#f3d478" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">CALLOUT 1 · PRIMARY SUB-ASSEMBLY</text>
     <text x="338" y="152" fill="#f5ebd6" font-family="monospace" font-size="11.5">${escapeXml(c1.slice(0, 36))}</text>
     <rect x="324" y="194" width="276" height="74" rx="8" fill="#15100b" stroke="#b89b4a" stroke-opacity="0.65" stroke-width="1.2"/>
-    <text x="338" y="216" fill="#e6d3b3" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">FIGURA II · COUPLED MECHANISM</text>
+    <text x="338" y="216" fill="#e6d3b3" font-family="Georgia, serif" font-size="10" font-weight="bold" letter-spacing="1.2">CALLOUT 2 · COUPLED MECHANISM</text>
     <text x="338" y="240" fill="#f5ebd6" font-family="monospace" font-size="11.5">${escapeXml(c2.slice(0, 36))}</text>
-    <text x="36" y="322" fill="#bda782" font-family="Georgia, serif" font-size="11" font-style="italic">De Mechanica · Gemini 4 Argon Multimodal Internal Part Callout</text>
+    <text x="36" y="322" fill="#bda782" font-family="Georgia, serif" font-size="11" font-style="italic">Get Me An Alt · Gemini 4 Argon Multimodal Internal Part Callout</text>
   </svg>`;
 
   return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
@@ -470,7 +470,7 @@ export function TeardownGallery({
                 href={v.url}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-xl border border-[#d4af37]/30 bg-[#120e0a]/90 px-3 py-1.5 text-xs font-medium text-[#f5ebd6] transition-all hover:border-[#f3d478]/65 hover:bg-[#d4af37]/15 hover:text-[#f3d478]"
+                className="inline-flex min-h-[44px] items-center gap-1.5 rounded-xl border border-[#d4af37]/30 bg-[#120e0a]/90 px-3 py-1.5 text-xs font-medium text-[#f5ebd6] transition-all hover:border-[#f3d478]/65 hover:bg-[#d4af37]/15 hover:text-[#f3d478]"
               >
                 <span className="max-w-[220px] truncate">{v.title}</span>
                 <span aria-hidden="true" className="text-[#d4af37]">
@@ -811,7 +811,7 @@ export function TeardownGallery({
                               ? `Inspect ${part.name} in 3D Exploded View`
                               : `Inspect ${part.name} in Bill of Materials`
                           }
-                          className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 text-[11px] font-medium transition-all ${
+                          className={`inline-flex min-h-[44px] items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-medium transition-all ${
                             isPrint
                               ? 'border-[#b89b4a]/45 bg-[#1d1710]/90 text-[#e6d3b3] hover:border-[#f3d478]/65 hover:bg-[#282016]'
                               : 'border-[#d4af37]/40 bg-[#d4af37]/12 text-[#f3d478] hover:border-[#f3d478]/70 hover:bg-[#d4af37]/25'
@@ -941,9 +941,9 @@ export function TeardownGallery({
                                   [partKey]: !prev[partKey],
                                 }))
                               }
-                              className="mt-1 text-[11px] font-semibold text-[#f3d478] hover:underline"
+                              className="mt-1 -ml-2 inline-flex min-h-[44px] min-w-[44px] items-center px-2 text-[11px] font-semibold text-[#f3d478] hover:underline"
                             >
-                              {isPartExpanded ? 'Less' : 'More'}
+                              {isPartExpanded ? 'Show Less' : 'Read More'}
                             </button>
                           )}
 
@@ -985,7 +985,7 @@ export function TeardownGallery({
                                     );
                                   }
                                 }}
-                                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#b89b4a]/45 bg-[#1d1710] px-2.5 py-1 font-mono text-[11px] text-[#dfd3be] transition-colors hover:border-[#f3d478]/65 hover:bg-[#282016]"
+                                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#b89b4a]/45 bg-[#1d1710] px-2.5 py-1.5 font-mono text-[11px] text-[#dfd3be] transition-colors hover:border-[#f3d478]/65 hover:bg-[#282016]"
                                 title="Inspect matching 3D part in Exploded View"
                               >
                                 <span>
@@ -1010,7 +1010,7 @@ export function TeardownGallery({
                                     );
                                   }
                                 }}
-                                className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#d4af37]/40 bg-[#d4af37]/15 px-2.5 py-1 font-mono text-[11px] text-[#f3d478] transition-colors hover:border-[#f3d478]/70 hover:bg-[#d4af37]/25"
+                                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#d4af37]/40 bg-[#d4af37]/15 px-2.5 py-1.5 font-mono text-[11px] text-[#f3d478] transition-colors hover:border-[#f3d478]/70 hover:bg-[#d4af37]/25"
                                 title="View matching line item in Bill of Materials"
                               >
                                 <span>
@@ -1025,7 +1025,7 @@ export function TeardownGallery({
                               href={matchedBom?.primaryUrl || amazonSearchUrl}
                               target="_blank"
                               rel="noreferrer"
-                              className="inline-flex min-h-[38px] items-center gap-1 rounded-lg border border-[#d4af37]/25 bg-[#17120c] px-2.5 py-1 text-[11px] text-[#dfd3be] transition-colors hover:border-[#f3d478]/50 hover:text-[#faf4e8]"
+                              className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#d4af37]/25 bg-[#17120c] px-2.5 py-1.5 text-[11px] text-[#dfd3be] transition-colors hover:border-[#f3d478]/50 hover:text-[#faf4e8]"
                               title={`Source off-the-shelf part: ${searchQuery}`}
                             >
                               <span className="max-w-[130px] truncate">
