@@ -21,15 +21,16 @@
       "name": "Weighted H-Frame Studio Base Hub",
       "kind": "printed",
       "dims_mm": [
-        145,
-        120,
-        28
+        165,
+        136,
+        26
       ],
       "shape": "box",
       "params": {
-        "width": 145,
-        "depth": 120,
-        "height": 28,
+        "rolePreset": "easel_h_base",
+        "width": 165,
+        "depth": 136,
+        "height": 26,
         "cornerRadius": 8
       },
       "position": [
@@ -45,7 +46,7 @@
       "explode": [
         0,
         0,
-        -60
+        -65
       ],
       "color": "#d97706",
       "bomRef": "bom-filament-easel",
@@ -64,20 +65,22 @@
       "name": "15°-Step Ratcheting Tilt Mast Hinge",
       "kind": "printed",
       "dims_mm": [
-        64,
         58,
-        42
+        48,
+        40
       ],
-      "shape": "bracket",
+      "shape": "bracketL",
       "params": {
-        "width": 64,
-        "depth": 58,
-        "height": 42
+        "rolePreset": "u_yoke_clevis",
+        "width": 58,
+        "depth": 48,
+        "height": 40,
+        "thickness": 7
       },
       "position": [
         0,
-        -14,
-        28
+        -8,
+        26
       ],
       "rotation": [
         0,
@@ -86,8 +89,8 @@
       ],
       "explode": [
         0,
-        -55,
-        -15
+        -52,
+        -18
       ],
       "color": "#d4af37",
       "bomRef": "bom-filament-easel",
@@ -106,21 +109,22 @@
       "name": "Lower Canvas Ledge & Brush Rest Tray",
       "kind": "printed",
       "dims_mm": [
-        160,
-        48,
-        32
+        168,
+        44,
+        26
       ],
       "shape": "box",
       "params": {
-        "width": 160,
-        "depth": 48,
-        "height": 32,
+        "rolePreset": "shelf_ledge",
+        "width": 168,
+        "depth": 44,
+        "height": 26,
         "cornerRadius": 4
       },
       "position": [
         0,
-        22,
-        68
+        26,
+        72
       ],
       "rotation": [
         0,
@@ -129,8 +133,8 @@
       ],
       "explode": [
         0,
-        80,
-        10
+        85,
+        12
       ],
       "color": "#b89b4a",
       "bomRef": "bom-filament-easel",
@@ -149,20 +153,21 @@
       "name": "Sliding Top Canvas Clamp Jaw",
       "kind": "printed",
       "dims_mm": [
-        68,
+        72,
         46,
         34
       ],
-      "shape": "bracket",
+      "shape": "bracketL",
       "params": {
-        "width": 68,
+        "rolePreset": "canvas_top_clamp",
+        "width": 72,
         "depth": 46,
         "height": 34
       },
       "position": [
         0,
-        20,
-        185
+        22,
+        228
       ],
       "rotation": [
         0,
@@ -171,8 +176,8 @@
       ],
       "explode": [
         0,
-        75,
-        95
+        78,
+        118
       ],
       "color": "#d4af37",
       "bomRef": "bom-filament-easel",
@@ -191,20 +196,20 @@
       "name": "2020 V-Slot Rear Strut Locking Collar",
       "kind": "printed",
       "dims_mm": [
-        44,
-        42,
-        26
+        48,
+        48,
+        24
       ],
       "shape": "tube",
       "params": {
-        "outerRadius": 22,
-        "innerRadius": 11,
-        "height": 26
+        "outerRadius": 24,
+        "innerRadius": 12,
+        "height": 24
       },
       "position": [
         0,
-        -24,
-        120
+        -22,
+        132
       ],
       "rotation": [
         0,
@@ -233,19 +238,22 @@
       "name": "Lobed M5 Brass-Insert Rosette Knobs (×3)",
       "kind": "printed",
       "dims_mm": [
-        34,
-        34,
-        18
+        36,
+        36,
+        16
       ],
-      "shape": "cylinder",
+      "shape": "gear_simple",
       "params": {
-        "radius": 17,
-        "height": 18
+        "outerRadius": 18,
+        "teeth": 8,
+        "boreRadius": 3,
+        "thickness": 16,
+        "eulerDeg": [90, 0, 0]
       },
       "position": [
-        36,
-        -18,
-        120
+        42,
+        -16,
+        132
       ],
       "rotation": [
         0,
@@ -253,9 +261,9 @@
         0
       ],
       "explode": [
-        95,
-        -45,
-        55
+        88,
+        -48,
+        48
       ],
       "color": "#c84b31",
       "bomRef": "bom-filament-easel",
@@ -271,23 +279,24 @@
     {
       "id": "extrusion-spine-2020",
       "partNumber": "OTS-01",
-      "name": "2020 Black Anodized V-Slot Aluminum Extrusion (400mm)",
+      "name": "2020 Black Anodized V-Slot Aluminum Extrusion & Frame Spine",
       "kind": "purchased",
       "dims_mm": [
-        20,
-        20,
+        142,
+        88,
         240
       ],
       "shape": "box",
       "params": {
-        "width": 20,
-        "depth": 20,
+        "rolePreset": "h_frame",
+        "width": 142,
+        "depth": 88,
         "height": 240
       },
       "position": [
         0,
         0,
-        125
+        134
       ],
       "rotation": [
         0,
@@ -296,14 +305,14 @@
       ],
       "explode": [
         0,
-        0,
-        85
+        -18,
+        48
       ],
       "color": "#7a5c38",
       "bomRef": "bom-extrusion-2020",
       "material": "6063-T5 Black Anodized Aluminum (Purchased)",
       "quantity": 1,
-      "description": "Precision 20×20mm V-slot linear aluminum profile acting as the rigid vertical spine.",
+      "description": "Precision 20×20mm V-slot linear aluminum profile and studio H-frame mast assembly.",
       "roleInAssembly": "Primary vertical mast along which the lower tray and top canvas clamp travel.",
       "step": 2
     },
@@ -313,19 +322,22 @@
       "name": "M5×0.8mm Solid Brass Knurled Thumb Nuts & Inserts (10-Pack)",
       "kind": "purchased",
       "dims_mm": [
-        16,
-        16,
-        10
+        24,
+        24,
+        12
       ],
-      "shape": "cylinder",
+      "shape": "gear_simple",
       "params": {
-        "radius": 8,
-        "height": 10
+        "outerRadius": 12,
+        "teeth": 12,
+        "boreRadius": 2.5,
+        "thickness": 12,
+        "eulerDeg": [90, 0, 0]
       },
       "position": [
-        -36,
-        -18,
-        120
+        -42,
+        -16,
+        132
       ],
       "rotation": [
         0,
@@ -333,9 +345,9 @@
         0
       ],
       "explode": [
-        -95,
-        -45,
-        55
+        -88,
+        -48,
+        48
       ],
       "color": "#e6c365",
       "bomRef": "bom-brass-knurled-nuts",
@@ -351,19 +363,20 @@
       "name": "M5×20mm Stainless Socket Cap Screws & 2020 Roll-In T-Nuts",
       "kind": "purchased",
       "dims_mm": [
-        12,
-        12,
-        20
+        14,
+        14,
+        24
       ],
       "shape": "cylinder",
       "params": {
-        "radius": 6,
-        "height": 20
+        "radius": 7,
+        "height": 24,
+        "eulerDeg": [90, 0, 0]
       },
       "position": [
         0,
-        8,
-        150
+        12,
+        156
       ],
       "rotation": [
         90,
@@ -371,9 +384,9 @@
         0
       ],
       "explode": [
-        55,
-        35,
-        65
+        62,
+        42,
+        68
       ],
       "color": "#bda782",
       "bomRef": "bom-m5-tnut-bolts",
@@ -389,20 +402,21 @@
       "name": "Non-Slip EPDM Rubber Foot Pads & Canvas Jaw Cushions (8-Pack)",
       "kind": "purchased",
       "dims_mm": [
-        24,
-        24,
-        4
+        42,
+        42,
+        6
       ],
-      "shape": "box",
+      "shape": "plate_with_holes",
       "params": {
-        "width": 24,
-        "depth": 24,
-        "height": 4
+        "width": 42,
+        "depth": 42,
+        "thickness": 6,
+        "holes": 4
       },
       "position": [
-        -55,
+        -58,
         42,
-        -2
+        -10
       ],
       "rotation": [
         0,
@@ -428,19 +442,21 @@
       "name": "302 Stainless Compression Detent Spring (8mm OD × 25mm)",
       "kind": "purchased",
       "dims_mm": [
-        8,
-        8,
-        25
+        16,
+        16,
+        28
       ],
-      "shape": "cylinder",
+      "shape": "tube",
       "params": {
-        "radius": 4,
-        "height": 25
+        "outerRadius": 8,
+        "innerRadius": 5,
+        "height": 28,
+        "eulerDeg": [0, 0, 90]
       },
       "position": [
-        18,
-        -14,
-        34
+        34,
+        -8,
+        26
       ],
       "rotation": [
         0,
@@ -448,9 +464,9 @@
         0
       ],
       "explode": [
-        75,
-        -55,
-        -10
+        78,
+        -48,
+        -14
       ],
       "color": "#d4bc94",
       "bomRef": "bom-compression-spring",
