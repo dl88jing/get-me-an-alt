@@ -1271,19 +1271,19 @@ export function MissionControl({
   return (
     <section
       aria-label="Mission Control — Gemini 4 Argon Managed Agent Pipeline"
-      className="surface-card relative overflow-hidden rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3 space-y-3"
+      className="surface-card relative overflow-hidden rounded-2xl px-3 py-2 sm:px-5 sm:py-3 space-y-3"
     >
       {/* Compact Header, Telemetry & Toggle Controls */}
-      <div className="relative flex flex-col gap-2.5 lg:flex-row lg:items-center lg:justify-between">
-        <div className="flex flex-wrap items-center gap-3">
-          <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#e5bd47]/45 bg-[#231d15] px-2.5 py-1 text-xs font-bold text-[#f3d478]">
+      <div className="relative flex flex-wrap items-center justify-between gap-2">
+        <div className="flex flex-wrap items-center gap-2 sm:gap-3 min-w-0">
+          <span className="inline-flex items-center gap-1.5 rounded-lg border border-[#e5bd47]/45 bg-[#231d15] px-2 sm:px-2.5 py-1 text-xs font-bold text-[#f3d478] shrink-0">
             <Activity className="h-3.5 w-3.5 text-[#f3d478]" />
             9-Agent Pipeline
           </span>
 
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#faf4e8]">
+          <span className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#faf4e8]">
             <span
-              className={`inline-block h-2 w-2 rounded-full ${
+              className={`inline-block h-2 w-2 rounded-full shrink-0 ${
                 completedCount === MISSION_NODES.length && !isReplaying
                   ? 'bg-[#c2a353]'
                   : failedCount > 0
@@ -1292,23 +1292,23 @@ export function MissionControl({
               }`}
             />
             {completedCount === MISSION_NODES.length && !isReplaying
-              ? `${completedCount}/${MISSION_NODES.length} Agents Verified`
+              ? `${completedCount}/${MISSION_NODES.length} Verified`
               : `${completedCount}/${MISSION_NODES.length} Running`}
           </span>
 
-          <span className="hidden sm:inline text-xs font-mono text-[#b5a48b]/85 tabular-nums">
+          <span className="hidden md:inline text-xs font-mono text-[#b5a48b]/85 tabular-nums">
             {formatTokens(totalTokensCount)} tok · {formatMs(totalElapsedMs)} · {totalArtifactsCount} artifacts
           </span>
         </div>
 
         {/* Replay & Expand Controls */}
-        <div className="flex flex-wrap items-center gap-2">
+        <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 shrink-0">
           {isReplaying ? (
             <>
               <button
                 type="button"
                 onClick={() => setIsPaused((p) => !p)}
-                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478]"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-[#faf4e8] hover:border-[#f3d478]"
               >
                 {isPaused ? (
                   <>
@@ -1323,14 +1323,14 @@ export function MissionControl({
               <button
                 type="button"
                 onClick={() => setSpeedMultiplier((s) => (s === 1 ? 2 : 1))}
-                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-bold text-[#f3d478] hover:border-[#f3d478]"
               >
                 {speedMultiplier}x
               </button>
               <button
                 type="button"
                 onClick={finishImmediately}
-                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478]"
+                className="inline-flex min-h-[44px] items-center gap-1 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478]"
               >
                 <FastForward className="h-3.5 w-3.5" /> Skip
               </button>
@@ -1342,10 +1342,10 @@ export function MissionControl({
                 setDetailsOpen(true);
                 handleReplayClick();
               }}
-              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
+              className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#f3d478] hover:border-[#f3d478]"
             >
               <RotateCcw className="h-3.5 w-3.5" />
-              Replay Graph
+              <span>Replay Graph</span>
             </button>
           )}
 
@@ -1353,9 +1353,10 @@ export function MissionControl({
             type="button"
             onClick={() => setDetailsOpen((o) => !o)}
             aria-expanded={showFullGraph}
-            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-3.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
+            className="inline-flex min-h-[44px] items-center gap-1.5 rounded-lg border border-[#dfd3be]/25 bg-[#231d15] px-2.5 sm:px-3.5 py-1.5 text-xs font-semibold text-[#dfd3be] hover:border-[#f3d478] hover:text-[#faf4e8]"
           >
-            <span>{showFullGraph ? 'Hide Agent Logs' : 'Inspect Agent Graph & Logs'}</span>
+            <span className="sm:hidden">{showFullGraph ? 'Hide Logs' : 'Graph & Logs'}</span>
+            <span className="hidden sm:inline">{showFullGraph ? 'Hide Agent Logs' : 'Inspect Agent Graph & Logs'}</span>
           </button>
         </div>
       </div>

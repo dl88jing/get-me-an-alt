@@ -440,12 +440,12 @@ export default function ProjectPage() {
   );
 
   return (
-    <div className="space-y-4 pb-16">
+    <div className="space-y-3 sm:space-y-4 pb-16">
       {/* Sticky Project Header: Object Name, Dominant Price -> Alt Price + Savings, and Segmented Tabs */}
-      <div className="sticky top-16 z-40 -mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-4 py-3 sm:px-6 shadow-glass space-y-2.5">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
-          <div className="min-w-0 space-y-1">
-            <div className="flex flex-wrap items-center gap-2 text-xs text-[#b5a48b]">
+      <div className="sticky top-16 z-40 -mx-2 rounded-2xl border border-[#dfd3be]/25 bg-[#17130e]/95 backdrop-blur-md px-3 py-2 sm:px-6 sm:py-3 shadow-glass space-y-2 sm:space-y-2.5">
+        <div className="flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+          <div className="min-w-0 space-y-0.5 sm:space-y-1">
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 text-xs text-[#b5a48b]">
               <Link
                 href="/"
                 className="inline-flex items-center gap-1 font-medium text-[#dfd3be] hover:text-[#f3d478] transition-colors"
@@ -454,15 +454,15 @@ export default function ProjectPage() {
               </Link>
               <span>/</span>
               {analysis?.category && (
-                <span className="text-[#b5a48b]">{analysis.category}</span>
+                <span className="truncate text-[#b5a48b]">{analysis.category}</span>
               )}
             </div>
 
-            <h1 className="font-display text-2xl sm:text-3xl font-bold tracking-tight text-[#faf4e8] truncate">
+            <h1 className="font-display text-xl sm:text-3xl font-bold tracking-tight text-[#faf4e8] truncate">
               {manifest.title}
             </h1>
             {analysis?.tagline && (
-              <p className="text-sm text-[#dfd3be] max-w-2xl truncate">
+              <p className="hidden sm:block text-sm text-[#dfd3be] max-w-2xl truncate">
                 {analysis.tagline}
               </p>
             )}
@@ -470,27 +470,27 @@ export default function ProjectPage() {
 
           {/* Dominant Price Comparison & Savings */}
           {bom && (
-            <div className="flex flex-wrap items-center gap-3 rounded-xl border border-[#e5bd47]/45 bg-[#0c0a08] px-4 py-2.5 shrink-0">
-              <div className="flex items-baseline gap-2.5 tabular-nums">
+            <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-3 rounded-xl border border-[#e5bd47]/45 bg-[#0c0a08] px-3 py-1.5 sm:px-4 sm:py-2.5 shrink-0">
+              <div className="flex items-baseline gap-1.5 sm:gap-2.5 tabular-nums min-w-0">
                 <span
-                  className="text-sm text-[#b5a48b] line-through"
+                  className="text-xs sm:text-sm text-[#b5a48b] line-through"
                   title="Original Retail Price"
                 >
                   ${bom.summary.originalRetailPrice.toFixed(2)}
                 </span>
-                <span className="text-[#b5a48b]">→</span>
+                <span className="text-xs sm:text-sm text-[#b5a48b]">→</span>
                 <span
-                  className="font-display text-2xl sm:text-3xl font-bold text-[#faf4e8]"
+                  className="font-display text-xl sm:text-3xl font-bold text-[#faf4e8]"
                   title="DIY Alternative Total Cost"
                 >
                   ${bom.summary.totalDiyCost.toFixed(2)}
                 </span>
-                <span className="text-xs font-semibold uppercase tracking-wider text-[#dfd3be]">
+                <span className="text-[11px] sm:text-xs font-semibold uppercase tracking-wider text-[#dfd3be]">
                   DIY
                 </span>
               </div>
 
-              <div className="rounded-lg bg-[#e5bd47] px-3 py-1.5 text-[#140e07] font-sans font-bold text-xs sm:text-sm tabular-nums shadow-sm">
+              <div className="rounded-lg bg-[#e5bd47] px-2.5 py-1 sm:px-3 sm:py-1.5 text-[#140e07] font-sans font-bold text-xs sm:text-sm tabular-nums shadow-sm shrink-0">
                 Save ${bom.summary.totalSavings.toFixed(2)} (
                 {bom.summary.savingsPercent}%)
               </div>
@@ -498,11 +498,11 @@ export default function ProjectPage() {
           )}
         </div>
 
-        {/* High-Contrast Segmented Tab Navigation (Fitts's Law >= 44px targets) */}
+        {/* High-Contrast Segmented Tab Navigation (Single-row horizontally scrollable on mobile, >= 44px targets) */}
         <div
           role="tablist"
           aria-label="Project Sections"
-          className="flex flex-wrap items-center gap-1.5 rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-1.5"
+          className="flex items-center gap-1.5 overflow-x-auto lg:flex-wrap rounded-xl border border-[#dfd3be]/20 bg-[#0c0a08] p-1 sm:p-1.5"
         >
           {TABS.map((t) => {
             const Icon = t.icon;
@@ -515,17 +515,17 @@ export default function ProjectPage() {
                 data-tab-id={t.id}
                 type="button"
                 onClick={() => setActiveTab(t.id)}
-                className={`relative inline-flex min-h-[44px] flex-1 sm:flex-initial items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-all ${
+                className={`relative inline-flex min-h-[44px] shrink-0 whitespace-nowrap items-center justify-center gap-1.5 sm:gap-2 rounded-lg px-3 sm:px-4 py-1.5 sm:py-2 text-xs sm:text-sm font-semibold transition-all ${
                   active
                     ? 'bg-[#e5bd47] text-[#140e07] font-bold shadow-md'
                     : 'bg-transparent text-[#dfd3be] hover:bg-[#231d15] hover:text-[#faf4e8]'
                 }`}
               >
-                <Icon className="h-4 w-4 shrink-0" />
+                <Icon className="h-3.5 w-3.5 sm:h-4 sm:w-4 shrink-0" />
                 <span>{t.label}</span>
                 {t.badge && (
                   <span
-                    className={`rounded-md px-1.5 py-0.5 text-xs font-mono tabular-nums ${
+                    className={`rounded-md px-1.5 py-0.5 text-[11px] sm:text-xs font-mono tabular-nums ${
                       active
                         ? 'bg-[#140e07]/15 text-[#140e07] font-bold'
                         : 'bg-[#231d15] text-[#b5a48b]'

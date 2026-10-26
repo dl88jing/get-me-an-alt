@@ -386,33 +386,33 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="space-y-14 pb-20">
+    <div className="space-y-7 sm:space-y-14 pb-16 sm:pb-20">
       {/* =====================================================================
           1. FOCUSED HERO — ONE HEADLINE, ONE SUBHEAD, ONE PRIMARY ACTION
       ===================================================================== */}
       <section
         id="hero-command"
-        className="relative overflow-hidden rounded-3xl gilded-frame bg-[#17130e] px-6 py-10 sm:px-12 sm:py-14"
+        className="relative overflow-hidden rounded-2xl sm:rounded-3xl gilded-frame bg-[#17130e] px-4 py-5 sm:px-12 sm:py-14"
       >
         <div
           aria-hidden="true"
           className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(229,189,71,0.14),transparent_65%)]"
         />
 
-        <div className="relative z-10 mx-auto max-w-3xl text-center space-y-5">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#e5bd47]/40 bg-[#231d15] px-3.5 py-1 text-xs font-semibold text-[#f3d478]">
-            <Sparkles className="h-3.5 w-3.5 text-[#e5bd47]" />
+        <div className="relative z-10 mx-auto max-w-3xl text-center space-y-3 sm:space-y-5">
+          <div className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full border border-[#e5bd47]/40 bg-[#231d15] px-3 py-1 text-[11px] sm:text-xs font-semibold text-[#f3d478]">
+            <Sparkles className="h-3.5 w-3.5 shrink-0 text-[#e5bd47]" />
             <span>DIY 3D-Printed Parts + Off-the-Shelf Hardware</span>
           </div>
 
-          <h1 className="font-display text-4xl sm:text-6xl font-bold tracking-tight text-[#faf4e8] leading-[1.05]">
+          <h1 className="font-display text-[1.75rem] sm:text-6xl font-bold tracking-tight text-[#faf4e8] leading-[1.1] sm:leading-[1.05]">
             Every invention begins as a sketch.{' '}
             <span className="text-[#f3d478] italic font-normal">
               Build a DIY alternative for 80–92% less.
             </span>
           </h1>
 
-          <p className="text-base sm:text-lg text-[#dfd3be] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-sm sm:text-lg text-[#dfd3be] max-w-2xl mx-auto leading-snug sm:leading-relaxed">
             Paste a product URL, YouTube video, or photo to get plate-packed STL
             &amp; 3MF print files, a sourced retail BOM, and animated 3D assembly
             steps.
@@ -427,26 +427,26 @@ export default function LandingPage() {
             }}
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
-            className={`mt-6 space-y-3 rounded-2xl p-4 text-left transition-all glass-command-bar ${
+            className={`mt-4 sm:mt-6 space-y-2.5 sm:space-y-3 rounded-2xl p-3 sm:p-4 text-left transition-all glass-command-bar ${
               isDragging ? 'ring-2 ring-[#f3d478] border-[#f3d478]' : ''
             }`}
           >
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <div className="relative flex-1">
-                <Link2 className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-[#e5bd47]" />
+            <div className="flex flex-col gap-2.5 sm:flex-row sm:gap-3">
+              <div className="relative flex-1 min-w-0">
+                <Link2 className="pointer-events-none absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-[#e5bd47]" />
                 <input
                   type="text"
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   placeholder="Paste a product link, YouTube URL, or describe any gadget..."
-                  className="w-full min-h-[48px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-12 pr-4 py-3 text-base text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478]"
+                  className="w-full min-h-[46px] sm:min-h-[48px] rounded-xl border border-[#dfd3be]/25 bg-[#0c0a08] pl-10 sm:pl-12 pr-3 sm:pr-4 py-2.5 sm:py-3 text-sm sm:text-base text-[#faf4e8] placeholder-[#b5a48b] focus:border-[#f3d478]"
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={submitting}
-                className="btn-primary-gold min-h-[48px] px-7 text-sm sm:text-base tracking-wide shrink-0 disabled:opacity-50"
+                className="btn-primary-gold min-h-[46px] sm:min-h-[48px] w-full sm:w-auto px-6 sm:px-7 text-sm sm:text-base tracking-wide shrink-0 disabled:opacity-50"
               >
                 {submitting ? (
                   <>
@@ -462,8 +462,8 @@ export default function LandingPage() {
               </button>
             </div>
 
-            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-[#dfd3be]/15 text-sm text-[#dfd3be]">
-              <div className="flex flex-wrap items-center gap-3">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center justify-between gap-2 sm:gap-3 pt-2 border-t border-[#dfd3be]/15 text-sm text-[#dfd3be]">
+              <div className="flex items-center justify-between sm:justify-start gap-2 min-w-0">
                 <label
                   onDragOver={(e) => {
                     e.preventDefault();
@@ -471,18 +471,20 @@ export default function LandingPage() {
                   }}
                   onDragLeave={() => setIsDraggingPhoto(false)}
                   onDrop={handlePhotoDrop}
-                  className={`inline-flex min-h-[38px] cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                  className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-colors ${
                     isDraggingPhoto
                       ? 'border-[#f3d478] bg-[#e5bd47]/25 text-[#faf4e8]'
                       : 'border-[#dfd3be]/25 bg-[#17130e] text-[#faf4e8] hover:border-[#f3d478]'
                   }`}
                 >
-                  <Upload className="h-3.5 w-3.5 text-[#f3d478]" />
-                  {isDraggingPhoto
-                    ? 'Drop photo to upload'
-                    : imageFile
-                    ? `Photo: ${imageFile.name}`
-                    : 'Upload or Drop Photo'}
+                  <Upload className="h-3.5 w-3.5 shrink-0 text-[#f3d478]" />
+                  <span className="truncate">
+                    {isDraggingPhoto
+                      ? 'Drop photo to upload'
+                      : imageFile
+                      ? `Photo: ${imageFile.name}`
+                      : 'Upload or Drop Photo'}
+                  </span>
                   <input
                     type="file"
                     accept="image/*"
@@ -494,18 +496,18 @@ export default function LandingPage() {
                   <button
                     type="button"
                     onClick={() => setImageFile(null)}
-                    className="text-xs font-medium text-[#e06348] hover:underline"
+                    className="min-h-[44px] px-2 text-xs font-medium text-[#e06348] hover:underline shrink-0"
                   >
                     Remove photo
                   </button>
                 )}
               </div>
 
-              <div className="flex items-center gap-2">
-                <Printer className="h-4 w-4 text-[#e5bd47]" />
+              <div className="flex items-center gap-2 min-w-0 w-full sm:w-auto">
+                <Printer className="h-4 w-4 shrink-0 text-[#e5bd47]" />
                 <label
                   htmlFor="hero-printer-select"
-                  className="text-xs font-medium text-[#b5a48b]"
+                  className="text-xs font-medium text-[#b5a48b] shrink-0"
                 >
                   Printer:
                 </label>
@@ -513,7 +515,7 @@ export default function LandingPage() {
                   id="hero-printer-select"
                   value={printerId}
                   onChange={(e) => setPrinterId(e.target.value)}
-                  className="min-h-[38px] rounded-lg border border-[#dfd3be]/25 bg-[#0c0a08] px-3 py-1.5 text-xs font-medium text-[#faf4e8] focus:border-[#f3d478]"
+                  className="min-h-[44px] min-w-0 flex-1 sm:flex-initial max-w-full truncate rounded-lg border border-[#dfd3be]/25 bg-[#0c0a08] px-2.5 sm:px-3 py-1.5 text-xs font-medium text-[#faf4e8] focus:border-[#f3d478]"
                 >
                   {POPULAR_PRINTERS.map((p) => (
                     <option key={p.id} value={p.id}>
@@ -537,17 +539,17 @@ export default function LandingPage() {
       <section
         id="sample-builds"
         aria-label="Instant Demo Builds"
-        className="space-y-5 pt-2"
+        className="space-y-4 sm:space-y-5 pt-1 sm:pt-2"
       >
         <div id="showcase-gallery" className="-mt-4" />
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-[#dfd3be]/15 pb-4">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-1.5 sm:gap-2 border-b border-[#dfd3be]/15 pb-3 sm:pb-4">
           <div>
             <p className="eyebrow">Instant Demos</p>
-            <h2 className="mt-1 font-display text-3xl sm:text-4xl font-bold text-[#faf4e8]">
+            <h2 className="mt-0.5 sm:mt-1 font-display text-2xl sm:text-4xl font-bold text-[#faf4e8]">
               Explore Ready-to-Print DIY Builds
             </h2>
           </div>
-          <p className="text-sm text-[#dfd3be]">
+          <p className="text-xs sm:text-sm text-[#dfd3be]">
             Click any build to inspect its BOM, printable STLs/3MFs, and 3D
             assembly guide.
           </p>
