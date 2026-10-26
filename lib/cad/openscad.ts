@@ -312,11 +312,7 @@ async function loadCreateOpenSCAD(): Promise<
     };
   }>
 > {
-  const runtimeImport = new Function(
-    "specifier",
-    "return import(specifier)"
-  ) as (specifier: string) => Promise<{ createOpenSCAD: any }>;
-  const mod = await runtimeImport("openscad-wasm-prebuilt");
+  const mod = await import("openscad-wasm-prebuilt");
   return mod.createOpenSCAD as any;
 }
 
