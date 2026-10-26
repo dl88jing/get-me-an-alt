@@ -170,7 +170,9 @@ export default function CritiquePanel({ critique }: CritiquePanelProps) {
             key={p.label}
             className="flex items-center justify-between rounded-xl border border-[#d4af37]/25 bg-[#0c0906]/80 px-3 py-2 text-xs"
           >
-            <span className="text-[#e6d3b3] font-medium">{p.label}</span>
+            <span className="font-codex text-xs font-semibold text-[#e6d3b3]">
+              {p.label}
+            </span>
             {p.pass ? (
               <span className="inline-flex items-center gap-1 font-codex text-[11px] font-bold text-[#f3d478]">
                 <CheckCircle2 className="h-3.5 w-3.5 text-[#b89b4a]" /> PASS

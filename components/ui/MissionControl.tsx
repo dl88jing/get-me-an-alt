@@ -1304,11 +1304,11 @@ export function MissionControl({
           </div>
           <p className="font-display italic text-sm text-[#bda782]">
             Streaming live agent telemetry{' '}
-            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-sans not-italic text-[11px] text-[#f3d478]">
+            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-mono not-italic text-[11px] text-[#f3d478]">
               {'{agent, phase, message, data, ts}'}
             </span>{' '}
             from{' '}
-            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-sans not-italic text-[11px] text-[#e6d3b3]">
+            <span className="rounded border border-[#d4af37]/25 bg-[#14100b] px-1.5 py-0.5 font-mono not-italic text-[11px] text-[#e6d3b3]">
               /api/objects/{projectId}/stream
             </span>
           </p>

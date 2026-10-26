@@ -24,7 +24,7 @@ function RetailerBadge({ retailer }: { retailer: string }) {
 export function BomSummary({ bom }: { bom: BomData }) {
   const { summary } = bom;
   return (
-    <div className="card animate-slide-in p-5">
+    <div className="codex-folio rounded-2xl animate-slide-in p-5">
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <p className="eyebrow">DIY alternative</p>
@@ -43,20 +43,28 @@ export function BomSummary({ bom }: { bom: BomData }) {
       </div>
       <dl className="mt-4 grid grid-cols-2 gap-3 border-t border-[#d4af37]/20 pt-4 text-sm sm:grid-cols-3">
         <div>
-          <dt className="text-[#bda782]">Off-the-shelf parts</dt>
-          <dd className="mt-0.5 font-semibold text-[#f5ebd6]">
+          <dt className="font-codex text-xs uppercase tracking-wider text-[#bda782]">
+            Off-the-shelf parts
+          </dt>
+          <dd className="mt-0.5 font-display text-lg font-bold text-[#f5ebd6]">
             {formatMoney(summary.purchasedPartsTotal, bom.currency)}
           </dd>
         </div>
         <div>
-          <dt className="text-[#bda782]">Filament</dt>
-          <dd className="mt-0.5 font-semibold text-[#f3d478]">
+          <dt className="font-codex text-xs uppercase tracking-wider text-[#bda782]">
+            Filament
+          </dt>
+          <dd className="mt-0.5 font-display text-lg font-bold text-[#f3d478]">
             {formatMoney(summary.filamentCostTotal, bom.currency)}
           </dd>
         </div>
         <div>
-          <dt className="text-[#bda782]">Items</dt>
-          <dd className="mt-0.5 font-semibold text-[#f5ebd6]">{bom.items.length}</dd>
+          <dt className="font-codex text-xs uppercase tracking-wider text-[#bda782]">
+            Items
+          </dt>
+          <dd className="mt-0.5 font-display text-lg font-bold text-[#f5ebd6]">
+            {bom.items.length}
+          </dd>
         </div>
       </dl>
     </div>
@@ -76,7 +84,7 @@ export function BomItemCard({
   return (
     <article
       id={`bom-item-${item.id}`}
-      className="card card-hover animate-slide-in p-4 flex flex-col justify-between"
+      className="codex-folio rounded-2xl card-hover animate-slide-in p-4 flex flex-col justify-between"
     >
       <div>
         <div className="flex items-start justify-between gap-3">
