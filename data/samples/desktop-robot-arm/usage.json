@@ -1,0 +1,432 @@
+{
+  "objectName": "ArgoBot 6-Axis Articulated Desktop Robot Arm",
+  "summary": "Five-step 6-DOF robotic manipulation sequence: energize the 6V PCA9685 servo bus, slew the J1 azimuth turntable, articulate the J2/J3 shoulder and elbow links, close the geared parallel gripper jaws, and execute a pick-and-place trajectory.",
+  "totalDurationSeconds": 21.4,
+  "scenes": [
+    {
+      "id": "scene-1",
+      "index": 1,
+      "title": "Energize 6V Servo Bus & Home Joints",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          490,
+          355,
+          580
+        ],
+        "toPosition": [
+          340,
+          210,
+          420
+        ],
+        "fromTarget": [
+          10,
+          145,
+          0
+        ],
+        "toTarget": [
+          -45,
+          -18,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Power on the 6V bus; ESP32-S3 homes all six joints.",
+        "subtext": "16-channel PCA9685 12-bit PWM controller",
+        "anchor": "part",
+        "partId": "esp32-controller",
+        "offset": [
+          0,
+          36,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "esp32-controller",
+          "type": "pulse",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.7,
+          "oscillate": true
+        },
+        {
+          "partId": "pca9685-driver",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.55
+        },
+        {
+          "partId": "base-pedestal",
+          "type": "glow",
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.35
+        }
+      ],
+      "effects": [
+        {
+          "type": "led_indicator",
+          "partId": "esp32-controller",
+          "color": "#f3d478",
+          "label": "IK Solver Ready"
+        }
+      ]
+    },
+    {
+      "id": "scene-2",
+      "index": 2,
+      "title": "Slew J1 Azimuth Turntable Deck",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          340,
+          210,
+          420
+        ],
+        "toPosition": [
+          380,
+          245,
+          440
+        ],
+        "fromTarget": [
+          -45,
+          -18,
+          0
+        ],
+        "toTarget": [
+          0,
+          35,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Azimuth ring gear slews smoothly on the 6808 ball bearing.",
+        "subtext": "360° continuous J1 waist rotation",
+        "anchor": "part",
+        "partId": "turntable-plate",
+        "offset": [
+          0,
+          38,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "turntable-plate",
+          "type": "rotate",
+          "fromRotationDelta": [
+            0,
+            -35,
+            0
+          ],
+          "toRotationDelta": [
+            0,
+            35,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6
+        },
+        {
+          "partId": "shoulder-yoke",
+          "type": "rotate",
+          "fromRotationDelta": [
+            0,
+            -35,
+            0
+          ],
+          "toRotationDelta": [
+            0,
+            35,
+            0
+          ],
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.45
+        }
+      ],
+      "effects": [
+        {
+          "type": "motion_arc",
+          "partId": "turntable-plate",
+          "color": "#f3d478",
+          "label": "J1 Azimuth Slew"
+        }
+      ]
+    },
+    {
+      "id": "scene-3",
+      "index": 3,
+      "title": "Articulate Shoulder & Elbow Truss Links",
+      "durationSeconds": 4.4,
+      "camera": {
+        "fromPosition": [
+          380,
+          245,
+          440
+        ],
+        "toPosition": [
+          395,
+          310,
+          465
+        ],
+        "fromTarget": [
+          0,
+          35,
+          0
+        ],
+        "toTarget": [
+          0,
+          165,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Shoulder and elbow servos pitch the forearm toward the target.",
+        "subtext": "Dual MG996R metal-gear torque joints",
+        "anchor": "part",
+        "partId": "elbow-housing",
+        "offset": [
+          0,
+          38,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "lower-arm-link",
+          "type": "tilt",
+          "fromRotationDelta": [
+            -12,
+            0,
+            0
+          ],
+          "toRotationDelta": [
+            16,
+            0,
+            0
+          ],
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.45
+        },
+        {
+          "partId": "elbow-housing",
+          "type": "tilt",
+          "fromRotationDelta": [
+            -10,
+            0,
+            0
+          ],
+          "toRotationDelta": [
+            22,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6
+        },
+        {
+          "partId": "forearm-tube",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            0,
+            -15
+          ],
+          "toOffset": [
+            0,
+            -12,
+            22
+          ],
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.45
+        }
+      ],
+      "effects": [
+        {
+          "type": "motion_arc",
+          "partId": "elbow-housing",
+          "color": "#f3d478",
+          "label": "J2/J3 Reach Extension"
+        }
+      ]
+    },
+    {
+      "id": "scene-4",
+      "index": 4,
+      "title": "Engage Geared Parallel Gripper Jaws",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          395,
+          310,
+          465
+        ],
+        "toPosition": [
+          295,
+          415,
+          355
+        ],
+        "fromTarget": [
+          0,
+          165,
+          0
+        ],
+        "toTarget": [
+          0,
+          330,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Spur-gear parallel jaws close symmetrically around the workpiece.",
+        "subtext": "Compliant TPU grip pads hold 250g payload",
+        "anchor": "part",
+        "partId": "gripper-jaw",
+        "offset": [
+          0,
+          36,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "gripper-jaw",
+          "type": "press",
+          "fromOffset": [
+            0,
+            12,
+            0
+          ],
+          "toOffset": [
+            0,
+            -6,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.7
+        },
+        {
+          "partId": "gripper-body",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.55
+        }
+      ],
+      "effects": [
+        {
+          "type": "target_prop",
+          "partId": "gripper-jaw",
+          "color": "#f3d478",
+          "label": "250g Test Cube"
+        }
+      ]
+    },
+    {
+      "id": "scene-5",
+      "index": 5,
+      "title": "Execute Pick-and-Place Trajectory",
+      "durationSeconds": 4.6,
+      "camera": {
+        "fromPosition": [
+          295,
+          415,
+          355
+        ],
+        "toPosition": [
+          510,
+          375,
+          610
+        ],
+        "fromTarget": [
+          0,
+          330,
+          0
+        ],
+        "toTarget": [
+          0,
+          185,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Six-axis inverse kinematics lifts and places payload on target.",
+        "subtext": "Smooth cosine velocity profiling via Web UI",
+        "anchor": "part",
+        "partId": "wrist-pitch-clevis",
+        "offset": [
+          0,
+          38,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "wrist-pitch-clevis",
+          "type": "rotate",
+          "fromRotationDelta": [
+            0,
+            -25,
+            0
+          ],
+          "toRotationDelta": [
+            0,
+            25,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6
+        },
+        {
+          "partId": "gripper-body",
+          "type": "translate",
+          "fromOffset": [
+            -18,
+            -10,
+            0
+          ],
+          "toOffset": [
+            18,
+            16,
+            0
+          ],
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.55
+        },
+        {
+          "partId": "gripper-jaw",
+          "type": "translate",
+          "fromOffset": [
+            -18,
+            -10,
+            0
+          ],
+          "toOffset": [
+            18,
+            16,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.65
+        }
+      ],
+      "effects": [
+        {
+          "type": "target_prop",
+          "partId": "gripper-jaw",
+          "color": "#f3d478",
+          "label": "Placed Payload"
+        },
+        {
+          "type": "motion_arc",
+          "partId": "gripper-body",
+          "color": "#e5bd47",
+          "label": "6-DOF IK Path"
+        }
+      ]
+    }
+  ]
+}

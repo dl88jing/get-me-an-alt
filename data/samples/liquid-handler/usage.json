@@ -1,0 +1,416 @@
+{
+  "objectName": "Benchtop Lab Pipette Liquid Automaton",
+  "summary": "Five-step automated pipetting cycle: snap 96-well plates into the SBS deck, home X-Y-Z axes against optical endstops, aspirate 50µL reagent via the T8 leadscrew escapement, shuttle across the MGN9H rail to dispense, and strip the used tip.",
+  "totalDurationSeconds": 21.2,
+  "scenes": [
+    {
+      "id": "scene-1",
+      "index": 1,
+      "title": "Load 96-Well Microplates & Tip Rack",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          295,
+          240,
+          350
+        ],
+        "toPosition": [
+          215,
+          148,
+          265
+        ],
+        "fromTarget": [
+          -4,
+          65,
+          -10
+        ],
+        "toTarget": [
+          0,
+          -14,
+          0
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Snap two 96-well microplates and tip rack into deck bays.",
+        "subtext": "Registered SBS footprint with ±0.15mm repeatability",
+        "anchor": "part",
+        "partId": "pipette-96well-plate",
+        "offset": [
+          0,
+          34,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "pipette-96well-plate",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            26,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.55
+        },
+        {
+          "partId": "deck-base-96well",
+          "type": "glow",
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.4
+        }
+      ],
+      "effects": [
+        {
+          "type": "hand_proxy",
+          "partId": "pipette-96well-plate",
+          "color": "#f3d478",
+          "label": "Seat SBS Plates"
+        }
+      ]
+    },
+    {
+      "id": "scene-2",
+      "index": 2,
+      "title": "Optical Homing Across X-Y-Z Gantry",
+      "durationSeconds": 4.2,
+      "camera": {
+        "fromPosition": [
+          215,
+          148,
+          265
+        ],
+        "toPosition": [
+          -235,
+          210,
+          255
+        ],
+        "fromTarget": [
+          0,
+          -14,
+          0
+        ],
+        "toTarget": [
+          -65,
+          118,
+          -8
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Home the carriage against optical switches for zero reference.",
+        "subtext": "GRBL-ESP32 TMC2209 silent microstepping",
+        "anchor": "part",
+        "partId": "optical-endstops",
+        "offset": [
+          0,
+          30,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "x-carriage-shuttle",
+          "type": "slide",
+          "fromOffset": [
+            -48,
+            0,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.5
+        },
+        {
+          "partId": "optical-endstops",
+          "type": "pulse",
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.75,
+          "oscillate": true
+        },
+        {
+          "partId": "grbl-esp32-board",
+          "type": "glow",
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.5
+        }
+      ],
+      "effects": [
+        {
+          "type": "led_indicator",
+          "partId": "optical-endstops",
+          "color": "#f3d478",
+          "label": "XYZ Zeroed"
+        }
+      ]
+    },
+    {
+      "id": "scene-3",
+      "index": 3,
+      "title": "Seat Tip & Aspirate Reagent Volume",
+      "durationSeconds": 4.4,
+      "camera": {
+        "fromPosition": [
+          -235,
+          210,
+          255
+        ],
+        "toPosition": [
+          195,
+          225,
+          250
+        ],
+        "fromTarget": [
+          -65,
+          118,
+          -8
+        ],
+        "toTarget": [
+          0,
+          125,
+          20
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Leadscrew escapement lifts plunger to aspirate 50µL reagent.",
+        "subtext": "T8×2mm anti-backlash nut meters microliter volume",
+        "anchor": "part",
+        "partId": "plunger-escapement-arm",
+        "offset": [
+          0,
+          32,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "t8-leadscrew-nut",
+          "type": "spin",
+          "spinAxis": "y",
+          "spinSpeed": 2.5,
+          "glowColor": "#d4af37",
+          "glowIntensity": 0.5
+        },
+        {
+          "partId": "plunger-escapement-arm",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            -14,
+            0
+          ],
+          "toOffset": [
+            0,
+            14,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.65
+        },
+        {
+          "partId": "z-pipette-cradle",
+          "type": "translate",
+          "fromOffset": [
+            0,
+            -18,
+            0
+          ],
+          "toOffset": [
+            0,
+            0,
+            0
+          ],
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.45
+        }
+      ],
+      "effects": [
+        {
+          "type": "water_flow",
+          "partId": "pipette-96well-plate",
+          "targetPartId": "z-pipette-cradle",
+          "color": "#f3d478",
+          "label": "Aspirate 50µL"
+        }
+      ]
+    },
+    {
+      "id": "scene-4",
+      "index": 4,
+      "title": "Traverse MGN9H Rail & Dispense Array",
+      "durationSeconds": 4.6,
+      "camera": {
+        "fromPosition": [
+          195,
+          225,
+          250
+        ],
+        "toPosition": [
+          230,
+          185,
+          285
+        ],
+        "fromTarget": [
+          0,
+          125,
+          20
+        ],
+        "toTarget": [
+          18,
+          55,
+          12
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Shuttle glides across linear rail and dispenses into target wells.",
+        "subtext": "Automated serial dilution across 96-well columns",
+        "anchor": "part",
+        "partId": "x-carriage-shuttle",
+        "offset": [
+          0,
+          34,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "x-carriage-shuttle",
+          "type": "translate",
+          "fromOffset": [
+            -42,
+            0,
+            0
+          ],
+          "toOffset": [
+            42,
+            0,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6,
+          "oscillate": true
+        },
+        {
+          "partId": "z-pipette-cradle",
+          "type": "translate",
+          "fromOffset": [
+            -42,
+            0,
+            0
+          ],
+          "toOffset": [
+            42,
+            0,
+            0
+          ],
+          "glowColor": "#e5bd47",
+          "glowIntensity": 0.5,
+          "oscillate": true
+        },
+        {
+          "partId": "plunger-escapement-arm",
+          "type": "press",
+          "fromOffset": [
+            0,
+            12,
+            0
+          ],
+          "toOffset": [
+            0,
+            -10,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.6
+        }
+      ],
+      "effects": [
+        {
+          "type": "water_flow",
+          "partId": "z-pipette-cradle",
+          "targetPartId": "pipette-96well-plate",
+          "color": "#e5bd47",
+          "label": "Dispense Well Array"
+        }
+      ]
+    },
+    {
+      "id": "scene-5",
+      "index": 5,
+      "title": "Eject Disposable Tip via Stripping Fork",
+      "durationSeconds": 4,
+      "camera": {
+        "fromPosition": [
+          230,
+          185,
+          285
+        ],
+        "toPosition": [
+          295,
+          235,
+          345
+        ],
+        "fromTarget": [
+          18,
+          55,
+          12
+        ],
+        "toTarget": [
+          0,
+          42,
+          16
+        ],
+        "fov": 40
+      },
+      "narration": {
+        "text": "Stripping fork ejects the used tip before the next sample.",
+        "subtext": "Zero cross-contamination between assay rows",
+        "anchor": "part",
+        "partId": "tip-ejector-fork",
+        "offset": [
+          0,
+          30,
+          0
+        ]
+      },
+      "partAnimations": [
+        {
+          "partId": "tip-ejector-fork",
+          "type": "press",
+          "fromOffset": [
+            0,
+            10,
+            0
+          ],
+          "toOffset": [
+            0,
+            -14,
+            0
+          ],
+          "glowColor": "#f3d478",
+          "glowIntensity": 0.65
+        }
+      ],
+      "effects": [
+        {
+          "type": "motion_arc",
+          "partId": "tip-ejector-fork",
+          "color": "#f3d478",
+          "label": "Strip Used Tip"
+        }
+      ]
+    }
+  ]
+}
