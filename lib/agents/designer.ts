@@ -168,44 +168,75 @@ Return ONLY valid JSON matching:
           'OTS-04 Stainless Steel Compression Spring & Detent Pin Set',
         ];
 
+  const isHorizontalVehicleOrBoat =
+    /\b(tugboat|boat|ship|vessel|hull|yacht|kayak|canoe|submarine|rov|barge|ferry|vehicle|car|truck|rover|train|locomotive|aircraft|plane|glider|slider)\b/i.test(
+      `${analysis.objectName} ${analysis.category} ${analysis.slug}`
+    );
+
+  const inferPartShape = (label: string): DesignPart['shape'] => {
+    const l = label.toLowerCase();
+    if (/\b(funnel|cone|spout|hopper|emitter\s+spike)\b/.test(l)) return 'cone';
+    if (/\b(nozzle|kort|duct|tube|pipe|sleeve|collar|bushing|ring)\b/.test(l)) return 'tube';
+    if (/\b(cylinder|drum|shaft|pillar|post|mast|winch|thruster|motor\s+pod)\b/.test(l)) return 'cylinder';
+    if (/\b(bracket|arm|strut|hinge|clamp|jaw|cradle|stand|mount|rudder|skeg)\b/.test(l)) return 'bracket';
+    if (/\b(hull|bow|stern|midship|wheelhouse|superstructure|cabin|deck|bulkhead|pontoon|housing|chassis|enclosure|case|reservoir|cover)\b/.test(l)) {
+      return 'enclosure';
+    }
+    return 'box';
+  };
+
   const fallbackParts: DesignPart[] =
     isRevision && input.previousDesign
       ? input.previousDesign.parts
       : isPlantWaterer
       ? SAMPLE_DESIGN.parts
       : [
-          ...defaultPrintedLabels.slice(0, 6).map((label, i) => ({
-            id: `prt-part-${i + 1}`,
-            partNumber: `PRT-0${i + 1}`,
-            name: cleanLabel(label, `Printed Part ${i + 1}`),
-            kind: 'printed' as const,
-            dims_mm: [
-              Math.max(40, 110 - i * 10),
-              Math.max(20, 45 - i * 4),
-              Math.max(40, 95 - i * 8),
-            ] as [number, number, number],
-            shape: (
-              ['enclosure', 'bracket', 'cylinder', 'box', 'tube', 'cone'] as const
-            )[i % 6],
-            params: {
-              wallThickness: 2.4,
-              clearanceMm: 0.3,
-              maxOverhangDeg: 42,
-              dfmVerified: true,
-            },
-            position: [0, 18 + i * 22, 0] as [number, number, number],
-            rotation: [0, 0, 0] as [number, number, number],
-            explode: [
-              Math.round(Math.cos(i) * 65),
-              (i - 2) * 30,
-              Math.round(Math.sin(i) * 65),
-            ] as [number, number, number],
-            color: PALETTE[i % PALETTE.length],
-            material: 'PETG / PLA+',
-            quantity: 1,
-            description: `3D-printed structural component for ${analysis.objectName}.`,
-            roleInAssembly: cleanLabel(label, `Printed Part ${i + 1}`),
-          })),
+          ...defaultPrintedLabels.slice(0, 6).map((label, i) => {
+            const cleanName = cleanLabel(label, `Printed Part ${i + 1}`);
+            const pos: [number, number, number] = isHorizontalVehicleOrBoat
+              ? i === 0
+                ? [140, 0, 0]
+                : i === 1
+                ? [0, 0, 0]
+                : i === 2
+                ? [-140, 0, 0]
+                : i === 3
+                ? [0, 52, 0]
+                : i === 4
+                ? [30, 105, 0]
+                : [-130, -22, i % 2 === 0 ? 28 : -28]
+              : [0, 18 + i * 22, 0];
+            return {
+              id: `prt-part-${i + 1}`,
+              partNumber: `PRT-0${i + 1}`,
+              name: cleanName,
+              kind: 'printed' as const,
+              dims_mm: [
+                Math.max(40, 110 - i * 10),
+                Math.max(20, 45 - i * 4),
+                Math.max(40, 95 - i * 8),
+              ] as [number, number, number],
+              shape: inferPartShape(cleanName),
+              params: {
+                wallThickness: 2.4,
+                clearanceMm: 0.3,
+                maxOverhangDeg: 42,
+                dfmVerified: true,
+              },
+              position: pos,
+              rotation: [0, 0, 0] as [number, number, number],
+              explode: [
+                Math.round(Math.cos(i) * 65),
+                (i - 2) * 30,
+                Math.round(Math.sin(i) * 65),
+              ] as [number, number, number],
+              color: PALETTE[i % PALETTE.length],
+              material: 'PETG / PLA+',
+              quantity: 1,
+              description: `3D-printed structural component for ${analysis.objectName}.`,
+              roleInAssembly: cleanName,
+            };
+          }),
           ...defaultBoughtLabels.slice(0, 4).map((label, i) => ({
             id: `ots-part-${i + 1}`,
             partNumber: `OTS-0${i + 1}`,
@@ -341,23 +372,28 @@ Return ONLY valid JSON matching:
             Math.round(Math.sin(angle) * 70),
           ];
 
-    const shapeVal = String(p.shape || 'box');
+    const partName = (typeof p.name === 'string' && p.name) || `Component ${idx + 1}`;
+    const shapeVal = String(p.shape || '').toLowerCase();
     const shape: DesignPart['shape'] =
-      shapeVal === 'cylinder' ||
-      shapeVal === 'tube' ||
-      shapeVal === 'cone' ||
-      shapeVal === 'sphere' ||
-      shapeVal === 'bracket' ||
-      shapeVal === 'enclosure'
+      shapeVal === 'cone'
+        ? /\b(cone|funnel|spout|hopper|spike)\b/i.test(partName)
+          ? 'cone'
+          : inferPartShape(partName)
+        : shapeVal === 'cylinder' ||
+          shapeVal === 'tube' ||
+          shapeVal === 'sphere' ||
+          shapeVal === 'bracket' ||
+          shapeVal === 'enclosure' ||
+          shapeVal === 'box'
         ? shapeVal
-        : 'box';
+        : inferPartShape(partName);
 
     return {
       id:
         (typeof p.id === 'string' && p.id) ||
         `part-${idx + 1}`,
       partNumber,
-      name: (typeof p.name === 'string' && p.name) || `Component ${idx + 1}`,
+      name: partName,
       kind,
       dims_mm,
       shape,

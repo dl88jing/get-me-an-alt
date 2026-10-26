@@ -135,20 +135,14 @@ function sanitizeVec3(
   return [...fallback];
 }
 
-/**
- * Ensures all parts (printed + purchased) have coherent, non-overlapping 3D assembly
- * transforms (position, rotation, explode in mm in the shared Three.js Y-up coordinate frame)
- * grounded in the object's overall dimensions and each part's role in the assembly.
- */
-export function ensureGroundedAssemblyTransforms(
+function isPlausibleDesignerLayout(
   parts: DesignPart[],
   analysis?: ObjectAnalysis
-): void {
-  if (!Array.isArray(parts) || parts.length === 0) return;
-
-  // Detect if parts are still stuck in the degenerate Designer fallback stack
-  // (`[0, 18 + i * 22, 0]` or `[0, 20 + i * 18, 0]` where all printed parts have X=0 and Z=0)
+): boolean {
   const printed = parts.filter((p) => p.kind === "printed");
+  if (printed.length === 0) return true;
+
+  // Reject if all printed parts sit on X=0, Z=0 (degenerate vertical Y-stack fallback)
   const allPrintedZeroXZ =
     printed.length >= 3 &&
     printed.every(
@@ -156,101 +150,226 @@ export function ensureGroundedAssemblyTransforms(
         Math.abs(p.position?.[0] ?? 0) < 1 &&
         Math.abs(p.position?.[2] ?? 0) < 1
     );
-  const ungroundedCount = parts.filter((p) => !p.cadGrounded).length;
-  const needsAutoLayout =
-    allPrintedZeroXZ || ungroundedCount >= Math.ceil(parts.length / 2);
+  if (allPrintedZeroXZ) return false;
+
+  const [bx, by, bz] = analysis?.overallDimensionsMm || [250, 250, 250];
+  const maxBound = Math.max(bx, by, bz, 220) * 3;
+
+  for (const p of parts) {
+    if (!Array.isArray(p.position) || p.position.length < 3) return false;
+    const [x, y, z] = p.position;
+    if (
+      !Number.isFinite(x) ||
+      !Number.isFinite(y) ||
+      !Number.isFinite(z) ||
+      Math.abs(x) > maxBound ||
+      Math.abs(y) > maxBound ||
+      Math.abs(z) > maxBound
+    ) {
+      return false;
+    }
+  }
+
+  // Check pairwise non-overlapping among printed parts
+  let pairs = 0;
+  let overlappingPairs = 0;
+  for (let i = 1; i < printed.length; i++) {
+    for (let j = 0; j < i; j++) {
+      pairs++;
+      const pi = printed[i].position;
+      const pj = printed[j].position;
+      const dist = Math.hypot(pi[0] - pj[0], pi[1] - pj[1], pi[2] - pj[2]);
+      if (dist < 14) {
+        overlappingPairs++;
+      }
+    }
+  }
+  if (pairs > 0 && overlappingPairs / pairs > 0.25) {
+    return false;
+  }
+
+  return true;
+}
+
+/**
+ * Ensures all parts (printed + purchased) have coherent, non-overlapping 3D assembly
+ * transforms (position, rotation, explode in mm in the shared Three.js Y-up coordinate frame)
+ * grounded in the object's overall dimensions and each part's role in the assembly.
+ * Preserves Designer assembly positions whenever they are plausible (non-overlapping, within 3x bbox).
+ */
+export function ensureGroundedAssemblyTransforms(
+  parts: DesignPart[],
+  analysis?: ObjectAnalysis
+): void {
+  if (!Array.isArray(parts) || parts.length === 0) return;
+
+  const designerPlausible = isPlausibleDesignerLayout(parts, analysis);
+  const objectText = `${analysis?.objectName || ""} ${analysis?.category || ""} ${analysis?.description || ""}`.toLowerCase();
+  const isHorizontalVehicleOrVessel =
+    /\b(tugboat|boat|ship|vessel|hull|yacht|kayak|canoe|submarine|rov|barge|ferry|vehicle|car|truck|rover|train|locomotive|aircraft|plane|glider|slider)\b/i.test(
+      objectText
+    ) ||
+    parts.some((p) =>
+      /\b(hull|bow|stern|midship|wheelhouse|superstructure|kort|rudder|fuselage)\b/i.test(
+        p.name || ""
+      )
+    );
 
   let cursorY = 0;
+  let hullCursorX = 0;
 
   parts.forEach((p, idx) => {
+    const partNameLower = (p.name || "").toLowerCase();
     const nameText = `${p.name || ""} ${p.roleInAssembly || ""} ${p.description || ""}`.toLowerCase();
     const [dx, dy, dz] = p.dims_mm || [60, 40, 35];
-    const partHeightY = Math.min(dx, dy, dz) < Math.max(dx, dy, dz) * 0.45
-      ? Math.min(dy, dz)
-      : Math.min(140, Math.max(18, dz || dy || 32));
+    const partHeightY =
+      Math.min(dx, dy, dz) < Math.max(dx, dy, dz) * 0.45
+        ? Math.min(dy, dz)
+        : Math.min(140, Math.max(18, dz || dy || 32));
 
-    if (!p.cadGrounded || (needsAutoLayout && allPrintedZeroXZ)) {
+    // Only synthesize fallback positions when Designer layout is NOT plausible and part isn't CAD-grounded
+    if (!designerPlausible && !p.cadGrounded) {
+      const isHullOrMarinePart =
+        /\b(hull|bow|stern|midship|keel|deck|bulkhead|pontoon|fuselage|wheelhouse|superstructure|cabin|nozzle|kort|rudder|propeller|thruster|bilge|ballast)\b/i.test(
+          nameText
+        );
+
       if (p.kind === "printed") {
-        const isRingOrLoop =
-          /\b(ring|loop|airfoil|coanda|multiplier|frame|halo)\b/.test(nameText);
-        const isFrontHeadOrCradle =
-          /\b(head|faceplate|cradle|magsafe|slimlink|holder|tray|ledge|shelf|clamp|jaw)\b/.test(
-            nameText
-          );
-        const isArmOrBall =
-          /\b(arm|cantilever|ball\s+stud|ball\s+joint|spherical|swivel|pivot|hinge|strut|link)\b/.test(
-            nameText
-          );
-        const isSideBracketOrKnob =
-          /\b(knob|thumbwheel|collar|clip|gusset|side|latch)\b/.test(nameText);
-
-        const centerY = Math.round(cursorY + partHeightY * 0.5);
-        cursorY += Math.max(18, Math.round(partHeightY * 0.82));
-
-        if (isRingOrLoop) {
-          p.position = [0, centerY + 25, 0];
-          p.rotation = [90, 0, 0];
-          p.explode = [0, 95, 25];
-        } else if (isFrontHeadOrCradle) {
-          p.position = [0, centerY, 28];
-          p.rotation = [18, 0, 0];
-          p.explode = [0, 45, 90];
-        } else if (isArmOrBall) {
-          p.position = [0, centerY, 14];
-          p.rotation = [-15, 0, 0];
-          p.explode = [0, 35, 60];
-        } else if (isSideBracketOrKnob) {
-          const sideX = idx % 2 === 0 ? 28 : -28;
-          p.position = [sideX, Math.max(24, centerY - 12), 14];
-          p.rotation = [0, 0, 0];
-          p.explode = [Math.sign(sideX) * 75, 25, 55];
+        if (isHorizontalVehicleOrVessel || isHullOrMarinePart) {
+          const spanX = Math.max(80, Math.max(dx, dz));
+          if (/\b(bow|front|forward|prow|nose)\b/i.test(partNameLower)) {
+            p.position = [Math.round(spanX * 0.95), 0, 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [95, 0, 0];
+          } else if (/\b(stern|rear|aft|tail|transom)\b/i.test(partNameLower)) {
+            p.position = [-Math.round(spanX * 0.95), 0, 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [-95, 0, 0];
+          } else if (/\b(midship|center\s+hull|middle\s+hull|main\s+hull|chassis)\b/i.test(partNameLower)) {
+            p.position = [0, 0, 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [0, -65, 0];
+          } else if (/\b(deck|hatch|coaming)\b/i.test(partNameLower)) {
+            p.position = [0, Math.round(partHeightY * 0.75 + 28), 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [0, 75, 0];
+          } else if (/\b(wheelhouse|superstructure|cabin|bridge|pilothouse|tower|funnel|mast)\b/i.test(partNameLower)) {
+            p.position = [Math.round(spanX * 0.15), Math.round(partHeightY + 68), 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [0, 110, 0];
+          } else if (/\b(kort|nozzle|rudder|thruster|propeller|pod|skeg)\b/i.test(partNameLower)) {
+            const sideZ = idx % 2 === 0 ? 32 : -32;
+            p.position = [-Math.round(spanX * 0.85), -24, sideZ];
+            p.rotation = [0, 0, 0];
+            p.explode = [-85, -45, Math.sign(sideZ) * 55];
+          } else {
+            const offset = (idx - 1) * Math.round(spanX * 0.85);
+            p.position = [offset + hullCursorX, 0, 0];
+            hullCursorX += 20;
+            p.rotation = [0, 0, 0];
+            p.explode = [offset === 0 ? 0 : Math.sign(offset) * 80, 45, 0];
+          }
         } else {
-          p.position = [0, centerY, 0];
-          p.rotation = [0, 0, 0];
-          p.explode = [
-            0,
-            idx === 0 ? -75 : Math.round(35 + idx * 18),
-            idx % 2 === 0 ? -25 : 25,
-          ];
+          const isRingOrLoop =
+            /\b(ring|loop|airfoil|coanda|multiplier|frame|halo)\b/.test(
+              partNameLower
+            );
+          const isFrontHeadOrCradle =
+            !isHullOrMarinePart &&
+            /\b(faceplate|cradle|magsafe|slimlink|phone\s+holder|device\s+tray|clamp\s+jaw|tension\s+clamp)\b/.test(
+              partNameLower
+            );
+          const isArmOrBall =
+            !isHullOrMarinePart &&
+            /\b(arm|cantilever|ball\s+stud|ball\s+joint|spherical|swivel|pivot|hinge|strut|link)\b/.test(
+              partNameLower
+            );
+          const isSideBracketOrKnob =
+            !isHullOrMarinePart &&
+            /\b(knob|thumbwheel|collar|clip|gusset|latch)\b/.test(
+              partNameLower
+            );
+
+          const centerY = Math.round(cursorY + partHeightY * 0.5);
+          cursorY += Math.max(18, Math.round(partHeightY * 0.82));
+
+          if (isRingOrLoop) {
+            p.position = [0, centerY + 25, 0];
+            p.rotation = [90, 0, 0];
+            p.explode = [0, 95, 25];
+          } else if (isFrontHeadOrCradle) {
+            p.position = [0, centerY, 28];
+            p.rotation = [18, 0, 0];
+            p.explode = [0, 45, 90];
+          } else if (isArmOrBall) {
+            p.position = [0, centerY, 14];
+            p.rotation = [-15, 0, 0];
+            p.explode = [0, 35, 60];
+          } else if (isSideBracketOrKnob) {
+            const sideX = idx % 2 === 0 ? 28 : -28;
+            p.position = [sideX, Math.max(24, centerY - 12), 14];
+            p.rotation = [0, 0, 0];
+            p.explode = [Math.sign(sideX) * 75, 25, 55];
+          } else {
+            p.position = [0, centerY, 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [
+              0,
+              idx === 0 ? -75 : Math.round(35 + idx * 18),
+              idx % 2 === 0 ? -25 : 25,
+            ];
+          }
         }
       } else {
         // Purchased off-the-shelf part placement in shared frame
-        const isFilterOrCore =
-          /\b(hepa|filter|cartridge|fan|blower|motor|pump|battery)\b/.test(
+        if (isHorizontalVehicleOrVessel) {
+          const isMotorOrProp = /\b(motor|propeller|shaft|thruster)\b/.test(
             nameText
           );
-        const isMagnetOrPad =
-          /\b(magnet|magsafe|pad|vhb|adhesive|tape|gasket|epdm|foot|bumper)\b/.test(
-            nameText
-          );
-        if (isFilterOrCore) {
-          p.position = [0, Math.max(36, Math.round(cursorY * 0.45)), 0];
+          const isServoOrRudder = /\b(servo|rudder|steering)\b/.test(nameText);
+          p.position = isMotorOrProp
+            ? [-45, -12, idx % 2 === 0 ? 22 : -22]
+            : isServoOrRudder
+              ? [-120, 8, 0]
+              : [25, 6, idx % 2 === 0 ? 18 : -18];
           p.rotation = [0, 0, 0];
-          p.explode = [-95, 20, 0];
-        } else if (isMagnetOrPad) {
-          const isBottomAdhesive = /\b(vhb|adhesive|bottom|foot|base)\b/.test(
-            nameText
-          );
-          p.position = isBottomAdhesive
-            ? [0, -6, 0]
-            : [0, Math.max(40, cursorY - 10), 34];
-          p.rotation = isBottomAdhesive ? [0, 0, 0] : [18, 0, 0];
-          p.explode = isBottomAdhesive ? [0, -90, 0] : [0, 55, 95];
+          p.explode = [0, 65, idx % 2 === 0 ? 60 : -60];
         } else {
-          const side = idx % 2 === 0 ? 1 : -1;
-          p.position = [side * 34, Math.max(24, 22 + idx * 16), -12];
-          p.rotation = [0, 0, 0];
-          p.explode = [side * 85, 25 + idx * 10, -55];
+          const isFilterOrCore =
+            /\b(hepa|filter|cartridge|fan|blower|motor|pump|battery)\b/.test(
+              nameText
+            );
+          const isMagnetOrPad =
+            /\b(magnet|magsafe|pad|vhb|adhesive|tape|gasket|epdm|foot|bumper)\b/.test(
+              nameText
+            );
+          if (isFilterOrCore) {
+            p.position = [0, Math.max(36, Math.round(cursorY * 0.45)), 0];
+            p.rotation = [0, 0, 0];
+            p.explode = [-95, 20, 0];
+          } else if (isMagnetOrPad) {
+            const isBottomAdhesive = /\b(vhb|adhesive|bottom|foot|base)\b/.test(
+              nameText
+            );
+            p.position = isBottomAdhesive
+              ? [0, -6, 0]
+              : [0, Math.max(40, cursorY - 10), 34];
+            p.rotation = isBottomAdhesive ? [0, 0, 0] : [18, 0, 0];
+            p.explode = isBottomAdhesive ? [0, -90, 0] : [0, 55, 95];
+          } else {
+            const side = idx % 2 === 0 ? 1 : -1;
+            p.position = [side * 34, Math.max(24, 22 + idx * 16), -12];
+            p.rotation = [0, 0, 0];
+            p.explode = [side * 85, 25 + idx * 10, -55];
+          }
         }
       }
     }
 
-    p.position = sanitizeVec3(p.position, [0, idx * 24, 0]);
+    p.position = sanitizeVec3(p.position, [0, idx * 24, 0], 1200);
     p.rotation = sanitizeVec3(p.rotation, [0, 0, 0], 360);
-    p.explode = sanitizeVec3(p.explode, [0, 45 + idx * 12, 0], 300);
-    if (
-      Math.hypot(p.explode[0], p.explode[1], p.explode[2]) < 15
-    ) {
+    p.explode = sanitizeVec3(p.explode, [0, 45 + idx * 12, 0], 400);
+    if (Math.hypot(p.explode[0], p.explode[1], p.explode[2]) < 15) {
       const ang = (idx / Math.max(1, parts.length)) * Math.PI * 2;
       p.explode = [
         Math.round(Math.cos(ang) * 55),
